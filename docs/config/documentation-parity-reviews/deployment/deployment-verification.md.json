@@ -1,6 +1,160 @@
 {
-  "schemaVersion": "kubeclaw-documentation-parity-review.pending.v1",
-  "originalPath": "docs/deployment/deployment-verification.md",
-  "verdict": "NOT_READY",
-  "reason": "Original content review found missing required schema validation; canonical/test correction is authored and original author function passes, but actual corrected content/reference/current-source independent approval and original full native source-valid result are still required. No deletion or gate approval."
+  "schemaVersion": "kubeclaw-documentation-parity-review.v1",
+  "source": {
+    "originalPath": "docs/deployment/deployment-verification.md",
+    "legacyPath": "docs/_legacy-source/deployment/deployment-verification.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "9acd81a6b41bfbf883a9bf60e0b3e25776253743",
+    "extractionDigest": "d82febee5a0656d23cd63001880f9da04bdbe309a19b7f9724df84fca494082a",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewer": {
+    "id": "parity-reviewer:platform-deployment-operations-and-security",
+    "assignmentId": "parity-assignment:b46dd355be30c27b37deda845c90e8f7c6453a4190a4533d841e655338913ddb",
+    "freshContext": true,
+    "readOnly": true,
+    "provenance": {
+      "kind": "repository-review-assignment",
+      "revision": "4178d6ec07cac5e4b903126f9daba81aab908949",
+      "actorId": "parity-reviewer:platform-deployment-operations-and-security"
+    }
+  },
+  "decisionSha256": "7ead195326836cbd4156e97a289fa3f7cdd69385560028b2e17f697387662c96",
+  "contentRoot": "7de6e5cc31d700cf8e89aed232c01f13e5a9c41d421cfabb4f111f71777d8523",
+  "claimIds": [
+    "deployment-verification:dpu_31bf4f46a08bc501e2d5c41aec975072:0",
+    "deployment-verification:dpu_f30be3e447a1f0041d8a76d05b1150a8:0",
+    "deployment-verification:dpu_172f155edfb0e9ae1b5b08385a9b904f:0",
+    "deployment-verification:dpu_712dd50292fd924c4abdbdf61f11ebf9:0",
+    "deployment-verification:dpu_34ed270f008e21e337a89c1d841320a9:0",
+    "deployment-verification:dpu_d573166a609d9e69f4bfbfc494bfa396:0",
+    "deployment-verification:dpu_ce44cc3c1862c1927cddbe5c70d93f0a:0"
+  ],
+  "reviewedRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
+  "classificationVerdict": "PASS",
+  "claimVerdicts": [
+    {
+      "claimId": "deployment-verification:dpu_31bf4f46a08bc501e2d5c41aec975072:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "deployment-verification:dpu_f30be3e447a1f0041d8a76d05b1150a8:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "deployment-verification:dpu_172f155edfb0e9ae1b5b08385a9b904f:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "deployment-verification:dpu_712dd50292fd924c4abdbdf61f11ebf9:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "deployment-verification:dpu_34ed270f008e21e337a89c1d841320a9:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "deployment-verification:dpu_d573166a609d9e69f4bfbfc494bfa396:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "deployment-verification:dpu_ce44cc3c1862c1927cddbe5c70d93f0a:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    }
+  ],
+  "visualVerdicts": [],
+  "activeDependencyReview": {
+    "reviewedRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
+    "reviewedTree": "4046309a8a16e4a995e8d9bfcb030b4fa82f3585",
+    "contentRoot": "7de6e5cc31d700cf8e89aed232c01f13e5a9c41d421cfabb4f111f71777d8523",
+    "scope": {
+      "paths": [
+        "docs/deployment/deployment-verification.md",
+        "docs/_legacy-source/deployment/deployment-verification.md"
+      ],
+      "risks": [
+        "dynamic-configuration",
+        "generated-paths",
+        "runtime-lookup",
+        "external-consumers"
+      ]
+    },
+    "methods": [
+      {
+        "kind": "manual-inspection",
+        "detail": "dynamic-configuration: Inspected the complete native scanner and current exact-guide checker source. The fixture checker reads only the authoritative docs/site installation page and local toy inputs, not old deployment-verification content. The frozen full249-source scan checks all current repository inputs for both old/extracted paths and supported simple path construction; zero matches. Complex computed configuration and third-party consumers are not disproven."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "generated-paths: Inspected complete blueprint and strict author-suggestion producers plus full tree authority. The generator obtains current canonical destinations from Source/content-bound author control only; no old verification body drives current generated instructions. Legacy tree membership and parity extraction intentionally remain structural controls until AP10; they are not product/reader consumers or permission to delete."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "runtime-lookup: Inspected the entire maintained deployment truth verifier and exact-guide CLI checker. Their runtime lookups select the reviewed checkout, chart/config source inputs and current canonical install guide, never the old verification Markdown. The complete native parity checker reads immutable legacy bytes solely for original extraction/claim validation. The current wholeSource scanner supplies independently bound static reference evidence, not complete program-analysis proof."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "external-consumers: Inspected the complete authoritative route registry and source-specific redirect candidate. No authoritative old deployment-verification public route is declared, so no redirect is invented. Current canonical install, handbook and command targets are positively published by the unchanged registry and fresh native Reader controls. Unknown external consumers cannot be proved absent by repository inspection; preserve the original static limitation and no AP10/deletion/worldwide-link approval."
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected the complete native scanner and current exact-guide checker source. The fixture checker reads only the authoritative docs/site installation page and local toy inputs, not old deployment-verification content. The frozen full249-source scan checks all current repository inputs for both old/extracted paths and supported simple path construction; zero matches. Complex computed configuration and third-party consumers are not disproven."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected complete blueprint and strict author-suggestion producers plus full tree authority. The generator obtains current canonical destinations from Source/content-bound author control only; no old verification body drives current generated instructions. Legacy tree membership and parity extraction intentionally remain structural controls until AP10; they are not product/reader consumers or permission to delete."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected the entire maintained deployment truth verifier and exact-guide CLI checker. Their runtime lookups select the reviewed checkout, chart/config source inputs and current canonical install guide, never the old verification Markdown. The complete native parity checker reads immutable legacy bytes solely for original extraction/claim validation. The current wholeSource scanner supplies independently bound static reference evidence, not complete program-analysis proof."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected the complete authoritative route registry and source-specific redirect candidate. No authoritative old deployment-verification public route is declared, so no redirect is invented. Current canonical install, handbook and command targets are positively published by the unchanged registry and fresh native Reader controls. Unknown external consumers cannot be proved absent by repository inspection; preserve the original static limitation and no AP10/deletion/worldwide-link approval."
+      },
+      {
+        "kind": "scanner-result",
+        "detail": "Inspected and compared the actual frozen full249-source scanner record at a383c4f5287cca980ddacd59e1c34354e73fa47b across 5513 current Git-bound file inputs. Both original and extracted source paths have zero matches. Input root 9eb100c41d18cbc4f41d5a31de1f4e125e8fa4fe7d8813cdfbcaa2c36ec1b11f binds every scanned path/blob; current Source vectors and canonical/primary bytes equal the independently qualified7claim content source. Static zero matches alone do not prove arbitrary dynamic or external consumer absence."
+      }
+    ],
+    "findings": [],
+    "scanner": {
+      "version": "kubeclaw-documentation-active-dependency-scanner.v2",
+      "searchedPaths": [
+        "docs/deployment/deployment-verification.md",
+        "docs/_legacy-source/deployment/deployment-verification.md"
+      ],
+      "scannedFileCount": 5513,
+      "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
+      "scannerInputRoot": "9eb100c41d18cbc4f41d5a31de1f4e125e8fa4fe7d8813cdfbcaa2c36ec1b11f",
+      "matches": []
+    },
+    "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
+    "verdict": "PASS"
+  },
+  "verdict": "PASS",
+  "findings": []
 }

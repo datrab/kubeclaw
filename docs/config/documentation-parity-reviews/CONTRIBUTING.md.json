@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:project-navigation-and-status"
     }
   },
-  "decisionSha256": "5e21224360c7b95b0255921114e5ed5f1ed51501b69ee4244f1df3bebc755b56",
+  "decisionSha256": "d3493fae96a3dbd0f236afc7f0f35ac3f577784e9aeb77c2b02359495a1ed24b",
   "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
   "claimIds": [
     "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
@@ -33,7 +33,7 @@
     "contributing:dpu_2619224de547c655eccef696386b3d54:3",
     "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0"
   ],
-  "reviewedRevision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
+  "reviewedRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -109,8 +109,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "341663c0d2f1ba53d56eb0d700f9dd7e949584ec",
-    "reviewedTree": "88a3cf9a8acb02c849474562e0fb7b6730f558a4",
+    "reviewedRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
+    "reviewedTree": "4046309a8a16e4a995e8d9bfcb030b4fa82f3585",
     "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
     "scope": {
       "paths": [
@@ -127,53 +127,41 @@
     "methods": [
       {
         "kind": "manual-inspection",
-        "detail": "dynamic-configuration: Full executable scanner and owner configuration paths inspected. Frozen scanner binds5512 text files and finds no exact legacy/original token or supported simple joined-path use. Broader case-insensitive basename search identified only root CONTRIBUTING guidance and root reference-check token plus documentation-control authorities; no evidence that product configuration resolves docs/CONTRIBUTING.md. Root README links root CONTRIBUTING.md, not the extracted documentation source. See complete root README/CONTRIBUTING and docs-check-refs source."
+        "detail": "dynamic-configuration: Inspected the complete executable scanner, configuration selection controls and current root README/CONTRIBUTING sources. Root contributor navigation identifies the maintained root file, not the old docs contributor body. Current wholeSource paths and Git blobs are bound by the actual native scanner, with zero original/extracted contributor-path matches; complex dynamic construction remains limited as declared."
       },
       {
         "kind": "manual-inspection",
-        "detail": "generated-paths: Full blueprint producer walks docs only to classify advisory source paths. The obsolete contributor selector is removed. Exact one generated ledger row now obtains four explicit canonical targets from complete per-claim author decision and remains pending rewrite/unapproved. Owner generation and --check both exit0. Full tree producer sourceConsumers/classify inventories legacy membership and verifies immutable classification; this structural authority remains checked by its own readiness gates, not migrated as a content-consuming reader. No whole10MB inventory certification is inferred."
+        "detail": "generated-paths: Inspected full blueprint and strict author-suggestion producers plus the tree authority. Current generator destinations derive from exact author Source/content-root metadata; the obsolete contributor hint is removed. Physical legacy membership and original extraction remain structural/parity controls, not generated current reader instructions or an application consumer. Complete old qualified target/primary vectors remain byteequal."
       },
       {
         "kind": "manual-inspection",
-        "detail": "runtime-lookup: Complete maintained parity checker intentionally reads immutable legacy bytes to validate extraction and claim fragments; this is the declared parity control, not an application content consumer. Its scanner searches executable/configuration inputs outside explicit control metadata, enforces Git blob identity for every input and still requires manual review. The basename reference in docs-check-refs is the root CONTRIBUTING.md token; docs-status merely emits audience prose containing contributing agent. Complete sources supplied, no renamed consumer or literal exemption."
+        "detail": "runtime-lookup: Inspected complete maintained parity checker, reference checker and status producer. The basename CONTRIBUTING.md token in reference checking concerns the distinct root contributor file; parity reads old bytes only to validate original extraction and claims. The new exact-guide checker reads current install Markdown and toy fixtures, not legacy contributor content. Current native scanner binds every file and reports zero old-path references, without proving arbitrary runtime programs absent."
       },
       {
         "kind": "manual-inspection",
-        "detail": "external-consumers: Complete public route registry inspected: no authoritative old CONTRIBUTING public route or consumer is declared, and rules forbid inventing one. Root README links the distinct maintained root CONTRIBUTING.md. Repository static inspection cannot prove unknown third-party consumers absent; original scanner limitation remains verbatim and no AP10 deletion or world-wide link guarantee is authorized. Remaining physical legacy source is preserved for AP10 obligations."
+        "detail": "external-consumers: Inspected complete public route registry and current root README/contributor navigation. No authoritative old docs contributor public route or consumer is declared, so no invented redirect is supplied. Repository source inspection cannot disprove unknown third-party links or consumers; preserve the native static limitation and all AP10 obligations, with no worldwide-link/deletion approval."
       }
     ],
     "evidence": [
       {
-        "kind": "scanner-result",
-        "detail": "Actual frozen 95d9cd8a scan searched original and extracted paths across5512 files; zero matches; full scanner input root79a93efc7087d81338f6ac404e67093cb2686d69e1edd1feaab7624a435396f0 and native source inspection are retained. Static zero alone is not the manual criterion."
+        "kind": "manual-observation",
+        "detail": "Inspected the complete executable scanner, configuration selection controls and current root README/CONTRIBUTING sources. Root contributor navigation identifies the maintained root file, not the old docs contributor body. Current wholeSource paths and Git blobs are bound by the actual native scanner, with zero original/extracted contributor-path matches; complex dynamic construction remains limited as declared."
       },
       {
         "kind": "manual-observation",
-        "detail": "Full executable scanner and owner configuration paths inspected. Frozen scanner binds5512 text files and finds no exact legacy/original token or supported simple joined-path use. Broader case-insensitive basename search identified only root CONTRIBUTING guidance and root reference-check token plus documentation-control authorities; no evidence that product configuration resolves docs/CONTRIBUTING.md. Root README links root CONTRIBUTING.md, not the extracted documentation source. See complete root README/CONTRIBUTING and docs-check-refs source."
+        "detail": "Inspected full blueprint and strict author-suggestion producers plus the tree authority. Current generator destinations derive from exact author Source/content-root metadata; the obsolete contributor hint is removed. Physical legacy membership and original extraction remain structural/parity controls, not generated current reader instructions or an application consumer. Complete old qualified target/primary vectors remain byteequal."
       },
       {
         "kind": "manual-observation",
-        "detail": "Full blueprint producer walks docs only to classify advisory source paths. The obsolete contributor selector is removed. Exact one generated ledger row now obtains four explicit canonical targets from complete per-claim author decision and remains pending rewrite/unapproved. Owner generation and --check both exit0. Full tree producer sourceConsumers/classify inventories legacy membership and verifies immutable classification; this structural authority remains checked by its own readiness gates, not migrated as a content-consuming reader. No whole10MB inventory certification is inferred."
+        "detail": "Inspected complete maintained parity checker, reference checker and status producer. The basename CONTRIBUTING.md token in reference checking concerns the distinct root contributor file; parity reads old bytes only to validate original extraction and claims. The new exact-guide checker reads current install Markdown and toy fixtures, not legacy contributor content. Current native scanner binds every file and reports zero old-path references, without proving arbitrary runtime programs absent."
       },
       {
         "kind": "manual-observation",
-        "detail": "Complete maintained parity checker intentionally reads immutable legacy bytes to validate extraction and claim fragments; this is the declared parity control, not an application content consumer. Its scanner searches executable/configuration inputs outside explicit control metadata, enforces Git blob identity for every input and still requires manual review. The basename reference in docs-check-refs is the root CONTRIBUTING.md token; docs-status merely emits audience prose containing contributing agent. Complete sources supplied, no renamed consumer or literal exemption."
-      },
-      {
-        "kind": "manual-observation",
-        "detail": "Complete public route registry inspected: no authoritative old CONTRIBUTING public route or consumer is declared, and rules forbid inventing one. Root README links the distinct maintained root CONTRIBUTING.md. Repository static inspection cannot prove unknown third-party consumers absent; original scanner limitation remains verbatim and no AP10 deletion or world-wide link guarantee is authorized. Remaining physical legacy source is preserved for AP10 obligations."
+        "detail": "Inspected complete public route registry and current root README/contributor navigation. No authoritative old docs contributor public route or consumer is declared, so no invented redirect is supplied. Repository source inspection cannot disprove unknown third-party links or consumers; preserve the native static limitation and all AP10 obligations, with no worldwide-link/deletion approval."
       },
       {
         "kind": "scanner-result",
-        "detail": "The original validator builds its index with all249 immutable sources, excluding every legacy body from active consumers. Exact native-equivalent index has 5512 inputs and zero matches. Earlier public single-source call additionally scanned248 other legacy bodies, also zero matches; substantive four-risk verdict remains byteequal except native scan binding. Exact original uninstrumented source validator must still confirm this registration; no tool/schema/authority change."
-      },
-      {
-        "kind": "manual-observation",
-        "detail": "Final Source pin includes the approved review metadata and its generated inventory row/counts, plus three durable verdict files. Full source-specific native scan remains zero matches. The primary source, all target pages, direct code evidence and public route authority are byteequal to the already independently passed content/manual assessments; exact complete vector retained. New verdict documents introduce no active source consumer. No criterion or limitation changes."
-      },
-      {
-        "kind": "scanner-result",
-        "detail": "Inspected the current original full249-source scanner record and compared its frozen5512 file paths and Git blob input root at341663c0d2f1ba53d56eb0d700f9dd7e949584ec: zero CONTRIBUTING path matches. Current scanner input binding is2283628aad896ef0038700a16b66603a84994aa0e7ad993febaf234d97f7cb45; complete unchanged primary/target/route vectors retain the previous substantive manual four-risk source observations. This inspected static result does not prove unknown dynamic or external consumers absent."
+        "detail": "Inspected and compared the actual current full249-source scanner record at a383c4f5287cca980ddacd59e1c34354e73fa47b across 5513 frozen Git-bound file inputs. Both original and extracted contributor paths have zero matches. Input root 9eb100c41d18cbc4f41d5a31de1f4e125e8fa4fe7d8813cdfbcaa2c36ec1b11f binds every scanned path/blob. Current complete byteequal target/primary/route vectors retain the actual earlier substantive content approval; this static result does not prove arbitrary dynamic or external consumer absence."
       }
     ],
     "findings": [],
@@ -183,9 +171,9 @@
         "docs/CONTRIBUTING.md",
         "docs/_legacy-source/CONTRIBUTING.md"
       ],
-      "scannedFileCount": 5512,
-      "scannedPathsSha256": "d36402ca9a46b1837c6fcac9abb3d71fdefa53e96d2b46aeccb388d05c5efc0b",
-      "scannerInputRoot": "2283628aad896ef0038700a16b66603a84994aa0e7ad993febaf234d97f7cb45",
+      "scannedFileCount": 5513,
+      "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
+      "scannerInputRoot": "9eb100c41d18cbc4f41d5a31de1f4e125e8fa4fe7d8813cdfbcaa2c36ec1b11f",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
