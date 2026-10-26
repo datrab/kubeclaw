@@ -231,6 +231,7 @@ python3 -m venv "$COMPILED_JOURNEY_PARENT/semgrep"
 "$COMPILED_JOURNEY_PARENT/semgrep/bin/python" -m pip install --require-hashes --only-binary=:all: -r docker/python-tools/semgrep-nova.txt
 export PATH="$COMPILED_JOURNEY_PARENT/semgrep/bin:$PATH"
 export SEMGREP_SETTINGS_FILE="$COMPILED_JOURNEY_PARENT/semgrep-settings.yml"
+export SEMGREP_LOG_FILE="$COMPILED_JOURNEY_PARENT/semgrep.log"
 ```
 
 Before creating a fixture, check the exact executable paths used by the helper:
@@ -249,7 +250,7 @@ semgrep --version
 Node must be major 24. `/usr/bin/flock` and `/usr/bin/script` must be GNU
 util-linux, and `/usr/bin/tar` must be GNU tar. Git must exist at `/usr/bin/git`;
 a different executable found only through `PATH` is not sufficient. Use the
-Semgrep executable from the hash-locked environment just installed. Stop on a missing or wrong
+Semgrep executable from the hash-locked environment installed above. Stop on a missing or wrong
 host dependency. These steps do not provision a Gateway or grant a model account.
 
 The operator must supply an approved OpenClaw Gateway tools endpoint, its bearer
