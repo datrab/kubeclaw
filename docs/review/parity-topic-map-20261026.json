@@ -1,0 +1,28 @@
+{
+  "scope": "Complete original TopicMap navigation/source-location content only, not childprocedure or wholeA91311 approval",
+  "originalSource": "docs/_legacy-source/DOCUMENTATION_TOPIC_MAP.md",
+  "canonicalTarget": "docs/site/reference/documentation-site.md",
+  "units": 14,
+  "atomicClaims": 37,
+  "omissions": 0,
+  "independentContentVerdict": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "TOPIC_MAP_CONTENT=PASS. All 37 navigation/source-location claims are preserved by the complete canonical table with exact reader destinations and source locations, and the added boundary correctly avoids implying procedure or runtime qualification. The retired special-case generator hint is safely replaced by the existing strict author-decision path.",
+    "overall_confidence": 0.94
+  },
+  "actualIndependentTarget": "cf3c8fe321a3baeed883eddc0b6a4b9f298006d1",
+  "maintainedSource": "16e7b792aeaeae4ded0e9ee02f41b0bc06b2e247",
+  "nativeAuthorOnly": "PASS original unchanged decision validator; not independent/source/global approval",
+  "referenceNativePublicationAndPriorScopePreservation": "PENDING",
+  "originalGateCountsUnchanged": {
+    "gates": 65,
+    "requirements": 226
+  },
+  "retainedLimits": [
+    "Linkeddiagnose/maintenance fullbodyguard refusals retain their separate procedure/example review limits. No bodyexcerpts/aliases used for their acceptance.",
+    "FirstCONTRIBUTING publishednativeSourcevalid mustbe rebound to newwholeSource before newper-source approval; no firstSourcecontent rerun merelyforcommit.",
+    "Alloriginalproduct/Human/DATAUNKNOWN/Sourcequalification failures retained; no AP10deletion or wholepoint waivers."
+  ],
+  "detailedEvidenceOutsideRepository": "operations/pr13/evidence/a91311-topic-map-20261026"
+}

@@ -2030,7 +2030,7 @@
       "audience": "operator, plugin author, developer, documentation maintainer",
       "owner": "documentation",
       "appliesTo": "positively selected repository reader pages and the local HTML publication artifact",
-      "lastVerified": "source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope; machine-readable page bindings source and isolated fixture tests checked on 2026-10-21, not a complete production-build result",
+      "lastVerified": "source, original 167-page build, parser tests, and rendered local links checked on 2026-10-21; browser observations have their own recorded scope; machine-readable page bindings source and isolated fixture tests checked on 2026-10-21, not a complete production-build result; topic-link target existence and tracked source-root membership checked on 2026-10-26, not new procedure or runtime execution",
       "sourceDependencies": [
         "scripts/docs-reader/page-records.mjs",
         "scripts/tests/docs-reader-page-records.test.mjs",
