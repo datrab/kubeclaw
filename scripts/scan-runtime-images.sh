@@ -124,21 +124,33 @@ mkdir -p "$database_cache"
 scan_failed=0
 for image in "$@"; do
   digest="${image##*@sha256:}"
-  report="$report_dir/${digest}.txt"
+  report="$report_dir/${digest}.json"
+  table="$report_dir/${digest}.txt"
+  # Do not let an earlier successful scan hide a failed retry.
+  rm -f -- "$report" "$table"
   echo "Scanning $image with Trivy $TRIVY_VERSION"
   if "$trivy_executable" image \
     --cache-dir "$database_cache" \
     --scanners vuln \
     --severity HIGH,CRITICAL \
     --exit-code 1 \
-    --format table \
+    --format json \
     --output "$report" \
     "$image"; then
     :
   else
     scan_failed=1
   fi
-  cat "$report"
+  if [[ -s "$report" ]]; then
+    if "$trivy_executable" convert --format table --output "$table" "$report"; then
+      cat "$table"
+    else
+      scan_failed=1
+    fi
+  else
+    echo "Scanner produced no report for $image" >&2
+    scan_failed=1
+  fi
   echo "Saved report: $report"
 done
 
