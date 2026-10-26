@@ -34,6 +34,7 @@ concurrency:
   cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 env:
   REGISTRY: ghcr.io
+  TRIVY_DB_REPOSITORY: ghcr.io/aquasecurity/trivy-db:2
 jobs:
   validate:
     runs-on: ubuntu-latest
