@@ -7,6 +7,7 @@ import { loadOpsMcpConfig } from './config.mjs';
 import { createKubeRequest, createKubeList } from './kubernetes.mjs';
 import { createMonitoring, METRIC_QUERIES } from './monitoring.mjs';
 import { INVENTORY_PATHS, resourceSummary } from './resource-inventory.mjs';
+import { describeNodeResources } from './node-resources.mjs';
 import { createServer as createHttpServer } from 'node:http';
 import { createServer as createHttpsServer } from 'node:https';
 import { createHash } from 'node:crypto';
@@ -235,10 +236,14 @@ function buildServer() {
   {
     server.registerTool('platform_cluster_state', {
       title: 'Cluster resource state',
-      description: 'Read node health, discover namespaces, or read global Cilium policies. Namespace discovery requires global namespace observation. Does not execute in nodes or Cilium pods.',
-      inputSchema: z.object({ resource: z.enum(['nodes', 'namespaces', 'ciliumclusterwidenetworkpolicies']), continueToken: z.string().max(16384).optional() }),
+      description: 'Read node health, discover namespaces, or read global Cilium policies. With resource=nodes and node=<name>, return Capacity, Allocatable, non-terminated pods and allocated requests/limits across namespaces; requires global namespace observation. Namespace discovery also requires global observation. No credentials or pod exec.',
+      inputSchema: z.object({ resource: z.enum(['nodes', 'namespaces', 'ciliumclusterwidenetworkpolicies']),
+        node: z.string().min(1).max(253).refine(value => value.split('.').every(label => /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/.test(label)), 'Invalid node name').optional(),
+        continueToken: z.string().max(16384).optional(),
+      }).refine(args => !args.node || (args.resource === 'nodes' && !args.continueToken), 'node requires resource=nodes without continueToken'),
       annotations: { readOnlyHint: true, destructiveHint: false, idempotentHint: true, openWorldHint: false },
-    }, async ({ resource, continueToken }) => {
+    }, async ({ resource, node, continueToken }) => {
+      if (node) return jsonText(await describeNodeResources(kubeRequest, kubeList, node));
       const path = resource === 'nodes' ? '/api/v1/nodes' : resource === 'namespaces' ? '/api/v1/namespaces' : '/apis/cilium.io/v2/ciliumclusterwidenetworkpolicies';
       const page = await kubeList(path, { pageSize: 50, maxPages: 1, continueToken,
         mapItem: item => resource === 'nodes'

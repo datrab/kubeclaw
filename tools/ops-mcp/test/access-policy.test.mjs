@@ -60,6 +60,7 @@ test('global namespace observation is explicit, discoverable, and never an impli
     assert.doesNotThrow(() => authorizeTool(parsed, 'get_pod', { namespace }, 'argocd'));
   }
   assert.doesNotThrow(() => authorizeTool(parsed, 'platform_cluster_state', { resource: 'namespaces' }, 'argocd'));
+  assert.doesNotThrow(() => authorizeTool(parsed, 'platform_cluster_state', { resource: 'nodes', node: 'ax41-production' }, 'argocd'));
   assert.throws(() => authorizeTool(parsed, 'exec_pod', { namespace: 'production' }, 'argocd'), /NAMESPACE_FORBIDDEN/);
   const pod = { metadata: { labels: { app: 'buster' } }, spec: { containers: [{ name: 'runtime' }] } };
   assert.throws(() => authorizeExec(parsed, { namespace: 'production', container: 'runtime' }, pod), /TARGET_FORBIDDEN/);
@@ -71,6 +72,7 @@ test('global namespace observation is explicit, discoverable, and never an impli
   const scoped = { ...ops, readAllNamespaces: false };
   assert.doesNotThrow(() => parsePolicy(JSON.stringify({ clients: [scoped] }), ['kubeclaw'], [], true));
   assert.doesNotThrow(() => authorizeTool(scoped, 'platform_cluster_state', { resource: 'nodes' }, 'argocd'));
+  assert.throws(() => authorizeTool(scoped, 'platform_cluster_state', { resource: 'nodes', node: 'ax41-production' }, 'argocd'), /TOOL_FORBIDDEN/);
   assert.throws(() => authorizeTool(scoped, 'platform_cluster_state', { resource: 'namespaces' }, 'argocd'), /TOOL_FORBIDDEN/);
   assert.throws(() => authorizeTool(scoped, 'get_pod', { namespace: 'production' }, 'argocd'), /NAMESPACE_FORBIDDEN/);
 });
