@@ -192,14 +192,15 @@ explicit graph. The real implementation agent corrects an initially wrong
 `greeting()` result. The same run then performs module lint, a mandatory Buster
 provider test, final lint, a cumulative provider test and the technical summary.
 
-Use the full reviewed Source commit shown for this copy of the guide. Do not
-substitute the developer handbook's older example baseline. The following
-commands replace the handbook's clone/revision selection steps:
+Use the fixed executable Source baseline below. It contains all three workflow
+helpers and the product code used by this journey. Later guide-only corrections
+do not change that executable baseline. Do not substitute the developer
+handbook's older example baseline. These commands replace its clone/revision
+selection steps:
 
 ```bash
 set -euo pipefail
-read -r -p "Full reviewed Source commit for this guide: " COMPILED_SOURCE_REVISION
-[[ "$COMPILED_SOURCE_REVISION" =~ ^[0-9a-f]{40}$ ]]
+COMPILED_SOURCE_REVISION=7c8d2d3a0162ff056020ea0b965ded54ee2f4c19
 export COMPILED_SOURCE_REVISION
 git clone https://github.com/datrab/kubeclaw.git kubeclaw-compiled-source
 cd kubeclaw-compiled-source
