@@ -34,6 +34,9 @@ test('real Git snapshots allow private Buster changes but reject shared changes 
     write('my-values/infra/native-worker-pools-ax41.yaml','schedulerReservation: changed');const hostChange=commit();
     assert.equal(busterRenderConfigurationCompatible(root,before,hostChange),false);
     assert.equal(busterRenderConfigurationCompatible(root,before,hostChange,'retain-active-nova-prism'),true);
+    write('gitops/production/overlays/prism-ax41.yaml','worker: {resources: {requests: {cpu: 100m}}}');const prismChange=commit();
+    assert.equal(busterRenderConfigurationCompatible(root,hostChange,prismChange),false);
+    assert.equal(busterRenderConfigurationCompatible(root,hostChange,prismChange,'retain-active-nova-prism'),true);
     for (const file of ['my-values/infra/native-worker-pools.yaml','my-values/infra/postgresql-values.yaml']) {
       write(file,'shared: changed');const unknownChange=commit();
       assert.equal(busterRenderConfigurationCompatible(root,hostChange,unknownChange,'retain-active-nova-prism'),false);

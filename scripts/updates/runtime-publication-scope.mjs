@@ -38,6 +38,9 @@ export function busterRenderConfigurationCompatible(root, before, after, retaine
   const retainedNonRenderInputs = new Set([
     'charts/kubeclaw/files/config/knip.json',
     'my-values/infra/native-worker-pools-ax41.yaml',
+    // Prism-only overlay is not rendered by export-buster; the exporter
+    // independently authenticates and preserves the active Prism manifest.
+    'gitops/production/overlays/prism-ax41.yaml',
   ]);
   const sharedInput = file => isNonBusterRenderConfiguration(file)
     && !(retainedRolePolicy === 'retain-active-nova-prism' && retainedNonRenderInputs.has(file));
