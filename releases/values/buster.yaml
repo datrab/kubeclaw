@@ -1,4 +1,4 @@
-# Generated from release 08ceb103d23d0c8bce37bc9038ad0aacf76a1780 and byte-matched source configuration; do not edit.
+# Generated from release d73b68be5f462c3ab265ecd15e8dd99fe3043f46 and byte-matched source configuration; do not edit.
 agentRole: buster
 gateway:
   startupDoctor:
@@ -30,7 +30,7 @@ initSetup:
       memory: 8Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-buster-gateway
-  digest: sha256:4d36cf581532137d46a9744817d1bac827504fedbb198c485298d27757bd1a8d
+  digest: sha256:c664db9d2ecb3faffa5e5ea4851bb82feed52c09a981368f81acf4cab5dd3cd1
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -38,13 +38,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-40591869710-1/buster-08ceb103d23d0c8bce37bc9038ad0aacf76a1780.tgz
-  expectedCommit: 08ceb103d23d0c8bce37bc9038ad0aacf76a1780
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-40598494650-1/buster-d73b68be5f462c3ab265ecd15e8dd99fe3043f46.tgz
+  expectedCommit: d73b68be5f462c3ab265ecd15e8dd99fe3043f46
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: ceb9b21204e0f029368c64f36494c17d430432d039f139b2c14d1050e14289dc
+  sha256: c1163ac3de1444f230ec3bbfd8b300aa91e3dc337c234439a83422bf789ac5b9
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-buster
@@ -92,7 +92,7 @@ service:
       targetPort: buster-plan
 extraContainers:
   - name: buster-v2-runtime
-    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:04247db2532a54cabfeba111c9161cb8858e21d0e92a34450a891e2c5b7bc76a
+    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:45562e14f2ed566ebe914463abedeff0a4753d83e8c8515a401454ca865985ec
     imagePullPolicy: Always
     env:
       - name: BUSTER_DIAGNOSIS_GATEWAY_TOKEN
@@ -248,7 +248,7 @@ busterNamespaceBroker:
       - prism-test-ghcr
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
-      digest: sha256:91422b6fdbc8d573cec4f4da25420ae740a4ada9d1f275247e37d7fc76f2abf8
+      digest: sha256:916b6df757f479a8a81fdef27b0de859334f00c12cc31b520d6944963e1089be
       tag: ''
       pullPolicy: IfNotPresent
 resources:
