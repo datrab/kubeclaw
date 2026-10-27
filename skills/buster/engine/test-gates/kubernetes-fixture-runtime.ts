@@ -893,12 +893,12 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     const timer = setTimeout(() => timeout.abort(), configured.timeoutMs);
     const signal = AbortSignal.any([input.signal, timeout.signal]);
     let onAbort: (() => void) | undefined;
-    let settled = false;
+    const dispatchState = { settled: false, terminationUnconfirmed: false };
     const operation = Promise.resolve().then(() => {
       signal.throwIfAborted(); return configured.diagnose({ ...input, signal });
     });
     // Observe both resolution and rejection immediately, including late completion.
-    const settlement = operation.then(() => { settled = true; }, () => { settled = true; });
+    const settlement = operation.then(() => { dispatchState.settled = true; }, error => { dispatchState.settled = true; dispatchState.terminationUnconfirmed = error instanceof Error && error.message.includes('OPENCLAW_SESSION_CLEANUP_UNRESOLVED:'); });
     try {
       const aborted = new Promise<never>((_resolve, reject) => {
         onAbort = () => reject(new Error('KUBERNETES_FIXTURE_DIAGNOSIS_ABORTED'));
@@ -908,7 +908,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       const result = await Promise.race([aborted, operation]);
       return parseFixtureFailureDiagnosis(result);
     } catch {
-      if (signal.aborted && !settled) {
+      if (signal.aborted && !dispatchState.settled) {
         // Give the existing transport a bounded chance to cancel/reconcile its
         // agent before the namespace is removed. Settlement alone is not proof
         // that an external agent terminated; the transport owns that assertion.
@@ -921,7 +921,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       }
       return Object.freeze({ status: 'unavailable', component: 'kubernetes-fixture',
         errorMessage: 'Failure diagnosis did not produce a valid result before its deadline.', cause: null,
-        evidence: Object.freeze([]), nextStep: !settled
+        evidence: Object.freeze([]), nextStep: !dispatchState.settled || dispatchState.terminationUnconfirmed
           ? 'Remote diagnosis agent termination is unconfirmed; reconcile its status through the authorized runtime before another diagnostic attempt.'
           : 'Inspect the original fixture failure evidence through an authorized diagnostic path.' });
     } finally {

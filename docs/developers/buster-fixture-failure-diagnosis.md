@@ -26,7 +26,7 @@ whether the returned failed gate requires Forge using its existing graph policy.
 ## Agent dispatch and result contract
 
 `fixture-diagnosis-agent.ts` reuses the common runtime-dispatch plugin's actual
-`dispatchOpenClaw`, collector session/result transport, and cancellation protocol.
+`dispatchOpenClaw`, native session/result transport, and cancellation protocol.
 There is no second agent launcher or project-specific error catalogue.
 The operator chooses the target; project manifests cannot choose credentials,
 agents, gateways or permissions. The agent receives the immutable fixture identity
@@ -56,8 +56,12 @@ The target must use a dedicated `agentRole: buster-diagnosis`, subagent runtime,
 no writable workspaceReference/root, no controller session and no remote result
 endpoint. HTTPS is required except on loopback. The shared target parser validates
 budgets/model/polling/path configuration. Buster permits only that exact Gateway
-endpoint and token; redirect and oversized response bodies are rejected. Result
-transport is collector-based, not arbitrary repository file reads.
+endpoint and token; redirect and oversized response bodies are rejected.
+Diagnosis uses a quiet ordinary native run, not the Swarm collector queue.
+The shared adapter's `terminalOnly` transport reads only the exact session's
+terminal assistant message bound to its native run id. It neither requests nor
+persists a result file and never reads arbitrary repository files. The task
+prompt is unchanged; transport instructions require only terminal JSON.
 
 A nonempty policy reference is **not** proof of enforcement. Before enabling:
 configure/verify a dedicated agent with namespace-bound read-only pod/status/event
@@ -83,7 +87,7 @@ fixed unavailable message, not a raw exception or success.
 Focused tests exercise failure→diagnosis→cleanup ordering, no diagnosis on success
 or admission validation errors, invalid output, timeout, cancellation and stubborn
 callbacks. A local mock Gateway exercises the **real shared dispatch transport**
-(idempotent spawn, collector wait/result, token exclusion and report filtering).
+(idempotent spawn, terminal-history identity checks, token exclusion and report filtering).
 These tests do not prove a deployed agent policy, live Gateway activation or live
 namespace diagnosis. Those require the operator-configured target and one isolated
 live failure with report delivery and cleanup observation.

@@ -127,7 +127,7 @@ function terminal(value: unknown, identity: OpenClawSessionIdentity, subagent: b
         const state = String(first(match.status, match.state) ?? 'unknown').toLowerCase();
         const model = typeof match.model === 'string' ? match.model : identity.model;
         const taskId = optionalText(first(match.taskId, match.task_id)) ?? identity.taskId;
-        return { terminal: ['completed', 'complete', 'done', 'succeeded', 'ended', 'failed', 'cancelled', 'canceled', 'error'].includes(state), state,
+        return { terminal: ['completed', 'complete', 'done', 'succeeded', 'ended', 'closed', 'failed', 'cancelled', 'canceled', 'killed', 'timeout', 'error'].includes(state), state,
           ...(model ? { model } : {}), ...(taskId ? { taskId } : {}) };
       }
     }
@@ -244,13 +244,12 @@ export async function pollSession(context: OpenClawGatewayContext, target: OpenC
 
 export async function cancelSession(context: OpenClawGatewayContext, target: OpenClawTarget, token: string, identity: OpenClawSessionIdentity): Promise<void> {
   if (target.runtime === 'subagent') {
-    const taskId = identity.taskId ?? (await pollSessionIdentity(context, target, token, identity));
-    if (!taskId) throw new Error('OPENCLAW_TASK_ID_UNRESOLVED');
-    await gateway(context, target, token, 'subagents', { action: 'cancel', taskId }, `cancel:${identity.runId}`);
+    const taskId = identity.taskId ?? await pollSessionIdentity(context, target, token, identity);
+    const selector = taskId ? { taskId } : { runId: identity.runId };
+    await gateway(context, target, token, 'subagents', { action: 'cancel', ...selector }, `cancel:${identity.runId}`);
   }
   else await gateway(context, target, token, 'sessions_send', { sessionKey: identity.sessionKey, message: 'Stop immediately. The owning pipeline invocation was cancelled.' }, `cancel:${identity.runId}`);
 }
-
 async function pollSessionIdentity(context: OpenClawGatewayContext, target: OpenClawTarget, token: string,
   identity: OpenClawSessionIdentity): Promise<string | undefined> {
   const raw = await gateway(context, target, token, 'subagents', {

@@ -35,7 +35,7 @@ export function fixtureDiagnosisAgent(raw: unknown, environment: Readonly<Record
       const signal = options?.signal ?? input.signal;
       signal.throwIfAborted();
       if (capability === 'secrets.read' && request.resource.canonicalId === target.tokenSecret) return { value: token };
-      // Use terminal collector output, never arbitrary result-file access.
+      // Use bound terminal history only, never arbitrary result-file access.
       if (capability === 'git.repository.read') throw new Error('REPOSITORY_FILE_NOT_FOUND');
       const resource = new URL(request.resource.canonicalId); resource.hash = '';
       if (capability !== 'network.http' || resource.href !== target.endpoint
@@ -59,7 +59,7 @@ export function fixtureDiagnosisAgent(raw: unknown, environment: Readonly<Record
       },
     } as AdapterActivationContext;
     const identity = { namespace: input.namespace, leaseName: input.leaseName, errorCode: input.errorCode };
-    const response = await dispatchOpenClaw(context, targetId, { ...target, collectorMode: true, sessionTimeoutMs: timeoutMs }, {
+    const response = await dispatchOpenClaw(context, targetId, { ...target, collectorMode: false, terminalOnly: true, sessionTimeoutMs: timeoutMs }, {
       protocol: 'kubeclaw.buster-fixture-diagnosis.v1', agent: targetId, identity,
       failureEvidence: input.failureEvidence,
       task: [

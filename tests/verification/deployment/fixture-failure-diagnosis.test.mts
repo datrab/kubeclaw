@@ -152,3 +152,17 @@ test('uncooperative diagnostic callback cannot block lease release and reports u
     assert.match(result.failureEvidence.diagnosis.nextStep, /termination is unconfirmed/);
   } finally { fs.rmSync(fixture.root, { recursive: true, force: true }); }
 });
+
+
+test('a settled transport rejection cannot hide unresolved remote agent termination', async () => {
+  const fixture = setup({ diagnosis: { timeoutMs: 100, diagnose: async () => {
+    throw new Error('OPENCLAW_SESSION_CLEANUP_UNRESOLVED:owned-dispatch:owned-run');
+  } } });
+  try {
+    const result: any = await fixture.invoke();
+    assert.equal(result.ok, false); assert.equal(result.failureEvidence.diagnosis.status, 'unavailable');
+    assert.match(result.failureEvidence.diagnosis.nextStep, /termination is unconfirmed/);
+    assert.ok(fixture.events.includes('cleanup'));
+    assert.doesNotMatch(JSON.stringify(result.failureEvidence.diagnosis), /owned-dispatch|owned-run/);
+  } finally { fs.rmSync(fixture.root, { recursive: true, force: true }); }
+});
