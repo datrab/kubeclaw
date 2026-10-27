@@ -17225,7 +17225,7 @@
             "source": ".github/workflows/auto-promote-runtime.yaml",
             "target": "docs/site/reference/workflows.md#workflows",
             "owner": "platform-maintainers",
-            "factsSha256": "2da28bfcc8ea7fd5b46b205c020d3e8a24d993c6da907f4b03df77cc56aa4e40"
+            "factsSha256": "8e25f1f2ad2c55abb7dd0ecc72bb9626c33cec4a00c1e3cc7cd523a7c6e925b8"
           },
           {
             "sourceId": "workflow:.github%2Fworkflows%2Fbuild-images.yaml:job:build",
@@ -46099,7 +46099,7 @@
             "source": "skills/buster/plugins/axe/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "226098cb0ad29278237af1469cdb1ba6897dcc32c9e942110c54a2b72aafbc4a"
+            "factsSha256": "a530a4bb56205f1d0f42c053c72b90c16490a9b95b4af73047a22e00ed8534e8"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Faxe%2Fschemas%2Fconfig.schema.json:%24.url:%5B%5D",
@@ -47023,7 +47023,7 @@
             "source": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ea22f2be359130afba8fa076e8d7deaf7381214cc728bec9d59e9f8bbc1de4e5"
+            "factsSha256": "dc40d4b84128a45700ac2fb5c3187ee3d79cfb8b14ca0bb1f26531e497d0a2f8"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Flighthouse%2Fschemas%2Fconfig.schema.json:%24.url:%5B%5D",
@@ -49102,7 +49102,7 @@
             "source": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "3bb1275a03b553aaf908c551e476aa3e70630dd28212bb8d1101e70dddae9280"
+            "factsSha256": "0b935193ef8c66ea86b86b1ea5cad061deda30671d65762bee0bca932ee0070a"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fopenclaw-agent-observer%2Fopenclaw.plugin.json%23%24.configSchema:%24.enabled:%5B%5D",
@@ -49123,7 +49123,7 @@
             "source": "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "bfc97e4bef2cc71c36fb5a2c2d518e1a74176a28458269b87846f8483955c076"
+            "factsSha256": "2245e96e5601f2a6ab8ff963350e35654e1e2360d9d183684546dfa63739efdd"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fopenclaw-agent-observer%2Fopenclaw.plugin.json%23%24.configSchema:%24.maxEventBytes:%5B%5D",
