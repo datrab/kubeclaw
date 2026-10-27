@@ -1,0 +1,477 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/developers/README.md",
+    "legacyPath": "docs/_legacy-source/developers/README.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "7248b38ef8d3156a90a97628ef67171317fb68b7",
+    "extractionDigest": "658cde397b7e652adb2d4fe19ee3a275427e7db16ca2b385f4033f415d23d83e",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
+  "author": {
+    "id": "parity-author:developer-and-extension-sources",
+    "assignmentId": "parity-assignment:70b7105a120b9307cfcfe33309bd8b997b6ae7d9204a0342a40295cf67615b88"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/developers",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "No authoritative historical public route is declared; the current canonical Extend hub preserves all eight task routes without inventing a redirect."
+  },
+  "visualEvidence": [],
+  "contentRoot": "5fb4698b79d38175727d29c4202ab5f81ad8a5b093cb04cff3521affab41ccb4",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_1f64af900dbfcd647768171966c69585",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_1f64af900dbfcd647768171966c69585",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 18
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_80dc45df7606b4d41ee9a4e49e98a24b",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_80dc45df7606b4d41ee9a4e49e98a24b",
+          "reasonCode": null,
+          "byteStart": 19,
+          "byteEnd": 78
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_443739f68852e10e53d7bae83ff25eaf",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_443739f68852e10e53d7bae83ff25eaf",
+          "reasonCode": null,
+          "byteStart": 78,
+          "byteEnd": 130
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_2f16d858b81b04984060849a5b44ed30",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_2f16d858b81b04984060849a5b44ed30",
+          "reasonCode": null,
+          "byteStart": 130,
+          "byteEnd": 189
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_05c897de227004c60fc5ef468de73b43",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_05c897de227004c60fc5ef468de73b43",
+          "reasonCode": null,
+          "byteStart": 189,
+          "byteEnd": 241
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_096f47f2152659f49fa2c05d11a81c09",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_096f47f2152659f49fa2c05d11a81c09",
+          "reasonCode": null,
+          "byteStart": 241,
+          "byteEnd": 296
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_c2f98f75943ff3e312c2aca822f75e07",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_c2f98f75943ff3e312c2aca822f75e07",
+          "reasonCode": null,
+          "byteStart": 296,
+          "byteEnd": 341
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_d5c73ba7daca2d4b86bfc1b9b463329f",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_d5c73ba7daca2d4b86bfc1b9b463329f",
+          "reasonCode": null,
+          "byteStart": 341,
+          "byteEnd": 379
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_a9d1559a147ce1f773c167cef0238054",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_a9d1559a147ce1f773c167cef0238054",
+          "reasonCode": null,
+          "byteStart": 379,
+          "byteEnd": 413
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_e45bba3d3ed021ad5e77c061f45899b8",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-entry:dpu_e45bba3d3ed021ad5e77c061f45899b8",
+          "reasonCode": null,
+          "byteStart": 414,
+          "byteEnd": 577
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "developer-entry:dpu_1f64af900dbfcd647768171966c69585",
+      "unitId": "dpu_1f64af900dbfcd647768171966c69585",
+      "summary": "Developer navigation heading",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 18,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "073d3a9e8429196c8481f52b490c919af61f1f776fe2600f7bec60a12d25ad2c",
+        "normalizedSha256": "b98e42ff25323f236b77862bb5c2099f91c6ce7d76a46bcb16337d1d96507f0b"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "## Developer Task Routes",
+          "excerptSha256": "6e93867982c55e1dc881eee4c4ecefc14675419b3709b6d8600188bb8d1bee6b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_80dc45df7606b4d41ee9a4e49e98a24b",
+      "unitId": "dpu_80dc45df7606b4d41ee9a4e49e98a24b",
+      "summary": "Author pipeline plugins entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 19,
+        "byteEnd": 78,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "1bba6bd576e9aa0340c5becdb6e16a6af985c73f34ab3fb25e61a7dce47bd657",
+        "normalizedSha256": "e7186cd5a2316980d05f9a684f6230470642e9d34f2539dfef8f10a2416b9d6d"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "| Author pipeline plugins | [Create and activate a first pipeline plugin](first-plugin.md#create-and-activate-a-first-pipeline-plugin) |",
+          "excerptSha256": "b1aa3f96d2bd2009be3ed7f6fd577e02a9282d93f6910546c0f9055cdac1e62b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_443739f68852e10e53d7bae83ff25eaf",
+      "unitId": "dpu_443739f68852e10e53d7bae83ff25eaf",
+      "summary": "Author observers entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 78,
+        "byteEnd": 130,
+        "lineStart": 4,
+        "lineEnd": 4,
+        "exactSha256": "cb2a71b66db7ce156ce38c4f986bee706528fca18379cc21f22cc35552b5d053",
+        "normalizedSha256": "903f150a6e48668f054b14c526820b3425b9806d4e65c01adc3c107de4b8a1e5"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "| Author observers | [Practice an observer lifecycle locally](first-plugin.md#practice-an-observer-lifecycle-locally) |",
+          "excerptSha256": "c21ba5bca45934bbdd6a53e7c738890564f6f394bee890ceb58285c828d9eaa8",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_2f16d858b81b04984060849a5b44ed30",
+      "unitId": "dpu_2f16d858b81b04984060849a5b44ed30",
+      "summary": "Install and use OpenClaw plugins entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 130,
+        "byteEnd": 189,
+        "lineStart": 5,
+        "lineEnd": 5,
+        "exactSha256": "73ac6427854a0fec7c8cea7a2eb1455212046239e57c44cdac60889d3160ca8b",
+        "normalizedSha256": "ccc45242998bdb01b4088f87a5ccfce88c33155a868a14e14edbea2b6b8cd0c2"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "| Install and use OpenClaw plugins | [Build an OpenClaw hook extension](host-and-engine.md#build-an-openclaw-hook-extension), then [operate the packaged hosts](testing.md#operate-the-packaged-openclaw-hosts) |",
+          "excerptSha256": "98094df3761d5c27c6ccff815b20bf2099eaeaebb927cba8f8dc6db8858fe3c3",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_05c897de227004c60fc5ef468de73b43",
+      "unitId": "dpu_05c897de227004c60fc5ef468de73b43",
+      "summary": "Migrate retained or imported behavior with parity entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 189,
+        "byteEnd": 241,
+        "lineStart": 6,
+        "lineEnd": 6,
+        "exactSha256": "872fd37ca47e6bd6ebca0929712e4919d58bd136799268745e24f4346a33600e",
+        "normalizedSha256": "808e15618b718cc7a2378806c49f0f5a844467f555b9f1e47bc5c606fa883dee"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "| Migrate behavior | [Plan a behavior-preserving migration](#plan-a-behavior-preserving-migration) |",
+          "excerptSha256": "ec041012e1b66f6c8d23cf8c309781d6f712822836ed02be8209fa1991132899",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_096f47f2152659f49fa2c05d11a81c09",
+      "unitId": "dpu_096f47f2152659f49fa2c05d11a81c09",
+      "summary": "Replace runtime.dispatch provider entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 241,
+        "byteEnd": 296,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "fef6c12dfea3ac986deb5cf67550d2d6f7a33fe732ef9cfd0d68eaf0a91b1272",
+        "normalizedSha256": "387f72cfec3268769ea53747610e243c074a42fd0c205fdc0dd9d99f4e8987fb"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "| Replace agent dispatch | [Replace the runtime.dispatch provider](#replace-the-runtimedispatch-provider) |",
+          "excerptSha256": "a8cfd0a6278e24bd0a6c053011cf0185759aaf3656c2c4bdf6768e46e2722d2f",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_c2f98f75943ff3e312c2aca822f75e07",
+      "unitId": "dpu_c2f98f75943ff3e312c2aca822f75e07",
+      "summary": "Add verification entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 296,
+        "byteEnd": 341,
+        "lineStart": 8,
+        "lineEnd": 8,
+        "exactSha256": "4273cc25cb9077bbc75042f81e44adbec6d4df9d49ea0030d5c2900596f0c7e8",
+        "normalizedSha256": "5d7f4c30403684d30d7f7192497179080df602b3a0926c05c0f9243e78060ff2"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "| Add verification | [Add verification at the owning boundary](testing.md#add-verification-at-the-owning-boundary) |",
+          "excerptSha256": "fb7afc995cc527f7fd4e58acd7863dbaf5a850e87a1878688bf970e65585106f",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_d5c73ba7daca2d4b86bfc1b9b463329f",
+      "unitId": "dpu_d5c73ba7daca2d4b86bfc1b9b463329f",
+      "summary": "Testing and CI entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 341,
+        "byteEnd": 379,
+        "lineStart": 9,
+        "lineEnd": 9,
+        "exactSha256": "d01d3908a01b9823dec73243e8521119ff71ff5877b551564735b89cf4e013b9",
+        "normalizedSha256": "3a5cc7488bc681ad69c349808b80b616ebcedfcc16e241e95178ad6e10e747db"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "| Testing and CI | [Select the smallest complete check chain](developer-handbook.md#select-the-smallest-complete-check-chain) and [check CI authority and failure handling](developer-handbook.md#ci-triggers-authority-and-failure-handling) |",
+          "excerptSha256": "f8f9788143d683df19f4187979a25851d81de2e6f8f24cad89e1728ee1f3aa59",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_a9d1559a147ce1f773c167cef0238054",
+      "unitId": "dpu_a9d1559a147ce1f773c167cef0238054",
+      "summary": "Contributing entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 379,
+        "byteEnd": 413,
+        "lineStart": 10,
+        "lineEnd": 10,
+        "exactSha256": "51abddd0fa5ae2dd2cd0ca1a3c793dc528628e6afe5acc4870ef5fff30a967d5",
+        "normalizedSha256": "f2cc415ac0cc09030b7922bea19e23e9c5862846a85b45beda0f61c537ea0f05"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "| Contributing | [Prepare a clean checkout](developer-handbook.md#prepare-a-clean-checkout); use the [documentation change chain](developer-handbook.md#documentation-change-chain) for documentation changes |",
+          "excerptSha256": "ce2ed81599b82c9b6701453176db1257e97f2832ea706d932d50c06961ad36e9",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-entry:dpu_e45bba3d3ed021ad5e77c061f45899b8",
+      "unitId": "dpu_e45bba3d3ed021ad5e77c061f45899b8",
+      "summary": "Generic Core lifecycle and authority; separately owned registered domain behavior and privileged implementation packages",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 414,
+        "byteEnd": 577,
+        "lineStart": 12,
+        "lineEnd": 14,
+        "exactSha256": "b53a1ab13f56ab64eee9f89bc5047de8678b8131038825d5e77c2b7c9aa6b275",
+        "normalizedSha256": "78abb56706cead66aa8064ab21ab97701de45fbcda56febf2716386c808e4b81"
+      },
+      "evidence": [
+        {
+          "revision": "6d436bd8eae9f23b68387632c487af398f528835",
+          "path": "scripts/check-runtime-package-ownership.mjs",
+          "basis": "current-implementation",
+          "assertion": "The package ownership checker validates distinct package owners, role membership and shared plugin classification, and rejects the old mixed runtime core. It establishes the maintained ownership boundary, not successful universal import isolation or live runtime behavior.",
+          "gitObject": "46b23f23f973038900ad8ab921973bea584853bc",
+          "byteStart": 0,
+          "byteEnd": 3514,
+          "lineStart": 1,
+          "lineEnd": 57,
+          "exactSha256": "73da06e6e6237f1030203cbfb83de0a1b1f4ab929b7fe630f6290034dbdeed71",
+          "normalizedSha256": "be418b7d69621a6ac4954c89e2e0362201c9cc2820373222663350a3360fecd7"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "first-identify-the-behavior-owner",
+          "excerpt": "- Core owns scheduling, canonical state, and the extension security model.",
+          "excerptSha256": "fa4d816466cbf424ba301c6b8bd4bf180c14fc3c085e9e8a262353b66f00678f",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "stage",
+          "excerpt": "A stage performs one graph operation and returns a typed stage result.\nCore interprets that result and changes canonical lifecycle state.",
+          "excerptSha256": "a41e6c4fad52e06cf4c4e6c12ee40be1a7d019d83bd9e64dc89e160dc8af4646",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "stage",
+          "excerpt": "Do not use a stage to bypass a capability adapter.\nA stage requests authority through its invocation context.\nIt does not import privileged runtime services directly.",
+          "excerptSha256": "5ffc39234406127aea0c6cc2943aa2cb2475e12491908ac7b086c50d35a2196f",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "choose-a-worker-engine-or-runtime-role",
+          "excerpt": "**Why this boundary exists:** Worker Core owns neutral execution mechanics.\nThe engine owns specialist meaning.\nThe role limits which code and authority reach one deployed process.",
+          "excerptSha256": "065cc0131c0d6dbe4330c37ffa1ca39173a7343740cd26a412c10b73750a2bd4",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    }
+  ]
+}

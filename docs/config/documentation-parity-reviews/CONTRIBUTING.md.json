@@ -19,8 +19,8 @@
       "actorId": "parity-reviewer:project-navigation-and-status"
     }
   },
-  "decisionSha256": "9577be2afe5b3c719c17b4566654d78f20d6b133027a9763cdfd0619b63281e5",
-  "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
+  "decisionSha256": "bec3253f12a04096b1f3a1890f364c412f72999bdd4dcec16599685776281b31",
+  "contentRoot": "6e89a564241a56179c575363a1e7649fbc6831c9edd475dc756b6dc29c5226ed",
   "claimIds": [
     "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
     "contributing:dpu_a2f8cc1ec24a26383b0a72d9e00551d7:0",
@@ -33,7 +33,7 @@
     "contributing:dpu_2619224de547c655eccef696386b3d54:3",
     "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0"
   ],
-  "reviewedRevision": "7a629af64cb5ba9da89c0787c473f974de03a6f0",
+  "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -109,9 +109,9 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "7a629af64cb5ba9da89c0787c473f974de03a6f0",
-    "reviewedTree": "b4f9ce810a0ca6081f11f783e454e41828af4937",
-    "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
+    "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
+    "reviewedTree": "ee2aa2391658570ea60d3dd5b24514417f7f6513",
+    "contentRoot": "6e89a564241a56179c575363a1e7649fbc6831c9edd475dc756b6dc29c5226ed",
     "scope": {
       "paths": [
         "docs/CONTRIBUTING.md",
@@ -161,7 +161,7 @@
       },
       {
         "kind": "scanner-result",
-        "detail": "Inspected and compared the actual full249-source reference scan at 7a629af64cb5ba9da89c0787c473f974de03a6f0 across 5513 frozen Git-bound file inputs. Both original and extracted source paths have zero matches. Input root 273a9a23d304fe164976445f8b88b1e7432c2ff6a67a70f7bf039536b1f47521 binds every scanned path/blob; actual complete qualified content/primary/route byte equality is separately supplied. This static observation does not establish arbitrary dynamic or external-consumer absence."
+        "detail": "Inspected and compared actual complete249-source native reference scan at 6d436bd8eae9f23b68387632c487af398f528835 across 5513 frozen Git-bound file inputs. Original and extracted source paths have zero matches; current scanner input root e550f6d70e1ce0310b5c7c60c64d78f9eae5f83fbe601af609bb829a86a222e6 binds every path/blob. Complete original domain/primary/target equality and semantic scoped review are separate evidence. This static observation is not arbitrary dynamic/external consumer absence; original methods and limitations remain in force."
       }
     ],
     "findings": [],
@@ -173,7 +173,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "273a9a23d304fe164976445f8b88b1e7432c2ff6a67a70f7bf039536b1f47521",
+      "scannerInputRoot": "e550f6d70e1ce0310b5c7c60c64d78f9eae5f83fbe601af609bb829a86a222e6",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",

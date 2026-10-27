@@ -1,0 +1,64 @@
+{
+  "source": "6d436bd8eae9f23b68387632c487af398f528835",
+  "actualBoundedIndependentReferenceReviews": {
+    "current_contributing": {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "SIXD_CURRENT_CONTRIBUTING_COMPLETE_SOURCE_REFERENCE=PASS. The decision and review consistently rebind the named CONTRIBUTING source, all evidence locators, content root, reviewed tree, scanner-input root, and exact decision digest to 6d. Supplied full-vector equality establishes that the legacy source, canonical targets, route registry, and evidence bytes retain the previously reviewed content; the 6d native scan covers 5,513 Git-bound inputs with no original or legacy-path match. The recorded manual checks substantively address dynamic configuration, generated paths, runtime lookup, and external consumers while preserving the stated static-scanner and unknown-external-consumer limitations. Assignment identity and reviewer provenance remain unchanged and match the supplied committed authority.",
+      "overall_confidence": 0.98
+    },
+    "current_developer": {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "SIXD_CURRENT_DEVELOPER_COMPLETE_SOURCE_REFERENCE=PASS. The added decision and independent review bind the exact legacy source, assignment authority, reviewed revision, content root, targets, evidence, and 5513-input scanner result. The eight navigation claims map to concrete Extend-hub routes, and the ownership constraint is backed by the current package-ownership checker. Manual records substantively address dynamic configuration, generated paths, runtime lookup, and external consumers while retaining the limitation for unknown dynamic or third-party consumers; no deletion or runtime-success approval is asserted.",
+      "overall_confidence": 0.99
+    },
+    "retained_adding": {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "SIXD_RETAINED_ADDING_COMPLETE_SOURCE_REFERENCE=PASS. The decision and review consistently rebind to 6d436bd8, including evidence revisions, decision digest, reviewed tree, and the 5513-input scanner root. The supplied unchanged source/target/route bindings preserve the prior claim scope; the retained manual review substantively covers configuration, generated paths, runtime lookup, and external consumers while retaining the stated limits for dynamic and external consumers.",
+      "overall_confidence": 0.97
+    },
+    "retained_deployment": {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "SIXD_RETAINED_DEPLOYMENT_COMPLETE_SOURCE_REFERENCE=PASS. The deployment decision and independent review consistently rebind to 6d436bd8eae9f23b68387632c487af398f528835, including all evidence revisions, reviewed tree, scanner-input root, and the review’s SHA-256 binding to the updated decision. Supplied equality evidence preserves the legacy source, canonical targets, route registry, evidence spans, claim semantics, assignments, and provenance. The complete 6d scanner observation reports zero old/legacy-path matches across its bound inputs; the retained manual assessments remain substantively consistent with the supplied scanner, tree, generator, verifier, route, package, root-document, and hub evidence, while preserving limitations for dynamic and external consumers.",
+      "overall_confidence": 0.98
+    },
+    "operator": {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "SIXD_OPERATOR_COMPLETE_SOURCE_REFERENCE=PASS. The updated operator decision, evidence revision, review binding, reviewed tree, decision digest, and scanner input root consistently bind to the supplied current revision. The four retained manual-risk assessments remain supported and preserve their dynamic and external-consumer limitations.",
+      "overall_confidence": 0.98
+    }
+  },
+  "originalNative": {
+    "scope": "Unmodified inspectParitySources explicit-root all249 sources; five exact current author/review controls source-valid. Whole parity remains NOT_READY.",
+    "globalFindings": [],
+    "sourceValid": 5,
+    "sourceCount": 249,
+    "sourcePaths": [
+      "docs/CONTRIBUTING.md",
+      "docs/deployment/deployment-verification.md",
+      "docs/developers/README.md",
+      "docs/developers/adding-verification.md",
+      "docs/operators/README.md"
+    ],
+    "nativeReceiptSha256": "ac153a68811069850d082ca831a47feff23caaf615ea52996c908e81231d368c"
+  },
+  "newlyAcceptedSourcePaths": [
+    "docs/developers/README.md"
+  ],
+  "preservedPriorSources": [
+    "docs/CONTRIBUTING.md",
+    "docs/developers/adding-verification.md",
+    "docs/deployment/deployment-verification.md",
+    "docs/operators/README.md"
+  ],
+  "currentSourceBasis": "Two original sources CONTENT/AUTHOR/manualrisk approved at d041; Source6d commits genuinely reviewed14scope preservation before frozen scan; all5 current original field checks and complete consumer/registration judgments pass with exact whole-domain/primary equality for reuse. Original initialP2, route, omissionrevision, manualpredicate, two-source receiver/root failures retained externally and not rewritten.",
+  "acceptanceLimits": "No wholeA91311/AP10 legacy removal, downstreamfullprocedure, freshpersona/screenreader/human/live/runtime, arbitraryDATA/toolrole or selectedrelease qualification. Current actual6Reader/4offlinebrowser scope only at unchanged canonicalSource d041; no repeated executions invented.",
+  "newGateIds": [],
+  "newRequirementIds": [],
+  "acceptedGates": 65,
+  "acceptedRequirements": 226
+}
