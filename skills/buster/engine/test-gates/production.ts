@@ -1,3 +1,4 @@
+import { fixtureDiagnosisAgent } from './fixture-diagnosis-agent.ts';
 import fs from 'node:fs';
 import { validateRegistryHealth } from './registry-health-access.ts';
 import path from 'node:path';
@@ -263,6 +264,7 @@ export function loadProductionBusterRemotePlanRuntime(
       ...(registryUsername !== undefined ? { registryUsername, registryPassword: registryPassword! } : {}),
     } } : {}),
     ...(kubernetesFixtureSource ? { kubernetesFixture: {
+      ...(kubernetesFixtureSource.failureDiagnosis === undefined ? {} : { failureDiagnosis: fixtureDiagnosisAgent(kubernetesFixtureSource.failureDiagnosis, environment)! }),
       kubectlExecutable: path.resolve(directory, String(kubernetesFixtureSource.kubectlExecutable)),
       controllerNamespace: String(kubernetesFixtureSource.controllerNamespace),
       leaseApiGroup: String(kubernetesFixtureSource.leaseApiGroup),

@@ -48,7 +48,57 @@ async function executeProcess(command: string, args: readonly string[], options:
   return { stdout, stderr };
 }
 
+export interface FixtureFailureDiagnosisInput {
+  readonly namespace: string;
+  readonly leaseName: string;
+  readonly errorCode: string;
+  readonly failureEvidence: Readonly<Record<string, unknown>>;
+  readonly signal: AbortSignal;
+}
+
+// Operator-configured diagnosis is advisory; it never changes the native failure.
+// The dispatcher must return secret-filtered findings, never raw private logs.
+export interface FixtureFailureDiagnosis {
+  readonly status: 'diagnosed' | 'inconclusive' | 'unavailable';
+  readonly component: string;
+  readonly errorMessage: string;
+  readonly cause: string | null;
+  readonly evidence: readonly string[];
+  readonly nextStep: string;
+}
+export interface FixtureFailureDiagnosisOptions {
+  readonly timeoutMs: number;
+  readonly cancellationGraceMs?: number;
+  readonly diagnose: (input: FixtureFailureDiagnosisInput) => Promise<unknown>;
+}
+
+export function parseFixtureFailureDiagnosis(value: unknown): FixtureFailureDiagnosis {
+  const source = object(value, 'failureDiagnosis');
+  const keys = ['status', 'component', 'errorMessage', 'cause', 'evidence', 'nextStep'];
+  if (Object.keys(source).length !== keys.length || Object.keys(source).some(key => !keys.includes(key))
+    || !['diagnosed', 'inconclusive', 'unavailable'].includes(String(source.status))
+    || (source.cause !== null && typeof source.cause !== 'string')
+    || !Array.isArray(source.evidence) || source.evidence.length > 16) {
+    throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_INVALID');
+  }
+  const bounded = (input: unknown, maximum: number): string => {
+    if (typeof input !== 'string' || !input.trim() || input.length > maximum || input.includes('\0')) {
+      throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_INVALID');
+    }
+    return input;
+  };
+  if (source.status === 'diagnosed' && source.cause === null) throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_INVALID');
+  const result: FixtureFailureDiagnosis = {
+    status: source.status as FixtureFailureDiagnosis['status'], component: bounded(source.component, 256),
+    errorMessage: bounded(source.errorMessage, 4096), cause: source.cause === null ? null : bounded(source.cause, 4096),
+    evidence: Object.freeze(source.evidence.map(item => bounded(item, 1024))), nextStep: bounded(source.nextStep, 2048),
+  };
+  if (Buffer.byteLength(JSON.stringify(result), 'utf8') > 16384) throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_INVALID');
+  return Object.freeze(result);
+}
+
 export interface KubernetesFixtureCapabilityInvokerOptions {
+  readonly failureDiagnosis?: FixtureFailureDiagnosisOptions;
   readonly workspaceRoot: string;
   readonly kubectlExecutable: string;
   readonly controllerNamespace: string;
@@ -456,6 +506,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
   readonly #maximumRetentionSeconds: number;
   readonly #maximumExecutionMs: number;
   readonly #pollIntervalMs: number;
+  readonly #failureDiagnosis: FixtureFailureDiagnosisOptions | undefined;
   readonly #execute: Execute;
   readonly #now: () => Date;
 
@@ -517,6 +568,15 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
     if (!Number.isSafeInteger(this.#pollIntervalMs) || this.#pollIntervalMs < 50 || this.#pollIntervalMs > 10_000) {
       throw new Error('KUBERNETES_FIXTURE_POLL_INTERVAL_INVALID');
     }
+    if (options.failureDiagnosis && (!Number.isSafeInteger(options.failureDiagnosis.timeoutMs)
+      || options.failureDiagnosis.timeoutMs < 1 || options.failureDiagnosis.timeoutMs > 300_000
+      || typeof options.failureDiagnosis.diagnose !== 'function'
+      || (options.failureDiagnosis.cancellationGraceMs !== undefined
+        && (!Number.isSafeInteger(options.failureDiagnosis.cancellationGraceMs)
+          || options.failureDiagnosis.cancellationGraceMs < 0 || options.failureDiagnosis.cancellationGraceMs > 10_000)))) {
+      throw new Error('KUBERNETES_FIXTURE_DIAGNOSIS_CONFIG_INVALID');
+    }
+    this.#failureDiagnosis = options.failureDiagnosis;
     this.#execute = options.execute ?? executeProcess;
     this.#now = options.now ?? (() => new Date());
   }
@@ -799,22 +859,74 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       // Keep cancellation semantics; cleanup has its own independent deadline.
       // Read diagnostics before releasing the lease, bounded by both cancellation
       // and a dedicated short deadline. Never expose arbitrary kubectl stderr.
-      const diagnosticSignal = AbortSignal.any([signal, AbortSignal.timeout(5_000)]);
-      const failureEvidence = await collectFixtureFailureEvidence(namespaceName, diagnosticSignal,
-        (args, readSignal) => this.#kubectlRun(args, null, readSignal, 1_000));
-      let cleanupError = false;
-      await this.#releaseAfterPrepareFailure(leaseName).catch(() => { cleanupError = true; });
-      if (signal.aborted) throw error;
       const errorCode = error instanceof Error ? error.message.split(':', 1)[0] : 'KUBERNETES_FIXTURE_PREPARATION_FAILED';
-      // Readiness and post-admission replacement failures retain diagnostics.
-      // This does not relax lease validation or turn a failed replacement into success.
+      const diagnosable = ['KUBERNETES_FIXTURE_READINESS_TIMEOUT', 'KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT',
+        'KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED', 'KUBERNETES_FIXTURE_READINESS_QUERY_TIMEOUT'].includes(errorCode!);
+      let failureEvidence: Readonly<Record<string, unknown>> = {};
+      let diagnosis: FixtureFailureDiagnosis | undefined;
+      let cleanupError = false;
+      try {
+        const diagnosticSignal = AbortSignal.any([signal, AbortSignal.timeout(5_000)]);
+        failureEvidence = await collectFixtureFailureEvidence(namespaceName, diagnosticSignal,
+          (args, readSignal) => this.#kubectlRun(args, null, readSignal, 1_000)).catch(() => ({ readErrors: ['diagnostics:unavailable'] }));
+        if (diagnosable && !signal.aborted && this.#failureDiagnosis) {
+          diagnosis = await this.#diagnoseFailure({ namespace: namespaceName, leaseName,
+            errorCode: errorCode!, failureEvidence, signal });
+        }
+      } finally {
+        // Diagnosis timeout, cancellation and malformed output cannot strand the lease.
+        await this.#releaseAfterPrepareFailure(leaseName).catch(() => { cleanupError = true; });
+      }
+      if (signal.aborted) throw error;
       // Validation, credential and other controller failures still throw.
-      if (!['KUBERNETES_FIXTURE_READINESS_TIMEOUT', 'KUBERNETES_FIXTURE_SERVICE_READINESS_TIMEOUT',
-        'KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED', 'KUBERNETES_FIXTURE_READINESS_QUERY_TIMEOUT'].includes(errorCode!)) throw error;
+      if (!diagnosable) throw error;
       return Object.freeze({ ok: false, errorCode, namespace: namespaceName, leaseName,
-        failureEvidence: { ...failureEvidence, cleanupError } });
+        failureEvidence: { ...failureEvidence, ...(diagnosis ? { diagnosis } : {}), cleanupError } });
     } finally {
       this.#preparing.delete(leaseName);
+    }
+  }
+
+  async #diagnoseFailure(input: FixtureFailureDiagnosisInput): Promise<FixtureFailureDiagnosis> {
+    const configured = this.#failureDiagnosis!;
+    const timeout = new AbortController();
+    const timer = setTimeout(() => timeout.abort(), configured.timeoutMs);
+    const signal = AbortSignal.any([input.signal, timeout.signal]);
+    let onAbort: (() => void) | undefined;
+    let settled = false;
+    const operation = Promise.resolve().then(() => {
+      signal.throwIfAborted(); return configured.diagnose({ ...input, signal });
+    });
+    // Observe both resolution and rejection immediately, including late completion.
+    const settlement = operation.then(() => { settled = true; }, () => { settled = true; });
+    try {
+      const aborted = new Promise<never>((_resolve, reject) => {
+        onAbort = () => reject(new Error('KUBERNETES_FIXTURE_DIAGNOSIS_ABORTED'));
+        signal.addEventListener('abort', onAbort, { once: true });
+        if (signal.aborted) onAbort();
+      });
+      const result = await Promise.race([aborted, operation]);
+      return parseFixtureFailureDiagnosis(result);
+    } catch {
+      if (signal.aborted && !settled) {
+        // Give the existing transport a bounded chance to cancel/reconcile its
+        // agent before the namespace is removed. Settlement alone is not proof
+        // that an external agent terminated; the transport owns that assertion.
+        let graceTimer: NodeJS.Timeout | undefined;
+        try {
+          await Promise.race([settlement, new Promise<void>(resolve => {
+            graceTimer = setTimeout(resolve, configured.cancellationGraceMs ?? 10_000);
+          })]);
+        } finally { if (graceTimer) clearTimeout(graceTimer); }
+      }
+      return Object.freeze({ status: 'unavailable', component: 'kubernetes-fixture',
+        errorMessage: 'Failure diagnosis did not produce a valid result before its deadline.', cause: null,
+        evidence: Object.freeze([]), nextStep: !settled
+          ? 'Remote diagnosis agent termination is unconfirmed; reconcile its status through the authorized runtime before another diagnostic attempt.'
+          : 'Inspect the original fixture failure evidence through an authorized diagnostic path.' });
+    } finally {
+      clearTimeout(timer);
+      if (onAbort) signal.removeEventListener('abort', onAbort);
     }
   }
 

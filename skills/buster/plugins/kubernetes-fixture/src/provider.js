@@ -164,7 +164,10 @@ export function provider() {
         const condition = pod?.conditions?.find(item => item.status === 'False');
         const detail = container?.state?.waiting ?? container?.state?.terminated ?? condition ?? evidence.events?.at(-1);
         // Evidence is already redacted and bounded by the fixture runtime.
-        const diagnostic = [detail?.reason, detail?.message].filter(Boolean).join(': ').slice(0, 1200);
+        const diagnosis = evidence.diagnosis;
+        const diagnostic = (diagnosis
+          ? [diagnosis.status, diagnosis.component, diagnosis.errorMessage, diagnosis.cause].filter(Boolean).join(': ')
+          : [detail?.reason, detail?.message].filter(Boolean).join(': ')).slice(0, 1200);
         const summary = `${String(result.errorCode)} in ${String(result.namespace)}${diagnostic ? `: ${diagnostic}` : ''}; see fixture failure evidence.`;
         return { schemaVersion: 'provider-result.v1', outcome: 'failed', summary,
           counts: { total: 1, passed: 0, failed: 1, skipped: 0 },

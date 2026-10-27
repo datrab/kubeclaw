@@ -40,3 +40,29 @@ for (const verifiedImages of [[], [secondImage], [stackValues.verifiedImages[1],
 }
 assert.throws(() => testContract.configuration({ ...invocation, inputs: [], configuration: {
   values: { ...invocation.configuration.values, verifiedImages: stackValues.verifiedImages } } }), /FULL_STACK_REQUIRED/u);
+
+// The normal native failure summary must carry diagnosis to Nova, not merely
+// hide it in a side artifact while a subsequent Forge repair sees generic timeout.
+{
+  const fs = await import('node:fs'); const os = await import('node:os');
+  const path = await import('node:path'); const { pathToFileURL } = await import('node:url');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'fixture-diagnosis-summary-'));
+  try {
+    fs.writeFileSync(path.join(root, 'manifest.yaml'), '{}'); fs.mkdirSync(path.join(root, 'evidence'));
+    const diagnostic = { status: 'diagnosed', component: 'postgresql', errorMessage: 'TLS key has unsafe mode.',
+      cause: 'Decimal/octal mismatch.', evidence: ['postgres FATAL'], nextStep: 'Use decimal288.' };
+    const result = await instance.execute({ ...invocation, timeoutMs: 1000,
+      limits: { artifactFiles: 1, artifactBytes: 131072 }, workspace: { evidence: 'evidence' },
+      inputs: [{ name: 'checked-manifest', kind: 'artifact', artifact: {
+        mediaType: testContract.mediaType, contentDigest: `sha256:${'a'.repeat(64)}`, sizeBytes: 2,
+        storageUrl: pathToFileURL(path.join(root, 'manifest.yaml')).href } }] }, {
+      workspaceRoot: root, invoke: async () => ({ ok: false, errorCode: 'READINESS_TIMEOUT', namespace: 'test-namespace',
+        failureEvidence: { diagnosis: diagnostic } }),
+    } as any);
+    assert.equal(result.outcome, 'failed'); assert.equal(result.counts.failed, 1);
+    assert.match(result.summary, /postgresql.*TLS key has unsafe mode.*Decimal\/octal mismatch/);
+    assert.deepEqual(result.providerDetails.values.failureEvidence.diagnosis, diagnostic);
+    const saved = JSON.parse(fs.readFileSync(path.join(root, 'evidence/kubernetes-fixture-failure.json'), 'utf8'));
+    assert.deepEqual(saved.diagnosis, diagnostic);
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+}
