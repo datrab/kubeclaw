@@ -317,7 +317,7 @@ function pluginPage(plugin) {
       `## ${registration.kind}: ${registration.id}`,
       '',
       `Public identifier: \`${registrationName(registration)}\`.`,
-      ...(pipeline ? [`Global registration ID: \`${manifest.id}:${registration.id}\`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.`] : []),
+      ...(pipeline ? [`Global registration ID: \`${manifest.id}:${registration.id}\`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.`] : []),
       '',
       `${codex ? 'Codex interface capabilities' : 'Required capabilities'}: ${list(registration.requiredCapabilities)}`,
       '',
@@ -325,11 +325,11 @@ function pluginPage(plugin) {
       '',
       `Configuration schema: ${schemaFacts(directory, registration.configSchema, registration.configSchemaObject, file).link}`,
       '',
-      'Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):',
+      'Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.',
       '',
       schemaFacts(directory, registration.configSchema, registration.configSchemaObject, file).fields,
       '',
-      `Input schema: ${registration.inputSchema ? schemaFacts(directory, registration.inputSchema, undefined, file).link : pipeline ? 'No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).' : openclaw ? 'Hook or tool input belongs to the host and module; absence of a manifest field does not mean unrestricted input.' : 'Natural-language skill trigger; no JSON input schema.'}`,
+      `Input schema: ${registration.inputSchema ? schemaFacts(directory, registration.inputSchema, undefined, file).link : pipeline ? 'No package-specific inputSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).' : openclaw ? 'Hook or tool input belongs to the host and module. Absence of a manifest field does not mean unrestricted input.' : 'Natural-language skill trigger; no JSON input schema.'}`,
       '',
       `Result schema: ${registration.resultSchema ? schemaFacts(directory, registration.resultSchema, undefined, file).link : pipeline ? 'No package-specific resultSchema field. Use the [shared runtime data contract](../contracts.md#data-and-authority-comparison).' : 'The host owns the response contract.'}`,
       ...(registration.checkpointSchema ? ['', `Checkpoint schema: ${schemaFacts(directory, registration.checkpointSchema, undefined, file).link}`] : []),
@@ -356,10 +356,10 @@ function pluginPage(plugin) {
     ...(authored?.operationNote ? [authored.operationNote, ''] : []),
     ...(pipeline ? [
       'Registry validation checks declared paths, schemas, and capability names.',
-      'Activation or the Buster loader checks executable exports; discovery does not import package code.',
+      'Activation or the Buster loader checks executable exports. Discovery does not import package code.',
       'The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.',
       'The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.',
-      'Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).',
+      'Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).',
     ] : openclaw ? [
       'OpenClaw rejects invalid host configuration or an unavailable extension module.',
       'External dependency failure appears in the extension result or host diagnostics. Check the package-specific request limits before activation.',
@@ -370,9 +370,19 @@ function pluginPage(plugin) {
     '',
     '## Package Checks',
     '',
-    `Recorded local command result on ${localVerification.date}: \`${localResult?.result ?? 'not-run'}\`.`,
+    `Historical local command record dated ${localVerification.date}.`,
+    `Recorded source revision: \`${localVerification.revision}\`.`,
+    `Recorded environment: \`${localVerification.environment}\`.`,
+    `Recorded result: \`${localResult?.result ?? 'not-run'}\`.`,
     '',
-    localResult?.reason ?? 'No local verification result exists.',
+    ...(localResult?.reason ? [
+      'Exact reason from that historical record:',
+      '',
+      ...localResult.reason.split('\n').map((line) => '> ' + line),
+    ] : ['No historical reason is recorded for this package.']),
+    '',
+    'This historical quotation is not a current package-availability or readiness result.',
+    'The next section gives the current command or no-command declaration.',
     '',
     'Run the package command:',
     '',
@@ -419,7 +429,7 @@ function catalogueIndex() {
     'The plugin-foundation owner maintains purpose, use, exclusion, and limit text.',
     'The source component owner maintains manifest and schema facts.',
     'Do not edit generated catalogue pages as a second authority.',
-    'Follow the [documentation maintenance procedure](../documentation-maintenance.md#generate-only-owned-facts-then-check)',
+    'Use the [documentation maintenance procedure](../documentation-maintenance.md#generate-only-owned-facts-then-check)',
     'to change the owning input, regenerate, and run the declared checks.',
   ];
   for (const [kind, entries] of groups) {
@@ -431,7 +441,9 @@ function catalogueIndex() {
 }
 
 function markdownCell(value) {
-  return String(value).replaceAll('|', '\\|').replaceAll('\n', ' ').trim();
+  return String(value).replaceAll('|', '\\|')
+    .replace(/\n(?:[ \t]*\n)+/gu, '<br><br>')
+    .replaceAll('\n', ' ').trim();
 }
 
 const configurationSemanticsPath = path.join(root, 'docs/generated/inventory/configuration-schemas.json');

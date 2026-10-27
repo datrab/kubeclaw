@@ -5,41 +5,41 @@
     {
       "id": "kubeclaw-agent-observer",
       "purpose": "Move OpenClaw agent events into bounded Redis observability streams.",
-      "useWhen": "Use it when OpenClaw hook activity must become durable agent evidence.",
+      "useWhen": "When OpenClaw hook activity must become durable agent evidence, use it.",
       "avoidWhen": "Do not use it for Nova pipeline events or lifecycle control.",
       "criticalLimit": "It depends on configured Redis streams and does not own pipeline state.",
-      "operationNote": "OpenClaw hooks enter a bounded queue before Redis publication. Queue admission and durable delivery are different events; removing the extension does not remove Redis records."
+      "operationNote": "OpenClaw hooks enter a bounded queue before Redis publication. Queue admission and durable delivery are different events. Extension removal does not remove Redis records."
     },
     {
       "id": "kubeclaw-ops",
       "purpose": "Guide read-only diagnosis across Kubernetes, Argo CD, logs, and Hubble evidence.",
-      "useWhen": "Use it when a Codex operator must correlate platform symptoms without making changes.",
+      "useWhen": "When a Codex operator needs a read-only diagnosis of platform symptoms, use it.",
       "avoidWhen": "Do not use it to deploy, restart, patch, or delete platform resources.",
       "criticalLimit": "The plugin supplies a skill, but it does not supply the external read-only tools.",
-      "deploymentNote": "Codex installs this package separately; KubeClaw runtime-role manifests do not contain it.",
+      "deploymentNote": "Codex installs this package separately. KubeClaw runtime-role manifests do not contain it.",
       "operationNote": "The package supplies instructions and a read-only interface, not an MCP server. Missing Ops connections prevent evidence collection. Removal does not delete Kubernetes resources, logs, or tool-side history."
     },
     {
       "id": "kubeclaw-prism",
       "purpose": "Expose Prism design-set and revision commits as OpenClaw tools.",
-      "useWhen": "Use it when the Prism agent must submit validated design output to Prism control.",
+      "useWhen": "When the Prism agent must send validated design output to Prism control, use it.",
       "avoidWhen": "Do not use it as a general HTTP client or a Nova pipeline stage.",
-      "criticalLimit": "It requires Prism control. The tools constrain the design count, but do not bound all text or document sizes. The HTTP request has no explicit timeout or cancellation signal; test the real host before acceptance.",
-      "deploymentNote": "The Prism agent image copies this extension directly; the runtime-role manifest does not list it.",
+      "criticalLimit": "It requires Prism control. The tools constrain the design count, but do not bound all text or document sizes. The HTTP request has no explicit timeout or cancellation signal. Test the real host before acceptance.",
+      "deploymentNote": "The Prism agent image copies this extension directly. The runtime-role manifest does not list it.",
       "operationNote": "The two operations commit a three-design set or one revision. Prism control errors become tool errors. Registration tests check names and the design count, not a live control-service commit."
     },
     {
       "id": "kubeclaw.agent-observability",
       "purpose": "Project agent-observability records into ingestion and evidence observer flows.",
-      "useWhen": "Use it when committed agent records must enter the pipeline observability boundary.",
+      "useWhen": "When committed agent records must enter the pipeline observability boundary, use it.",
       "avoidWhen": "Do not use it to collect OpenClaw hooks directly.",
       "criticalLimit": "It observes committed records and cannot change canonical lifecycle state.",
-      "operationNote": "The ingester appends records and the evidence observer writes JSON artifacts. Both consume event data; neither can turn an observed record into a lifecycle decision."
+      "operationNote": "The ingester appends records and the evidence observer writes JSON artifacts. The ingester and evidence observer use event data. Neither can turn an observed record into a lifecycle decision."
     },
     {
       "id": "kubeclaw.api-flow",
       "purpose": "Run ordered API flow checks as a Buster test provider.",
-      "useWhen": "Use it when several HTTP operations form one stateful test scenario.",
+      "useWhen": "When one stateful test scenario needs several HTTP operations, use it.",
       "avoidWhen": "Do not use it for one independent request or OpenAPI-wide operation discovery.",
       "criticalLimit": "Flow state exists only inside the bounded provider execution.",
       "operationNote": "Steps can use HTTP requests or WebSocket messages. Missing variables, unknown steps, and cross-origin paths fail validation. The report distinguishes failed and skipped steps."
@@ -47,23 +47,23 @@
     {
       "id": "kubeclaw.architecture-validator",
       "purpose": "Validate architecture deliverables before later pipeline work uses them.",
-      "useWhen": "Use it when a graph needs an explicit architecture acceptance step.",
+      "useWhen": "When a graph needs an explicit architecture acceptance step, use it.",
       "avoidWhen": "Do not use it to create the architecture or replace human approval.",
       "criticalLimit": "It evaluates declared architecture input and does not inspect undeclared repository context.",
-      "operationNote": "The input schema requires only task; source and sourceBinding are optional. sourceBinding resolves source-preflight evidence, while input.source captures a review subject. Only a present subject triggers Git/source verification before and after dispatch and checkedFiles coverage of its paths. With neither source input, dispatch and report persistence can proceed without Git verification or source-path coverage. The configured agent receives architecture and any review subject, including selected source-file text; the architecture-validation artifact persists the response and any subject. Assign the actual runtime.dispatch and artifacts.read/write providers owners for access, retention and failure response; a candidate provider is not an active binding. Invalid agent responses or subject checks block the stage; report-write failure escapes without a semantic outcome."
+      "operationNote": "The input schema requires only task. The source and sourceBinding inputs are optional. sourceBinding resolves source-preflight evidence, while input.source captures a review subject. Only a present subject triggers Git/source verification before and after dispatch and checkedFiles coverage of its paths. With neither source input, dispatch and report persistence can proceed without Git verification or source-path coverage.\n\nThe configured agent receives architecture and any review subject, including selected source-file text. The architecture-validation artifact persists the response and any subject.\n\nAssign the actual runtime.dispatch and artifacts.read/write providers owners for access, retention and failure response. A candidate provider is not an active binding. Invalid agent responses or subject checks block the stage. Report-write failure rejects execution without a semantic outcome."
     },
     {
       "id": "kubeclaw.artifact-store",
-      "purpose": "Provide controlled artifact reads and writes through the capability boundary.",
-      "useWhen": "Use it when a pipeline capability consumer must exchange durable bounded artifacts.",
+      "purpose": "Give controlled artifact read and write access through the capability boundary.",
+      "useWhen": "When a pipeline capability consumer must exchange durable bounded artifacts, use it.",
       "avoidWhen": "Do not use it as arbitrary filesystem access or as canonical pipeline state.",
-      "criticalLimit": "Every operation remains subject to the granted artifact capability constraints.",
-      "operationNote": "Consumers write JSON or read through artifact references. Digest, reference, and store-budget failures are errors. Package removal leaves the configured artifact store and run references intact."
+      "criticalLimit": "All operations remain subject to the granted artifact capability constraints.",
+      "operationNote": "Consumers write JSON or read through artifact references. Digest, reference, and store-budget failures are errors. Package removal does not change the configured artifact store or run references."
     },
     {
       "id": "kubeclaw.axe",
       "purpose": "Run Axe accessibility checks through the Buster provider contract.",
-      "useWhen": "Use it when rendered web content needs automated accessibility findings.",
+      "useWhen": "When rendered web content needs automated accessibility findings, use it.",
       "avoidWhen": "Do not use it as a complete manual accessibility review.",
       "criticalLimit": "Its result covers Axe-detectable rules in the tested page state only.",
       "operationNote": "The provider invokes browser.axe with resolved target and profile limits. It rejects ambiguous targets and malformed capability results. A browser is required for the package execution test."
@@ -71,92 +71,92 @@
     {
       "id": "kubeclaw.blueprint-sync",
       "purpose": "Synchronize blueprint content into the implementation workspace.",
-      "useWhen": "Use it when an approved blueprint must become a bounded repository change.",
-      "avoidWhen": "Do not use it to approve unreviewed architecture or arbitrary files.",
-      "criticalLimit": "Approval checks depend on supplied ancestor evidence. Source-less execution is supported and does not prove approval; the graph must require the intended approval step.",
+      "useWhen": "When an approved blueprint must become a bounded repository change, use it.",
+      "avoidWhen": "Do not use it to give approval for unreviewed architecture or arbitrary files.",
+      "criticalLimit": "Approval checks depend on supplied ancestor evidence. Source-less execution is supported and does not prove approval. The graph must require the intended approval step.",
       "operationNote": "The stage synchronizes control paths, commits the workspace change, appends state, and stores an artifact. Supplied approval evidence must match the source paths and revision."
     },
     {
       "id": "kubeclaw.buster-quality-gate",
       "purpose": "Request and interpret a Buster quality result in the Nova graph.",
-      "useWhen": "Use it when later Nova work must wait for an exact remote test plan result.",
+      "useWhen": "When later Nova work must wait for an exact remote test plan result, use it.",
       "avoidWhen": "Do not use it to execute provider tests inside Nova.",
-      "criticalLimit": "Buster owns test execution; Nova imports only the bound result and evidence.",
-      "operationNote": "The stage checks a bound Buster result and stores decision evidence; an optional evaluator uses runtime.dispatch. Missing expected coverage or a mismatched run identity is an error."
+      "criticalLimit": "Buster owns test execution. Nova imports only the bound result and evidence.",
+      "operationNote": "The stage checks a bound Buster result and stores decision evidence. An optional evaluator uses runtime.dispatch. Missing expected coverage or a mismatched run identity is an error."
     },
     {
       "id": "kubeclaw.case-study",
       "purpose": "Create the case-study deliverable at its ordered pipeline point.",
-      "useWhen": "Use it when a completed delivery needs the declared showcase narrative.",
+      "useWhen": "When a completed delivery needs the declared showcase narrative, use it.",
       "avoidWhen": "Do not use it as general documentation generation.",
       "criticalLimit": "It produces only the outputs declared by its stage contract.",
-      "operationNote": "The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. It rejects output whose artifact identity does not match the producing attempt. The generated narrative remains draft-not-entailment-verified, not proof of factual entailment or publication readiness. artifacts.write and returned-artifact binding checks occur outside the dispatch try block: they can reject after narrative dispatch without a StageResult. Preserve and reconcile dispatch and persistence outcomes before retry; generated text is not a stored case-study result."
+      "operationNote": "The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. The output artifact identity must match the producing attempt. The stage rejects output with a different identity. The generated narrative remains draft-not-entailment-verified, not proof of factual entailment or publication readiness.\n\nartifacts.write and returned-artifact binding checks occur outside the dispatch try block: they can reject after narrative dispatch without a StageResult. Preserve and reconcile dispatch and persistence outcomes before retry. Generated text is not a stored case-study result."
     },
     {
       "id": "kubeclaw.command-runner",
-      "purpose": "Provide bounded command execution to granted consumers.",
-      "useWhen": "Use it when an installed extension must run an approved local command.",
+      "purpose": "Give granted consumers bounded command execution.",
+      "useWhen": "When an installed extension must run an approved local command, use it.",
       "avoidWhen": "Do not use it to expose an unrestricted shell to project input.",
       "criticalLimit": "Command, environment, duration, and output remain inside operator grants.",
-      "operationNote": "The adapter runs granted commands and stops owned processes under duration, output, and termination limits. New work is rejected after shutdown starts. Process-group tests do not prove isolation on every host."
+      "operationNote": "The adapter runs granted commands and stops owned processes within duration, output, and termination limits. The adapter rejects new work after shutdown starts. Process-group tests do not prove isolation on all hosts."
     },
     {
       "id": "kubeclaw.container-build",
       "purpose": "Run a BuildKit container build as a Buster provider.",
-      "useWhen": "Use it when a test plan must prove that a declared image can build.",
+      "useWhen": "When a test plan must prove that a declared image can build, use it.",
       "avoidWhen": "Do not use it for untracked deployment or arbitrary daemon control.",
       "criticalLimit": "It depends on the configured BuildKit service and bounded build context.",
-      "operationNote": "The capability operation is build_push_verify: this can push an image, not merely compile a local Dockerfile. The provider validates output names and platforms. Package tests do not prove a live BuildKit deployment."
+      "operationNote": "The capability operation is build_push_verify. It can push an image, not only build from a local Dockerfile. The provider validates output names and platforms. Package tests do not prove a live BuildKit deployment."
     },
     {
       "id": "kubeclaw.coverage-budget",
       "purpose": "Compare LCOV coverage facts with declared quality budgets.",
-      "useWhen": "Use it when a test plan must enforce measurable coverage thresholds.",
+      "useWhen": "When a test plan must enforce measurable coverage thresholds, use it.",
       "avoidWhen": "Do not use it to run tests or infer coverage without an LCOV report.",
       "criticalLimit": "The decision is only as complete as the supplied LCOV data.",
-      "operationNote": "The provider verifies LCOV input sizes and digests before reducing coverage budgets. Duplicate content, missing files, or changed bytes fail validation; it does not create coverage measurements."
+      "operationNote": "The provider verifies LCOV input sizes and digests before reducing coverage budgets. Duplicate content, missing files, or changed bytes fail validation. It does not create coverage measurements."
     },
     {
       "id": "kubeclaw.delivery-lint",
       "purpose": "Check delivery metadata and files before release-oriented work continues.",
-      "useWhen": "Use it when a graph needs a dedicated delivery-contract lint step.",
+      "useWhen": "When a graph needs a dedicated delivery-contract lint step, use it.",
       "avoidWhen": "Do not use it for source-code lint rules owned by the main lint plugin.",
-      "criticalLimit": "It checks the declared delivery surface, not every repository convention.",
-      "operationNote": "Configuration is the closed empty object. The artifact namespace is fixed to `kubeclaw.delivery-lint`; it is not a configurable report namespace. Input selects nullable Dockerfile and static paths. dockerfile=null writes an empty passed report immediately, without reading a Dockerfile or considering staticPath. With a Dockerfile, staticPath=null skips the COPY-destination check. A passed result therefore need not establish that either delivery surface was checked. A passing lexical check does not prove COPY source existence or the final image filesystem. See the configuration schema and registration module above. The local returned artifact check establishes only object presence, not report digest/size/identity/producer binding; the actual artifacts.write provider and receiving evidence consumer must establish those properties. Use POSIX repository-relative Dockerfile paths without backslashes or drive/UNC forms. safeRepositoryPath checks leading slash before replacing backslashes. Local admission therefore does not prove that the normalized path remains relative. The selected git.repository.read provider retains final path admission; do not infer arbitrary-file access or a runtime fix."
+      "criticalLimit": "It checks the declared delivery surface, not all repository conventions.",
+      "operationNote": "Configuration is the closed empty object. The artifact namespace is fixed to `kubeclaw.delivery-lint`. It is not a configurable report namespace. Input selects nullable Dockerfile and static paths. dockerfile=null writes an empty passed report immediately, without reading a Dockerfile or considering staticPath. With a Dockerfile, staticPath=null skips the COPY-destination check.\n\nA passed result therefore need not prove that either delivery surface was checked.\n\nA passing lexical check does not prove COPY source existence or the final image filesystem. Refer to the configuration schema and registration module above. The local returned artifact check proves only object presence, not report digest/size/identity/producer binding. The actual artifacts.write provider and receiving evidence consumer must bind the reference to those properties.\n\nUse POSIX repository-relative Dockerfile paths without backslashes or drive/UNC forms. safeRepositoryPath checks leading slash before replacing backslashes. Local admission therefore does not prove that the normalized path remains relative. The selected git.repository.read provider retains final path admission. Do not infer arbitrary-file access or a runtime fix."
     },
     {
       "id": "kubeclaw.demo-auth-smoke",
       "purpose": "Exercise the demo authentication session as a Buster provider.",
-      "useWhen": "Use it when the demo path needs a focused authenticated smoke check.",
+      "useWhen": "When the demo path needs a focused authenticated smoke check, use it.",
       "avoidWhen": "Do not use it as a general identity-provider security assessment.",
       "criticalLimit": "It validates the configured demo session path and its available environment only.",
-      "operationNote": "The test requires an unauthenticated negative control, successful login, and protected business assertions. Its local integration command builds the credential producer with Go."
+      "operationNote": "The test requires an unauthenticated negative control, login without error, and protected business assertions. Its local integration command builds the credential producer with Go."
     },
     {
       "id": "kubeclaw.demo-handoff",
       "purpose": "Move demo candidates through readiness, delivery, and handoff boundaries.",
-      "useWhen": "Use it when the Nova graph needs the complete declared demo handoff flow.",
+      "useWhen": "When the Nova graph needs the complete declared demo handoff flow, use it.",
       "avoidWhen": "Do not use it as a generic transport or approval mechanism.",
       "criticalLimit": "Its three stages and adapter share one package-specific handoff contract.",
-      "operationNote": "Candidate creation, delivery, readiness and the handoff adapter own different effects. Candidate artifacts and durable delivery records can retain confidential credential material; removing a plugin is not erasure. Receipt reconciliation must not create a second delivery.",
+      "operationNote": "Candidate creation, delivery, readiness and the handoff adapter own different effects. Candidate artifacts and durable delivery records can retain confidential credential material. Plugin removal is not erasure. Receipt reconciliation must not create a second delivery.",
       "registrationOperationNotes": {
-        "candidate": "The candidate stage reads test.plan.evidence and writes the complete verified candidate evidence through artifacts.write. This can include generated demo credentials and requires confidential artifact access/retention. Invalid evidence or write failure returns blocked demo.candidate_invalid; it does not invoke handoff, publish a notification or look up a delivery receipt.",
-        "delivery": "Delivery binds the verified candidate to its configured operator target. The full request payload/transport body, including projected username/password fields when present, is durably recorded before delivery; deletion/retention is a separate store-owner responsibility. Unknown accepted outcomes require receipt reconciliation before another delivery.",
-        "ready": "Readiness compares recovered delivery receipts with authoritative operator receipt evidence. A missing, mismatched or unresolved receipt is not successful readiness; reconcile the original delivery identity rather than emitting another external delivery.",
-        "handoff": "The adapter requires a canonical HTTPS endpoint with exact /v1/demo-ready and normalized absolute credential/CA file paths. Credential/CA files must be regular bounded files. It records intent before POST, checks the /status endpoint after uncertain outcomes, and verifies the authoritative receipt; no successful cleanup or duplicate-free arbitrary external transport is inferred."
+        "candidate": "The candidate stage reads test.plan.evidence and writes the complete verified candidate evidence through artifacts.write. This can include generated demo credentials and requires confidential artifact access/retention. Invalid evidence or write failure returns blocked demo.candidate_invalid. It does not invoke handoff, publish a notification or look up a delivery receipt.",
+        "delivery": "Delivery binds the verified candidate to its configured operator target. The full request payload/transport body, including projected username/password fields when present, is durably recorded before delivery. Deletion/retention is a separate store-owner responsibility. Unknown accepted outcomes require receipt reconciliation before another delivery.",
+        "ready": "Readiness compares recovered delivery receipts with authoritative operator receipt evidence. A missing, mismatched or unresolved receipt is a readiness failure. Reconcile the original delivery identity instead of another external delivery.",
+        "handoff": "The adapter requires a canonical HTTPS endpoint with exact /v1/demo-ready and normalized absolute credential/CA file paths. Credential/CA files must be regular bounded files. It records intent before POST, checks the /status endpoint after uncertain outcomes, and verifies the authoritative receipt. These checks prove neither cleanup nor duplicate-free arbitrary external transport."
       }
     },
     {
       "id": "kubeclaw.direct-command",
       "purpose": "Run one declared command as a Buster test provider.",
-      "useWhen": "Use it when a test plan needs a bounded command and its evidence.",
+      "useWhen": "When a test plan needs a bounded command and its evidence, use it.",
       "avoidWhen": "Do not use it for long-lived services or unrestricted shell sessions.",
       "criticalLimit": "The provider declares retrySafe, but it cannot prove that an arbitrary command is idempotent. Set retry count to zero for effects that cannot be safely repeated.",
       "operationNote": "The provider runs the resolved command and imports bounded evidence files. Command errors and excess artifact counts fail execution. The manifest retrySafe flag does not inspect command side effects."
     },
     {
       "id": "kubeclaw.git-workspace",
-      "purpose": "Provide controlled Git workspace operations to pipeline extensions.",
+      "purpose": "Give pipeline extensions controlled Git workspace operations.",
       "useWhen": "Use it for granted worktree creation, synchronization, commit, or merge operations. Use kubeclaw.repository-adapter for bounded repository inspection.",
       "avoidWhen": "Do not use it to bypass repository grants or package installation controls.",
       "criticalLimit": "Repository root, operation, and writable scope remain grant-bound.",
@@ -168,172 +168,172 @@
       "useWhen": "Use it for an independent endpoint check with explicit expectations.",
       "avoidWhen": "Do not use it for a multi-step stateful API flow.",
       "criticalLimit": "Network reach and request behavior remain inside the resolved provider plan.",
-      "operationNote": "The provider validates the capability response and evaluates explicit HTTP expectations. Timeouts produce a failed provider result; transport and malformed-response errors remain distinguishable."
+      "operationNote": "The provider validates the capability response and evaluates explicit HTTP expectations. Timeouts produce a failed provider result. Transport and malformed-response errors remain distinguishable."
     },
     {
       "id": "kubeclaw.human-approval",
       "purpose": "Pause a graph for general or architecture-specific human approval.",
-      "useWhen": "Use it when policy requires a recorded person to approve continuation.",
+      "useWhen": "When policy requires a recorded person to give approval for continuation, use it.",
       "avoidWhen": "Do not use it as automated validation or as a hidden default approval.",
       "criticalLimit": "The stage waits for an external decision and cannot manufacture approval.",
-      "operationNote": "General approval uses config.target as the operator recipient and config.issuerId as the sole authorized signal.wait/guidance issuer; the platform configuration owner must qualify both separately. Architecture approval first verifies a passed report. It verifies the review subject only when subject is present. An absent subject skips git.repository.read source verification; persistence can record null. With no findings, it succeeds without executeApproval, operator.request, signal.wait or a reason. Only the findings path invokes general approval; approved guidance on that path requires a nonempty reason. Core validates the external signal and resumes the wait."
+      "operationNote": "General approval uses config.target as the operator recipient and config.issuerId as the sole authorized signal.wait/guidance issuer. The platform configuration owner must qualify the target and issuer separately.\n\nArchitecture approval first verifies a passed report. It verifies the review subject only when subject is present. An absent subject skips git.repository.read source verification. Persistence can record null.\n\nWith no findings, it succeeds without executeApproval, operator.request, signal.wait or a reason. Only the findings path invokes general approval. Approved guidance on that path requires a nonempty reason. Core validates the external signal and resumes the wait."
     },
     {
       "id": "kubeclaw.implementation-agent",
       "purpose": "Run the declared implementation-agent work at the implementation stage.",
-      "useWhen": "Use it when an approved plan is ready for bounded agent implementation.",
+      "useWhen": "When an approved plan is ready for bounded agent implementation, use it.",
       "avoidWhen": "Do not use it before required design and approval evidence exists.",
       "criticalLimit": "The stage receives only its declared context and capability grants.",
-      "operationNote": "The stage dispatches implementation work to config.agent and stores attempt-bound completion artifacts; the name alone establishes neither approval nor a usable host. A Core-issued guidance.repairRequest conditionally reads up to 32 integrity-checked JSON artifacts through artifacts.read. Request/evidence are limited to 256 KiB and serialized JSON is checked against that limit, then appended with helperPrompt to the configured runtime-agent request. Assign the actual artifact and runtime providers owners for raw evidence access, retention and failure handling. Optional workspaces are committed/merged only for ready_for_testing completion; removal is attempted only after integration. Created but unintegrated workspaces and branches are retained for reconciliation, with references in blocked error details or completion artifacts. Integrated cleanup failure produces a separate cleanup artifact and does not imply rollback. No-workspace execution makes no workspace-cleanup guarantee; invalid evidence or output blocks execution."
+      "operationNote": "The stage dispatches implementation work to config.agent and stores attempt-bound completion artifacts. The name alone proves neither approval nor a usable host. A Core-issued guidance.repairRequest conditionally reads up to 32 integrity-checked JSON artifacts through artifacts.read. Request/evidence are limited to 256 KiB and serialized JSON is checked against that limit, then appended with helperPrompt to the configured runtime-agent request. Assign the actual artifact and runtime providers owners for raw evidence access, retention and failure handling.\n\nOptional workspaces are committed/merged only for ready_for_testing completion. Removal is attempted only after integration. Created but unintegrated workspaces and branches are retained for reconciliation, with references in blocked error details or completion artifacts. Integrated cleanup failure produces a separate cleanup artifact and does not imply rollback.\n\nExecution without a workspace makes no workspace-cleanup guarantee. Invalid evidence or output blocks execution."
     },
     {
       "id": "kubeclaw.junit-report",
       "purpose": "Normalize JUnit XML into the Buster report contract.",
-      "useWhen": "Use it when a provider emits JUnit-compatible test results.",
+      "useWhen": "When a provider emits JUnit-compatible test results, use it.",
       "avoidWhen": "Do not use it to execute tests or decide quality policy.",
       "criticalLimit": "Malformed, oversized, or unsupported JUnit input must fail normalization.",
-      "operationNote": "Normalization rejects unsupported media types, invalid UTF-8, and invalid byte-order marks. It imports reports from bounded files; it does not execute the test command or set Nova policy."
+      "operationNote": "Normalization rejects unsupported media types, invalid UTF-8, and invalid byte-order marks. It imports reports from bounded files. It does not execute the test command or set Nova policy."
     },
     {
       "id": "kubeclaw.kubernetes-fixture",
       "purpose": "Prepare and clean a Kubernetes fixture for Buster tests.",
-      "useWhen": "Use it when a test requires a bounded temporary Kubernetes deployment.",
+      "useWhen": "When a test requires a bounded temporary Kubernetes deployment, use it.",
       "avoidWhen": "Do not use it for permanent application deployment.",
       "criticalLimit": "Fixture ownership and cleanup apply only to the resolved test plan scope.",
-      "operationNote": "Preparation returns deployment evidence and, when requested, actual generated username/password Secret values as the demo-credentials value output, not provenance-only metadata. Keep those values confidential in transit, outputs and retained evidence. With delete retention, cleanup calls release and requires a successful response. With retain retention, provider cleanup does not request release; lease expiry and controller retention policy still bound lifetime. Provider tests do not prove deletion in a real cluster. Use [Prepare and release a Kubernetes fixture](../../use/workflows/kubernetes-fixture.md) for supported entry point, authorities, outputs, retention and recovery. serviceName and servicePort select a matching Service and port already present in the checked manifest. Optional serviceTargetPort validates its resolved numeric or named target; it does not rewrite workload or Service ports, and the checked bytes are applied unchanged. Local Secret-reference syntax permits uppercase and underscore; it does not validate Kubernetes object names. Use actual Kubernetes-compatible names admitted by both allowlists. Verify source lookup/copy through the controller; local acceptance does not prove backend copy readiness."
+      "operationNote": "Preparation returns deployment evidence and, when requested, actual generated username/password Secret values as the demo-credentials value output, not provenance-only metadata. Keep those values confidential in transit, outputs and retained evidence.\n\nWith delete retention, cleanup calls release and requires a response without error. With retain retention, provider cleanup does not request release. Lease expiry and controller retention policy still bound lifetime. Provider tests do not prove deletion in a real cluster.\n\nUse [Prepare and release a Kubernetes fixture](../../use/workflows/kubernetes-fixture.md) for supported entry point, authorities, outputs, retention and recovery.\n\nserviceName and servicePort select a matching Service and port already present in the checked manifest. Optional serviceTargetPort validates its resolved numeric or named target. It does not rewrite workload or Service ports, and the checked bytes are applied unchanged.\n\nLocal Secret-reference syntax permits uppercase and underscore. It does not validate Kubernetes object names. Use actual Kubernetes-compatible names admitted by both allowlists. Verify source lookup/copy through the controller. Local acceptance does not prove backend copy readiness."
     },
     {
       "id": "kubeclaw.lighthouse",
       "purpose": "Run Lighthouse web-quality checks as a Buster provider.",
-      "useWhen": "Use it when a rendered page needs performance and quality measurements.",
+      "useWhen": "When a rendered page needs performance and quality measurements, use it.",
       "avoidWhen": "Do not use it as a load test or server-capacity measure.",
       "criticalLimit": "Results depend on the tested page, runner environment, and configured categories.",
-      "operationNote": "The provider invokes browser.lighthouse and validates the returned runs and category data. Missing categories or audit execution errors fail the operation. Its package test requires real Chromium. Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName selects the first deployment endpoint. Lighthouse uses the selected URL origin and configured root-relative routes."
+      "operationNote": "The provider invokes browser.lighthouse and validates the returned runs and category data. Missing categories or audit execution errors fail the operation. Its package test requires real Chromium.\n\nTarget selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName selects the first deployment endpoint. Lighthouse uses the selected URL origin and configured root-relative routes."
     },
     {
       "id": "kubeclaw.lint",
       "purpose": "Run pre-check and full lint stages through a controlled lint executor.",
-      "useWhen": "Use it when Nova must apply the installed repository lint rule set.",
+      "useWhen": "When Nova must apply the installed repository lint rule set, use it.",
       "avoidWhen": "Do not use it for delivery-only checks or arbitrary command execution.",
-      "criticalLimit": "Rule coverage follows the installed lint configuration and executor grant.",
-      "operationNote": "The executor accepts lint.execute/run_report and validates the selected source revision. Requested revisions create an isolated shared Git clone and detached checkout, removed in finally; selected tools can retain separate caches. The stage reads implementation provenance when required and writes its report through artifacts.write. Missing tools with required=false are not_applicable; required missing tools return errors, never a clean lint verdict.",
+      "criticalLimit": "The installed lint configuration and executor grant control rule coverage.",
+      "operationNote": "The executor accepts lint.execute/run_report and validates the selected source revision. When a revision is requested, the executor uses withLintCandidate to create an isolated shared Git clone with a detached checkout. The helper removes its temporary directory in a finally block. Selected tools can keep separate caches.\n\nThe stage reads implementation provenance when required and writes its report through artifacts.write. Missing tools with required=false are not_applicable. Required missing tools return errors, never a clean lint verdict.",
       "registrationOperationNotes": {
-        "pre-check": "When sourceStageId is supplied, the stage first invokes artifacts.read/get_json_bytes for the selected same-run implementation artifact, verifies reference/bytes/digest/size and ready_for_testing source revision; resolution failure rejects before lint.execute. An explicit revision skips this artifact read. The schema also permits neither sourceStageId nor revision: that branch skips resolveSourceRevision and artifacts.read, invokes lint.execute without sourceRevision and leaves source identity to the delegated working-directory/execution context. Success in that branch is not immutable implementation-provenance verification. After report validation, artifacts.write/put_json must succeed before any StageResult; persistence failure rejects rather than proving lint success. The stage validates lint report structure and expected policyProject, tier, scope, optional project and visibility before artifacts.write; a selected sourceRevision must also match. It does not bind the returned policy, baseline, config or policy-pack digests or effective targets to an immutable configured policy identity. Its returned stored.artifact is only cast locally, not independently bound to serialized report ID/namespace/media type/digest/size/current producer attempt. Establish that binding through the actual artifacts.write provider and receiving evidence consumer before treating the reference as qualified; stage success alone is not that proof.",
-        "full": "When sourceStageId is supplied, the stage first invokes artifacts.read/get_json_bytes for the selected same-run implementation artifact, verifies reference/bytes/digest/size and ready_for_testing source revision; resolution failure rejects before lint.execute. An explicit revision skips this artifact read. The schema also permits neither sourceStageId nor revision: that branch skips resolveSourceRevision and artifacts.read, invokes lint.execute without sourceRevision and leaves source identity to the delegated working-directory/execution context. Success in that branch is not immutable implementation-provenance verification. After report validation, artifacts.write/put_json must succeed before any StageResult; persistence failure rejects rather than proving lint success. The stage validates lint report structure and expected policyProject, tier, scope, optional project and visibility before artifacts.write; a selected sourceRevision must also match. It does not bind the returned policy, baseline, config or policy-pack digests or effective targets to an immutable configured policy identity. Its returned stored.artifact is only cast locally, not independently bound to serialized report ID/namespace/media type/digest/size/current producer attempt. Establish that binding through the actual artifacts.write provider and receiving evidence consumer before treating the reference as qualified; stage success alone is not that proof."
+        "pre-check": "When sourceStageId is supplied, the stage first invokes artifacts.read/get_json_bytes for the selected same-run implementation artifact, verifies reference/bytes/digest/size and ready_for_testing source revision. Resolution failure rejects before lint.execute. An explicit revision skips this artifact read.\n\nThe schema also permits neither sourceStageId nor revision. That branch skips resolveSourceRevision and artifacts.read. It invokes lint.execute without sourceRevision. Source identity then depends on the delegated working-directory/execution context. Success in that branch is not immutable implementation-provenance verification.\n\nAfter report validation, artifacts.write/put_json must succeed before any StageResult. Persistence failure rejects rather than proving lint success. The stage validates lint report structure and expected policyProject, tier, scope, optional project and visibility before artifacts.write. A selected sourceRevision must also match.\n\nIt does not bind the returned policy, baseline, config or policy-pack digests or effective targets to an immutable configured policy identity.\n\nIts returned stored.artifact is only cast locally, not independently bound to serialized report ID/namespace/media type/digest/size/current producer attempt. Use the actual artifacts.write provider and receiving evidence consumer to bind the reference. Before you accept it as qualified, verify this binding. Stage success alone is not that proof.",
+        "full": "When sourceStageId is supplied, the stage first invokes artifacts.read/get_json_bytes for the selected same-run implementation artifact, verifies reference/bytes/digest/size and ready_for_testing source revision. Resolution failure rejects before lint.execute. An explicit revision skips this artifact read.\n\nThe schema also permits neither sourceStageId nor revision. That branch skips resolveSourceRevision and artifacts.read. It invokes lint.execute without sourceRevision. Source identity then depends on the delegated working-directory/execution context. Success in that branch is not immutable implementation-provenance verification.\n\nAfter report validation, artifacts.write/put_json must succeed before any StageResult. Persistence failure rejects rather than proving lint success. The stage validates lint report structure and expected policyProject, tier, scope, optional project and visibility before artifacts.write. A selected sourceRevision must also match.\n\nIt does not bind the returned policy, baseline, config or policy-pack digests or effective targets to an immutable configured policy identity.\n\nIts returned stored.artifact is only cast locally, not independently bound to serialized report ID/namespace/media type/digest/size/current producer attempt. Use the actual artifacts.write provider and receiving evidence consumer to bind the reference. Before you accept it as qualified, verify this binding. Stage success alone is not that proof."
       }
     },
     {
       "id": "kubeclaw.network-http",
-      "purpose": "Provide grant-controlled HTTP effects to pipeline extensions.",
-      "useWhen": "Use it when a stage or observer needs an approved outbound HTTP call.",
+      "purpose": "Give pipeline extensions grant-controlled HTTP effects.",
+      "useWhen": "When a stage or observer needs an approved outbound HTTP call, use it.",
       "avoidWhen": "Do not use it as a Buster HTTP test provider.",
-      "criticalLimit": "Destinations, methods, payloads, and response bounds follow operator grants.",
-      "operationNote": "The adapter checks configured origins, methods, credentials, and request-size bounds before transport. A denied origin or oversized request is an error; a grant is not an unrestricted HTTP client."
+      "criticalLimit": "Destinations, methods, payloads, and response bounds must agree with operator grants.",
+      "operationNote": "The adapter checks configured origins, methods, credentials, and request-size bounds before transport. A denied origin or oversized request is an error. A grant is not an unrestricted HTTP client."
     },
     {
       "id": "kubeclaw.notification-observer",
       "purpose": "Deliver selected committed events to notification and preview targets.",
-      "useWhen": "Use it when operators need asynchronous lifecycle notifications.",
+      "useWhen": "When operators need asynchronous lifecycle notifications, use it.",
       "avoidWhen": "Do not use it to block or alter the source pipeline event.",
       "criticalLimit": "Delivery failure affects the observer attempt, not canonical pipeline history.",
-      "operationNote": "Notifications select config.target as the operator recipient; schema omission is not runtime readiness because a missing target fails only on delivery. Both registrations use at_least_once/per_run best_effort delivery; retries can duplicate a notification and exhausted attempts can lose it without blocking the run. The selected operator transport and receipt/data retention remain separately configured authorities."
+      "operationNote": "Notifications select config.target as the operator recipient. Schema omission is not runtime readiness because a missing target fails only on delivery. The two registrations use at_least_once/per_run best_effort delivery. Retries can duplicate a notification and exhausted attempts can lose it without blocking the run. The selected operator transport and receipt/data retention remain separately configured authorities."
     },
     {
       "id": "kubeclaw.openapi",
       "purpose": "Check declared OpenAPI operations through the Buster provider boundary.",
-      "useWhen": "Use it when API behavior must agree with an OpenAPI description.",
+      "useWhen": "When API behavior must agree with an OpenAPI description, use it.",
       "avoidWhen": "Do not use it for an unrelated HTTP smoke request.",
       "criticalLimit": "Coverage includes only selected operations and supplied runtime access.",
-      "operationNote": "The provider resolves selected operation IDs and path parameters from the supplied specification. Unknown operations, missing parameters, or paths outside the selected origin fail before the request. Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName requires a sole deployment endpoint. OpenAPI resolves root-relative operation paths, discarding a configured base-path prefix."
+      "operationNote": "The provider resolves selected operation IDs and path parameters from the supplied specification. Unknown operations, missing parameters, or paths outside the selected origin fail before the request. Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName requires a sole deployment endpoint. OpenAPI resolves root-relative operation paths and discards a configured base-path prefix."
     },
     {
       "id": "kubeclaw.openclaw-agent-events",
       "purpose": "Bridge live OpenClaw hooks into namespaced plugin events.",
-      "useWhen": "Use it when an OpenClaw SDK host must feed hook events to the pipeline event boundary.",
+      "useWhen": "When an OpenClaw SDK host must send hook events to the pipeline event boundary, use it.",
       "avoidWhen": "Do not use it to read historical agent records or as a standalone Redis ingestion service.",
-      "criticalLimit": "Its exposed capability reports bridge status. Queued events are volatile until accepted by the event journal; the host must provide OpenClaw hooks.",
+      "criticalLimit": "Its exposed capability reports bridge status. Queued events are volatile until accepted by the event journal. The host must give the extension access to OpenClaw hooks.",
       "operationNote": "Activation requires the OpenClaw on-hook API. The capability exposes status, not arbitrary event-history reads. Cancellation or an unsupported operation is an error."
     },
     {
       "id": "kubeclaw.operator-messaging",
-      "purpose": "Provide controlled messages from pipeline work to an operator channel.",
-      "useWhen": "Use it when a stage must request or report operator-visible information.",
+      "purpose": "Send controlled messages from pipeline work to an operator channel.",
+      "useWhen": "When a stage must request or report operator-visible information, use it.",
       "avoidWhen": "Do not use it as canonical approval state or general transport.",
       "criticalLimit": "Delivery authority and destination remain operator-controlled.",
-      "operationNote": "Publication uses an approved target; receipt lookup has its own operation and target constraints. Unknown targets and malformed receipt queries fail. A lost response must be reconciled before publication repeats."
+      "operationNote": "Publication uses an approved target. Receipt lookup has its own operation and target constraints. Unknown targets and malformed receipt queries fail. A lost response must be reconciled before publication repeats."
     },
     {
       "id": "kubeclaw.pipeline-review",
       "purpose": "Run the pipeline review stage and retrieve its bounded review evidence.",
-      "useWhen": "Use it when the graph needs the installed pipeline-specific review workflow.",
+      "useWhen": "When the graph needs the installed pipeline-specific review workflow, use it.",
       "avoidWhen": "Do not use it for the broader repository audit stages.",
       "criticalLimit": "Its stage and evidence adapter share one review-specific contract.",
-      "operationNote": "The stage and evidence adapter have separate storage and failure boundaries. Selected report evidence, runtime-agent dispatch and artifact bindings must each be qualified; live or external storage ownership is not implied by code availability.",
+      "operationNote": "The stage and evidence adapter have separate storage and failure boundaries. Selected report evidence, runtime-agent dispatch and artifact bindings must each be qualified. Live or external storage ownership is not implied by code availability.",
       "registrationOperationNotes": {
-        "review": "The review stage reads report.evidence.read, dispatches its configured runtime agent, parses the report and writes it through artifacts.write. Preserve evidence-read, dispatch/parse and artifact-persistence failures separately; a report verdict is not proof that later persistence succeeded. The persisted narrativeStatus is draft-not-entailment-verified: verified source evidence does not establish generated narrative entailment or publication readiness.",
-        "evidence": "The adapter reads the configured local storageRoot run store, binds run identity and checks for mutation with a second read. orchestratorIssuerId controls recovered stage states. maximumJournalBytes, aggregate selected-artifact bytes and the canonical UTF-8 bundle budget can fail independently; changed/mismatched data is not a partial authoritative snapshot."
+        "review": "The review stage reads report.evidence.read, dispatches its configured runtime agent, parses the report and writes it through artifacts.write. Preserve evidence-read, dispatch/parse and artifact-persistence failures separately. A report verdict is not proof that later persistence succeeded. The persisted narrativeStatus is draft-not-entailment-verified: verified source evidence does not prove generated narrative entailment or publication readiness.",
+        "evidence": "The adapter reads the configured local storageRoot run store, binds run identity and checks for mutation with a second read. orchestratorIssuerId controls recovered stage states. maximumJournalBytes, aggregate selected-artifact bytes and the canonical UTF-8 bundle budget can fail independently. Changed/mismatched data is not a partial authoritative snapshot."
       }
     },
     {
       "id": "kubeclaw.playwright",
       "purpose": "Run browser scenarios through Playwright in a Buster provider.",
-      "useWhen": "Use it when behavior requires a real browser and page interaction.",
+      "useWhen": "When behavior requires a real browser and page interaction, use it.",
       "avoidWhen": "Do not use it for a simple HTTP status or API-only check.",
       "criticalLimit": "Browser, evidence, network, and execution time remain plan-bound.",
-      "operationNote": "The provider runs the selected browser test and imports its report and artifacts. Malformed reports and excess artifact counts fail. The package test needs an absolute PLAYWRIGHT_BROWSERS_PATH. Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName selects the first deployment endpoint. Playwright requires the selected URL to be a root HTTP/HTTPS origin without credentials, query or fragment; tests select paths."
+      "operationNote": "The provider runs the selected browser test and imports its report and artifacts. Malformed reports and excess artifact counts fail. The package test needs an absolute PLAYWRIGHT_BROWSERS_PATH.\n\nTarget selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName selects the first deployment endpoint. Playwright requires the selected URL to be a root HTTP/HTTPS origin without credentials, query or fragment. Tests select paths."
     },
     {
       "id": "kubeclaw.preflight-contract",
       "purpose": "Validate preflight inputs and resolve their approved source before work starts.",
-      "useWhen": "Use it when the graph must reject incomplete or inconsistent initial contracts.",
+      "useWhen": "When the graph must reject incomplete or inconsistent initial contracts, use it.",
       "avoidWhen": "Do not use it for later repository quality or delivery lint.",
       "criticalLimit": "The two stages validate only the declared preflight and source contracts.",
-      "operationNote": "The source and validate registrations have different evidence and outcomes. Each depends on selected repository/artifact authority; neither replaces later implementation tests.",
+      "operationNote": "The source and validate registrations have different evidence and outcomes. Each depends on selected repository/artifact authority. Neither replaces later implementation tests.",
       "registrationOperationNotes": {
-        "validate": "Validation awaits artifacts.write for its validation report on both normal and caught input/read/parse paths. Missing required deliverables return request_fix and caught input/read/parse failures return blocked only after that write succeeds. If report persistence rejects, execute rejects without a reported blocked or request_fix result; verify the selected write binding and retain the persistence failure separately. This registration does not produce the source registration's source-preflight evidence.",
+        "validate": "Validation awaits artifacts.write for its validation report on normal paths and caught input/read/parse paths. Missing required deliverables return request_fix and caught input/read/parse failures return blocked only after that write succeeds. If report persistence rejects, execute rejects without a reported blocked or request_fix result. Verify the selected write binding and retain the persistence failure separately. This registration does not produce the source registration's source-preflight evidence.",
         "source": "The source registration requires a clean frozen HEAD, resolves the architecture reference and reads the approved architecture revision rather than silently substituting HEAD. It checks sourceRevision against baseRevision and stores the captured subject/contract as source-preflight evidence through artifacts.write. Invalid input, revision or persistence fails the stage."
       }
     },
     {
       "id": "kubeclaw.prism-design",
       "purpose": "Request and import Prism design work as an ordered Nova stage.",
-      "useWhen": "Use it when the graph requires a Prism design result before implementation.",
+      "useWhen": "When the graph requires a Prism design result before implementation, use it.",
       "avoidWhen": "Do not use it to expose Prism OpenClaw tools directly.",
       "criticalLimit": "The stage depends on the configured Prism service and versioned result contract.",
-      "operationNote": "When requiresDesign is false the stage returns before configuration or capability calls. Otherwise it reads verified architecture and dispatches the configured agent before approval wait/operator notification. It sends architectureContent and later stores the verified imported design archive/request through artifact authority. Dispatch/parse failures block the stage. A waiting result is not approval, and the configured operator target, issuer and expiry must be qualified independently."
+      "operationNote": "When requiresDesign is false, the stage returns before configuration or capability calls. If the stage continues, it reads verified architecture and dispatches the configured agent before approval wait/operator notification. It sends architectureContent and later stores the verified imported design archive/request through artifact authority. Dispatch/parse failures block the stage. A waiting result is not approval, and the configured operator target, issuer and expiry must be qualified independently."
     },
     {
       "id": "kubeclaw.project-summary",
       "purpose": "Create the declared project summary from completed pipeline evidence.",
-      "useWhen": "Use it when the graph needs a final bounded summary artifact.",
+      "useWhen": "When the graph needs a final bounded summary artifact, use it.",
       "avoidWhen": "Do not use it as a substitute for source evidence or detailed reports.",
       "criticalLimit": "It summarizes the inputs supplied by the graph and cannot recover omitted facts.",
-      "operationNote": "The default output is delivery-manifest.v2. Set deliveryManifestEncoding to delivery-manifest.utf16-v1 to select v3. The stored artifact then uses the separate kubeclaw-json.utf16.v1 encoding marker. Final source, lint, test, coverage, and optional review evidence must agree; incompatible evidence blocks the stage."
+      "operationNote": "The default output is delivery-manifest.v2. Set deliveryManifestEncoding to delivery-manifest.utf16-v1 to select v3. The stored artifact then uses the separate kubeclaw-json.utf16.v1 encoding marker. Final source, lint, test, coverage, and optional review evidence must agree. Incompatible evidence blocks the stage."
     },
     {
       "id": "kubeclaw.redis-transport",
       "purpose": "Publish transport and telemetry records through configured Redis channels.",
-      "useWhen": "Use it when Nova extensions need the installed Redis transport boundary.",
+      "useWhen": "When Nova extensions need the installed Redis transport boundary, use it.",
       "avoidWhen": "Do not use it as a general Redis client or canonical state store.",
-      "criticalLimit": "Channel, payload, timeout, and credential behavior follow adapter configuration.",
+      "criticalLimit": "The adapter configuration controls channel, payload, timeout, and credential behavior.",
       "operationNote": "The adapter resolves its Redis secret and publishes through the Redis transport. Missing secrets, unsupported operations, and payloads above the byte limit fail. Disabling publication does not delete existing stream entries."
     },
     {
       "id": "kubeclaw.remote-test-gate",
-      "purpose": "Submit exact remote test plans and retrieve their evidence for Nova.",
-      "useWhen": "Use it when Nova delegates test execution to the Buster boundary.",
+      "purpose": "Send the selected remote test plans and retrieve their evidence for Nova.",
+      "useWhen": "When Nova delegates test execution to the Buster boundary, use it.",
       "avoidWhen": "Do not use it to run provider code inside the Nova process.",
       "criticalLimit": "Plan and evidence identities must remain bound across remote execution.",
-      "operationNote": "Plan and evidence registrations have distinct responsibilities; neither a ready() result nor a fixture envelope proves remote Buster execution.",
+      "operationNote": "Plan and evidence registrations have distinct responsibilities. Neither a ready() result nor a fixture envelope proves remote Buster execution.",
       "registrationOperationNotes": {
-        "plan": "The plan registration resolves configured secrets during invocation, then composes remote dispatch and verified result/evidence import. Effective endpoints require HTTPS or loopback HTTP without userinfo; SPIFFE proxy mode is restricted to localhost, 127.0.0.1 or [::1]. Bearer activation/ready does not apply all production URL checks: invocation can reject the endpoint after token/private-key reads and before a remote request. Preserve job/import identity and uncertain effects on failure or cancellation.",
-        "evidence": "The evidence registration does not contact Buster or import remote results. It reads manifest/decision artifacts through the selected artifacts.read binding and requires a previously completed verified local stateRoot/imports record with matching identities. Assign local import retention/access/failure authority and the actual artifact-provider owner. Missing, corrupt or incomplete import and cancellation stop projection; a returned projection is not fresh remote-reachability proof."
+        "plan": "The plan registration resolves configured secrets during invocation, then composes remote dispatch and verified result/evidence import. Effective endpoints require HTTPS or loopback HTTP without userinfo. SPIFFE proxy mode is restricted to localhost, 127.0.0.1 or [::1].\n\nBearer activation/ready does not apply all production URL checks: invocation can reject the endpoint after token/private-key reads and before a remote request. Preserve job/import identity and uncertain effects on failure or cancellation.",
+        "evidence": "The evidence registration does not contact Buster or import remote results. It reads manifest/decision artifacts through the selected artifacts.read binding and requires a previously completed verified local stateRoot/imports record with matching identities.\n\nAssign local import retention/access/failure authority and the actual artifact-provider owner. Missing, corrupt or incomplete import and cancellation stop projection. A returned projection is not fresh remote-reachability proof."
       }
     },
     {
       "id": "kubeclaw.repository-adapter",
-      "purpose": "Provide repository operations for Nova through an explicit adapter contract.",
-      "useWhen": "Use it when Nova stages need the installed repository abstraction.",
+      "purpose": "Give Nova repository operations through an explicit adapter contract.",
+      "useWhen": "When Nova stages need the installed repository abstraction, use it.",
       "avoidWhen": "Do not use it for arbitrary host filesystem access.",
       "criticalLimit": "It exposes only declared repository operations and granted roots.",
       "operationNote": "Repository reads use the configured root and limits on file bytes and changed paths. The adapter validates the root and optional expected HEAD. This is not the workspace mutation adapter."
@@ -341,32 +341,32 @@
     {
       "id": "kubeclaw.review",
       "purpose": "Run review, repository audit, and repository revalidation stages.",
-      "useWhen": "Use it when the graph needs the full installed review lifecycle.",
+      "useWhen": "When the graph needs the full installed review lifecycle, use it.",
       "avoidWhen": "Do not use it for the narrower pipeline-review contract.",
       "criticalLimit": "Each stage has a distinct type and must appear at the correct graph point.",
-      "operationNote": "Each registration freezes its selected source and policy and uses separately selected Git, runtime-dispatch and artifact bindings. Immutable report storage and reviewer quality are not implied by source availability; registration-specific failure and recovery behavior differs.",
+      "operationNote": "Each registration freezes its selected source and policy and uses separately selected Git, runtime-dispatch and artifact bindings. Immutable report storage and reviewer quality are not implied by source availability. Registration-specific failure and recovery behavior differs.",
       "registrationOperationNotes": {
-        "review": "The stage verifies proposed findings and reads implementation/prior-report artifacts. It writes a review report and, when required, the selected bundle; a required persistence failure returns blocked review.report_write_failed. Audit checkpoints and revalidation resume behavior belong to other registrations. No local test proves live reviewer quality.",
-        "repository-audit": "The stage reads frozen repository content and sends selected source text through the configured runtime agent. Artifact storage retains prepared plans, cache/checkpoints and final reports when those writes succeed. Integrity/cache errors return blocked; ordinary dispatch infrastructure errors and EFFECT_OUTCOME_UNRESOLVED escape to Core recovery. Checkpoints do not guarantee a final report for every failure. Reconcile unresolved sessions before retry.",
-        "repository-revalidation": "The stage verifies a baseline report and ancestry, then dispatches baseline findings, current source/path states and relationship candidates through its configured agent. It writes the backlog only after dispatch completion. Integrity/admission errors return blocked; exhausted dispatch and unresolved-outcome errors escape to Core/provider recovery. No per-finding resume or durable result on that error path is promised."
+        "review": "The stage verifies proposed findings and reads implementation/prior-report artifacts. It writes a review report and, when required, the selected bundle. A required persistence failure returns blocked review.report_write_failed. Audit checkpoints and revalidation resume behavior belong to other registrations.\n\nNo local test proves live reviewer quality.",
+        "repository-audit": "The stage reads frozen repository content and sends selected source text through the configured runtime agent. Artifact storage retains prepared plans, cache/checkpoints and final reports when those writes succeed. Integrity/cache errors return blocked. Ordinary dispatch infrastructure errors and EFFECT_OUTCOME_UNRESOLVED escape to Core recovery.\n\nCheckpoints do not guarantee a final report for every failure. Reconcile unresolved sessions before retry.",
+        "repository-revalidation": "The stage verifies a baseline report and ancestry, then dispatches baseline findings, current source/path states and relationship candidates through its configured agent. It writes the backlog only after dispatch completion. Integrity/admission errors return blocked. Exhausted dispatch and unresolved-outcome errors escape to Core/provider recovery.\n\nNo per-finding resume or durable result on that error path is promised."
       }
     },
     {
       "id": "kubeclaw.runtime-dispatch",
       "purpose": "Dispatch bounded runtime and OpenClaw work through approved runtime targets.",
-      "useWhen": "Use it when an extension must call an installed specialist runtime.",
+      "useWhen": "When an extension must call an installed specialist runtime, use it.",
       "avoidWhen": "Do not use it to let project input select arbitrary processes.",
       "criticalLimit": "Target identity, request, timeout, and result remain capability-bound.",
-      "operationNote": "The generic HTTP dispatcher and OpenClaw session dispatcher are separate registrations. Each uses the configured target and its own response, credential, result and recovery contract; local tests do not establish a connected production agent.",
+      "operationNote": "The generic HTTP dispatcher and OpenClaw session dispatcher are separate registrations. Each uses the configured target and its own response, credential, result and recovery contract. Local tests do not prove a connected production agent.",
       "registrationOperationNotes": {
-        "runtime": "The generic dispatcher sends the bounded payload through network.http to its configured target and validates status/body size/JSON before returning the body. It does not import an OpenClaw result file. Provider and transport failures do not prove a remote task had no effects.",
-        "openclaw": "The OpenClaw dispatcher sends bearer-authenticated gateway requests through network.http; its configured target accepts HTTP/HTTPS without userinfo or fragment, not a general HTTPS-only promise. Result collection can read/write a repository-relative local authoritative result or use a separately authenticated result endpoint. Accepted-or-unknown sessions require identity/label reconciliation, cancellation and observed termination; unresolved cleanup raises OPENCLAW_SESSION_CLEANUP_UNRESOLVED rather than permitting blind respawn."
+        "runtime": "The generic dispatcher sends the bounded payload through network.http to its configured target and validates status/body size/JSON before it returns the body. It does not import an OpenClaw result file. Provider and transport failures do not prove a remote task had no effects.",
+        "openclaw": "The OpenClaw dispatcher sends bearer-authenticated gateway requests through network.http. Its configured target accepts HTTP/HTTPS without userinfo or fragment, not a general HTTPS-only promise.\n\nResult collection can read/write a repository-relative local authoritative result or use a separately authenticated result endpoint.\n\nAccepted-or-unknown sessions require identity/label reconciliation, cancellation and observed termination. Unresolved cleanup raises OPENCLAW_SESSION_CLEANUP_UNRESOLVED rather than permitting blind respawn."
       }
     },
     {
       "id": "kubeclaw.secret-resolver",
       "purpose": "Resolve secret references without exposing the backing secret store.",
-      "useWhen": "Use it when an extension needs an approved secret value at runtime.",
+      "useWhen": "When an extension needs an approved secret value at runtime, use it.",
       "avoidWhen": "Do not use it to place literal secrets in project or plugin configuration.",
       "criticalLimit": "Callers receive only secrets allowed by their exact grant.",
       "operationNote": "The resolve operation maps a logical secret ID to an allowed environment variable. An unmapped ID is denied and an empty or missing variable is unavailable. Removal does not erase the external secret."
@@ -374,74 +374,74 @@
     {
       "id": "kubeclaw.security-providers",
       "purpose": "Run HTTP, dependency, image, policy, and runtime security checks in Buster.",
-      "useWhen": "Use it when a test plan needs one of the five declared security contracts.",
+      "useWhen": "When a test plan needs one of the five declared security contracts, use it.",
       "avoidWhen": "Do not treat one provider result as a complete security assessment.",
       "criticalLimit": "Each provider covers a separate evidence source and execution environment.",
-      "operationNote": "Each registration has distinct inputs and scan operations. Dependency/image scans require approved fresh vulnerability-database snapshots; Kubernetes policy scans do not use that vulnerability database. The selected runtime still requires nonempty allowedRegistryPrefixes even for local scans. Providers validate findings but forward capability resultDigest without independently validating its format; the known runtime generating SHA256 does not qualify an arbitrary provider result. Dependency projectDirectory is path-contained but is not required to be a directory by current provider/runtime code; an existing file can produce a partial scan. Verify the actual intended directory and expected project coverage before accepting whole-project results. Kubernetes-runtime kubectl inherits HOME as well as KUBECONFIG and Kubernetes service settings; when KUBECONFIG is absent its default $HOME/.kube/config can select the API/context and credentials. The platform owner must qualify that ambient authority before any read."
+      "operationNote": "Each registration has distinct inputs and scan operations. Dependency/image scans require approved fresh vulnerability-database snapshots. Kubernetes policy scans do not use that vulnerability database.\n\nThe selected runtime still requires nonempty allowedRegistryPrefixes even for local scans. Providers validate findings but forward capability resultDigest without independently validating its format. The known runtime generates SHA256. That does not qualify an arbitrary provider result.\n\nDependency projectDirectory is path-contained but is not required to be a directory by current provider/runtime code. If projectDirectory is an existing file, the scan can cover only part of the project. Verify the actual intended directory and expected project coverage before you accept whole-project results.\n\nKubernetes-runtime kubectl inherits HOME as well as KUBECONFIG and Kubernetes service settings. When KUBECONFIG is absent its default $HOME/.kube/config can select the API/context and credentials. The platform owner must qualify that ambient authority before any read."
     },
     {
       "id": "kubeclaw.size-budget",
       "purpose": "Compare artifact size facts with a declared Buster budget.",
-      "useWhen": "Use it when release quality depends on a bounded artifact size.",
+      "useWhen": "When release quality depends on a bounded artifact size, use it.",
       "avoidWhen": "Do not use it to measure runtime memory or container resource use.",
       "criticalLimit": "It evaluates only the supplied artifact and configured size threshold.",
-      "operationNote": "The provider measures declared build-output files against absolute or baseline limits. It checks baseline availability, input names, evidence paths, and artifact budgets; it does not perform the build."
+      "operationNote": "The provider measures declared build-output files against absolute or baseline limits. It checks baseline availability, input names, evidence paths, and artifact budgets. It does not build the output."
     },
     {
       "id": "kubeclaw.state-store",
-      "purpose": "Provide controlled reads and writes for extension-owned state.",
-      "useWhen": "Use it when a pipeline extension needs durable bounded state.",
+      "purpose": "Give controlled read and write access to extension-owned state.",
+      "useWhen": "When a pipeline extension needs durable bounded state, use it.",
       "avoidWhen": "Do not use it to replace Core's canonical journal.",
       "criticalLimit": "State operations read or append namespaced records. The adapter has no update, delete, or retention operation.",
-      "operationNote": "Read returns namespaced records; append uses an idempotency key. Reusing that key with different content fails with STATE_IDEMPOTENCY_CONFLICT. No operation updates or deletes an existing record."
+      "operationNote": "Read returns namespaced records. Append uses an idempotency key. Reusing that key with different content fails with STATE_IDEMPOTENCY_CONFLICT. No operation updates or deletes an existing record."
     },
     {
       "id": "kubeclaw.tailscale-exposure",
       "purpose": "Create a bounded Tailscale exposure for a Buster test target.",
-      "useWhen": "Use it when a remote test must reach an otherwise private fixture.",
+      "useWhen": "When a remote test needs access to a private fixture, use it.",
       "avoidWhen": "Do not use it for permanent ingress or unrelated network access.",
       "criticalLimit": "It depends on Tailscale authority and must clean up the temporary exposure.",
-      "operationNote": "The provider selects a matching deployment endpoint; omitted endpointName requires a sole endpoint, and endpointName is not authorization. Optional hostname requests one DNS-label public hostname. path defaults to / and must be a root-relative path without //, query, fragment, NUL, CR or LF. readinessTimeoutSeconds defaults 120, admits integers 1..3600 and is capped by invocation.timeoutMs. retentionMode defaults release; await-readiness forwards a handoff retention request and requires awaiting-readiness phase plus exposure generation in the response. Both prepare and cleanup forward the selected path, optional hostname and handoff mode to kubernetes.exposure. The actual runtime/controller owns release/handoff lifetime and reconciliation; cleanup calls release but does not prove remote deletion. Configure fixture, Tailscale operator and Kubernetes authorities independently."
+      "operationNote": "The provider selects a matching deployment endpoint. Omitted endpointName requires a sole endpoint, and endpointName is not authorization. Optional hostname requests one DNS-label public hostname. path defaults to / and must be a root-relative path without //, query, fragment, NUL, CR or LF.\n\nreadinessTimeoutSeconds defaults 120, admits integers 1..3600 and is capped by invocation.timeoutMs. retentionMode defaults release. await-readiness forwards a handoff retention request and requires awaiting-readiness phase plus exposure generation in the response.\n\nPreparation and cleanup forward the selected path, optional hostname and handoff mode to kubernetes.exposure. The actual runtime/controller owns release/handoff lifetime and reconciliation. Cleanup calls release but does not prove remote deletion. Configure fixture, Tailscale operator and Kubernetes authorities independently."
     },
     {
       "id": "kubeclaw.telemetry-observer",
       "purpose": "Deliver committed lifecycle telemetry through the configured telemetry path.",
-      "useWhen": "Use it when pipeline events need an asynchronous telemetry projection.",
+      "useWhen": "When pipeline events need an asynchronous telemetry projection, use it.",
       "avoidWhen": "Do not use it to store canonical pipeline state or gate execution.",
       "criticalLimit": "Telemetry delivery can fail without changing the committed source event.",
-      "operationNote": "The observer sends lifecycle identity, timestamp, sequence, causation and payload plus observer provenance to telemetry.emit. Redaction is key-based, not a guarantee that all sensitive values are removed. Delivery is at_least_once/per_run and best_effort with five attempts and a ten-second attempt timeout. Retries can duplicate records. Exhausted delivery can lose telemetry without blocking the run. The selected provider owns its separately configured storage; the observer does not own canonical lifecycle state."
+      "operationNote": "The observer sends lifecycle identity, timestamp, sequence, causation and payload plus observer provenance to telemetry.emit. Redaction is key-based, not a guarantee that all sensitive values are removed. Delivery is at_least_once/per_run and best_effort with five attempts and a ten-second attempt timeout. Retries can duplicate records. Exhausted delivery can lose telemetry without blocking the run.\n\nThe selected provider owns its separately configured storage. The observer does not own canonical lifecycle state."
     },
     {
       "id": "kubeclaw.telemetry-store",
       "purpose": "Append telemetry records through the telemetry.emit capability.",
-      "useWhen": "Use it when an observer must write bounded telemetry to the configured durable record store.",
+      "useWhen": "When an observer must write bounded telemetry to the configured durable record store, use it.",
       "avoidWhen": "Do not use it to query, delete, or rotate telemetry records.",
-      "criticalLimit": "The adapter appends records; it supplies no query or retention-management operation.",
+      "criticalLimit": "The adapter appends records. It supplies no query or retention-management operation.",
       "operationNote": "Only telemetry.emit/append is supported. It enforces record and store budgets and rejects cancellation. Rotation, queries, and deletion require a separate storage-management procedure."
     },
     {
       "id": "kubeclaw.transport-publisher",
       "purpose": "Publish granted events through the configured HTTP transport.",
-      "useWhen": "Use it when a Nova extension needs transport-neutral message publication.",
-      "avoidWhen": "Do not use it for Redis publication; select kubeclaw.redis-transport for that transport.",
-      "criticalLimit": "The selected provider and grant determine the real transport authority.",
-      "operationNote": "Publication persists original message bodies and reserves durable state, resolves signingSecret for HMAC-SHA256 and sends through network.http. Existing in-progress reservations can fall through to another POST; a later attempt after uncertain failure can POST again. Per-record locks and an idempotency-key header do not ensure receiver deduplication. Establish receiver-enforced idempotency and reconcile original keys/receipts before retrying; no rollback or universal receipt lookup is guaranteed. Assign deliveryRoot access, retention, backup/removal and failure-response ownership. The current local execution check fails canonical effect-request validation; treat the package as locally unavailable until it passes. deliveryRoot selects the local durable directory. maximumDeliveryRecords defaults to 100000 records and maximumDeliveryBytes to 268435456 bytes (256 MiB); both must be positive safe integers. Reaching store capacity can reject new request/reservation persistence before delivery with a store-full failure; it is not automatic retention or cleanup. Separate recording failure after an external effect remains uncertain and requires reconciliation."
+      "useWhen": "When a Nova extension needs transport-neutral message publication, use it.",
+      "avoidWhen": "Do not use it for Redis publication. Select kubeclaw.redis-transport for that transport.",
+      "criticalLimit": "The selected provider and grant control the actual transport authority.",
+      "operationNote": "Publication persists original message bodies and reserves durable state, resolves signingSecret for HMAC-SHA256 and sends through network.http. Existing in-progress reservations can fall through to another POST. A later attempt after uncertain failure can POST again. Per-record locks and an idempotency-key header do not ensure receiver deduplication.\n\nThe receiver must enforce idempotency. Before another attempt, verify this enforcement. Before another attempt, reconcile the original keys/receipts. No rollback or universal receipt lookup is guaranteed.\n\nAssign deliveryRoot access, retention, backup/removal and failure-response ownership. The current local execution check fails canonical effect-request validation. Treat the package as locally unavailable until it passes.\n\ndeliveryRoot selects the local durable directory. maximumDeliveryRecords defaults to 100000 records and maximumDeliveryBytes to 268435456 bytes (256 MiB). The two limits must be positive safe integers. A full store can reject persistence of a new request/reservation before delivery with a store-full failure. It is not automatic retention or cleanup.\n\nSeparate recording failure after an external effect remains uncertain and requires reconciliation."
     },
     {
       "id": "kubeclaw.visual",
       "purpose": "Run visual comparison checks and produce bounded image evidence in Buster.",
-      "useWhen": "Use it when a test plan must detect changes against approved visual baselines.",
+      "useWhen": "When a test plan must detect changes against approved visual baselines, use it.",
       "avoidWhen": "Do not use it for functional browser interaction without visual comparison.",
       "criticalLimit": "Results depend on stable rendering conditions and the selected baseline.",
-      "operationNote": "The provider requires either a configured root HTTP/HTTPS origin url with no typed inputs, or exactly one typed deployment/public-endpoint value input. Zero or two inputs without url fail VISUAL_TARGET_REQUIRED; configured url plus any input fails VISUAL_TARGET_AMBIGUOUS. endpointName is used only for deployment inputs; omission selects the first endpoint, while public-endpoint input ignores it. manifestFile and profileFile are required repository-relative regular files: realpaths must stay within the selected repository, each JSON is bounded to one MiB and validated. Selected targets must exist in the manifest and match browser/profile/page identity. Baseline PNGs stay within that repository, have bounded encoded/decoded dimensions and verified SHA-256; violations block before capture. The project owns baseline/profile input and generated evidence custody. comparisonProfile defaults strict-v1 (difference/pixel/uncertainty thresholds 0/0.1/0); balanced-v1 uses 0.5/0.1/0.25. overrides can replace maximumDifferencePercent (0..100), pixelThreshold (0..1) and uncertaintyMarginPercent (0..100), changing the verdict boundary. masks bind unique selected target IDs to selectors passed to Playwright masking. timeoutMs defaults 30000 for capture. Capture and image/evidence size checks are automated checks, not manual visual acceptance. timeoutMs is passed only to capture; subsequent synchronous PNG/pixelmatch compare calls have no separate computation timeout, and pending browser launch can outlast the capture deadline. Capture closes all WebSockets, including same-origin connections: neither allowedOrigins nor fixture authority permits them. Attempts recorded by the post-navigation check fail BROWSER_VISUAL_SUBRESOURCE_ORIGIN_DENIED; later sockets are still closed and may alter rendered state. Do not use this route to claim WebSocket-dependent rendering or functional success."
+      "operationNote": "The provider requires either a configured root HTTP/HTTPS origin url with no typed inputs, or exactly one typed deployment/public-endpoint value input. Zero or two inputs without url fail VISUAL_TARGET_REQUIRED. Configured url plus any input fails VISUAL_TARGET_AMBIGUOUS. endpointName is used only for deployment inputs. Omission selects the first endpoint, while public-endpoint input ignores it.\n\nmanifestFile and profileFile are required repository-relative regular files: realpaths must stay within the selected repository, each JSON is bounded to one MiB and validated. Selected targets must exist in the manifest and match browser/profile/page identity.\n\nBaseline PNGs stay within that repository, have bounded encoded/decoded dimensions and verified SHA-256. Violations block before capture. The project owns baseline/profile input and generated evidence custody.\n\ncomparisonProfile defaults strict-v1 (difference/pixel/uncertainty thresholds 0/0.1/0). balanced-v1 uses 0.5/0.1/0.25. overrides can replace maximumDifferencePercent (0..100), pixelThreshold (0..1) and uncertaintyMarginPercent (0..100). These overrides change the verdict boundary. masks bind unique selected target IDs to selectors passed to Playwright masking.\n\ntimeoutMs defaults 30000 for capture. Capture and image/evidence size checks are automated checks, not manual visual acceptance. timeoutMs is passed only to capture. Synchronous PNG/pixelmatch compare calls after capture have no separate computation timeout, and pending browser launch can outlast the capture deadline.\n\nCapture closes all WebSockets, including same-origin connections: neither allowedOrigins nor fixture authority permits them. Attempts recorded by the post-navigation check fail BROWSER_VISUAL_SUBRESOURCE_ORIGIN_DENIED. Later sockets are still closed and may alter rendered state. Do not use this route to claim WebSocket-dependent rendering or functional success."
     },
     {
       "id": "kubeclaw.wait-store",
       "purpose": "Create and read durable wait records through signal.wait.",
-      "useWhen": "Use it when Core needs storage for a wait owned by a pipeline attempt.",
+      "useWhen": "When Core needs storage for a wait owned by a pipeline attempt, use it.",
       "avoidWhen": "Do not use it to authorize a signal or decide that a waiting stage can continue.",
       "criticalLimit": "The adapter stores waits. Core validates signals and owns wait resolution and continuation.",
-      "operationNote": "Create checks typed wait fields and expiry; read retrieves a stored wait. Reusing a key with different wait content fails with WAIT_IDEMPOTENCY_CONFLICT. Signal authorization and continuation remain Core responsibilities."
+      "operationNote": "Create checks typed wait fields and expiry. Read retrieves a stored wait. Reusing a key with different wait content fails with WAIT_IDEMPOTENCY_CONFLICT. Signal authorization and continuation remain Core responsibilities."
     }
   ]
 }
