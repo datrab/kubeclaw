@@ -81,6 +81,9 @@ data:
         }
       },
       "agents": {
+        {{- if eq .Values.agentRole "buster" }}
+        "ownership": "explicit",
+        {{- end }}
         "defaults": {
           "systemAgent": {
             "agentId": "main"

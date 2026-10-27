@@ -82,6 +82,7 @@ test('production Helm target and persisted gateway reconciliation agree', async 
     '--set', 'runtimeInfrastructure.registry.transport=http-lab'], { encoding: 'utf8' });
   const documents = parseAllDocuments(rendered).map(document => document.toJSON());
   const desired = JSON.parse(documents.find(document => document?.data?.['openclaw.json']).data['openclaw.json']);
+  assert.equal(desired.agents.ownership, 'explicit');
   const policy = desired.agents.entries['buster-diagnosis'].tools;
   assert.deepEqual(policy.allow, ['ops__namespace_overview', 'ops__get_pod', 'ops__get_events', 'ops__get_pod_logs']);
   assert.ok(policy.deny.includes('ops__exec_pod'));
@@ -98,6 +99,7 @@ test('production Helm target and persisted gateway reconciliation agree', async 
     fs.writeFileSync(wanted, JSON.stringify(desired));
     execFileSync(process.execPath, ['charts/kubeclaw/files/sync-ops-mcp-config.mjs', current, wanted]);
     const reconciled = JSON.parse(fs.readFileSync(current, 'utf8'));
+    assert.equal(reconciled.agents.ownership, 'explicit');
     assert.deepEqual(reconciled.agents.entries['buster-diagnosis'], desired.agents.entries['buster-diagnosis']);
     assert.deepEqual(reconciled.agents.entries.main, { skills: ['preserved'] });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }

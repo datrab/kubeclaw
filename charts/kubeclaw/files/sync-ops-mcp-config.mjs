@@ -20,6 +20,7 @@ if (fs.existsSync(configPath)) {
   const diagnosis = desired.agents?.entries?.['buster-diagnosis'];
   if (diagnosis) {
     config.agents ??= {};
+    config.agents.ownership = 'explicit';
     config.agents.entries ??= {};
     config.agents.entries['buster-diagnosis'] = diagnosis;
   }
