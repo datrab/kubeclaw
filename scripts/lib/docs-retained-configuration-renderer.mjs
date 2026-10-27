@@ -1,6 +1,7 @@
 // Versioned retained 6fa renderer: static pure copy, not the current inventory schema.
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
+import {retainedHelmIntroduction,environmentConsumerGuidance} from './docs-configuration-reference-guidance.mjs';
 import {yamlFieldPathTokens} from './docs-retained-yaml-field-path.mjs';
 export function table(headers, rows) {
   const escape = (value) => String(value ?? '').replaceAll('|', '\\|').replaceAll('\n', '<br>');
@@ -246,7 +247,7 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists every current scalar, list, and map in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.
+${banner ? retainedHelmIntroduction : "This page lists every current scalar, list, and map in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content."}
 
 ${generatedNotice(['docs/generated/inventory/configuration-values.json'])}
 ## Coverage
@@ -403,7 +404,7 @@ This page lists environment variables that the checked-in sources read or inject
 
 The Surface column identifies the receiving process. A \`maintainer-verification-input\` controls a development tool, such as its input directory. Set it only when you run that tool. It does not configure a running product service. The consumer-specific contract identifies the tool, its accepted values, and its errors.
 
-${generatedNotice(['docs/generated/inventory/configuration-runtime-inputs.json'])}
+${banner ? environmentConsumerGuidance + '\n\n' : ''}${generatedNotice(['docs/generated/inventory/configuration-runtime-inputs.json'])}
 ## Surface Coverage
 
 ${table(['Class', 'Count', 'Meaning'], [

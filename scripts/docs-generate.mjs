@@ -17,6 +17,7 @@ import { generateSdkReference } from './docs-sdk-reference.mjs';
 import { readVerifiedRetainedLanguageBundle } from './lib/docs-retained-language-bundle.mjs';
 import { loadRetainedConfigurationSnapshot, assertRetainedPageDestinations, writeRetainedPage } from './lib/docs-retained-source.mjs';
 import { renderRetainedConfigurationReferences } from './lib/docs-retained-configuration-renderer.mjs';
+import { helmSnapshotSummary, environmentConsumerGuidance } from './lib/docs-configuration-reference-guidance.mjs';
 import { renderProductPipeline } from './docs-product-pipeline-reference.mjs';
 
 const argv = process.argv.slice(2);
@@ -550,7 +551,7 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists every current scalar, list, and map in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.
+${helmSnapshotSummary}
 
 ${generatedNotice(['docs/generated/inventory/configuration-values.json'])}
 ## Coverage
@@ -717,14 +718,7 @@ This page lists environment variables that the checked-in sources read or inject
 
 The Surface column identifies the receiving process. A \`maintainer-verification-input\` controls a development tool, such as its input directory. Set it only when you run that tool. It does not configure a running product service. The consumer-specific contract identifies the tool, its accepted values, and its errors.
 
-## Choose the receiving process before setting a value
-
-1. Find the variable, then select the consumer source for the command or workload you are configuring. The same name can have different defaults and validation in different processes.
-2. Read that consumer's accepted form, empty-value behavior, precedence, and failure boundary. Precedence is local to that consumer; table order does not define a global override order.
-3. Follow the Surface guidance. For an injected value, change the owning Helm, GitOps, Secret, or generated-configuration input. Do not export a competing terminal value. An internal shell assignment is not an operator setting.
-4. Verify the effective workload configuration and the consumer's documented health or failure signal. Source references, table generation, and syntax checks do not prove that a deployed process received the value.
-
-Embedded Node or Python readers inside shell scripts and YAML payloads are receiving processes too. Their presence does not make their inputs externally configurable. An injection-only row proves a producer, not the receiving program's defaults or validation; use the named external authority before changing it. Secret classifications describe provenance and handling, not verified live access control. Do not print Secret values when checking effective configuration.
+${environmentConsumerGuidance}
 
 ${generatedNotice(['docs/generated/inventory/configuration-runtime-inputs.json'])}
 ## Surface Coverage

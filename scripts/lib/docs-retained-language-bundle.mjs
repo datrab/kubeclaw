@@ -21,6 +21,7 @@ export const editorialSourceFiles = Object.freeze([
   'scripts/lib/docs-retained-configuration-formatters.mjs',
   'scripts/lib/docs-retained-configuration-projection.mjs',
   'scripts/lib/docs-configuration-editorial-language.mjs',
+  'scripts/lib/docs-configuration-reference-guidance.mjs',
 ]);
 const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 

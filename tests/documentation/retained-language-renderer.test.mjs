@@ -27,8 +27,20 @@ test('full historical renderer reproduces original pages and preserves all rows 
     const expected = execFileSync('git', ['show', `${artifactRevision}:${relative}`],
       { cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     assert.equal(text, expected, `historical baseline differs: ${relative}`);
-    assert.equal(rows(next.get(relative)), rows(text), `rows lost: ${relative}`);
+    const generatedBody = page => {
+      const start = page.indexOf('<!-- BEGIN GENERATED:');
+      assert(start >= 0, `generated boundary absent: ${relative}`);
+      return page.slice(start);
+    };
+    assert.equal(rows(generatedBody(next.get(relative))), rows(generatedBody(text)),
+      `historical generated rows lost: ${relative}`);
     assert(next.get(relative).includes('This view does not perform current discovery'));
+    const published = execFileSync('git', ['show', `ae67b6204435bb104e00d85091969da53ede415c:${relative}`],
+      { cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
+    assert.equal(rows(next.get(relative)), rows(published), `published complete-page rows lost: ${relative}`);
+    const publishedIntroduction = published.split('## Summary\n\n')[1].split('<!-- BEGIN GENERATED:')[0].trim();
+    assert(next.get(relative).includes(publishedIntroduction), `published operator guidance lost: ${relative}`);
+
   }
   const helm = baseline.get('docs/site/reference/helm-values.md');
   const changed = next.get('docs/site/reference/helm-values.md');
