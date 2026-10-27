@@ -563,10 +563,10 @@ assert.match(
   /name:\s*NODE_OPTIONS\s*\n\s*value:\s*\{\{ \.Values\.gateway\.startupDoctor\.nodeOptions \| quote \}\}/,
   'the state migration must receive its explicitly budgeted V8 heap size',
 );
-assert.doesNotMatch(
+assert.match(
   gatewayConfig,
-  /"ownership":\s*"explicit"/,
-  'single-agent configurations must not declare multi-agent ownership',
+  /if eq \.Values\.agentRole "buster"[\s\S]*?"ownership":\s*"explicit"[\s\S]*?\{\{- end \}\}/,
+  'explicit ownership must be restricted to the managed Buster multi-agent roster',
 );
 assert.doesNotMatch(
   gatewayConfig,
@@ -929,7 +929,14 @@ if (helm.error?.code !== 'ENOENT') {
   const assertManagedModels = rendered => {
     const configMap = loadAll(rendered).find(object => object?.kind === 'ConfigMap' && object.data?.['openclaw.json']);
     assert.ok(configMap, 'the rendered gateway configuration must be present');
-    const defaults = JSON.parse(configMap.data['openclaw.json']).agents.defaults;
+    const agents = JSON.parse(configMap.data['openclaw.json']).agents;
+    const defaults = agents.defaults;
+    if (Object.keys(agents.entries).length === 1) {
+      assert.equal(agents.ownership, undefined, 'single-agent configs must not declare multi-agent ownership');
+    } else {
+      assert.deepEqual(Object.keys(agents.entries).sort(), ['buster-diagnosis', 'main']);
+      assert.equal(agents.ownership, 'explicit', 'Buster diagnosis requires explicit multi-agent ownership');
+    }
     const models = ['openai/gpt-6-astra', 'openai/gpt-6.1-sol'].includes(defaults.model.primary)
       ? ['openai/gpt-6-astra', 'openai/gpt-6.1-sol', 'openai/gpt-5.6-sol', 'openai/gpt-5.5']
       : ['openai/gpt-5.6-sol', 'openai/gpt-5.5'];
