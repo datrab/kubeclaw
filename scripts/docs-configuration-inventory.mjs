@@ -3164,7 +3164,7 @@ const SCHEMA_RUNTIME_CONTEXTS = new Map(Object.entries({
   'skills/buster/plugins/security-providers/schemas/image.schema.json': 'one container-image vulnerability scan',
   'skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json': 'one static Kubernetes-policy scan',
   'skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json': 'one live Kubernetes runtime-security scan',
-  'skills/buster/plugins/size-budget/schemas/config.schema.json': 'one repository size-budget decision',
+  'skills/buster/plugins/size-budget/schemas/config.schema.json': 'one build-output artifact size-budget decision',
   'skills/buster/plugins/tailscale-exposure/schemas/config.schema.json': 'one Tailscale HTTPS exposure lease',
   'skills/buster/plugins/visual/schemas/config.schema.json': 'one browser screenshot comparison',
   'skills/common/plugin-runtime/foundation/config/platform.schema.json': 'one Pipeline Core plugin-platform activation',
@@ -3279,7 +3279,7 @@ const SCHEMA_RUNTIME_FALLBACK_AUTHORITIES = new Map(Object.entries({
 // Each effective fallback is bound to an exact consumer expression. Schema
 // annotations alone are never used to establish runtime default insertion.
 for (const [plugin, source, fields] of [
-  ['artifact-store', 'adapter', { maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES'], maximumRecords: [100000, 'context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS'] }],
+  ['artifact-store', 'adapter', { maxArtifactBytes: [16777216, 'context.config.maxArtifactBytes ?? 16 * 1024 * 1024'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES'], maximumRecords: [100000, 'context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS'] }],
   ['state-store', 'adapter', { maxEntryBytes: [1048576, 'context.config.maxEntryBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? DEFAULT_MAXIMUM_STORE_BYTES'], maximumRecords: [100000, 'context.config.maximumRecords ?? DEFAULT_MAXIMUM_RECORDS'] }],
   ['wait-store', 'adapter', { maxEntryBytes: [1048576, 'context.config.maxEntryBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? 256 * 1024 * 1024'], maximumRecords: [100000, 'context.config.maximumRecords ?? 100_000'] }],
   ['telemetry-store', 'adapter', { maxRecordBytes: [1048576, 'context.config.maxRecordBytes ?? 1_048_576'], maximumStoreBytes: [268435456, 'context.config.maximumStoreBytes ?? 256 * 1024 * 1024'], maximumRecords: [100000, 'context.config.maximumRecords ?? 100_000'] }],
@@ -3296,6 +3296,18 @@ for (const [field, value, anchor] of [
   ['args', [], 'value.args ?? []'],
   ['environment', {}, 'value.environment === undefined ? {}'],
 ]) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`skills/buster/plugins/direct-command/schemas/config.schema.json::$.${field}`, [value, 'skills/buster/plugins/direct-command/src/provider.js', anchor]);
+for (const [field, value, anchor] of [
+  ['maxFileBytes', 4194304, "positiveInteger(context.config.maxFileBytes, 4 * 1024 * 1024, 'maxFileBytes')"],
+  ['maxChangedPaths', 2048, "positiveInteger(context.config.maxChangedPaths, 2048, 'maxChangedPaths')"],
+]) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`skills/nova/plugins/repository-adapter/schemas/config.schema.json::$.${field}`, [value, 'skills/nova/plugins/repository-adapter/src/adapter.ts', anchor]);
+for (const [schemaPath, fieldPath, value, sourcePath, anchor] of [
+  ['skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json', '$.namespacePrefix', 'test', 'skills/buster/plugins/kubernetes-fixture/src/provider.js', "value.namespacePrefix ?? 'test'"],
+  ['skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json', '$.readinessTimeoutSeconds', 120, 'skills/buster/plugins/kubernetes-fixture/src/provider.js', 'value.readinessTimeoutSeconds ?? 120'],
+  ['skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json', '$.secretReferences', [], 'skills/buster/plugins/kubernetes-fixture/src/provider.js', 'value.secretReferences ?? []'],
+  ['skills/buster/plugins/size-budget/schemas/config.schema.json', '$.largestFiles', 10, 'skills/buster/plugins/size-budget/src/provider.js', 'value.largestFiles === undefined ? 10'],
+  ['skills/buster/plugins/size-budget/schemas/config.schema.json', '$.matchingFiles[].requireMatch', true, 'skills/buster/plugins/size-budget/src/provider.js', 'rule.requireMatch !== false'],
+  ['skills/common/plugin-runtime/foundation/config/platform.schema.json', '$.effectLockTtlMs', 300000, 'skills/nova/core/execution/engine-runtime.ts', 'platform.effectLockTtlMs ?? 300_000'],
+]) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`${schemaPath}::${fieldPath}`, [value, sourcePath, anchor]);
 SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/nova/plugins/human-approval/schemas/config.schema.json::$.timeoutMinutes', [60, 'skills/nova/plugins/human-approval/src/approval.ts', 'config.timeoutMinutes ?? DEFAULT_APPROVAL_TIMEOUT_MINUTES']);
 SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set('skills/nova/plugins/buster-quality-gate/schemas/config.schema.json::$.testAgentEnabled', [true, 'skills/nova/plugins/buster-quality-gate/src/stage.ts', 'context.contract.config.testAgentEnabled !== false']);
 for (const field of ['includeDebt', 'includeExperimental']) SCHEMA_RUNTIME_FALLBACK_AUTHORITIES.set(`skills/nova/plugins/lint/schemas/config.schema.json::$.${field}`, [false, 'skills/nova/plugins/lint/src/stage.ts', `context.contract.config.${field} === true`]);
@@ -3529,6 +3541,130 @@ function webProviderTargetRules(authorityPath, fieldPath) {
 }
 
 function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === 'skills/buster/plugins/http/schemas/config.schema.json'
+    && ['$.expectedStatuses', '$.expectedText', '$.expectedContentType', '$.path'].includes(field.path)) {
+    const omission = {
+      '$.expectedStatuses': 'The schema declares no default. Omission selects success statuses 200 through 299. A supplied list instead selects membership in that list.',
+      '$.expectedText': 'The schema declares no default. Omission adds no response-body substring assertion; other configured assertions still apply.',
+      '$.expectedContentType': 'The schema declares no default. Omission adds no content-type equality assertion; other configured assertions still apply.',
+      '$.path': 'The schema declares no default. Omission uses the selected typed public-endpoint URL pathname, otherwise /. An explicit path replaces that route.',
+    }[field.path];
+    return {
+      omission,
+      failure: field.path === '$.expectedText'
+        ? 'Supplying expectedText with HEAD rejects configuration with HTTP_CONFIG_EXPECTED_TEXT_INVALID. A substring mismatch produces a failed assertion, not a successful request.'
+        : 'Configured values must satisfy schema and native admission. A failed configured status or content-type assertion produces a failed provider result. Missing or ambiguous target inputs still reject execution.',
+      evidence: ['skills/buster/plugins/http/src/provider.js:75', 'skills/buster/plugins/http/src/provider.js:94', 'skills/buster/plugins/http/src/provider.js:100', 'skills/buster/plugins/http/src/provider.js:108', 'skills/buster/plugins/http/src/provider.js:121'],
+    };
+  }
+  if (authorityPath === 'skills/buster/plugins/size-budget/schemas/config.schema.json'
+    && ['$.maximumTotalBytes', '$.maximumFileCount', '$.maximumGrowthBytes', '$.maximumGrowthPercent'].includes(field.path)) {
+    const growth = field.path.includes('Growth');
+    return {
+      omission: `The schema declares no default. Omission disables this individual ${growth ? 'growth' : field.path.endsWith('FileCount') ? 'artifact-entry-count' : 'total-byte'} acceptance check. Other configured checks and fixed input, archive and integrity bounds remain.`,
+      failure: growth
+        ? 'A configured growth bound requires a valid baseline or raises SIZE_BUDGET_BASELINE_REQUIRED. Exceeding the bound yields a failed result; positive growth from a zero-byte baseline fails a percentage bound.'
+        : 'Exceeding this configured bound yields a failed size-budget result. Blocking mode additionally requires at least one configured total, count, growth or matching-file limit.',
+      evidence: ['skills/buster/plugins/size-budget/src/provider.js:56', 'skills/buster/plugins/size-budget/src/provider.js:68', 'skills/buster/plugins/size-budget/src/provider.js:313', 'skills/buster/plugins/size-budget/src/provider.js:320', 'skills/buster/plugins/size-budget/src/provider.js:333'],
+    };
+  }
+  if (authorityPath === 'skills/buster/plugins/size-budget/schemas/config.schema.json' && field.path === '$.matchingFiles[].requireMatch') return {
+    accepted: 'Only explicit false permits a matching rule with no selected artifact entries. The aggregate-byte limit still applies to the selected set',
+    failure: 'With the effective true value, zero selected entries fail that matching rule. A matched byte total above maximumBytes also fails the rule.',
+    evidence: ['skills/buster/plugins/size-budget/src/provider.js:52', 'skills/buster/plugins/size-budget/src/provider.js:324', 'skills/buster/plugins/size-budget/src/provider.js:327'],
+  };
+  if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json' && field.path === '$.readinessTimeoutSeconds') return {
+    accepted: 'The provider requests readinessTimeoutMs as min(invocation.timeoutMs, readinessTimeoutSeconds times 1000). This is not one deadline for create, apply, readiness and cleanup',
+    failure: 'Native configuration rejects values outside 1 through 3600 seconds. A valid requested timeout does not prove successful readiness or completed lease cleanup.',
+    evidence: ['skills/buster/plugins/kubernetes-fixture/src/provider.js:45', 'skills/buster/plugins/kubernetes-fixture/src/provider.js:46', 'skills/buster/plugins/kubernetes-fixture/src/provider.js:94'],
+  };
+  if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && field.path === '$.effectLockTtlMs') return {
+    accepted: 'This is an effect-lock lease duration, not an execution timeout or proof that a previous external effect stopped',
+    evidence: ['skills/nova/core/execution/engine-runtime.ts:82'],
+  };
+  if (authorityPath === 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'
+    && ['$.targets.{*}.maxPollMs', '$.targets.{*}.sessionTimeoutMs'].includes(field.path)) {
+    const timeout = field.path.endsWith('.sessionTimeoutMs');
+    if (!timeout) return {
+      accepted: 'Native admission requires maxPollMs to be at least pollMs, in addition to each scalar schema bound',
+      failure: 'A target with maxPollMs below pollMs rejects activation with RUNTIME_CONFIG_INVALID:openclaw:<targetId>. An omitted maxPollMs still selects its documented fallback before this comparison.',
+      evidence: ['skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:29', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:32'],
+    };
+    return {
+      accepted: 'Native admission requires sessionTimeoutMs to be at least pollMs. Its timer begins only when status polling starts after spawn or reattachment',
+      failure: 'A target with sessionTimeoutMs below pollMs rejects activation with RUNTIME_CONFIG_INVALID:openclaw:<targetId>. Later polling exhaustion raises OPENCLAW_SESSION_TIMEOUT; spawning, result import and cleanup have separate bounds.',
+      evidence: ['skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:32', 'skills/common/plugins/runtime-dispatch/src/openclaw-session.ts:219', 'skills/common/plugins/runtime-dispatch/src/openclaw.ts:284', 'skills/common/plugins/runtime-dispatch/src/openclaw.ts:293'],
+    };
+  }
+  if ((authorityPath === 'skills/common/plugins/artifact-store/schemas/config.schema.json' && field.path === '$.maxArtifactBytes')
+    || (authorityPath === 'skills/nova/plugins/repository-adapter/schemas/config.schema.json' && ['$.maxFileBytes', '$.maxChangedPaths'].includes(field.path))) {
+    const artifact = authorityPath.includes('/artifact-store/');
+    const name = field.path.slice(2);
+    return {
+      accepted: 'The native adapter additionally requires a positive safe integer, at most 9007199254740991. The schema minimum alone does not establish this native upper bound',
+      empty: 'Null and an empty string fail the declared integer type. Neither is a valid authored omission value.',
+      failure: `Adapter activation rejects a non-positive or unsafe integer with ${name} is invalid. A documented default does not prove a successful read or write.`,
+      evidence: artifact ? ['skills/common/plugins/artifact-store/src/adapter.ts:162', 'skills/common/plugins/artifact-store/src/adapter.ts:163']
+        : ['skills/nova/plugins/repository-adapter/src/adapter.ts:61', 'skills/nova/plugins/repository-adapter/src/adapter.ts:75', 'skills/nova/plugins/repository-adapter/src/adapter.ts:76'],
+    };
+  }
+  if (authorityPath === 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'
+    && ['$.targets.{*}.agentId', '$.targets.{*}.agentRole', '$.targets.{*}.thinking'].includes(field.path)) {
+    const thinking = field.path.endsWith('.thinking');
+    const fallback = field.path.endsWith('.agentId') ? 'codex' : 'the enclosing target map key';
+    return {
+      accepted: thinking
+        ? 'The schema requires a nonempty string when supplied. The consumer trims supplied strings, but does not validate this field against a closed reasoning-level enum'
+        : 'The schema requires a nonempty string when supplied. The consumer retains only strings matching its target-ID pattern; other schema-valid strings select the omission fallback instead',
+      omission: thinking
+        ? 'The schema declares no default. The consumer selects high when thinking is absent.'
+        : `The schema declares no default. The consumer selects ${fallback} when this field is absent. This is a consumer fallback, not schema default insertion.`,
+      empty: thinking
+        ? 'An empty string fails the schema. A whitespace-only nonempty string passes the schema, trims to empty, and does not select high.'
+        : 'An empty string fails the schema. A schema-valid string outside the target-ID pattern selects the same fallback; do not infer rejection or trimming.',
+      failure: thinking
+        ? 'The local parser does not reject a trimmed-empty or unknown thinking string. It forwards the selected value to sessions_spawn; the selected runtime owns later admission.'
+        : 'An invalid optional agent identity or role string falls back rather than causing target rejection. Other required target fields still undergo independent admission checks.',
+      evidence: ['skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:3', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:11', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:12', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:58', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:59'],
+    };
+  }
+  if (authorityPath === 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'
+    && field.path === '$.targets.{*}.maxOutputTokens') return {
+    accepted: 'The setting reserves output capacity during local prompt checks and caps acceptance of imported output. It is not a provider generation-request limit',
+    failure: 'After completion and result import, output above the effective token cap rejects with OPENCLAW_OUTPUT_TOKENS_EXCEEDED. It does not stop generation at that token count.',
+    evidence: ['skills/common/plugins/runtime-dispatch/src/openclaw.ts:124', 'skills/common/plugins/runtime-dispatch/src/openclaw.ts:162', 'skills/common/plugins/runtime-dispatch/src/openclaw.ts:216', 'skills/common/plugins/runtime-dispatch/src/openclaw.ts:284', 'skills/common/plugins/runtime-dispatch/src/openclaw.ts:296', 'skills/common/plugins/runtime-dispatch/src/openclaw-session.ts:219'],
+  };
+  if (authorityPath === 'skills/buster/plugins/playwright/schemas/config.schema.json'
+    && ['$.workers', '$.minimumExecutedTests'].includes(field.path)) return {
+    accepted: field.path === '$.workers'
+      ? 'The authored worker count must satisfy the schema. The provider requests at least one worker, bounded by the request and max(1, invocation.limits.processes minus 4)'
+      : 'The provider compares passed plus failed test counts with the effective minimum. Blocking mode requires at least one executed test even for an explicit zero',
+    omission: field.path === '$.workers'
+      ? 'The schema declares no default. The provider starts with four workers on omission, then applies the process-budget clamp.'
+      : 'The schema declares no default. Omission selects one executed test. The effective minimum is max(blocking mode ? 1 : 0, configured value or omission fallback 1).',
+    empty: 'Null and an empty string fail the integer type. An explicit zero is not omission and remains subject to the declared field minimum.',
+    failure: field.path === '$.workers'
+      ? 'A returned capability worker count below one or above the requested count rejects with PLAYWRIGHT_CAPABILITY_RESULT_INVALID. The limit does not prove that a browser test ran.'
+      : 'Fewer passed plus failed tests than the effective minimum adds a Required execution finding and yields a failed result. Skips do not count as executed tests.',
+    evidence: ['skills/buster/plugins/playwright/src/provider.js:49', 'skills/buster/plugins/playwright/src/provider.js:51', 'skills/buster/plugins/playwright/src/provider.js:66'],
+  };
+  if (authorityPath === 'skills/common/plugins/notification-observer/schemas/config.schema.json' && field.path === '$.maxMessageChars') return {
+    accepted: 'This bounds usable lifecycle summary or message text after control-character replacement, measured in JavaScript UTF-16 string-length units. Title fallback and other fields have separate limits',
+    omission: 'The schema declares no default. observe selects 8192 when maxMessageChars is absent; preview notification construction does not consume this setting.',
+    failure: 'A configured value must satisfy the schema. Missing or unusable summary/message text selects the separately bounded title, which this setting does not truncate. This is not a whole-notification byte cap.',
+    evidence: ['skills/common/plugins/notification-observer/src/observer.ts:58', 'skills/common/plugins/notification-observer/src/observer.ts:117', 'skills/common/plugins/notification-observer/src/observer.ts:136', 'skills/common/plugins/notification-observer/src/observer.ts:177', 'skills/common/plugins/notification-observer/src/observer.ts:198'],
+  };
+  if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json' && field.path.endsWith('.maxPayloadBytes')) return {
+    accepted: 'The consumer bounds UTF-8 JSON serialization of the admitted operator payload before format conversion. json sends that payload; discord_webhook constructs a different envelope',
+    failure: 'An admitted payload above the cap rejects with OPERATOR_PAYLOAD_SIZE_EXCEEDED. No second maxPayloadBytes check bounds the transformed webhook envelope; separate durable-store and network limits still apply.',
+    evidence: ['skills/common/plugins/operator-messaging/src/payload.ts:100', 'skills/common/plugins/operator-messaging/src/adapter.ts:36', 'skills/common/plugins/operator-messaging/src/adapter.ts:37', 'skills/common/plugins/operator-messaging/src/discord-payload.ts:8'],
+  };
+  if (['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json'].includes(authorityPath)
+    && field.path === '$.policy.limits') return {
+    accepted: 'maxContextBytes must not exceed maxBundleBytes. maxContextFileBytes must not exceed maxContextBytes. maxInitialContextFiles must be less than maxContextFiles. maxInitialContextBytes must be less than maxContextBytes',
+    failure: 'Policy parsing rejects any violated cross-field relation before policy selection. Individual scalar bounds do not replace these total-context and expansion-capacity checks.',
+    evidence: ['skills/nova/plugins/review/src/review-policy-parser.ts:239', 'skills/nova/plugins/review/src/review-policy-parser.ts:255'],
+  };
   if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json'
     && ['endpoint', 'tokenSecret', 'endpointSecret', 'endpointOrigin'].some((name) => field.path.endsWith(`.${name}`))) return {
     accepted: 'Schema anyOf admits a direct endpoint/tokenSecret pair or an endpointSecret/endpointOrigin pair but does not exclude mixed-mode keys. Adapter activation is stricter: presence of endpointSecret OR endpointOrigin selects secret-endpoint mode and forbids a simultaneous endpoint; a complete selected pair and its URL/identifier checks must pass',
@@ -3672,6 +3808,29 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  if (['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json'].includes(authorityPath)) {
+    const purpose = {
+      '$.policy.profile': 'Names the identity of this complete review-policy object. The separate profile field selects a built-in gate, lean or audit policy. A supplied policy replaces that whole object.',
+      '$.policy.limits.maxProposals': 'Sets the proposed-findings count limit used by proposal preflight. Exceeding it adds a proposal-count limit violation. Context-expansion capacity uses separate limits.',
+      '$.policy.verification.semanticVerifier': 'Selects semantic-verification mode, not a required verifier result. disabled selects none; p0-only limits eligible candidates to P0. all-blockers uses configured blocking priorities. Category, evidence, diff and scope requirements still apply.',
+    }[fieldPath];
+    if (purpose) return purpose;
+  }
+  if (authorityPath === 'skills/buster/plugins/size-budget/schemas/config.schema.json') {
+    const purpose = {
+      '$.largestFiles': 'Sets the maximum number of measured artifact entries listed in largest-file diagnostic evidence.',
+      '$.maximumTotalBytes': 'Sets the accepted total bytes across measured build-output artifact entries.',
+      '$.maximumFileCount': 'Sets the accepted number of measured file entries in the build-output artifact.',
+      '$.maximumGrowthBytes': 'Sets the accepted byte growth from the supplied size-budget baseline to the current measured artifact.',
+      '$.maximumGrowthPercent': 'Sets the accepted percentage growth from the supplied size-budget baseline to the current measured artifact.',
+    }[fieldPath];
+    if (purpose) return purpose;
+  }
+  if (authorityPath === 'skills/buster/plugins/container-build/schemas/config.schema.json' && fieldPath === '$.definition.dockerfile') return 'Selects the repository-relative Dockerfile, independently of buildContext. The provider requires an existing file and rejects lexical or canonical escape from the repository.';
+  if (authorityPath === 'skills/buster/plugins/playwright/schemas/config.schema.json' && fieldPath === '$.configFile') return 'Selects the Playwright configuration file relative to projectDirectory, which is itself repository-relative. The provider requires an existing file and canonical containment within projectDirectory.';
+  if (authorityPath === 'skills/buster/plugins/lighthouse/schemas/config.schema.json' && fieldPath === '$.profile') return 'Selects a named profile from the profiles map in the selected settingsFile. The provider loads this JSON file before selection. An unknown profile raises LIGHTHOUSE_PROFILE_NOT_FOUND.';
+  if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json' && fieldPath.endsWith('.maxPayloadBytes')) return 'Caps UTF-8 serialized bytes of the admitted operator payload before format conversion. It does not cap the transformed discord_webhook envelope.';
+  if (authorityPath === 'skills/common/plugins/notification-observer/schemas/config.schema.json' && fieldPath === '$.maxMessageChars') return 'Caps normalized supplied lifecycle summary/message text, not the whole notification. Title fallback, other fields and preview notifications have separate limits or paths.';
   if (authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies navigation and analysis timeout budgets calculated from a fresh deadline for each profile/route combination after browser launch. Screenshot calls consult the remaining budget, but screenshot timeout errors are suppressed: screenshots are best-effort and do not enforce a combination completion deadline. Browser/context setup and cleanup are not bounded by this scalar. The enclosing provider or worker deadline is separate.';
   if (authorityPath === 'skills/buster/plugins/lighthouse/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies the timeout wrapper for each sequential Lighthouse audit run after Chrome launch. This is not a whole-measurement-set deadline or a bound on browser launch or cleanup. The enclosing provider or worker deadline is separate.';
   if (authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema') {
@@ -3740,7 +3899,9 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     const declarationKind = pathWithoutRoot.split('[', 1)[0].replace(/s$/u, '');
     return {
       id: `Sets the unique evidence identifier for one declared ${declarationKind} produced by ${context}.`,
-      path: `Selects the repository-relative output path copied for one declared ${declarationKind} in ${context}.`,
+      path: authorityPath === 'skills/buster/plugins/direct-command/schemas/config.schema.json'
+        ? `Selects the output path relative to the configured workingDirectory for one declared ${declarationKind}. The provider requires a regular file and canonical containment within that directory.`
+        : `Selects the repository-relative output path copied for one declared ${declarationKind} in ${context}.`,
       mediaType: `Declares the exact media type accepted for one ${declarationKind} output in ${context}.`,
       format: `Declares the parser format used for one ${declarationKind} output in ${context}.`,
     }[leaf] ?? null;
@@ -3809,7 +3970,9 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
       cwd: `Sets the fixed working directory for dispatches that do not carry an attempt-owned workspace reference.`,
       maxContextTokens: `Limits the combined model context token estimate admitted for one named target.`,
       maxInputTokens: `Limits prompt and input tokens admitted for one named target.`,
-      maxOutputTokens: `Limits requested model output tokens for one named target.`,
+      maxOutputTokens: authorityPath === 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'
+        ? `Reserves local output-token capacity and caps imported output acceptance for one named target. It does not set a provider generation-request limit.`
+        : `Limits requested model output tokens for one named target.`,
       maxPollMs: `Caps the delay between OpenClaw status polls for one named target.`,
       maxPolls: `Caps the number of OpenClaw status polls before the dispatch stops waiting.`,
       maxPromptBytes: `Limits UTF-8 prompt bytes sent to one named target.`,
@@ -3820,7 +3983,9 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
       resultPathPrefix: `Restricts imported local result files to this path prefix for one named target.`,
       resultTokenSecret: `Names the confidential token used only when importing a result from one named target.`,
       runtime: `Selects the runtime protocol implemented by one named dispatch target.`,
-      sessionTimeoutMs: `Limits the complete OpenClaw session wait for one named target.`,
+      sessionTimeoutMs: authorityPath === 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'
+        ? `Limits status polling after OpenClaw spawn or reattachment. Spawning, result import and cleanup have separate bounds.`
+        : `Limits the complete OpenClaw session wait for one named target.`,
       spawnIntervalMs: `Sets the minimum delay between serialized OpenClaw spawn calls for one controller.`,
       thinking: `Selects the configured reasoning level for one named OpenClaw target.`,
       tokenizerEncoding: `Selects the tokenizer used to enforce token budgets for one named target.`,
@@ -4272,6 +4437,12 @@ for (const schemaPath of [
   }
 }
 
+for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {
+  SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::$.policy.profile`, ['skills/nova/plugins/review/src/review-policy-parser.ts', "profile: text(input.profile, 'profile')"]);
+  SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::$.policy.limits.maxProposals`, ['skills/nova/plugins/review/src/review-proposal-preflight.ts', 'const overLimit = parsed.proposedFindings.length > policy.policy.limits.maxProposals']);
+  SCHEMA_IMPLEMENTATION_AUTHORITIES.set(`${schemaPath}::$.policy.verification.semanticVerifier`, ['skills/nova/plugins/review/src/review-proposal-preflight.ts', "policy.verification.semanticVerifier === 'p0-only'"]);
+}
+
 for (const [field, anchor] of Object.entries({
   endpoint: 'endpointValue(raw.endpoint)', tokenSecret: 'text(raw.tokenSecret)', runtime: "runtime: raw.runtime",
   agentId: 'idValue(raw.agentId', agentRole: 'idValue(raw.agentRole', model: 'text(raw.model)', thinking: 'text(raw.thinking',
@@ -4348,11 +4519,15 @@ SCHEMA_COLLECTION_AUTHORITIES.get(`${busterSchema('direct-command')}::$.environm
   ['skills/common/plugins/command-runner/src/adapter.ts', "request.payload.environment !== undefined"],
 ];
 for (const kind of ['reports', 'coverage', 'artifacts']) {
-  collectionAuthority(busterSchema('direct-command'), [`$.${kind}`, `$.${kind}[]`], busterSource('direct-command'), `const ${kind} = declarations(value.${kind}`,
-    `Declares the ${kind} copied from repository-relative output files. Identifiers and paths must be unique across all three evidence collections.`,
+  collectionAuthority(busterSchema('direct-command'), [`$.${kind}`], busterSource('direct-command'), `const ${kind} = declarations(value.${kind}`,
+    `Declares the ${kind} copied from output files relative to the configured workingDirectory. Identifiers and paths must be unique across all three evidence collections.`,
     'The declarations parser uses an empty list when omitted.', kind === 'reports'
       ? 'An empty list is required for resultMode=exit-code and forbidden for resultMode=junit-required.'
       : 'An empty list declares no output of this kind.');
+  collectionAuthority(busterSchema('direct-command'), [`$.${kind}[]`], busterSource('direct-command'), `const ${kind} = declarations(value.${kind}`,
+    `Declares one ${kind} item copied from an output file relative to the configured workingDirectory. Identifiers and paths must be unique across all three evidence collections.`,
+    'An omitted collection supplies no items. Each authored item must satisfy its own required fields.',
+    'An empty object fails the authored item required fields. Collection-level empty-list and resultMode conditions remain separate.');
 }
 collectionAuthority(busterSchema('container-build'), ['$.definition.buildArgs'], busterSource('container-build'), "buildArgs = object(definition.buildArgs",
   'Maps Docker build-argument names to values sent to the immutable image build.', 'Omission leaves the initial buildArgs map empty.', 'An empty map supplies no build arguments.');
@@ -4384,8 +4559,14 @@ for (const [field, anchor, purpose] of [
   ['rules', 'const value = overrides === undefined ? {}', 'Supplies removals, additions, and replacements for the selected built-in security-header rule profile.'],
   ['rules.remove', 'base.filter((item) => !remove.includes(item.id))', 'Selects built-in security-header rule identifiers to remove from the active rule list.'],
 ]) collectionAuthority('skills/buster/plugins/security-providers/schemas/headers.schema.json', [`$.${field}`], 'skills/buster/plugins/security-providers/src/headers.js', anchor, purpose);
-collectionAuthority(busterSchema('size-budget'), ['$.matchingFiles', '$.matchingFiles[]'], busterSource('size-budget'), 'const matchingFiles = value.matchingFiles ?? []',
-  'Declares named glob rules with a maximum aggregate byte count for each matched file set.', 'Omission uses an empty matching-rule list.', 'An empty list adds no matching-file check. At least one total, count, growth, or matching-file limit is still required.');
+collectionAuthority(busterSchema('size-budget'), ['$.matchingFiles'], busterSource('size-budget'), 'const matchingFiles = value.matchingFiles ?? []',
+  'Declares named glob rules with a maximum aggregate byte count for each matched artifact-entry set.',
+  'Omission uses an empty matching-rule list.',
+  'An empty list adds no matching-file check. Only blocking mode requires at least one total, count, growth or matching-file limit; otherwise SIZE_BUDGET_BLOCKING_LIMIT_REQUIRED rejects configuration.');
+collectionAuthority(busterSchema('size-budget'), ['$.matchingFiles[]'], busterSource('size-budget'), 'const matchingFiles = value.matchingFiles ?? []',
+  'Declares one named glob rule with a maximum aggregate byte count for its matched artifact-entry set.',
+  'An omitted collection supplies no rules. Each authored rule requires id, pattern and maximumBytes.',
+  'An empty object lacks the required rule fields and is invalid. The separate blocking-mode condition applies to the whole configured limit set.');
 for (const [field, anchor, purpose, omission, empty] of [
   ['masks', 'config.masks ?? []', 'Declares CSS selector masks for selected screenshot targets.', 'Omission uses an empty mask list.', 'An empty list masks no element.'],
   ['masks[]', 'config.masks ?? []', 'Binds one selector list to a target already present in targets.', null, 'An empty object lacks a target and selector list and is rejected.'],
@@ -4434,7 +4615,7 @@ for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json
     'An empty object is invalid because the complete review-policy fields are required.');
   for (const [section, purpose] of Object.entries({
     blocking: 'Selects blocking finding priorities and categories and their diff/evidence conditions. P0 and correctness, security, and contract cannot be omitted.',
-    limits: 'Sets bounded finding, bundle, context, expansion, and advisory capacities.',
+    limits: 'Sets finding, bundle, context, expansion, and advisory capacities. Context and file bytes must fit the enclosing byte budgets. Initial context must leave both file and byte capacity for expansion.',
     scope: 'Selects what happens to outside-scope, unknown-scope, and pre-existing findings.',
     verification: 'Selects semantic verification and the action for insufficient evidence or an unverified requirement.',
     simplification: 'Selects simplification rules, confidence, and recommendation capacity. Enabled policies need rules and positive capacity; disabled policies require neither.',
