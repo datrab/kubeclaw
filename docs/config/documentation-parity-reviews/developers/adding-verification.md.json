@@ -1,6 +1,160 @@
 {
-  "schemaVersion": "kubeclaw-documentation-parity-review.pending.v1",
-  "originalPath": "docs/developers/adding-verification.md",
-  "verdict": "NOT_READY",
-  "reason": "Actual original7claim CONTENT/AUTHOR PASS after four materialguidance gaps corrected; current reference/index/native receiver and affected-scope preservation still incomplete. Reserved controlfilename is not acceptance."
+  "schemaVersion": "kubeclaw-documentation-parity-review.v1",
+  "source": {
+    "originalPath": "docs/developers/adding-verification.md",
+    "legacyPath": "docs/_legacy-source/developers/adding-verification.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "ef895d18321c6a8f47f31143f875b52223af01a2",
+    "extractionDigest": "d0185d625ea1e382f7e4af8b1a9ad6f94eded0bc85a3e643c850f9e6f89ea6bf",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewer": {
+    "id": "parity-reviewer:developer-and-extension-sources",
+    "assignmentId": "parity-assignment:02f8544c6a42032f2441081ab84141560504db8af87a2ebf0b746822f46ab90a",
+    "freshContext": true,
+    "readOnly": true,
+    "provenance": {
+      "kind": "repository-review-assignment",
+      "revision": "4178d6ec07cac5e4b903126f9daba81aab908949",
+      "actorId": "parity-reviewer:developer-and-extension-sources"
+    }
+  },
+  "decisionSha256": "be43a2a1c39f8809db3063ae7df104bc951d285112ce72786a063f090cc68572",
+  "contentRoot": "9b11811c29b2de1f4aee0b713daa8a21175a761f1d8454b5342a296f5609710c",
+  "claimIds": [
+    "adding-verification:dpu_e55fdbc2762fb5cf42ce06a2ac2c2299",
+    "adding-verification:dpu_76eefcfa82b9d713869f25f65fd5ae59",
+    "adding-verification:dpu_92897ed35294fcdd329f0e8b8fe0f1a9",
+    "adding-verification:dpu_84f51f4a2f76ec600f33f8687cd9a005",
+    "adding-verification:dpu_d8da54dcf5f423b0022b7a5c65629577",
+    "adding-verification:dpu_969f106b5e0e6eb715fca9ac19b3f1ce",
+    "adding-verification:dpu_12fb3a8baa4c076e17a9ddf4a25d55fa"
+  ],
+  "reviewedRevision": "7a629af64cb5ba9da89c0787c473f974de03a6f0",
+  "classificationVerdict": "PASS",
+  "claimVerdicts": [
+    {
+      "claimId": "adding-verification:dpu_e55fdbc2762fb5cf42ce06a2ac2c2299",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "adding-verification:dpu_76eefcfa82b9d713869f25f65fd5ae59",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "adding-verification:dpu_92897ed35294fcdd329f0e8b8fe0f1a9",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "adding-verification:dpu_84f51f4a2f76ec600f33f8687cd9a005",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "adding-verification:dpu_d8da54dcf5f423b0022b7a5c65629577",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "adding-verification:dpu_969f106b5e0e6eb715fca9ac19b3f1ce",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "adding-verification:dpu_12fb3a8baa4c076e17a9ddf4a25d55fa",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    }
+  ],
+  "visualVerdicts": [],
+  "activeDependencyReview": {
+    "reviewedRevision": "7a629af64cb5ba9da89c0787c473f974de03a6f0",
+    "reviewedTree": "b4f9ce810a0ca6081f11f783e454e41828af4937",
+    "contentRoot": "9b11811c29b2de1f4aee0b713daa8a21175a761f1d8454b5342a296f5609710c",
+    "scope": {
+      "paths": [
+        "docs/developers/adding-verification.md",
+        "docs/_legacy-source/developers/adding-verification.md"
+      ],
+      "risks": [
+        "dynamic-configuration",
+        "generated-paths",
+        "runtime-lookup",
+        "external-consumers"
+      ]
+    },
+    "methods": [
+      {
+        "kind": "manual-inspection",
+        "detail": "dynamic-configuration: Inspected complete native scanner and current root package configuration, verification authoring guide and real E2E caller. Package commands select actual test entrypoints and current canonical verification instructions, not old developer Markdown. The full frozen Source scan checks supported static/composed references. Arbitrary computed configuration and unknown third-party consumers are not disproven."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "generated-paths: Inspected complete blueprint/author generators, tree source controls and current canonical route registry. Current verification targets derive from exact Source/content-bound author control and published testing page. Original extraction and parity membership remain structural source provenance until AP10, not current reader procedure or runtime consumers. No deletion or receipt rewrite proposed."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "runtime-lookup: Inspected complete native parity checker, package verifier and actual real pipeline E2E source. The package verifier executes package test commands; the E2E caller uses its configured project/model/service inputs, not the old verification Markdown. Legacy bytes are read only for extraction/content parity validation. Whole actual current Source input binding and zero old-path matches supplement manual inspection, not arbitrary-program absence proof."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "external-consumers: Inspected the complete authoritative route registry file and exact original /developers/adding-verification redirect decision. Current reader content routes to canonical testing, Core contracts and real E2E command reference; no authoritative historical route or consumer is declared, so no redirect is invented. Unknown external references cannot be disproven by repository inspection; retain native static limitations and all whole-parity/AP10 obligations."
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected complete native scanner and current root package configuration, verification authoring guide and real E2E caller. Package commands select actual test entrypoints and current canonical verification instructions, not old developer Markdown. The full frozen Source scan checks supported static/composed references. Arbitrary computed configuration and unknown third-party consumers are not disproven."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected complete blueprint/author generators, tree source controls and current canonical route registry. Current verification targets derive from exact Source/content-bound author control and published testing page. Original extraction and parity membership remain structural source provenance until AP10, not current reader procedure or runtime consumers. No deletion or receipt rewrite proposed."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected complete native parity checker, package verifier and actual real pipeline E2E source. The package verifier executes package test commands; the E2E caller uses its configured project/model/service inputs, not the old verification Markdown. Legacy bytes are read only for extraction/content parity validation. Whole actual current Source input binding and zero old-path matches supplement manual inspection, not arbitrary-program absence proof."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected the complete authoritative route registry file and exact original /developers/adding-verification redirect decision. Current reader content routes to canonical testing, Core contracts and real E2E command reference; no authoritative historical route or consumer is declared, so no redirect is invented. Unknown external references cannot be disproven by repository inspection; retain native static limitations and all whole-parity/AP10 obligations."
+      },
+      {
+        "kind": "scanner-result",
+        "detail": "Inspected and compared the actual full249-source reference scan at 7a629af64cb5ba9da89c0787c473f974de03a6f0 across 5513 frozen Git-bound file inputs. Both original and extracted source paths have zero matches. Input root 273a9a23d304fe164976445f8b88b1e7432c2ff6a67a70f7bf039536b1f47521 binds every scanned path/blob; actual complete qualified content/primary/route byte equality is separately supplied. This static observation does not establish arbitrary dynamic or external-consumer absence."
+      }
+    ],
+    "findings": [],
+    "scanner": {
+      "version": "kubeclaw-documentation-active-dependency-scanner.v2",
+      "searchedPaths": [
+        "docs/developers/adding-verification.md",
+        "docs/_legacy-source/developers/adding-verification.md"
+      ],
+      "scannedFileCount": 5513,
+      "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
+      "scannerInputRoot": "273a9a23d304fe164976445f8b88b1e7432c2ff6a67a70f7bf039536b1f47521",
+      "matches": []
+    },
+    "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
+    "verdict": "PASS"
+  },
+  "verdict": "PASS",
+  "findings": []
 }
