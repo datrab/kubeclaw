@@ -43106,6 +43106,90 @@
         "boundedMetadataTransitions": 60,
         "historicalAcquisitionsReexecuted": false
       }
+    },
+    {
+      "id": "QUA-003-whole-significant-decision-rationale-20261027",
+      "revision": "a041ba93575d2bbdf4dc7c8638de15b82b2ab1c9",
+      "author": "Nova documentation rationale integration and sole shared-lease writer",
+      "reviewer": "Independent /root/whole_criterion_selection whole original QUA003 Source/semanticReader/Quality adjudicator, qualified complete original decision field assessors",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-003"
+      ],
+      "pages": [
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/acceptance.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/implementation.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/status/acceptance.md"
+      ],
+      "sources": [
+        "cmd/buster-namespace-controller/demo-product.go",
+        "contracts/pipeline-test-gate/v1/src/index.ts",
+        "docs/blueprint/07-documentation-quality-standard.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/review/remediation/decisions.md",
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
+        "scripts/docs-publication.mjs",
+        "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts",
+        "skills/nova/plugins/review/src/review-governor-decision.ts",
+        "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "skills/prism/corpus/index.ts",
+        "skills/prism/domain/index.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "spikes/prism/postgres-retrieval/verify.mjs",
+        "docs/blueprint/05-decision-record-catalogue.md"
+      ],
+      "checks": [
+        {
+          "command": "Independent original QUA-003 whole significant architecture/data/security/operator/developer decision mapping and Source/semanticReader/Quality adjudication",
+          "exitCode": 0,
+          "observation": "Actual WHOLE_QUA003/sourceAccuracy/readerUsability/quality/significantDecisionCoverage PASS at a041ba93; all five original missing dimensions mapped to complete seven decision-content routes/index/governance and full canonical acceptance status. Fresh original decision, not automatic A91307 inheritance or field-presence-only approval."
+        },
+        {
+          "command": "Exact complete current source-vector verification and qualified unchanged committed Reader/native evidence reuse",
+          "exitCode": 0,
+          "observation": "Actual30full source/page vectors match qualified f063; seven decision routes/index/governance match original f88. Publisher changed since f88 but its specific current delta independently preserved; no historical rationale inferred from publisher behavior. Reuse actual f063 common28/gov/refs/build+5Reader only on exact unchanged relevant inputs; no redundant execution."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Current complete significant architecture/data/security/operator/developer choices are mapped to source-backed reason/tradeoff, recorded authority/status, separate implementation state and actual reconsideration condition or explicit unknown. This is a fresh original QUA-003 duty adjudication using qualified full-content evidence, not automatic inheritance of A913-07 status.",
+      "limits": [
+        "Documentation rationale/semantic reader assessment only; no human/practical/live deployment, model quality, new runtime or global publication acceptance.",
+        "Unknown historical rationale/approval/reconsideration remains explicit; no newly invented reasons or blanket approval. Original failures including D086/D113 and first whole-record/presentation failures retained.",
+        "Current NEW publisher/CI purpose drift remains actual REFUSED qualification debt, not baseline-identical or waived; no claim here relies on that refused global authority.",
+        "No product/matrix/receipt edits; evidence only. No separate A91307, A9911 or unrelated gate grant.",
+        "All110 earlier completion records/requirements/gates and their source/check/history/limits remain exact; no new code, source document, generator, runtime or proof-authority change. Original first-review/presentation/source-link failures retained.",
+        "Global current original receiver remains actual exit1 at NEW publisher-purpose drift; no externalCI analysis/API/source-role/global freshness award or profile/receipt repin. Existing committed Reader evidence reused without relabelling a fresh practical/human exercise."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "WHOLE_QUA003": "PASS",
+      "significantDecisionCoverage": "PASS",
+      "independentOriginalDecision": {
+        "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua003-owner-policy-20261027/verdict.json",
+        "sha256": "f7ac7fb1b668d114159472b7f1bab6f4f962c92c85a3c5ddda54d6968dd46d2a",
+        "sourceRevision": "a041ba93575d2bbdf4dc7c8638de15b82b2ab1c9"
+      },
+      "wholeSignificantDecisionMapping": {
+        "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua003-owner-policy-20261027/whole-significant-decision-mapping.json",
+        "sha256": "f674f26c5d95cfed050d4f546f2982a7eb73892a343b2ad288f1880ce75c9b02"
+      },
+      "evidenceRoot": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua003-owner-policy-20261027"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -60555,7 +60639,7 @@
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-current-whole-original-significant-decision-rationale-review-PASS; see completionRecord",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -60585,7 +60669,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -60653,18 +60737,56 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
           "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
           "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "/root/whole_criterion_selection",
+          "role": "source",
+          "verdict": "PASS",
+          "revision": "a041ba93575d2bbdf4dc7c8638de15b82b2ab1c9",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua003-owner-policy-20261027/verdict.json",
+          "reportSha256": "f7ac7fb1b668d114159472b7f1bab6f4f962c92c85a3c5ddda54d6968dd46d2a",
+          "scope": "Complete original QUA003 only; all significant architecture/data/security/operator/developer choices, explicit historical unknowns/authority/status/implementation/reconsideration; no global source-purpose/live grant."
+        },
+        {
+          "agent": "/root/whole_criterion_selection",
+          "role": "reader",
+          "verdict": "PASS",
+          "revision": "a041ba93575d2bbdf4dc7c8638de15b82b2ab1c9",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua003-owner-policy-20261027/verdict.json",
+          "reportSha256": "f7ac7fb1b668d114159472b7f1bab6f4f962c92c85a3c5ddda54d6968dd46d2a",
+          "scope": "Complete original QUA003 only; all significant architecture/data/security/operator/developer choices, explicit historical unknowns/authority/status/implementation/reconsideration; no global source-purpose/live grant."
+        },
+        {
+          "agent": "/root/whole_criterion_selection",
+          "role": "quality",
+          "verdict": "PASS",
+          "revision": "a041ba93575d2bbdf4dc7c8638de15b82b2ab1c9",
+          "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua003-owner-policy-20261027/verdict.json",
+          "reportSha256": "f7ac7fb1b668d114159472b7f1bab6f4f962c92c85a3c5ddda54d6968dd46d2a",
+          "scope": "Complete original QUA003 only; all significant architecture/data/security/operator/developer choices, explicit historical unknowns/authority/status/implementation/reconsideration; no global source-purpose/live grant."
         }
       ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L422",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- QUA-003 — Jede wichtige Entscheidung begründet: NOT_READY. SA NOT_READY / RU NOT_READY / Q PASS for sampled decision prose. Minimal plugin guide gives rationale, benefit, cost, alternative and reconsider condition; status pages distinguish decision authority. No complete independent mapping of every significant architecture/data/security/operator/developer choice to reason/status/implementation/reconsider condition was established. No claim that all rationale is missing, and no new broad decision ledger required merely to retain current partial good content.",
-        "requiresAffectedRereview": true,
-        "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "a041ba93575d2bbdf4dc7c8638de15b82b2ab1c9",
+        "completionRecord": "QUA-003-whole-significant-decision-rationale-20261027",
+        "reason": "Current complete significant architecture/data/security/operator/developer choices are mapped to source-backed reason/tradeoff, recorded authority/status, separate implementation state and actual reconsideration condition or explicit unknown. This is a fresh original QUA-003 duty adjudication using qualified full-content evidence, not automatic inheritance of A913-07 status.",
+        "independentOriginalDecision": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua003-owner-policy-20261027/verdict.json",
+        "independentOriginalDecisionSha256": "f7ac7fb1b668d114159472b7f1bab6f4f962c92c85a3c5ddda54d6968dd46d2a"
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- QUA-003 — Jede wichtige Entscheidung begründet: NOT_READY. SA NOT_READY / RU NOT_READY / Q PASS for sampled decision prose. Minimal plugin guide gives rationale, benefit, cost, alternative and reconsider condition; status pages distinguish decision authority. No complete independent mapping of every significant architecture/data/security/operator/developer choice to reason/status/implementation/reconsider condition was established. No claim that all rationale is missing, and no new broad decision ledger required merely to retain current partial good content.",
+          "requiresAffectedRereview": true,
+          "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "QUA-003-whole-significant-decision-rationale-20261027"
     },
     {
       "id": "QUA-004",
