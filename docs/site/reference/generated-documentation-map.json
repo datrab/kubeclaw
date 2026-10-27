@@ -2912,7 +2912,7 @@
       "audience": "maintainer, operator, contributing agent",
       "owner": "platform-maintainers",
       "appliesTo": "source baseline ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
-      "lastVerified": "2026-10-11; each issue states its available evidence and remaining validation",
+      "lastVerified": "2026-10-27; each issue states its available evidence and remaining validation",
       "sourceDependencies": [
         "docs/status/open-issues.json"
       ],
@@ -3723,7 +3723,7 @@
       "page": "docs/site/use/prism-studio.md",
       "route": "/use/prism-studio/",
       "contentKind": "authored",
-      "status": "local sample procedure available; local Studio browser checks blocked by missing host libraries; local deploy-script verification passed; fixed spike browser path blocks complete local checks; absent runtime release selection blocks deployment; installed operator-messaging payload mismatch blocks the Nova approval wait; no live journey result",
+      "status": "local sample procedure available; recorded local browser/deploy-script results and messaging-contract limits appear below; deployment requires current release preflight; no live journey result",
       "audience": "Prism operator, designer, incident responder, platform maintainer",
       "owner": "Prism maintainers",
       "appliesTo": "the current Prism Control, Studio, agent, native worker, ingestion service, and Nova Prism stage",
@@ -4118,21 +4118,21 @@
             "source": "skills/common/plugin-runtime/sdk/src/artifact-json.ts",
             "target": "docs/site/reference/sdk-exports.md#verifiedartifactjsontext",
             "owner": "documentation automation",
-            "factsSha256": "5f91303adf35025e5f7699babb9a2fc420b3c73b9aa285cbe675bf7efcbd91a5"
+            "factsSha256": "32cc5e0e9c0d92d6cda2f3add99f3c02d05e3a1fc6bbdef751faf341f1bf04ce"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:AdapterActivationId",
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#adapteractivationid",
             "owner": "documentation automation",
-            "factsSha256": "bdbac5ad00ba05ce6d39d6b45dd0f0f7cd15e75fd886bbb025a45a746707af6a"
+            "factsSha256": "79e4dabee670b487b056c4e39258da33aedc7e555ea020e8327db586c827dbd8"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:AdapterLifecycle",
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#adapterlifecycle",
             "owner": "documentation automation",
-            "factsSha256": "c2a6ed65e17066fc246ef392a4f97115303d34ad8ee18548386ee8431e6b6801"
+            "factsSha256": "1566590bfb1d4b534466cace9c4a39a2ef4ae0aff83fd9c780670f265d9a9e9a"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:AdapterLifecycle:member:%5Bindex%5D:0",
@@ -4181,7 +4181,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#adapterregistration",
             "owner": "documentation automation",
-            "factsSha256": "7e8edd35977314b924b8e60a94cb3c37066edf9b9dd3d63c34e48ee65bcd69b6"
+            "factsSha256": "ffb19f8ad024a01e5635daf5eb1d997c062f6f34cc6a2c9bdfccce0802dedcae"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:AdapterRegistration:member:configSchema:0",
@@ -4587,7 +4587,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#current_runtime_dispatch_profile",
             "owner": "documentation automation",
-            "factsSha256": "74b1ce9152f27a3d20348f4faaf08ddc11b29bdd498f53a4726d9095280551bc"
+            "factsSha256": "648e2585491b0f0f6da2616bb7c8fba75ba6cb4727db1b5daadb45b337d95e03"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:DecisionFacts",
@@ -4608,7 +4608,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#effectattemptidentity",
             "owner": "documentation automation",
-            "factsSha256": "aae5ee1c08456e76847d7e170c83288e4756db2290dca46d47038d94e3776097"
+            "factsSha256": "ca682f08c9351469b1a11d3c7c408d89951a45cca48aee6cc05cfdecb0fc7b5c"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:EffectAttemptIdentity:member:attemptId:0",
@@ -4657,21 +4657,21 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#effectdeliveryid",
             "owner": "documentation automation",
-            "factsSha256": "4bac8edbe4caea7e920222e3cb8894cd135f8d4ee51169c98837ab5d7f383089"
+            "factsSha256": "4e27bfb68a4766f3d499daf5c72876dd2197dc9ea9754622fa8243e8e5f0e0df"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:EffectIdempotencyKey",
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#effectidempotencykey",
             "owner": "documentation automation",
-            "factsSha256": "13b7dcdb15f49645bd9027bcacd7f30c4ff645329c744c75ecec9419912039be"
+            "factsSha256": "c5f56d5c79d3d156a35ec711168fd0543f80fb498e708dbafd8295a9259987bf"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:EffectReceipt",
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#effectreceipt",
             "owner": "documentation automation",
-            "factsSha256": "efed1bf2e5681efce655c6d6110a0bd2c1da8e46f333ff75637ec892285e3246"
+            "factsSha256": "e26baa371f77f8dd233769be18ec971d4e43f8779e1493987d379c0b51c4294a"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:EffectReceipt:member:%5Bindex%5D:0",
@@ -4832,7 +4832,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#eventidentity",
             "owner": "documentation automation",
-            "factsSha256": "f3065375c4ec00e4042cb0500f84514b69dd3147caec239896e2600de597cb23"
+            "factsSha256": "c1352d12230b94e8cbc706d18010cfb1899f1bcf08bff54b82a35cfd4aa4aeaa"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:EventIdentity:member:artifactId:0",
@@ -4993,7 +4993,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#jsonobject",
             "owner": "documentation automation",
-            "factsSha256": "4abcc8a915218fc57bedebebd3bc3669b900848a5231de139785eda1f876235d"
+            "factsSha256": "2ed4472948a5f8cbba72d9cd093d002f1859c600515cfe3ee53f135834d9c14c"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:JsonObject:member:%5Bindex%5D:0",
@@ -5007,7 +5007,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#lifecycleevent",
             "owner": "documentation automation",
-            "factsSha256": "fd2c608dd7844184df058c826b0396b5a9241f7dde7bf1bf504e93c84c7a9a52"
+            "factsSha256": "509ca397d5cd286c75f540a8c0b87e7732ed63fd09c9aa2078ee7bd3569829d5"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:LifecycleEvent:member:causationId:0",
@@ -5084,7 +5084,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#observercheckpoint",
             "owner": "documentation automation",
-            "factsSha256": "dba2e5e76a9b68c0fecf59a9c3b4c6c014924b16da8989c2d8564f253e7ef448"
+            "factsSha256": "bc94f4f455fd861bdb4b9d53a5d4307bd5cff050f0027de5bc9dcf5763eb557b"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ObserverCheckpoint:member:eventId:0",
@@ -5133,7 +5133,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#observerdelivery",
             "owner": "documentation automation",
-            "factsSha256": "4f81364498b97079c99bae9fc6e3a3e7f45cb6266a64467b7b1a99cdbdbb9fda"
+            "factsSha256": "50f029ef8f2b7b92cd0ac78686fc9341a77d453136fe821ebdce5353ea8bcc8c"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ObserverDelivery:member:attemptNumber:0",
@@ -5182,7 +5182,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#observerregistration",
             "owner": "documentation automation",
-            "factsSha256": "1d3a927bf4acc9ef4826763c4ee67a29970b14146c3956dca2e163d3b416fa0f"
+            "factsSha256": "064b9355126a34de774aa8f19aca87294548863c4efef9ce00a1f47585ccdf4a"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ObserverRegistration:member:checkpointSchema:0",
@@ -5287,14 +5287,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#opaqueid",
             "owner": "documentation automation",
-            "factsSha256": "ea49fe8e8295fa38a934e037944afdf730cbc13a7443701c65f06b3d7041738f"
+            "factsSha256": "3042d99c5dac85b6b1a717acaf687497e566e184fc1f2ba9a6238b58cb77dc08"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:PackageIdentity",
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#packageidentity",
             "owner": "documentation automation",
-            "factsSha256": "9d7812781509dd577b6ed0d06007967b7d7387144edbedfcc3b36471d23bdbba"
+            "factsSha256": "4af72a88f6856ef6799bf1a25fde190dde0aa948ff9a1c72e08779866ab487ab"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:PackageIdentity:member:apiVersion:0",
@@ -5406,7 +5406,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#packageresolution",
             "owner": "documentation automation",
-            "factsSha256": "d0197074d80aa8a2c8c077736e1a43d5665134848314626b17fb4db5f2662991"
+            "factsSha256": "8035ab2a876b73fb01f8d21003471993ddaadfb6523bc657195443a949aa6c57"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:PackageResolution:member:apiVersion:0",
@@ -5483,7 +5483,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#plugincontext",
             "owner": "documentation automation",
-            "factsSha256": "e6fdd7edddc94d4796403062f851166d260270a54def2ab9444a8f19c60b38bb"
+            "factsSha256": "75f962d18de0a42a927dc235e77fe35f7bce554451da80ffc1731056659615f9"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:PluginContext:member:artifacts:0",
@@ -5581,7 +5581,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#plugindomainevent",
             "owner": "documentation automation",
-            "factsSha256": "70f8b3bb0b5118cee1dd450dd7b912759242084dfe1b114083e74f6412847c59"
+            "factsSha256": "3dd43a8225a2d545e3d2c9c72dc3d2146c94976536465bd45e3a6036a3a84c3e"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:PluginDomainEvent:member:causationId:0",
@@ -5651,7 +5651,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#pluginmanifest",
             "owner": "documentation automation",
-            "factsSha256": "df740d84f17e1c7fd75930cb4c213ee00e2a2404226f66059c091450bb6c905d"
+            "factsSha256": "e49303ef68a2e2248a416eaa60ad378e96d4c858fd69e7c7fbdc45a7ba7655bc"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:PluginManifest:member:adapters:0",
@@ -5749,7 +5749,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#pluginmanifest1",
             "owner": "documentation automation",
-            "factsSha256": "40458769be4ddcc1110d5aad0291914973e6a519ba0c5e1acb10119abdee6296"
+            "factsSha256": "ffd382ff43a6a8b465e17e87d4384834981d0e5506ba311818314278aa6fce64"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:PluginManifest1:member:%5Bindex%5D:0",
@@ -5945,7 +5945,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#pluginsystemv2",
             "owner": "documentation automation",
-            "factsSha256": "139d6645b701c47c4c0f825c7f2802837fdb6bd8dcffb1048d2f682318bca0a3"
+            "factsSha256": "b5691594bfd0b9d5b2c2ea0d1ce3765e6a09e6ce84ec40d23d5bbf2da52bb415"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:PluginSystemV2:member:adapterActivationId:0",
@@ -6288,7 +6288,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#reason",
             "owner": "documentation automation",
-            "factsSha256": "12acd0793d7e09db5be95d14abb81a1d8e5379d4cb00d8a8dc6dda547792893c"
+            "factsSha256": "e87f717d0b6fc6e1480266ca5e1d7f3e11e25430e4f514548a828c023e056cdf"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:Reason:member:code:0",
@@ -6316,7 +6316,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#registrationprovenance",
             "owner": "documentation automation",
-            "factsSha256": "dd459c499a137ebd3d5b6fcd5823b67f0903c995e701863f93fe3453ff08b004"
+            "factsSha256": "915864bd1dd458dadec9cde2afce50c2cc070503037bdf4917239370f5cd5141"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:RegistrationProvenance:member:package:0",
@@ -6351,14 +6351,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#relativemodulepath",
             "owner": "documentation automation",
-            "factsSha256": "35eeb1b11cf40086bf1226fdbdb84197688935fdee17c833300ebe0465ef1917"
+            "factsSha256": "08699d2e51e4f66f4aff6400c525177fe0eaf90ad10b3706f08a43deb0e9942f"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:RelativeSchemaPath",
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#relativeschemapath",
             "owner": "documentation automation",
-            "factsSha256": "224b459d48ec372f7bef2bad038772f0b425e0ea562951cfc08afaca75e90aa0"
+            "factsSha256": "b4ced2d7d6fdfc0ac89064c1e3ab0a6f81fb77a6cf314b53e46e226318bced34"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ReportAdapterRegistration",
@@ -6414,7 +6414,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#resourceidentity",
             "owner": "documentation automation",
-            "factsSha256": "9412d148dab8a93c6b98a9b056ee42b34b8d0bfab736327972f0995d352e481d"
+            "factsSha256": "72cac95ceb1e397e4e359fd2738f5bd08fc7c202af1792497dfc93f1a038208f"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ResourceIdentity:member:canonicalId:0",
@@ -6435,7 +6435,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#resourcelock",
             "owner": "documentation automation",
-            "factsSha256": "feeac635874f51470528c2e92757d20f1c0a1fab41c9bb7b22ef9345275abfd8"
+            "factsSha256": "b755fb90620a366ac77f9447dade23437290bc5973836ac8b57f5fed7ab81351"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ResourceLock:member:acquiredAt:0",
@@ -6505,7 +6505,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#resultbase",
             "owner": "documentation automation",
-            "factsSha256": "35d0a65fee7ab1a31d0e17aacb913b34b7d639ace7be9b2337d862dc167193a1"
+            "factsSha256": "35b555c659cbaddd57750c74d41025115688d3cb30d3810b9e89b620b5b3db49"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ResultBase:member:%5Bindex%5D:0",
@@ -6547,7 +6547,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#resumesignal",
             "owner": "documentation automation",
-            "factsSha256": "7d6aa7a0d58834976b881a487d2fce773f928dded4c0a3ec8b10c515dfc11d6c"
+            "factsSha256": "7ddebf19b510123a790bf4e984bb3f6d3a5893482b68a8b80888e49853a7dbba"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ResumeSignal:member:idempotencyKey:0",
@@ -6694,7 +6694,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#runtimerungraph",
             "owner": "documentation automation",
-            "factsSha256": "753c808713cb71dc4d10e1c6bfa5d92b09fb47e1bdae8168885b3bd663a0259e"
+            "factsSha256": "099ba19f1b519f57bbd29528e92da7140ee591b1ad6c29a5a58e86e06b111f3c"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:RuntimeRunGraph:member:digest:0",
@@ -6792,7 +6792,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#runtimerunsnapshotv4",
             "owner": "documentation automation",
-            "factsSha256": "552cc44126f08c660dd07659b681404c823284929db3803f80d4ffc50aca1c14"
+            "factsSha256": "2b97229b6523ceee4580714ebbc947571d24e79aa9c52dd35ce34eee54e9ca0c"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:RuntimeRunSnapshotV4:member:digest:0",
@@ -6841,7 +6841,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#stageattempt",
             "owner": "documentation automation",
-            "factsSha256": "70da899c290620781972a94a0bc09f887ac2ff619a7ac80687d2ad081536bdae"
+            "factsSha256": "616b4ef46b8b65a65c7316a40b9952a7bf27970e9f913f74300bd59c276cbf4b"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:StageAttempt:member:createdAt:0",
@@ -6925,7 +6925,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#stagedefinition",
             "owner": "documentation automation",
-            "factsSha256": "697796a8400150ee9cc06c91f8adf02f6a107520bc58aded2cb4fbdcb1d0358a"
+            "factsSha256": "af08c50e8a6610fb3e6b872707d1dc5feaf0fbea76d3863b49150d21345c119d"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:StageDefinition:member:activation:0",
@@ -7149,7 +7149,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#stageresult",
             "owner": "documentation automation",
-            "factsSha256": "6b82ad6098fab445d1c5cfb773023f628456bb9fd91bfd93bcca7a6a644f6f98"
+            "factsSha256": "2fa734faeef49eb7b87ffc6f88c021c4db81ad90cb099a97b21b4555c036dc74"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:StageResult:member:artifacts:0",
@@ -7345,7 +7345,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#testproviderport",
             "owner": "documentation automation",
-            "factsSha256": "986d8a70fafa2809e3798e0de95078cdaa1a0712eb70b81587806d2f6bbb7581"
+            "factsSha256": "3b088b6d215879c25530ab9a890f09ca95cea663a4dfc1409cf1789656478681"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:TestProviderPort:member:kind:0",
@@ -7429,7 +7429,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#testproviderregistration",
             "owner": "documentation automation",
-            "factsSha256": "ab3680a8a312cf803e11e7f4ce250511c67f0fffb8b880443953dd48f5507446"
+            "factsSha256": "cd4c14a9785f41b7841670127a4986286f0b48c4916cf0710eaaa7cc10e9c727"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:TestProviderRegistration:member:configSchema:0",
@@ -7534,7 +7534,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#waitrequest",
             "owner": "documentation automation",
-            "factsSha256": "1829090079791c1f810eb70602b38b8a1102946ee86903949ff51fabfeb66aa9"
+            "factsSha256": "03ff52487c4f3226070621d43fb0d75e9ddea54ee2bffbf371b97cd6030a0799"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:WaitRequest:member:authorizedIssuer:0",
@@ -7611,42 +7611,42 @@
             "source": "skills/common/plugin-runtime/sdk/src/review-cache-profile.ts",
             "target": "docs/site/reference/sdk-exports.md#parsereviewcacheprofile",
             "owner": "documentation automation",
-            "factsSha256": "54e0d5a8475c406feccd3120351dd6c8741ef5b1595ae50ed5cdb94e66d2e3bb"
+            "factsSha256": "25b49d3007083dd0238d1548f959d2a797ea68fdd0bd2e885d08b2f82e22030e"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Freview-cache-profile.ts:.:reviewCacheProfileFromContext",
             "source": "skills/common/plugin-runtime/sdk/src/review-cache-profile.ts",
             "target": "docs/site/reference/sdk-exports.md#reviewcacheprofilefromcontext",
             "owner": "documentation automation",
-            "factsSha256": "5fd018b43ef8ddf5a581ca6e3ba1bd19103974dbb8e7ab4083ee4178e7ef8a7b"
+            "factsSha256": "5255da6fd635420f65d7b7204a40b79efcc5399d8397c564f96d3e0d84748a21"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Freview-subject.ts:.:captureReviewSubject",
             "source": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
             "target": "docs/site/reference/sdk-exports.md#capturereviewsubject",
             "owner": "documentation automation",
-            "factsSha256": "b4bfa3f25a776dee06544f2986ca84cae3f78c6dfdbcf59f3575d97d2e00105a"
+            "factsSha256": "9da93eb3f6dd5a07a53237272f6b105955e15dd49e16826dc609a7d86e191f3f"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Freview-subject.ts:.:parseReviewSource",
             "source": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
             "target": "docs/site/reference/sdk-exports.md#parsereviewsource",
             "owner": "documentation automation",
-            "factsSha256": "c3d344ce6b4878c590179b8ad351c8a295a8f500887f2ed96b6ab8537402667f"
+            "factsSha256": "5c71b8e9a6801ca367b373b6ea9deb014d08074921aa715409842b533bb15594"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Freview-subject.ts:.:parseReviewSubject",
             "source": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
             "target": "docs/site/reference/sdk-exports.md#parsereviewsubject",
             "owner": "documentation automation",
-            "factsSha256": "886f4b00ca4ad0d182f1fdda02b1cb28c6af43e20b71d8e213f5a5c8402fad7a"
+            "factsSha256": "af45d4b66515608662872659f14593cc745deb6ae020f88a5a6a1d4b1377814f"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Freview-subject.ts:.:reviewIdentityDigest",
             "source": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
             "target": "docs/site/reference/sdk-exports.md#reviewidentitydigest",
             "owner": "documentation automation",
-            "factsSha256": "166df1395d30c8333db00f1468e18032ed05e5287c97fe6e04edcfbd24d9bed6"
+            "factsSha256": "c6df442edc7226413421d46da04c71b130b8a661a7fc44bb904b2740203ac667"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Freview-subject.ts:.:ReviewSource",
@@ -7695,7 +7695,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
             "target": "docs/site/reference/sdk-exports.md#reviewsubject",
             "owner": "documentation automation",
-            "factsSha256": "e40e5de573be2a55e31ad3c580109e6cb3ed0270f13f7b23400d5a29e1fcd482"
+            "factsSha256": "a18f80a14b6284061b842468cf1fd2d4a9ff73b05ac14a42026cda9f9c0ca407"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Freview-subject.ts:.:ReviewSubject:member:architectureRef:0",
@@ -7814,14 +7814,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
             "target": "docs/site/reference/sdk-exports.md#verifyreviewsubject",
             "owner": "documentation automation",
-            "factsSha256": "0ef28e1d386804b3c072f9ca3d645729d0e7caa7a826d874ea269e27c067a69a"
+            "factsSha256": "5c5aa0f1f02e30628820213eb3b9e6f10ff553273e05b58ba0d5904ee9a93461"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime-agent-task.ts:.:buildRuntimeAgentTask",
             "source": "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
             "target": "docs/site/reference/sdk-exports.md#buildruntimeagenttask",
             "owner": "documentation automation",
-            "factsSha256": "475da8a0e12af29e4db5b8924ee1445a225da2d5a493b20be7975f3739873f77"
+            "factsSha256": "d2570ccde971c0f843446be4a41156863c1493f3793b0de77f93da615721f75b"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime-agent-task.ts:.:RUNTIME_RESULT_FILE_MAX_BYTES",
@@ -7835,14 +7835,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
             "target": "docs/site/reference/sdk-exports.md#parseruntimedispatchprofile",
             "owner": "documentation automation",
-            "factsSha256": "2bcee75bed57a5ae2893e093c82df90df5ce891d515a578a5c65a3eac34f0bb5"
+            "factsSha256": "98bfec973ff259897c290c2c55a91e4dc0efb6400b1240ccf1a2b6b727c6c77d"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime-dispatch-profile.ts:.:runtimeDispatchProfileFields",
             "source": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
             "target": "docs/site/reference/sdk-exports.md#runtimedispatchprofilefields",
             "owner": "documentation automation",
-            "factsSha256": "57d2bf7138491c342cffe43a5b986ec08a12321152b6b471ba85d77cdc180987"
+            "factsSha256": "a0c5bcefe75adad0f41b685651d8052e76b553a4a6e3d20d8c33df23c591c906"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime-dispatch-profile.ts:.:runtimeDispatchProfileFields:member:return.runtimeDispatchProfile:0",
@@ -7856,14 +7856,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
             "target": "docs/site/reference/sdk-exports.md#withruntimedispatchprofile",
             "owner": "documentation automation",
-            "factsSha256": "bb07fe35004f092bdd70890ae05c5b2dc8e98d018fffc1ad4f6d7f2d942b48c1"
+            "factsSha256": "bead2e16fbb6e8ecbeb058a73cf39472490c45b61fde176b65e99ab04ea03097"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime-workspace.ts:.:parseRuntimeWorkspace",
             "source": "skills/common/plugin-runtime/sdk/src/runtime-workspace.ts",
             "target": "docs/site/reference/sdk-exports.md#parseruntimeworkspace",
             "owner": "documentation automation",
-            "factsSha256": "3f703adf010224d854aff8b22baf4af5c45a61319a84ca19cd81283b8f645872"
+            "factsSha256": "bb74413aac1eb1743d7d8854b568b993c1be1c1705531335e3f59fb4858d2b8d"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime-workspace.ts:.:runtimeWorkspaceGeneration",
@@ -7898,7 +7898,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime-workspace.ts",
             "target": "docs/site/reference/sdk-exports.md#runtimeworkspacereference",
             "owner": "documentation automation",
-            "factsSha256": "378e5d5dfea74fdd5a50397315c45f850ff03b1b1c874cd7725d68ba61f574a5"
+            "factsSha256": "cd859b1f13f45579fb6f0335d807f1d80fdb291843af86e6f3a9ad1c4e843430"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime-workspace.ts:.:RuntimeWorkspaceReference:member:branch:0",
@@ -7954,7 +7954,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#adapteractivationcontext",
             "owner": "documentation automation",
-            "factsSha256": "d14cb42cc73521e7ecb6e91de0f1d161ac40677048cfc91f6c38b8e7fff1b35d"
+            "factsSha256": "d7bab912bddc48ca7cf6cedb02dddef3d4985de20e8a16795ee1615ee8bd935d"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:AdapterActivationContext:member:config:0",
@@ -8031,7 +8031,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#adapterdependencyoptions",
             "owner": "documentation automation",
-            "factsSha256": "4c7a3a6011296b6334a0851d5082eefc7aacf7995ab5820743c4bc0018f0cf9e"
+            "factsSha256": "1172999dd2c62c0ed3035752bde7d73ea941531457923a8210f700ff1c9cd1f7"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:AdapterDependencyOptions:member:deliveryId:0",
@@ -8059,7 +8059,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#adapterinstance",
             "owner": "documentation automation",
-            "factsSha256": "c9514625d580d51f8c066c42bb65634d34ea9ee9cfe3e5d30aa4563f68f046e4"
+            "factsSha256": "1dc9b3d61dafbb826a753b695eaf4a54bef9a7362cee7c2bd8ba22c66826ec7f"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:AdapterInstance:member:invoke:0",
@@ -8094,7 +8094,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#adapterinvocation",
             "owner": "documentation automation",
-            "factsSha256": "16e6adfc94251b7718dda5f746996ffd04194db48babcad057971811317c6108"
+            "factsSha256": "da66c01083228fea973630fe16514182a16752b0177b9bd60d3e77f69bd85640"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:AdapterInvocation:member:confidential:0",
@@ -8150,7 +8150,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#capabilityinvocation",
             "owner": "documentation automation",
-            "factsSha256": "baaea60d317145a7614a51894e47f928d6db96b24a37567a55e972d5cc76a3e1"
+            "factsSha256": "e55d86f13f13c342ee3c77ae39be94d85b64ebe93aa099c198ff95b73193b643"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:CapabilityInvocation:member:operation:0",
@@ -8241,14 +8241,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#observerhandler",
             "owner": "documentation automation",
-            "factsSha256": "84e15b55478765be4fa71432e1c45c32c7bf1ba0774f79fad931b64a7aa10930"
+            "factsSha256": "ea0d2b780e20f124efda0f21c76aa2c3eadcf110ed50becb53c27d192e0f1d85"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:PluginInvocationContext",
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#plugininvocationcontext",
             "owner": "documentation automation",
-            "factsSha256": "7d36ab3033b0b0adf4faac17411011092eeff1c9141a510a3576632640ccf394"
+            "factsSha256": "147b46c5ae202d3dc883c152b84c3c0e332adf303ebad8c701e31dd1dfc4bbd3"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:PluginInvocationContext:member:artifact:0",
@@ -8283,7 +8283,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#reportadapterfunction",
             "owner": "documentation automation",
-            "factsSha256": "1308910de452d417040a326109345bff99e0140ab24565b3256d1eb973284998"
+            "factsSha256": "0255fef303529d54e96c00e024f9478ef21568b2cd198c0bee7da5095e2c0cfa"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:ReportAdapterInput",
@@ -8353,7 +8353,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#reportadapteroutput",
             "owner": "documentation automation",
-            "factsSha256": "5a6ef3845b3b6a21e0ff8c90dd0dc63e9aecae1630cdc308daea48c46514e9b2"
+            "factsSha256": "30d7f7934e57a5feeb4ed196107cedda4849693537bf6dfe058ef675962c3f7f"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:ReportAdapterOutput:member:cases:0",
@@ -8381,7 +8381,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#testprovidercapabilityrequest",
             "owner": "documentation automation",
-            "factsSha256": "1b3db25c6df42ce954b5e23f5d2ad95e0852d8f567a655e036b771426251ebc9"
+            "factsSha256": "74a97db3058d26963f5545256b7533f0b7cd5f9ee0733aba58aadcd10c16769d"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:TestProviderCapabilityRequest:member:operation:0",
@@ -8423,7 +8423,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#testproviderexecutioncontext",
             "owner": "documentation automation",
-            "factsSha256": "de1718c28dd1bbc46fb27b7d1832cbcd6fe6d992f301d75ff975dc42285a0474"
+            "factsSha256": "79ccf5ea59037de5b2db637f308bab888ad29ca2aec121ed046522171acb6fbd"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:TestProviderExecutionContext:member:invoke:0",
@@ -8458,14 +8458,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#testproviderfactory",
             "owner": "documentation automation",
-            "factsSha256": "3cb78b62aab30a1a9d3349856a0868f91988968bde74c55ce151b416527a01b6"
+            "factsSha256": "2404dbe66e4244ad79975741d5fdbbd1c0f8e6664fb732228fa20c3be8721924"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:TestProviderInstance",
             "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
             "target": "docs/site/reference/sdk-exports.md#testproviderinstance",
             "owner": "documentation automation",
-            "factsSha256": "1d7627b7174d2a1adb92c3cce6ecfb1e3b00404d45d28a5e0087f5657e7390c7"
+            "factsSha256": "8a9c31a52fe59fac04c08e46a66b4b42797d76901ec7900db5deaf7d88fd37a3"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:.:TestProviderInstance:member:cleanup:0",
@@ -8486,7 +8486,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/source-approval.ts",
             "target": "docs/site/reference/sdk-exports.md#approvedsource",
             "owner": "documentation automation",
-            "factsSha256": "ed5ff52c728d4b110c19f7ce0f647354f6a2fd209ba0536d50ee484e40aa4760"
+            "factsSha256": "ab74236fe5ed73a77b165ee1b0cd890e489512a11206f0489ba715b21fbd5596"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fsource-approval.ts:.:approvedSource:member:return.sourceRevision:0",
@@ -8507,14 +8507,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/source-approval.ts",
             "target": "docs/site/reference/sdk-exports.md#readboundartifact",
             "owner": "documentation automation",
-            "factsSha256": "3d3b89ad02f14c42763d0d68c12687dc48ae20bb1da57bb00dbe90476ab05447"
+            "factsSha256": "acf52fd585187d88af98fe4016c0e1a0013ec298b0e93d2dd7e533988ec74e73"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fsource-preflight.ts:.:parseSourceBinding",
             "source": "skills/common/plugin-runtime/sdk/src/source-preflight.ts",
             "target": "docs/site/reference/sdk-exports.md#parsesourcebinding",
             "owner": "documentation automation",
-            "factsSha256": "459f6808e85ab386f85c55cc62e0bfe985eeb097a40af9cd91010d4c35b51ed2"
+            "factsSha256": "40bc9641d0586a820a2d3c972abb6ef5e33b7e3e26ab4c735da18111d83a1f6a"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fsource-preflight.ts:.:SourceBinding",
@@ -8556,14 +8556,14 @@
             "source": "skills/common/plugin-runtime/sdk/src/source-preflight.ts",
             "target": "docs/site/reference/sdk-exports.md#sourcepreflight",
             "owner": "documentation automation",
-            "factsSha256": "871a33474cb2d8885b8001c2f015aaa475ae72ab0bd924d641cb9e942cae43fd"
+            "factsSha256": "bed2ef2f01b5f366787f668e984d9bd802025a5c19cbd6816af129783375ba61"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fsource-revision.ts:.:resolveImplementationRevisions",
             "source": "skills/common/plugin-runtime/sdk/src/source-revision.ts",
             "target": "docs/site/reference/sdk-exports.md#resolveimplementationrevisions",
             "owner": "documentation automation",
-            "factsSha256": "41bb839b5ce6797fa1320d2d2b0a0ac2c417df806fe23b98a22bd26658f3bb58"
+            "factsSha256": "d0bbe6778e9d2dc1bd670e9962935472591935bc12fbcda1587ef9d21177d0ba"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fsource-revision.ts:.:resolveImplementationRevisions:member:return.base:0",
@@ -8584,7 +8584,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/source-revision.ts",
             "target": "docs/site/reference/sdk-exports.md#resolvesourcerevision",
             "owner": "documentation automation",
-            "factsSha256": "86b580e120b70e3ed8fd43114275b63fb4a3d363bd3514f7acb5df2b4f3a6356"
+            "factsSha256": "f92df2ce7b82fdca0eda2aeaeb18c547077e1acf87449754ffca6a7d42536550"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fsource-revision.ts:.:resolveSourceRevision:member:argument%3Ainput.revision:0",
@@ -8612,77 +8612,77 @@
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#arrayvalue",
             "owner": "documentation automation",
-            "factsSha256": "8668727bf28310681ce446d8bab86ce25becb16a2b6c3d20960a8de2812b39b0"
+            "factsSha256": "a740f8ebb6842de64c08da72139e7cfe8861aa8f62331c844dfbe307e15cdf83"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:canonicalJson",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#canonicaljson",
             "owner": "documentation automation",
-            "factsSha256": "ea42565531d9ae82a7a262d323020ce87a53dc6e3b3dca442fe684b0b0a16266"
+            "factsSha256": "c4f0914f5b565348522b2044a50e211cb375267d9f7164c06c8715c2531cb902"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:objectRecord",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#objectrecord",
             "owner": "documentation automation",
-            "factsSha256": "86add18d167d359c08684e91daaf5bbad061cff441354757d5db56a0f1c5bfc6"
+            "factsSha256": "a3af8a2f348e36d3dc17fa025290a6869a0b22e517c6c342a0a3c16a7066b726"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:OptionalAbsenceReader",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#optionalabsencereader",
             "owner": "documentation automation",
-            "factsSha256": "724031f3a198aa8f096f4676fd22265c8413f5de0e729f061695839a68f99aea"
+            "factsSha256": "284c58cdcf2dfbdc795fc3df2c157a422ca3559cc49f224a599ae52f68b4ab4d"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:PORTABLE_JSON_ENCODING",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#portable_json_encoding",
             "owner": "documentation automation",
-            "factsSha256": "3315fda091a589acbb10e6288291c10cd8e6aa4344ac5bee5c4759a1ae48ff9c"
+            "factsSha256": "10a26cc3961349c14f4e5769eb3ee59a43e9955055e91067c8c07c49689ebfd0"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:portableJson",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#portablejson",
             "owner": "documentation automation",
-            "factsSha256": "8c974f6be5a0e0e396fa893fc02211032c219f20031755f8d78b4f7d50e63739"
+            "factsSha256": "e93c0612cc3117567df820c7c4c975fd20655b14fd5f84f6d2c8e4785e2861b6"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:redactStructuredValue",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#redactstructuredvalue",
             "owner": "documentation automation",
-            "factsSha256": "75dd70ef70e3b2a99143e7a9473f924b3f70becb2df654c1b5e07ffda598836c"
+            "factsSha256": "957af1718c7cc7ae80c1162153e16028e162c0a15890ac636437e728a1549316"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:selectDefinedValue",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#selectdefinedvalue",
             "owner": "documentation automation",
-            "factsSha256": "15b9ed627a99cdb661db38a332adc83791948e36e3973e44355359cf37dee0be"
+            "factsSha256": "7ba49c36513e068499b578d6f647cf0820639d5340be9a3af32ded7fd0bfb14b"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:selectPresentValue",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#selectpresentvalue",
             "owner": "documentation automation",
-            "factsSha256": "d3113a1b770669ecb5aa1c9a89f2990f0192fdb4736dce8b1ee417fa55020491"
+            "factsSha256": "a0b5a48e38947a42cb6140652df5236ad69122fcab59a9db974e4d9646e7b548"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:selectTruthyValue",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#selecttruthyvalue",
             "owner": "documentation automation",
-            "factsSha256": "d996522e9fc915d7914f86ae96984da53b77fd5f810e87eec301d63c4781ce4e"
+            "factsSha256": "2f1470b36e14a89464ea981dff9fec04a92dade1ccdf16f5ff4253f4cc3d5892"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:sha256Bytes",
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#sha256bytes",
             "owner": "documentation automation",
-            "factsSha256": "08c694744e3553a631764c00ec6aeae80f5a670fd99f2f222c41e594cf958675"
+            "factsSha256": "9a490ff81359ab03ab3bb38d8fdd4cf8708378f2ed96353e6ff6fdbc2b4fb625"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:sha256Text",
@@ -8696,7 +8696,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#textvalue",
             "owner": "documentation automation",
-            "factsSha256": "56bd555e5a8131a151ea0ea596bf2a7b992831c22b1ac046adcfaaf972e59aca"
+            "factsSha256": "c776e860df9c5800e2f5d14c6fef0267d3294873601ba81cb5b455a66b09bd8d"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:ValueRecord",

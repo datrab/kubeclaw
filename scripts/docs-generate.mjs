@@ -268,7 +268,7 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
     const description = `${literalText(text)}<br>Inventory meaning status: ${literalText(meaning.status)}`;
     if (!/blocker/u.test(meaning.status)) return description;
     if (!meaning.blockerOwner || !meaning.closureCondition) throw new Error(`swarm collection blocker lacks owner or closure: ${field.path}`);
-    return `${description}<br>Not a completed operator option. Authority owner: ${literalText(meaning.blockerOwner)}.<br>Closure condition: ${literalText(meaning.closureCondition)}<br>Stop before you use unknown keys or assume that empty, omitted or null input is accepted.`;
+    return `${description}<br>Not a completed operator option. Authority owner: ${literalText(meaning.blockerOwner)}.<br>Closure condition: ${literalText(meaning.closureCondition).replace(/charts\/[A-Za-z0-9./#$-]+/gu, coordinate => `<code>${coordinate}</code>`)}<br>Stop before you use unknown keys or assume that empty, omitted or null input is accepted.`;
   };
   const swarmTable = swarm ? table(['Field', 'Type and value', 'Required and constraint authority', 'Owner and consumers', 'Precedence and proof', 'Impact, failure, and closure'], swarm.fields.map((field) => {
     const wrapper = field.required === 'not-applicable-container';

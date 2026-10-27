@@ -7,7 +7,7 @@
       "index": 0,
       "readerQuestion": "Which extension point should I choose for a proposed change?",
       "owner": "plugin-foundation",
-      "sourceSha256": "2ec8302db70443ecb139358c90a03d9a39ce099809e37e44e14f7763961368fb",
+      "sourceSha256": "6418fedfa067c629438930a10d4dd45a2cca3c865b95e130101ea70f5b30806b",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
@@ -25,7 +25,7 @@
       "index": 0,
       "readerQuestion": "Which ordered handoffs prepare, execute and clean up one Worker attempt?",
       "owner": "Worker Core maintainers",
-      "sourceSha256": "081b30dad305f3906583b6b2b8f37a49e64a9a9c4b5c2c6767b7e9ee7157f224",
+      "sourceSha256": "79deff5ab221902930b68f5ab31a1f751d06f4357de39dc3b93ee0070d1b886b",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
@@ -88,7 +88,7 @@
       "index": 1,
       "readerQuestion": "Which handoffs carry a design request from Studio to a recorded result?",
       "owner": "Prism maintainers",
-      "sourceSha256": "c9450e366402e788fa61b6fbdc8672f00fbd06c06ba6c002d9ccd9b7b3722706",
+      "sourceSha256": "59dc6670672d8911f8b951d9499fa74887411e77bf11dc47619bf5a127937374",
       "textAlternative": "The existing text alternative immediately following this diagram; retained visibly in publication."
     },
     {
