@@ -836,11 +836,14 @@ kubectl -n argocd get application "<application>" -o yaml
 Record `spec.source.targetRevision`, `status.sync.revision`, and the operation result revision.
 Confirm that the resolved commit equals the intended immutable source.
 
-The current platform health script can compare a branch name with a resolved commit.
-That comparison can report a false unhealthy result.
-[The continuous GitOps revision mismatch](../status/open-issues.md#continuous-gitops-health-compares-a-branch-name-with-resolved-commit-ids) tracks the correction.
+The current health source handles `targetRevision=main` separately from resolved commit IDs.
+It retains source, destination, successful-operation and workload-health checks.
+Reuse across different `main` revisions requires the marked immutable bundle path and matching applied-source provenance.
 
-Do not bypass that gap by accepting any revision.
+[The continuous GitOps rollout evidence gap](../status/open-issues.md#continuous-gitops-health-still-needs-installed-branch-to-commit-rollout-evidence) remains open.
+Source inspection and declared test cases do not prove the installed rollout, its subsequent wave or stale-operation rejection.
+
+Do not bypass a failed health check by accepting any revision.
 Resolve the branch to the intended commit and record both values.
 
 For rollback, revert the reviewed Git change and sync the compatible prior state.

@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "updated_at": "2026-10-11",
+  "updated_at": "2026-10-27",
   "source_baseline": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
   "purpose": "Single machine-readable authority for currently incomplete technical work. The status generator creates the reader-facing page from this file.",
   "scope": {
@@ -1057,24 +1057,25 @@
     {
       "id": "DOC-AP03-GITOPS-001",
       "origin": "ap03-source-follow-up",
-      "title": "Continuous GitOps health compares a branch name with resolved commit IDs",
+      "title": "Continuous GitOps health still needs installed branch-to-commit rollout evidence",
       "severity": "unassessed",
       "status": "open",
-      "problem": "continuousApplications sets runtime child targetRevision=main, but strict application-health.lua requires status.sync.revision and operationState.syncResult.revision to equal that literal targetRevision. A resolved commit SHA does not equal main.",
-      "impact": "An actually synchronized healthy runtime child reporting its SHA can remain Progressing in the app-of-apps gate and block later waves. This is a source-confirmed mismatch, not an observed live outage.",
+      "problem": "The historical health implementation compared targetRevision=main with resolved commit IDs. Current source treats main separately and binds reported health to the selected source, destination and successful operation. An installed branch-to-commit rollout and its subsequent wave are not established by the retained evidence.",
+      "impact": "The historical comparison could keep a synchronized runtime child Progressing. The current source correction does not prove that the selected installed app-of-apps rollout and later waves complete or that stale operations stay blocked in the target environment.",
       "components": [
         "scripts/gitops-continuous.mjs",
         "charts/gitops/files/application-health.lua",
         "Runtime app-of-apps"
       ],
-      "current_state": "The pinned implementation compares the configured branch name with resolved commit IDs. Existing health tests cover exact commit pins, stale-operation rejection and separate observed platform mode, but contain no positive continuous main-with-resolved-SHA case.",
+      "current_state": "At the recorded ad67f9bb5c75cfa8cc1b926668aec1dd0168452c baseline, the Lua compared the branch name with resolved commit IDs and the cited positive continuous-main case was absent. Current source no longer requires sync.revision to equal the literal main. It still checks the compared repository, path, targetRevision, directory selection and destination, workload health and successful operation. Reuse across different main revisions requires the marked immutable bundle path and matching applied-source provenance. The current test file declares continuous-main positive, prior-bundle, mismatched-operation and immutable-bundle cases. This source inspection is not a newly executed test or an installed rollout result.",
       "remaining_work": [
-        "Bind the selected and actually synchronized immutable revision consistently while continuous manifests track main.",
-        "Preserve stale-operation, source-path, destination, error and drift checks. Removing revision comparisons or switching runtime children to observed mode is not sufficient."
+        "Run the current original Lua fixture test with its supported interpreter and preserve all positive, stale-operation, source, destination, error, drift and immutable-bundle assertions. A test declaration alone is not execution evidence.",
+        "Accept an actual branch-to-commit rollout in a separately authorized target, including the subsequent wave and a stale or mismatched operation. Preserve runtime versus manually observed platform health as separate contracts."
       ],
       "reproduction": [
-        "Invoke the original Lua with spec.source.targetRevision=\"main\", status.sync.status=\"Synced\", status.sync.revision=\"aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa\", health.status=\"Healthy\", operationState.phase=\"Succeeded\" and syncResult.revision set to that same SHA. comparedTo.source must match spec.source including main/path/repoURL/directory.include; comparedTo.destination must match spec.destination. Omit observed mode. Current code returns Progressing.",
-        "Use the immutable-SHA positive fixture in tests/verification/deployment/gitops-health.test.mjs and change only spec.source.targetRevision and comparedTo.source.targetRevision to main. Test current and stale operation revisions separately."
+        "Historical reproduction at ad67f9bb5c75cfa8cc1b926668aec1dd0168452c: set targetRevision and compared source targetRevision to main, retain matching resolved commit and operation identities, and observe the original literal comparison. This is the historical failure, not the current expected result.",
+        "Current local route: run node --test tests/verification/deployment/gitops-health.test.mjs with the supported Lua interpreter. The test file declares the continuous-main resolved-commit positive case and preserves stale source/path/destination/operation negatives. Record actual execution separately.",
+        "In a separately authorized installed environment, bind the selected immutable bundle path, resolved sync commit and successful applied-operation provenance, then observe the later wave and stale-operation rejection."
       ],
       "acceptance_criteria": [
         "The selected real continuous commit can reach Healthy when sync, source binding, successful operation and workload health all match it.",
@@ -1084,8 +1085,10 @@
       "live_validation": "After correction, accept an actual branch-to-SHA rollout with the subsequent wave and a stale operation. Lua fixtures alone do not establish live acceptance.",
       "dependencies": [],
       "evidence": {
-        "assessment": "The inspection covered both original sources and the existing health test. Deterministic mismatch follows from string comparison. No Lua or Argo execution occurred.",
-        "original_scope": "Additional AP03 follow-up; outside the original 154 and five separately closed integration findings."
+        "assessment": "Historical source inspection established the original branch/SHA mismatch. Fresh complete current Lua, continuous generator and test-source inspection identifies the corrected selection conditions and declared positive/negative fixtures. No new Lua or Argo execution occurred in this independent review.",
+        "original_scope": "Additional AP03 follow-up; outside the original 154 and five separately closed integration findings.",
+        "current_source_scope": "Current code inspection only; installed rollout and later-wave evidence remain pending.",
+        "historical_failure_preserved": "The original ad67 source comparison and historical reproduction remain above; this update does not rewrite that old failure or infer live acceptance."
       },
       "sources": [
         {
@@ -1111,6 +1114,24 @@
           "commit": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
           "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/blueprint/review-ledger.jsonl",
           "scope": "Commit-pinned source or historical evidence; current interpretation and limits are stated above."
+        },
+        {
+          "path": "charts/gitops/files/application-health.lua",
+          "commit": "5c661747f63c67b8adb05c4dbc4f9bf7673d3a0c",
+          "url": "https://github.com/datrab/kubeclaw/blob/5c661747f63c67b8adb05c4dbc4f9bf7673d3a0c/charts/gitops/files/application-health.lua",
+          "scope": "Complete current source inspected on 2026-10-27. Source correction and declared fixtures only; not newly executed Lua or installed Argo rollout proof. Historical ad67 references above remain historical."
+        },
+        {
+          "path": "scripts/gitops-continuous.mjs",
+          "commit": "5c661747f63c67b8adb05c4dbc4f9bf7673d3a0c",
+          "url": "https://github.com/datrab/kubeclaw/blob/5c661747f63c67b8adb05c4dbc4f9bf7673d3a0c/scripts/gitops-continuous.mjs",
+          "scope": "Complete current source inspected on 2026-10-27. Source correction and declared fixtures only; not newly executed Lua or installed Argo rollout proof. Historical ad67 references above remain historical."
+        },
+        {
+          "path": "tests/verification/deployment/gitops-health.test.mjs",
+          "commit": "5c661747f63c67b8adb05c4dbc4f9bf7673d3a0c",
+          "url": "https://github.com/datrab/kubeclaw/blob/5c661747f63c67b8adb05c4dbc4f9bf7673d3a0c/tests/verification/deployment/gitops-health.test.mjs",
+          "scope": "Complete current source inspected on 2026-10-27. Source correction and declared fixtures only; not newly executed Lua or installed Argo rollout proof. Historical ad67 references above remain historical."
         }
       ]
     },
