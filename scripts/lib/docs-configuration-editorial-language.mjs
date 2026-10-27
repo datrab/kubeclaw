@@ -1,5 +1,6 @@
 // Maintained editorial wording, separate from retained source facts and qualifications.
 export const editorialOwners = Object.freeze({
+  unusedHelmExampleLeaf:"This leaf has no recorded receiving use in the locally bound chart. This field-level result does not mean that its complete values file is inactive. Other fields in the same file can have consumers. Do not treat this leaf as effective configuration until its owner proves a receiving contract or removes the unused value. This statement does not prove a successful render or deployment.",
   ed25519AcceptedForm:'A non-empty Node-readable Ed25519 public key. PEM text is a supported key encoding.',
   kubernetesHostDefault:'No repository default. This consumer passes through the Kubernetes service host value when present.',
   kubernetesPortDefault:'No repository default in this consumer. It passes through the Kubernetes service port value when present.',

@@ -2,6 +2,7 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {retainedHelmIntroduction,environmentConsumerGuidance} from './docs-configuration-reference-guidance.mjs';
+import { editorialOwners } from './docs-configuration-editorial-language.mjs';
 import {yamlFieldPathTokens} from './docs-retained-yaml-field-path.mjs';
 export function table(headers, rows) {
   const escape = (value) => String(value ?? '').replaceAll('|', '\\|').replaceAll('\n', '<br>');
@@ -108,11 +109,17 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     const linked = match ? sourceLink(match[1], Number(match[2]), source) : sourceLink(source, 1, source);
     return details.length > 0 ? `${linked}; ${details.join('; ')}` : linked;
   };
-  const readerMeaning = (field) => {
+  const readerMeaning = (field, sourceClass) => {
     const meaning = literalText(field.meaning.text);
     const collection = field.meaning.apiCollectionAuthority
       ? `<br>[Exact API collection contract](#${collectionSchemaAnchor(field.meaning.apiCollectionAuthority)})`
       : '';
+    if (banner && sourceClass === 'helm-example' && field.required === 'not-applicable-unused'
+      && ['inactive-profile', 'unused-field'].includes(field.meaning.status)) {
+      const historical = field.meaning.status === 'inactive-profile'
+        ? 'The recorded inactive-profile marker is limited here to this unused leaf. It does not prove that the complete file is unselected.<br>' : '';
+      return `${historical}${literalText(editorialOwners.unusedHelmExampleLeaf)}<br>Owner: ${literalText(field.meaning.blockerOwner)}. Required before use: ${literalText(field.meaning.closureCondition)}<br>Recorded source evidence: ${meaningEvidence(field.meaning.evidence)}`;
+    }
     if (field.meaning.status === 'inactive-profile') return `${meaning}<br>This file is not selected by a checked-in deployment path.`;
     if (/blocker/u.test(field.meaning.status)) return `${meaning}${collection}<br>This field is not ready for operator use because its receiving behavior is not yet proved.<br>Owner: ${field.blockerOwner}. Required before use: ${field.closureCondition}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}`;
     const authority = field.meaning.apiAuthority ? `<br>Behavior authority: ${field.meaning.apiAuthority}` : '';
@@ -199,7 +206,7 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     const links = sourceRangeLinks(file.path);
     return `<details>\n<summary><code>${file.path}</code> — ${fields.length} discovered fields, including lists and maps</summary>\n\nSource evidence:\n\n${links}\n\n${table(['Field', 'Behavior', 'Type and selected value', 'Required state and limits', 'Source and runtime owner', 'Receiving source', 'Precedence and effective value', 'Change impact and failure'], fields.map((field) => [
       `\`${field.path}\``,
-      `${readerMeaning(field)}${literalKeyOverride(field, file.sourceClass)}`,
+      `${readerMeaning(field, file.sourceClass)}${literalKeyOverride(field, file.sourceClass)}`,
       `\`${field.type}\`<br>${selectedValue(field.value)}<br>${selectedValueType(field)}`,
       `${requiredState(field)}: ${field.requiredReason}<br>${field.constraints.length ? field.constraints.map(literalText).join('<br>') : 'No additional repository constraint.'}`,
       `Source: ${field.ownerComponent} (\`${field.ownerEvidence}\`)<br>Runtime: ${field.runtimeOwner}`,
@@ -262,7 +269,7 @@ ${table(['Class', 'Count', 'Meaning'], [
   ['Active operator configuration leaves', configurationValues.totals.activeOperatorConfigurationLeaves, 'Local chart, external chart, payload, or loader configuration after API-object fields and inactive profiles are separated.'],
   ['Fields without a complete behavior contract', configurationValues.totals.activeMeaningBlockers, 'These fields are not ready for operator use until the receiving behavior and failure result are proved.'],
   ['Opaque payloads without a proved reader', configurationValues.totals.embeddedPayloadContractsNeedingConsumerProof, 'Kubernetes stores these ConfigMap or Secret values, but the application reader must define their meaning.'],
-  ['Inactive profile leaves', configurationValues.totals.inactiveProfileLeaves, 'No checked-in active binding proves runtime effect.'],
+  [banner ? 'Recorded inactive-profile leaf markers' : 'Inactive profile leaves', configurationValues.totals.inactiveProfileLeaves, banner ? 'This count records historical leaf classifications. A field-level unused marker does not prove that all other fields in its file are inactive.' : 'No checked-in active binding proves runtime effect.'],
 ])}
 ## Discovered Value Sources
 

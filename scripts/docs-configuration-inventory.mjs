@@ -2546,8 +2546,10 @@ function yamlMeaning(context, exactPath, valueType, semantics, authority) {
   const inactive = semantics.required === 'not-applicable-unused'
     || (semantics.consumers.length > 0 && semantics.consumers.every((item) => item?.inactiveProfile === true || item?.kind === 'not-applicable'));
   if (inactive) return {
-    status: 'inactive-profile',
-    text: context.sourcePath === 'my-values/infra/litellm-values.yaml'
+    status: context.sourceClass === 'helm-example' && semantics.required === 'not-applicable-unused' ? 'unused-field' : 'inactive-profile',
+    text: context.sourceClass === 'helm-example' && semantics.required === 'not-applicable-unused'
+      ? editorialOwners.unusedHelmExampleLeaf
+      : context.sourcePath === 'my-values/infra/litellm-values.yaml'
       ? 'This leaf belongs to an unselected Helm-style LiteLLM profile. The current deployment reads my-values/infra/litellm-config.yaml and renders my-values/infra/litellm-deployment.yaml. Editing this profile changes no checked-in deployment path.'
       : `This leaf belongs to the inactive profile ${context.sourcePath}. No checked-in render or deploy path selects that profile, so operators must not treat the leaf as effective configuration.`,
     evidence: context.sourcePath === 'my-values/infra/litellm-values.yaml'
@@ -3016,7 +3018,7 @@ function buildYamlInventory() {
     || field.closureCondition !== field.meaning.closureCondition).length, 0,
   'quality gate: top-level YAML blocker metadata must match the final field meaning');
   assert.equal(allFields.filter((field) => !/blocker/u.test(field.meaning.status)
-    && field.meaning.status !== 'inactive-profile'
+    && !['inactive-profile', 'unused-field'].includes(field.meaning.status)
     && (field.blockerOwner !== null || field.closureCondition !== null)).length, 0,
   'quality gate: resolved YAML meanings must not retain stale blocker metadata');
   return {
@@ -3049,7 +3051,7 @@ function buildYamlInventory() {
       kubernetesApiObjectLeaves: leafFields.filter((field) => field.meaning.status.startsWith('deployment-')).length,
       kubernetesOperationalLeaves: leafFields.filter((field) => field.meaning.status === 'deployment-operational-authority').length,
       kubernetesStructuralLeaves: leafFields.filter((field) => field.meaning.status === 'deployment-structural-authority').length,
-      activeOperatorConfigurationLeaves: leafFields.filter((field) => !field.meaning.status.startsWith('deployment-') && field.meaning.status !== 'inactive-profile').length,
+      activeOperatorConfigurationLeaves: leafFields.filter((field) => !field.meaning.status.startsWith('deployment-') && !['inactive-profile', 'unused-field'].includes(field.meaning.status)).length,
       unknownLeafRuntimeOwner: unknownLeafRuntimeOwners,
       unknownLeafConsumer: unknownLeafConsumers,
       unknownLeafRequired,

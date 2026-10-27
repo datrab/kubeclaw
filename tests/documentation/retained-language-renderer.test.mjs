@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
+import { editorialOwners } from '../../scripts/lib/docs-configuration-editorial-language.mjs';
 import { loadRetainedConfigurationSnapshot } from '../../scripts/lib/docs-retained-source.mjs';
 import { buildHistoricalOwners } from '../../scripts/lib/docs-retained-configuration-owners.mjs';
 import { projectRetainedInventoryLanguage } from '../../scripts/lib/docs-retained-configuration-projection.mjs';
@@ -55,6 +56,20 @@ test('full historical renderer reproduces original pages and preserves all rows 
   assert.equal(countFields(changed), 3813);
   assert.equal(projected.runtimeInputs.environment.length, 435);
   assert.equal(projected.changes.length, 106);
+  for (const [file, fieldPath] of [['examples/buster-values.yaml', '$.serviceAccount.name'], ['examples/nova-values.yaml', '$.processor.enabled']]) {
+    const section = page => { const start = page.indexOf(`<summary><code>${file}</code>`); assert(start >= 0); return page.slice(start, page.indexOf('</details>', start)); };
+    const currentRow = section(changed).split('\n').find(line => line.startsWith(`| \`${fieldPath}\` |`));
+    const historicalRow = section(helm).split('\n').find(line => line.startsWith(`| \`${fieldPath}\` |`));
+    assert(currentRow && historicalRow);
+    assert(currentRow.includes(editorialOwners.unusedHelmExampleLeaf), 'unused field scope is not visible');
+    assert(currentRow.includes('Required before use: Add a source-backed template/Application/deploy binding or remove the unused value.'));
+    assert(!currentRow.includes('No checked-in render or deploy path selects that profile'));
+    assert(!currentRow.includes('This file is not selected by a checked-in deployment path.'));
+    assert(historicalRow.includes('No checked-in render or deploy path selects that profile'), 'historical baseline was silently rewritten');
+    const raw = original.configurationValues.files.find(item => item.path === file).documents.flatMap(item => item.fields).find(item => item.path === fieldPath);
+    assert.equal(raw.meaning.status, 'inactive-profile', 'protected historical classification changed');
+  }
+
   assert(projected.preservation.allNonEditorialPointersEqual);
   assert(projected.preservation.secretsEqual);
   assert.throws(() => renderRetainedConfigurationReferences({ ...args, sourceRevision: artifactRevision }),
