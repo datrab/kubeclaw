@@ -643,3 +643,81 @@ instead of silently skipping them.
 - Removal checks every remaining state owner.
 - Unavailable and live checks remain explicit.
 - Every behavior claim links to current contract, implementation, configuration, or test evidence.
+
+
+## Prepare The Plugin-System Release Checks
+
+Use the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)
+to prepare the isolated checkout, locked dependencies, build tools, and the
+prerequisites of each selected command. The following maintained release checks
+are not unconditional starting commands and are not a record of a green release.
+Stop the ordered chain at its first nonzero exit and retain the failure.
+
+Before running `verify:plugin-system-v2`, have the host administrator provision a
+writable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that
+actual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:
+exporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`
+itself. The selected parent must contain no processes in `cgroup.procs` and must
+have `memory` enabled in `cgroup.subtree_control`.
+
+The verifier creates per-invocation children. It needs writable memory controls
+and `cgroup.kill`, plus readable memory and population event files. The host must
+also provide the native sandbox and process-tree interfaces used by the isolation
+checks. A writable ordinary directory does not substitute for the cgroup-v2
+filesystem or delegation.
+
+After the real host preparation, select the commands required by the change and
+release scope. When this complete release chain is required, run from the clean
+repository root with the handbook's prerequisites already satisfied:
+
+```sh
+set -eu
+# Replace this example with the actual host-provided delegated subtree.
+export KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification
+npm run verify:plugin-system-v2
+npm run typecheck:skills
+npm run docs:check
+node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"
+```
+
+The npm chain passes the required root explicitly to the phase11, isolation, and
+external-engine gates. Missing or empty configuration fails; an invalid root
+fails the unchanged isolation validator. If the host cannot provide the required
+facilities, report those checks as blocked and use a host that can run the same
+unmodified gates. Do not skip or simulate isolation checks. A zero exit from a
+narrower check does not discharge the missing release check.
+
+Retain each command, its selected source revision, actual host prerequisites,
+exit code, output, and remaining state. These instructions assert no delegated
+host, sandbox run, deployment verification, model run, or release result.
+
+> **Source evidence — release orchestration and isolation prerequisites**
+>
+> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).
+> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).
+> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).
+> Status: source-backed required preparation, not observed successful execution.
+
+
+### Retain The Model-Backed Cutover Obligation
+
+The retained developer release instruction deliberately reserves
+`tests/verification/e2e/run-real-pipeline-e2e.mjs` for release cutover because it
+consumes external agent capacity. This records the inherited scheduling decision
+and its rationale, not a newly observed model run or proof of a currently enforced
+CI scheduling policy. Do not silently replace that obligation with compile-only,
+contract-only, or package-local checks.
+
+The associated migration instruction defers the real system run until active
+registrations, package parity, runtime contracts, and assembled bundles are ready;
+it does not require a real model run for every package edit. The current
+[real-system verification route](../reference/verification-commands.md) selects
+the full harness. Prepare its real infrastructure, credentials, gateway and agent
+capacity before dispatch. A source inspection or capabilities-only probe is not
+the full successful run.
+
+The current release owner's capacity reservation and cutover scheduling authority
+are not established by the harness implementation or by this historical decision.
+Keep that authority and actual execution evidence explicit in the release record;
+if they are unavailable, report the release proof as not ready. This page does not
+claim a completed cutover, live model verification, or an approved release.
