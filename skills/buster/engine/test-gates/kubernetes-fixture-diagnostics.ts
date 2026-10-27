@@ -24,10 +24,23 @@ export function fixtureDiagnosticText(value: unknown, privateValues: readonly st
   text = text.replace(/[\u0000-\u0008\u000b-\u001f\u007f]/gu, '');
   return text.length > 1024 ? text.slice(0, 1024) + '[TRUNCATED]' : text;
 }
+// Optional project-owned marker protocol. Exact whole-message matching avoids
+// publishing arbitrary phase names, paths, arguments or captured private text.
+// Self-reported phase is a diagnostic hint, not proof of startup/root cause.
+export function fixtureTerminationCategories(value: unknown): string[] {
+  if (typeof value !== 'string') return [];
+  switch (value) {
+    case 'BUSTER_FIXTURE_PHASE=setup\n': return ['setup'];
+    case 'BUSTER_FIXTURE_PHASE=pre-exec\n': return ['pre-exec'];
+    case 'BUSTER_FIXTURE_PHASE=runtime\n': return ['runtime'];
+    default: return [];
+  }
+}
 function state(value: unknown, privateValues: readonly string[]): RecordValue {
   const input = record(value);
   return Object.fromEntries(['waiting', 'running', 'terminated'].filter(key => input[key]).map(key => [key,
-    { ...fields(input[key], ['reason', 'exitCode', 'signal', 'startedAt', 'finishedAt']), message: fixtureDiagnosticText(record(input[key]).message, privateValues) }]));
+    { ...fields(input[key], ['reason', 'exitCode', 'signal', 'startedAt', 'finishedAt']),
+      ...(key === 'terminated' ? { terminationCategories: fixtureTerminationCategories(record(input[key]).message) } : {}), message: fixtureDiagnosticText(record(input[key]).message, privateValues) }]));
 }
 // Resource-only projection of admitted values, not a full spec or capacity verdict.
 function resourceEvidence(value: unknown): RecordValue {

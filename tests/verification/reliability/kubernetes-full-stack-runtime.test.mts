@@ -554,3 +554,31 @@ test('failed private regular containers expose only bounded fixed startup hints'
   assert.ok(result.logs.every(log => log.text === null && log.omitted === 'unresolved-private-sources'));
   assert.ok(!JSON.stringify(result).includes(canary));
 });
+
+
+test('termination phase hints use exact closed vocabulary and survive private message withholding', async () => {
+  const { fixtureTerminationCategories, collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  for (const phase of ['setup', 'pre-exec', 'runtime']) {
+    assert.deepEqual(fixtureTerminationCategories(`BUSTER_FIXTURE_PHASE=${phase}\n`), [phase]);
+  }
+  const canary = 'opaque-secret-canary';
+  for (const text of [canary, `BUSTER_FIXTURE_PHASE=${canary}\n`,
+    `BUSTER_FIXTURE_PHASE=pre-exec\n${canary}`, `${canary}BUSTER_FIXTURE_PHASE=pre-exec\n`,
+    'BUSTER_FIXTURE_PHASE=pre-exec', 'BUSTER_FIXTURE_PHASE=pre-exec\n\n', null]) {
+    assert.deepEqual(fixtureTerminationCategories(text), []);
+  }
+  const result = await collectFixtureFailureEvidence('test', new AbortController().signal, async args => {
+    if (args[0] === 'logs') return canary;
+    if (args[1] === 'pods') return JSON.stringify({ items: [{ metadata: { name: 'app' },
+      spec: { containers: [{ envFrom: [{ secretRef: { name: 'private' } }] }] },
+      status: { containerStatuses: [{ name: 'app', state: { terminated: { exitCode: 1,
+        message: 'BUSTER_FIXTURE_PHASE=pre-exec\n' } }, lastState: { terminated: { exitCode: 1,
+        message: `BUSTER_FIXTURE_PHASE=runtime\n${canary}` } } }] } }] });
+    return JSON.stringify({ items: [] });
+  });
+  const container = (result.pods[0].containerStatuses as any[])[0];
+  assert.deepEqual(container.state.terminated.terminationCategories, ['pre-exec']);
+  assert.deepEqual(container.lastState.terminated.terminationCategories, []);
+  assert.equal(container.state.terminated.message, '[OMITTED: unresolved private sources]');
+  assert.equal(JSON.stringify(result).includes(canary), false);
+});
