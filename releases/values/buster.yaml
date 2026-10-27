@@ -1,4 +1,4 @@
-# Generated from release 8a6fdbbd6f396b69d42607bbaba8fdbc1bbe9090 and byte-matched source configuration; do not edit.
+# Generated from release 08ceb103d23d0c8bce37bc9038ad0aacf76a1780 and byte-matched source configuration; do not edit.
 agentRole: buster
 gateway:
   startupDoctor:
@@ -30,7 +30,7 @@ initSetup:
       memory: 8Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-buster-gateway
-  digest: sha256:133a43055ad37ddd690f77f4ff8b04de3319f9b095fed5c3d179aadf712520d5
+  digest: sha256:4d36cf581532137d46a9744817d1bac827504fedbb198c485298d27757bd1a8d
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -38,13 +38,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-40583424839-1/buster-8a6fdbbd6f396b69d42607bbaba8fdbc1bbe9090.tgz
-  expectedCommit: 8a6fdbbd6f396b69d42607bbaba8fdbc1bbe9090
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-40591869710-1/buster-08ceb103d23d0c8bce37bc9038ad0aacf76a1780.tgz
+  expectedCommit: 08ceb103d23d0c8bce37bc9038ad0aacf76a1780
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 3cc8219161298d5e3a4e2bf8d4007d634d1ffa19a7f1d9c6972fcc42c6328887
+  sha256: ceb9b21204e0f029368c64f36494c17d430432d039f139b2c14d1050e14289dc
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-buster
@@ -92,7 +92,7 @@ service:
       targetPort: buster-plan
 extraContainers:
   - name: buster-v2-runtime
-    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:4e9a2d93445190c08c8a91f165cef34b1b65add7ac7a5b0ed7530623f70e4e2e
+    image: ghcr.io/datrab/kubeclaw-buster-runtime@sha256:04247db2532a54cabfeba111c9161cb8858e21d0e92a34450a891e2c5b7bc76a
     imagePullPolicy: Always
     env:
       - name: BUSTER_DIAGNOSIS_GATEWAY_TOKEN
@@ -102,7 +102,7 @@ extraContainers:
             key: gatewayToken-buster
       - name: BUSTER_FIXTURE_FAILURE_DIAGNOSIS
         value: >-
-          {"targetId":"buster-diagnosis","tokenEnvironmentVariable":"BUSTER_DIAGNOSIS_GATEWAY_TOKEN","timeoutMs":120000,"readOnlyPolicyReference":"buster-ops-bearer:test-prefix-read-only-tools","target":{"endpoint":"http://127.0.0.1:18789/tools/invoke","tokenSecret":"buster-diagnosis.gateway","runtime":"subagent","agentId":"buster-diagnosis","agentRole":"buster-diagnosis","model":"openai/gpt-6.1-sol","thinking":"high","cwd":"/home/node/.openclaw/workspace","repositoryRoot":"/home/node/.openclaw/workspace","resultPathPrefix":".swarm/diagnosis-results","collectorMode":true}}
+          {"targetId":"buster-diagnosis","tokenEnvironmentVariable":"BUSTER_DIAGNOSIS_GATEWAY_TOKEN","timeoutMs":120000,"readOnlyPolicyReference":"buster-ops-bearer:test-prefix-read-only-tools","target":{"endpoint":"http://127.0.0.1:18789/tools/invoke","tokenSecret":"buster-diagnosis.gateway","runtime":"subagent","agentId":"buster-diagnosis","agentRole":"buster-diagnosis","model":"openai/gpt-6.1-sol","thinking":"high","cwd":"/home/node/.openclaw/workspace","repositoryRoot":"/home/node/.openclaw/workspace","resultPathPrefix":".swarm/diagnosis-results","collectorMode":false,"terminalOnly":true}}
       - name: BUSTER_V2_TOKEN
         valueFrom:
           secretKeyRef:
@@ -248,7 +248,7 @@ busterNamespaceBroker:
       - prism-test-ghcr
     image:
       repository: ghcr.io/datrab/kubeclaw-namespace-controller
-      digest: sha256:1231bcba156a779b7b6ab1f7a68b5b323d1aa5db06757b332cbbd1350e7d614c
+      digest: sha256:91422b6fdbc8d573cec4f4da25420ae740a4ada9d1f275247e37d7fc76f2abf8
       tag: ''
       pullPolicy: IfNotPresent
 resources:
