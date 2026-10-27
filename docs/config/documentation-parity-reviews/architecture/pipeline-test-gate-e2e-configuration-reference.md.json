@@ -1,0 +1,168 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-review.v1",
+  "source": {
+    "originalPath": "docs/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+    "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "129ee6aec3dab384ac9c0cb32fbb0816efce756f",
+    "extractionDigest": "7ba4d343f9086f69490f51ec03a0bc4df5a471e4e59285f72225877787016fe8",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewer": {
+    "id": "parity-reviewer:buster-suite-end-to-end",
+    "assignmentId": "parity-assignment:267bccb8b20f6e3f503276f01318975ef523959e426ca6c4f7877b07b5601dc6",
+    "freshContext": true,
+    "readOnly": true,
+    "provenance": {
+      "kind": "repository-review-assignment",
+      "revision": "4178d6ec07cac5e4b903126f9daba81aab908949",
+      "actorId": "parity-reviewer:buster-suite-end-to-end"
+    }
+  },
+  "decisionSha256": "ab5559ced582a2bf3bea395256b544f1f7d0b7c1a635e739bde0330e5ac1fdc0",
+  "contentRoot": "029d086e6008c3933e028a6a84041704af0914ee946c486d5fcbe2189c09e657",
+  "claimIds": [
+    "e2e-config:dpu_8a5aa7d3ce27327d8c3f0e250ac9fd9b:0",
+    "e2e-config:dpu_0cf321c6d6be3c2cecf879a14bbd3d99:0",
+    "e2e-config:dpu_cf282bba72993db5ad4d25fb604f398e:0",
+    "e2e-config:dpu_cf282bba72993db5ad4d25fb604f398e:1",
+    "e2e-config:dpu_5814ae9086b3e3549b91ea719d56a122:0",
+    "e2e-config:dpu_5814ae9086b3e3549b91ea719d56a122:1",
+    "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:0",
+    "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:1"
+  ],
+  "reviewedRevision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+  "classificationVerdict": "PASS",
+  "claimVerdicts": [
+    {
+      "claimId": "e2e-config:dpu_8a5aa7d3ce27327d8c3f0e250ac9fd9b:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "e2e-config:dpu_0cf321c6d6be3c2cecf879a14bbd3d99:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "e2e-config:dpu_cf282bba72993db5ad4d25fb604f398e:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "e2e-config:dpu_cf282bba72993db5ad4d25fb604f398e:1",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "e2e-config:dpu_5814ae9086b3e3549b91ea719d56a122:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "e2e-config:dpu_5814ae9086b3e3549b91ea719d56a122:1",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:1",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    }
+  ],
+  "visualVerdicts": [],
+  "activeDependencyReview": {
+    "reviewedRevision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+    "reviewedTree": "950a54a1f276cdce811786908ec5dee3321c2730",
+    "contentRoot": "029d086e6008c3933e028a6a84041704af0914ee946c486d5fcbe2189c09e657",
+    "scope": {
+      "paths": [
+        "docs/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+        "docs/_legacy-source/architecture/pipeline-test-gate-e2e-configuration-reference.md"
+      ],
+      "risks": [
+        "dynamic-configuration",
+        "generated-paths",
+        "runtime-lookup",
+        "external-consumers"
+      ]
+    },
+    "methods": [
+      {
+        "kind": "manual-inspection",
+        "detail": "dynamic-configuration: Compared the complete775byte original Markdown with its five original units/eight atomic claims and actual canonical authority/reader-target bindings. The old file is a superseded navigation pointer containing no configuration values, executable command or secret input. Inspected the pinned provider generator input selection and exact schema freshness branch; values come from manifests/schemas, not this pointer. This comparison and current static scan do not prove arbitrary computed configuration consumers absent."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "generated-paths: Inspected actual publicationPages selector: only explicitly classified docs/site Markdown enters reader publication; old original/extracted paths are outside its source root. Current full177page publication manifest contains neither path. Native extraction/blueprint provenance remains intentional metadata, not evidence that all generated programs lack dynamic consumers. No source deletion or path-exclusion change proposed."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "runtime-lookup: Inspected full Nova entrypoint and registry discovery: direct entry selects the product CLI; discovery selects configured installation directories and plugin.json manifests rather than this Markdown reference. Compared the actual root command map documentation commands and unchanged selected loader files. Full current original reference scan binds both old paths and every current scanned file; undeclared computed runtime lookups remain outside static proof."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "external-consumers: Compared the full authoritative route registry, exact native redirect decision and original/canonical destinations. No historical public route is declared, so no redirect is invented; current10-end-to-end-suite and kubeclawplaywright1 anchors are actual author-validator checked headings. Unknown third-party links and dynamic external consumers are not disproved. AP10 removal and external deployment are separate and unapproved. Compared both exact original/extracted file paths with every current public route record and the canonical reference targets; the full registry declares no historical public source path, and no external ownership or deployment observation is invented."
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "manual-observation",
+        "detail": "Compared the complete775byte original Markdown with its five original units/eight atomic claims and actual canonical authority/reader-target bindings. The old file is a superseded navigation pointer containing no configuration values, executable command or secret input. Inspected the pinned provider generator input selection and exact schema freshness branch; values come from manifests/schemas, not this pointer. This comparison and current static scan do not prove arbitrary computed configuration consumers absent."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected actual publicationPages selector: only explicitly classified docs/site Markdown enters reader publication; old original/extracted paths are outside its source root. Current full177page publication manifest contains neither path. Native extraction/blueprint provenance remains intentional metadata, not evidence that all generated programs lack dynamic consumers. No source deletion or path-exclusion change proposed."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected full Nova entrypoint and registry discovery: direct entry selects the product CLI; discovery selects configured installation directories and plugin.json manifests rather than this Markdown reference. Compared the actual root command map documentation commands and unchanged selected loader files. Full current original reference scan binds both old paths and every current scanned file; undeclared computed runtime lookups remain outside static proof."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Compared the full authoritative route registry, exact native redirect decision and original/canonical destinations. No historical public route is declared, so no redirect is invented; current10-end-to-end-suite and kubeclawplaywright1 anchors are actual author-validator checked headings. Unknown third-party links and dynamic external consumers are not disproved. AP10 removal and external deployment are separate and unapproved. Compared both exact original/extracted file paths with every current public route record and the canonical reference targets; the full registry declares no historical public source path, and no external ownership or deployment observation is invented."
+      },
+      {
+        "kind": "scanner-result",
+        "detail": "Inspected and compared actual unchanged original full249-source reference scan at 6c44dd840b2f19790003d6060e05dd237e1f4adb over 5513 Git-bound input files. Both original/extracted paths have zero active reference matches; exact scanner input root 03fde05f3f3d1ba38601ca15d0d4969ba9481006cddd697e6fbcaf5ef57b303a binds their whole frozen current input vector. Native metadata/extraction provenance is intentionally scoped by unchanged original control; no arbitrary dynamic or external absence claimed."
+      }
+    ],
+    "findings": [],
+    "scanner": {
+      "version": "kubeclaw-documentation-active-dependency-scanner.v2",
+      "searchedPaths": [
+        "docs/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+        "docs/_legacy-source/architecture/pipeline-test-gate-e2e-configuration-reference.md"
+      ],
+      "scannedFileCount": 5513,
+      "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
+      "scannerInputRoot": "03fde05f3f3d1ba38601ca15d0d4969ba9481006cddd697e6fbcaf5ef57b303a",
+      "matches": []
+    },
+    "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
+    "verdict": "PASS"
+  },
+  "verdict": "PASS",
+  "findings": []
+}

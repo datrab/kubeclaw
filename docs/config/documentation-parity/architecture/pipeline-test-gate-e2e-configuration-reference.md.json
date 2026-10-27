@@ -1,0 +1,391 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+    "legacyPath": "docs/_legacy-source/architecture/pipeline-test-gate-e2e-configuration-reference.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "129ee6aec3dab384ac9c0cb32fbb0816efce756f",
+    "extractionDigest": "7ba4d343f9086f69490f51ec03a0bc4df5a471e4e59285f72225877787016fe8",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewedRevision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+  "author": {
+    "id": "parity-author:buster-suite-end-to-end",
+    "assignmentId": "parity-assignment:267bccb8b20f6e3f503276f01318975ef523959e426ca6c4f7877b07b5601dc6"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/architecture/pipeline-test-gate-e2e-configuration-reference",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "No authoritative pre-registry public route is declared. The complete navigation pointer is mapped to real current suite/provider anchors; obsolete source fragment end-to-end is replaced by actual10-end-to-end-suite, not falsely declared valid or turned into an invented redirect."
+  },
+  "visualEvidence": [],
+  "contentRoot": "029d086e6008c3933e028a6a84041704af0914ee946c486d5fcbe2189c09e657",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_8a5aa7d3ce27327d8c3f0e250ac9fd9b",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "e2e-config:dpu_8a5aa7d3ce27327d8c3f0e250ac9fd9b:0",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 42
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_0cf321c6d6be3c2cecf879a14bbd3d99",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "e2e-config:dpu_0cf321c6d6be3c2cecf879a14bbd3d99:0",
+          "reasonCode": null,
+          "byteStart": 43,
+          "byteEnd": 62
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_cf282bba72993db5ad4d25fb604f398e",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "e2e-config:dpu_cf282bba72993db5ad4d25fb604f398e:0",
+          "reasonCode": null,
+          "byteStart": 63,
+          "byteEnd": 111
+        },
+        {
+          "kind": "claim",
+          "claimId": "e2e-config:dpu_cf282bba72993db5ad4d25fb604f398e:1",
+          "reasonCode": null,
+          "byteStart": 111,
+          "byteEnd": 306
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_5814ae9086b3e3549b91ea719d56a122",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "e2e-config:dpu_5814ae9086b3e3549b91ea719d56a122:0",
+          "reasonCode": null,
+          "byteStart": 307,
+          "byteEnd": 503
+        },
+        {
+          "kind": "claim",
+          "claimId": "e2e-config:dpu_5814ae9086b3e3549b91ea719d56a122:1",
+          "reasonCode": null,
+          "byteStart": 503,
+          "byteEnd": 570
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_7870741d55afb7e503e0a8e425647cc3",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:0",
+          "reasonCode": null,
+          "byteStart": 571,
+          "byteEnd": 639
+        },
+        {
+          "kind": "claim",
+          "claimId": "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:1",
+          "reasonCode": null,
+          "byteStart": 639,
+          "byteEnd": 775
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "e2e-config:dpu_8a5aa7d3ce27327d8c3f0e250ac9fd9b:0",
+      "unitId": "dpu_8a5aa7d3ce27327d8c3f0e250ac9fd9b",
+      "summary": "E2E configuration navigation heading",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 42,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "a1658f5f5d7f6ce7be1d527e3000cd7a7a4a7b80026b123e713253bb46046760",
+        "normalizedSha256": "b30592450972974332ead53cc1cf9cbfc5a06c83aa5b5c3676abcca12259de56"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/buster-suites.md",
+          "anchor": "10-end-to-end-suite",
+          "excerpt": "## 10. End-to-End Suite",
+          "excerptSha256": "6accfd7f0107fd8a3fc4c5a14850899882103f292baae72d96db2a767981cdfd",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "e2e-config:dpu_0cf321c6d6be3c2cecf879a14bbd3d99:0",
+      "unitId": "dpu_0cf321c6d6be3c2cecf879a14bbd3d99",
+      "summary": "The retained legacy pointer is superseded by the canonical reader authority",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 43,
+        "byteEnd": 62,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "4bf89f20b6fa68d3188fcc6ecc96de89e7de27f3787c27cd769d8edd51db6665",
+        "normalizedSha256": "10f222949741d275edeca224fbbcf92ed04a48c9c93737184f2a13e1e1b38b16"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "Only pages below `docs/site` are canonical reader documentation. Other files\nprovide implementation evidence or temporary migration sources. They do not\ndefine a second reader-facing authority.",
+          "excerptSha256": "2a9858dabb42c09b9cacdad83841534655237827c6b0594134874817a504a130",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/reference/buster-suites.md",
+          "anchor": "10-end-to-end-suite",
+          "excerpt": "## 10. End-to-End Suite",
+          "excerptSha256": "6accfd7f0107fd8a3fc4c5a14850899882103f292baae72d96db2a767981cdfd",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "e2e-config:dpu_cf282bba72993db5ad4d25fb604f398e:0",
+      "unitId": "dpu_cf282bba72993db5ad4d25fb604f398e",
+      "summary": "Old extraction location is not configuration authority",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 63,
+        "byteEnd": 111,
+        "lineStart": 5,
+        "lineEnd": 5,
+        "exactSha256": "cd883876feaa943eeb23a0f310abda75449124d06e8c76c4cc0beaffa1c9637f",
+        "normalizedSha256": "a378718b3278d0ac400441f57737001a4da281cdefa7ac0b610be2f61fb6e04b"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "Only pages below `docs/site` are canonical reader documentation. Other files\nprovide implementation evidence or temporary migration sources. They do not\ndefine a second reader-facing authority.",
+          "excerptSha256": "2a9858dabb42c09b9cacdad83841534655237827c6b0594134874817a504a130",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "e2e-config:dpu_cf282bba72993db5ad4d25fb604f398e:1",
+      "unitId": "dpu_cf282bba72993db5ad4d25fb604f398e",
+      "summary": "Canonical suite route preserves purpose, configuration, prerequisites, result meaning and diagnosis without claiming a fresh run",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 111,
+        "byteEnd": 306,
+        "lineStart": 5,
+        "lineEnd": 8,
+        "exactSha256": "5b351204ce81395e7f61b924fa94325b62c6d39317aef84b1838a37897ee542a",
+        "normalizedSha256": "cb746d0be20a1e5423638d2a9c59cdfbe7c68e1a2bf1b18a27436c75bcff5ebf"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/buster-suites.md",
+          "anchor": "10-end-to-end-suite",
+          "excerpt": "## 10. End-to-End Suite\n\n**Purpose:** Run project-owned Playwright tests against a typed or approved\nendpoint. **Boundary:** KubeClaw does not rewrite test selection, assertions,\nauthentication setup, Playwright retries, screenshots, video, or trace policy.\n\nThe shipped blocking node uses project directory `.`, config file\n`playwright.config.ts`, four workers, a 600000 ms timeout, zero Buster retries,\nand browser concurrency 1.\n\n`projectDirectory` and `configFile` are required. `url` and `endpointName` are\noptional target selectors. `workers` defaults to 4, ranges from 1 to 64, and is\nalso capped by the attempt process limit. `timeoutMs` defaults to the attempt\ntimeout and ranges from 1000 to 3600000. `minimumExecutedTests` defaults to 1\nand ranges from 0 to 100000; blocking mode still enforces at least one.\n`requiredTests[]` defaults empty and names tests that must appear exactly once\nas executed.\n\nThe provider is not retry-safe and needs `browser.playwright`. It forces a JSON\nreporter, no maximum-failure early exit, and an attempt-owned output directory.\nIt emits logs, test reports, screenshots, video, traces, and bounded test\nartifacts. Unexpected test failures fail. In a usable report, an insufficient\nexecuted-test count, unexecuted tests, or a required title that is missing,\nambiguous, skipped, or unexecuted also produces a failed result. A flaky test\nthat passes under the project retry policy is not itself a failure. Zero\ndiscovered tests, invalid report, attachment limit, or execution failure without\na reported failed test is an error.\n\nNova validates imported provider details before it accepts the result. It emits\n`TEST_PROVIDER_E2E_DETAILS_INVALID` when the detail object has unknown fields,\ndoes not use `test-provider.e2e.v1`, or fails the closed E2E-result schema. This\nis a result-contract failure, not a failed browser assertion. Preserve the raw\nresult and compare the provider and Nova contract versions before retrying.\n\n> [E2E detail validation](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/validation.ts#L55-L69)\n\n> [E2E suite](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/suites/e2e.v1.json) ·\n> [complete Playwright schema](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/playwright/schemas/config.schema.json)",
+          "excerptSha256": "3eba73f7a94dc6d88942c868d85d96e383d423a4a3e93f4d13e2788185621b57",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "e2e-config:dpu_5814ae9086b3e3549b91ea719d56a122:0",
+      "unitId": "dpu_5814ae9086b3e3549b91ea719d56a122",
+      "summary": "Complete Playwright provider table is the accepted-field/default/range/validation reference",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 307,
+        "byteEnd": 503,
+        "lineStart": 10,
+        "lineEnd": 12,
+        "exactSha256": "0a258a2de7dea25529d5353c35f1f609c02d0bdebf97dd36bca56806a94edb3d",
+        "normalizedSha256": "110e46593029ddef929ac2d2e62d96ffb943bed09d96b9012331912e3f4a6f8b"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/buster-provider-configuration.md",
+          "anchor": "kubeclawplaywright1",
+          "excerpt": "## `kubeclaw.playwright@1`\n\n> [Validation schema](https://github.com/datrab/kubeclaw/blob/a51d223dca0130a889a3d63f4fb2a6db42bd8250/skills/buster/plugins/playwright/schemas/config.schema.json)\n\n**Root rule:** Unknown top-level fields are rejected.\n\n| Exact field path | Presence | Type | Schema rules |\n| --- | --- | --- | --- |\n| `configFile` | Required | string | minimum length 1; maximum length 1024; pattern \"^&#40;?!/&#41;&#40;?!.*&#40;?:^\\|/&#41;\\\\.\\\\.&#40;?:/\\|$&#41;&#41;.+$\" |\n| `endpointName` | Optional | string | pattern \"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$\" |\n| `minimumExecutedTests` | Optional | integer | minimum 0; maximum 100000 |\n| `projectDirectory` | Required | string | minimum length 1; maximum length 1024; pattern \"^&#40;?:\\\\.\\|&#40;?!/&#41;&#40;?!.*&#40;?:^\\|/&#41;\\\\.\\\\.&#40;?:/\\|$&#41;&#41;.+&#41;$\" |\n| `requiredTests` | Optional | array | maximum items 10000; unique items |\n| `requiredTests[]` | Each array item | string | minimum length 1; maximum length 2048 |\n| `timeoutMs` | Optional | integer | default 600000; minimum 1000; maximum 3600000 |\n| `url` | Optional | string | maximum length 2048; pattern \"^https?://\" |\n| `workers` | Optional | integer | minimum 1; maximum 64 |\n\n### Choice And Dependency Rules\n\n- The schema declares no `oneOf`, `anyOf`, or dependent-required rule.",
+          "excerptSha256": "2a04516dd0b782b6df07609c60a1dd2d2472fbc036f31a9218e8387cec62e00d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "e2e-config:dpu_5814ae9086b3e3549b91ea719d56a122:1",
+      "unitId": "dpu_5814ae9086b3e3549b91ea719d56a122",
+      "summary": "Default generator command checks exact current reference freshness against pinned provider inputs",
+      "claimType": "source-evidence",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 503,
+        "byteEnd": 570,
+        "lineStart": 12,
+        "lineEnd": 13,
+        "exactSha256": "62d2f2a9bf7e014075eaf471425ba22b9a67b174a75e60444efc9432b555fd69",
+        "normalizedSha256": "b37b867b93a7e14d904d6e1259cba9892ff40157cf73f37144568b151d271245"
+      },
+      "evidence": [
+        {
+          "revision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+          "path": "scripts/generate-buster-provider-reference.mjs",
+          "basis": "current-implementation",
+          "assertion": "The default generator command checks the complete generated reference byte-for-byte against its rendered pinned provider inputs; it rejects stale content and never substitutes provider execution or remote health for schema freshness.",
+          "gitObject": "18402e2994b211d57a81f8a31b06b99904f19e23",
+          "byteStart": 18150,
+          "byteEnd": 18737,
+          "lineStart": 305,
+          "lineEnd": 314,
+          "exactSha256": "296bde340ff911274373034d9e621d0bb894f9990aba017d4be51116eae5926c",
+          "normalizedSha256": "e57cd5eb45de1979fb18ad583b222272281429b2b751f31120a6e4f1df0b8cfe"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/reference/buster-provider-configuration.md",
+          "anchor": "maintenance-rule",
+          "excerpt": "Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This proves generated freshness, not provider execution or remote health.",
+          "excerptSha256": "60960d9498cdcf06f6153088f6a216e4e50268b9807c5db5e8e15b9d46161182",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:0",
+      "unitId": "dpu_7870741d55afb7e503e0a8e425647cc3",
+      "summary": "Navigation-only pointer copies no configuration values; reader follows the sole current schema table",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 571,
+        "byteEnd": 639,
+        "lineStart": 15,
+        "lineEnd": 15,
+        "exactSha256": "1efb0b8ff4fd7ac72dfd4cd09e1c1002295b2f12be0e340d513af90e2e0b0dd6",
+        "normalizedSha256": "0f17d9468e7ca2d6da8fc79fc638e18d7a918f53524f2016830b47105d87695b"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "topic-routing-and-supporting-sources",
+          "excerpt": "Only pages below `docs/site` are canonical reader documentation. Other files\nprovide implementation evidence or temporary migration sources. They do not\ndefine a second reader-facing authority.",
+          "excerptSha256": "2a9858dabb42c09b9cacdad83841534655237827c6b0594134874817a504a130",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/reference/buster-provider-configuration.md",
+          "anchor": "kubeclawplaywright1",
+          "excerpt": "## `kubeclaw.playwright@1`\n\n> [Validation schema](https://github.com/datrab/kubeclaw/blob/a51d223dca0130a889a3d63f4fb2a6db42bd8250/skills/buster/plugins/playwright/schemas/config.schema.json)\n\n**Root rule:** Unknown top-level fields are rejected.\n\n| Exact field path | Presence | Type | Schema rules |\n| --- | --- | --- | --- |\n| `configFile` | Required | string | minimum length 1; maximum length 1024; pattern \"^&#40;?!/&#41;&#40;?!.*&#40;?:^\\|/&#41;\\\\.\\\\.&#40;?:/\\|$&#41;&#41;.+$\" |\n| `endpointName` | Optional | string | pattern \"^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$\" |\n| `minimumExecutedTests` | Optional | integer | minimum 0; maximum 100000 |\n| `projectDirectory` | Required | string | minimum length 1; maximum length 1024; pattern \"^&#40;?:\\\\.\\|&#40;?!/&#41;&#40;?!.*&#40;?:^\\|/&#41;\\\\.\\\\.&#40;?:/\\|$&#41;&#41;.+&#41;$\" |\n| `requiredTests` | Optional | array | maximum items 10000; unique items |\n| `requiredTests[]` | Each array item | string | minimum length 1; maximum length 2048 |\n| `timeoutMs` | Optional | integer | default 600000; minimum 1000; maximum 3600000 |\n| `url` | Optional | string | maximum length 2048; pattern \"^https?://\" |\n| `workers` | Optional | integer | minimum 1; maximum 64 |\n\n### Choice And Dependency Rules\n\n- The schema declares no `oneOf`, `anyOf`, or dependent-required rule.",
+          "excerptSha256": "2a04516dd0b782b6df07609c60a1dd2d2472fbc036f31a9218e8387cec62e00d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:1",
+      "unitId": "dpu_7870741d55afb7e503e0a8e425647cc3",
+      "summary": "Single canonical explanation avoids contradictory limits in historical copied documentation",
+      "claimType": "reason",
+      "truthState": "historical-decision",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 639,
+        "byteEnd": 775,
+        "lineStart": 15,
+        "lineEnd": 17,
+        "exactSha256": "e931f3a36778ecb8a625f5dd1fd294681533c206b084ad03a6f4baa6a49fa026",
+        "normalizedSha256": "c08522c53954ca6b05915c4b45ebfba774a6205234e1ae9ecc56b3f0d0b028c6"
+      },
+      "evidence": [
+        {
+          "revision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+          "path": "scripts/generate-buster-provider-reference.mjs",
+          "basis": "current-implementation",
+          "assertion": "The default generator command checks the complete generated reference byte-for-byte against its rendered pinned provider inputs; it rejects stale content and never substitutes provider execution or remote health for schema freshness.",
+          "gitObject": "18402e2994b211d57a81f8a31b06b99904f19e23",
+          "byteStart": 18150,
+          "byteEnd": 18737,
+          "lineStart": 305,
+          "lineEnd": 314,
+          "exactSha256": "296bde340ff911274373034d9e621d0bb894f9990aba017d4be51116eae5926c",
+          "normalizedSha256": "e57cd5eb45de1979fb18ad583b222272281429b2b751f31120a6e4f1df0b8cfe"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/reference/documentation-site.md",
+          "anchor": "routes-links-and-static-use",
+          "excerpt": "Keep a single canonical explanation for each fact. Before a rename or removal,\nmove still-valid information, update incoming links and ownership, and declare\nthe successor according to [governance](documentation-governance.md). Test the\nold route and its anchors in the actual output before retiring it. Do not\ninvent historical redirects for paths that were never public.",
+          "excerptSha256": "26a1b53f8e5fca4fe99d090d257dff4bc1c4fe7e1a27001fdbb6303236de2a2d",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/reference/buster-provider-configuration.md",
+          "anchor": "maintenance-rule",
+          "excerpt": "Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This proves generated freshness, not provider execution or remote health.",
+          "excerptSha256": "60960d9498cdcf06f6153088f6a216e4e50268b9807c5db5e8e15b9d46161182",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    }
+  ]
+}
