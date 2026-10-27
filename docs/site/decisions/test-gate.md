@@ -1143,7 +1143,7 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Unconfirmed; acceptance date unknown; original D-113.
 
-**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-113-connected-gate-boundary).
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-113-phase-7-connected-gate-boundary).
 
 ## D-114: Direct Commands Use an Executable and Literal Arguments
 
