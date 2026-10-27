@@ -397,7 +397,9 @@ function parseWorkflowJobs(text) {
 
 function parseWorkflowCommands(text) {
   const commands = new Set();
-  for (const match of text.matchAll(/run:\s*(.+)$/gm)) {
+  // Match a complete run key on its own source line. workflow_run is a
+  // trigger, and horizontal spacing must not consume its following line.
+  for (const match of text.matchAll(/^[ \t]*(?:-[ \t]+)?run:[ \t]*(.+)$/gm)) {
     const command = match[1].trim();
     if (command && command !== '|' && command !== '>') {
       commands.add(command.replace(/^['"]|['"]$/g, ''));

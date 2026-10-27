@@ -3669,6 +3669,12 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  if (authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies navigation and analysis timeout budgets calculated from a fresh deadline for each profile/route combination after browser launch. Screenshot calls consult the remaining budget, but screenshot timeout errors are suppressed: screenshots are best-effort and do not enforce a combination completion deadline. Browser/context setup and cleanup are not bounded by this scalar. The enclosing provider or worker deadline is separate.';
+  if (authorityPath === 'skills/buster/plugins/lighthouse/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies the timeout wrapper for each sequential Lighthouse audit run after Chrome launch. This is not a whole-measurement-set deadline or a bound on browser launch or cleanup. The enclosing provider or worker deadline is separate.';
+  if (authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema') {
+    if (fieldPath === '$.deadLetterMaxLen') return 'Sets the approximate Redis Stream MAXLEN ~ trim target for dead-letter writes. Retained length can exceed the target; this is not a strict record or byte cap.';
+    if (fieldPath === '$.hookTimeoutMs') return 'Passes timeoutMs to the OpenClaw host api.on hook registration. Enforcement and timeout reporting belong to the selected host; the local synchronous observer callback supplies no own timeout or failure-report mechanism. Registration alone does not prove host enforcement.';
+  }
   if (authorityPath === 'skills/buster/plugins/visual/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies the browser.visual capture request timeout in milliseconds, with provider default 30000. It does not set a deadline for later compare calls. Capture has deadline checks, but browser launch can outlast them; synchronous PNG/pixelmatch comparison has no separate computation timer and cannot be preempted by this setting.';
 
   if (authorityPath === 'skills/buster/plugins/security-providers/schemas/dependency.schema.json' && fieldPath === '$.projectDirectory') return 'Selects a repository-relative scan target. The provider checks lexical repository containment and the runtime resolves canonical workspace containment, but neither requires a directory. An existing file can be scanned without covering the intended project; the platform owner must verify that the selected path is the actual project directory and check expected project coverage before treating results as whole-project evidence.';
@@ -4531,6 +4537,16 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       schemaEvidence: schemaAuthorityPath(authorityPath),
       implementationEvidence: `${implementation.path}:${implementation.line}`,
       additionalImplementationEvidence: [...new Set([
+        ...(authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && field.path === '$.timeoutMs'
+          ? ['skills/buster/engine/test-gates/browser-axe-runtime.ts:166', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:177', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:222', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:229'] : []),
+        ...(authorityPath === 'skills/buster/plugins/lighthouse/schemas/config.schema.json' && field.path === '$.timeoutMs'
+          ? ['skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:199', 'skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:218'] : []),
+        ...(authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema'
+          && field.path === '$.deadLetterMaxLen'
+          ? ['skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:226', 'skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:239'] : []),
+        ...(authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema'
+          && field.path === '$.hookTimeoutMs'
+          ? ['skills/common/plugins/openclaw-agent-observer/src/index.ts:246', 'skills/common/plugins/openclaw-agent-observer/src/plugin-api.ts:13'] : []),
         ...(authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json'
           && ['$.secretReferences', '$.secretReferences[]'].includes(field.path)
           ? ['skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:664',

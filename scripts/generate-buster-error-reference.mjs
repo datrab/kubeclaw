@@ -508,7 +508,7 @@ const invalidRuleOverrides = new Map([
   ['KUBERNETES_FIXTURE_IMAGE_INPUT_INVALID', 'The image input is duplicated or does not use the required value kind and container-image schema.'],
   ['KUBERNETES_FIXTURE_IMAGE_INVALID', 'The image reference is not immutable, its digest is invalid, or its embedded digest and declared digest differ.'],
   ['KUBERNETES_FIXTURE_STORAGE_QUANTITY_INVALID', 'The Kubernetes storage quantity has invalid syntax, precision, unit, sign, or byte range.'],
-  ['KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID', 'The test-credential mode is not generate, or its Secret name is not a DNS label.'],
+  ['KUBERNETES_FIXTURE_TEST_CREDENTIALS_INVALID', 'The test-credential mode is not generate, or secretName violates the receiving branch: the provider requires a DNS label; the native runtime requires 1–253 characters from letters, digits, dot, underscore, and hyphen. Native validation does not establish Kubernetes API or CRD acceptance.'],
   ['OPENAPI_PATH_INVALID', 'The route is not one safe absolute path or it resolves outside the declared server origin.'],
   ['OPENAPI_PATHS_INVALID', 'The OpenAPI paths value is not an object.'],
   ['SECURITY_HEADERS_PATHS_INVALID', 'The path list is empty, too large, duplicated, unsafe, or outside the configured origin.'],
@@ -522,9 +522,9 @@ const invalidRuleOverrides = new Map([
   ['REPORT_ADAPTER_LIMITS_INVALID', 'The report-adapter limits value is not an object.'],
   ['VISUAL_PROFILE_FILE_INVALID', 'The profile file is outside the repository, unavailable, not regular, invalid JSON, structurally invalid, or uses the wrong schema.'],
   ['SECURITY_HEADERS_DEPLOYMENT_INVALID', 'The deployment input does not contain one valid HTTP or HTTPS endpoint.'],
-  ['KUBERNETES_RUNTIME_SECURITY_DEPLOYMENT_INVALID', 'The deployment input has no bounded Kubernetes namespace and release name.'],
+  ['KUBERNETES_RUNTIME_SECURITY_DEPLOYMENT_INVALID', 'The deployment input is not an object with schemaVersion kubernetes-deployment-fixture.v1, string leaseName, namespace and immutableImage, and a manifestDigest equal to the checked-manifest artifact contentDigest.'],
   ['TAILSCALE_EXPOSURE_DEPLOYMENT_INPUT_INVALID', 'The provider did not receive exactly one deployment artifact with the required schema.'],
-  ['TAILSCALE_EXPOSURE_DEPLOYMENT_INVALID', 'The deployment artifact has no valid release, namespace, or endpoint list.'],
+  ['TAILSCALE_EXPOSURE_DEPLOYMENT_INVALID', 'The deployment artifact lacks schemaVersion kubernetes-deployment-fixture.v1, DNS-label leaseName and namespace, a parseable string expiresAt, or a nonempty endpoint list.'],
   ['TAILSCALE_EXPOSURE_LEASE_NAME_INVALID', 'The lease name is not a valid Kubernetes DNS label.'],
   ['VISUAL_COMPARISON_OVERRIDE_INVALID', 'A comparison override has an unknown field, a non-numeric value, or a value outside its supported range.'],
 ]);
@@ -661,7 +661,7 @@ function naturalCause(code) {
     'PATH_ESCAPE'].includes(suffix)) return `${lead} detected ${object} outside its approved filesystem boundary.`;
   if (suffix === 'OUTPUT_LIMIT') return `${lead} stopped process output because it exceeds the configured byte limit.`;
   if (['TOO_LARGE', 'LIMIT_EXCEEDED', 'BUDGET_EXCEEDED', 'CAPACITY_EXCEEDED',
-    'BYTES_EXCEEDED', 'FILE_LIMIT', 'EXHAUSTED', 'EXCEEDED', 'FULL', 'LIMIT'].includes(suffix)) return `${lead} rejected ${object}. The measured resource use exceeds the configured limit.`;
+    'BYTES_EXCEEDED', 'FILE_LIMIT', 'EXHAUSTED', 'EXCEEDED', 'FULL', 'LIMIT'].includes(suffix)) return `${lead} rejected ${object} at its named bound. The source determines whether this is a fixed parser bound, a reservation, or measured resource use.`;
   if (suffix === 'LIMIT_EXCEEDS_CONTRACT' || suffix === 'TOO_LOW' || suffix === 'TOO_BROAD') return `${lead} rejected ${object}. The configured value is outside the safe range.`;
   if (suffix === 'EXPIRED' || suffix === 'STALE') return `${lead} rejected ${object}. The value is no longer current.`;
   if (suffix === 'UNSUPPORTED') return `${lead} does not support the selected ${object}.`;
@@ -1088,7 +1088,68 @@ const finiteFamilyDiagnoses = new Map([
 for (const code of ["COVERAGE_LCOV_TOO_LARGE", "COVERAGE_LCOV_LINE_LIMIT", "JUNIT_XML_TAG_LIMIT", "JUNIT_XML_DEPTH_LIMIT", "JUNIT_SUITE_DEPTH_LIMIT", "OPENAPI_SCHEMA_DEPTH_EXCEEDED", "OPENAPI_FILE_TOO_LARGE", "OPENAPI_SELECTION_LIMIT_EXCEEDED", "SIZE_BUDGET_ARCHIVE_EXPANDED_LIMIT", "SIZE_BUDGET_ARCHIVE_FILE_LIMIT", "SIZE_BUDGET_TOTAL_LIMIT", "SIZE_BUDGET_BASELINE_OUTPUT_LIMIT", "SIZE_BUDGET_INPUT_SIZE_INVALID"]) {
   assert(locations.has(code), `fixed parser diagnosis has no production occurrence: ${code}`);
 }
+// These branches have different validation or effect phases from the suffix
+// family. Keep their recovery advice with the actual receiving owner, not a
+// universal pre-use, integer-only, or safe-replay promise.
+const receivingOwnerDiagnoses = new Map([
+  ['COVERAGE_BUDGET_MINIMUM_INVALID', [
+    'minimumLinePercent is not a finite number from 0 through 100; fractional percentages are accepted.',
+    'The provider rejects the configuration before reading coverage artifacts.',
+    'Supply a finite percentage in the inclusive range 0–100. Do not round a valid fractional percentage merely to make it integral.',
+    'Retry after correcting the rejected value.',
+  ]],
+  ['SIZE_BUDGET_LIMIT_INVALID', [
+    'The named size-budget field violates its numeric constraint: byte and count fields require nonnegative safe integers; maximumGrowthPercent accepts any finite nonnegative number, including fractions.',
+    'The provider rejects the configuration before measuring the selected artifact.',
+    'Use the field named in the diagnostic suffix to select the correct integer or percentage constraint.',
+    'Retry after the named value passes its actual validation.',
+  ]],
+  ['API_FLOW_STEP_LIMIT_EXCEEDED', [
+    'The total setup, main, and cleanup step count is below 1 or above maximumSteps.',
+    'The provider rejects the plan before invoking its steps.',
+    'Supply at least one step; if the plan is oversized, reduce its total count or use a reviewed valid maximumSteps.',
+    'Retry with a nonempty bounded plan.',
+  ]],
+  ...[
+    ['BROWSER_AXE_COMBINATION_LIMIT_EXCEEDED', 'combinations', 'maximumCombinations'],
+    ['BROWSER_LIGHTHOUSE_RUN_LIMIT_EXCEEDED', 'runs', 'maximumRuns'],
+    ['BROWSER_VISUAL_COMBINATION_LIMIT_EXCEEDED', 'combinations', 'maximumCombinations'],
+  ].map(([code, plan, bound]) => [code, [
+    `The ${plan} value is not an array, is empty, or contains more entries than ${bound}.`,
+    'The runtime rejects the plan before launching its browser work.',
+    `Supply a nonempty ${plan} array within ${bound}; repair missing or wrong-shaped input rather than treating every failure as excess resource use.`,
+    'Retry with a correctly shaped bounded plan.',
+  ]]),
+  ['HTTP_RESPONSE_REDIRECT_DENIED', [
+    'The completed HTTP request returned a redirect response (status 300–399).',
+    'The runtime does not follow the redirect or accept it as the requested result. The original request has already been sent and may have effects.',
+    'Inspect the original endpoint response and any request effects; correct the selected endpoint or its response without disabling redirect policy.',
+    'Retry only after the response condition and replay safety are understood; server responses can change.',
+  ]],
+  ['HTTP_REGISTRY_HEALTH_RESPONSE_SECRET_DENIED', [
+    'The registry-health response body or content-type header contains the authorization value, its encoded credential portion, or the password bytes.',
+    'The authorized request has already been sent. The rejected response is not accepted as evidence; this does not prove the secret was never used.',
+    'Preserve the diagnostic without copying secret bytes. Inspect the registry response and credential handling under the credential owner.',
+    'Retry only after the response condition and credential exposure or rotation decision are resolved.',
+  ]],
+  ['BROWSER_LIGHTHOUSE_SUBRESOURCE_ORIGIN_DENIED', [
+    'The post-audit network log records a WebSocket/WebTransport creation or an HTTP(S) request to an origin different from the target.',
+    'The runtime rejects the audit evidence after Lighthouse ran. This code alone proves neither that no target was used nor that foreign egress succeeded.',
+    'Inspect the retained audit context and target resource behavior; correct the origin or protocol condition under the owning policy.',
+    'Retry only after understanding the observed activity and the next audit boundary.',
+  ]],
+  ['TAILSCALE_EXPOSURE_HOST_DENIED', [
+    'The controller-returned public URL hostname is outside the allowed suffixes.',
+    'The hostname is checked after observing a Ready lease. A patch may already have occurred, but existing-owner and pending-handoff paths need not send one. Only the main preparation try/catch attempts rollback; pending-handoff validation is outside that catch, and attempted rollback can fail.',
+    'Inspect the actual lease, controller output and any rollback error. Reconcile retained exposure under its owner; do not broaden the suffix policy merely to accept the output.',
+    'Retry only after exposure ownership, cleanup and the returned-host condition are resolved.',
+  ]],
+]);
+for (const code of receivingOwnerDiagnoses.keys()) {
+  assert(locations.has(code), `receiving-owner diagnosis has no production occurrence: ${code}`);
+}
 function diagnosis(code) {
+  if (receivingOwnerDiagnoses.has(code)) return receivingOwnerDiagnoses.get(code);
   if (processRecoveryDiagnoses.has(code)) return processRecoveryDiagnoses.get(code);
   if (finiteFamilyDiagnoses.has(code)) return finiteFamilyDiagnoses.get(code);
   if (code === 'KUBERNETES_FIXTURE_RBAC_DENIED') return [
@@ -1113,9 +1174,9 @@ function diagnosis(code) {
   }
   if (/(?:_DENIED|_FORBIDDEN)$/u.test(code)) return [cause, 'The requested capability, value, or target was not used.', 'Select an allowed value or change the owning policy through review.', 'An unchanged retry will fail again.'];
   if (code === 'TAILSCALE_EXPOSURE_PREDECESSORS_EXHAUSTED') return [cause,
-    'The service cannot select an earlier lease without risking conflicting ownership.',
-    'Keep all lease records. Inspect their owners, generations, states, and expiry times before recovery.',
-    'Retry only after one authoritative lease can be selected or a new handoff is admitted.'];
+    'The proposed unique unfinished lineage, including the current owner, would exceed 64 exposure-owner identities; the new exposure patch is not sent. The existing lineage can still contain exactly 64 entries.',
+    'Preserve the lease annotations and state. Reconcile its actual exposure owner and observed generation. A matching Ready or Off generation completes the previous lineage; these entries are not earlier leases.',
+    'Retry only after the owning exposure handoff is reconciled. Do not delete lineage or select an earlier lease to evade the bound.'];
   if (code === 'BUSTER_REMOTE_ADMISSION_FULL') return [cause,
     'Buster did not admit or start the new job.',
     'Wait for a queued job to start or cancel a job that is no longer required. Increase queue capacity only after a service-capacity review.',
@@ -1124,7 +1185,10 @@ function diagnosis(code) {
     'Buster did not admit the job with an unenforceable concurrency request.',
     'Reduce the job maximum concurrency to the published service limit.',
     'Retry with the corrected concurrency value.'];
-  if (/(?:TOO_LARGE|LIMIT|LIMIT_EXCEEDED|BUDGET_EXCEEDED|CAPACITY_EXCEEDED|BYTES_EXCEEDED|FILE_LIMIT|OUTPUT_LIMIT|EXHAUSTED|EXCEEDED|FULL)$/u.test(code)) return [cause, 'Buster stopped before the named resource could exceed worker or service capacity.', 'Reduce the named input, output, concurrency, or resource use. Increase the limit only after a capacity review.', 'Retry with smaller work or an approved larger limit.'];
+  if (/(?:TOO_LARGE|LIMIT|LIMIT_EXCEEDED|BUDGET_EXCEEDED|CAPACITY_EXCEEDED|BYTES_EXCEEDED|FILE_LIMIT|OUTPUT_LIMIT|EXHAUSTED|EXCEEDED|FULL)$/u.test(code)) return [cause,
+    'The owner rejects work or evidence at the named bound. A check can follow allocation, reading, execution or resource sampling, or reserve capacity before work; this code is not a universal pre-use capacity guarantee.',
+    'Inspect the exact source phase and retained effects. Reduce the named work or reservation. Fixed parser bounds are not configurable; change a configurable limit only through its owner and capacity review.',
+    'Retry with valid bounded work only after cleanup, reservations and replay safety are understood.'];
   if (code === 'BUSTER_FIXTURE_NOT_READY') return [cause,
     'Buster does not publish fixture readiness or start dependent tests.',
     'Inspect the provider outcome and case counts. Correct the fixture preparation failure first.',
