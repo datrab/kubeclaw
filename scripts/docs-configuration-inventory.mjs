@@ -4538,15 +4538,15 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       implementationEvidence: `${implementation.path}:${implementation.line}`,
       additionalImplementationEvidence: [...new Set([
         ...(authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && field.path === '$.timeoutMs'
-          ? ['skills/buster/engine/test-gates/browser-axe-runtime.ts:166', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:177', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:222', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:229'] : []),
+          ? ['skills/buster/engine/test-gates/browser-axe-runtime.ts:168', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:177', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:218', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:226', 'skills/buster/engine/test-gates/browser-axe-runtime.ts:232'] : []),
         ...(authorityPath === 'skills/buster/plugins/lighthouse/schemas/config.schema.json' && field.path === '$.timeoutMs'
-          ? ['skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:199', 'skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:218'] : []),
+          ? ['skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:204', 'skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:218', 'skills/buster/engine/test-gates/browser-lighthouse-runtime.ts:224'] : []),
         ...(authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema'
           && field.path === '$.deadLetterMaxLen'
-          ? ['skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:226', 'skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:239'] : []),
+          ? ['skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:228', 'skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts:250'] : []),
         ...(authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema'
           && field.path === '$.hookTimeoutMs'
-          ? ['skills/common/plugins/openclaw-agent-observer/src/index.ts:246', 'skills/common/plugins/openclaw-agent-observer/src/plugin-api.ts:13'] : []),
+          ? ['skills/common/plugins/openclaw-agent-observer/src/index.ts:253', 'skills/common/plugins/openclaw-agent-observer/src/plugin-api.ts:19'] : []),
         ...(authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json'
           && ['$.secretReferences', '$.secretReferences[]'].includes(field.path)
           ? ['skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:664',
