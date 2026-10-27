@@ -523,3 +523,34 @@ test('admitted resource projection is bounded and excludes arbitrary spec and re
   assert.equal(projection.truncated, true);
   assert.equal(JSON.stringify(result).includes('private-canary'), false);
 });
+
+
+test('failed private regular containers expose only bounded fixed startup hints', async () => {
+  const { collectFixtureFailureEvidence } = await import('../../../skills/buster/engine/test-gates/kubernetes-fixture-diagnostics.ts');
+  const canary = 'private-runtime-canary';
+  const calls: string[][] = [];
+  const result = await collectFixtureFailureEvidence('test-stack', new AbortController().signal, async args => {
+    calls.push([...args]);
+    if (args[0] === 'logs') {
+      assert.ok(args.includes('--limit-bytes=4096'));
+      assert.ok(args.includes('--tail=40'));
+      return `Permission denied ${canary}`;
+    }
+    return JSON.stringify({ items: args[1] === 'pods' ? [{ metadata: { name: 'database' },
+      spec: { containers: [{ envFrom: [{ secretRef: { name: 'private' } }] }] },
+      status: { containerStatuses: [
+        { name: 'database', state: { waiting: { reason: 'CrashLoopBackOff' } }, lastState: { terminated: { exitCode: 1 } } },
+        { name: 'failed-current', state: { terminated: { exitCode: 2 } } },
+        { name: 'healthy', state: { running: {} } },
+        { name: 'successful', state: { terminated: { exitCode: 0 } } },
+      ] } }] : [] });
+  });
+  const reads = calls.filter(args => args[0] === 'logs');
+  assert.equal(reads.length, 3);
+  assert.equal(reads.filter(args => args.includes('--previous=true')).length, 1);
+  assert.ok(reads.every(args => ['database', 'failed-current'].includes(args[args.indexOf('-c') + 1])));
+  assert.equal(result.logs.filter(log => Array.isArray(log.categories)).length, 3);
+  assert.ok(result.logs.filter(log => Array.isArray(log.categories)).every(log => JSON.stringify(log.categories) === '["permission-denied"]'));
+  assert.ok(result.logs.every(log => log.text === null && log.omitted === 'unresolved-private-sources'));
+  assert.ok(!JSON.stringify(result).includes(canary));
+});

@@ -177,7 +177,13 @@ export async function collectFixtureFailureEvidence(namespace: string, signal: A
         if (signal.aborted || logReads >= 8) break;
         if (previous && !record(record(container).lastState).terminated) continue;
         logReads++;
-        if (unresolvedPrivateSources && !list(status.initContainerStatuses).includes(container)) {
+        // Failed regular containers use the same closed-vocabulary hints as init
+        // containers. Healthy private application logs remain unread.
+        const failed = [record(container).state, record(container).lastState].some(value => {
+          const exitCode = record(record(value).terminated).exitCode;
+          return typeof exitCode === 'number' && Number.isInteger(exitCode) && exitCode > 0;
+        });
+        if (unresolvedPrivateSources && !list(status.initContainerStatuses).includes(container) && !failed) {
           logs.push({ pod: name, container: containerName, previous, text: null, omitted: 'unresolved-private-sources' });
           continue;
         }
