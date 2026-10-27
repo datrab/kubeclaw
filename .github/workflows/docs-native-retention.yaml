@@ -1,0 +1,65 @@
+name: Native documentation retention query
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/docs-native-retention.yaml'
+      - 'tests/verification/docs/check-published-retention-sql.py'
+      - 'tests/verification/docs/prepare-retention-postgresql.py'
+      - 'tests/fixtures/postgresql-native/**'
+      - 'tests/fixtures/litellm-database/**'
+      - 'docs/site/understand/data-and-state.md'
+  workflow_dispatch: null
+permissions:
+  contents: read
+jobs:
+  native-query:
+    runs-on: ubuntu-latest
+    container:
+      image: node:24-bookworm-slim@sha256:ba849c60be29959425b8734d57b8b4b7d56f98edd9504c9af091d5281095a71e
+    outputs:
+      receipt: ${{ steps.fixture.outputs.receipt }}
+    steps:
+      - name: Checkout exact source without persisted credentials
+        uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262 # v4
+        with:
+          persist-credentials: false
+      - name: Prepare native runtime libraries in disposable container
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends python3 ca-certificates dpkg gpgv \
+            libnuma1 liburing2 libicu72 libldap-2.5-0 libxml2 libxslt1.1 \
+            liblz4-1 libzstd1 libreadline8 libpam0g libselinux1 libsystemd0 \
+            libuuid1 libgssapi-krb5-2 libssl3 zlib1g
+          python3 tests/verification/docs/prepare-retention-postgresql.py --destination /tmp/docs-native-postgresql
+      - name: Execute exact SQL and full genuine schema with native peer authentication
+        id: fixture
+        env:
+          LD_LIBRARY_PATH: /tmp/docs-native-postgresql/root/usr/lib/x86_64-linux-gnu
+        run: |
+          mkdir -p .tmp
+          python3 tests/verification/docs/check-published-retention-sql.py \
+            --postgres-bin-dir /tmp/docs-native-postgresql/root/usr/lib/postgresql/18/bin \
+            --library-path "$LD_LIBRARY_PATH" --output-json .tmp/native-retention-result.json
+          python3 - <<'PY'
+          import hashlib,json,os,pathlib
+          p=pathlib.Path('.tmp/native-retention-result.json');r=json.loads(p.read_text())
+          assert r['ok'] and r['serverVersionNum']=='180006' and len(r['cases'])==8
+          assert r['negative']['nativeUnknownColumnRejected'] and r['cleanup']['complete']
+          with open(os.environ['GITHUB_OUTPUT'],'a') as f:f.write('receipt='+hashlib.sha256(p.read_bytes()).hexdigest()+'\n')
+          PY
+      - name: Preserve native receipt independently of outcome
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: native-retention-result
+          path: .tmp/native-retention-result.json
+          if-no-files-found: warn
+  receipt-witness:
+    name: Native SQL receipt ${{ needs.native-query.outputs.receipt }}
+    needs: native-query
+    runs-on: ubuntu-latest
+    steps:
+      - name: Bind public job witness to successful complete native assertions
+        run: test -n "$NATIVE_RECEIPT"
+        env:
+          NATIVE_RECEIPT: ${{ needs.native-query.outputs.receipt }}
