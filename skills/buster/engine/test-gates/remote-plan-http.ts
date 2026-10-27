@@ -157,6 +157,11 @@ export function createBusterRemotePlanHttpServer(options: {
         response.end(bytes);
         return;
       }
+      const preparing = request.url?.match(/^\/v1\/plan-jobs\/([^/?#]+)\/preparing-namespaces$/u);
+      if (preparing?.[1] && request.method === 'GET') {
+        send(response, 200, await options.service.preparingNamespaces(decodeURIComponent(preparing[1])), options.maximumResponseBytes);
+        return;
+      }
       const id = jobId(request.url);
       if (id && request.method === 'GET') {
         send(response, 200, await options.service.status(id), options.maximumResponseBytes);

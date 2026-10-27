@@ -458,6 +458,7 @@ function configuredBuildkitReadiness(options: BusterRemotePlanServiceOptions): B
 export class BusterRemotePlanService {
   readonly #options: BusterRemotePlanServiceOptions;
   readonly #now: () => Date;
+  readonly #fixtures = new Map<string, KubernetesFixtureCapabilityInvoker>();
   readonly #active = new Map<string, AbortController>();
   readonly #executions = new Map<string, Promise<void>>();
   readonly #queue = new Map<string, RemotePlanJobV1>();
@@ -560,6 +561,12 @@ export class BusterRemotePlanService {
     // A point-in-time observation, not an admission lock or a reservation.
     return { schemaVersion: 'buster-plan-census.v1', total: records.length, counts,
       nonterminal: counts.accepted + counts.running + counts.cancelling };
+  }
+
+  async preparingNamespaces(jobId: string) {
+    const status = await this.status(jobId);
+    return { schemaVersion: 'buster-plan-preparing-namespaces.v1', jobId,
+      namespaces: status.state === 'running' ? this.#fixtures.get(jobId)?.preparingNamespaces() ?? [] : [] };
   }
 
   async status(jobId: string): Promise<RemotePlanStatusV1> {
@@ -679,6 +686,7 @@ export class BusterRemotePlanService {
         this.#stopping = true;
         this.#queue.clear();
       }).finally(() => {
+        this.#fixtures.delete(id);
         this.#active.delete(id); this.#executions.delete(id); this.#weights.delete(id); this.#drain();
       });
       this.#executions.set(id, execution);
@@ -725,6 +733,7 @@ export class BusterRemotePlanService {
           workspaceRoot: jobRoot,
         })
         : null;
+      if (kubernetesFixture) this.#fixtures.set(job.jobId, kubernetesFixture);
       const tailscaleExposure = this.#options.allowedCapabilities.has('kubernetes.exposure')
         ? new TailscaleExposureCapabilityInvoker(this.#options.tailscaleExposure
           ?? (() => { throw new Error('BUSTER_TAILSCALE_EXPOSURE_CONFIG_REQUIRED'); })())

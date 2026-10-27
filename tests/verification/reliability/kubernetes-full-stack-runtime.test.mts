@@ -44,7 +44,10 @@ test('full-stack prepare binds inventory and policies to lease but never applies
       if (document.kind === 'BusterNamespaceLease') lease = document; else applied = document;
     } else if (args[0] === 'get' && args[1] === 'busternamespacelease') result = { status: {
       phase: 'Ready', namespaceName: 'test-stack', createdAt: new Date().toISOString() } };
-    else if (args[1] === 'pods') result = { items: [{ metadata: { name: 'app' }, status: { phase: 'Running', conditions: [{ type: 'Ready', status: 'True' }] } }] };
+    else if (args[1] === 'pods') {
+      assert.deepEqual(invoker.preparingNamespaces(), [{ namespace: 'test-stack', leaseName: 'test-stack' }]);
+      result = { items: [{ metadata: { name: 'app' }, status: { phase: 'Running', conditions: [{ type: 'Ready', status: 'True' }] } }] };
+    }
     else if (args[1] === 'service') result = { spec: { ports: [{ port: 8080 }] } };
     else if (args[1] === 'endpoints') result = { subsets: [{ addresses: [{ ip: '10.0.0.2' }], ports: [{ port: 8080 }] }] };
     else throw new Error(`Unexpected command ${args.join(' ')}`);
@@ -53,6 +56,7 @@ test('full-stack prepare binds inventory and policies to lease but never applies
   try {
     const result = await invoker.invoke('kubernetes.fixture', { operation: 'prepare', resource: requestResource, payload } as any, new AbortController().signal);
     assert.equal(result.ok, true);
+    assert.deepEqual(invoker.preparingNamespaces(), []);
     assert.deepEqual(lease.spec.verifiedImages, [primary, database].sort());
     assert.deepEqual(lease.spec.endpointSelector, { app: 'app' });
     assert.equal(lease.spec.networkPolicies[0].name, 'deny');
@@ -81,7 +85,7 @@ test('timeout snapshots safe evidence before cleanup and preserves event read er
   const { invoker, root, payload } = setup(async (_: string, args: string[]) => {
     if (args[0] === 'auth') return { stdout: 'yes' };
     if (args[0] === 'apply') return { stdout: '{}' };
-    if (args[0] === 'delete') { assert.ok(eventRead); deleted = true; return { stdout: '{}' }; }
+    if (args[0] === 'delete') { assert.deepEqual(invoker.preparingNamespaces(), []); assert.ok(eventRead); deleted = true; return { stdout: '{}' }; }
     if (args[1]?.startsWith('busternamespacelease')) return { stdout: JSON.stringify({ status: {
       phase: 'Ready', namespaceName: 'test-stack', createdAt: new Date().toISOString() } }) };
     assert.equal(deleted, false);

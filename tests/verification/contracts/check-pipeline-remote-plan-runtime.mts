@@ -357,6 +357,14 @@ try {
     const spiffePort = (spiffeServer.address() as AddressInfo).port;
     const statusUrl = `http://127.0.0.1:${spiffePort}/v1/plan-jobs/${encodeURIComponent(normalJob.jobId)}`;
     assert.equal((await fetch(statusUrl)).status, 401, 'missing verified peer identity must fail closed');
+    const preparingUrl = `${statusUrl}/preparing-namespaces`;
+    assert.equal((await fetch(preparingUrl)).status, 401);
+    const preparing = await fetch(preparingUrl, { headers: {
+      'x-forwarded-client-cert': `By=spiffe://kubeclaw.internal/proxy;URI=${novaSpiffeId}`,
+    } });
+    assert.equal(preparing.status, 200);
+    assert.deepEqual(await preparing.json(), { schemaVersion: 'buster-plan-preparing-namespaces.v1',
+      jobId: normalJob.jobId, namespaces: [] });
     assert.equal((await fetch(statusUrl, { headers: {
       'x-forwarded-client-cert': 'URI=spiffe://kubeclaw.internal/ns/kubeclaw/sa/prism-control',
     } })).status, 401, 'an authenticated but unauthorized workload must be rejected');

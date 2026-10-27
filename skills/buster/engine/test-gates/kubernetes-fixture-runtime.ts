@@ -431,6 +431,12 @@ function waitForPoll(milliseconds: number, signal: AbortSignal): Promise<void> {
 }
 
 export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilityInvoker {
+  readonly #preparing = new Map<string, Readonly<{ namespace: string; leaseName: string }>>();
+
+  preparingNamespaces(): readonly Readonly<{ namespace: string; leaseName: string }>[] {
+    return [...this.#preparing.values()];
+  }
+
   readonly #root: string;
   readonly #kubectl: string;
   readonly #controllerNamespace: string;
@@ -757,6 +763,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
       status = await this.#waitLease(leaseName, signal, readinessTimeoutMs);
       const actualNamespace = text(status.namespaceName, 'status.namespaceName', 63);
       if (actualNamespace !== namespaceName) throw new Error('KUBERNETES_FIXTURE_NAMESPACE_MISMATCH');
+      this.#preparing.set(leaseName, Object.freeze({ namespace: namespaceName, leaseName }));
       await this.#kubectlRun(['apply', '--namespace', namespaceName, '-f', '-'], applyBytes, signal, readinessTimeoutMs);
       const readinessDeadline = Date.now() + readinessTimeoutMs;
       const podCount = await this.#waitPods(namespaceName, signal, readinessTimeoutMs);
@@ -806,6 +813,8 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
         'KUBERNETES_FIXTURE_REPLACEMENT_LEASE_CHANGED', 'KUBERNETES_FIXTURE_READINESS_QUERY_TIMEOUT'].includes(errorCode!)) throw error;
       return Object.freeze({ ok: false, errorCode, namespace: namespaceName, leaseName,
         failureEvidence: { ...failureEvidence, cleanupError } });
+    } finally {
+      this.#preparing.delete(leaseName);
     }
   }
 
@@ -882,6 +891,7 @@ export class KubernetesFixtureCapabilityInvoker implements TestProviderCapabilit
 
   async #release(leaseName: string, signal: AbortSignal): Promise<Readonly<Record<string, unknown>>> {
     if (!DNS_LABEL.test(leaseName)) throw new Error('KUBERNETES_FIXTURE_LEASE_NAME_INVALID');
+    this.#preparing.delete(leaseName);
     await this.#kubectlRun(['delete', 'busternamespacelease', leaseName, '-n', this.#controllerNamespace,
       '--ignore-not-found=true', '--wait=true', `--timeout=${Math.ceil(this.#maximumExecutionMs / 1_000)}s`], null, signal);
     return Object.freeze({ ok: true, leaseName, released: true });
