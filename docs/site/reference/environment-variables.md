@@ -1,6 +1,6 @@
 # Environment Variables
 
-> Retained historical view. Artifact: `145da1d0b30fb3b636c4b03fb3d3252819ee2bf5`; source facts and original evidence: `6fa4830a48244d29655104a5be58957d5fa87d2f`. Editorial language owner: [`scripts/lib/docs-configuration-editorial-language.mjs` at `2da605d3eeffaa2cf750f68e0ea5eb0ad890b8e1`](https://github.com/datrab/kubeclaw/blob/2da605d3eeffaa2cf750f68e0ea5eb0ad890b8e1/scripts/lib/docs-configuration-editorial-language.mjs). This view does not perform current discovery, runtime validation, or API-role qualification. Inherited metadata and current-inventory statements below describe only the retained snapshot.
+> Retained historical view. Artifact: `145da1d0b30fb3b636c4b03fb3d3252819ee2bf5`; source facts and original evidence: `6fa4830a48244d29655104a5be58957d5fa87d2f`. Editorial language owner: [`scripts/lib/docs-configuration-editorial-language.mjs` at `7e486d48b193f7fe8241f54ce44e49621ac767ba`](https://github.com/datrab/kubeclaw/blob/7e486d48b193f7fe8241f54ce44e49621ac767ba/scripts/lib/docs-configuration-editorial-language.mjs). This view does not perform current discovery, runtime validation, or API-role qualification. Inherited metadata and current-inventory statements below describe only the retained snapshot.
 
 Status: generated reference
 Audience: reference reader, operator
