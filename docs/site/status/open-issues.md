@@ -846,7 +846,7 @@ Status: open. Severity: unassessed.
 
 The historical health implementation compared targetRevision=main with resolved commit IDs. Current source treats main separately and binds reported health to the selected source, destination and successful operation. An installed branch-to-commit rollout and its subsequent wave are not established by the retained evidence.
 
-The historical comparison could keep a synchronized runtime child Progressing. The current source correction does not prove that the selected installed app-of-apps rollout and later waves complete or that stale operations stay blocked in the target environment.
+The historical comparison could keep a synchronized runtime child Progressing. The current source correction does not prove that the selected installed app-of-apps rollout and later waves complete. It does not prove that stale operations stay blocked in the target environment.
 
 ### Components and current state
 
@@ -865,7 +865,7 @@ At the recorded ad67f9bb5c75cfa8cc1b926668aec1dd0168452c baseline, the Lua compa
 
 - Historical reproduction at ad67f9bb5c75cfa8cc1b926668aec1dd0168452c: set targetRevision and compared source targetRevision to main, retain matching resolved commit and operation identities, and observe the original literal comparison. This is the historical failure, not the current expected result.
 - Current local route: run node --test tests/verification/deployment/gitops-health.test.mjs with the supported Lua interpreter. The test file declares the continuous-main resolved-commit positive case and preserves stale source/path/destination/operation negatives. Record actual execution separately.
-- In a separately authorized installed environment, bind the selected immutable bundle path, resolved sync commit and successful applied-operation provenance, then observe the later wave and stale-operation rejection.
+- In a separately authorized installed environment, bind the selected immutable bundle path, resolved sync commit and successful applied-operation provenance. Then observe the later wave and stale-operation rejection.
 
 ### Completion criteria
 
