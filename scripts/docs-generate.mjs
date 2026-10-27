@@ -259,12 +259,29 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
     ]),
   )}\n\n</details>`).join('\n\n');
   const swarm = configurationSchemas.swarm;
-  const swarmTable = swarm ? table(['Field', 'Type and value', 'Required and constraint authority', 'Owner and consumers', 'Precedence and proof', 'Impact, failure, and closure'], swarm.fields.map((field) => [
-    `\`${field.path}\``, `\`${field.type}\`<br>${selectedValue(field.value)}`, `${field.required}: ${field.requiredReason}<br>${field.constraints.join('<br>') || 'none for structural container'}`,
-    `Source: \`${field.ownerComponent}\` (${field.ownerEvidence})<br>Runtime: ${field.runtimeOwner}<br>${field.consumers.map((consumer) => `\`${consumer.path}:${consumer.line}\` (${consumer.kind})`).join('<br>')}`,
-    `${field.precedence.join(' → ')}<br>${field.effectiveValueProof}`,
-    `${field.changeImpact}<br>Failure: ${field.failureMeaning}${field.closureCondition ? `<br>Not a completed operator option. Authority owner: ${field.blockerOwner}; a versioned field contract is required.` : ''}`,
-  ])) : 'No compact swarm configuration source was discovered.';
+  const swarmContainerMeaning = (field) => {
+    const meaning = field.meaning;
+    const text = field.path === '$' && swarm.path === 'charts/kubeclaw/files/config/swarm.config.json'
+      ? 'JSON document root. The chart embeds the complete file. The init path parses and writes JSON. The structural inventory entry does not prove whole-object loader requiredness or accepted fields.'
+      : meaning.text;
+    const description = `${literalText(text)}<br>Inventory meaning status: ${literalText(meaning.status)}`;
+    if (!/blocker/u.test(meaning.status)) return description;
+    if (!meaning.blockerOwner || !meaning.closureCondition) throw new Error(`swarm collection blocker lacks owner or closure: ${field.path}`);
+    return `${description}<br>Not a completed operator option. Authority owner: ${literalText(meaning.blockerOwner)}.<br>Closure condition: ${literalText(meaning.closureCondition)}<br>Stop before you use unknown keys or assume that empty, omitted or null input is accepted.`;
+  };
+  const swarmTable = swarm ? table(['Field', 'Type and value', 'Required and constraint authority', 'Owner and consumers', 'Precedence and proof', 'Impact, failure, and closure'], swarm.fields.map((field) => {
+    const wrapper = field.required === 'not-applicable-container';
+    const requirement = wrapper
+      ? `Recorded inventory marker: ${literalText(field.required)}. This classifies the structural inventory entry, not runtime applicability or whole-object requiredness.<br>${field.constraints.join('<br>') || 'No additional constraint is recorded here. This does not prove that the runtime loader has no whole-object constraints.'}`
+      : `${field.required}: ${field.requiredReason}<br>${field.constraints.join('<br>') || 'none for structural container'}`;
+    const failure = `${field.changeImpact}<br>Failure: ${field.failureMeaning}${field.closureCondition ? `<br>Not a completed operator option. Authority owner: ${field.blockerOwner}; a versioned field contract is required.` : ''}`;
+    return [
+      `\`${field.path}\``, `\`${field.type}\`<br>${selectedValue(field.value)}`, requirement,
+      `Source: \`${field.ownerComponent}\` (${field.ownerEvidence})<br>Runtime: ${field.runtimeOwner}<br>${field.consumers.map((consumer) => `\`${consumer.path}:${consumer.line}\` (${consumer.kind})`).join('<br>')}`,
+      `${field.precedence.join(' → ')}<br>${field.effectiveValueProof}`,
+      wrapper ? `${failure}<br>${swarmContainerMeaning(field)}` : failure,
+    ];
+  })) : 'No compact swarm configuration source was discovered.';
   return `# Plugin And Platform Configuration Schemas
 
 Status: generated reference
@@ -296,6 +313,12 @@ ${sections}
 ${swarmTable}
 
 The compact swarm file has no bound field schema in the current source. The chart embeds it in a ConfigMap and the init path materializes it for the OpenClaw gateway. Leaf rows therefore identify the external loader contract and its closure condition. Do not infer validation rules that the loader does not publish.
+
+A structural inventory marker does not prove whole-object requiredness, accepted keys or runtime constraints. The \`$.overrides\` collection contract remains open with the owner and closure condition in its row. Until that contract is qualified, do not use unknown keys or assume that empty, omitted or null input is accepted.
+
+Consumer coordinates in the table are recorded inventory metadata. They are not a new verification of current line positions.
+
+Current source evidence: [ConfigMap embedding](${pinnedSourceUrl('charts/kubeclaw/templates/configmap-swarm-config.yaml', 10, 15)}), [JSON parsing](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 699, 704)}), [JSON writing](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 745, 746)}) and [runtime mount](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 1486, 1487)}). These source statements prove materialization and mounting only. They do not prove a whole-object loader contract or live acceptance.
 
 ${generatedEnd()}
 ## How To Use This Reference
