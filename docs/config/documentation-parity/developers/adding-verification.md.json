@@ -8,7 +8,7 @@
     "extractionDigest": "d0185d625ea1e382f7e4af8b1a9ad6f94eded0bc85a3e643c850f9e6f89ea6bf",
     "classification": "legacy-extraction-source"
   },
-  "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+  "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
   "author": {
     "id": "parity-author:developer-and-extension-sources",
     "assignmentId": "parity-assignment:02f8544c6a42032f2441081ab84141560504db8af87a2ebf0b746822f46ab90a"
@@ -161,7 +161,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
           "basis": "current-test",
           "assertion": "The package-local TypeScript live-function test calls provider().execute with real fixture inputs and asserts passed, failed and duplicate-input rejection outcomes. It demonstrates the requested authoring pattern, not a new execution result or all-package coverage.",
@@ -174,7 +174,7 @@
           "normalizedSha256": "2f8d6f9b0a83c0c808c2dd9030e4b8c059d50cfca516a42b880ba98702ada5cc"
         },
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "go.mod",
           "basis": "current-configuration",
           "assertion": "go.mod defines the Go component module and its Go language version, alongside the TypeScript package test pattern. The canonical instruction permits the owning component native language; this is not a claim all verification uses one language.",
@@ -216,7 +216,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
           "basis": "current-test",
           "assertion": "The package-local TypeScript live-function test calls provider().execute with real fixture inputs and asserts passed, failed and duplicate-input rejection outcomes. It demonstrates the requested authoring pattern, not a new execution result or all-package coverage.",
@@ -258,7 +258,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
           "basis": "current-test",
           "assertion": "The package-local boundary test checks manifest stage identities, declared executor capability and requiredCapabilities for each lint stage. It demonstrates package-owned boundary assertions rather than substituting a platform registry result.",
@@ -356,7 +356,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "package.json defines verify:plugin-system-v2 with contract, lifecycle, capability-security, recovery and native-isolation checks and requires KUBECLAW_TEST_CGROUP_ROOT for host-boundary fixtures. These are declared verification routes, not assertions every plugin passes or unavailable host proof succeeded.",

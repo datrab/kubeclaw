@@ -8,7 +8,7 @@
     "extractionDigest": "658cde397b7e652adb2d4fe19ee3a275427e7db16ca2b385f4033f415d23d83e",
     "classification": "legacy-extraction-source"
   },
-  "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+  "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
   "author": {
     "id": "parity-author:developer-and-extension-sources",
     "assignmentId": "parity-assignment:70b7105a120b9307cfcfe33309bd8b997b6ae7d9204a0342a40295cf67615b88"
@@ -424,7 +424,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "scripts/check-runtime-package-ownership.mjs",
           "basis": "current-implementation",
           "assertion": "The package ownership checker validates distinct package owners, role membership and shared plugin classification, and rejects the old mixed runtime core. It establishes the maintained ownership boundary, not successful universal import isolation or live runtime behavior.",

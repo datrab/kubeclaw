@@ -8,7 +8,7 @@
     "gitObject": "3c3f44d48582fedb4e72cc4d11b8718589fb174f",
     "extractionDigest": "6a69c950fe0de608b44736af44b40a530c34a77053aa4a5387d21143404703a7"
   },
-  "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+  "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
   "author": {
     "id": "parity-author:developer-and-extension-sources",
     "assignmentId": "parity-assignment:2c1cbc85e8c1969a615bd7a8f2238edfad6bd445c8059b2d4dc06b2615e8421d"
@@ -164,7 +164,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "scripts/check-runtime-package-ownership.mjs",
           "basis": "current-implementation",
           "assertion": "The package ownership checker validates distinct package owners, role membership and shared plugin classification, and rejects the old mixed runtime core.",
@@ -250,7 +250,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/nova/pipeline.ts",
           "basis": "current-implementation",
           "assertion": "The Nova pipeline entrypoint contains the Core reexport and conditional import of project/cli.ts; direct invocation selects the project CLI, while ordinary imports expose Core without starting that CLI.",
@@ -263,7 +263,7 @@
           "normalizedSha256": "6c7a9d0b2733f1641a8ba948a03b42afe746ff764a34254e3be4d262e707c493"
         },
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/nova/core/src/index.ts",
           "basis": "current-implementation",
           "assertion": "The Core entry module defines public registry activation, capability grant resolution and execution context exports through plugin-foundation; it does not implement package-specific domain behavior.",
@@ -318,7 +318,7 @@
         "explanation": "Original unconditional aggregate commands are superseded by explicit prerequisite-aware check selection. Scripts still exist, but cgroups/builds/browser/service prerequisites make unconditional starting guidance incorrect. Preserve the qualified current route, not the unconditional instruction.",
         "evidence": [
           {
-            "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+            "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
             "path": "package.json",
             "basis": "current-configuration",
             "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",

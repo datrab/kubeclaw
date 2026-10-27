@@ -8,7 +8,7 @@
     "gitObject": "bc9d4a5a292243b440cb7be0fe292280f59b542f",
     "extractionDigest": "abfdea102d850a2673f4a9cd5d4108106949c5fa74c236e9dd7736db6d308a51"
   },
-  "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+  "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
   "author": {
     "id": "parity-author:developer-and-extension-sources",
     "assignmentId": "parity-assignment:12fb52222abada1dab5b8ce7ce77b33a43a6aab439cdeca38653b882ab4aba75"
@@ -344,7 +344,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -386,7 +386,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -428,7 +428,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -470,7 +470,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -512,7 +512,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -554,7 +554,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "tests/verification/deployment/check-deployment-truth.mjs",
           "basis": "current-test",
           "assertion": "The deployment checker reads source-root inputs and validates deployment source truth; this does not establish a live deployed release result.",
@@ -596,7 +596,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
@@ -638,7 +638,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
@@ -680,7 +680,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
@@ -722,7 +722,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
@@ -764,7 +764,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
@@ -806,7 +806,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -819,7 +819,7 @@
           "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
         },
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
@@ -861,7 +861,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -874,7 +874,7 @@
           "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
         },
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
@@ -916,7 +916,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -929,7 +929,7 @@
           "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
         },
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
@@ -971,7 +971,7 @@
       },
       "evidence": [
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
@@ -984,7 +984,7 @@
           "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
         },
         {
-          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
           "basis": "current-implementation",
           "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",

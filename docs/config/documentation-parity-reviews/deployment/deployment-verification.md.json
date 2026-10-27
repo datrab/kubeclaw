@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:platform-deployment-operations-and-security"
     }
   },
-  "decisionSha256": "4171810e506f1c1a572e2eaf6408eab1463f96df4cf84ed8d850159cdcb4a886",
+  "decisionSha256": "467cf2a79e4ba360ac3885d6815f80f6ca2940998dc479f516e0736f9c509459",
   "contentRoot": "7de6e5cc31d700cf8e89aed232c01f13e5a9c41d421cfabb4f111f71777d8523",
   "claimIds": [
     "deployment-verification:dpu_31bf4f46a08bc501e2d5c41aec975072:0",
@@ -30,7 +30,7 @@
     "deployment-verification:dpu_d573166a609d9e69f4bfbfc494bfa396:0",
     "deployment-verification:dpu_ce44cc3c1862c1927cddbe5c70d93f0a:0"
   ],
-  "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+  "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -85,8 +85,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
-    "reviewedTree": "baa14789bcd0325afe2d59c62265d896ee38a4e1",
+    "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
+    "reviewedTree": "844838a37030b1eee99afefe86e2eb54ade140e3",
     "contentRoot": "7de6e5cc31d700cf8e89aed232c01f13e5a9c41d421cfabb4f111f71777d8523",
     "scope": {
       "paths": [
@@ -120,6 +120,10 @@
       {
         "kind": "manual-inspection",
         "detail": "Compared the complete changed SDK support ownership join, existing canonical SDK page selection and original full current reference input tree. The new parser reads canonical docs/site/reference/sdk-exports.md and already owned inventory only; it does not load extracted Markdown as runtime configuration, generated reader authority or a package entrypoint. All original dynamic/external limits remain and prior manual observations are reused only where actual whole bytes are unchanged."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "Compared the complete5513-file input blob vector from the actually qualified priorSource to frozen 08b563c6a477d0ecbf70fe2e3e885d808597c6b5. Exactly three generated ledger count-summary blobs changed; no input paths, reader bodies, primary code, source assertions or canonical/legacy/route files changed. Original manual four-risk observations are retained at their qualified scope; this performed whole-vector comparison does not relabel them as fresh runtime/external observations or prove undeclared consumers absent."
       }
     ],
     "evidence": [
@@ -148,8 +152,12 @@
         "detail": "Compared each complete primary/target/legacy/route file blob for docs/deployment/deployment-verification.md with its previously qualified source content and current revision. Every declared file matches its whole-body hash; claim text, truth, target spans and evidence assertions remain inverse-equal except revision/contentRoot bindings. The full current reference scanner binds all repository input paths separately. Original dynamic/external consumer limits and retained manual observations remain explicit; current file comparison and6Reader/4offline controls are coordinator evidence, not invented fresh human/runtime or independent approval."
       },
       {
+        "kind": "manual-observation",
+        "detail": "Compared the complete5513-file input blob vector from the actually qualified priorSource to frozen 08b563c6a477d0ecbf70fe2e3e885d808597c6b5. Exactly three generated ledger count-summary blobs changed; no input paths, reader bodies, primary code, source assertions or canonical/legacy/route files changed. Original manual four-risk observations are retained at their qualified scope; this performed whole-vector comparison does not relabel them as fresh runtime/external observations or prove undeclared consumers absent."
+      },
+      {
         "kind": "scanner-result",
-        "detail": "Inspected and compared the actual full249-source native reference scan at bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced across 5513 frozen Git-bound path inputs. Both original and extracted source paths have zero matches; scanner input root 03fde05f3f3d1ba38601ca15d0d4969ba9481006cddd697e6fbcaf5ef57b303a binds every scanned path and blob. Complete primary/target/legacy/route vectors and actual original content/preservation outcomes are supplied separately. This static control does not prove arbitrary dynamic or external absence."
+        "detail": "Inspected and compared actual full249-source reference inputs at 08b563c6a477d0ecbf70fe2e3e885d808597c6b5; all5513path/blob entries are bound by original scanner input root 440b1541917058d283d5a650d94a7c2998c4692ca96b40fa0782113f2bf6477e. Both exact original/extracted source paths have zero matches. Complete old/current vectors independently recompute every previous qualified root and expose exactly3counter-summary changes, no other input object changes. Unknown computed configuration/runtime and arbitrary external consumers remain outside this static proof."
       }
     ],
     "findings": [],
@@ -161,7 +169,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "03fde05f3f3d1ba38601ca15d0d4969ba9481006cddd697e6fbcaf5ef57b303a",
+      "scannerInputRoot": "440b1541917058d283d5a650d94a7c2998c4692ca96b40fa0782113f2bf6477e",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",

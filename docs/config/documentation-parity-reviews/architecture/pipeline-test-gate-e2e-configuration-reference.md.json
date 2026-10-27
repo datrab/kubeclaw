@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:buster-suite-end-to-end"
     }
   },
-  "decisionSha256": "ab5559ced582a2bf3bea395256b544f1f7d0b7c1a635e739bde0330e5ac1fdc0",
+  "decisionSha256": "7ff5c358c5ab06a75f86093b86945aea07e15758bc31d34497c38c525830a9e7",
   "contentRoot": "029d086e6008c3933e028a6a84041704af0914ee946c486d5fcbe2189c09e657",
   "claimIds": [
     "e2e-config:dpu_8a5aa7d3ce27327d8c3f0e250ac9fd9b:0",
@@ -31,7 +31,7 @@
     "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:0",
     "e2e-config:dpu_7870741d55afb7e503e0a8e425647cc3:1"
   ],
-  "reviewedRevision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+  "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -93,8 +93,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
-    "reviewedTree": "950a54a1f276cdce811786908ec5dee3321c2730",
+    "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
+    "reviewedTree": "844838a37030b1eee99afefe86e2eb54ade140e3",
     "contentRoot": "029d086e6008c3933e028a6a84041704af0914ee946c486d5fcbe2189c09e657",
     "scope": {
       "paths": [
@@ -124,6 +124,10 @@
       {
         "kind": "manual-inspection",
         "detail": "external-consumers: Compared the full authoritative route registry, exact native redirect decision and original/canonical destinations. No historical public route is declared, so no redirect is invented; current10-end-to-end-suite and kubeclawplaywright1 anchors are actual author-validator checked headings. Unknown third-party links and dynamic external consumers are not disproved. AP10 removal and external deployment are separate and unapproved. Compared both exact original/extracted file paths with every current public route record and the canonical reference targets; the full registry declares no historical public source path, and no external ownership or deployment observation is invented."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "Compared the complete5513-file input blob vector from the actually qualified priorSource to frozen 08b563c6a477d0ecbf70fe2e3e885d808597c6b5. Exactly three generated ledger count-summary blobs changed; no input paths, reader bodies, primary code, source assertions or canonical/legacy/route files changed. Original manual four-risk observations are retained at their qualified scope; this performed whole-vector comparison does not relabel them as fresh runtime/external observations or prove undeclared consumers absent."
       }
     ],
     "evidence": [
@@ -144,8 +148,12 @@
         "detail": "Compared the full authoritative route registry, exact native redirect decision and original/canonical destinations. No historical public route is declared, so no redirect is invented; current10-end-to-end-suite and kubeclawplaywright1 anchors are actual author-validator checked headings. Unknown third-party links and dynamic external consumers are not disproved. AP10 removal and external deployment are separate and unapproved. Compared both exact original/extracted file paths with every current public route record and the canonical reference targets; the full registry declares no historical public source path, and no external ownership or deployment observation is invented."
       },
       {
+        "kind": "manual-observation",
+        "detail": "Compared the complete5513-file input blob vector from the actually qualified priorSource to frozen 08b563c6a477d0ecbf70fe2e3e885d808597c6b5. Exactly three generated ledger count-summary blobs changed; no input paths, reader bodies, primary code, source assertions or canonical/legacy/route files changed. Original manual four-risk observations are retained at their qualified scope; this performed whole-vector comparison does not relabel them as fresh runtime/external observations or prove undeclared consumers absent."
+      },
+      {
         "kind": "scanner-result",
-        "detail": "Inspected and compared actual unchanged original full249-source reference scan at 6c44dd840b2f19790003d6060e05dd237e1f4adb over 5513 Git-bound input files. Both original/extracted paths have zero active reference matches; exact scanner input root 03fde05f3f3d1ba38601ca15d0d4969ba9481006cddd697e6fbcaf5ef57b303a binds their whole frozen current input vector. Native metadata/extraction provenance is intentionally scoped by unchanged original control; no arbitrary dynamic or external absence claimed."
+        "detail": "Inspected and compared actual full249-source reference inputs at 08b563c6a477d0ecbf70fe2e3e885d808597c6b5; all5513path/blob entries are bound by original scanner input root 440b1541917058d283d5a650d94a7c2998c4692ca96b40fa0782113f2bf6477e. Both exact original/extracted source paths have zero matches. Complete old/current vectors independently recompute every previous qualified root and expose exactly3counter-summary changes, no other input object changes. Unknown computed configuration/runtime and arbitrary external consumers remain outside this static proof."
       }
     ],
     "findings": [],
@@ -157,7 +165,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "03fde05f3f3d1ba38601ca15d0d4969ba9481006cddd697e6fbcaf5ef57b303a",
+      "scannerInputRoot": "440b1541917058d283d5a650d94a7c2998c4692ca96b40fa0782113f2bf6477e",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",

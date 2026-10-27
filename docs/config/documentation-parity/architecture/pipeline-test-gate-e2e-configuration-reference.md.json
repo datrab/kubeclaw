@@ -8,7 +8,7 @@
     "extractionDigest": "7ba4d343f9086f69490f51ec03a0bc4df5a471e4e59285f72225877787016fe8",
     "classification": "legacy-extraction-source"
   },
-  "reviewedRevision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+  "reviewedRevision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
   "author": {
     "id": "parity-author:buster-suite-end-to-end",
     "assignmentId": "parity-assignment:267bccb8b20f6e3f503276f01318975ef523959e426ca6c4f7877b07b5601dc6"
@@ -276,7 +276,7 @@
       },
       "evidence": [
         {
-          "revision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "scripts/generate-buster-provider-reference.mjs",
           "basis": "current-implementation",
           "assertion": "The default generator command checks the complete generated reference byte-for-byte against its rendered pinned provider inputs; it rejects stale content and never substitutes provider execution or remote health for schema freshness.",
@@ -354,7 +354,7 @@
       },
       "evidence": [
         {
-          "revision": "6c44dd840b2f19790003d6060e05dd237e1f4adb",
+          "revision": "08b563c6a477d0ecbf70fe2e3e885d808597c6b5",
           "path": "scripts/generate-buster-provider-reference.mjs",
           "basis": "current-implementation",
           "assertion": "The default generator command checks the complete generated reference byte-for-byte against its rendered pinned provider inputs; it rejects stale content and never substitutes provider execution or remote health for schema freshness.",
