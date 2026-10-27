@@ -13,7 +13,7 @@ This page lists product GitHub Actions workflows, their triggers, path filters, 
 
 <!-- BEGIN GENERATED: source-backed reference -->
 
-Generated from: `.github/workflows/auto-promote-runtime.yaml`, `.github/workflows/build-images.yaml`, `.github/workflows/build-ops-mcp.yaml`, `.github/workflows/dependency-updates.yaml`, `.github/workflows/docs-checks.yaml`, `.github/workflows/pipeline-reliability.yaml`, `.github/workflows/promote-runtime.yaml`, `.github/workflows/publish-image-receipts.yaml`, `.github/workflows/release-security.yaml`, `.github/workflows/remediation-native.yaml`, `.github/workflows/role-images.yaml`, `.github/workflows/rollback-runtime.yaml`, `.github/workflows/update-checks.yaml`
+Generated from: `.github/workflows/auto-promote-runtime.yaml`, `.github/workflows/build-images.yaml`, `.github/workflows/build-ops-mcp.yaml`, `.github/workflows/dependency-updates.yaml`, `.github/workflows/docs-checks.yaml`, `.github/workflows/docs-native-retention.yaml`, `.github/workflows/pipeline-reliability.yaml`, `.github/workflows/promote-runtime.yaml`, `.github/workflows/publish-image-receipts.yaml`, `.github/workflows/release-security.yaml`, `.github/workflows/remediation-native.yaml`, `.github/workflows/role-images.yaml`, `.github/workflows/rollback-runtime.yaml`, `.github/workflows/update-checks.yaml`
 
 ## Workflows
 
@@ -23,6 +23,7 @@ Generated from: `.github/workflows/auto-promote-runtime.yaml`, `.github/workflow
 | `.github/workflows/build-images.yaml` (Build Runtime Images And Skill Bundles) | `push`, `workflow_dispatch` |  |  | `update-policy`, `reliability`, `detect-build-inputs`, `build`, `bundle-skills`, `prism-live-acceptance`, `preserve-receipts` | `bash scripts/deploy.sh prism-e2e`<br>`bash scripts/prepare-image-build-runner.sh`<br>`node scripts/updates/code-release.mjs dist "$GITHUB_SHA" "$GITHUB_REPOSITORY`<br>`node scripts/updates/runtime-inputs.mjs`<br>`npm ci --ignore-scripts`<br>`npm run plugin-system:sandbox:build`<br>`uses: ./.github/workflows/pipeline-reliability.yaml`<br>`uses: ./.github/workflows/publish-image-receipts.yaml`<br>`uses: ./.github/workflows/update-checks.yaml`<br>`uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803`<br>`uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444`<br>`uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02`<br>`uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4`<br>`uses: azure/setup-kubectl@776406bce94f63e41d621b960d78ee25c8b76ede`<br>`uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a`<br>`uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f`<br>`uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302`<br>`uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e` |
 | `.github/workflows/build-ops-mcp.yaml` (Build Ops Images) | `pull_request`, `push`, `workflow_dispatch` | `versions.json`<br>`scripts/versions.mjs`<br>`scripts/scan-runtime-images.sh`<br>`tools/ops-mcp/**`<br>`my-values/infra/**`<br>`scripts/*cilium*`<br>`examples/cilium/**`<br>`ops/pod/**`<br>`charts/ops-pod/**`<br>`scripts/deploy-ops-pod.sh`<br>`.github/workflows/build-ops-mcp.yaml` |  | `validate`, `publish`, `preserve-receipts` | `bash ops/pod/test-image.sh "$TEST_IMAGE`<br>`bash scripts/scan-runtime-images.sh "$IMAGE`<br>`bash tools/ops-mcp/test-image.sh "$TEST_IMAGE`<br>`node scripts/versions.mjs --check`<br>`uses: ./.github/workflows/publish-image-receipts.yaml`<br>`uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803`<br>`uses: actions/setup-node@249970729cb0ef3589644e2896645e5dc5ba9c38`<br>`uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02`<br>`uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4`<br>`uses: docker/build-push-action@53b7df96c91f9c12dcc8a07bcb9ccacbed38856a`<br>`uses: docker/login-action@dbcb813823bdd20940b903addbd779551569679f`<br>`uses: docker/metadata-action@dc802804100637a589fabce1cb79ff13a1411302`<br>`uses: docker/setup-buildx-action@37fe631027851001ddb9b187196cc803df7f5f0e` |
 | `.github/workflows/dependency-updates.yaml` (Dependency updates) | `schedule`, `workflow_dispatch` |  | `15 4 * * *` | `renovate` | `uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803`<br>`uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349` |
+| `.github/workflows/docs-native-retention.yaml` (Native documentation retention query) | `push`, `pull_request`, `workflow_dispatch` | `.github/workflows/docs-native-retention.yaml`<br>`tests/verification/docs/check-published-retention-sql.py`<br>`tests/verification/docs/prepare-retention-postgresql.py`<br>`tests/fixtures/postgresql-native/**`<br>`tests/fixtures/litellm-database/**`<br>`docs/site/understand/data-and-state.md` |  | `native-query`, `receipt-witness` | `test -n "$NATIVE_RECEIPT`<br>`uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262`<br>`uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02` |
 | `.github/workflows/pipeline-reliability.yaml` (Pipeline reliability) | `pull_request`, `workflow_call` |  |  | `core-reliability`, `reliability-tests`, `native-reliability`, `service-reliability`, `browser-reliability`, `security-reliability`, `prism-postgres-reliability` | `bash scripts/prepare-reliability-services.sh`<br>`node --test tests/verification/deployment/reliability-groups.test.mjs`<br>`node --test tests/verification/e2e/production-graph-validation.test.mts tests/verification/e2e/real-run-evidence.test.mjs tests/verification/e2e/durable-evidence.test.mjs`<br>`node node_modules/playwright/cli.js install --with-deps chromium`<br>`node scripts/reliability-tests.mjs core ${{ matrix.shard }} 4`<br>`node scripts/reliability-tests.mjs services`<br>`node tests/verification/contracts/check-pipeline-remote-real-provider.mts`<br>`node tests/verification/contracts/check-prism-postgres-transactions.mts`<br>`node tests/verification/contracts/check-project-compiler.mts`<br>`npm ci --ignore-scripts`<br>`npm run plugin-system:sandbox:build`<br>`npm run typecheck:skills`<br>`npm run verify:reliability:contracts`<br>`npm run versions:check`<br>`npm test --prefix skills/buster/plugins/${{ matrix.provider }}`<br>`npm test --workspace @kubeclaw/plugin-security-providers`<br>`sudo apt-get -o Acquire::Retries=3 update && sudo apt-get -o Acquire::Retries=3 install -y nginx redis-server`<br>`sudo apt-get update && sudo apt-get install -y shellcheck shfmt`<br>`uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803`<br>`uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444`<br>`uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4` |
 | `.github/workflows/promote-runtime.yaml` (Promote image release) | `workflow_dispatch` |  |  | `prepare` | `npm ci --ignore-scripts --no-audit --no-fund`<br>`uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803`<br>`uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349`<br>`uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444`<br>`uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02`<br>`uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4` |
 | `.github/workflows/publish-image-receipts.yaml` (Preserve image release receipts) | `workflow_call` |  |  | `preserve` | `uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803`<br>`uses: actions/download-artifact@d3f86a106a0bac45b974a628896c90dbdf5c8093`<br>`uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444` |
@@ -307,70 +308,70 @@ The returned `progress` object is not proof that any caller persists it. Writer/
 
 ## Product pipeline source revision
 
-The documentation generator derives the product pipeline declarations above from revision `06962b4fb396bf79277f20230b2c507536ed2c63`. These links identify their source bytes; they do not establish runtime execution or complete workflow-family coverage.
+The documentation generator derives the product pipeline declarations above from revision `a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad`. These links identify their source bytes; they do not establish runtime execution or complete workflow-family coverage.
 
 ### Source: skills/common/plugin-runtime/sdk/src/generated/contracts.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L1-L60"><code>L1-L60</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L61-L120"><code>L61-L120</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L121-L180"><code>L121-L180</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L181-L240"><code>L181-L240</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L241-L300"><code>L241-L300</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L301-L360"><code>L301-L360</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L361-L420"><code>L361-L420</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L421-L480"><code>L421-L480</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L481-L540"><code>L481-L540</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L541-L600"><code>L541-L600</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L601-L660"><code>L601-L660</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L661-L699"><code>L661-L699</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L1-L60"><code>L1-L60</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L61-L120"><code>L61-L120</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L121-L180"><code>L121-L180</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L181-L240"><code>L181-L240</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L241-L300"><code>L241-L300</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L301-L360"><code>L301-L360</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L361-L420"><code>L361-L420</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L421-L480"><code>L421-L480</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L481-L540"><code>L481-L540</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L541-L600"><code>L541-L600</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L601-L660"><code>L601-L660</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L661-L699"><code>L661-L699</code></a>
 
 ### Source: skills/nova/project/compiler.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/compiler.ts#L1-L60"><code>L1-L60</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/compiler.ts#L61-L120"><code>L61-L120</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/compiler.ts#L121-L180"><code>L121-L180</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/compiler.ts#L181-L193"><code>L181-L193</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/compiler.ts#L1-L60"><code>L1-L60</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/compiler.ts#L61-L120"><code>L61-L120</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/compiler.ts#L121-L180"><code>L121-L180</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/compiler.ts#L181-L193"><code>L181-L193</code></a>
 
 ### Source: skills/nova/project/demo.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/demo.ts#L1-L55"><code>L1-L55</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/demo.ts#L1-L55"><code>L1-L55</code></a>
 
 ### Source: skills/nova/project/source.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/source.ts#L1-L60"><code>L1-L60</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/source.ts#L61-L67"><code>L61-L67</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/source.ts#L1-L60"><code>L1-L60</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/source.ts#L61-L67"><code>L61-L67</code></a>
 
 ### Source: skills/nova/project/coverage.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/coverage.ts#L1-L60"><code>L1-L60</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/coverage.ts#L61-L68"><code>L61-L68</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/coverage.ts#L1-L60"><code>L1-L60</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/coverage.ts#L61-L68"><code>L61-L68</code></a>
 
 ### Source: skills/nova/project/review-semantics.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/review-semantics.ts#L1-L21"><code>L1-L21</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/review-semantics.ts#L1-L21"><code>L1-L21</code></a>
 
 ### Source: skills/nova/project/delivery-manifest.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project/delivery-manifest.ts#L1-L33"><code>L1-L33</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project/delivery-manifest.ts#L1-L33"><code>L1-L33</code></a>
 
 ### Source: skills/nova/project_setup/tools/progress-scaffold-validation.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L1-L60"><code>L1-L60</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L61-L120"><code>L61-L120</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L121-L180"><code>L121-L180</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L181-L240"><code>L181-L240</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L241-L263"><code>L241-L263</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L1-L60"><code>L1-L60</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L61-L120"><code>L61-L120</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L121-L180"><code>L121-L180</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L181-L240"><code>L181-L240</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-validation.ts#L241-L263"><code>L241-L263</code></a>
 
 ### Source: skills/nova/project_setup/tools/progress-scaffold-test-config.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-test-config.ts#L1-L60"><code>L1-L60</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-test-config.ts#L61-L115"><code>L61-L115</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-test-config.ts#L1-L60"><code>L1-L60</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-test-config.ts#L61-L115"><code>L61-L115</code></a>
 
 ### Source: skills/nova/project_setup/tools/progress-scaffold-values.ts
 
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-values.ts#L1-L60"><code>L1-L60</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-values.ts#L61-L120"><code>L61-L120</code></a>
-<a href="https://github.com/datrab/kubeclaw/blob/06962b4fb396bf79277f20230b2c507536ed2c63/skills/nova/project_setup/tools/progress-scaffold-values.ts#L121-L168"><code>L121-L168</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-values.ts#L1-L60"><code>L1-L60</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-values.ts#L61-L120"><code>L61-L120</code></a>
+<a href="https://github.com/datrab/kubeclaw/blob/a5aaed3e85cbb2c6b82b7c54137a484a7d2060ad/skills/nova/project_setup/tools/progress-scaffold-values.ts#L121-L168"><code>L121-L168</code></a>
 
 
 

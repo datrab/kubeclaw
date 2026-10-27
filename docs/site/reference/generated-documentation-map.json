@@ -17347,6 +17347,27 @@
             "factsSha256": "0ab72d6c301923bc48a65530c9ba4fab24e2fc73dc8cec6e13a2a71ec79181c4"
           },
           {
+            "sourceId": "workflow:.github%2Fworkflows%2Fdocs-native-retention.yaml:job:native-query",
+            "source": ".github/workflows/docs-native-retention.yaml",
+            "target": "docs/site/reference/workflows.md#workflows",
+            "owner": "platform-maintainers",
+            "factsSha256": "54c57dc67969dbff2e5f29b59668efdc70804a3d252727cdeee5b2091eaf5c3c"
+          },
+          {
+            "sourceId": "workflow:.github%2Fworkflows%2Fdocs-native-retention.yaml:job:receipt-witness",
+            "source": ".github/workflows/docs-native-retention.yaml",
+            "target": "docs/site/reference/workflows.md#workflows",
+            "owner": "platform-maintainers",
+            "factsSha256": "bd7e755d87b6df893bf0556c213111f5bbafe46adb66692c42372710ed695cae"
+          },
+          {
+            "sourceId": "workflow:.github%2Fworkflows%2Fdocs-native-retention.yaml:workflow",
+            "source": ".github/workflows/docs-native-retention.yaml",
+            "target": "docs/site/reference/workflows.md#workflows",
+            "owner": "platform-maintainers",
+            "factsSha256": "6bdd79aa51cc5c37a113962d4aea63a3cfef3346760d4ca3569fe0cf8e5e6506"
+          },
+          {
             "sourceId": "workflow:.github%2Fworkflows%2Fpipeline-reliability.yaml:job:browser-reliability",
             "source": ".github/workflows/pipeline-reliability.yaml",
             "target": "docs/site/reference/workflows.md#workflows",
@@ -58207,6 +58228,9 @@
           "workflow:.github%2Fworkflows%2Fbuild-ops-mcp.yaml:workflow",
           "workflow:.github%2Fworkflows%2Fdependency-updates.yaml:job:renovate",
           "workflow:.github%2Fworkflows%2Fdependency-updates.yaml:workflow",
+          "workflow:.github%2Fworkflows%2Fdocs-native-retention.yaml:job:native-query",
+          "workflow:.github%2Fworkflows%2Fdocs-native-retention.yaml:job:receipt-witness",
+          "workflow:.github%2Fworkflows%2Fdocs-native-retention.yaml:workflow",
           "workflow:.github%2Fworkflows%2Fpipeline-reliability.yaml:job:browser-reliability",
           "workflow:.github%2Fworkflows%2Fpipeline-reliability.yaml:job:core-reliability",
           "workflow:.github%2Fworkflows%2Fpipeline-reliability.yaml:job:native-reliability",
