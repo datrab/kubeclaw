@@ -50,6 +50,73 @@ However, configuration cannot create behavior that no installed component suppli
 This guide assumes that you understand Git, TypeScript, JSON Schema, and automated tests.
 It explains KubeClaw-specific boundaries when they affect your choice.
 
+## Developer Task Routes
+
+Choose the task before choosing a package or registration type.
+
+| Task | Start here |
+| --- | --- |
+| Author pipeline plugins | [Create and activate a first pipeline plugin](first-plugin.md#create-and-activate-a-first-pipeline-plugin) |
+| Author observers | [Practice an observer lifecycle locally](first-plugin.md#practice-an-observer-lifecycle-locally) |
+| Install and use OpenClaw plugins | [Build an OpenClaw hook extension](host-and-engine.md#build-an-openclaw-hook-extension), then [operate the packaged hosts](testing.md#operate-the-packaged-openclaw-hosts) |
+| Migrate behavior | [Plan a behavior-preserving migration](#plan-a-behavior-preserving-migration) |
+| Replace agent dispatch | [Replace the runtime.dispatch provider](#replace-the-runtimedispatch-provider) |
+| Add verification | [Add verification at the owning boundary](testing.md#add-verification-at-the-owning-boundary) |
+| Testing and CI | [Select the smallest complete check chain](developer-handbook.md#select-the-smallest-complete-check-chain) and [check CI authority and failure handling](developer-handbook.md#ci-triggers-authority-and-failure-handling) |
+| Contributing | [Prepare a clean checkout](developer-handbook.md#prepare-a-clean-checkout); use the [documentation change chain](developer-handbook.md#documentation-change-chain) for documentation changes |
+
+### Plan A Behavior-Preserving Migration
+
+Use this route when retained or imported behavior must become a self-contained
+v2 package. An update or a new package alone does not prove migration parity.
+
+1. Name one cohesive behavior and its producers, consumers, configuration,
+   effects, fixtures, and tests. Record the observable inputs, results, artifacts,
+   lifecycle, failures, retry, cancellation, and recovery guarantees to preserve.
+2. Choose reuse, refactor, or rewrite explicitly for each parity scenario.
+   Preserve behavior rather than copying source structure. For an intentional
+   change, record the old and new expectations, rationale, complexity impact,
+   approval, and tests that demonstrate the difference. Undocumented drift fails
+   parity.
+3. Use [the behavior-owner decision](#first-identify-the-behavior-owner) and
+   [the first-plugin procedure](first-plugin.md#create-and-activate-a-first-pipeline-plugin)
+   to put the implementation and its contracts in the owning registered package.
+   Stages decide domain results; adapters own privileged effects. Do not retain
+   forwarding wrappers, imports into the old implementation, or parallel runtime
+   authority. If a required capability or Core-issued authority is unavailable,
+   record that prerequisite before claiming parity; do not invent it locally.
+4. Compare legacy and replacement results for the declared scenarios, including
+   failures and recovery. Use [verification at the owning boundary](testing.md#add-verification-at-the-owning-boundary)
+   and [update or replacement checks](testing.md#update-or-replace) to plan the
+   check chain and rollback. Retire old authority only after the comparison and
+   consumer cutover are proven.
+
+This is the migration entry and planning boundary, not a claim that a particular
+package has passed parity or that legacy files may now be deleted.
+
+### Replace The runtime.dispatch Provider
+
+Agent-dispatch replacement is a capability-provider change, not a specialist
+Worker engine replacement. Start with the
+[runtime-dispatch package and its adapter registrations](plugin-catalogue/kubeclaw.runtime-dispatch.md).
+Install an adapter that declares `runtime.dispatch`, then have the operator
+select its exact registration ID in `pipeline-platform.v2.providers` for that
+capability. Follow [adapter selection and validation](../reference/pipeline-platform.md#adapter-selection-and-validation)
+for configuration, required-provider activation, grants, dependencies, and
+recovery. A provider mapping alone does not start an adapter.
+
+Preserve the agent-output boundary during the replacement. An agent-backed
+registration owns a closed `outputContract`: protocol, agent, identity, task,
+evidence, and rules supplied in the request are input, not fields the agent may
+echo into its domain output. The runtime owns invocation identity and durable
+session evidence; trusted runtime code adds that evidence before the extension
+parser validates the completion. Bind run, stage, module, gate, project, and
+attempt identity from trusted invocation input, not agent-supplied identity.
+Reject unknown output fields and keep durable output outside disposable
+worktrees, with atomic writes. Provider replacement must preserve terminal-state,
+cancellation, and durable-result behavior; a package listing or configuration
+change is not proof of a successful dispatch or live end-to-end execution.
+
 ## First Identify The Behavior Owner
 
 Ask one question first: which component must own the new behavior?
