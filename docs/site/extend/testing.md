@@ -27,6 +27,43 @@ selection, activation, behavior, failure, and cleanup.
 | Live check | Use the actual host, service, network, storage, or cluster |
 | Remaining state | Data that an extension does not own or cannot remove safely |
 
+## Add Verification At The Owning Boundary
+
+Write verification in TypeScript or the component's native language. Keep the
+verification beside the behavior it owns:
+
+- For package behavior, add a **package-local TypeScript live-function test**
+  that invokes the real exported function. A metadata/import check alone is not
+  a live-function test.
+- For a package boundary, add a **package-local boundary test**. Verify the
+  package's input, output, and authority contract; a shared platform or registry
+  test does not replace this local test.
+- Put shared Core contract checks under `tests/verification/contracts/`.
+  The [lifecycle contract check](../../../tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs)
+  is one existing example, not a replacement for the affected package tests.
+- For a real system run, use
+  `tests/verification/e2e/run-real-pipeline-e2e.mjs`; the
+  [verification command reference](../reference/verification-commands.md#claim-to-test-map)
+  names its complete real model-backed workflow command. Prepare that caller's
+  host, model, and service prerequisites first. A unit or contract result is not
+  a successful real system run.
+
+Every plugin must prove success, control-result failure, denied authority,
+timeout/cancellation, crash containment, and relevant recovery/idempotency.
+Use the owning host's boundary for authority, cancellation, or crash containment
+that the package function does not own. Record which boundary supplied each
+proof. If a required boundary cannot be exercised, retain the missing prerequisite
+and the result as not ready; an inner passing test is not a substitute.
+For relevant recovery/idempotency, interrupt the operation, recover from its
+retained state, and repeat the same operation identity without duplicating an
+external effect.
+
+These are verification requirements, not a claim that every existing package
+already meets them. A catalogue package check with no package-local automated
+tests does not satisfy the live-function or boundary-test requirement. Keep the
+recorded gaps and use the proof levels and surface-specific procedures below to
+complete the required evidence.
+
 ## Use A Proof Ladder
 
 For a catalogue **Package Checks** command, follow the
