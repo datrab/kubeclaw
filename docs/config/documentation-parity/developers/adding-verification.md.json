@@ -1,0 +1,385 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/developers/adding-verification.md",
+    "legacyPath": "docs/_legacy-source/developers/adding-verification.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "ef895d18321c6a8f47f31143f875b52223af01a2",
+    "extractionDigest": "d0185d625ea1e382f7e4af8b1a9ad6f94eded0bc85a3e643c850f9e6f89ea6bf",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewedRevision": "1c0a7c52a6644434db34af95bf364aeb9a1a0710",
+  "author": {
+    "id": "parity-author:developer-and-extension-sources",
+    "assignmentId": "parity-assignment:02f8544c6a42032f2441081ab84141560504db8af87a2ebf0b746822f46ab90a"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/developers/adding-verification",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "No authoritative historical public route is declared; the current canonical testing section preserves the original verification authoring instructions without inventing a redirect."
+  },
+  "visualEvidence": [],
+  "contentRoot": "9b11811c29b2de1f4aee0b713daa8a21175a761f1d8454b5342a296f5609710c",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_e55fdbc2762fb5cf42ce06a2ac2c2299",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "adding-verification:dpu_e55fdbc2762fb5cf42ce06a2ac2c2299",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 22
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_76eefcfa82b9d713869f25f65fd5ae59",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "adding-verification:dpu_76eefcfa82b9d713869f25f65fd5ae59",
+          "reasonCode": null,
+          "byteStart": 23,
+          "byteEnd": 74
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_92897ed35294fcdd329f0e8b8fe0f1a9",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "adding-verification:dpu_92897ed35294fcdd329f0e8b8fe0f1a9",
+          "reasonCode": null,
+          "byteStart": 75,
+          "byteEnd": 142
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_84f51f4a2f76ec600f33f8687cd9a005",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "adding-verification:dpu_84f51f4a2f76ec600f33f8687cd9a005",
+          "reasonCode": null,
+          "byteStart": 142,
+          "byteEnd": 193
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_d8da54dcf5f423b0022b7a5c65629577",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "adding-verification:dpu_d8da54dcf5f423b0022b7a5c65629577",
+          "reasonCode": null,
+          "byteStart": 193,
+          "byteEnd": 243
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_969f106b5e0e6eb715fca9ac19b3f1ce",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "adding-verification:dpu_969f106b5e0e6eb715fca9ac19b3f1ce",
+          "reasonCode": null,
+          "byteStart": 243,
+          "byteEnd": 314
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_12fb3a8baa4c076e17a9ddf4a25d55fa",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "adding-verification:dpu_12fb3a8baa4c076e17a9ddf4a25d55fa",
+          "reasonCode": null,
+          "byteStart": 315,
+          "byteEnd": 463
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "adding-verification:dpu_e55fdbc2762fb5cf42ce06a2ac2c2299",
+      "unitId": "dpu_e55fdbc2762fb5cf42ce06a2ac2c2299",
+      "summary": "Verification authoring heading",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 22,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "1bda86331399367719235c9ee928b905a3653972277a2269b0421d65381263cb",
+        "normalizedSha256": "9962a33eb4ced1ad5893db49c71155f9241dd8596ccaab0df89858fa4e818119"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "add-verification-at-the-owning-boundary",
+          "excerpt": "## Add Verification At The Owning Boundary",
+          "excerptSha256": "02cc0a1a0b36998e1a3c28cd00c0d7ddf6ffeef37d908869d4aad3269a1562e6",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "adding-verification:dpu_76eefcfa82b9d713869f25f65fd5ae59",
+      "unitId": "dpu_76eefcfa82b9d713869f25f65fd5ae59",
+      "summary": "Use TypeScript or the owning component native language",
+      "claimType": "procedure",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 23,
+        "byteEnd": 74,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "a81d829f59cc2c81fb4d0ac20e405b691f3d9bfeed27cb5793a77a333bff1ed4",
+        "normalizedSha256": "821a5fcc23ff657dcc40b43d0c82e0344fcb71ac969ed600274eb12900a3be0f"
+      },
+      "evidence": [
+        {
+          "revision": "1c0a7c52a6644434db34af95bf364aeb9a1a0710",
+          "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+          "basis": "current-test",
+          "assertion": "The package-local TypeScript live-function test calls provider().execute with real fixture inputs and asserts passed, failed and duplicate-input rejection outcomes. It demonstrates the requested authoring pattern, not a new execution result or all-package coverage.",
+          "gitObject": "f05b1010f5d488a3369d125fea66b146c71948f1",
+          "byteStart": 929,
+          "byteEnd": 1258,
+          "lineStart": 19,
+          "lineEnd": 21,
+          "exactSha256": "afd962346a4e8fefd22b205f5d87578eb89a9022bb8b02186fb8dc68a7edda4c",
+          "normalizedSha256": "2f8d6f9b0a83c0c808c2dd9030e4b8c059d50cfca516a42b880ba98702ada5cc"
+        },
+        {
+          "revision": "1c0a7c52a6644434db34af95bf364aeb9a1a0710",
+          "path": "go.mod",
+          "basis": "current-configuration",
+          "assertion": "go.mod defines the Go component module and its Go language version, alongside the TypeScript package test pattern. The canonical instruction permits the owning component native language; this is not a claim all verification uses one language.",
+          "gitObject": "f6b5e6001e691343ebb1ba36e0749ae42acbb81c",
+          "byteStart": 0,
+          "byteEnd": 42,
+          "lineStart": 1,
+          "lineEnd": 3,
+          "exactSha256": "a80cfccbfbe9d5e886667f01cab02bb72312ec0d81e414cf22e4ee77f683ffed",
+          "normalizedSha256": "790da825f15cb35d0954d4a9625bb27d5e74505162630431995caf620f9a2a4f"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "add-verification-at-the-owning-boundary",
+          "excerpt": "Write verification in TypeScript or the component's native language. Keep the\nverification beside the behavior it owns:",
+          "excerptSha256": "2e446c3d87d25be583b36e8bad4bf5bf07bd250847e053aac266957dd3fb553c",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "adding-verification:dpu_92897ed35294fcdd329f0e8b8fe0f1a9",
+      "unitId": "dpu_92897ed35294fcdd329f0e8b8fe0f1a9",
+      "summary": "Package behavior requires a package-local TypeScript live-function test",
+      "claimType": "procedure",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 75,
+        "byteEnd": 142,
+        "lineStart": 5,
+        "lineEnd": 5,
+        "exactSha256": "e9c281fbc02c73f05abeac03929b08209a7440561d91451bda2bd1dc8ef76afa",
+        "normalizedSha256": "dbc34e91ce47b113079846e41b5c067bfb81ac51f1036d9863f67c2ccea11727"
+      },
+      "evidence": [
+        {
+          "revision": "1c0a7c52a6644434db34af95bf364aeb9a1a0710",
+          "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+          "basis": "current-test",
+          "assertion": "The package-local TypeScript live-function test calls provider().execute with real fixture inputs and asserts passed, failed and duplicate-input rejection outcomes. It demonstrates the requested authoring pattern, not a new execution result or all-package coverage.",
+          "gitObject": "f05b1010f5d488a3369d125fea66b146c71948f1",
+          "byteStart": 929,
+          "byteEnd": 1258,
+          "lineStart": 19,
+          "lineEnd": 21,
+          "exactSha256": "afd962346a4e8fefd22b205f5d87578eb89a9022bb8b02186fb8dc68a7edda4c",
+          "normalizedSha256": "2f8d6f9b0a83c0c808c2dd9030e4b8c059d50cfca516a42b880ba98702ada5cc"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "add-verification-at-the-owning-boundary",
+          "excerpt": "- For package behavior, add a **package-local TypeScript live-function test**\n  that invokes the real exported function. A metadata/import check alone is not\n  a live-function test.",
+          "excerptSha256": "4c15057f8858c78b69ae624b5ab7553acc9c3a7c1521e26326be9068438e9903",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "adding-verification:dpu_84f51f4a2f76ec600f33f8687cd9a005",
+      "unitId": "dpu_84f51f4a2f76ec600f33f8687cd9a005",
+      "summary": "Package boundary requires a package-local boundary test",
+      "claimType": "procedure",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 142,
+        "byteEnd": 193,
+        "lineStart": 6,
+        "lineEnd": 6,
+        "exactSha256": "d907d40c07e75cb8bbf982f110bf4ecef1fc45ec3e5900f0c650f53fcb5fdcc1",
+        "normalizedSha256": "9d1a345c19be9d807307510c66da2f6eca203c9dd4c8f4ad638d32195500b81a"
+      },
+      "evidence": [
+        {
+          "revision": "1c0a7c52a6644434db34af95bf364aeb9a1a0710",
+          "path": "skills/nova/plugins/lint/tests/package-boundary.test.mjs",
+          "basis": "current-test",
+          "assertion": "The package-local boundary test checks manifest stage identities, declared executor capability and requiredCapabilities for each lint stage. It demonstrates package-owned boundary assertions rather than substituting a platform registry result.",
+          "gitObject": "7b9bc3a0f71fe26a451dd199a36e772fadf5448e",
+          "byteStart": 1225,
+          "byteEnd": 1749,
+          "lineStart": 38,
+          "lineEnd": 48,
+          "exactSha256": "e972a4426d4b9e7c918e51c8d6e5bd27933889a49ef41b75809f3ddccfc3ff99",
+          "normalizedSha256": "53d79eec081e9c563e3fe48bd2246140ec70dff87dbadd199370dc3cd5392fd2"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "add-verification-at-the-owning-boundary",
+          "excerpt": "- For a package boundary, add a **package-local boundary test**. Verify the\n  package's input, output, and authority contract; a shared platform or registry\n  test does not replace this local test.",
+          "excerptSha256": "90882ba431a273b9829f8be0f205360d99f049ba8e3a6b8a8ebaafb4d9cee8f3",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "adding-verification:dpu_d8da54dcf5f423b0022b7a5c65629577",
+      "unitId": "dpu_d8da54dcf5f423b0022b7a5c65629577",
+      "summary": "Core contract verification belongs under tests/verification/contracts",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 193,
+        "byteEnd": 243,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "c2547e0f602948b749e8c2f197319ae8fa69c76414532f46d389a8e491bb78f6",
+        "normalizedSha256": "eb4cea353f9c88c201570d5328124238f10e869c767b5fdbdeabf50339855777"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "add-verification-at-the-owning-boundary",
+          "excerpt": "- Put shared Core contract checks under `tests/verification/contracts/`.\n  The [lifecycle contract check](../../../tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs)\n  is one existing example, not a replacement for the affected package tests.",
+          "excerptSha256": "6cfe819236cf4a5b780708094ce78eff511332c6a72ff29531e6a8fdb2b6877f",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "adding-verification:dpu_969f106b5e0e6eb715fca9ac19b3f1ce",
+      "unitId": "dpu_969f106b5e0e6eb715fca9ac19b3f1ce",
+      "summary": "Real-system verification routes to the complete real pipeline E2E caller",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 243,
+        "byteEnd": 314,
+        "lineStart": 8,
+        "lineEnd": 8,
+        "exactSha256": "fb6a479ead5dcb5548b6d4a1e2f59eba65d9f2f7af566d275ec6dc5b94a17895",
+        "normalizedSha256": "560d74096f8a58ce1aa6714955185e2a9698308307a06f53731098293d72aeb5"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "add-verification-at-the-owning-boundary",
+          "excerpt": "- For a real system run, use\n  `tests/verification/e2e/run-real-pipeline-e2e.mjs`; the\n  [verification command reference](../reference/verification-commands.md#claim-to-test-map)\n  names its complete real model-backed workflow command. Prepare that caller's\n  host, model, and service prerequisites first. A unit or contract result is not\n  a successful real system run.",
+          "excerptSha256": "03fc041cd941b5a68c1596e25b829a72797ef81db49d5a5d44a15cb87642976e",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "adding-verification:dpu_12fb3a8baa4c076e17a9ddf4a25d55fa",
+      "unitId": "dpu_12fb3a8baa4c076e17a9ddf4a25d55fa",
+      "summary": "Every plugin requires success, control-result failure, authority denial, timeout/cancellation, crash containment and relevant recovery/idempotency; missing proof remains not ready",
+      "claimType": "procedure",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 315,
+        "byteEnd": 463,
+        "lineStart": 10,
+        "lineEnd": 11,
+        "exactSha256": "2ff7daf163723ecf830f5079db5e6ba162f19c7956e2aa3169f03ae849686da5",
+        "normalizedSha256": "e064830ffe3984deb63764e002eeab613edfe624392f677e9cc05f78da854f7c"
+      },
+      "evidence": [
+        {
+          "revision": "1c0a7c52a6644434db34af95bf364aeb9a1a0710",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "package.json defines verify:plugin-system-v2 with contract, lifecycle, capability-security, recovery and native-isolation checks and requires KUBECLAW_TEST_CGROUP_ROOT for host-boundary fixtures. These are declared verification routes, not assertions every plugin passes or unavailable host proof succeeded.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40581,
+          "byteEnd": 42749,
+          "lineStart": 260,
+          "lineEnd": 260,
+          "exactSha256": "dccc9022f7f854f377cdcf771d2b0d249a69c892103d0e9ff7df542515923e3e",
+          "normalizedSha256": "fdffbb24eb57b848c56df91fc20185e40b506e62f033534555fd489061bb25a6"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "add-verification-at-the-owning-boundary",
+          "excerpt": "Every plugin must prove success, control-result failure, denied authority,\ntimeout/cancellation, crash containment, and relevant recovery/idempotency.\nUse the owning host's boundary for authority, cancellation, or crash containment\nthat the package function does not own. Record which boundary supplied each\nproof. If a required boundary cannot be exercised, retain the missing prerequisite\nand the result as not ready; an inner passing test is not a substitute.\nFor relevant recovery/idempotency, interrupt the operation, recover from its\nretained state, and repeat the same operation identity without duplicating an\nexternal effect.",
+          "excerptSha256": "7a7182d8a2c3d68d5cdb54ecc11b398dab6d7b3c5dc154cee5562565ab8e14b8",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    }
+  ]
+}
