@@ -203,7 +203,7 @@ function registrationDependencyFacts(plugin, registration) {
       : qualifiedOwners.length ? ''
         : !diagnostics.length ? `The registration transforms its host input or local files; no remote data owner is established. ${evidence}.` : `Data ownership requires the unresolved runtime authority above.`;
   let reachability = boundary.records.some((item) => ['runtime-client', 'host-tools', 'credential-provider'].includes(item.scope)) && !diagnostics.length ? ''
-    : service ? `Run a bounded operation through the selected ${namespace} binding and verify its expected result. Direct client or provider code availability does not prove that an endpoint is configured or reachable. Retain failure, timeout, and cancellation results separately. ${evidence}.`
+    : service ? `Use the ${namespace} to run one bounded operation. Verify its expected result. Direct client or provider code availability does not prove that an endpoint is configured or reachable. Retain failure, timeout, and cancellation results separately. ${evidence}.`
     : !diagnostics.length ? `No direct network preflight for this invocation. Verify local store and artifact/capability access using the registration's contract. ${evidence}.` : 'A complete dependency preflight requires qualification of the unresolved invocation authority above.';
   if (registration.kind === 'observer') {
     const policy = registration.failurePolicy ?? {};

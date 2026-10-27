@@ -110,7 +110,8 @@ test('publication transforms only the first metadata header and never evidence p
   const actual = publicationMetadata(input, 'a'.repeat(40), item => { selected.push(item); return `https://example.test/${item}`; });
   assert.deepEqual(selected, ['source.go', 'source-directory']);
   assert.match(actual, /Evidence: \[source.go\]\(https:\/\/example.test\/source.go\); \[source-directory\]\(https:\/\/example.test\/source-directory\)/u);
-  assert.match(actual, new RegExp(`Last verified: ${'a'.repeat(40)}`));
+  assert.match(actual, new RegExp(`Last verified: publication source revision ${'a'.repeat(40)}`));
+  assert.match(actual, /Publication does not prove runtime verification/u);
   assert(actual.endsWith(body));
 });
 
@@ -127,7 +128,7 @@ test('publication recognizes the existing spaced metadata header without consumi
   const input = '# Decision\n\nStatus: implemented\n\nAudience: maintainer\n\nOwner: platform\n\nEvidence: source.go\n\nLast verified: generated during publication\n' + body;
   const actual = publicationMetadata(input, 'c'.repeat(40), item => `https://example.test/${item}`);
   assert.match(actual, /Evidence: \[source.go\]\(https:\/\/example.test\/source.go\)/u);
-  assert.match(actual, new RegExp(`Last verified: ${'c'.repeat(40)}`));
+  assert.match(actual, new RegExp(`Last verified: publication source revision ${'c'.repeat(40)}`));
   assert(actual.endsWith(body));
 });
 
@@ -137,7 +138,8 @@ test('publication recognizes metadata on every existing reader page, including s
   for (const file of pages(root)) {
     const text = fs.readFileSync(file, 'utf8').replace(/^Last verified: .+$/mu, 'Last verified: generated during publication');
     const actual = publicationMetadata(text, 'd'.repeat(40), item => `https://example.test/${item}`);
-    assert.match(actual, new RegExp(`Last verified: ${'d'.repeat(40)}`), file);
+    assert.match(actual, new RegExp(`Last verified: publication source revision ${'d'.repeat(40)}`), file);
+    assert.match(actual, /Publication does not prove runtime verification/u, file);
     assert(!actual.includes('Last verified: generated during publication'), file);
   }
 });

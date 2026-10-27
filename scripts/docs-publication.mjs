@@ -468,7 +468,7 @@ function operatorPluginMatrix() {
         facts.provided.length ? `provides: ${facts.provided.join(', ')}` : 'provides: none declared',
       ].join('; ');
       const failure = rebaseMarkdownLinks(authored?.registrationOperationNotes?.[registration.id] ?? authored?.operationNote ?? `Blocked failure guidance: source owner \`${rel(plugin.file)}\` must describe the failure effect.`, path.join(catalogueRoot, `${plugin.manifest.id}.md`), operatorPluginPage);
-      return `| [\`${plugin.manifest.id}:${registration.id}\`](../extend/plugin-catalogue/${plugin.manifest.id}.md#${registration.kind.replaceAll(' ', '-').toLowerCase()}-${String(registration.id).toLowerCase().replace(/[^a-z0-9-]/gu, '-')}) | ${markdownCell(facts.serviceText)} | ${markdownCell(facts.endpoint)} | ${markdownCell(capability)} | ${markdownCell(facts.secret)} | ${markdownCell(facts.dataOwner)} | ${markdownCell(facts.reachability)} | ${markdownCell(failure)} | <!-- dependency-source ${facts.digest} -->`;
+      return `| [\`${plugin.manifest.id}:${registration.id}\`](../extend/plugin-catalogue/${plugin.manifest.id}.md#${registration.kind.replaceAll(' ', '-').toLowerCase()}-${String(registration.id).toLowerCase().replace(/[^a-z0-9-]/gu, '-')}) | ${markdownCell(facts.serviceText)} | ${markdownCell(facts.endpoint)} | ${markdownCell(capability)} | ${markdownCell(facts.secret)} | ${markdownCell(facts.dataOwner)} | ${markdownCell(facts.reachability)} | ${markdownCell(failure)} <!-- dependency-source ${facts.digest} --> |`;
     });
   });
   const registrationCount = plugins.reduce((sum, plugin) => sum + plugin.registrations.length, 0);
@@ -491,7 +491,7 @@ function operatorPluginMatrix() {
     '### Per-registration external dependency matrix',
     '',
     '| Package registration | External service | Endpoint authority fields | Capabilities | Secret-reference fields | Data owner | Reachability check | Failure effect |',
-    '| --- | --- | --- | --- | --- | --- | --- | --- | --- |',
+    '| --- | --- | --- | --- | --- | --- | --- | --- |',
     ...dependencyRows,
     '',
     operatorMatrixEnd,

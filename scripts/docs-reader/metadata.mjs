@@ -12,7 +12,8 @@ export function publicationMetadata(text, revision, evidenceUrl) {
           return `[${item}](${/^https?:\/\//u.test(item) ? item : evidenceUrl(item)})`;
         });
         return `Evidence: ${links.join('; ')}`;
-      }).replace(/^Last verified: generated during publication$/mu, `Last verified: ${revision}`);
+      }).replace(/^Last verified: generated during publication$/mu,
+        `Last verified: publication source revision ${revision}. Publication does not prove runtime verification.`);
       return `${heading}${converted}\n`;
     });
 }

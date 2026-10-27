@@ -14,6 +14,9 @@ import {
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamApiReference } from './docs-api-reference.mjs';
 import { generateSdkReference } from './docs-sdk-reference.mjs';
+import { readVerifiedRetainedLanguageBundle } from './lib/docs-retained-language-bundle.mjs';
+import { loadRetainedConfigurationSnapshot, assertRetainedPageDestinations, writeRetainedPage } from './lib/docs-retained-source.mjs';
+import { renderRetainedConfigurationReferences } from './lib/docs-retained-configuration-renderer.mjs';
 import { renderProductPipeline } from './docs-product-pipeline-reference.mjs';
 
 const argv = process.argv.slice(2);
@@ -25,11 +28,15 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration'].includes(only)) {
-  throw new Error('--only supports exactly workflows or plugin-configuration');
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language'].includes(only)) {
+  throw new Error('--only supports workflows, plugin-configuration or retained-configuration-language');
 }
 if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
+}
+const retainedLanguageBundlePath = option('--retained-language-bundle', null);
+if ((only === 'retained-configuration-language') !== Boolean(retainedLanguageBundlePath)) {
+  throw new Error('--retained-language-bundle is required only for --only retained-configuration-language');
 }
 const allowDetachedSourceRoot = argv.includes('--allow-detached-source-root');
 const updateSourceRevision = argv.includes('--update-source-revision');
@@ -150,6 +157,22 @@ function selectedValue(value) {
 }
 
 function stableWriteMap() {
+  // This explicit historical datatype does not replace current acquisition or
+  // current API/producer qualification. Authenticate the entire bundle first.
+  if (only === 'retained-configuration-language') {
+    const bundle = readVerifiedRetainedLanguageBundle({ root, filename: path.resolve(retainedLanguageBundlePath) });
+    if (bundle.editorialRevision !== sourceRevision) {
+      throw new Error('retained language editorial revision must match --revision');
+    }
+    const snapshot = loadRetainedConfigurationSnapshot({ root,
+      artifactRevision: bundle.artifactRevision, sourceRevision: bundle.sourceRevision });
+    return renderRetainedConfigurationReferences({ ...bundle.inventories,
+      secrets: bundle.inventories.secretSetup,
+      readSourceText: snapshot.readSourceText, sourceRevision: bundle.sourceRevision,
+      artifactRevision: bundle.artifactRevision, editorialRevision: bundle.editorialRevision,
+      banner: true, editorialSourcePath: 'scripts/lib/docs-configuration-editorial-language.mjs' });
+  }
+
   // A schema-only correction has its own complete publication boundary. Keep
   // unrelated API, SDK and values inventories out of this explicitly selected route.
   if (only === 'plugin-configuration') return new Map([
@@ -909,6 +932,7 @@ ${generatedEnd()}
 
 const outputs = stableWriteMap();
 const stale = [];
+if (only === 'retained-configuration-language') assertRetainedPageDestinations(root, [...outputs.keys()]);
 
 for (const [relPath, expected] of outputs) {
   const absPath = path.join(root, relPath);
@@ -917,7 +941,8 @@ for (const [relPath, expected] of outputs) {
     if (actual !== expected) stale.push(relPath);
   } else {
     fs.mkdirSync(path.dirname(absPath), { recursive: true });
-    fs.writeFileSync(absPath, expected);
+    if (only === 'retained-configuration-language') writeRetainedPage(absPath, expected);
+    else fs.writeFileSync(absPath, expected);
     console.log(`wrote ${relPath}`);
   }
 }
