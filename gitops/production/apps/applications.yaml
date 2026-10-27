@@ -100,7 +100,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '0'
     kubeclaw.dev/helm-releases: '["prism","agent-prism"]'
-    kubeclaw.dev/immutable-bundle-path: releases/gitops/runtime-40000895109-1/prism
+    kubeclaw.dev/immutable-bundle-path: releases/gitops/prism-cpu-headroom-20261027/prism
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
 spec:
@@ -108,7 +108,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/runtime-40000895109-1/prism
+    path: releases/gitops/prism-cpu-headroom-20261027/prism
     directory:
       include: resources.yaml
   destination:

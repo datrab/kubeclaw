@@ -1,7 +1,24 @@
 # Matches the installed native-worker-pools-ax41.yaml policy.
 # The 2 CPU / 16 GiB host pool is separate from supervisor/service Pod budgets.
+# Reduce ordinary Pod CPU requests to free 1900m for other workloads on AX41.
+# CPU limits and native pool settings remain unchanged; services can still burst.
+control:
+  resources:
+    requests:
+      cpu: 100m
+studio:
+  resources:
+    requests:
+      cpu: 50m
+postgresql:
+  resources:
+    requests:
+      cpu: 100m
 worker:
   replicas: 1
+  resources:
+    requests:
+      cpu: 100m
   native:
     nodeName: ax41-production
     namespace: kubeclaw
