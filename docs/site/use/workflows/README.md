@@ -7,7 +7,7 @@ Evidence: docs/site/use/workflows/examples/compiled-project.mjs; docs/site/use/w
 Applies to: pipeline workflow selection; each guide states its contracts and execution prerequisites
 Last verified: 2026-10-26; one actual eight-stage compiled minimal-project run, original audit and artifact verification; compile-only task remains separate; no deployment or human acceptance claim
 
-Use these guides to bind a pipeline task to its inputs, durable state, result
+Use these guides to [bind](../../reference/glossary.md#technical-verb-bind) a pipeline task to its inputs, durable state, result
 authority, and cleanup. A **wait** is a persisted request for a later decision.
 A **resume signal** supplies that decision to the same run. Resuming creates a
 new stage attempt; it does not change the result of the earlier attempt.

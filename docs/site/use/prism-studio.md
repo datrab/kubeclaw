@@ -1,6 +1,6 @@
 # Operate Prism: From Architecture to Approved Handoff
 
-Status: local sample procedure available; local Studio browser checks blocked by missing host libraries; local deploy-script verification passed; fixed spike browser path blocks complete local checks; absent runtime release selection blocks deployment; installed operator-messaging payload mismatch blocks the Nova approval wait; no live journey result
+Status: local sample procedure available; recorded local browser/deploy-script results and messaging-contract limits appear below; deployment requires current release preflight; no live journey result
 Audience: Prism operator, designer, incident responder, platform maintainer
 Owner: Prism maintainers
 Evidence: skills/prism; skills/nova/plugins/prism-design; charts/prism; charts/kubeclaw; scripts/deploy.sh
@@ -277,12 +277,16 @@ bound_deploy render prism
 The three verification/render commands must exit zero after the binding
 assertion succeeds. At the recorded revision, `verify:prism:deploy-script`
 passed its workflow, deploy-command contract, and Bash syntax checks.
-`materialize-release.mjs --family=runtime --check` stops because
-`releases/runtime-images.json` is absent. This checkout therefore has no selected
-runtime release to deploy. Retain that error and stop before deployment.
+At that recorded revision, `materialize-release.mjs --family=runtime --check`
+stopped because `releases/runtime-images.json` was absent.
+That historical checkout had no selected runtime release to deploy.
+Retain that historical failure; it does not establish the release state of a later checkout.
 Local script verification does not prove an installed Prism service.
 
-After the release owner supplies a selected runtime release, repeat every
+For your selected checkout, use [Preflight Without Mutation](install.md#preflight-without-mutation).
+A present receipt can still fail verification.
+Any failed binding, selection, or render check stops deployment.
+After the release owner supplies a valid selected runtime release, repeat every
 preflight and render check. Complete [Before You Start](#before-you-start),
 [Deploy Prism](#deploy-prism), [The Complete Studio Journey](#the-complete-studio-journey),
 and [Completion Checklist](#completion-checklist) in order.
@@ -811,7 +815,7 @@ The pipeline plugin has four closed settings:
 | --- | --- | --- |
 | `agent` | Exactly `prism` | Prevents a project from redirecting design work to another runtime. |
 | `target` | Nonempty operator target | Selects where the approval request is published. |
-| `issuerId` | Nonempty operator issuer | Binds the only identity that can resolve the wait. |
+| `issuerId` | Nonempty operator issuer | Sets the only operator issuer value this stage accepts. The value does not authenticate the caller. |
 | `timeoutMinutes` | Integer from 1 through 525600 | Creates the absolute approval-wait expiry. |
 
 These settings come from Nova's resolved plugin configuration, not from Prism
@@ -1003,8 +1007,10 @@ The chart uses worker `/bootstrap` for Pod readiness so that the post-install
 migration can create the nonce table after the Pod becomes ready. The smoke
 command separately calls worker `/ready`. The chart default has
 `workerTrust.spiffe.enabled: false`; determine the actual mode from the selected
-values and render. The absent runtime release selection establishes no deployed
-mode. Use the canonical [Worker endpoints](../understand/prism-runtime.md#worker-endpoints)
+values and render. At the recorded revision, the runtime release selection was absent.
+That observation does not prove a deployed mode or describe the current checkout.
+For the current selection, use [Preflight Without Mutation](install.md#preflight-without-mutation).
+Use the canonical [Worker endpoints](../understand/prism-runtime.md#worker-endpoints)
 explanation for these boundaries. Keep admission closed on failed native
 reconciliation or, in HMAC mode, failed nonce-table access.
 
@@ -1031,8 +1037,10 @@ closed until those checks succeed.
 
 The following status map applies to every step below at the recorded revision.
 “Implemented” means that the linked product code provides the operation; it does
-not mean that this deployment exercised it. The absent runtime release selection
-stops this checkout before deployment and the live journey. Verification did
+not mean that this deployment exercised it. At that recorded revision, the absent
+runtime release selection stopped that checkout before deployment and the live journey.
+For the current checkout, use [Preflight Without Mutation](install.md#preflight-without-mutation).
+Stop if selection, binding or rendering fails. The recorded verification did
 not include any live Studio-to-Nova step. Agent work additionally remains
 unavailable until the selected release meets [SPIFFE agent admission](#spiffe-agent-admission);
 service health alone does not remove that boundary. The notification mismatch

@@ -664,6 +664,7 @@ Read the Nova chain as these separate outcomes:
 
 The [Nova lifecycle exercise](examples/platform-change-nova-lifecycle.json)
 contains desired behavior, invalid input, interruption, and removal conditions.
+Use the [technical verb definitions](../reference/glossary.md#technical-verbs) for its instructions.
 It is task input, not a run result. Use a separate scratch checkout at the
 selected revision. Find ownership and the check chain from this handbook.
 Capture the unchanged baseline before editing. Add the temporary behavior and

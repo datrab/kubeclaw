@@ -382,6 +382,7 @@ architecture review or approval stage, and its final provider plan must contain
 one executable chain from container build through a Kubernetes fixture and
 Tailscale exposure to the blocking demo authentication check.
 
+The conceptual trace uses the [technical verb definitions](../../reference/glossary.md#technical-verbs).
 This exercise does not prove the conceptual
 [20-step showcase trace](examples/request-trace-success.json). Prism is proved
 separately by `prism-smoke` and the

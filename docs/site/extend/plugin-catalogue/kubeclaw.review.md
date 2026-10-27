@@ -13,7 +13,7 @@ Run review, repository audit, and repository revalidation stages.
 
 ## When To Use It
 
-Use it when the graph needs the full installed review lifecycle.
+When the graph needs the full installed review lifecycle, use it.
 
 ## When Not To Use It
 
@@ -61,7 +61,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: review
 
 Public identifier: `kubeclaw.decision.review`.
-Global registration ID: `kubeclaw.review:review`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.review:review`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `git.repository.read`, `artifacts.read`, `artifacts.write`
 
@@ -69,7 +69,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/review/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `reviewSemanticEncoding` (constant; optional; value `review-semantics.utf16-v1`)
 - `reportArtifactEncoding` (constant; optional; value `kubeclaw-json.utf16.v1`)
@@ -97,7 +97,7 @@ Declared manifest facts:
 ## stage: repository-audit
 
 Public identifier: `kubeclaw.audit.repository-review`.
-Global registration ID: `kubeclaw.review:repository-audit`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.review:repository-audit`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `git.repository.read`, `artifacts.read`, `artifacts.write`
 
@@ -105,7 +105,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/repository-audit-config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/review/schemas/repository-audit-config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `agent` (string; required; minLength `1`)
 - `reviewerModel` (string; required; minLength `1`)
@@ -135,7 +135,7 @@ Declared manifest facts:
 ## stage: repository-revalidation
 
 Public identifier: `kubeclaw.audit.repository-review-revalidation`.
-Global registration ID: `kubeclaw.review:repository-revalidation`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.review:repository-revalidation`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `git.repository.read`, `artifacts.read`, `artifacts.write`
 
@@ -143,7 +143,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/repository-audit-config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/review/schemas/repository-audit-config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `agent` (string; required; minLength `1`)
 - `reviewerModel` (string; required; minLength `1`)
@@ -172,19 +172,27 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Each registration freezes its selected source and policy and uses separately selected Git, runtime-dispatch and artifact bindings. Immutable report storage and reviewer quality are not implied by source availability; registration-specific failure and recovery behavior differs.
+Each registration freezes its selected source and policy and uses separately selected Git, runtime-dispatch and artifact bindings. Immutable report storage and reviewer quality are not implied by source availability. Registration-specific failure and recovery behavior differs.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

@@ -1,7 +1,7 @@
 {
   "schemaVersion": "sdk-reference-inventory.v1",
   "purpose": "Compiler-discovered public SDK facts and finite owning callback closure; consumer explanations are authored in the documentation scripts. Not content acceptance.",
-  "sourceRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+  "sourceRevision": "66bb2d30f1235da97ad6b7c020926f66560c48ec",
   "owner": "documentation automation",
   "canonicalTarget": "docs/site/reference/sdk.md",
   "generatedTarget": "docs/site/reference/sdk-exports.md",
@@ -387,7 +387,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.AdapterActivationContext"
       },
-      "consumerSemantics": "Adapter factory input. registration identifies the resolved package and registration; config is the validated adapter configuration. invoke and invokeConfidential use existing dependency grants. emit must use the plugin event namespace. Optional withCleanup provides one bounded cleanup phase, not extra permissions.",
+      "consumerSemantics": "Adapter factory input. registration identifies the resolved package and registration. `config` is the validated adapter configuration. invoke and invokeConfidential use existing dependency grants. emit must use the plugin event namespace. Optional withCleanup gives one bounded cleanup phase, not extra permissions.",
       "example": "const factory = (context: AdapterActivationContext) => ({ ready: async () => {}, invoke: async () => ({}), shutdown: async () => {} });",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -444,7 +444,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.AdapterActivationId"
       },
-      "consumerSemantics": "Historical adapter activation owner token. It contains the package and registration names, not a stage run ID. The schema limits each part and the whole token; do not invent a stage attempt from this string.",
+      "consumerSemantics": "Historical adapter activation owner token. It contains the package and registration names, not a stage run ID. The schema limits each part and the whole token. Do not invent a stage attempt from this string.",
       "example": "const owner: AdapterActivationId = 'adapter:example.adapter:main';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -585,7 +585,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.AdapterDependencyOptions"
       },
-      "consumerSemantics": "Optional signal joins the lifecycle and parent signals. deliveryId is optional; when present, the runtime requires a nonblank string of at most 512 UTF-16 code units and a parent invocation. It does not create an observer delivery or grant permission.",
+      "consumerSemantics": "Optional signal joins the lifecycle and parent signals. deliveryId is optional. When present, the runtime requires a nonblank string of at most 512 UTF-16 code units and a parent invocation. It does not create an observer delivery or grant permission.",
       "example": "const options: AdapterDependencyOptions = { signal: controller.signal };",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -717,7 +717,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.AdapterInstance"
       },
-      "consumerSemantics": "Implement ready, invoke and shutdown. Optional receipt looks up an earlier external result for an EffectRequest and may return undefined. An invoke Promise is not proof of durable completion: the effect coordinator owns receipts, locking and recovery. Honor the supplied abort signals.",
+      "consumerSemantics": "Implement ready, invoke and shutdown. Optional receipt looks up an earlier external result for an EffectRequest and may return undefined. An invoke Promise is not proof of durable completion. The effect coordinator owns receipts, locking and recovery. Use the supplied abort signals.",
       "example": "const instance: AdapterInstance = { ready: async () => {}, invoke: async ({signal}) => { signal.throwIfAborted(); return {}; }, shutdown: async () => {} };",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -917,7 +917,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.AdapterInvocation"
       },
-      "consumerSemantics": "Discriminated union. confidential: true excludes lock and fence. Otherwise lock and fence are required and confidential may be absent or false. request carries the admitted effect and signal bounds cancellation. The reachable fence and variant interfaces are not named exports from the SDK entrypoint.",
+      "consumerSemantics": "Discriminated union. If confidential is true, the invocation has no lock or fence. If confidential is absent or false, the lock and fence are required. request carries the admitted effect, and signal carries cancellation. The reachable fence and variant interfaces are not named exports from the SDK entrypoint.",
       "example": "if (invocation.confidential !== true) invocation.fence.assertCurrent();",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -1174,7 +1174,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.AdapterLifecycle"
       },
-      "consumerSemantics": "Records adapter startup, readiness, degradation and shutdown state with provider provenance and change time. degraded or failed requires a reason at schema validation. This record describes state; it does not start or stop an adapter.",
+      "consumerSemantics": "Records adapter startup, readiness, degradation and shutdown state with provider provenance and change time. degraded or failed requires a reason at schema validation. This record describes state. It does not start or stop an adapter.",
       "example": "const status: AdapterLifecycle['status'] = 'ready';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -1404,7 +1404,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.AdapterRegistration"
       },
-      "consumerSemantics": "Manifest entry connects a module/export and config schema to provided and required capabilities. At least one provided capability is required; capability arrays must have unique items. Declaring a requirement is not the same as receiving a grant.",
+      "consumerSemantics": "Manifest entry connects a module/export and config schema to provided and required capabilities. At least one provided capability is required. Capability arrays must have unique items. Declaring a requirement is not the same as receiving a grant.",
       "example": "const provided: AdapterRegistration['providesCapabilities'] = ['example.read'];",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -2869,7 +2869,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.CURRENT_RUNTIME_DISPATCH_PROFILE"
       },
-      "consumerSemantics": "Frozen generated constant: runtime-dispatch-profile.v1 with json-utf16-v1. Producers explicitly bind this run-owned transport choice; historical absence keeps the legacy producer. It is not inferred from a review cache or artifact version.",
+      "consumerSemantics": "Frozen generated constant: runtime-dispatch-profile.v1 with json-utf16-v1. Producers explicitly bind this run-owned transport choice. Historical absence keeps the legacy producer. It is not inferred from a review cache or artifact version.",
       "example": "const profile = CURRENT_RUNTIME_DISPATCH_PROFILE;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -3256,7 +3256,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.CapabilityInvocation"
       },
-      "consumerSemantics": "Public named type is the readonly runtime interface, not the wider generated alias of the same name. Supply operation, resource.type, resource.canonicalId and payload. Optional runtimeDispatchProfile is control metadata; the owning schema restricts it to dispatch on runtime.agent. The helper that binds a profile does not itself enforce operation/resource rules; core validates the tagged request.",
+      "consumerSemantics": "Public named type is the readonly runtime interface, not the wider generated alias of the same name. Supply operation, resource.type, resource.canonicalId and payload. Optional runtimeDispatchProfile is control metadata. The owning schema restricts it to dispatch on runtime.agent. The helper that binds a profile does not itself enforce operation/resource rules. Core validates the tagged request.",
       "example": "const request: CapabilityInvocation = {operation:'get',resource:{type:'example.object',canonicalId:'item1'},payload:{}};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -3668,7 +3668,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.EffectAttemptIdentity"
       },
-      "consumerSemantics": "Either a normal AttemptIdentity or the exact historical adapter activation shape. The latter has stageId adapter-activation and attemptNumber 1; core also checks that runId and attemptId name the actual activation owner. The union alone does not make those strings equal.",
+      "consumerSemantics": "Either a normal AttemptIdentity or the exact historical adapter activation shape. The latter has stageId adapter-activation and attemptNumber 1. Core also checks that runId and attemptId name the actual activation owner. The union alone does not make those strings equal.",
       "example": "const number: EffectAttemptIdentity['attemptNumber'] = 1;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -3727,7 +3727,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.EffectDeliveryId"
       },
-      "consumerSemantics": "Adapter dependency delivery token: schema maxLength is 512 Unicode code points; the runtime separately requires nonblank text of at most 512 UTF-16 code units. This is not the stricter observer delivery ID grammar. Runtime checks require a parent owner when a dependency call supplies it.",
+      "consumerSemantics": "Adapter dependency delivery token: schema maxLength is 512 Unicode code points. The runtime separately requires nonblank text of at most 512 UTF-16 code units. This is not the stricter observer delivery ID grammar. Runtime checks require a parent owner when a dependency call supplies it.",
       "example": "const delivery: EffectDeliveryId = 'delivery-1';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -3809,7 +3809,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.EffectIdempotencyKey"
       },
-      "consumerSemantics": "Key used to detect a repeated effect request. The schema accepts compact opaque IDs and the exact historical adapter dependency key grammar. New dependency producers use compact opaque IDs. Reuse with different request identity or payload is a conflict, not permission to perform another effect.",
+      "consumerSemantics": "Key used to detect a repeated effect request. The schema accepts compact opaque IDs and the exact historical adapter dependency key grammar. New dependency producers use compact opaque IDs. Reuse with different request identity or payload is a conflict, not permission for another effect.",
       "example": "const key: EffectIdempotencyKey = 'effect1';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -4424,7 +4424,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.EffectReceipt"
       },
-      "consumerSemantics": "Durable effect status and resolved adapter provenance. accepted has neither result nor error; failed requires error and forbids result; completed forbids error and may contain result. These conditional rules are in the schema even though the TypeScript interface allows optional members.",
+      "consumerSemantics": "Durable effect status and resolved adapter provenance. accepted has neither result nor error. The `failed` status requires error and forbids result. The `completed` status forbids error and may contain result. These conditional rules are in the schema even though the TypeScript interface allows optional members.",
       "example": "const status: EffectReceipt['status'] = 'completed';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -5042,7 +5042,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.EventIdentity"
       },
-      "consumerSemantics": "Run ID is required; stage, attempt, effect, wait and artifact IDs are optional links. Omission means the event does not carry that link. It does not mean that a missing value should be copied from an unrelated event.",
+      "consumerSemantics": "Run ID is required. Stage, attempt, effect, wait and artifact IDs are optional links. Omission means the event does not carry that link. It does not mean that a missing value should be copied from an unrelated event.",
       "example": "const identity: EventIdentity = {runId:'run1'};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -5599,7 +5599,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.JsonObject"
       },
-      "consumerSemantics": "Generated open object shape. Arbitrary property values remain any in TypeScript; this does not guarantee the strict JSON value domain used by canonicalJson and portableJson. Validate at the owning boundary before serialization.",
+      "consumerSemantics": "Generated open object shape. Arbitrary property values remain any in TypeScript. This does not guarantee the strict JSON value domain used by canonicalJson and portableJson. Validate at the owning boundary before serialization.",
       "example": "const payload: JsonObject = {enabled:true};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -5902,7 +5902,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.LifecycleEvent"
       },
-      "consumerSemantics": "Core lifecycle event with a closed event-type enum, sequence, identity, time, payload and nullable causationId. Sequence starts at one in the schema. null causation is allowed; omission is not. Observer code receives this or PluginDomainEvent, not an unversioned message.",
+      "consumerSemantics": "Core lifecycle event with a closed event-type enum, sequence, identity, time, payload and nullable causationId. Sequence starts at one in the schema. null causation is allowed. Omission is not. Observer code receives this or PluginDomainEvent, not an unversioned message.",
       "example": "const type: LifecycleEvent['type'] = 'stage.started';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -6240,7 +6240,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ObserverCheckpoint"
       },
-      "consumerSemantics": "Observer progress record binds registration, run, sequence, event ID and update time. Sequence may be zero; eventId may be null but is required. The type does not persist or advance the checkpoint.",
+      "consumerSemantics": "Observer progress record binds registration, run, sequence, event ID and update time. Sequence may be zero. `eventId` may be null but is required. The type does not persist or advance the checkpoint.",
       "example": "const sequence: ObserverCheckpoint['sequence'] = 0;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -6466,7 +6466,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ObserverDelivery"
       },
-      "consumerSemantics": "One observer delivery attempt links observer provenance and a lifecycle or plugin event. attemptNumber is at least one. Observer handlers must account for at-least-once delivery; this envelope is not an exactly-once guarantee.",
+      "consumerSemantics": "One observer delivery attempt links observer provenance and a lifecycle or plugin event. attemptNumber is at least one. Observer handlers must account for at-least-once delivery. This envelope is not an exactly-once guarantee.",
       "example": "const attempt: ObserverDelivery['attemptNumber'] = 1;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -6510,7 +6510,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ObserverHandler"
       },
-      "consumerSemantics": "Async callback receives delivery and plugin invocation context and resolves with no result. A thrown or rejected error is an observer failure for the runtime policy. Use the context for granted effects; a callback does not create its own lease.",
+      "consumerSemantics": "Async callback receives delivery and plugin invocation context and resolves with no result. A thrown or rejected error is an observer failure for the runtime policy. Use the context for granted effects. A callback does not create its own lease.",
       "example": "const handler: ObserverHandler = async (delivery, context) => { const run = delivery.event.identity.runId; };",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -6933,7 +6933,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ObserverRegistration"
       },
-      "consumerSemantics": "Manifest callback entry declares subscriptions, at_least_once delivery, per_run ordering, failure mode and bounded attempts/backoff/timeout. At least one subscription is required. Checkpoint/config schemas and required capabilities are explicit; no failure policy default is declared here.",
+      "consumerSemantics": "Manifest callback entry declares subscriptions, at_least_once delivery, per_run ordering, failure mode and bounded attempts/backoff/timeout. At least one subscription is required. Checkpoint/config schemas and required capabilities are explicit. No failure policy default is declared here.",
       "example": "const ordering: ObserverRegistration['ordering'] = 'per_run';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -6989,7 +6989,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.OpaqueId"
       },
-      "consumerSemantics": "Schema identifier begins with an ASCII letter or digit and then permits letters, digits, dot, underscore, colon and hyphen, to 192 characters total. Treat its meaning as owner-defined; do not parse a run or producer from arbitrary text.",
+      "consumerSemantics": "Schema identifier begins with an ASCII letter or digit and then permits letters, digits, dot, underscore, colon and hyphen, to 192 characters total. Treat its meaning as owner-defined. Do not parse a run or producer from arbitrary text.",
       "example": "const id: OpaqueId = 'run:1';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -7031,7 +7031,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.OptionalAbsenceReader"
       },
-      "consumerSemantics": "Zero-argument value reader used by the selector helpers. Readers run in order until the selector accepts a value. Reader exceptions propagate; the alias provides no asynchronous waiting or exception suppression.",
+      "consumerSemantics": "A zero-argument value reader for the selector helpers. Readers run in order until the selector accepts a value. If a reader throws an error, the selector throws that error. The selectors do not wait for asynchronous completion or suppress reader errors.",
       "example": "const reader: OptionalAbsenceReader<string | undefined> = () => undefined;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -7111,7 +7111,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PORTABLE_JSON_ENCODING"
       },
-      "consumerSemantics": "Exact artifact/source identity tag kubeclaw-json.utf16.v1. It differs from the profile encoding field json-utf16-v1. Select it explicitly for the owning contract; never attach it to historical bytes after the fact.",
+      "consumerSemantics": "Exact artifact/source identity tag kubeclaw-json.utf16.v1. It differs from the profile encoding field json-utf16-v1. Select it explicitly for the owning contract. Never attach it to historical bytes after the fact.",
       "example": "const encoding = PORTABLE_JSON_ENCODING;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -7266,7 +7266,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PackageIdentity"
       },
-      "consumerSemantics": "Immutable package identity includes plugin ID, pipeline-plugin-v2 API version, package version and content digest. Package version follows the schema version grammar. Identity records exact content; it does not assert a trust decision.",
+      "consumerSemantics": "Immutable package identity includes plugin ID, pipeline-plugin-v2 API version, package version and content digest. The package version must agree with the schema version grammar. Identity records exact content. It does not assert a trust decision.",
       "example": "const api: PackageIdentity['apiVersion'] = PLUGIN_API_VERSION;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -7859,7 +7859,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PackageResolution"
       },
-      "consumerSemantics": "Package identity plus registrationId selects the exact implementation surface. The same package may contain several registrations; preserve this field in provider/receipt ownership comparisons.",
+      "consumerSemantics": "Package identity plus registrationId selects the exact implementation surface. The same package may contain several registrations. Preserve this field in provider/receipt ownership comparisons.",
       "example": "const registration: PackageResolution['registrationId'] = 'main';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -8407,7 +8407,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PluginContext"
       },
-      "consumerSemantics": "Serialized invocation input contains the lease, resolved config, input and visible artifacts. Optional guidance/lifecycle fields carry caller information; their absence is permitted. Optional runtime and cache profiles are explicit independent producer selections. The runtime wraps this contract in PluginInvocationContext methods.",
+      "consumerSemantics": "Serialized invocation input contains the lease, resolved config, input and visible artifacts. Optional guidance/lifecycle fields carry caller information. Their absence is permitted. Optional runtime and cache profiles are explicit independent producer selections. The runtime wraps this contract in PluginInvocationContext methods.",
       "example": "const version: PluginContext['schemaVersion'] = 'plugin-context.v2';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -8703,7 +8703,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PluginDomainEvent"
       },
-      "consumerSemantics": "Plugin-produced event includes registration provenance and a plugin-prefixed type, unlike the core closed lifecycle enum. It retains required sequence, run identity, nullable causation and time. Runtime emission checks the plugin namespace and current run; typing the payload does not bypass those checks.",
+      "consumerSemantics": "Plugin-produced event includes registration provenance and a plugin-prefixed type, unlike the core closed lifecycle enum. It retains required sequence, run identity, nullable causation and time. Runtime emission checks the plugin namespace and current run. Typing the payload does not bypass those checks.",
       "example": "const type: PluginDomainEvent['type'] = 'plugin.example.plugin.changed';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -8792,7 +8792,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PluginInvocationContext"
       },
-      "consumerSemantics": "Runtime wrapper exposes contract, invoke, emit and artifact. Core checks the active lease on each call. invoke requires a grant and capability authorization; emit requires the plugin event namespace and same run. artifact returns a visible reference or undefined and can fail when the lease is inactive. No method grants arbitrary host access.",
+      "consumerSemantics": "Runtime wrapper exposes contract, invoke, emit and artifact. Core checks the active lease on each call. invoke requires a grant and capability authorization. `emit` requires the plugin event namespace and same run. artifact returns a visible reference or undefined and can fail when the lease is inactive. No method grants arbitrary host access.",
       "example": "const ref = context.artifact(artifactId);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -9623,7 +9623,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PluginManifest"
       },
-      "consumerSemantics": "Package manifest declares stages, observers and adapters as required arrays; testProviders/reportAdapters are optional. At least one of the five arrays must be nonempty. API version is pipeline-plugin-v2. The registry validates JSON, then resolves modules and referenced schemas; the type does not activate a package.",
+      "consumerSemantics": "Package manifest declares stages, observers and adapters as required arrays. `testProviders`/reportAdapters are optional. At least one of the five arrays must be nonempty. API version is pipeline-plugin-v2. The registry validates JSON, then resolves modules and referenced schemas. The type does not activate a package.",
       "example": "const manifest: PluginManifest = {id:'example.plugin',apiVersion:PLUGIN_API_VERSION,packageVersion:'1.0.0',stages:[],observers:[],adapters:[registration]};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -10151,7 +10151,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PluginManifest1"
       },
-      "consumerSemantics": "Generated auxiliary union captures the manifest requirement that at least one registration array is nonempty. It is exported because the generated contracts entrypoint uses export star. Do not use it alone as a complete manifest; PluginManifest adds identity and required arrays.",
+      "consumerSemantics": "Generated auxiliary union captures the manifest requirement that at least one registration array is nonempty. It is exported because the generated contracts entrypoint uses export star. Do not use it alone as a complete manifest. PluginManifest adds identity and required arrays.",
       "example": "const nonempty: PluginManifest1 = {adapters:[registration]};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -11061,7 +11061,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.PluginSystemV2"
       },
-      "consumerSemantics": "Generated wrapper interface exposes optional contract examples for type generation. It is not a runnable plugin manifest or a runtime dispatcher. Its members refer to individual owning schema definitions; omission of all wrapper members does not create a usable package.",
+      "consumerSemantics": "Generated wrapper interface exposes optional contract examples for type generation. It is not a runnable plugin manifest or a runtime dispatcher. Its members refer to individual owning schema definitions. Omission of all wrapper members does not create a usable package.",
       "example": "const wrapper: PluginSystemV2 = {};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -11232,7 +11232,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.Reason"
       },
-      "consumerSemantics": "Structured reason requires a namespaced code. Optional message is 1–4096 characters and details is an object. Omitted message is permitted; callers must not assume every reason has user-facing prose.",
+      "consumerSemantics": "Structured reason requires a namespaced code. Optional message is 1–4096 characters and details is an object. Omitted message is permitted. Callers must not assume all reasons have user-facing prose.",
       "example": "const reason: Reason = {code:'example.invalid'};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -11392,7 +11392,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.RegistrationProvenance"
       },
-      "consumerSemantics": "Registration origin binds package provenance, surface and registration ID. Surface is one of stage, observer, adapter, test_provider or report_adapter. Keep it with lifecycle and state records; its schema does not verify the package evidence.",
+      "consumerSemantics": "Registration origin binds package provenance, surface and registration ID. Surface is one of stage, observer, adapter, test_provider or report_adapter. Keep it with lifecycle and state records. Its schema does not verify the package evidence.",
       "example": "const surface: RegistrationProvenance['surface'] = 'adapter';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -11449,7 +11449,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.RelativeModulePath"
       },
-      "consumerSemantics": "Schema path must be relative, exclude parent path segments, end in mjs/mts/js/ts and have at most 512 characters. A matching string does not prove a regular file or containment after filesystem resolution; the registry checks module resolution.",
+      "consumerSemantics": "Schema path must be relative, exclude parent path segments, end in mjs/mts/js/ts and have at most 512 characters. A matching string does not prove a regular file or containment after filesystem resolution. The registry checks module resolution.",
       "example": "const module: RelativeModulePath = 'src/stage.ts';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -11506,7 +11506,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.RelativeSchemaPath"
       },
-      "consumerSemantics": "Schema path must be relative, exclude parent segments, end in json and have at most 512 characters. Registry owns reading/compiling the actual schema. The string type does not establish that a file exists or contains valid JSON Schema.",
+      "consumerSemantics": "Schema path must be relative, exclude parent segments, end in json and have at most 512 characters. Registry owns reading/compiling the actual schema. The string type does not prove that a file exists or contains valid JSON Schema.",
       "example": "const schema: RelativeSchemaPath = 'schemas/config.json';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -11550,7 +11550,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ReportAdapterFunction"
       },
-      "consumerSemantics": "Callback accepts report bytes/media type and limits, and returns counts/cases/findings plus required duration/truncation metadata, directly or asynchronously. It does not own adapter provenance or sourceArtifact fields; Buster adds those and validates the result. Rejection is a failed report adaptation, not a passing test.",
+      "consumerSemantics": "Callback accepts report bytes/media type and limits, and returns counts/cases/findings plus required duration/truncation metadata, directly or asynchronously. It does not own adapter provenance or sourceArtifact fields. Buster adds those and validates the result. Rejection is a failed report adaptation, not a passing test.",
       "example": "const adapt: ReportAdapterFunction = input => ({counts:{passed:0,failed:0,skipped:0,errored:0,total:0},durationMs:0,cases:[],casesTruncated:false,omittedCaseCount:0,findings:[],findingsTruncated:false,omittedFindingCount:0});",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -11837,7 +11837,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ReportAdapterOutput"
       },
-      "consumerSemantics": "Counts, case list and finding list are required; duration and truncation metadata are required by the test-gate contract. This is the callback-owned subset, not the final provenance-bearing ReportAdapterResultV1. Buster adds adapter/source fields, validates the full contract and count limits.",
+      "consumerSemantics": "Counts, case list and finding list are required. Duration and truncation metadata are required by the test-gate contract. This is the callback-owned subset, not the final provenance-bearing ReportAdapterResultV1. Buster adds adapter/source fields, validates the full contract and count limits.",
       "example": "const cases: ReportAdapterOutput['cases'] = [];",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -12165,7 +12165,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ResourceIdentity"
       },
-      "consumerSemantics": "Capability-owned resource type and nonempty canonical ID. Canonical IDs can be URLs, absolute paths, dot or catalogue keys; this schema does not apply a universal path grammar. The selected capability implementation checks its own resource and authorization rules.",
+      "consumerSemantics": "Capability-owned resource type and nonempty canonical ID. Canonical IDs can be URLs, absolute paths, dot or catalogue keys. This schema does not apply a universal path grammar. The selected capability implementation checks its own resource and authorization rules.",
       "example": "const resource: ResourceIdentity = {type:'example.object',canonicalId:'item1'};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -12464,7 +12464,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ResourceLock"
       },
-      "consumerSemantics": "Core lock record binds resource, owner lease/activation ID and positive fencingToken with state and expiry. A fence rejects operations whose lock is no longer current. The record alone does not acquire/renew a lock; check the invocation fence at the external-effect boundary.",
+      "consumerSemantics": "Core lock record binds resource, owner lease/activation ID and positive fencingToken with state and expiry. A fence rejects operations with a lock that is no longer current. The record alone does not acquire/renew a lock. Check the invocation fence at the external-effect boundary.",
       "example": "const status: ResourceLock['status'] = 'active';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -12650,7 +12650,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ResultBase"
       },
-      "consumerSemantics": "Generated shared stage-result base shape requires version, outcome and artifact array; reason is optional at this base level. It is intentionally broader than the outcome-specific StageResult union and must not replace final stage result validation.",
+      "consumerSemantics": "Generated shared stage-result base shape requires version, outcome and artifact array. Reason is optional at this base level. It is intentionally broader than the outcome-specific StageResult union and must not replace final stage result validation.",
       "example": "const outcome: ResultBase['outcome'] = 'passed';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -12951,7 +12951,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ResumeSignal"
       },
-      "consumerSemantics": "Versioned signal binds idempotency, wait ID, signal type, authorized issuer identity, time and payload. Matching the shape is not authorization; the runtime compares it to the selected wait and issuer before continuation.",
+      "consumerSemantics": "Versioned signal binds idempotency, wait ID, signal type, authorized issuer identity, time and payload. Matching the shape is not authorization. The runtime compares it to the selected wait and issuer before continuation.",
       "example": "const version: ResumeSignal['schemaVersion'] = 'resume-signal.v2';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -13339,7 +13339,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ReviewSubject"
       },
-      "consumerSemantics": "Frozen review identity extends ReviewSource with current run, source/architecture revisions, input digest, ordered file content/mode/digest/size and subject digest. File bytes come from the architecture revision, not necessarily current HEAD. parse validates content binding; verify also checks current repository revisions.",
+      "consumerSemantics": "A content-bound review identity extends ReviewSource with the current run, source and architecture revisions, input digest and subject digest. Ordered files retain their content, mode, digest and size. File bytes come from the architecture revision, which can differ from current HEAD.\n\nparse validates the content binding. verify also checks current repository revisions. This description does not mean that the returned JavaScript object is frozen.",
       "example": "const mode: ReviewSubject['files'][number]['mode'] = '100644';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -13789,7 +13789,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.RuntimeRunGraph"
       },
-      "consumerSemantics": "Frozen execution graph snapshot accepts v2 or v3, includes pipeline ID, positive concurrency, nodes, ordinary/remediation edges and digest. JsonObject nodes are not a fully validated node model in this SDK type. Snapshot verification belongs to the runtime.",
+      "consumerSemantics": "An execution-graph snapshot accepts v2 or v3. It includes pipeline ID, positive concurrency, nodes, ordinary and remediation edges, and a digest. JsonObject nodes are not a fully validated node model in this SDK type. The runtime owns snapshot verification.",
       "example": "const version: RuntimeRunGraph['schemaVersion'] = 'execution-graph-snapshot.v3';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -14171,7 +14171,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.RuntimeRunSnapshotV4"
       },
-      "consumerSemantics": "run-snapshot.v4 requires both independent runtime dispatch and review cache profiles with graph, registry and digest. The version does not authorize deriving either from artifact encoding. Both explicit profiles must satisfy their finite contracts.",
+      "consumerSemantics": "run-snapshot.v4 requires the two independent runtime dispatch and review cache profiles with graph, registry and digest. The version does not authorize deriving either from artifact encoding. The two explicit profiles must satisfy their finite contracts.",
       "example": "const version: RuntimeRunSnapshotV4['schemaVersion'] = 'run-snapshot.v4';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -14284,7 +14284,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.RuntimeWorkspaceReference"
       },
-      "consumerSemantics": "Git adapter-issued workspace record binds repository/workspace roots, path, branch, source revision and attempt owner under runtime-workspace.v1. parse checks shape and owner equality; runtime separately checks the protected owner record. A supplied object is not proof that the workspace belongs to the caller.",
+      "consumerSemantics": "Git adapter-issued workspace record binds repository/workspace roots, path, branch, source revision and attempt owner under runtime-workspace.v1. parse checks shape and owner equality. Runtime separately checks the protected owner record. A supplied object is not proof that the workspace belongs to the caller.",
       "example": "const version: RuntimeWorkspaceReference['schemaVersion'] = 'runtime-workspace.v1';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -14691,7 +14691,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.StageAttempt"
       },
-      "consumerSemantics": "Core attempt state links identity, owner registration, stage type and lease with retry/remediation counters and timestamps. Status values: created/dispatched/completed/timed_out/cancelled. Optional finish/dispatch times are data, not timers. The shape alone does not establish successful stage outcome.",
+      "consumerSemantics": "Core attempt state links identity, owner registration, stage type and lease with retry/remediation counters and timestamps. Status values: created/dispatched/completed/timed_out/cancelled. Optional finish/dispatch times are data, not timers. The shape alone does not prove that the stage passed.",
       "example": "const status: StageAttempt['status'] = 'created';",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -15350,7 +15350,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.StageDefinition"
       },
-      "consumerSemantics": "Pipeline stage selection includes dependencies, config/input and execution budgets. Optional activation compares a source-stage fact; optional request_fix route chooses remediation. Required maxAttempts/timeout are positive; maxRemediationCycles permits zero. Optional technical retry/repair settings have schema limits; no SDK default is supplied.",
+      "consumerSemantics": "Pipeline stage selection includes dependencies, config/input and execution budgets. Optional activation compares a source-stage fact. Optional request_fix route chooses remediation. Required maxAttempts/timeout are positive. `maxRemediationCycles` permits zero. Optional technical retry/repair settings have schema limits. No SDK default is supplied.",
       "example": "const dependencies: StageDefinition['dependsOn'] = [];",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -16488,7 +16488,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.StageResult"
       },
-      "consumerSemantics": "Outcome-specific stage result. passed allows facts without reason; retry/request_fix/blocked/failed/timed_out/cancelled requires reason; wait/orchestrator_required also requires wait; rate_limited requires retryAt. Artifact array is required in every variant and may be empty. Runtime handles continuation, not this type.",
+      "consumerSemantics": "Each outcome has its own stage-result fields. The passed variant permits facts without a reason. All other variants require a reason. The wait and orchestrator_required variants also require wait. The rate_limited variant also requires retryAt.\n\nEach variant requires an artifact array, which can be empty. The runtime handles continuation. This type does not do that work.",
       "example": "const result: StageResult = {schemaVersion:'stage-result.v2',outcome:'passed',artifacts:[]};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -16811,7 +16811,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.TestProviderCapabilityRequest"
       },
-      "consumerSemantics": "Provider dependency request includes operation, typed resource and payload but no runtimeDispatchProfile member. It does not grant a capability; the provider execution context owns the permitted call. This shape is distinct from plugin CapabilityInvocation.",
+      "consumerSemantics": "Provider dependency request includes operation, typed resource and payload but no runtimeDispatchProfile member. It does not grant a capability. The provider execution context owns the permitted call. This shape is distinct from plugin CapabilityInvocation.",
       "example": "const request: TestProviderCapabilityRequest = {operation:'get',resource:{type:'example.object',canonicalId:'item1'},payload:{}};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -16899,7 +16899,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.TestProviderExecutionContext"
       },
-      "consumerSemantics": "Provider receives cancellation signal, mutable workspace root, log(stdout/stderr, text/bytes) and granted invoke with an optional call signal. Output logging is separate from ProviderResultV1. The local capability broker combines cancellation signals and returns failures; no unrestricted host access is part of the type.",
+      "consumerSemantics": "Provider receives cancellation signal, mutable workspace root, log(stdout/stderr, text/bytes) and granted invoke with an optional call signal. Output logging is separate from ProviderResultV1. The local capability broker combines cancellation signals and returns failures. No unrestricted host access is part of the type.",
       "example": "context.log('stdout', 'check started');",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -16943,7 +16943,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.TestProviderFactory"
       },
-      "consumerSemantics": "Factory receives ProviderInvocationV1 and returns TestProviderInstance directly or asynchronously. The invocation/result types belong to the separate pipeline-test-gate contract package; they are not named SDK exports. Factory failure is not a passing test.",
+      "consumerSemantics": "Factory receives ProviderInvocationV1 and returns TestProviderInstance directly or asynchronously. The invocation/result types belong to the separate pipeline-test-gate contract package. They are not named SDK exports. Factory failure is not a passing test.",
       "example": "const factory: TestProviderFactory = invocation => ({execute: async (invocation, context) => result});",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -17009,7 +17009,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.TestProviderInstance"
       },
-      "consumerSemantics": "execute receives the invocation plus execution context and returns ProviderResultV1. Optional cleanup receives the same argument shapes and returns void. Honor cancellation and use explicit cleanup for resources your provider owns; this interface guarantees no automatic rollback of external effects.",
+      "consumerSemantics": "execute receives the invocation and execution context, and returns ProviderResultV1. Optional cleanup receives the same argument shapes and returns void. Use the cancellation signal and explicit cleanup for resources your provider owns. This interface does not guarantee automatic rollback of external effects.",
       "example": "await instance.cleanup?.(invocation, context);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -17411,7 +17411,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.TestProviderPort"
       },
-      "consumerSemantics": "Value port requires schemaId; artifact port requires 1–32 unique media types and may omit schemaId. Both declare name and required. A required:false port can be absent at the consuming boundary; it is not a JavaScript default value.",
+      "consumerSemantics": "Value port requires schemaId. Artifact port requires 1–32 unique media types and may omit schemaId. The two port variants declare name and required. A required:false port can be absent at the consuming boundary. It is not a JavaScript default value.",
       "example": "const port: TestProviderPort = {name:'input',kind:'value',required:true,schemaId:'example/data@1'};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -17886,7 +17886,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.TestProviderRegistration"
       },
-      "consumerSemantics": "Manifest provider/fixture entry declares contract, module/export/config, input/output ports, required capabilities, retrySafe, matrix fields, report formats, evidence types and explicit outcome evidence defaults. retrySafe is a declaration for the test engine, not a proof that every external operation can repeat.",
+      "consumerSemantics": "Manifest provider/fixture entry declares contract, module/export/config, input/output ports, required capabilities, retrySafe, matrix fields, report formats, evidence types and explicit outcome evidence defaults. retrySafe is a declaration for the test engine, not a proof that all external operations can repeat.",
       "example": "const safe: TestProviderRegistration['retrySafe'] = false;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18230,7 +18230,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.WaitRequest"
       },
-      "consumerSemantics": "Versioned continuation wait names kind, signal type, authorized issuer and required expiry. expiresAt may be null for no declared expiry; omission is invalid. Optional request carries continuation data. This type does not install a timer or accept a resume signal.",
+      "consumerSemantics": "Versioned continuation wait names kind, signal type, authorized issuer and required expiry. expiresAt may be null for no declared expiry. Omission is invalid. Optional request carries continuation data. This type does not install a timer or accept a resume signal.",
       "example": "const expiry: WaitRequest['expiresAt'] = null;",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18296,7 +18296,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.approvedSource"
       },
-      "consumerSemantics": "Resolve the source revision from visible same-run artifacts. With expected binding, require its preflight and optional selected review. Without it, absent report and approval returns undefined; an approval without a report fails. Passed reports with findings require report-bound human approval. Select the latest unique attempt per stage; reject competing stages or tied artifacts. Apply bound blueprint sync, then one unambiguous implementation lineage; reject cycles and forks. Reads artifacts but does not mutate Git or grant a general trust scope.",
+      "consumerSemantics": "Resolve the source revision from visible same-run artifacts. With expected binding, require its preflight and optional selected review. Without it, absent report and approval returns undefined. An approval without a report fails.\n\nPassed reports with findings require report-bound human approval. Select the latest unique attempt per stage. Reject competing stages or tied artifacts. Apply bound blueprint sync, then one unambiguous implementation lineage.\n\nReject cycles and forks. Reads artifacts but does not mutate Git or grant a general trust scope.",
       "example": "const approved = await approvedSource(context, binding);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18338,7 +18338,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.arrayValue"
       },
-      "consumerSemantics": "Return the input array by reference; for non-array values that native Array.isArray can classify, including null and undefined, return a new empty array. A revoked proxy throws TypeError during classification. No element validation or copy occurs. The generic type is a cast, not a runtime check.",
+      "consumerSemantics": "Return the input array by reference. For non-array values that native Array.isArray can classify, including null and undefined, return a new empty array. A revoked proxy throws TypeError during classification. No element validation or copy occurs. The generic type is a cast, not a runtime check.",
       "example": "arrayValue<number>(null); // []",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18381,7 +18381,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.buildRuntimeAgentTask"
       },
-      "consumerSemantics": "Build instruction text that describes its serialized input envelope as immutable; it also includes atomic result-file instructions. It does not freeze the supplied payload. resultFile is limited to 2048 UTF-8 bytes; longer paths throw RUNTIME_RESULT_FILE_PATH_TOO_LONG. Native JSON.stringify serializes the payload once: undefined/function/symbol object fields are omitted, their array elements become null, and nonfinite numbers become null. Enumerable getters and toJSON can execute and transform output; their exceptions propagate, as can cycles/BigInt errors. Use trusted, already-JSON data when executable object effects are not intended. This is not the strict portableJson domain. This helper neither writes the file nor validates path containment or the returned agent result.",
+      "consumerSemantics": "Make instruction text that describes its serialized input envelope as immutable. The text also gives atomic result-file instructions. This helper does not freeze the supplied payload.\n\nresultFile is limited to 2048 UTF-8 bytes. Longer paths throw RUNTIME_RESULT_FILE_PATH_TOO_LONG. Native JSON.stringify serializes the payload once. It omits undefined/function/symbol object fields, converts those array elements to null, and converts nonfinite numbers to null.\n\nEnumerable getters and toJSON can execute and transform output. Their exceptions propagate. Cycles and BigInt can also cause serialization errors. Use trusted, already-JSON data when these executable object effects are not intended.\n\nThis is not the strict portableJson domain. This helper neither writes the file nor validates path containment or the returned agent result.",
       "example": "buildRuntimeAgentTask({task:'Return the declared fields',outputContract:{required:['status']}}, 'result.json');",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18421,7 +18421,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.canonicalJson"
       },
-      "consumerSemantics": "Legacy JSON codec sorts object keys with localeCompare. Preserve it for existing identities; its collation is locale-sensitive and must not be relabelled portable. Accepted values and rejection codes are the same as portableJson. It returns text, writes no file and does not hash.",
+      "consumerSemantics": "Legacy JSON codec sorts object keys with localeCompare. Preserve it for existing identities. Its collation is locale-sensitive and must not be relabelled portable. Accepted values and rejection codes are the same as portableJson. It returns text, writes no file and does not hash.",
       "example": "canonicalJson({z:1,a:2}); // '{\"a\":2,\"z\":1}'",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18465,7 +18465,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.captureReviewSubject"
       },
-      "consumerSemantics": "Parse and sort the source paths; freeze clean HEAD and the architecture reference through git.repository.read; read regular files at that architecture revision. Verify each response path, mode, digest and UTF-8 size. Bind the input digest and current run, then verify both frozen revisions again. Calls Git read capabilities; does not commit or write source. Any capability rejection propagates.",
+      "consumerSemantics": "Parse and sort the source paths. Use git.repository.read to record clean HEAD and the selected architecture revision. Read regular files at that architecture revision. Verify each response path, mode, digest and UTF-8 size.\n\nBind the input digest and current run. Then verify the two selected revisions again. The helper calls Git read capabilities. It does not commit or write source. If a capability call fails, the helper rejects with that error.",
       "example": "const subject = await captureReviewSubject(source, input, context);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18507,7 +18507,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.objectRecord"
       },
-      "consumerSemantics": "Return a truthy non-array object by reference when native Array.isArray can classify it; otherwise return a new empty object. Class instances, live proxies and accessor-bearing records can pass. A revoked proxy throws TypeError during classification. It is a permissive convenience cast, not strict JSON validation.",
+      "consumerSemantics": "For a truthy input with typeof equal to object, call native Array.isArray. If it returns false, return the input by reference. For other inputs, return a new empty object. Class instances, proxies that are not revoked and records with accessors can pass. A revoked proxy throws TypeError during classification. This helper is a permissive convenience cast, not strict JSON validation.",
       "example": "objectRecord(null); // {}",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18549,7 +18549,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.parseReviewCacheProfile"
       },
-      "consumerSemantics": "Compare the complete strict portable serialization to the one generated current cache profile. Return the generated frozen constant on equality; otherwise throw REVIEW_CACHE_PROFILE_INVALID. Extra/missing fields, null and unknown versions fail. Strict JSON failures can occur before the profile-specific error.",
+      "consumerSemantics": "Compare the complete strict portable serialization with the one generated current cache profile. If they are equal, return the generated constant, which Object.freeze protects. If they are not equal, throw REVIEW_CACHE_PROFILE_INVALID. Extra or missing fields, null and unknown versions fail. Strict JSON failures can occur before the profile-specific error.",
       "example": "parseReviewCacheProfile(CURRENT_REVIEW_CACHE_PROFILE);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18591,7 +18591,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.parseReviewSource"
       },
-      "consumerSemantics": "For dense plain-JSON input, check project ID, absolute repository root, architecture reference and 1–128 unique safe relative paths. Text fields are nonempty, at most 4096 UTF-16 code units and exclude NUL/CR/LF. Paths exclude absolute paths, backslashes and empty/dot/parent segments. Only an own identityEncoding is guarded and must be portable. Property reads can inherit values or execute getters/proxy traps; a truthy inherited encoding is copied into an own output field, including an unknown tag. Array.some skips holes: a single-hole paths array passes and copies to [undefined]. Return a new object with sorted copied paths and discard unrelated fields. This is a limited local parser, not strict unknown-input validation; no Git access occurs.",
+      "consumerSemantics": "For dense plain-JSON input, check the project ID, absolute repository root, architecture reference and 1–128 unique safe relative paths. Text fields must be nonempty. They have a maximum of 4096 UTF-16 code units and cannot contain NUL, CR or LF. Paths cannot be absolute or contain backslashes or empty, dot or parent segments.\n\nThe identityEncoding check applies only to an own property. Its value must be the portable tag. Property reads can inherit values or execute getters or proxy traps. A truthy inherited encoding is copied into an own output field, even if the tag is unknown.\n\nArray.some skips holes. A paths array with one hole passes and copies to [undefined]. Return a new object with sorted copied paths, without unrelated fields. This local parser does not strictly validate arbitrary unknown input. It does not read Git.",
       "example": "parseReviewSource({projectId:'project1',repositoryRoot:'/repo',architectureRef:'main',paths:['design.md']});",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18633,7 +18633,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.parseReviewSubject"
       },
-      "consumerSemantics": "Validate the source, current run ID, two 40- or 64-character lowercase hex revisions, input digest and ordered files. Every file must match a sorted source path, executable/regular Git mode, content hash and UTF-8 size. Recompute the unsigned subject digest with the selected identity codec. Return the original subject. No repository freshness check occurs here.",
+      "consumerSemantics": "Validate the source, current run ID, two 40- or 64-character lowercase hex revisions, input digest and ordered files. Each file must match a sorted source path, executable/regular Git mode, content hash and UTF-8 size. Recompute the unsigned subject digest with the selected identity codec. Return the original subject. No repository freshness check occurs here.",
       "example": "const parsed = parseReviewSubject(subject, runId);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18675,7 +18675,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.parseRuntimeDispatchProfile"
       },
-      "consumerSemantics": "Strict portable serialization must exactly match the generated current profile; return its frozen constant. Wrong shape/version throws RUNTIME_DISPATCH_PROFILE_INVALID; invalid JSON domain can throw a CANONICAL_JSON error first. This parser does not dispatch an agent.",
+      "consumerSemantics": "Compare strict portable serialization with the complete generated current profile. If they are equal, return the constant, which Object.freeze protects. A wrong shape or version throws RUNTIME_DISPATCH_PROFILE_INVALID. An invalid JSON domain can cause a CANONICAL_JSON error first. This parser does not dispatch an agent.",
       "example": "parseRuntimeDispatchProfile(CURRENT_RUNTIME_DISPATCH_PROFILE);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18718,7 +18718,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.parseRuntimeWorkspace"
       },
-      "consumerSemantics": "Require an object with exactly the seven declared enumerable string keys and runtime-workspace.v1. Require a 40/64 lowercase hex revision. Require nonempty path/branch strings to 4096 UTF-16 code units without controls. Compare owner using legacy canonical JSON. Return the original reference. It does not prove containment, branch existence or a protected owner-file record; runtime performs that adjacent check.",
+      "consumerSemantics": "Require an object with exactly the seven declared enumerable string keys and runtime-workspace.v1. Require a 40/64 lowercase hex revision. Require nonempty path/branch strings to 4096 UTF-16 code units without controls. Compare owner using legacy canonical JSON.\n\nReturn the original reference. It does not prove containment, branch existence or a protected owner-file record. Runtime performs that adjacent check.",
       "example": "const parsed = parseRuntimeWorkspace(reference, attempt);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18760,7 +18760,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.parseSourceBinding"
       },
-      "consumerSemantics": "Check enumerable own string keys against stageId, inputDigest, optional reviewStageId and optional identityEncoding; this does not reject hidden/symbol keys or inherited fields. Stage names must be nonempty strings; digest must have sha256 and 64 lowercase hex digits. An own identityEncoding must be the portable token. Inherited encodings are not guarded and the original reference retains them; inherited required fields can pass. Reads can execute getters/proxy traps, so use trusted dense plain-JSON input for the stated contract, not this parser as strict unknown-input validation. Omitted reviewStageId is allowed; a present undefined value also passes this local parser. Return the original binding. Throws SOURCE_PREFLIGHT_BINDING_INVALID for failed checks.",
+      "consumerSemantics": "Check enumerable own string keys against stageId, inputDigest, optional reviewStageId and optional identityEncoding. This does not reject hidden keys, symbol keys or inherited fields. Stage names must be nonempty strings. The digest must have sha256 and 64 lowercase hexadecimal digits.\n\nAn own identityEncoding property must have the portable token. Inherited encodings are not checked, and the original reference retains them. Required fields can also be inherited. Property reads can execute getters or proxy traps. Use trusted dense plain-JSON input for this contract, not this parser as strict validation of arbitrary unknown input.\n\nAn omitted reviewStageId is allowed. A present undefined value also passes this local parser. Return the original binding. Failed checks throw SOURCE_PREFLIGHT_BINDING_INVALID.",
       "example": "parseSourceBinding({stageId:'preflight',inputDigest:sha256Text('{}')});",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18800,7 +18800,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.portableJson"
       },
-      "consumerSemantics": "Serialize strict JSON with object keys sorted by UTF-16 code units, independently of locale. Accept null, strings, booleans, finite numbers, plain/null-prototype records and dense standard arrays of enumerable data properties. Reject undefined, functions, symbols, BigInt, nonfinite numbers, proxies, cycles, exotic prototypes, hidden/symbol/accessor properties and extra/sparse array entries. Error codes are listed in the JSON section. Shared noncyclic objects are allowed; negative zero becomes 0. No getters, toJSON or proxy traps execute.",
+      "consumerSemantics": "Serialize strict JSON with object keys sorted by UTF-16 code units, independently of locale. Accept null, strings, booleans, finite numbers, plain/null-prototype records and dense standard arrays of enumerable data properties. Reject undefined, functions, symbols, BigInt, nonfinite numbers, proxies, cycles, exotic prototypes, hidden/symbol/accessor properties and extra/sparse array entries. Error codes are listed in the JSON section.\n\nShared noncyclic objects are allowed. Negative zero becomes 0. No getters, toJSON or proxy traps execute.",
       "example": "portableJson({Z:1,a:2}); // '{\"Z\":1,\"a\":2}'",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18845,7 +18845,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.readBoundArtifact"
       },
-      "consumerSemantics": "Require same-run producer, application/json media type and size at most 4 MiB; then invoke artifacts.read/get_json_bytes with the full reference. Verify exact byte/reference/value binding and repeat digest/size checks. Return response.value by cast, not a validated record schema. Byte agreement is not blanket producer trust; approval/preflight helpers impose their own selection rules.",
+      "consumerSemantics": "Require same-run producer, application/json media type and size at most 4 MiB. Then invoke artifacts.read/get_json_bytes with the full reference. Verify exact byte/reference/value binding and repeat digest/size checks. Return response.value by cast, not a validated record schema. Byte agreement is not blanket producer trust. Approval/preflight helpers impose their own selection rules.",
       "example": "const value = await readBoundArtifact(ref, context);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18885,7 +18885,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.redactStructuredValue"
       },
-      "consumerSemantics": "Build a bounded redacted value: sensitive object keys matching authorization/cookie/password/secret/token/api-key/credential become [redacted]. Keep at most 1000 array entries or object entries; truncate beyond depth 16 and strings after a 65536-UTF-16-code-unit prefix, followed by `[truncated]` (65547 output units). No comprehensive secret detection is promised. Object enumeration may execute getters/proxy traps; cyclic graphs terminate through the depth bound, not cycle identity detection.",
+      "consumerSemantics": "Make a bounded redacted value. Replace values of sensitive object keys with [redacted]. The key pattern matches authorization/cookie/password/secret/token/api-key/credential. Keep at most 1000 array entries or object entries.\n\nTruncate values beyond depth 16. For a string longer than 65536 UTF-16 code units, keep that prefix and add `[truncated]`. The resulting truncated string has 65547 code units. This helper does not promise comprehensive secret detection.\n\nObject enumeration can execute getters or proxy traps. Cyclic graphs terminate through the depth limit, not through cycle identity detection.",
       "example": "redactStructuredValue({token:'value',count:1}); // {token:'[redacted]',count:1}",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18949,7 +18949,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.resolveImplementationRevisions"
       },
-      "consumerSemantics": "Select earliest and latest unique implementation attempts for the named stage in the current run. Read and verify both exact JSON artifacts; require ready_for_testing and a valid source revision. First headBefore must be a valid 40/64 lowercase hex revision. Return base/head; do not use ambient repository HEAD or compare lexical revisions. Calls artifacts.read and propagates failures.",
+      "consumerSemantics": "Select earliest and latest unique implementation attempts for the named stage in the current run. Read and verify the two exact JSON artifacts. Require ready_for_testing and a valid source revision. First headBefore must be a valid 40/64 lowercase hex revision.\n\nReturn base/head. Do not use ambient repository HEAD or compare lexical revisions. Calls artifacts.read and propagates failures.",
       "example": "const {base, head} = await resolveImplementationRevisions(stageId, context);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19013,7 +19013,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.resolveSourceRevision"
       },
-      "consumerSemantics": "Supply exactly one of revision and sourceStageId. An explicit revision must be 40/64 lowercase hex. Otherwise select the latest unique matching implementation artifact attempt in the same run/stage and read its ready_for_testing revision. Empty candidate sets and tied attempts fail; no fallback to HEAD occurs. Explicit revision needs no capability call.",
+      "consumerSemantics": "Supply exactly one of revision and sourceStageId. An explicit revision must have 40 or 64 lowercase hexadecimal characters. If sourceStageId is supplied, select the latest unique matching implementation artifact attempt in the same run and stage. Read its ready_for_testing revision.\n\nEmpty candidate sets and tied attempts fail. There is no fallback to HEAD. An explicit revision requires no capability call.",
       "example": "resolveSourceRevision({revision:'a'.repeat(40)}, context);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19055,7 +19055,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.reviewCacheProfileFromContext"
       },
-      "consumerSemantics": "First validate strict portable JSON for the complete contract. If the own reviewCacheProfile key is absent, return undefined. If present, parse exactly the current profile. Present undefined is rejected by strict JSON, not treated as legacy absence; null or unknown profile also fails. No context mutation occurs.",
+      "consumerSemantics": "First validate strict portable JSON for the complete contract. If the contract has no own reviewCacheProfile property, return undefined. If the property is present, parse the exact current profile.\n\nStrict JSON rejects a present undefined value. It is not legacy absence. Null or an unknown profile also fails. This helper does not change the context.",
       "example": "reviewCacheProfileFromContext({}); // undefined",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19098,7 +19098,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.reviewIdentityDigest"
       },
-      "consumerSemantics": "Guard only an own identityEncoding: an own different value, including undefined, throws REVIEW_IDENTITY_ENCODING_INVALID. Then ordinary property lookup selects portable JSON for the portable tag, including an inherited tag; an inherited unknown tag selects legacy canonical JSON. Dense plain-JSON input without the key selects legacy. Reads can execute getters/proxy traps. Does not add a version tag to the returned sha256 digest, mutate source or normalize historical identities.",
+      "consumerSemantics": "Check only an own identityEncoding property. If its value differs from the portable tag, including undefined, throw REVIEW_IDENTITY_ENCODING_INVALID. Ordinary property lookup then selects portable JSON for the portable tag, including an inherited tag. An inherited unknown tag selects legacy canonical JSON.\n\nDense plain-JSON input without the key selects legacy JSON. Property reads can execute getters or proxy traps. This helper does not add a version tag to the returned sha256 digest. It does not change the source or normalize historical identities.",
       "example": "reviewIdentityDigest({a:1}, {});",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19152,7 +19152,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.runtimeDispatchProfileFields"
       },
-      "consumerSemantics": "Validate strict portable JSON for the whole request. Missing own profile key returns a new empty object. Present profile with a provided capability other than runtime.dispatch throws RUNTIME_DISPATCH_PROFILE_CAPABILITY_INVALID; otherwise parse the profile and return only that metadata. An omitted capability does not check capability identity. Same-named nested payload/model fields are ordinary data.",
+      "consumerSemantics": "Validate strict portable JSON for the whole request. If the request has no own runtimeDispatchProfile property, return a new empty object. If a profile is present and a supplied capability differs from runtime.dispatch, throw RUNTIME_DISPATCH_PROFILE_CAPABILITY_INVALID.\n\nIf that capability check does not fail, parse the profile and return only that metadata. If capability is omitted, this helper does not check capability identity. Same-named nested payload or model fields are ordinary data.",
       "example": "runtimeDispatchProfileFields({payload:{runtimeDispatchProfile:null}}); // {}",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19300,7 +19300,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.selectDefinedValue"
       },
-      "consumerSemantics": "Run readers in order; return the first value other than undefined or null. The selector accepts false, zero and empty text. If none qualifies, return the last value; no readers returns undefined despite generic T. Exceptions propagate; readers after selection do not execute.",
+      "consumerSemantics": "Run readers in order. Return the first value other than undefined or null. The selector accepts false, zero and empty text. If no result qualifies, return the last value.\n\nWith no readers, return undefined despite generic T. If a reader throws an error, the selector throws that error. Readers after selection do not execute.",
       "example": "selectDefinedValue(() => null, () => 0, () => 1); // 0",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19340,7 +19340,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.selectPresentValue"
       },
-      "consumerSemantics": "Return the first nonempty string from the values, or empty text when none matches. Whitespace-only strings are nonempty and accepted. Other types, null and undefined are skipped; this helper does not trim or execute readers.",
+      "consumerSemantics": "Return the first nonempty string from the values, or empty text when none matches. Whitespace-only strings are nonempty and accepted. Other types, null and undefined are skipped. This helper does not trim or execute readers.",
       "example": "selectPresentValue(undefined, '', ' '); // ' '",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19384,7 +19384,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.selectTruthyValue"
       },
-      "consumerSemantics": "Run readers in order and return the first truthy value. False, zero, empty text, null, undefined and NaN are skipped. If all fail, return the last value; no readers returns undefined despite generic T. Exceptions propagate and later readers do not execute after selection.",
+      "consumerSemantics": "Run readers in order and return the first truthy value. False, zero, empty text, null, undefined and NaN do not qualify. If no result is truthy, return the last value.\n\nWith no readers, return undefined despite generic T. If a reader throws an error, the selector throws that error. Readers after selection do not execute.",
       "example": "selectTruthyValue(() => 0, () => 'ok'); // 'ok'",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19426,7 +19426,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.sha256Bytes"
       },
-      "consumerSemantics": "Hash the exact Uint8Array bytes and return sha256: followed by 64 lowercase hex digits. No JSON codec, encoding tag or trust check is applied. Wrong runtime argument types can cause Node crypto errors; this is not an unknown-input validator.",
+      "consumerSemantics": "Hash the exact Uint8Array bytes and return sha256: followed by 64 lowercase hex digits. No JSON codec, encoding tag or trust check is applied. Wrong runtime argument types can cause Node crypto errors. This is not an unknown-input validator.",
       "example": "sha256Bytes(new Uint8Array([65]));",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19508,7 +19508,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.sourcePreflight"
       },
-      "consumerSemantics": "Parse binding, select the latest unique source-preflight artifact from its explicit stage and current run, then read exact bound bytes. Require source-preflight.v1 and passed. Validate the subject and match identityEncoding, inputDigest and digest of the returned contract. Return binding/subject/contract. No artifact or failed/mismatched artifact rejects; never use an unrelated ancestor as fallback.",
+      "consumerSemantics": "Parse binding, select the latest unique source-preflight artifact from its explicit stage and current run, then read exact bound bytes. Require source-preflight.v1 and passed. Validate the subject and match identityEncoding, inputDigest and digest of the returned contract. Return binding/subject/contract. No artifact or failed/mismatched artifact rejects. Never use an unrelated ancestor as fallback.",
       "example": "const preflight = await sourcePreflight(binding, context);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19548,7 +19548,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.textValue"
       },
-      "consumerSemantics": "Return a string unchanged; every other value becomes empty text. Empty input text remains empty. This helper does not trim, convert, parse or validate.",
+      "consumerSemantics": "Return a string unchanged. All other values become empty text. Empty input text remains empty. This helper does not trim, convert, parse or validate.",
       "example": "textValue(1); // ''",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19592,7 +19592,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.verifiedArtifactJsonText"
       },
-      "consumerSemantics": "Verify artifact-json-bytes.v1, original UTF-8 byte size and digest; parse original text, compare strict portable value serialization, and compare the complete returned reference with expected. Digest and size must also agree with that reference. An explicitly encoded artifact must use the portable tag and its original bytes must equal portable serialization. Untagged historical JSON is not recanonicalized. Return original text, not reserialized text. Errors distinguish bytes/value/reference/encoding mismatch; JSON.parse and strict JSON errors propagate. No capability call, producer authorization or schema validation occurs.",
+      "consumerSemantics": "Verify artifact-json-bytes.v1, original UTF-8 byte size and digest. Parse original text, compare strict portable value serialization, and compare the complete returned reference with expected. Digest and size must also agree with that reference. An explicitly encoded artifact must use the portable tag and its original bytes must equal portable serialization.\n\nUntagged historical JSON is not recanonicalized. Return original text, not reserialized text. Errors distinguish bytes/value/reference/encoding mismatch. JSON.parse and strict JSON errors propagate.\n\nNo capability call, producer authorization or schema validation occurs.",
       "example": "const originalText = verifiedArtifactJsonText(response, expectedRef);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19636,7 +19636,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.verifyReviewSubject"
       },
-      "consumerSemantics": "Parse the subject for the current run, freeze clean HEAD and the architecture ref again, and compare with subject revisions. Optional expectedSourceRevision replaces only the expected current HEAD; architecture must still match. Throw REVIEW_SUBJECT_STALE on revision mismatch. Calls git.repository.read but performs no source mutation.",
+      "consumerSemantics": "Parse the subject for the current run, record clean HEAD and the architecture ref again, and compare with subject revisions. Optional expectedSourceRevision replaces only the expected current HEAD. Architecture must still match. Throw REVIEW_SUBJECT_STALE on revision mismatch. Calls git.repository.read but performs no source mutation.",
       "example": "const subject = await verifyReviewSubject(candidate, context);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -19679,7 +19679,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.withRuntimeDispatchProfile"
       },
-      "consumerSemantics": "If profile is undefined, return the original request unchanged without validating it. Otherwise parse current profile and validate strict JSON of the request. Reject any existing own runtimeDispatchProfile key. Return a shallow frozen copy with the selected profile. It does not validate dispatch operation/resource or deeply freeze payload.",
+      "consumerSemantics": "If profile is undefined, return the original request unchanged without validation. If profile is present, parse the current profile and validate strict JSON for the request. Reject an existing own runtimeDispatchProfile property.\n\nReturn a shallow copy. Object.freeze protects its top-level properties. This function does not validate the dispatch operation or resource. It does not freeze nested payload values.",
       "example": "const tagged = withRuntimeDispatchProfile(request, CURRENT_RUNTIME_DISPATCH_PROFILE);",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -27324,7 +27324,7 @@
         "line": 100,
         "endLine": 145
       },
-      "consumerSemantics": "Owning validation first applies the selected JSON Schema without default insertion or coercion. providerInvocation and providerResult have no extra semantic branch in checkPipelineTestGateContract. reportAdapterResult additionally requires outcome counts to sum to total and unique case IDs. Complete cases require zero omittedCaseCount, exact total length and exact outcome counts. Truncated cases require positive omittedCaseCount, listed plus omitted equal total, and listed outcomes no greater than exact counts. Report and case findingsTruncated must be true exactly when omittedFindingCount is positive. Buster supplies adapter/sourceArtifact provenance before this validation. Failure returns errors from checkPipelineTestGateContract; validatePipelineTestGateContract throws PipelineTestGateContractError. Shape acceptance does not authorize provider execution."
+      "consumerSemantics": "Owning validation first applies the selected JSON Schema without default insertion or coercion. providerInvocation and providerResult have no extra semantic branch in checkPipelineTestGateContract. reportAdapterResult additionally requires outcome counts to sum to total and unique case IDs. Complete cases require zero omittedCaseCount, exact total length and exact outcome counts. Truncated cases require positive omittedCaseCount, listed plus omitted equal total, and listed outcomes no greater than exact counts. Report and case findingsTruncated must be true exactly when omittedFindingCount is positive.\n\nBuster supplies adapter/sourceArtifact provenance before this validation. Failure returns errors from checkPipelineTestGateContract. `validatePipelineTestGateContract` throws PipelineTestGateContractError. Shape acceptance does not authorize provider execution."
     },
     "providerDetails": {
       "selection": "Buster selects these extra rules for kubeclaw.playwright@1, or whenever providerDetails.schemaId is kubeclaw.e2e-result.v1. Other provider-specific details remain governed by their owning provider contract, not a universal E2E requirement.",
@@ -27334,7 +27334,7 @@
         "line": 56,
         "endLine": 69
       },
-      "consumerSemantics": "Require the exact E2E schema ID and SHA-256 of the owning schema bytes, then validate values against that schema. Total must equal passed plus failed plus skipped plus unexecuted and the number of test cases. IDs must be unique; the number of cases with each status must equal its count. Failure throws TEST_PROVIDER_E2E_DETAILS_INVALID.",
+      "consumerSemantics": "Require the exact E2E schema ID and SHA-256 of the owning schema bytes, then validate values against that schema. Total must equal passed plus failed plus skipped plus unexecuted and the number of test cases. IDs must be unique. The number of cases with each status must equal its count. Failure throws TEST_PROVIDER_E2E_DETAILS_INVALID.",
       "schemaFacts": [
         {
           "pointer": "#",
@@ -27720,7 +27720,7 @@
           "line": 326,
           "endLine": 373
         },
-        "consumerSemantics": "After providerResult schema validation, Buster requires total = passed + failed + skipped, and a passed outcome cannot have failed > 0. Evidence IDs and file paths must each be unique; runner-log is reserved; evidence types must be registered. Report evidence IDs must be unique, report formats registered, and each report must refer to declared test-report evidence."
+        "consumerSemantics": "After providerResult schema validation, Buster requires total = passed + failed + skipped, and a passed outcome cannot have failed > 0. Evidence IDs and file paths must each be unique. `runner-log` is reserved. Evidence types must be registered. Report evidence IDs must be unique, report formats registered, and each report must refer to declared test-report evidence."
       },
       {
         "source": {

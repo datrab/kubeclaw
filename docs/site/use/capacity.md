@@ -29,8 +29,8 @@ and the platform and component owners' acceptance of these actual combinations.
 Stop until they accept the combination. Build inputs in `versions.json` do not
 establish compatibility: [general build tools](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/versions.json#L19-L23)
 and [Ops image overrides](https://github.com/datrab/kubeclaw/blob/ad312e3e4f15223809fadef90bd90e1f689ce941/versions.json#L65-L72)
-select different clients. KubeClaw does not define a Kubernetes, CSI (storage
-driver), registry, Redis, PostgreSQL, or filesystem compatibility range.
+select different clients. KubeClaw does not define a Kubernetes, CSI storage-driver
+implementation, registry, Redis, PostgreSQL, or filesystem compatibility range.
 
 Run cluster commands from the administration machine. Run product-specific
 queries only through the owning product's documented administration surface.

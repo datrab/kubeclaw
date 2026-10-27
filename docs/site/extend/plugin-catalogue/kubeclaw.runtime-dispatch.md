@@ -13,7 +13,7 @@ Dispatch bounded runtime and OpenClaw work through approved runtime targets.
 
 ## When To Use It
 
-Use it when an extension must call an installed specialist runtime.
+When an extension must call an installed specialist runtime, use it.
 
 ## When Not To Use It
 
@@ -60,7 +60,7 @@ the contract and lifecycle rules that apply to this package.
 ## capability adapter: runtime
 
 Public identifier: `runtime`.
-Global registration ID: `kubeclaw.runtime-dispatch:runtime`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.runtime-dispatch:runtime`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `network.http`, `secrets.read`
 
@@ -68,7 +68,7 @@ Provided capabilities: `runtime.dispatch`
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/runtime-dispatch/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `targets` (object; required)
 
@@ -90,7 +90,7 @@ Declared manifest facts:
 ## capability adapter: openclaw
 
 Public identifier: `openclaw`.
-Global registration ID: `kubeclaw.runtime-dispatch:openclaw`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.runtime-dispatch:openclaw`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `git.repository.read`, `network.http`, `secrets.read`
 
@@ -98,7 +98,7 @@ Provided capabilities: `runtime.dispatch`
 
 Configuration schema: [schemas/openclaw-config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `targets` (object; required)
 
@@ -119,19 +119,27 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The generic HTTP dispatcher and OpenClaw session dispatcher are separate registrations. Each uses the configured target and its own response, credential, result and recovery contract; local tests do not establish a connected production agent.
+The generic HTTP dispatcher and OpenClaw session dispatcher are separate registrations. Each uses the configured target and its own response, credential, result and recovery contract. Local tests do not prove a connected production agent.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

@@ -25,6 +25,7 @@ Use the [Developer handbook](developer-handbook.md) to prepare a checkout,
 choose component checks, and follow build and release procedures.
 For a bounded Core change, use the [administrative retry diagnostic exercise](examples/platform-change-nova-lifecycle.json)
 with the handbook’s [lifecycle change procedure](developer-handbook.md#practice-a-bounded-lifecycle-change-and-removal).
+Use the [technical verb definitions](../reference/glossary.md#technical-verbs) for the exercise instructions.
 
 - [Platform component changes](platform/README.md) selects the smallest internal owner, required checks, compatibility, and recovery boundaries.
 
@@ -96,7 +97,7 @@ package has passed parity or that legacy files may now be deleted.
 
 ### Replace The runtime.dispatch Provider
 
-Agent-dispatch replacement is a capability-provider change, not a specialist
+Agent-dispatch replacement is a [capability-provider](../reference/glossary.md#capability-provider) change, not a specialist
 Worker engine replacement. Start with the
 [runtime-dispatch package and its adapter registrations](plugin-catalogue/kubeclaw.runtime-dispatch.md).
 Install an adapter that declares `runtime.dispatch`, then have the operator
@@ -135,7 +136,7 @@ Start with the responsibility that must change.
 
 ```mermaid
 flowchart TD
-    Need[State the new behavior] --> Existing{Does an installed component already supply it?}
+    Need[Give the new behavior] --> Existing{Does an installed component already supply it?}
     Existing -->|Yes| Config[Change project or platform configuration]
     Existing -->|No| Host{Does a host own the behavior?}
     Host -->|OpenClaw or Codex| HostExtension[Create a host extension]
@@ -158,7 +159,7 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 
 | From | Relationship | To |
 | --- | --- | --- |
-| State the new behavior | Directed connection | Does an installed component already supply it? |
+| Give the new behavior | Directed connection | Does an installed component already supply it? |
 | Does an installed component already supply it? | Directed connection — Yes | Change project or platform configuration |
 | Does an installed component already supply it? | Directed connection — No | Does a host own the behavior? |
 | Does a host own the behavior? | Directed connection — OpenClaw or Codex | Create a host extension |

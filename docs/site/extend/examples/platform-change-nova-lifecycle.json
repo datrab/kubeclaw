@@ -69,7 +69,7 @@
     },
     {
       "id": "crash-after-durable-block",
-      "fault": "Terminate the isolated process after the administrative blocked event is durably committed and before local terminal projection or normal process completion. Restart from exactly the retained records.",
+      "fault": "After the engine durably commits the administrative blocked event, terminate the isolated process before local terminal projection or normal completion. Restart from the same retained records.",
       "expected": "The journal retains administrative_retry_suppressed and the original attempt result reason. Recovery preserves blocked status and the consumed attempt count, does not schedule duplicate work, and leaves schema, graph, and digest identities unchanged. Do not require the diagnostic to become a new field in a state projection that has no reason field."
     }
   ],

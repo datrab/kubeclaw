@@ -625,14 +625,18 @@ An artifact ID has the form `artifact:sha256:<64 lowercase hexadecimal
 characters>`. The filesystem path is `<root>/<first two hex
 characters>/<complete hex digest>`.
 
-Publication uses this durable sequence:
+Publication uses this durable sequence.
+An `EEXIST` error means that the final name exists.
+The store uses `O_NOFOLLOW` to reject a symbolic link at the last path component during a file read.
 
 1. Copy caller bytes before the first asynchronous action.
 2. Create and synchronize the directory path.
 3. Create a unique pending file with mode `0600`.
 4. Write and synchronize its bytes.
 5. Create the final immutable name with a hard link.
-6. If that name exists, read it without following links and verify its digest.
+6. If the hard-link operation reports `EEXIST`, do these checks:
+   - Read the existing file with `O_NOFOLLOW`.
+   - Verify its digest.
 7. Synchronize the directory.
 8. Remove the pending name and synchronize the directory again.
 

@@ -13,7 +13,7 @@ Run browser scenarios through Playwright in a Buster provider.
 
 ## When To Use It
 
-Use it when behavior requires a real browser and page interaction.
+When behavior requires a real browser and page interaction, use it.
 
 ## When Not To Use It
 
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: playwright
 
 Public identifier: `kubeclaw.playwright@1`.
-Global registration ID: `kubeclaw.playwright:playwright`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.playwright:playwright`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `browser.playwright`
 
@@ -67,7 +67,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/playwright/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `url` (string; optional; maxLength `2048`; pattern `^https?://`)
 - `endpointName` (string; optional; pattern `^[A-Za-z0-9][A-Za-z0-9._-]{0,63}$`)
@@ -107,19 +107,29 @@ Inputs:
 
 ## Failure Behavior
 
-The provider runs the selected browser test and imports its report and artifacts. Malformed reports and excess artifact counts fail. The package test needs an absolute PLAYWRIGHT_BROWSERS_PATH. Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName selects the first deployment endpoint. Playwright requires the selected URL to be a root HTTP/HTTPS origin without credentials, query or fragment; tests select paths.
+The provider runs the selected browser test and imports its report and artifacts. Malformed reports and excess artifact counts fail. The package test needs an absolute PLAYWRIGHT_BROWSERS_PATH.
+
+Target selection: configured url cannot be combined with typed inputs. endpointName is used only for deployment inputs, not public endpoints or direct url. Omitted endpointName selects the first deployment endpoint. Playwright requires the selected URL to be a root HTTP/HTTPS origin without credentials, query or fragment. Tests select paths.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command requires a configured real Chromium or Playwright browser that is absent on this host.
+Exact reason from that historical record:
+
+> The command requires a configured real Chromium or Playwright browser that is absent on this host.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

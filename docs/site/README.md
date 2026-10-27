@@ -39,7 +39,7 @@ Use it when you do not know which track owns a component, interface, or configur
 ## Three Connected First Journeys
 
 - Architecture readers start with [Understand KubeClaw](understand/README.md).
-- Operators start with the [Operator Quickstart](use/quickstart.md), then compile the [maintained first project](use/workflows/README.md#materialize-and-compile-a-first-project). Use [Configure and Operate](use/operate.md) for governed execution.
+- Operators start with the [Operator Quickstart](use/quickstart.md), then [compile](reference/glossary.md#technical-verb-compile) the [maintained first project](use/workflows/README.md#materialize-and-compile-a-first-project). Use [Configure and Operate](use/operate.md) for governed execution.
 - Plugin developers start with [Create and Activate a First Pipeline Plugin](extend/first-plugin.md).
 
 The first-project exercise supplies the complete local project and repository

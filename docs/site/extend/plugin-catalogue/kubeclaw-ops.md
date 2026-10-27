@@ -13,7 +13,7 @@ Guide read-only diagnosis across Kubernetes, Argo CD, logs, and Hubble evidence.
 
 ## When To Use It
 
-Use it when a Codex operator must correlate platform symptoms without making changes.
+When a Codex operator needs a read-only diagnosis of platform symptoms, use it.
 
 ## When Not To Use It
 
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `codex`.
 - Package identity: `kubeclaw-ops@0.2.0`.
 - Runtime-role manifest inclusion: No runtime role.
-- Additional packaging path: Codex installs this package separately; KubeClaw runtime-role manifests do not contain it.
+- Additional packaging path: Codex installs this package separately. KubeClaw runtime-role manifests do not contain it.
 - Manifest: [plugins/kubeclaw-ops/.codex-plugin/plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/plugins/kubeclaw-ops/.codex-plugin/plugin.json)
 
 ## Boundaries
@@ -65,7 +65,7 @@ Provided capabilities: None.
 
 Configuration schema: None.
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 Not applicable.
 
@@ -90,9 +90,17 @@ The current package has no package-local automated acceptance test.
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `not-run`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `not-run`.
 
-The Codex package declares no package-local automated test; connected-tool and missing-tool reader exercises remain required.
+Exact reason from that historical record:
+
+> The Codex package declares no package-local automated test; connected-tool and missing-tool reader exercises remain required.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

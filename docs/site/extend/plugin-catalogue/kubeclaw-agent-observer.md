@@ -13,7 +13,7 @@ Move OpenClaw agent events into bounded Redis observability streams.
 
 ## When To Use It
 
-Use it when OpenClaw hook activity must become durable agent evidence.
+When OpenClaw hook activity must become durable agent evidence, use it.
 
 ## When Not To Use It
 
@@ -64,7 +64,7 @@ Provided capabilities: None.
 
 Configuration schema: [Inline host schema in the manifest](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `enabled` (boolean; optional)
 - `redisHost` (string; optional)
@@ -84,7 +84,7 @@ Configuration fields (schema declarations; defaults are annotations, not proof t
 - `hookPriority` (number; optional)
 - `hookTimeoutMs` (number; optional)
 
-Input schema: Hook or tool input belongs to the host and module; absence of a manifest field does not mean unrestricted input.
+Input schema: Hook or tool input belongs to the host and module. Absence of a manifest field does not mean unrestricted input.
 
 Result schema: The host owns the response contract.
 
@@ -98,16 +98,24 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-OpenClaw hooks enter a bounded queue before Redis publication. Queue admission and durable delivery are different events; removing the extension does not remove Redis records.
+OpenClaw hooks enter a bounded queue before Redis publication. Queue admission and durable delivery are different events. Extension removal does not remove Redis records.
 
 OpenClaw rejects invalid host configuration or an unavailable extension module.
 External dependency failure appears in the extension result or host diagnostics. Check the package-specific request limits before activation.
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `passed`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `passed`.
 
-The package-local command completed with exit code 0.
+Exact reason from that historical record:
+
+> The package-local command completed with exit code 0.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

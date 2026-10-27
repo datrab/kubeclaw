@@ -13,7 +13,7 @@ Run pre-check and full lint stages through a controlled lint executor.
 
 ## When To Use It
 
-Use it when Nova must apply the installed repository lint rule set.
+When Nova must apply the installed repository lint rule set, use it.
 
 ## When Not To Use It
 
@@ -21,7 +21,7 @@ Do not use it for delivery-only checks or arbitrary command execution.
 
 ## Most Important Limit
 
-Rule coverage follows the installed lint configuration and executor grant.
+The installed lint configuration and executor grant control rule coverage.
 
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
@@ -61,7 +61,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: pre-check
 
 Public identifier: `kubeclaw.lint.pre-check`.
-Global registration ID: `kubeclaw.lint:pre-check`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.lint:pre-check`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `lint.execute`, `artifacts.write`, `artifacts.read`
 
@@ -69,7 +69,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/lint/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `policyPath` (string; required; minLength `1`)
 - `policyProject` (string; required; minLength `1`)
@@ -96,7 +96,7 @@ Declared manifest facts:
 ## stage: full
 
 Public identifier: `kubeclaw.lint.full`.
-Global registration ID: `kubeclaw.lint:full`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.lint:full`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `lint.execute`, `artifacts.write`, `artifacts.read`
 
@@ -104,7 +104,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/lint/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `policyPath` (string; required; minLength `1`)
 - `policyProject` (string; required; minLength `1`)
@@ -131,7 +131,7 @@ Declared manifest facts:
 ## capability adapter: executor
 
 Public identifier: `executor`.
-Global registration ID: `kubeclaw.lint:executor`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.lint:executor`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: None.
 
@@ -139,7 +139,7 @@ Provided capabilities: `lint.execute`
 
 Configuration schema: [schemas/adapter-config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/lint/schemas/adapter-config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `allowedRepositoryRoots` (array; required; minItems `1`)
 - `allowedPolicyRoots` (array; required; minItems `1`)
@@ -161,19 +161,29 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The executor accepts lint.execute/run_report and validates the selected source revision. Requested revisions create an isolated shared Git clone and detached checkout, removed in finally; selected tools can retain separate caches. The stage reads implementation provenance when required and writes its report through artifacts.write. Missing tools with required=false are not_applicable; required missing tools return errors, never a clean lint verdict.
+The executor accepts lint.execute/run_report and validates the selected source revision. When a revision is requested, the executor uses withLintCandidate to create an isolated shared Git clone with a detached checkout. The helper removes its temporary directory in a finally block. Selected tools can keep separate caches.
+
+The stage reads implementation provenance when required and writes its report through artifacts.write. Missing tools with required=false are not_applicable. Required missing tools return errors, never a clean lint verdict.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

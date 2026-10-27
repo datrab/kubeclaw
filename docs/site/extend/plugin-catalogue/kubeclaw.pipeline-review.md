@@ -13,7 +13,7 @@ Run the pipeline review stage and retrieve its bounded review evidence.
 
 ## When To Use It
 
-Use it when the graph needs the installed pipeline-specific review workflow.
+When the graph needs the installed pipeline-specific review workflow, use it.
 
 ## When Not To Use It
 
@@ -60,7 +60,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: review
 
 Public identifier: `kubeclaw.report.pipeline-review`.
-Global registration ID: `kubeclaw.pipeline-review:review`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.pipeline-review:review`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `artifacts.write`, `report.evidence.read`
 
@@ -68,7 +68,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/pipeline-review/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `agent` (string; required; minLength `1`)
 - `agentRole` (string; optional; minLength `1`)
@@ -93,7 +93,7 @@ Declared manifest facts:
 ## capability adapter: evidence
 
 Public identifier: `evidence`.
-Global registration ID: `kubeclaw.pipeline-review:evidence`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.pipeline-review:evidence`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `artifacts.read`
 
@@ -101,7 +101,7 @@ Provided capabilities: `report.evidence.read`
 
 Configuration schema: [schemas/evidence-config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `storageRoot` (string; required; minLength `1`)
 - `orchestratorIssuerId` (string; required; minLength `1`)
@@ -126,19 +126,27 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The stage and evidence adapter have separate storage and failure boundaries. Selected report evidence, runtime-agent dispatch and artifact bindings must each be qualified; live or external storage ownership is not implied by code availability.
+The stage and evidence adapter have separate storage and failure boundaries. Selected report evidence, runtime-agent dispatch and artifact bindings must each be qualified. Live or external storage ownership is not implied by code availability.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

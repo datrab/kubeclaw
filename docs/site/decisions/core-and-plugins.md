@@ -24,7 +24,7 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Context.** A pipeline can have several agents, providers and transports. Letting each advance its own pipeline state would create conflicting owners during retries and recovery.
 
-**Decision.** Core alone owns the frozen execution graph, scheduling, canonical lifecycle events, retries, remediation, waits, cancellation and terminal closure. Plugins return typed results that passed validation; they never write scheduler state. Plugin-specific phases stay in namespaced domain state. Core validates a graph before a run; remediation follows declared edges. Conditional activation can skip a declared ordinary stage using an immutable ancestor fact, but cannot insert work or redirect a remediation-only target.
+**Decision.** Core alone owns the frozen execution graph, scheduling, canonical lifecycle events, retries, remediation, waits, cancellation and terminal closure. Plugins return typed results that passed validation. They never write scheduler state. Plugin-specific phases stay in namespaced domain state. Core validates a graph before a run; remediation follows declared edges. Conditional activation can skip a declared ordinary stage using an immutable ancestor fact, but cannot insert work or redirect a remediation-only target.
 
 **Actual alternatives.** The source rejects a second Testkube workflow authority, plugin-owned pipeline history, and speculative lifecycle policy hooks. Testkube is a design reference, not a runtime dependency.
 

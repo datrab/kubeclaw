@@ -102,7 +102,7 @@ application Pod as the only recovery route.
 | `<full-git-commit>` | Any task-specific Git identity | Full immutable commit, never a branch or moving tag |
 | `<run-id>` | Durable Nova run identity | It comes from command output or durable evidence |
 | `<existing-nova-run-id>` | Existing run selected for inspection or recovery | Copied from durable Nova output, never guessed |
-| `<new-run-id>` | Newly emitted run identity | Captured from the immediately preceding command |
+| `<new-run-id>` | New, unused run identity | For an explicit graph start, the operator supplies the identity. If a command creates it, capture the value from that command's output. |
 | `<new-registered-fault-run-id>` | New run reserved for one controlled fault | Unique and recorded before fault injection |
 | `<different-new-registered-success-run-id>` | Separate healthy comparison run | Different from every fault or prior run identity |
 | `<backup-group>` | Completed backup unit | It includes metadata, members, and checksums |

@@ -61,7 +61,7 @@ sequenceDiagram
     participant K as Linux cgroup v2
     participant H as Unprivileged host
     participant E as Specialist engine
-    C->>J: Submit validated envelope
+    C->>J: Send the validated envelope
     J->>J: Persist accepted identity and input
     J->>O: Request resource reservation
     O->>K: Create and bind attempt scope
@@ -82,7 +82,7 @@ Participants: Calling service, Attempt journal, Ownership supervisor, Linux cgro
 
 | Step | From | Relationship | To |
 | --- | --- | --- | --- |
-| 1 | Calling service | Message — Submit validated envelope | Attempt journal |
+| 1 | Calling service | Message — Send the validated envelope | Attempt journal |
 | 2 | Attempt journal | Self-action — Persist accepted identity and input | Attempt journal |
 | 3 | Attempt journal | Message — Request resource reservation | Ownership supervisor |
 | 4 | Ownership supervisor | Message — Create and bind attempt scope | Linux cgroup v2 |
@@ -557,9 +557,12 @@ Forced cleanup uses `cgroup.kill` to reach all descendants.
 
 ### Host And Runtime Identity
 
-Host preparation writes a root-owned pool policy, node identity, and runtime
-identity. The worker opens these files without following symbolic links. It
-rejects writable, oversized, malformed, or wrong-role files.
+Host preparation writes a root-owned pool policy, node identity, and runtime identity.
+The worker uses `O_NOFOLLOW` for these file opens.
+This flag rejects a symbolic link at the last path component.
+The readers require a regular file and root ownership.
+They reject files with group or other write permission, excessive size or invalid content.
+The pool policy must match the worker role.
 
 The runtime identity binds the current boot ID and cgroup namespace device and
 inode. Worker Core compares it with the actual process namespace. It never

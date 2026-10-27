@@ -13,7 +13,7 @@ Run the declared implementation-agent work at the implementation stage.
 
 ## When To Use It
 
-Use it when an approved plan is ready for bounded agent implementation.
+When an approved plan is ready for bounded agent implementation, use it.
 
 ## When Not To Use It
 
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: implementation
 
 Public identifier: `kubeclaw.agent.implementation`.
-Global registration ID: `kubeclaw.implementation-agent:implementation`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.implementation-agent:implementation`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `runtime.dispatch`, `git.workspace.create`, `git.workspace.remove`, `git.commit`, `git.merge`, `artifacts.read`, `artifacts.write`
 
@@ -67,7 +67,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/implementation-agent/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `agent` (string; required; minLength `1`)
 - `agentRole` (string; optional; minLength `1`)
@@ -91,19 +91,31 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The stage dispatches implementation work to config.agent and stores attempt-bound completion artifacts; the name alone establishes neither approval nor a usable host. A Core-issued guidance.repairRequest conditionally reads up to 32 integrity-checked JSON artifacts through artifacts.read. Request/evidence are limited to 256 KiB and serialized JSON is checked against that limit, then appended with helperPrompt to the configured runtime-agent request. Assign the actual artifact and runtime providers owners for raw evidence access, retention and failure handling. Optional workspaces are committed/merged only for ready_for_testing completion; removal is attempted only after integration. Created but unintegrated workspaces and branches are retained for reconciliation, with references in blocked error details or completion artifacts. Integrated cleanup failure produces a separate cleanup artifact and does not imply rollback. No-workspace execution makes no workspace-cleanup guarantee; invalid evidence or output blocks execution.
+The stage dispatches implementation work to config.agent and stores attempt-bound completion artifacts. The name alone proves neither approval nor a usable host. A Core-issued guidance.repairRequest conditionally reads up to 32 integrity-checked JSON artifacts through artifacts.read. Request/evidence are limited to 256 KiB and serialized JSON is checked against that limit, then appended with helperPrompt to the configured runtime-agent request. Assign the actual artifact and runtime providers owners for raw evidence access, retention and failure handling.
+
+Optional workspaces are committed/merged only for ready_for_testing completion. Removal is attempted only after integration. Created but unintegrated workspaces and branches are retained for reconciliation, with references in blocked error details or completion artifacts. Integrated cleanup failure produces a separate cleanup artifact and does not imply rollback.
+
+Execution without a workspace makes no workspace-cleanup guarantee. Invalid evidence or output blocks execution.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

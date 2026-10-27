@@ -34,8 +34,8 @@ registry, Tailnet route, or human delivery path works in production.
 
 **Reason and benefit:** distinguish complete local correction from environment proof without
 claiming that unexecuted live checks passed. **Cost and consequence:** the original
-revision-bound local evidence and the separate live gates must both remain visible;
-local completion cannot replace product or deployment acceptance.
+revision-bound local evidence and the separate live gates must both remain visible.
+Local completion cannot replace product or deployment acceptance.
 
 **Status:** the owner explicitly accepted this local-completion policy on 2026-09-12.
 It replaces the earlier requirement to run every live, cluster, and receiving check

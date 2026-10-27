@@ -26,6 +26,7 @@ measured results, identity verification, and application permission distinct.
 | Buster | The test engine and role that executes fixed plans and returns facts and evidence. |
 | Capability | A named type of permitted external action, such as artifact write or runtime dispatch. |
 | Capability grant | Permission for one capability, one provider, and stated resource limits. |
+| <a id="capability-provider"></a>Capability provider | An adapter registration selected for a named Nova capability. A mapping alone does not start the adapter. |
 | Canonical state | The authoritative state used to decide what can happen next. Nova owns canonical pipeline state. |
 | [cgroup](#cgroup) | Linux control group: a group of processes with shared resource controls. |
 | Claim | A time-limited assignment of a worker attempt to one worker identity. |
@@ -60,7 +61,7 @@ measured results, identity verification, and application permission distinct.
 | Plugin | A package that declares extension registrations and requested capabilities. |
 | Present | Available as source, package content, or a role declaration. Present does not mean active or reachable. |
 | Prism | The design engine and product surface that creates revisioned design work and approved baselines. |
-| Provider | A Buster registration that performs one declared test operation and returns typed facts. |
+| Provider | Use a qualified name: [Nova capability provider](pipeline-platform.md#adapter-selection-and-validation) or [Buster test provider](../extend/buster.md#implement-a-test-provider). Their permissions and runtime contracts are separate. |
 | Reachable | Usable through the configured running process and network path in one environment. |
 | Reconciliation | Work that determines the outcome of earlier activity before the system permits new activity. |
 | Registration | One declared extension surface inside a plugin package. |
@@ -79,6 +80,7 @@ measured results, identity verification, and application permission distinct.
 | Stage | One declared unit in the pipeline graph. It has an owner, input, limits, and dependencies. |
 | [SVID](#svid) | SPIFFE Verifiable Identity Document: a workload credential that proves a SPIFFE identity. |
 | Terminal state | The final run state: succeeded, failed, blocked, or cancelled. |
+| Test provider | A Buster registration that performs one declared test or fixture operation and returns typed facts. |
 | Typed result | A result that must match the declared versioned schema before Core uses it. |
 | Uncertain effect | An external request that might have succeeded, although no trustworthy receipt is available. |
 | Wait | A durable pause that needs a matching signal, approval, orchestrator action, or cooldown. |
@@ -295,13 +297,64 @@ for interactive accessibility checks or human preview review.
 > **Limit:** A snapshot alone does not establish complete accessibility. See
 > [Test the preview](../use/prism-studio.md#step-8-test-the-preview).
 
+## Technical Verbs
+
+These definitions describe computer operations, not ordinary uses of difficult words.
+They do not claim formal ASD-STE100 certification or prove that an operation ran.
+
+At the first dependent instruction, give the object name and consumer/process. Give this scoped meaning or link to this shared entry. Do not replace exact API/CLI/wire identifiers. The linked canonical page gives actual operation-specific conditions, not a new grant.
+
+| Verb | Scoped meaning and limits | Operation-specific explanation |
+| --- | --- | --- |
+| <a id="technical-verb-compile"></a>compile | Change governed source input into the selected resolved graph or executable representation. Compilation does not execute that result. Give the compilation type: project compilation or programming-language compilation. | [Operation and conditions](../use/workflows/README.md#materialize-and-compile-a-first-project) |
+| <a id="technical-verb-render"></a>render | Change templates into manifests, or change a design into browser/screen output. Give the transformation type. Rendering does not prove deployment, rollout completion, human approval or complete accessibility. | [Operation and conditions](../use/maintenance.md#render-and-compare) |
+| <a id="technical-verb-validate"></a>validate | Apply the named schema, grammar, identity or invariant checks to input. Give the actual validator and boundary. Validation does not imply target admission, authorization or execution without error. | [Operation and conditions](schemas.md) |
+| <a id="technical-verb-dispatch"></a>dispatch | Send identity-bound work through the selected capability/transport. Submission, remote acceptance, completion and result import are different facts. | [Operation and conditions](../understand/communication.md) |
+| <a id="technical-verb-reconcile"></a>reconcile | Give the reconciliation type. For an uncertain external effect, find the original outcome through its owning supported method before permitted continuation. Do not replace uncertainty with a blind retry or edited state. For a controller, compare desired and observed state. Do the permitted provisioning/update/deletion work to get the desired state, with actual ownership, retry and cleanup rules. Controller reconciliation can include first provisioning and is not limited to earlier uncertain effects. | [Operation and conditions](../use/operate.md#recover-after-interruption); [Operation and conditions](../understand/buster-namespace-controller.md) |
+| <a id="technical-verb-authenticate"></a>authenticate | Check the evidence that binds a caller or message to the asserted identity or shared credential. This does not grant application permission or necessarily identify a human. | [Operation and conditions](glossary.md#hmac-and-nonce) |
+| <a id="technical-verb-authorize"></a>authorize | Check if the identified caller has permission for the specified operation/resource. Authentication alone does not give that permission. | [Operation and conditions](glossary.md#svid) |
+| <a id="technical-verb-commit"></a>commit | Make a named transaction or version-control change durable at its owning boundary. Give the commit type: database commit, Git commit or canonical-event commit. No type implies that all later effects succeeded. | [Operation and conditions](../understand/data-and-state.md) |
+| <a id="technical-verb-claim"></a>claim | Get the current bounded job/worker assignment through its identity and concurrency checks. A claim is not caller authentication, final result acceptance or a Kubernetes volume claim. | [Operation and conditions](glossary.md#job-fence) |
+| <a id="technical-verb-fetch"></a>fetch | Get the selected remote/Git objects through the named transport. This operation alone does not validate content, authorize its use or prove import without error. | [Git fetch and immutable-ref conditions](../use/diagnose.md#git-revision-unavailable) |
+| <a id="technical-verb-import"></a>import | Admit the selected project/artifact representation into its named consumer after its actual checks. Give a different explanation for programming-language module import: loading a module can execute initialization code. Project/artifact admission alone does not execute the admitted pipeline. Do not apply this no-execution limit to all imports. | [Operation and conditions](project-pipeline-publication.md) |
+| <a id="technical-verb-resume"></a>resume | Give the actual continuation path. Journal/run recovery continues the original retained run through its permitted recovery path and does not always need a signal. An active durable wait needs its matching qualified signal and allowed transition before continuation. An unresolved wait stops the ordinary journal-recovery path. A command given again does not necessarily do a resolved wait again. Keep original identities and retained records in each case. | [Operation and conditions](../use/operate.md); [Operation and conditions](../understand/nova-core.md) |
+| <a id="technical-verb-route"></a>route | Select the declared endpoint, adapter or control-flow path for a request. Routing does not grant authority or prove delivery/completion. | [Operation and conditions](../understand/communication.md) |
+| <a id="technical-verb-append"></a>append | Add a record or bytes after the existing content in the named journal/stream/file. Give its durability/atomicity boundary. Append alone is not receiver acceptance. | [Operation and conditions](../understand/data-and-state.md) |
+| <a id="technical-verb-admit"></a>admit | Accept an input/job at the named service or runtime boundary after its actual required checks. Admission at one boundary does not imply admission or success at another. | [Operation and conditions](../understand/nova-core.md) |
+| <a id="technical-verb-allocate"></a>allocate | Give bounded capacity or a resource to its named owner for its named lifetime. Allocation does not prove target readiness or final cleanup. | [Operation and conditions](../understand/buster-namespace-controller.md) |
+| <a id="technical-verb-execute"></a>execute | Do the selected code/task with the named runtime and granted authority. Execution does not itself mean success, safe retry or final lifecycle acceptance. | [Operation and conditions](../understand/worker-core.md) |
+| <a id="technical-verb-build"></a>build | Change selected source and dependencies into a named software/image output. Keep source/tool/image identities. A build does not prove a push or deployment without error. | [Operation and conditions](../use/workflows/build-image.md) |
+| <a id="technical-verb-push"></a>push | Send selected Git objects or image content to the named remote. Give the push type: Git or registry. If a response is lost, the remote effect can still be complete. Its outcome needs reconciliation. | [Operation and conditions](../use/workflows/build-image.md) |
+| <a id="technical-verb-store"></a>store | Keep the specified bytes/record through its named storage owner. Give the durability condition. Storage does not by itself make the record authoritative. | [Operation and conditions](../understand/data-and-state.md) |
+| <a id="technical-verb-reserve"></a>reserve | Reserve the named identifier, capacity or effect identity through its specific owner. Give different explanations for an in-memory runner-log identifier reservation, a durable Core effect record and an actual resource reservation. A reserved identifier alone proves neither durable effect admission nor available runtime capacity, execution or completion. | [Operation and conditions](../understand/nova-core.md) |
+| <a id="technical-verb-verify"></a>verify | Compare bytes, identity, digest or cryptographic evidence against the named expected authority and algorithm. Give the specified checks. Do not use the word as an unbounded correctness or trust claim. | [Operation and conditions](glossary.md#hmac-and-nonce) |
+| <a id="technical-verb-release"></a>release | End the named owned reservation/lease/resource through its supported operation. A release request does not prove finalizer completion or removal of retained/external data. | [Operation and conditions](buster-namespace-lease.md) |
+| <a id="technical-verb-lock"></a>lock | Get the named concurrency/ownership lock before its protected operation. Give the lock name and lifetime. A lock is not authentication or proof that unrelated writers stopped. | [Operation and conditions](glossary.md#job-fence) |
+| <a id="technical-verb-return"></a>return | Give the caller the named result through a function/protocol boundary. Returning an acknowledgment is not necessarily durable completion of the requested operation. | [Operation and conditions](contracts.md) |
+| <a id="technical-verb-parse"></a>parse | Read a representation according to the named syntax into a structure. Syntax acceptance does not prove schema validity or target behavior. | [Operation and conditions](schemas.md) |
+| <a id="technical-verb-serialize"></a>serialize | Change a value to the named byte/text representation. Give the codec/domain and side-effect limits. Serialization alone is not validation or trust. | [Operation and conditions](sdk.md) |
+| <a id="technical-verb-normalize"></a>normalize | Change a supported input representation into the specified canonical form. Give permitted changes and rejection conditions. Normalization is not permission to repair arbitrary invalid input. | [Operation and conditions](sdk.md) |
+| <a id="technical-verb-hash"></a>hash | Calculate a digest from the selected bytes with the named algorithm. Matching digests bind content, not human identity or general trust. | [Operation and conditions](glossary.md) |
+| <a id="technical-verb-decode"></a>decode | Interpret bytes with the specified encoding/format into a value. Decoding does not prove that the value satisfies its schema or authority. | [Operation and conditions](sdk.md) |
+| <a id="technical-verb-encode"></a>encode | Change a value or bytes to the specified encoding. Encoding does not add encryption, authentication or validation unless those are different stated operations. | [Operation and conditions](sdk.md) |
+| <a id="technical-verb-resolve"></a>resolve | Select the specified reference, path, dependency or identity through its named rules. Give the object type. Reference resolution is not automatically an allowed wait/run transition. | [Operation and conditions](configuration-precedence.md) |
+| <a id="technical-verb-sign"></a>sign | Calculate the named cryptographic signature over the specified domain/payload with the selected key. Signing is distinct from human approval, issuer authorization and receiver acceptance. | [Operation and conditions](contracts.md) |
+| <a id="technical-verb-replay"></a>replay | Read retained events/results again or do a named protocol operation again with its actual identity/replay rules. Give the path type: projection of existing facts or a path that can send effects. | [Operation and conditions](../use/workflows/redis-replay-recovery.md) |
+| <a id="technical-verb-follow"></a>follow | Traverse a named HTTP redirect, symbolic link, source-call/dependency edge or declared graph edge. This technical computer-process sense is not ordinary obedience to instructions, logical implication, or a generic justification. | [Operation and conditions](../understand/plugin-runtime.md) |
+| <a id="technical-verb-open"></a>open | Show the named computer application/view, or start access to the named file/connection through its permitted route. Opening a UI is not authentication or permission to change protected state. | [Operation and conditions](../use/prism-studio.md#step-2-open-studio-and-choose-the-project) |
+| <a id="technical-verb-terminate"></a>terminate | End the named operating-system process through the specified termination mechanism. Process termination is not durable run cancellation or proof that remote effects stopped. | [Operation and conditions](../use/workflows/interruption-recovery.md) |
+| <a id="technical-verb-restart"></a>restart | Start the named process/runtime again from its explicitly selected retained inputs/state. Restarting is not a new run identity or evidence that old effects are safe to repeat. | [Operation and conditions](../use/workflows/interruption-recovery.md) |
+| <a id="technical-verb-create"></a>create | Make a new named computer object, file, database record or session through its owning creation operation. Give identity, existence/replacement and retained-write rules. Creation of one object does not prove deployment or later-operation completion. Use make for ordinary preparation if it gives the same instruction. | [Operation and conditions](../use/workflows/examples/request-trace-success.json) |
+| <a id="technical-verb-bind"></a>bind | Connect selected values/content/identity to the specified record, digest, scope or consumer through the named mechanism. Give the fields and comparisons/signatures used. Binding supplied identity fields does not by itself authenticate a caller or authorize an operation. | [Operation and conditions](glossary.md) |
+| <a id="technical-verb-pin"></a>pin | Select and keep a specified source/content/version identity for the named consumer. Give the pin type: recorded selection, immutable byte reference or enforced runtime comparison. A pin claim alone does not prove that each later path checks it or that a mutable name cannot change. | [Operation and conditions](configuration.md) |
+
 ## Similar Terms
 
 Do not use these terms as synonyms.
 
 | Terms | Difference |
 | --- | --- |
-| Present, activated, reachable | Present concerns installed content. Activated concerns runtime selection. Reachable concerns the running environment. |
+| Present, activated, reachable | Present means the source, package content, or declaration exists. Activated means configuration selected the registration and the runtime loaded it. Reachable needs the running environment. |
 | Retry, repair | Retry repeats work after a technical problem. Repair changes the product after a detected defect. |
 | Failure, uncertainty | Failure is a known unsuccessful outcome. Uncertainty means that the outcome is not known. |
 | Role, engine, specialist, plugin | A role is a bundle. An engine interprets work. A specialist performs delegated work. A plugin declares extension points. |

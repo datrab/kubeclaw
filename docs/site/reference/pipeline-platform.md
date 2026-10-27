@@ -15,8 +15,8 @@ external bytes are trusted, which registrations receive capabilities, which
 adapters and observers start, and where durable run state is stored. A project
 or pipeline definition cannot add any of these authorities.
 
-Pass this file with `--platform`. The loader validates a closed JSON object,
-resolves its path fields, freezes the resulting object, and returns no
+Pass this file with `--platform`. The loader [validates](glossary.md#technical-verb-validate) a closed JSON object,
+[resolves](glossary.md#technical-verb-resolve) its path fields, freezes the resulting object, and returns no
 partially valid configuration.
 
 ## Complete field reference

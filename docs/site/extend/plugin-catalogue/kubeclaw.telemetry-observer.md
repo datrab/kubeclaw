@@ -13,7 +13,7 @@ Deliver committed lifecycle telemetry through the configured telemetry path.
 
 ## When To Use It
 
-Use it when pipeline events need an asynchronous telemetry projection.
+When pipeline events need an asynchronous telemetry projection, use it.
 
 ## When Not To Use It
 
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## observer: telemetry
 
 Public identifier: `telemetry`.
-Global registration ID: `kubeclaw.telemetry-observer:telemetry`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.telemetry-observer:telemetry`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `telemetry.emit`
 
@@ -67,7 +67,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/telemetry-observer/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 The schema declares no top-level fields.
 
@@ -94,19 +94,29 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The observer sends lifecycle identity, timestamp, sequence, causation and payload plus observer provenance to telemetry.emit. Redaction is key-based, not a guarantee that all sensitive values are removed. Delivery is at_least_once/per_run and best_effort with five attempts and a ten-second attempt timeout. Retries can duplicate records. Exhausted delivery can lose telemetry without blocking the run. The selected provider owns its separately configured storage; the observer does not own canonical lifecycle state.
+The observer sends lifecycle identity, timestamp, sequence, causation and payload plus observer provenance to telemetry.emit. Redaction is key-based, not a guarantee that all sensitive values are removed. Delivery is at_least_once/per_run and best_effort with five attempts and a ten-second attempt timeout. Retries can duplicate records. Exhausted delivery can lose telemetry without blocking the run.
+
+The selected provider owns its separately configured storage. The observer does not own canonical lifecycle state.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `passed`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `passed`.
 
-The package-local command completed with exit code 0.
+Exact reason from that historical record:
+
+> The package-local command completed with exit code 0.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

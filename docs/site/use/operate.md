@@ -278,7 +278,9 @@ npm run pipeline -- \
   --run-id "<new-run-id>"
 ```
 
-Use a new run identity.
+Choose a new, unused run identity before this command.
+Supply it through `--run-id`.
+For later inspection or recovery, use the `runId` returned by the CLI.
 Do not reuse a prior terminal run identity.
 
 ## Inspect a Run

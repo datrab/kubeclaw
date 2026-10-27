@@ -13,7 +13,7 @@ Create the declared project summary from completed pipeline evidence.
 
 ## When To Use It
 
-Use it when the graph needs a final bounded summary artifact.
+When the graph needs a final bounded summary artifact, use it.
 
 ## When Not To Use It
 
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## stage: summary
 
 Public identifier: `kubeclaw.report.project-summary`.
-Global registration ID: `kubeclaw.project-summary:summary`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.project-summary:summary`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `artifacts.read`, `artifacts.write`
 
@@ -67,7 +67,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/nova/plugins/project-summary/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `agentRole` (string; optional; minLength `1`)
 - `deliveryManifestEncoding` (constant; optional; value `delivery-manifest.utf16-v1`)
@@ -91,19 +91,27 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The default output is delivery-manifest.v2. Set deliveryManifestEncoding to delivery-manifest.utf16-v1 to select v3. The stored artifact then uses the separate kubeclaw-json.utf16.v1 encoding marker. Final source, lint, test, coverage, and optional review evidence must agree; incompatible evidence blocks the stage.
+The default output is delivery-manifest.v2. Set deliveryManifestEncoding to delivery-manifest.utf16-v1 to select v3. The stored artifact then uses the separate kubeclaw-json.utf16.v1 encoding marker. Final source, lint, test, coverage, and optional review evidence must agree. Incompatible evidence blocks the stage.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

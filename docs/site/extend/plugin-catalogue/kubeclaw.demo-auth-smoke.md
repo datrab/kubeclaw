@@ -13,7 +13,7 @@ Exercise the demo authentication session as a Buster provider.
 
 ## When To Use It
 
-Use it when the demo path needs a focused authenticated smoke check.
+When the demo path needs a focused authenticated smoke check, use it.
 
 ## When Not To Use It
 
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: session
 
 Public identifier: `kubeclaw.demo-auth-smoke@1`.
-Global registration ID: `kubeclaw.demo-auth-smoke:session`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.demo-auth-smoke:session`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `network.http`
 
@@ -67,7 +67,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `protocol` (constant; required; value `json-session.v1`)
 - `loginPath` (string; required; minLength `1`; maxLength `2048`)
@@ -112,19 +112,27 @@ Outputs:
 
 ## Failure Behavior
 
-The test requires an unauthenticated negative control, successful login, and protected business assertions. Its local integration command builds the credential producer with Go.
+The test requires an unauthenticated negative control, login without error, and protected business assertions. Its local integration command builds the credential producer with Go.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command requires the Go executable, which is absent on this host.
+Exact reason from that historical record:
+
+> The command requires the Go executable, which is absent on this host.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

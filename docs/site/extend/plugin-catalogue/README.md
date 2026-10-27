@@ -21,7 +21,7 @@ refresh cannot replace the authored purpose, use, exclusion, or limit with gener
 The plugin-foundation owner maintains purpose, use, exclusion, and limit text.
 The source component owner maintains manifest and schema facts.
 Do not edit generated catalogue pages as a second authority.
-Follow the [documentation maintenance procedure](../documentation-maintenance.md#generate-only-owned-facts-then-check)
+Use the [documentation maintenance procedure](../documentation-maintenance.md#generate-only-owned-facts-then-check)
 to change the owning input, regenerate, and run the declared checks.
 
 ## Stage Packages

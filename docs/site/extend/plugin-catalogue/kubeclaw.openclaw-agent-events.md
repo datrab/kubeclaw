@@ -13,7 +13,7 @@ Bridge live OpenClaw hooks into namespaced plugin events.
 
 ## When To Use It
 
-Use it when an OpenClaw SDK host must feed hook events to the pipeline event boundary.
+When an OpenClaw SDK host must send hook events to the pipeline event boundary, use it.
 
 ## When Not To Use It
 
@@ -21,7 +21,7 @@ Do not use it to read historical agent records or as a standalone Redis ingestio
 
 ## Most Important Limit
 
-Its exposed capability reports bridge status. Queued events are volatile until accepted by the event journal; the host must provide OpenClaw hooks.
+Its exposed capability reports bridge status. Queued events are volatile until accepted by the event journal. The host must give the extension access to OpenClaw hooks.
 
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## capability adapter: source
 
 Public identifier: `source`.
-Global registration ID: `kubeclaw.openclaw-agent-events:source`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.openclaw-agent-events:source`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: None.
 
@@ -67,7 +67,7 @@ Provided capabilities: `agent.events.subscribe`
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/openclaw-agent-events/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `hooks` (array; required; minItems `1`)
 - `maxQueueEvents` (integer; optional; default `256`; minimum `1`; maximum `10000`)
@@ -94,16 +94,24 @@ Declared manifest facts:
 Activation requires the OpenClaw on-hook API. The capability exposes status, not arbitrary event-history reads. Cancellation or an unsupported operation is an error.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

@@ -13,7 +13,7 @@ Normalize JUnit XML into the Buster report contract.
 
 ## When To Use It
 
-Use it when a provider emits JUnit-compatible test results.
+When a provider emits JUnit-compatible test results, use it.
 
 ## When Not To Use It
 
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## report adapter: junit
 
 Public identifier: `junit`.
-Global registration ID: `kubeclaw.junit-report:junit`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.junit-report:junit`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: None.
 
@@ -67,7 +67,7 @@ Provided capabilities: None.
 
 Configuration schema: None.
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 Not applicable.
 
@@ -88,19 +88,27 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Normalization rejects unsupported media types, invalid UTF-8, and invalid byte-order marks. It imports reports from bounded files; it does not execute the test command or set Nova policy.
+Normalization rejects unsupported media types, invalid UTF-8, and invalid byte-order marks. It imports reports from bounded files. It does not execute the test command or set Nova policy.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `passed`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `passed`.
 
-The package-local command completed with exit code 0.
+Exact reason from that historical record:
+
+> The package-local command completed with exit code 0.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

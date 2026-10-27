@@ -417,7 +417,7 @@ what each adapter does after selection.
 | `eslint-type-evidence-tests` | Classifies tests and fixtures, then runs their syntax-only audit config. It is experimental and repository-scoped. |
 | `eslint-type-evidence-generated` | Classifies generated or untracked files, then runs syntax-only audit rules. It is experimental and repository-scoped. |
 | `knip` | Runs the declared workspace model and requests six active issue categories. It converts each issue to a `knip:<category>` finding. |
-| `dependency-cruiser` | Builds the configured module graph without following dependencies. It reports forbidden layer edges and strongly connected cycles. |
+| `dependency-cruiser` | The tool builds the configured module graph. It stops recursive analysis at modules with paths that match `(^|/)node_modules/`. It reports forbidden layer edges and strongly connected cycles. |
 | `jscpd` | Runs production and test calibrations into temporary reports. It joins both duplicate lists and removes the temporary directories. |
 | `mypy` | Runs JSON output on the selected Python scope. It preserves the error code. Invalid JSON lines fail parsing; empty output is clean at exit zero, while a nonzero exit without findings is a parse failure. |
 | `go-imports` | Uses `go list -json` for each affected module. It rejects external imports outside the module's approved prefixes. |

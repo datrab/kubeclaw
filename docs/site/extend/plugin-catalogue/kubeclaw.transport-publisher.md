@@ -13,15 +13,15 @@ Publish granted events through the configured HTTP transport.
 
 ## When To Use It
 
-Use it when a Nova extension needs transport-neutral message publication.
+When a Nova extension needs transport-neutral message publication, use it.
 
 ## When Not To Use It
 
-Do not use it for Redis publication; select kubeclaw.redis-transport for that transport.
+Do not use it for Redis publication. Select kubeclaw.redis-transport for that transport.
 
 ## Most Important Limit
 
-The selected provider and grant determine the real transport authority.
+The selected provider and grant control the actual transport authority.
 
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## capability adapter: publisher
 
 Public identifier: `publisher`.
-Global registration ID: `kubeclaw.transport-publisher:publisher`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.transport-publisher:publisher`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `network.http`, `secrets.read`
 
@@ -67,7 +67,7 @@ Provided capabilities: `transport.publish`
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/common/plugins/transport-publisher/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `deliveryRoot` (string; required; minLength `1`)
 - `maximumDeliveryRecords` (integer; optional; default `100000`; minimum `1`)
@@ -91,19 +91,35 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-Publication persists original message bodies and reserves durable state, resolves signingSecret for HMAC-SHA256 and sends through network.http. Existing in-progress reservations can fall through to another POST; a later attempt after uncertain failure can POST again. Per-record locks and an idempotency-key header do not ensure receiver deduplication. Establish receiver-enforced idempotency and reconcile original keys/receipts before retrying; no rollback or universal receipt lookup is guaranteed. Assign deliveryRoot access, retention, backup/removal and failure-response ownership. The current local execution check fails canonical effect-request validation; treat the package as locally unavailable until it passes. deliveryRoot selects the local durable directory. maximumDeliveryRecords defaults to 100000 records and maximumDeliveryBytes to 268435456 bytes (256 MiB); both must be positive safe integers. Reaching store capacity can reject new request/reservation persistence before delivery with a store-full failure; it is not automatic retention or cleanup. Separate recording failure after an external effect remains uncertain and requires reconciliation.
+Publication persists original message bodies and reserves durable state, resolves signingSecret for HMAC-SHA256 and sends through network.http. Existing in-progress reservations can fall through to another POST. A later attempt after uncertain failure can POST again. Per-record locks and an idempotency-key header do not ensure receiver deduplication.
+
+The receiver must enforce idempotency. Before another attempt, verify this enforcement. Before another attempt, reconcile the original keys/receipts. No rollback or universal receipt lookup is guaranteed.
+
+Assign deliveryRoot access, retention, backup/removal and failure-response ownership. The current local execution check fails canonical effect-request validation. Treat the package as locally unavailable until it passes.
+
+deliveryRoot selects the local durable directory. maximumDeliveryRecords defaults to 100000 records and maximumDeliveryBytes to 268435456 bytes (256 MiB). The two limits must be positive safe integers. A full store can reject persistence of a new request/reservation before delivery with a store-full failure. It is not automatic retention or cleanup.
+
+Separate recording failure after an external effect remains uncertain and requires reconciliation.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+Exact reason from that historical record:
+
+> The command reached a persistent-path check, but BusyBox flock has no required --timeout option.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

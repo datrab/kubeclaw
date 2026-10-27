@@ -493,14 +493,14 @@ Buster validates the result before it becomes gate evidence.
 
 Important rules include:
 
-- total count equals passed plus failed plus skipped;
-- a passed provider cannot report failed cases;
-- evidence IDs and physical paths are unique;
-- `runner-log` is reserved by Buster;
-- every evidence type must be declared by the provider;
-- every report must reference a declared `test-report` evidence file;
-- every report format must be declared by the provider;
-- output ports must match the registration;
+- total count equals passed plus failed plus skipped.
+- a passed provider cannot report failed cases.
+- evidence IDs and physical paths are unique.
+- Buster reserves `runner-log`.
+- the provider must declare every evidence type.
+- every report must reference a declared `test-report` evidence file.
+- the provider must declare every report format.
+- output ports must match the registration.
 - selected evidence depends on pass, fail, or error policy.
 
 A provider must not return `passed` merely because its process exited zero if the

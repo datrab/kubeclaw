@@ -39,7 +39,7 @@ guarantees remain valid. Do not reuse an old identifier for the new choice.
 | [Evidence and acceptance policy](acceptance.md) | What does D12 permit local evidence to close, and which live or human claims remain separate? |
 
 Original identifiers remain attached to their decisions.
-Repeated explanations share a record; distinct approval or supersession boundaries remain explicit.
+Repeated explanations share a record. Distinct approval or supersession boundaries remain explicit.
 Where the source does not establish approval, the record says so.
 Historical scope instructions are not new product requirements.
 Sources are pinned to Git revisions so later document maintenance does not remove the evidence.

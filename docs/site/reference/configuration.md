@@ -108,7 +108,7 @@ complete procedure. The following distinctions prevent unsafe shortcuts:
 
 | Changed authority | Required boundary to check | Preserve before changing |
 | --- | --- | --- |
-| Platform packages, providers, grants, adapters, observers or graph | Existing run snapshots pin effective authority and graph/package identities; changed authority normally belongs to a new run | Prior platform, original graph, package identities and run ID |
+| Platform packages, providers, grants, adapters, observers or graph | Existing run snapshots pin effective authority and graph/package identities. If a change violates those pins, retain the original inputs for that run. Use the changed configuration for a new run. | Prior platform, original graph, package identities and run ID |
 | Platform shutdown/effect-lock timeouts | Recreate the consuming objects; new CLI invocation or restart if startup-loaded. Timeout-only change is not itself a new-run requirement in the recorded runtime subset | Original values, drain state and first shutdown diagnostic |
 | Provider plan or coupled `.swarm` files | Republish a consistent generation, then use its new resolved plan/run | Original pair/generation and plan digest; do not fix only one loose copy |
 | Pod template, environment or startup-mounted configuration | Identify the rendered receiving workload and its restart/rollout behavior; no general hot reload promise | Redacted rendered values, workload identity and previous generation |

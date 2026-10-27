@@ -13,7 +13,7 @@ Run visual comparison checks and produce bounded image evidence in Buster.
 
 ## When To Use It
 
-Use it when a test plan must detect changes against approved visual baselines.
+When a test plan must detect changes against approved visual baselines, use it.
 
 ## When Not To Use It
 
@@ -59,7 +59,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: visual
 
 Public identifier: `kubeclaw.visual@1`.
-Global registration ID: `kubeclaw.visual:visual`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.visual:visual`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `browser.visual`
 
@@ -67,7 +67,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/config.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/visual/schemas/config.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `url` (string; optional; maxLength `2048`; pattern `^https?://`)
 - `endpointName` (string; optional; maxLength `64`; pattern `^[A-Za-z0-9][A-Za-z0-9._-]*$`)
@@ -108,19 +108,37 @@ Inputs:
 
 ## Failure Behavior
 
-The provider requires either a configured root HTTP/HTTPS origin url with no typed inputs, or exactly one typed deployment/public-endpoint value input. Zero or two inputs without url fail VISUAL_TARGET_REQUIRED; configured url plus any input fails VISUAL_TARGET_AMBIGUOUS. endpointName is used only for deployment inputs; omission selects the first endpoint, while public-endpoint input ignores it. manifestFile and profileFile are required repository-relative regular files: realpaths must stay within the selected repository, each JSON is bounded to one MiB and validated. Selected targets must exist in the manifest and match browser/profile/page identity. Baseline PNGs stay within that repository, have bounded encoded/decoded dimensions and verified SHA-256; violations block before capture. The project owns baseline/profile input and generated evidence custody. comparisonProfile defaults strict-v1 (difference/pixel/uncertainty thresholds 0/0.1/0); balanced-v1 uses 0.5/0.1/0.25. overrides can replace maximumDifferencePercent (0..100), pixelThreshold (0..1) and uncertaintyMarginPercent (0..100), changing the verdict boundary. masks bind unique selected target IDs to selectors passed to Playwright masking. timeoutMs defaults 30000 for capture. Capture and image/evidence size checks are automated checks, not manual visual acceptance. timeoutMs is passed only to capture; subsequent synchronous PNG/pixelmatch compare calls have no separate computation timeout, and pending browser launch can outlast the capture deadline. Capture closes all WebSockets, including same-origin connections: neither allowedOrigins nor fixture authority permits them. Attempts recorded by the post-navigation check fail BROWSER_VISUAL_SUBRESOURCE_ORIGIN_DENIED; later sockets are still closed and may alter rendered state. Do not use this route to claim WebSocket-dependent rendering or functional success.
+The provider requires either a configured root HTTP/HTTPS origin url with no typed inputs, or exactly one typed deployment/public-endpoint value input. Zero or two inputs without url fail VISUAL_TARGET_REQUIRED. Configured url plus any input fails VISUAL_TARGET_AMBIGUOUS. endpointName is used only for deployment inputs. Omission selects the first endpoint, while public-endpoint input ignores it.
+
+manifestFile and profileFile are required repository-relative regular files: realpaths must stay within the selected repository, each JSON is bounded to one MiB and validated. Selected targets must exist in the manifest and match browser/profile/page identity.
+
+Baseline PNGs stay within that repository, have bounded encoded/decoded dimensions and verified SHA-256. Violations block before capture. The project owns baseline/profile input and generated evidence custody.
+
+comparisonProfile defaults strict-v1 (difference/pixel/uncertainty thresholds 0/0.1/0). balanced-v1 uses 0.5/0.1/0.25. overrides can replace maximumDifferencePercent (0..100), pixelThreshold (0..1) and uncertaintyMarginPercent (0..100). These overrides change the verdict boundary. masks bind unique selected target IDs to selectors passed to Playwright masking.
+
+timeoutMs defaults 30000 for capture. Capture and image/evidence size checks are automated checks, not manual visual acceptance. timeoutMs is passed only to capture. Synchronous PNG/pixelmatch compare calls after capture have no separate computation timeout, and pending browser launch can outlast the capture deadline.
+
+Capture closes all WebSockets, including same-origin connections: neither allowedOrigins nor fixture authority permits them. Attempts recorded by the post-navigation check fail BROWSER_VISUAL_SUBRESOURCE_ORIGIN_DENIED. Later sockets are still closed and may alter rendered state. Do not use this route to claim WebSocket-dependent rendering or functional success.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command requires a configured real Chromium or Playwright browser that is absent on this host.
+Exact reason from that historical record:
+
+> The command requires a configured real Chromium or Playwright browser that is absent on this host.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

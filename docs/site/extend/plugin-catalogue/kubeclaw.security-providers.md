@@ -13,7 +13,7 @@ Run HTTP, dependency, image, policy, and runtime security checks in Buster.
 
 ## When To Use It
 
-Use it when a test plan needs one of the five declared security contracts.
+When a test plan needs one of the five declared security contracts, use it.
 
 ## When Not To Use It
 
@@ -63,7 +63,7 @@ the contract and lifecycle rules that apply to this package.
 ## test provider: headers
 
 Public identifier: `kubeclaw.security-headers@1`.
-Global registration ID: `kubeclaw.security-providers:headers`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.security-providers:headers`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `network.http`
 
@@ -71,7 +71,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/headers.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/security-providers/schemas/headers.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `profile` (enumeration; required; allowed `["web-https-v1","api-http-v1"]`)
 - `paths` (array; required; minItems `1`; maxItems `32`)
@@ -108,7 +108,7 @@ Inputs:
 ## test provider: dependency-trivy
 
 Public identifier: `kubeclaw.dependency-scan-trivy@1`.
-Global registration ID: `kubeclaw.security-providers:dependency-trivy`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.security-providers:dependency-trivy`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `security.scan`
 
@@ -116,7 +116,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/dependency.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/security-providers/schemas/dependency.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `projectDirectory` (string; required; minLength `1`; maxLength `4096`)
 - `timeoutMs` (integer; optional; minimum `1000`; maximum `900000`)
@@ -147,7 +147,7 @@ Declared manifest facts:
 ## test provider: image-trivy
 
 Public identifier: `kubeclaw.image-scan-trivy@1`.
-Global registration ID: `kubeclaw.security-providers:image-trivy`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.security-providers:image-trivy`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `security.scan`
 
@@ -155,7 +155,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/image.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/security-providers/schemas/image.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `timeoutMs` (integer; optional; minimum `1000`; maximum `900000`)
 - `policy` (referenced schema; required; reference `#/$defs/policy`)
@@ -189,7 +189,7 @@ Inputs:
 ## test provider: kubernetes-policy
 
 Public identifier: `kubeclaw.kubernetes-policy-security@1`.
-Global registration ID: `kubeclaw.security-providers:kubernetes-policy`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.security-providers:kubernetes-policy`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `security.scan`
 
@@ -197,7 +197,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/kubernetes-policy.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `timeoutMs` (integer; optional; minimum `1000`; maximum `300000`)
 - `policy` (referenced schema; required; reference `#/$defs/policy`)
@@ -231,7 +231,7 @@ Inputs:
 ## test provider: kubernetes-runtime
 
 Public identifier: `kubeclaw.kubernetes-runtime-security@1`.
-Global registration ID: `kubeclaw.security-providers:kubernetes-runtime`. This identifies the installed registration. Graphs select stage types; Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
+Global registration ID: `kubeclaw.security-providers:kubernetes-runtime`. This identifies the installed registration. Graphs select stage types. Buster plans select provider contract IDs or report formats. Use the guide for the relevant selection field.
 
 Required capabilities: `kubernetes.runtime-security`
 
@@ -239,7 +239,7 @@ Provided capabilities: None.
 
 Configuration schema: [schemas/kubernetes-runtime.schema.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `timeoutMs` (integer; optional; minimum `1000`; maximum `300000`)
 - `policy` (referenced schema; required; reference `#/$defs/policy`)
@@ -273,19 +273,33 @@ Inputs:
 
 ## Failure Behavior
 
-Each registration has distinct inputs and scan operations. Dependency/image scans require approved fresh vulnerability-database snapshots; Kubernetes policy scans do not use that vulnerability database. The selected runtime still requires nonempty allowedRegistryPrefixes even for local scans. Providers validate findings but forward capability resultDigest without independently validating its format; the known runtime generating SHA256 does not qualify an arbitrary provider result. Dependency projectDirectory is path-contained but is not required to be a directory by current provider/runtime code; an existing file can produce a partial scan. Verify the actual intended directory and expected project coverage before accepting whole-project results. Kubernetes-runtime kubectl inherits HOME as well as KUBECONFIG and Kubernetes service settings; when KUBECONFIG is absent its default $HOME/.kube/config can select the API/context and credentials. The platform owner must qualify that ambient authority before any read.
+Each registration has distinct inputs and scan operations. Dependency/image scans require approved fresh vulnerability-database snapshots. Kubernetes policy scans do not use that vulnerability database.
+
+The selected runtime still requires nonempty allowedRegistryPrefixes even for local scans. Providers validate findings but forward capability resultDigest without independently validating its format. The known runtime generates SHA256. That does not qualify an arbitrary provider result.
+
+Dependency projectDirectory is path-contained but is not required to be a directory by current provider/runtime code. If projectDirectory is an existing file, the scan can cover only part of the project. Verify the actual intended directory and expected project coverage before you accept whole-project results.
+
+Kubernetes-runtime kubectl inherits HOME as well as KUBECONFIG and Kubernetes service settings. When KUBECONFIG is absent its default $HOME/.kube/config can select the API/context and credentials. The platform owner must qualify that ambient authority before any read.
 
 Registry validation checks declared paths, schemas, and capability names.
-Activation or the Buster loader checks executable exports; discovery does not import package code.
+Activation or the Buster loader checks executable exports. Discovery does not import package code.
 The surface runtime rejects a missing grant or resolved-plan binding before unauthorized work.
 The selected runtime owns failure recording and lifecycle state. Package code does not gain lifecycle authority.
-Adapter startup cleanup can remain pending when shutdown ignores its abort signal; follow the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
+Adapter startup cleanup can remain pending when shutdown ignores its abort signal. Use the [startup stop rules](../../use/plugins.md#3-activate-and-prove-health).
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `unavailable`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `unavailable`.
 
-The command requires a real Trivy cache and executable, which are absent on this host.
+Exact reason from that historical record:
+
+> The command requires a real Trivy cache and executable, which are absent on this host.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 

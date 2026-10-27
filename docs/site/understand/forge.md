@@ -102,11 +102,15 @@ not invent that evidence.
 7. `git.merge` integrates that exact commit into the declared merge target.
 8. The stage removes the workspace only after integration succeeds.
 
-The runtime-dispatch adapter repeats the workspace proof. It resolves real
-directories, requires the worktree below the configured workspace root, refuses
-the repository root itself, opens the owner file without following a final
-symlink, and compares the complete canonical owner record. This check is
-necessary because a path string alone does not prove who owns a directory.
+The runtime-dispatch adapter checks the workspace proof again.
+It requires canonical, absolute directories.
+It requires the worktree below the configured workspace root.
+It rejects the repository root itself.
+
+It opens the owner file with `O_NOFOLLOW`.
+This flag rejects a symbolic link at the last path component.
+It compares the complete canonical owner record.
+A path string alone does not prove who owns a directory.
 
 > **Source evidence — workspace fencing**
 >

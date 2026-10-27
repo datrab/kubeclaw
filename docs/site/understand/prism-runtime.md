@@ -430,12 +430,12 @@ sequenceDiagram
     A->>C: Claim job with runner identity
     C-->>A: Fenced attempt and session key
     A->>O: Run one named OpenClaw session
-    O->>C: Commit exactly three designs
+    O->>C: Commit three designs and no other designs
     A->>C: Finish bound attempt receipt
     S->>C: Select, revise, render, and evaluate
-    S->>C: Approve exact design digest and warnings
+    S->>C: Give approval for this design digest and its warnings
     S->>C: Publish baseline
-    C->>W: Render every view, state, and viewport
+    C->>W: Render all views, states, and viewports
     W-->>C: Bound result and evidence
     C->>C: Store immutable baseline archive
     N->>C: Dispatch same architecture with approval ID
@@ -456,12 +456,12 @@ Participants: Nova, Control, Agent Bridge, OpenClaw Agent, Studio user, Native W
 | 4 | Agent Bridge | Message — Claim job with runner identity | Control |
 | 5 | Control | Dashed reply — Fenced attempt and session key | Agent Bridge |
 | 6 | Agent Bridge | Message — Run one named OpenClaw session | OpenClaw Agent |
-| 7 | OpenClaw Agent | Message — Commit exactly three designs | Control |
+| 7 | OpenClaw Agent | Message — Commit three designs and no other designs | Control |
 | 8 | Agent Bridge | Message — Finish bound attempt receipt | Control |
 | 9 | Studio user | Message — Select, revise, render, and evaluate | Control |
-| 10 | Studio user | Message — Approve exact design digest and warnings | Control |
+| 10 | Studio user | Message — Give approval for this design digest and its warnings | Control |
 | 11 | Studio user | Message — Publish baseline | Control |
-| 12 | Control | Message — Render every view, state, and viewport | Native Worker |
+| 12 | Control | Message — Render all views, states, and viewports | Native Worker |
 | 13 | Native Worker | Dashed reply — Bound result and evidence | Control |
 | 14 | Control | Self-action — Store immutable baseline archive | Control |
 | 15 | Nova | Message — Dispatch same architecture with approval ID | Control |

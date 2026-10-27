@@ -13,7 +13,7 @@ Expose Prism design-set and revision commits as OpenClaw tools.
 
 ## When To Use It
 
-Use it when the Prism agent must submit validated design output to Prism control.
+When the Prism agent must send validated design output to Prism control, use it.
 
 ## When Not To Use It
 
@@ -21,7 +21,7 @@ Do not use it as a general HTTP client or a Nova pipeline stage.
 
 ## Most Important Limit
 
-It requires Prism control. The tools constrain the design count, but do not bound all text or document sizes. The HTTP request has no explicit timeout or cancellation signal; test the real host before acceptance.
+It requires Prism control. The tools constrain the design count, but do not bound all text or document sizes. The HTTP request has no explicit timeout or cancellation signal. Test the real host before acceptance.
 
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.
@@ -40,7 +40,7 @@ the contract and lifecycle rules that apply to this package.
 - Host: `openclaw`.
 - Package identity: `kubeclaw-prism@0.1.0`.
 - Runtime-role manifest inclusion: No runtime role.
-- Additional packaging path: The Prism agent image copies this extension directly; the runtime-role manifest does not list it.
+- Additional packaging path: The Prism agent image copies this extension directly. The runtime-role manifest does not list it.
 - Manifest: [skills/prism/openclaw-plugin/openclaw.plugin.json](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/prism/openclaw-plugin/openclaw.plugin.json)
 
 ## Boundaries
@@ -65,11 +65,11 @@ Provided capabilities: None.
 
 Configuration schema: [Inline host schema in the manifest](https://github.com/datrab/kubeclaw/blob/7994a51e16bc752357c3a801190b12b7d6a191a4/skills/prism/openclaw-plugin/openclaw.plugin.json)
 
-Configuration fields (schema declarations; defaults are annotations, not proof that the caller inserts a value):
+Configuration fields: schema declarations. Defaults are annotations, not proof that the caller inserts a value.
 
 - `controlUrl` (string; optional)
 
-Input schema: Hook or tool input belongs to the host and module; absence of a manifest field does not mean unrestricted input.
+Input schema: Hook or tool input belongs to the host and module. Absence of a manifest field does not mean unrestricted input.
 
 Result schema: The host owns the response contract.
 
@@ -90,9 +90,17 @@ External dependency failure appears in the extension result or host diagnostics.
 
 ## Package Checks
 
-Recorded local command result on 2026-09-16: `passed`.
+Historical local command record dated 2026-09-16.
+Recorded source revision: `bcf032f241b432bf920baa9ee5f727947921447d`.
+Recorded environment: `Linux workspace with Node.js 24 and BusyBox userland`.
+Recorded result: `passed`.
 
-The package-local command completed with exit code 0.
+Exact reason from that historical record:
+
+> The package-local command completed with exit code 0.
+
+This historical quotation is not a current package-availability or readiness result.
+The next section gives the current command or no-command declaration.
 
 Run the package command:
 
