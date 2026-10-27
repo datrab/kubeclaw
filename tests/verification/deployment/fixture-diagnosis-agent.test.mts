@@ -96,6 +96,14 @@ test('production Helm target and persisted gateway reconciliation agree', async 
   const environment = deployment.spec.template.spec.containers.find(container => container.name === 'buster-v2-runtime').env;
   const configuration = JSON.parse(environment.find(variable => variable.name === 'BUSTER_FIXTURE_FAILURE_DIAGNOSIS').value);
   assert.equal(configuration.target.agentId, 'buster-diagnosis');
+  const { default: Ajv2020 } = await import('ajv/dist/2020.js');
+  const schema = JSON.parse(fs.readFileSync('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json', 'utf8'));
+  const validate = new Ajv2020({ strict: false, validateFormats: false }).compile(schema);
+  assert.equal(validate({ targets: { diagnosis: configuration.target } }), true, JSON.stringify(validate.errors));
+  for (const patch of [{ collectorMode: true }, { runtime: 'acp' },
+    { resultEndpoint: 'https://example.test/result', resultTokenSecret: 'private.result' }]) {
+    assert.equal(validate({ targets: { diagnosis: { ...configuration.target, ...patch } } }), false);
+  }
   assert.ok(fixtureDiagnosisAgent(configuration, { BUSTER_DIAGNOSIS_GATEWAY_TOKEN: token }));
   assert.equal(environment.find(variable => variable.name === 'BUSTER_DIAGNOSIS_GATEWAY_TOKEN').valueFrom.secretKeyRef.key, 'gatewayToken-buster');
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'diagnosis-policy-'));

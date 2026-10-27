@@ -23,6 +23,7 @@
           "thinking": { "type": "string", "minLength": 1 },
           "controllerSessionKey": { "type": "string", "minLength": 1, "maxLength": 512 },
           "collectorMode": { "type": "boolean", "default": false },
+          "terminalOnly": { "type": "boolean", "default": false, "description": "Quiet native terminal JSON; no result file read or persistence." },
           "spawnIntervalMs": { "type": "integer", "minimum": 0, "maximum": 60000, "default": 1500 },
           "tokenizerEncoding": { "const": "o200k_base", "default": "o200k_base" },
           "maxPromptBytes": { "const": 900000, "default": 900000 },
@@ -49,6 +50,13 @@
           "resultEndpoint": { "type": "string", "format": "uri" },
           "resultTokenSecret": { "type": "string", "minLength": 1 }
         },
+        "allOf": [{
+          "if": { "properties": { "terminalOnly": { "const": true } }, "required": ["terminalOnly"] },
+          "then": {
+            "properties": { "runtime": { "const": "subagent" }, "collectorMode": { "const": false } },
+            "not": { "anyOf": [{ "required": ["resultEndpoint"] }, { "required": ["resultTokenSecret"] }] }
+          }
+        }],
         "dependentRequired": {
           "resultEndpoint": ["resultTokenSecret"],
           "resultTokenSecret": ["resultEndpoint"]
