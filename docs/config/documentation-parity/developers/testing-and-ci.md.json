@@ -1,0 +1,1049 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/developers/testing-and-ci.md",
+    "legacyPath": "docs/_legacy-source/developers/testing-and-ci.md",
+    "classification": "legacy-extraction-source",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "bc9d4a5a292243b440cb7be0fe292280f59b542f",
+    "extractionDigest": "abfdea102d850a2673f4a9cd5d4108106949c5fa74c236e9dd7736db6d308a51"
+  },
+  "reviewedRevision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+  "author": {
+    "id": "parity-author:developer-and-extension-sources",
+    "assignmentId": "parity-assignment:12fb52222abada1dab5b8ce7ce77b33a43a6aab439cdeca38653b882ab4aba75"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/developers/testing-and-ci",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "No authoritative historical public route is declared; exact original responsibilities are retained at canonical extension and testing destinations without inventing redirects."
+  },
+  "visualEvidence": [],
+  "contentRoot": "20008b8c7531aa13d8f7985ce7f25e24b56deee573785b61786755431731aaaf",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_87948db31a336a87005b17995c623c6e",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_87948db31a336a87005b17995c623c6e:0",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 16
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 16,
+          "byteEnd": 17
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_a0cb041189c7dbf86469298cf3f1c6c4",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_a0cb041189c7dbf86469298cf3f1c6c4:0",
+          "reasonCode": null,
+          "byteStart": 18,
+          "byteEnd": 43
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 43,
+          "byteEnd": 44
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_b4cab7eaa6134f719a81239d92b97a9f",
+      "codeBlockClassification": "configuration-example",
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:0",
+          "reasonCode": null,
+          "byteStart": 45,
+          "byteEnd": 122
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 122,
+          "byteEnd": 123
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:1",
+          "reasonCode": null,
+          "byteStart": 123,
+          "byteEnd": 154
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 154,
+          "byteEnd": 155
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:2",
+          "reasonCode": null,
+          "byteStart": 155,
+          "byteEnd": 179
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 179,
+          "byteEnd": 180
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:3",
+          "reasonCode": null,
+          "byteStart": 180,
+          "byteEnd": 198
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 198,
+          "byteEnd": 199
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:4",
+          "reasonCode": null,
+          "byteStart": 199,
+          "byteEnd": 281
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 281,
+          "byteEnd": 286
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_f07fe0acaeae402b2625f1c3d9fb11d3",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:0",
+          "reasonCode": null,
+          "byteStart": 287,
+          "byteEnd": 451
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 451,
+          "byteEnd": 452
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:1",
+          "reasonCode": null,
+          "byteStart": 452,
+          "byteEnd": 586
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 586,
+          "byteEnd": 587
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:2",
+          "reasonCode": null,
+          "byteStart": 587,
+          "byteEnd": 755
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 755,
+          "byteEnd": 756
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:3",
+          "reasonCode": null,
+          "byteStart": 756,
+          "byteEnd": 906
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 906,
+          "byteEnd": 907
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:4",
+          "reasonCode": null,
+          "byteStart": 907,
+          "byteEnd": 1010
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 1010,
+          "byteEnd": 1011
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_70cf7f0f8148cf5bc5c29bab6524b7ba",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:0",
+          "reasonCode": null,
+          "byteStart": 1012,
+          "byteEnd": 1116
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 1116,
+          "byteEnd": 1117
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:1",
+          "reasonCode": null,
+          "byteStart": 1117,
+          "byteEnd": 1235
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 1235,
+          "byteEnd": 1236
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:2",
+          "reasonCode": null,
+          "byteStart": 1236,
+          "byteEnd": 1301
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 1301,
+          "byteEnd": 1302
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:3",
+          "reasonCode": null,
+          "byteStart": 1302,
+          "byteEnd": 1486
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 1486,
+          "byteEnd": 1487
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_869416af2fcc76c85d68d97e608926a8",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_869416af2fcc76c85d68d97e608926a8:0",
+          "reasonCode": null,
+          "byteStart": 1488,
+          "byteEnd": 1659
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 1659,
+          "byteEnd": 1660
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "developer-support:dpu_87948db31a336a87005b17995c623c6e:0",
+      "unitId": "dpu_87948db31a336a87005b17995c623c6e",
+      "summary": "Canonical extension-testing heading plus handbook check selection is navigation; no runtime or release result asserted.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 16,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "7d7b824b28d6d9a6b578b91f68a878fde3400e4788771893b9d62860effb6d0c",
+        "normalizedSha256": "7d7b824b28d6d9a6b578b91f68a878fde3400e4788771893b9d62860effb6d0c"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "test-and-manage-an-extension",
+          "excerpt": "# Test And Manage An Extension",
+          "excerptSha256": "71624621967d0c02e444f70e41e4ff0174a98a99edc21b3eaa401ff20b570b29",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_a0cb041189c7dbf86469298cf3f1c6c4:0",
+      "unitId": "dpu_a0cb041189c7dbf86469298cf3f1c6c4",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: Permanent release checks:. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 18,
+        "byteEnd": 43,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "f0d9a76be3b0e297f3256089bb02dc712c5ebce6eab3ddaf1ed4b55fcb10bcaf",
+        "normalizedSha256": "f0d9a76be3b0e297f3256089bb02dc712c5ebce6eab3ddaf1ed4b55fcb10bcaf"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:0",
+      "unitId": "dpu_b4cab7eaa6134f719a81239d92b97a9f",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: export KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "configuration",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 45,
+        "byteEnd": 122,
+        "lineStart": 5,
+        "lineEnd": 6,
+        "exactSha256": "fe9f7f009344aedde869d0c97933d3d83d6c49e216bde92c33df34c521bbf74e",
+        "normalizedSha256": "868e1180eaf7dafc7a1cfd8787241d91ceed3a17cc9ae3f80f1467cbb35df228"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:1",
+      "unitId": "dpu_b4cab7eaa6134f719a81239d92b97a9f",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: npm run verify:plugin-system-v2. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "configuration",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 123,
+        "byteEnd": 154,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "5d5a4cbcea0ea55f121f2169b435057de0d91c97db0aea20ceeca47cb19b353f",
+        "normalizedSha256": "5d5a4cbcea0ea55f121f2169b435057de0d91c97db0aea20ceeca47cb19b353f"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:2",
+      "unitId": "dpu_b4cab7eaa6134f719a81239d92b97a9f",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: npm run typecheck:skills. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "configuration",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 155,
+        "byteEnd": 179,
+        "lineStart": 8,
+        "lineEnd": 8,
+        "exactSha256": "f938bbe8fc9735e4b744009c4e447170a7346c0502b98b4d479a77da52f82e6f",
+        "normalizedSha256": "f938bbe8fc9735e4b744009c4e447170a7346c0502b98b4d479a77da52f82e6f"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:3",
+      "unitId": "dpu_b4cab7eaa6134f719a81239d92b97a9f",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: npm run docs:check. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "configuration",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 180,
+        "byteEnd": 198,
+        "lineStart": 9,
+        "lineEnd": 9,
+        "exactSha256": "2e353da028595053b0cf8d2b8e460bc4e96837b2d87b1fe23092dcd0fa9e30d7",
+        "normalizedSha256": "2e353da028595053b0cf8d2b8e460bc4e96837b2d87b1fe23092dcd0fa9e30d7"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:4",
+      "unitId": "dpu_b4cab7eaa6134f719a81239d92b97a9f",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: node tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\". Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "configuration",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 199,
+        "byteEnd": 281,
+        "lineStart": 10,
+        "lineEnd": 10,
+        "exactSha256": "a490b28c57de07dafc7f1b7af42362fbc127e7a7f430b38fdaac8208bcc1f46e",
+        "normalizedSha256": "a490b28c57de07dafc7f1b7af42362fbc127e7a7f430b38fdaac8208bcc1f46e"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "tests/verification/deployment/check-deployment-truth.mjs",
+          "basis": "current-test",
+          "assertion": "The deployment checker reads source-root inputs and validates deployment source truth; this does not establish a live deployed release result.",
+          "gitObject": "2b0323fe4313784e0504e718e4f387894a0f8cd4",
+          "byteStart": 0,
+          "byteEnd": 2047,
+          "lineStart": 1,
+          "lineEnd": 40,
+          "exactSha256": "adfdcc4bcbcfd115b0d3976bb229f39c87fcc493de36ac9a3eb8fb4a0272d0c6",
+          "normalizedSha256": "eae413ae80172321d3ea84ac302b3967cfccf896bea0f2f7024b871eff89ec4b"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:0",
+      "unitId": "dpu_f07fe0acaeae402b2625f1c3d9fb11d3",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: Before running the plugin-system verifier, have the host administrator provision\nthe path in `KUBECLAW_TEST_CGROUP_ROOT` as a writable, delegated cgroup-v2 subtree.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 287,
+        "byteEnd": 451,
+        "lineStart": 13,
+        "lineEnd": 14,
+        "exactSha256": "fe30d30953408ebf4ad60b0fe911963531279678feae00e1a92e42893ef4037b",
+        "normalizedSha256": "81f0e9053691150f3dedb61482771bbb8e24dc5c1e5575dbdfdee7cdee714aaf"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:1",
+      "unitId": "dpu_f07fe0acaeae402b2625f1c3d9fb11d3",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: The example path above is a placeholder for that real host-provided delegation;\nexporting it does not create or configure the subtree.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 452,
+        "byteEnd": 586,
+        "lineStart": 15,
+        "lineEnd": 16,
+        "exactSha256": "466547d3df824917dd1d4d495ec97c138a614103c71e81cb38ad2245cf620726",
+        "normalizedSha256": "2bc5d0582f2c104dfee4d5f46e185c2bc7c57f09b3ee2798171a92529a848b21"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:2",
+      "unitId": "dpu_f07fe0acaeae402b2625f1c3d9fb11d3",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: The root must be absolute,\nmust not be `/sys/fs/cgroup` itself, must contain no processes in `cgroup.procs`,\nand must have `memory` enabled in `cgroup.subtree_control`.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 587,
+        "byteEnd": 755,
+        "lineStart": 16,
+        "lineEnd": 18,
+        "exactSha256": "bbe056d9adf34b3199b414dd335dca4a7caf2661a6c73c6f6ea167d97ee3e779",
+        "normalizedSha256": "59aef258e267bcb85613ed739f2c9dbd719b1e5cd8e433c266f6cee8afdc575f"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:3",
+      "unitId": "dpu_f07fe0acaeae402b2625f1c3d9fb11d3",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: The verifier creates\nper-invocation children and requires writable memory controls and `cgroup.kill`,\nplus readable memory and population event files.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 756,
+        "byteEnd": 906,
+        "lineStart": 18,
+        "lineEnd": 20,
+        "exactSha256": "f418fa5645fbd3f44603d5e06b2544d6bd90bc9ac9b1584ba2bb4cc0b968fc84",
+        "normalizedSha256": "05508d9d66d19188899a914fc1a892498f053decb244d23346b7fd8c740a5a5a"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:4",
+      "unitId": "dpu_f07fe0acaeae402b2625f1c3d9fb11d3",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: The host must also support the\nnative sandbox and process-tree interfaces used by the isolation checks.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 907,
+        "byteEnd": 1010,
+        "lineStart": 20,
+        "lineEnd": 21,
+        "exactSha256": "383c2e4684cd22e00d28d8844af34f5843f3639aebd5c2f5d928be4f1e8c8a8a",
+        "normalizedSha256": "6a8da56295512cea76d4ea10fccdc49e8f4cd3ac1879c55a86849f7a815feb35"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:0",
+      "unitId": "dpu_70cf7f0f8148cf5bc5c29bab6524b7ba",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: The npm chain passes this required root explicitly to the phase11, isolation,\nand external-engine gates.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1012,
+        "byteEnd": 1116,
+        "lineStart": 23,
+        "lineEnd": 24,
+        "exactSha256": "7669e89a3577b86a4455b9d506cb96e11b7bb23456b7bdd64a2fb2dbd9842dae",
+        "normalizedSha256": "44bc00f34771342c8e3cd2773333c4e956a8079f0f3d6c4765a73f6c4846702c"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:1",
+      "unitId": "dpu_70cf7f0f8148cf5bc5c29bab6524b7ba",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: A missing or empty variable fails with a configuration\nerror; an invalid root fails the unchanged isolation validator.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1117,
+        "byteEnd": 1235,
+        "lineStart": 24,
+        "lineEnd": 25,
+        "exactSha256": "e1761a6e74c9da5249fdbe1c85ef275ebe1342cba3ed36bcb3dc2670caa9003b",
+        "normalizedSha256": "0536471cd892e5233e5e7a221e4a5a65e806b3d39262122f7a7f48100afd5500"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:2",
+      "unitId": "dpu_70cf7f0f8148cf5bc5c29bab6524b7ba",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: An ordinary\ndirectory cannot substitute for cgroup-v2 delegation.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1236,
+        "byteEnd": 1301,
+        "lineStart": 25,
+        "lineEnd": 26,
+        "exactSha256": "644d6d3ba782fdc1e5728f5a16af9e18006a02936d6e76e121d60b126bbe2dea",
+        "normalizedSha256": "f44b7d96adf18671c559ba04448afe77aff910bfdc61e9718c788eed06e6a16c"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:3",
+      "unitId": "dpu_70cf7f0f8148cf5bc5c29bab6524b7ba",
+      "summary": "Corrected canonical release section now explicitly preserves this precise original obligation, its prerequisite and failure boundary: If the host cannot provide\nthese facilities, report the affected verification as blocked and run the same\nunmodified gates on a host that can; do not skip or simulate isolation checks.. Current package scripts and isolation validator establish the declared mechanism, not an observed successful release or delegated host.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1302,
+        "byteEnd": 1486,
+        "lineStart": 26,
+        "lineEnd": 28,
+        "exactSha256": "03cda574f0bfab0b222d18da367909a6c92034219376909cd86ea0a3c14df632",
+        "normalizedSha256": "7d4e3db2b0be2a4eb707ad145f5ff61c17add851ab9dc340725ac41648ba6495"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "package.json",
+          "basis": "current-configuration",
+          "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+          "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+          "byteStart": 40040,
+          "byteEnd": 42750,
+          "lineStart": 257,
+          "lineEnd": 260,
+          "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+          "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "basis": "current-implementation",
+          "assertion": "The isolation validator rejects invalid cgroup roots, checks the memory controller and parent population, creates invocation children, and requires writable kill controls and readable event files.",
+          "gitObject": "61bf97064b9d420af416a01b22f5e2e6a161bd42",
+          "byteStart": 649,
+          "byteEnd": 2246,
+          "lineStart": 17,
+          "lineEnd": 38,
+          "exactSha256": "d41f4109709eaa84bf5f0fcfb76e956ece70afb51d9167cb4ebcc0a1f5d73b29",
+          "normalizedSha256": "2f6401ef4f718fb3e14b10013baaa5ee09933db28e1b0d7a7536344a4677ce46"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "prepare-the-plugin-system-release-checks",
+          "excerpt": "## Prepare The Plugin-System Release Checks\n\nUse the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)\nto prepare the isolated checkout, locked dependencies, build tools, and the\nprerequisites of each selected command. The following maintained release checks\nare not unconditional starting commands and are not a record of a green release.\nStop the ordered chain at its first nonzero exit and retain the failure.\n\nBefore running `verify:plugin-system-v2`, have the host administrator provision a\nwritable, delegated **cgroup-v2** subtree. Set `KUBECLAW_TEST_CGROUP_ROOT` to that\nactual absolute path. `/sys/fs/cgroup/kubeclaw-verification` is only an example:\nexporting a pathname does not create or delegate it. Never select `/sys/fs/cgroup`\nitself. The selected parent must contain no processes in `cgroup.procs` and must\nhave `memory` enabled in `cgroup.subtree_control`.\n\nThe verifier creates per-invocation children. It needs writable memory controls\nand `cgroup.kill`, plus readable memory and population event files. The host must\nalso provide the native sandbox and process-tree interfaces used by the isolation\nchecks. A writable ordinary directory does not substitute for the cgroup-v2\nfilesystem or delegation.\n\nAfter the real host preparation, select the commands required by the change and\nrelease scope. When this complete release chain is required, run from the clean\nrepository root with the handbook's prerequisites already satisfied:\n\n```sh\nset -eu\n# Replace this example with the actual host-provided delegated subtree.\nexport KUBECLAW_TEST_CGROUP_ROOT=/sys/fs/cgroup/kubeclaw-verification\nnpm run verify:plugin-system-v2\nnpm run typecheck:skills\nnpm run docs:check\nnode tests/verification/deployment/check-deployment-truth.mjs --source-root \"$PWD\"\n```\n\nThe npm chain passes the required root explicitly to the phase11, isolation, and\nexternal-engine gates. Missing or empty configuration fails; an invalid root\nfails the unchanged isolation validator. If the host cannot provide the required\nfacilities, report those checks as blocked and use a host that can run the same\nunmodified gates. Do not skip or simulate isolation checks. A zero exit from a\nnarrower check does not discharge the missing release check.\n\nRetain each command, its selected source revision, actual host prerequisites,\nexit code, output, and remaining state. These instructions assert no delegated\nhost, sandbox run, deployment verification, model run, or release result.\n\n> **Source evidence — release orchestration and isolation prerequisites**\n>\n> [The root scripts declare the documentation/typecheck checks and pass the required root to three isolation-bearing gates](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/package.json#L257-L260).\n> [The isolation validator checks the actual cgroup-v2 parent, memory controller, process population, invocation children, controls, and event files](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/skills/common/plugin-runtime/foundation/isolation/cgroup.ts#L17-L38).\n> [The deployment checker owns its separate source-truth assertions](https://github.com/datrab/kubeclaw/blob/ae32a72e0a5f4dc32326416dccb69b9e312f9d23/tests/verification/deployment/check-deployment-truth.mjs#L1-L40).\n> Status: source-backed required preparation, not observed successful execution.",
+          "excerptSha256": "f6ff05036c50206c96c00a164ebe8fc3fca6c1c38b36491d951e742dae914448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_869416af2fcc76c85d68d97e608926a8:0",
+      "unitId": "dpu_869416af2fcc76c85d68d97e608926a8",
+      "summary": "Retain the exact inherited release-cutover scheduling decision and external agent-capacity rationale as historical decision, not proof of a current enforced calendar or successful live run. Original immutable source supplies the old intent; adjacent migration policy supplies final-cutover sequencing. Current harness implements real gateway/agent paths but cannot establish release-owner capacity scheduling. Canonical target explicitly preserves that unknown current authority and does not waive inherited release proof.",
+      "claimType": "decision",
+      "truthState": "historical-decision",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 1488,
+        "byteEnd": 1659,
+        "lineStart": 30,
+        "lineEnd": 32,
+        "exactSha256": "3bde38c2706cffdbd650bbb88bdebd148a7ef3cf5e437e2518aa272cbce5a995",
+        "normalizedSha256": "24ff10335bad5b8ed395d1c9ab399d28e1c8f4fe29c04b1a36a1d06b1d125647"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "retain-the-model-backed-cutover-obligation",
+          "excerpt": "### Retain The Model-Backed Cutover Obligation",
+          "excerptSha256": "a98f177cc32f6307302052f0932e0434b85b9bcf17913c38b04830d60ac565c6",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "retain-the-model-backed-cutover-obligation",
+          "excerpt": "### Retain The Model-Backed Cutover Obligation\n\nThe retained developer release instruction deliberately reserves\n`tests/verification/e2e/run-real-pipeline-e2e.mjs` for release cutover because it\nconsumes external agent capacity. This records the inherited scheduling decision\nand its rationale, not a newly observed model run or proof of a currently enforced\nCI scheduling policy. Do not silently replace that obligation with compile-only,\ncontract-only, or package-local checks.\n\nThe associated migration instruction defers the real system run until active\nregistrations, package parity, runtime contracts, and assembled bundles are ready;\nit does not require a real model run for every package edit. The current\n[real-system verification route](../reference/verification-commands.md) selects\nthe full harness. Prepare its real infrastructure, credentials, gateway and agent\ncapacity before dispatch. A source inspection or capabilities-only probe is not\nthe full successful run.\n\nThe current release owner's capacity reservation and cutover scheduling authority\nare not established by the harness implementation or by this historical decision.\nKeep that authority and actual execution evidence explicit in the release record;\nif they are unavailable, report the release proof as not ready. This page does not\nclaim a completed cutover, live model verification, or an approved release.",
+          "excerptSha256": "3704836946fecd3059bf096b721d23e43d2eaf91ff2ba2db2c9b5f7b82d131b1",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    }
+  ]
+}

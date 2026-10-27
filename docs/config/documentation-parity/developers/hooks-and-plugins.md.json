@@ -1,0 +1,381 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/developers/hooks-and-plugins.md",
+    "legacyPath": "docs/_legacy-source/developers/hooks-and-plugins.md",
+    "classification": "legacy-extraction-source",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "60a5232768e899332c3a38a836b8f999af1695ad",
+    "extractionDigest": "e2834caecdf72804398c8ed6e19a32cf76c2eb99ca8bc3e450daf03822c229b8"
+  },
+  "reviewedRevision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+  "author": {
+    "id": "parity-author:developer-and-extension-sources",
+    "assignmentId": "parity-assignment:458e6f91f72aa00e591dffc225112c6c6423a58806e90e6099f7f0fd7fa16c95"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/developers/hooks-and-plugins",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "No authoritative historical public route is declared; exact original responsibilities are retained at canonical extension and testing destinations without inventing redirects."
+  },
+  "visualEvidence": [],
+  "contentRoot": "36623fff36cd9b616e8066e70b063759ab45428e924d1eb8582399dc56f5ec0f",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_41a127088ca3f18cde0423fba095d92a",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_41a127088ca3f18cde0423fba095d92a:0",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 19
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 19,
+          "byteEnd": 20
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_e07a65a1b2ae5ac06b6a75a67cf07889",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_e07a65a1b2ae5ac06b6a75a67cf07889:0",
+          "reasonCode": null,
+          "byteStart": 21,
+          "byteEnd": 117
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 117,
+          "byteEnd": 118
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_e07a65a1b2ae5ac06b6a75a67cf07889:1",
+          "reasonCode": null,
+          "byteStart": 118,
+          "byteEnd": 167
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 167,
+          "byteEnd": 168
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_8b69ef15d2b283839e72d62028b546c6",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_8b69ef15d2b283839e72d62028b546c6:0",
+          "reasonCode": null,
+          "byteStart": 169,
+          "byteEnd": 223
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 223,
+          "byteEnd": 224
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_8b69ef15d2b283839e72d62028b546c6:1",
+          "reasonCode": null,
+          "byteStart": 224,
+          "byteEnd": 359
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 359,
+          "byteEnd": 360
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "developer-support:dpu_41a127088ca3f18cde0423fba095d92a:0",
+      "unitId": "dpu_41a127088ca3f18cde0423fba095d92a",
+      "summary": "Canonical task selector separates pipeline plugin, observer and host-plugin authoring; heading is navigation, not proof of every descendant procedure.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 19,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "8b64fa63ae5db816cb9563ed6630967328fa81d85531afb655e413e75858ca39",
+        "normalizedSha256": "8b64fa63ae5db816cb9563ed6630967328fa81d85531afb655e413e75858ca39"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "## Developer Task Routes",
+          "excerptSha256": "6e93867982c55e1dc881eee4c4ecefc14675419b3709b6d8600188bb8d1bee6b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_e07a65a1b2ae5ac06b6a75a67cf07889:0",
+      "unitId": "dpu_e07a65a1b2ae5ac06b6a75a67cf07889",
+      "summary": "Pipeline manifest discovery is inert and typed registration arrays distinguish stages, observers and adapters; canonical contracts and behavior-owner routes explain that distinction without claiming activation from metadata alone. Complete discovery implementation reads and parses the inert manifest, computes identity and returns frozen metadata without importing registration code; activation is separate. This is an import boundary assertion, not proof from schema shape alone.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 21,
+        "byteEnd": 117,
+        "lineStart": 3,
+        "lineEnd": 4,
+        "exactSha256": "a3f1c3b24f6031377c275eef5abcbc44b8a5248ca6f992e3cf9d447de8574d41",
+        "normalizedSha256": "23bf8ff1d4f8544e8896b4eae79b89d1d8d7074e4d2a8e700ab2535041b24746"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+          "basis": "current-schema",
+          "assertion": "The pluginManifest schema requires stages, observers and adapters registration arrays and defines their typed entries.",
+          "gitObject": "edf1a4c58cf50de9eadf163181b65cc4a7ec4e52",
+          "byteStart": 15983,
+          "byteEnd": 16626,
+          "lineStart": 405,
+          "lineEnd": 421,
+          "exactSha256": "e85ac1045203166f2d6fb565a3ea8af7338195e6f99371b54d47b0e9f4efc390",
+          "normalizedSha256": "f875ee55adf0e738e3f87ad0b41458ba8766819b2d8e03c8a199671125826bd1"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+          "basis": "current-implementation",
+          "assertion": "The discovery implementation reads plugin.json with fs.readFileSync, parses the manifest, computes package digest and returns deepFreeze metadata without executing package registration code.",
+          "gitObject": "8f1e3773ad2d17a18b812ad68ee9ee7f86d98eab",
+          "byteStart": 0,
+          "byteEnd": 5825,
+          "lineStart": 1,
+          "lineEnd": 138,
+          "exactSha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+          "normalizedSha256": "cef01d16873781e1901a04a3f841ddd795d247444eb6e090c67a0f06ef83851b"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/contracts.md",
+          "anchor": "shared-package-envelope",
+          "excerpt": "Every package has one inert `plugin.json`. Discovery reads this file before it\nimports executable code. The manifest supplies a package ID, API version, semantic",
+          "excerptSha256": "a3a4861ce85768d0c86c99d76cc219dc8d34f8919013eb6461598c18b9d86ca8",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "plan-a-behavior-preserving-migration",
+          "excerpt": "to put the implementation and its contracts in the owning registered package.\n   Stages decide domain results; adapters own privileged effects. Do not retain\n   forwarding wrappers, imports into the old implementation, or parallel runtime",
+          "excerptSha256": "c26d003605c655956f32993c24b3408bdfe3d188cc5fe3c1e09a8e3b8efbe448",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_e07a65a1b2ae5ac06b6a75a67cf07889:1",
+      "unitId": "dpu_e07a65a1b2ae5ac06b6a75a67cf07889",
+      "summary": "Host authoring explicitly requires openclaw.plugin.json and package.json; actual host manifest owns activation/configuration rather than pipeline registration arrays. The actual host package boundary test reads openclaw.plugin.json, requires startup activation and rejects a pipeline plugin.json; full host manifest is repeated context. This is maintained host-package contract evidence, not a claim the package-test directory selector is the external host loader.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 118,
+        "byteEnd": 167,
+        "lineStart": 4,
+        "lineEnd": 4,
+        "exactSha256": "a17871ab3e26dc84a342b8df7c4d261c5494b0840d3eb6cc2fc6350a97cfb5e8",
+        "normalizedSha256": "a17871ab3e26dc84a342b8df7c4d261c5494b0840d3eb6cc2fc6350a97cfb5e8"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
+          "basis": "current-test",
+          "assertion": "The package boundary test reads openclaw.plugin.json, requires activation.onStartup true and checks that pipeline plugin.json is absent for the maintained OpenClaw host extension.",
+          "gitObject": "ca697b5c837e24e4b949f40075704f5f4a716f72",
+          "byteStart": 0,
+          "byteEnd": 1352,
+          "lineStart": 1,
+          "lineEnd": 37,
+          "exactSha256": "d8664a4238624069f323d0b2edaa25aa5ef08b305495c2fb8a4331b93de49ed6",
+          "normalizedSha256": "523e7dcb2b983b9c4c471ab8f68101b4b6b6a3212395e807b332eb5f85eccd82"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/host-and-engine.md",
+          "anchor": "build-an-openclaw-hook-extension",
+          "excerpt": "## Build An OpenClaw Hook Extension\n\nUse `kubeclaw-agent-observer` as the maintained hook reference. It converts OpenClaw\nevents to the agent-observability contract and writes bounded Redis records.\n\nIts OpenClaw manifest owns startup activation and configuration. It does not use the\npipeline registration arrays. The configuration schema names Redis connection,\npayload, queue, retry, retention, priority, and hook-timeout fields. It marks the\npassword as sensitive for the host UI.\n\n> **Host manifest:** [The observer manifest declares startup activation, strict configuration, and the sensitive password field](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#L1-L35).\n\nFollow this path:\n\n1. Create one package with `openclaw.plugin.json` and `package.json`.\n2. Define host activation and a strict configuration schema.\n3. Normalize hook data before it enters a durable stream.\n4. Bound depth, size, queue length, retry, timeout, and retention.\n5. Remove or protect credentials before diagnostics and events leave the host.\n6. Make duplicate detection depend on stable source identity.\n7. Start no writer when configuration disables the extension.",
+          "excerptSha256": "09ccdc09126a09b0edfaafa8164ca52c95d6ea06e6891f9161bb8bf21c00b3b6",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_8b69ef15d2b283839e72d62028b546c6:0",
+      "unitId": "dpu_8b69ef15d2b283839e72d62028b546c6",
+      "summary": "Canonical observer route prohibits scheduler mutation and canonical-history rewriting. Runtime consumes typed LifecycleEvent/PluginDomainEvent from canonical journal; this does not assert observers can author lifecycle state. Journal snapshots each appended/parsed value using snapshotJson; that implementation recursively freezes the copied objects, preserving immutable canonical entries for observer delivery. This is not merely a readonly type annotation.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 169,
+        "byteEnd": 223,
+        "lineStart": 6,
+        "lineEnd": 6,
+        "exactSha256": "95bf11ee37bf0279fadfb2872b0ad08a64d93d2200b50de1904cedbfe84b07d0",
+        "normalizedSha256": "95bf11ee37bf0279fadfb2872b0ad08a64d93d2200b50de1904cedbfe84b07d0"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "basis": "current-implementation",
+          "assertion": "The ObserverRuntime uses CanonicalEvent values typed as LifecycleEvent or PluginDomainEvent from a FileJournal; this establishes the event consumer boundary, not permission to rewrite scheduler state.",
+          "gitObject": "5431febba9c100fe449a445a1f6d7270dc993bc7",
+          "byteStart": 821,
+          "byteEnd": 2464,
+          "lineStart": 13,
+          "lineEnd": 31,
+          "exactSha256": "fa11c9c2abb85d0e95f2a41712f920fd828685399aac2732e8836759dbf7b918",
+          "normalizedSha256": "19df6e43cae2a151c11ff1eba8cb50a7649449d842ffb70f4959e5c53f0e0aa7"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/nova/core/state/journal.ts",
+          "basis": "current-implementation",
+          "assertion": "The FileJournal uses snapshotJson for parsed records and appended entries, then writes a hash-bound frozen record; this preserves immutable canonical entries before observer delivery.",
+          "gitObject": "7ada254d9be68d75068aef652c27b009facb183a",
+          "byteStart": 0,
+          "byteEnd": 7281,
+          "lineStart": 1,
+          "lineEnd": 195,
+          "exactSha256": "7f77bfecea3146a73142043917fa3ea9882ce6a860a76408eae49c9c35a0a101",
+          "normalizedSha256": "553be4cac8439c1aae84046904847aa942d607961a7802601eccdc584e88a04c"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/nova/core/state/json-value.ts",
+          "basis": "current-implementation",
+          "assertion": "The snapshotJson function creates an owned JSON copy and Object.freeze applies to every completed nested object; this prevents observer mutation of canonical event snapshots.",
+          "gitObject": "a0b5fb5bd66e6ea1fbc1cb0bcd013884ce8cbb96",
+          "byteStart": 0,
+          "byteEnd": 2828,
+          "lineStart": 1,
+          "lineEnd": 53,
+          "exactSha256": "c99b7a8c16e3c8c6860e7e469d9feb454448fab311f8d5f7bbf6dd690e59a58b",
+          "normalizedSha256": "adc0a9815ae06edb880b43ace367e8eb6f7f23f0772bb9aafdda1f38cfa41bfc"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "observer",
+          "excerpt": "It owns delivery policy and a checkpoint schema.\n\nChoose an observer for telemetry, notification, or another event projection.\nDo not use an observer to advance the scheduler or rewrite canonical history.\n\nAn observer can fail delivery according to its declared policy.\nThat policy does not give the observer lifecycle authority.",
+          "excerptSha256": "e4bf0e2745f3c5dcf7c809f012973b957f76a7c5d5dea5ae609507c11c8d5546",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_8b69ef15d2b283839e72d62028b546c6:1",
+      "unitId": "dpu_8b69ef15d2b283839e72d62028b546c6",
+      "summary": "Host route explicitly normalizes data before durable ingress. Two maintained package implementations normalize host event input; package names alone are not a lifecycle acceptance. Canonical Nova Adapter With An OpenClaw SDK Dependency separately routes the agent-events adapter and states real-host SDK/readiness/committed-event limits; observer host lifecycle is not substituted for the distinct Nova adapter.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 224,
+        "byteEnd": 359,
+        "lineStart": 6,
+        "lineEnd": 8,
+        "exactSha256": "b8d391722f1b189006206067780029db1a668287b8d5abb4bdf3e785b175c1b6",
+        "normalizedSha256": "aa424bd85566d4357338403f2b9e48fa90ea02e105a92a9853f4344516830210"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
+          "basis": "current-implementation",
+          "assertion": "The hook normalizer exports typed normalization functions and validates incoming agent event values before durable ingress.",
+          "gitObject": "03ae329cf0d961584f0012003e9d4cde8df324fb",
+          "byteStart": 6132,
+          "byteEnd": 7204,
+          "lineStart": 126,
+          "lineEnd": 150,
+          "exactSha256": "2ad8d86627e9a56a13575c7d693be9de027023bc75782485b9d39b869e29fa85",
+          "normalizedSha256": "287b98f7e4c932b1d9067c78e08cb66e386723288034dda573f2742076941065"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+          "basis": "current-implementation",
+          "assertion": "The normalizeAgentEvent function validates raw input records and returns bounded normalized agent event fields before ingress.",
+          "gitObject": "106fcbf6cc5bebeda4462b5b623c1112d2d94b84",
+          "byteStart": 2517,
+          "byteEnd": 3297,
+          "lineStart": 45,
+          "lineEnd": 63,
+          "exactSha256": "eb186e45b7620ff87b25e8eb96a1726b530c6eba94c37242e4dc8bd5945b1916",
+          "normalizedSha256": "e6df1ea3eb79af3bf7551f82c9072661be32d738d9b10b71c3650c7b8f67bfc0"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/host-and-engine.md",
+          "anchor": "build-an-openclaw-hook-extension",
+          "excerpt": "## Build An OpenClaw Hook Extension\n\nUse `kubeclaw-agent-observer` as the maintained hook reference. It converts OpenClaw\nevents to the agent-observability contract and writes bounded Redis records.\n\nIts OpenClaw manifest owns startup activation and configuration. It does not use the\npipeline registration arrays. The configuration schema names Redis connection,\npayload, queue, retry, retention, priority, and hook-timeout fields. It marks the\npassword as sensitive for the host UI.\n\n> **Host manifest:** [The observer manifest declares startup activation, strict configuration, and the sensitive password field](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#L1-L35).\n\nFollow this path:\n\n1. Create one package with `openclaw.plugin.json` and `package.json`.\n2. Define host activation and a strict configuration schema.\n3. Normalize hook data before it enters a durable stream.\n4. Bound depth, size, queue length, retry, timeout, and retention.\n5. Remove or protect credentials before diagnostics and events leave the host.\n6. Make duplicate detection depend on stable source identity.\n7. Start no writer when configuration disables the extension.\n8. Flush accepted work and stop subscriptions during shutdown.\n9. Test disabled, healthy, invalid, degraded, duplicate, and shutdown behavior.\n10. Add the extension to every intended runtime role and built image.\n\nThe observer starts its writer only after it resolves configuration. It drops invalid\nevents with one bounded warning. It records deduplication only after queue admission.\n\n> **Runtime lifecycle:** [The observer resolves configuration, starts the writer, normalizes events, flushes, and stops subscriptions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L41-L149).\n>\n> **Admission and deduplication:** [The observer records a dedupe key only after the writer accepts the event](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/openclaw-agent-observer/src/index.ts#L176-L192).",
+          "excerptSha256": "ef40c1617f96b81cb62980e062c44ce465801b838502617819b311fe100c27f4",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/testing.md",
+          "anchor": "nova-adapter-with-an-openclaw-sdk-dependency",
+          "excerpt": "## Nova Adapter With An OpenClaw SDK Dependency\n\n`kubeclaw.openclaw-agent-events:source` version `1.0.0` is a Nova capability\nadapter, not either OpenClaw host extension above. Its manifest provides\n`agent.events.subscribe`. Select its adapter and provider through the\n[Nova lifecycle](../use/plugins.md#canonical-plugin-lifecycle-procedure).\nIts `activate` function loads `openclaw/plugin-sdk` and requires `on` during\n`ready()`. No compatible SDK version is declared by this package. The Nova role\nselects it, but that selection does not prove that the pinned OpenClaw SDK exports\nthis interface or that a real host shares its event source with the Nova process.\n\nStop at readiness if `OPENCLAW_HOOK_API_UNAVAILABLE` occurs or the SDK import\nfails. The Nova/OpenClaw integration owner must supply an exact compatible SDK\nversion and execution topology, prove `on` on the actual loaded module, and\nshow one configured real host hook reaching a matching committed Nova event.\nDo not use the observer's focused diagnostic SDK export as proof of this distinct\nroot export. Configured hooks must be supported and unique; invalid, unsupported,\nor duplicate hooks fail before readiness. The adapter's `status` operation\nreports `activeSubscriptions`, queue facts, and `shuttingDown`; it is an adapter\ninvocation, not a host gateway command. A local injected SDK test does not prove\nthe real source. Failed partial registration releases subscriptions. Shutdown\nreleases subscriptions and drains the queue under its signal. Keep committed\nNova events and recoverable runs when selection stops; source removal does not",
+          "excerptSha256": "68f72c535a08814025d1b2562dc7a498b366b9e22a49f2784f9f0d482391dcd7",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    }
+  ]
+}

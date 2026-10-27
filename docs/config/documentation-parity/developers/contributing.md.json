@@ -1,0 +1,337 @@
+{
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
+  "source": {
+    "originalPath": "docs/developers/contributing.md",
+    "legacyPath": "docs/_legacy-source/developers/contributing.md",
+    "classification": "legacy-extraction-source",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "3c3f44d48582fedb4e72cc4d11b8718589fb174f",
+    "extractionDigest": "6a69c950fe0de608b44736af44b40a530c34a77053aa4a5387d21143404703a7"
+  },
+  "reviewedRevision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+  "author": {
+    "id": "parity-author:developer-and-extension-sources",
+    "assignmentId": "parity-assignment:2c1cbc85e8c1969a615bd7a8f2238edfad6bd445c8059b2d4dc06b2615e8421d"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/developers/contributing",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "No authoritative historical public route is declared; exact original responsibilities are retained at canonical extension and testing destinations without inventing redirects."
+  },
+  "visualEvidence": [],
+  "contentRoot": "0a5f73a5dd5c508456b3404e89a215d4e4b5a0aa79f648e0f1b34b3de6f60b39",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_7412ad052476c14ddda457c3d2d3c5f1",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_7412ad052476c14ddda457c3d2d3c5f1:0",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 14
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 14,
+          "byteEnd": 15
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_f877ae00945d42444a3d6625fcc298d7",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_f877ae00945d42444a3d6625fcc298d7:0",
+          "reasonCode": null,
+          "byteStart": 16,
+          "byteEnd": 84
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 84,
+          "byteEnd": 85
+        },
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_f877ae00945d42444a3d6625fcc298d7:1",
+          "reasonCode": null,
+          "byteStart": 85,
+          "byteEnd": 170
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 170,
+          "byteEnd": 171
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_20a89e8d101c660eb8efebca39d6e74b",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_20a89e8d101c660eb8efebca39d6e74b:0",
+          "reasonCode": null,
+          "byteStart": 172,
+          "byteEnd": 287
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 287,
+          "byteEnd": 288
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_53cdfa33639d29d2183120f73b7edeb2",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "developer-support:dpu_53cdfa33639d29d2183120f73b7edeb2:0",
+          "reasonCode": null,
+          "byteStart": 289,
+          "byteEnd": 352
+        },
+        {
+          "kind": "structural",
+          "claimId": null,
+          "reasonCode": "formatting-only",
+          "byteStart": 352,
+          "byteEnd": 353
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "developer-support:dpu_7412ad052476c14ddda457c3d2d3c5f1:0",
+      "unitId": "dpu_7412ad052476c14ddda457c3d2d3c5f1",
+      "summary": "Navigation heading is expanded into the canonical developer task selector; it asserts no product behavior.",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 14,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "d720a828da1110733f6baa861dbe161da9315aa8d2e7971c9bcca92354d64cf3",
+        "normalizedSha256": "d720a828da1110733f6baa861dbe161da9315aa8d2e7971c9bcca92354d64cf3"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "developer-task-routes",
+          "excerpt": "## Developer Task Routes",
+          "excerptSha256": "6e93867982c55e1dc881eee4c4ecefc14675419b3709b6d8600188bb8d1bee6b",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_f877ae00945d42444a3d6625fcc298d7:0",
+      "unitId": "dpu_f877ae00945d42444a3d6625fcc298d7",
+      "summary": "Canonical behavior-owner section separates Core scheduling/security from registered domain work; ownership checker validates package/role ownership, not universal runtime success.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 16,
+        "byteEnd": 84,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "d7df9fd8e0cda635edc864fb9f283c1f214dffde28d7057abe11004fa9df8b33",
+        "normalizedSha256": "d7df9fd8e0cda635edc864fb9f283c1f214dffde28d7057abe11004fa9df8b33"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "scripts/check-runtime-package-ownership.mjs",
+          "basis": "current-implementation",
+          "assertion": "The package ownership checker validates distinct package owners, role membership and shared plugin classification, and rejects the old mixed runtime core.",
+          "gitObject": "46b23f23f973038900ad8ab921973bea584853bc",
+          "byteStart": 0,
+          "byteEnd": 3514,
+          "lineStart": 1,
+          "lineEnd": 57,
+          "exactSha256": "73da06e6e6237f1030203cbfb83de0a1b1f4ab929b7fe630f6290034dbdeed71",
+          "normalizedSha256": "be418b7d69621a6ac4954c89e2e0362201c9cc2820373222663350a3360fecd7"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "first-identify-the-behavior-owner",
+          "excerpt": "## First Identify The Behavior Owner\n\nAsk one question first: which component must own the new behavior?\n\n- A project declaration selects existing behavior.\n- A pipeline registration adds bounded behavior to an existing runtime.\n- A host extension adds behavior to OpenClaw or Codex.\n- A specialist engine interprets one class of worker attempt.\n- A runtime role assembles an exact deployable package set.\n- Core owns scheduling, canonical state, and the extension security model.\n\nDo not start with a directory name.",
+          "excerptSha256": "3099366d35786358f8d07024f661d2c29a4049d74ab96ffe02272b9a5b25aa64",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_f877ae00945d42444a3d6625fcc298d7:1",
+      "unitId": "dpu_f877ae00945d42444a3d6625fcc298d7",
+      "summary": "Canonical migration procedure explicitly chooses reuse/refactor/rewrite per parity scenario and preserves observable behavior rather than structure. Smaller complexity is a design preference, not a measured universal runtime property. The exact canonical Purpose explicitly selects the smallest supported change, and its adjacent smaller-change rationale lists reduced trust, recovery, packaging and maintenance consequences; both are now mapped alongside behavior-preserving refactor/rewrite procedure.",
+      "claimType": "decision",
+      "truthState": "historical-decision",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 85,
+        "byteEnd": 170,
+        "lineStart": 3,
+        "lineEnd": 4,
+        "exactSha256": "e0ab32de1cbfadbe766af5d25f18b6cc3a39a5201845d5d2f7f045ef74743e26",
+        "normalizedSha256": "83e770c64c93351b2d4cb65174514749b7dbbaf44ff2f2e23b065e8e36cc72e8"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "plan-a-behavior-preserving-migration",
+          "excerpt": "### Plan A Behavior-Preserving Migration\n\nUse this route when retained or imported behavior must become a self-contained\nv2 package. An update or a new package alone does not prove migration parity.\n\n1. Name one cohesive behavior and its producers, consumers, configuration,\n   effects, fixtures, and tests. Record the observable inputs, results, artifacts,\n   lifecycle, failures, retry, cancellation, and recovery guarantees to preserve.\n2. Choose reuse, refactor, or rewrite explicitly for each parity scenario.\n   Preserve behavior rather than copying source structure. For an intentional\n   change, record the old and new expectations, rationale, complexity impact,\n   approval, and tests that demonstrate the difference. Undocumented drift fails\n   parity.\n3. Use [the behavior-owner decision](#first-identify-the-behavior-owner) and\n   [the first-plugin procedure](first-plugin.md#create-and-activate-a-first-pipeline-plugin)",
+          "excerptSha256": "a0f7782c3db120704d93f0b9da26c793477c37f78f559bd3f9e23497713d289c",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "purpose",
+          "excerpt": "Use this guide before you create a package or change Core.\nIt identifies the smallest supported change that solves your problem.",
+          "excerptSha256": "6376996d837e5f0a4d5310b8a860b62d13a0ff485c4859ef0524a92c679d43ea",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/README.md",
+          "anchor": "purpose",
+          "excerpt": "A smaller change has fewer trust, recovery, packaging, and maintenance consequences.\nHowever, configuration cannot create behavior that no installed component supplies.",
+          "excerptSha256": "11b556405bd27fe64cee4d1c61b79a7e5b7a4d932fed60f350c89d28148d6a6a",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_20a89e8d101c660eb8efebca39d6e74b:0",
+      "unitId": "dpu_20a89e8d101c660eb8efebca39d6e74b",
+      "summary": "Canonical component identity names the Nova CLI and shared plugin runtime; exact entrypoint forwards to Core. It is not an independently running Core daemon.",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 172,
+        "byteEnd": 287,
+        "lineStart": 6,
+        "lineEnd": 7,
+        "exactSha256": "2a45c49c2236ac899d9b954f0c773b9a21c630a66e53f31c244b6e884fb2a084",
+        "normalizedSha256": "b028896415097c56face4347590e8ed2c1c7cdef808e9100ad4e09dc62b28c7e"
+      },
+      "evidence": [
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/nova/pipeline.ts",
+          "basis": "current-implementation",
+          "assertion": "The Nova pipeline entrypoint contains the Core reexport and conditional import of project/cli.ts; direct invocation selects the project CLI, while ordinary imports expose Core without starting that CLI.",
+          "gitObject": "91f429bfc44b0b8efe7fd5e95b258d049089b518",
+          "byteStart": 0,
+          "byteEnd": 406,
+          "lineStart": 1,
+          "lineEnd": 14,
+          "exactSha256": "57df2fece0a125211784d8ffdea446860e031f50b03fa5ae09a99f50177db821",
+          "normalizedSha256": "6c7a9d0b2733f1641a8ba948a03b42afe746ff764a34254e3be4d262e707c493"
+        },
+        {
+          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "path": "skills/nova/core/src/index.ts",
+          "basis": "current-implementation",
+          "assertion": "The Core entry module defines public registry activation, capability grant resolution and execution context exports through plugin-foundation; it does not implement package-specific domain behavior.",
+          "gitObject": "8b3c87c44e6f06a8ac9bedfbdca2133ffcca7016",
+          "byteStart": 0,
+          "byteEnd": 1259,
+          "lineStart": 1,
+          "lineEnd": 25,
+          "exactSha256": "839359b1f54d75b21e1aa9d440516b9e507e26f13a9faf401b226b758d5401f3",
+          "normalizedSha256": "6e8a7f8476530ed1269522c453ef7d558eb79a539ca16a3b6a3434daf8cbe8a8"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "repository-ownership-and-build-boundaries",
+          "excerpt": "| --- | --- | --- |\n| `skills/nova/core`, `skills/nova/project`, `skills/nova/pipeline.ts` | Lifecycle, scheduling, effects, run authority, project compilation, CLI | TypeScript source exports; project compilation produces run inputs, not a package build. |\n| `skills/worker/core` | Attempt admission, cancellation, deadlines, resource and result mechanics | TypeScript source plus native launcher/runtime prerequisites. No pipeline scheduling. |",
+          "excerptSha256": "8002cbf7d3da63320cf884a5f55d34afcd4f7b2c66359d8e49beabf07f84669e",
+          "occurrence": 1,
+          "relation": "expanded"
+        },
+        {
+          "path": "docs/site/extend/developer-handbook.md",
+          "anchor": "repository-ownership-and-build-boundaries",
+          "excerpt": "| `skills/prism` | Domain, renderer, corpus, engine, Control, Studio, Worker binding, Ingestion | Studio emits `dist-studio`; service entrypoints consume source and contract validators. |\n| `skills/common/plugin-runtime/sdk` | Public plugin API and value helpers | Schema-generated `src/generated/contracts.ts`; compiled SDK has its own build config. |\n| `skills/common/plugin-runtime/foundation` | Registry, configuration, package identity, artifact, isolation, observability mechanics | C isolation launcher and runtime contract assets. No specialist policy import. |\n| `skills/common/plugins`, `skills/nova/plugins`, `skills/buster/plugins` | Registered adapters, observers, stages, providers, report adapters | Manifest `src/*.ts` registration; each plugin needs a TypeScript config. The aggregate plugin build emits temporary JavaScript and removes it. |",
+          "excerptSha256": "ddfdcb1bd1bb3269d49d5829e310f44a6cf9c036aece18e8dea5dc8965ca7c4d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "developer-support:dpu_53cdfa33639d29d2183120f73b7edeb2:0",
+      "unitId": "dpu_53cdfa33639d29d2183120f73b7edeb2",
+      "summary": "Original unconditional aggregate commands are superseded by explicit prerequisite-aware check selection. Scripts still exist, but cgroups/builds/browser/service prerequisites make unconditional starting guidance incorrect. Preserve the qualified current route, not the unconditional instruction.",
+      "claimType": "constraint",
+      "truthState": "obsolete-or-incorrect",
+      "disposition": "omitted",
+      "source": {
+        "byteStart": 289,
+        "byteEnd": 352,
+        "lineStart": 9,
+        "lineEnd": 9,
+        "exactSha256": "d099ce2961833ea340ee26b35ff46c3c7cadf84239d04af2ab0801e4d58a8470",
+        "normalizedSha256": "d099ce2961833ea340ee26b35ff46c3c7cadf84239d04af2ab0801e4d58a8470"
+      },
+      "evidence": [],
+      "targets": [],
+      "omission": {
+        "reasonCode": "obsolete-or-incorrect",
+        "explanation": "Original unconditional aggregate commands are superseded by explicit prerequisite-aware check selection. Scripts still exist, but cgroups/builds/browser/service prerequisites make unconditional starting guidance incorrect. Preserve the qualified current route, not the unconditional instruction.",
+        "evidence": [
+          {
+            "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+            "path": "package.json",
+            "basis": "current-configuration",
+            "assertion": "The package scripts declare verify:plugin-system-v2 and pass KUBECLAW_TEST_CGROUP_ROOT explicitly to phase11, isolation and external-engine checks; script declarations do not prove successful release execution.",
+            "gitObject": "c983aaf3654d5f3d473f639e32ae6857221947e3",
+            "byteStart": 40040,
+            "byteEnd": 42750,
+            "lineStart": 257,
+            "lineEnd": 260,
+            "exactSha256": "b35b1284f7a15f1e19f0ce7b62d5f5a785c8ebd87f786eb6b7479b97e14fd419",
+            "normalizedSha256": "083ff4ecee6da1ac46f17b9ef3a2cb6ffa287954885c9d55be13996288c84546"
+          }
+        ]
+      }
+    }
+  ]
+}
