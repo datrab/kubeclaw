@@ -1,4 +1,41 @@
 {
-  "status": "NOT_READY",
-  "scope": "Original445byte Operator README eight claims and nine affected prior scopes. Content/author PASS; no final Source/gate approval. Frozen scope report reserved before owner generation."
+  "frozenReceiptScope": "Actual original445byte eight-claim CONTENT/AUTHOR and five original-scope preservation at Source4c5719bf only. Not current source-valid/reference/Gate/AP10 or destination-body/runtime approval. Never rewrite after matrix hash binding.",
+  "source": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
+  "publishedBaseline": "3785a8b58e99a66c04c63ec670985c259b99965c",
+  "contentReview": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "ORIGINAL_OPERATOR_ENTRY_CONTENT=PASS. Source: all six original navigation responsibilities and the platform-authority constraint are accurately represented; the platform reference confirms configuration ownership. Reader: each task has a specific, extant destination anchor, with recovery correctly limited to interruption recovery rather than backup/restore. Quality: the hub clearly states that links select procedures rather than proving execution and directs readers to destination preconditions and evidence. Destination procedure bodies were not treated as approved evidence.",
+    "overall_confidence": 0.96
+  },
+  "wholeAuthorContentReview": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "ORIGINAL_OPERATOR_EIGHT_CLAIM_AUTHOR_CONTENT=PASS. Source=PASS: all eight source units/spans and the native author validation are consistent. Reader=PASS: the hub preserves all six navigation responsibilities with valid destination anchors, and the platform-authority constraint is supported by the supplied platform reference/schema/loader. Quality=PASS: mappings are specific and recovery is correctly distinct from backup/restore. This is only the scoped author/content assessment; the auxiliary draft is not official adoption or final source-valid approval.",
+    "overall_confidence": 0.98
+  },
+  "fiveOriginalScopePreservation": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "ALL_FIVE_OPERATOR_ORIGINAL_SCOPES_PRESERVED=PASS. The added file is explicitly unadopted and introduces no IDs, counts, acceptance state, or modification to the retained records. Its five scoped assertions match the supplied complete hub delta: six valid operator routes, an explicit recovery-versus-restore boundary, and source-backed platform-configuration authority. The supplied current reader checks, bounded browser observations, content verdicts, and unchanged complete-file vector support SourceAccuracy, ReaderUsability, and Quality preservation without converting coordinator controls into new live, persona, runtime, or destination-procedure acceptance.",
+    "overall_confidence": 0.98
+  },
+  "scopeIds": [
+    "AP09-reader-operators-20261020",
+    "AP09-reviewed-publication-navigation-20261020",
+    "AP09-complete-static-reader-search-20261021",
+    "AP09-publication-positive-scope-7ef16585",
+    "A98-02-13-whole-operator-procedure-contract-20261022"
+  ],
+  "coordinatorControls": {
+    "nativeReaderCommands": 6,
+    "offlineBrowserCases": 4,
+    "nativeOriginalAuthorClaims": 8,
+    "completeDeclaredFileUnion": 457,
+    "ownerMap": "byte-identical published baseline",
+    "onlyChangedReaderSource": "docs/site/use/README.md"
+  },
+  "limits": "Complete destination metadata proves navigation only, not over-limit plugin body qualification. Existing historical receipts/Source/toolrole/DATAUNKNOWN/release/human/live limitations retained; current controls are not fresh personas. Final whole native source/reference/current binding mandatory later.",
+  "newGateIds": [],
+  "newRequirementIds": []
 }

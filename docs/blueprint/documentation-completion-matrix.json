@@ -3346,7 +3346,7 @@
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+      "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -3505,6 +3505,11 @@
           "command": "Independent original16-scope preservation across3complete families; six native Reader controls; exact-guide schema check10tests and4boundedoffline browsercases",
           "exitCode": 0,
           "observation": "All16 original SourceAccuracy/ReaderUsability/Quality scopes independently PASS. Complete changed install/schema preflight, full search record and717-file union reviewed; one owner metadata row changed. Old release/authority/live/role/DATAUNKNOWN/receipt limits and practical histories retained. No new accepted IDs or per-source/deletion approval."
+        },
+        {
+          "command": "Independent actual five original scopes Source/Reader/Quality preservation; six native Reader controls and four bounded offline browser cases",
+          "exitCode": 0,
+          "observation": "All five original scopes substantively preserved on complete457-file vectors and full operator hub. Only six original entry routes/platform ownership clarified; owner map unchanged. Prior human/runtime/toolrole/DATAUNKNOWN/release limits and all historical receipts retained; no new accepted IDs or destination-body approval."
         }
       ],
       "review": {
@@ -3673,6 +3678,20 @@
           "report": "docs/review/parity-deployment-verification-20261026.json",
           "reportSha256": "0406308b1f3aadcee613dd039a4a17c40b751c6b863d1b65c55f094fcc7bea29",
           "inspectionLimit": "Every original nonhistory field/custom qualification, full declared vectors, original contracts/limits and exact historical bindings supplied. CurrentCLI/toy/Reader/browser observations are coordinator controls, not fresh human/runtime/approvedschema/deployment qualification; all old receipts unchanged."
+        },
+        {
+          "previousReviewedRevision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+          "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 actual five original-scope preservation",
+          "changedDependencies": [
+            "docs/site/use/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only adds exact original six operator entry routes, clear run-recovery vs restore boundary and source-backed platform ownership. Full old hub procedures/contracts unchanged; generated owner map exact unchanged. Actual native Reader/bounded browser results supplied separately; no fresh human/live/destination-body approval.",
+          "originalRecordSha256": "41084177b7db38f58a5323b687e33a38ba40a173c939be3f2f2552b307221c86",
+          "report": "docs/review/parity-operator-entry-20261027.json",
+          "reportSha256": "d5736303591e5fd9a0e1ab47f41aa7efd18122833f983d948ead84f5d040ef4e",
+          "inspectionLimit": "Complete original nonhistory fields/qualifications, contracts and full vectors plus immutable history bindings supplied. No fresh runtime/persona, no oversized destination-body approval. All old receipts and limits retained."
         }
       ],
       "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -6580,7 +6599,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+      "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -6704,6 +6723,11 @@
           "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
           "exitCode": 0,
           "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
+        },
+        {
+          "command": "Independent actual five original scopes Source/Reader/Quality preservation; six native Reader controls and four bounded offline browser cases",
+          "exitCode": 0,
+          "observation": "All five original scopes substantively preserved on complete457-file vectors and full operator hub. Only six original entry routes/platform ownership clarified; owner map unchanged. Prior human/runtime/toolrole/DATAUNKNOWN/release limits and all historical receipts retained; no new accepted IDs or destination-body approval."
         }
       ],
       "review": {
@@ -7122,6 +7146,20 @@
           "report": "docs/review/parity-topic-map-20261026.json",
           "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
           "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
+        },
+        {
+          "previousReviewedRevision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 actual five original-scope preservation",
+          "changedDependencies": [
+            "docs/site/use/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only adds exact original six operator entry routes, clear run-recovery vs restore boundary and source-backed platform ownership. Full old hub procedures/contracts unchanged; generated owner map exact unchanged. Actual native Reader/bounded browser results supplied separately; no fresh human/live/destination-body approval.",
+          "originalRecordSha256": "bfc4a2ac311eb8f57eb628a2ba5acec01758f0b08cd32c3868e2a948c9fef208",
+          "report": "docs/review/parity-operator-entry-20261027.json",
+          "reportSha256": "d5736303591e5fd9a0e1ab47f41aa7efd18122833f983d948ead84f5d040ef4e",
+          "inspectionLimit": "Complete original nonhistory fields/qualifications, contracts and full vectors plus immutable history bindings supplied. No fresh runtime/persona, no oversized destination-body approval. All old receipts and limits retained."
         }
       ],
       "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -17206,7 +17244,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+      "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -17737,6 +17775,11 @@
           "command": "Independent original16-scope preservation across3complete families; six native Reader controls; exact-guide schema check10tests and4boundedoffline browsercases",
           "exitCode": 0,
           "observation": "All16 original SourceAccuracy/ReaderUsability/Quality scopes independently PASS. Complete changed install/schema preflight, full search record and717-file union reviewed; one owner metadata row changed. Old release/authority/live/role/DATAUNKNOWN/receipt limits and practical histories retained. No new accepted IDs or per-source/deletion approval."
+        },
+        {
+          "command": "Independent actual five original scopes Source/Reader/Quality preservation; six native Reader controls and four bounded offline browser cases",
+          "exitCode": 0,
+          "observation": "All five original scopes substantively preserved on complete457-file vectors and full operator hub. Only six original entry routes/platform ownership clarified; owner map unchanged. Prior human/runtime/toolrole/DATAUNKNOWN/release limits and all historical receipts retained; no new accepted IDs or destination-body approval."
         }
       ],
       "limits": [
@@ -19066,6 +19109,20 @@
           "report": "docs/review/parity-deployment-verification-20261026.json",
           "reportSha256": "0406308b1f3aadcee613dd039a4a17c40b751c6b863d1b65c55f094fcc7bea29",
           "inspectionLimit": "Every original nonhistory field/custom qualification, full declared vectors, original contracts/limits and exact historical bindings supplied. CurrentCLI/toy/Reader/browser observations are coordinator controls, not fresh human/runtime/approvedschema/deployment qualification; all old receipts unchanged."
+        },
+        {
+          "previousReviewedRevision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+          "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 actual five original-scope preservation",
+          "changedDependencies": [
+            "docs/site/use/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only adds exact original six operator entry routes, clear run-recovery vs restore boundary and source-backed platform ownership. Full old hub procedures/contracts unchanged; generated owner map exact unchanged. Actual native Reader/bounded browser results supplied separately; no fresh human/live/destination-body approval.",
+          "originalRecordSha256": "178e524a99bf46f8b0191634c5d2d60859e584e5b6f19ca8aa08290ba8cb602e",
+          "report": "docs/review/parity-operator-entry-20261027.json",
+          "reportSha256": "d5736303591e5fd9a0e1ab47f41aa7efd18122833f983d948ead84f5d040ef4e",
+          "inspectionLimit": "Complete original nonhistory fields/qualifications, contracts and full vectors plus immutable history bindings supplied. No fresh runtime/persona, no oversized destination-body approval. All old receipts and limits retained."
         }
       ],
       "scopePreservation3408": {
@@ -31709,7 +31766,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+      "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -32059,6 +32116,11 @@
           "command": "Independent original16-scope preservation across3complete families; six native Reader controls; exact-guide schema check10tests and4boundedoffline browsercases",
           "exitCode": 0,
           "observation": "All16 original SourceAccuracy/ReaderUsability/Quality scopes independently PASS. Complete changed install/schema preflight, full search record and717-file union reviewed; one owner metadata row changed. Old release/authority/live/role/DATAUNKNOWN/receipt limits and practical histories retained. No new accepted IDs or per-source/deletion approval."
+        },
+        {
+          "command": "Independent actual five original scopes Source/Reader/Quality preservation; six native Reader controls and four bounded offline browser cases",
+          "exitCode": 0,
+          "observation": "All five original scopes substantively preserved on complete457-file vectors and full operator hub. Only six original entry routes/platform ownership clarified; owner map unchanged. Prior human/runtime/toolrole/DATAUNKNOWN/release limits and all historical receipts retained; no new accepted IDs or destination-body approval."
         }
       ],
       "review": {
@@ -32776,6 +32838,20 @@
           "report": "docs/review/parity-deployment-verification-20261026.json",
           "reportSha256": "0406308b1f3aadcee613dd039a4a17c40b751c6b863d1b65c55f094fcc7bea29",
           "inspectionLimit": "Every original nonhistory field/custom qualification, full declared vectors, original contracts/limits and exact historical bindings supplied. CurrentCLI/toy/Reader/browser observations are coordinator controls, not fresh human/runtime/approvedschema/deployment qualification; all old receipts unchanged."
+        },
+        {
+          "previousReviewedRevision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+          "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 actual five original-scope preservation",
+          "changedDependencies": [
+            "docs/site/use/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only adds exact original six operator entry routes, clear run-recovery vs restore boundary and source-backed platform ownership. Full old hub procedures/contracts unchanged; generated owner map exact unchanged. Actual native Reader/bounded browser results supplied separately; no fresh human/live/destination-body approval.",
+          "originalRecordSha256": "f29cffd4f89fc971bae72fa4f1d987b6abc8b30127c2b4d7db4257009033310d",
+          "report": "docs/review/parity-operator-entry-20261027.json",
+          "reportSha256": "d5736303591e5fd9a0e1ab47f41aa7efd18122833f983d948ead84f5d040ef4e",
+          "inspectionLimit": "Complete original nonhistory fields/qualifications, contracts and full vectors plus immutable history bindings supplied. No fresh runtime/persona, no oversized destination-body approval. All old receipts and limits retained."
         }
       ],
       "scopePreservation3408": {
@@ -33472,7 +33548,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+      "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -33871,6 +33947,11 @@
           "command": "Independent original16-scope preservation across3complete families; six native Reader controls; exact-guide schema check10tests and4boundedoffline browsercases",
           "exitCode": 0,
           "observation": "All16 original SourceAccuracy/ReaderUsability/Quality scopes independently PASS. Complete changed install/schema preflight, full search record and717-file union reviewed; one owner metadata row changed. Old release/authority/live/role/DATAUNKNOWN/receipt limits and practical histories retained. No new accepted IDs or per-source/deletion approval."
+        },
+        {
+          "command": "Independent actual five original scopes Source/Reader/Quality preservation; six native Reader controls and four bounded offline browser cases",
+          "exitCode": 0,
+          "observation": "All five original scopes substantively preserved on complete457-file vectors and full operator hub. Only six original entry routes/platform ownership clarified; owner map unchanged. Prior human/runtime/toolrole/DATAUNKNOWN/release limits and all historical receipts retained; no new accepted IDs or destination-body approval."
         }
       ],
       "review": {
@@ -34344,6 +34425,20 @@
           "report": "docs/review/parity-deployment-verification-20261026.json",
           "reportSha256": "0406308b1f3aadcee613dd039a4a17c40b751c6b863d1b65c55f094fcc7bea29",
           "inspectionLimit": "Every original nonhistory field/custom qualification, full declared vectors, original contracts/limits and exact historical bindings supplied. CurrentCLI/toy/Reader/browser observations are coordinator controls, not fresh human/runtime/approvedschema/deployment qualification; all old receipts unchanged."
+        },
+        {
+          "previousReviewedRevision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+          "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 actual five original-scope preservation",
+          "changedDependencies": [
+            "docs/site/use/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only adds exact original six operator entry routes, clear run-recovery vs restore boundary and source-backed platform ownership. Full old hub procedures/contracts unchanged; generated owner map exact unchanged. Actual native Reader/bounded browser results supplied separately; no fresh human/live/destination-body approval.",
+          "originalRecordSha256": "1ead516b3d5161797e6e78b771ef2f502d8ae5bb3ee8dc9ab10e57a97cdc898a",
+          "report": "docs/review/parity-operator-entry-20261027.json",
+          "reportSha256": "d5736303591e5fd9a0e1ab47f41aa7efd18122833f983d948ead84f5d040ef4e",
+          "inspectionLimit": "Complete original nonhistory fields/qualifications, contracts and full vectors plus immutable history bindings supplied. No fresh runtime/persona, no oversized destination-body approval. All old receipts and limits retained."
         }
       ],
       "scopePreservation3408": {
