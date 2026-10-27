@@ -339,7 +339,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -507,6 +507,11 @@
           "command": "Independent original16-scope preservation across3complete families; six native Reader controls; exact-guide schema check10tests and4boundedoffline browsercases",
           "exitCode": 0,
           "observation": "All16 original SourceAccuracy/ReaderUsability/Quality scopes independently PASS. Complete changed install/schema preflight, full search record and717-file union reviewed; one owner metadata row changed. Old release/authority/live/role/DATAUNKNOWN/receipt limits and practical histories retained. No new accepted IDs or per-source/deletion approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -861,6 +866,23 @@
           "report": "docs/review/parity-deployment-verification-20261026.json",
           "reportSha256": "0406308b1f3aadcee613dd039a4a17c40b751c6b863d1b65c55f094fcc7bea29",
           "inspectionLimit": "Every original nonhistory field/custom qualification, full declared vectors, original contracts/limits and exact historical bindings supplied. CurrentCLI/toy/Reader/browser observations are coordinator controls, not fresh human/runtime/approvedschema/deployment qualification; all old receipts unchanged."
+        },
+        {
+          "previousReviewedRevision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "45998f4e0e12cfd0531a7621ab14c67265fdf87e9b1e9b09bebdfcffef0b8ade",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "revisionHistory": [
@@ -2599,7 +2621,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2769,6 +2791,11 @@
           "command": "Independent original16-scope preservation across3complete families; six native Reader controls; exact-guide schema check10tests and4boundedoffline browsercases",
           "exitCode": 0,
           "observation": "All16 original SourceAccuracy/ReaderUsability/Quality scopes independently PASS. Complete changed install/schema preflight, full search record and717-file union reviewed; one owner metadata row changed. Old release/authority/live/role/DATAUNKNOWN/receipt limits and practical histories retained. No new accepted IDs or per-source/deletion approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -3274,6 +3301,23 @@
           "report": "docs/review/parity-deployment-verification-20261026.json",
           "reportSha256": "0406308b1f3aadcee613dd039a4a17c40b751c6b863d1b65c55f094fcc7bea29",
           "inspectionLimit": "Every original nonhistory field/custom qualification, full declared vectors, original contracts/limits and exact historical bindings supplied. CurrentCLI/toy/Reader/browser observations are coordinator controls, not fresh human/runtime/approvedschema/deployment qualification; all old receipts unchanged."
+        },
+        {
+          "previousReviewedRevision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "e07f028da0e1c268c715ba20f3cdf86053c117439cd8bfe10ce2bce73352a1ae",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "previousReviewedRevision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
@@ -4070,7 +4114,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -4303,6 +4347,11 @@
           "command": "Independent actual14 original scopes Source/Reader/Quality preservation; committed6Reader controls and4bounded offline browser cases",
           "exitCode": 0,
           "observation": "All14 original scopes substantively preserved on full546-file vectors and actual canonical Hub delta. Only eight explicit taskroutes and bounded migration/runtime.dispatch entries added. Whole owner map unchanged. All historical failures/qualifications/runtime/human/toolrole/DATAUNKNOWN/release limits retained; no newacceptedIDs or downstreamprocedure approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -4762,6 +4811,23 @@
           "report": "docs/review/parity-developer-entry-20261027.json",
           "reportSha256": "796043fe891b2803e8cc41e22d4546155ac2434a7556dd24f74aed7c8ffc73db",
           "inspectionLimit": "Complete original materialcontracts/limits/tasks/customfields and546whole-source vectors, full actualHubdelta and immutable history binding supplied. Coordinator controls are not fresh participants/runtime; prior receipts and limits unchanged."
+        },
+        {
+          "previousReviewedRevision": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "3f1efab2e5972d10e7bd1917a79295d3ff57f0862bd9e2f38f7f800cca00d014",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
@@ -5918,7 +5984,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -6067,6 +6133,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -6536,6 +6607,23 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "f49c992230c939afe3c7cc6d1a7014adc2886c1e530f86faac13e8adb1756bff",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -7741,7 +7829,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "286f5ce82dba4b92e0ed689f48c8611909283215",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -7883,6 +7971,11 @@
           "command": "Actual committedSource286f5ce8: original177page publication build and all five docs-reader checks; publication/docs-check/refs and git diff --check",
           "exitCode": 0,
           "observation": "Actual build and artifact/search/Source-link/preview/diagram controls terminal0. Full corrected workerprofiles originalA99-11 Source/semanticReader/QualityPASS and independent6originalscope preservationPASS. Workerprofile prose separates localv1registration from freshnativev3fixedprofile/exactjournalrecovery, producer-definedcontentidentity from enginebyteprovenance, and completed/requested budgetobservations from unavailableotherterminalstates. Runtime/schema/renderer and historicalobservations unchanged. No fresh native/live/human or wholeA99-11 acceptance. Raw commands/logs: /home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/worker-profiles-recovery-committed-reader"
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -8231,6 +8324,23 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/worker-profiles-six-preservation-recovery-verdict.json",
           "reportSha256": "83f210db936d7a5a5da8c6f0c3d0b235c64649bee2912fe894f5ed08e3c0f4b2",
           "inspectionLimit": "Complete finalworkerprofilepage/nativeexecution/localruntime/journal/resourcevalidation and clean completecontentverdict/manifest; full originalcontracts/vectors/decoding shards. Technical checks are coordinator observations, not reviewer-run/freshparticipant/native/live work. Source-link terminalsummary not semanticinventory; fullraw retained unchanged. Original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits remain."
+        },
+        {
+          "previousReviewedRevision": "286f5ce82dba4b92e0ed689f48c8611909283215",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "3bd3366df3e0e27e37f0b1f7d541f274ae3f2367c57c5c4ad5cced1457e26b4f",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "previousReviewedRevision": "b4f3d630d6a6d15ab84036ec62bdab2d8a4949d3",
@@ -8305,7 +8415,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -8485,6 +8595,11 @@
           "command": "Independent original nine matrix and seven source semantic preservation plus six native Reader controls/four offline browser cases",
           "exitCode": 0,
           "observation": "All nine original SourceAccuracy/ReaderUsability/Quality scopes and old seven verification source claims substantively preserved on complete611file vectors, whole Testing/search and actual native/browser controls. Only precise release/cgroup preparation and inherited model cutover intent appended. Old limits/history unchanged; no new IDs/counts or actual host/model/release approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -8997,6 +9112,23 @@
           "report": "docs/review/parity-developer-support-20261027.json",
           "reportSha256": "c8442a0d10502c8259cfc2f2b89264c4c78affd9434f2b3159f7a41fb2a5ebe3",
           "inspectionLimit": "Full original qualifications/contracts/611vectors, allold7source author/review/primary bodies and whole Testing/search supplied. Current Reader/browser coordinatornotfresh human/runtime. No current source/reference/native/deletion or release approval."
+        },
+        {
+          "previousReviewedRevision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "2cfbb8dea0c0535b16a313573721e169eda339dd93fd2f1bb8128e654c8ddb95",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
@@ -9421,7 +9553,7 @@
     },
     {
       "id": "AP09-buster-lease-reference-20261020",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -9496,6 +9628,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -9588,6 +9725,23 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "da3d5eeb77e30df26dd486ff32a4bb86e1a1b4d5f35134620c0767e6960a49f0",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ]
     },
@@ -12187,7 +12341,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -12546,6 +12700,11 @@
           "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
           "exitCode": 0,
           "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -13173,6 +13332,23 @@
           "report": "docs/review/parity-topic-map-20261026.json",
           "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
           "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
+        },
+        {
+          "previousReviewedRevision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "ab5bb289cd8fc3764b14eb5d82733b41c4219f5880280e69a3eadf611e285abe",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -13682,7 +13858,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -13907,6 +14083,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -14268,6 +14449,23 @@
           "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
           "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
           "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "ea9328ca8d54c4e4debe71c2effa8773ddf06a8374d56efb2a05808de87de744",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
@@ -15931,7 +16129,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -16135,6 +16333,11 @@
           "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
           "exitCode": 0,
           "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -16615,6 +16818,23 @@
           "report": "docs/review/parity-topic-map-20261026.json",
           "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
           "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
+        },
+        {
+          "previousReviewedRevision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "ac227e2dad1d2535225d0c46feb617d7f6b5f71bc499f549c9e0c3b940b505c8",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "scopePreservation3408": {
@@ -16632,7 +16852,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -16938,6 +17158,11 @@
           "command": "Independent original nine matrix and seven source semantic preservation plus six native Reader controls/four offline browser cases",
           "exitCode": 0,
           "observation": "All nine original SourceAccuracy/ReaderUsability/Quality scopes and old seven verification source claims substantively preserved on complete611file vectors, whole Testing/search and actual native/browser controls. Only precise release/cgroup preparation and inherited model cutover intent appended. Old limits/history unchanged; no new IDs/counts or actual host/model/release approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -17390,13 +17615,30 @@
           "report": "docs/review/parity-developer-support-20261027.json",
           "reportSha256": "c8442a0d10502c8259cfc2f2b89264c4c78affd9434f2b3159f7a41fb2a5ebe3",
           "inspectionLimit": "Full original qualifications/contracts/611vectors, allold7source author/review/primary bodies and whole Testing/search supplied. Current Reader/browser coordinatornotfresh human/runtime. No current source/reference/native/deletion or release approval."
+        },
+        {
+          "previousReviewedRevision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "a7eb9c190f8ce85f6ec0586e0e58f8ef4ab6b34cf30efb0343e5168575807905",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f"
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -17947,6 +18189,11 @@
           "command": "Independent original nine matrix and seven source semantic preservation plus six native Reader controls/four offline browser cases",
           "exitCode": 0,
           "observation": "All nine original SourceAccuracy/ReaderUsability/Quality scopes and old seven verification source claims substantively preserved on complete611file vectors, whole Testing/search and actual native/browser controls. Only precise release/cgroup preparation and inherited model cutover intent appended. Old limits/history unchanged; no new IDs/counts or actual host/model/release approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "limits": [
@@ -19332,6 +19579,23 @@
           "report": "docs/review/parity-developer-support-20261027.json",
           "reportSha256": "c8442a0d10502c8259cfc2f2b89264c4c78affd9434f2b3159f7a41fb2a5ebe3",
           "inspectionLimit": "Full original qualifications/contracts/611vectors, allold7source author/review/primary bodies and whole Testing/search supplied. Current Reader/browser coordinatornotfresh human/runtime. No current source/reference/native/deletion or release approval."
+        },
+        {
+          "previousReviewedRevision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "85bc951f4175f383cc7c24ed28b8c311eb5bbdf9acb0e3cc627cf39e3c096742",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "scopePreservation3408": {
@@ -31632,7 +31896,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -31735,6 +31999,11 @@
           "command": "Independent original16-scope preservation across3complete families; six native Reader controls; exact-guide schema check10tests and4boundedoffline browsercases",
           "exitCode": 0,
           "observation": "All16 original SourceAccuracy/ReaderUsability/Quality scopes independently PASS. Complete changed install/schema preflight, full search record and717-file union reviewed; one owner metadata row changed. Old release/authority/live/role/DATAUNKNOWN/receipt limits and practical histories retained. No new accepted IDs or per-source/deletion approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -32015,6 +32284,23 @@
           "report": "docs/review/parity-deployment-verification-20261026.json",
           "reportSha256": "0406308b1f3aadcee613dd039a4a17c40b751c6b863d1b65c55f094fcc7bea29",
           "inspectionLimit": "Every original nonhistory field/custom qualification, full declared vectors, original contracts/limits and exact historical bindings supplied. CurrentCLI/toy/Reader/browser observations are coordinator controls, not fresh human/runtime/approvedschema/deployment qualification; all old receipts unchanged."
+        },
+        {
+          "previousReviewedRevision": "1b45659746f6e306a15d7a34042abfc26dc81c5d",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "4105e909068a4ce83bc4139623fe67034c091c84bd35b92725bb37b021cd95ba",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "scopePreservation3408": {
@@ -32051,7 +32337,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -32421,6 +32707,11 @@
           "command": "Independent original nine matrix and seven source semantic preservation plus six native Reader controls/four offline browser cases",
           "exitCode": 0,
           "observation": "All nine original SourceAccuracy/ReaderUsability/Quality scopes and old seven verification source claims substantively preserved on complete611file vectors, whole Testing/search and actual native/browser controls. Only precise release/cgroup preparation and inherited model cutover intent appended. Old limits/history unchanged; no new IDs/counts or actual host/model/release approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -33194,6 +33485,23 @@
           "report": "docs/review/parity-developer-support-20261027.json",
           "reportSha256": "c8442a0d10502c8259cfc2f2b89264c4c78affd9434f2b3159f7a41fb2a5ebe3",
           "inspectionLimit": "Full original qualifications/contracts/611vectors, allold7source author/review/primary bodies and whole Testing/search supplied. Current Reader/browser coordinatornotfresh human/runtime. No current source/reference/native/deletion or release approval."
+        },
+        {
+          "previousReviewedRevision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "8c569d2b83f5646ffde276aac7856af1c78601c9b8766401e93d210b04394058",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "scopePreservation3408": {
@@ -33909,7 +34217,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -34323,6 +34631,11 @@
           "command": "Independent original nine matrix and seven source semantic preservation plus six native Reader controls/four offline browser cases",
           "exitCode": 0,
           "observation": "All nine original SourceAccuracy/ReaderUsability/Quality scopes and old seven verification source claims substantively preserved on complete611file vectors, whole Testing/search and actual native/browser controls. Only precise release/cgroup preparation and inherited model cutover intent appended. Old limits/history unchanged; no new IDs/counts or actual host/model/release approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -34838,6 +35151,23 @@
           "report": "docs/review/parity-developer-support-20261027.json",
           "reportSha256": "c8442a0d10502c8259cfc2f2b89264c4c78affd9434f2b3159f7a41fb2a5ebe3",
           "inspectionLimit": "Full original qualifications/contracts/611vectors, allold7source author/review/primary bodies and whole Testing/search supplied. Current Reader/browser coordinatornotfresh human/runtime. No current source/reference/native/deletion or release approval."
+        },
+        {
+          "previousReviewedRevision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "5dc1c0957b4f9f0ce38ca30710ba3b78b2b83a2330a01664c01251a953a9120a",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "scopePreservation3408": {
@@ -34942,7 +35272,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -35287,6 +35617,11 @@
           "command": "Independent original nine matrix and seven source semantic preservation plus six native Reader controls/four offline browser cases",
           "exitCode": 0,
           "observation": "All nine original SourceAccuracy/ReaderUsability/Quality scopes and old seven verification source claims substantively preserved on complete611file vectors, whole Testing/search and actual native/browser controls. Only precise release/cgroup preparation and inherited model cutover intent appended. Old limits/history unchanged; no new IDs/counts or actual host/model/release approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -35703,6 +36038,23 @@
           "report": "docs/review/parity-developer-support-20261027.json",
           "reportSha256": "c8442a0d10502c8259cfc2f2b89264c4c78affd9434f2b3159f7a41fb2a5ebe3",
           "inspectionLimit": "Full original qualifications/contracts/611vectors, allold7source author/review/primary bodies and whole Testing/search supplied. Current Reader/browser coordinatornotfresh human/runtime. No current source/reference/native/deletion or release approval."
+        },
+        {
+          "previousReviewedRevision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "61a6ee499b68e7d478d7b568c3e6674e177315ea24f639c9b04fd1f980dce7b5",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ],
       "scopePreservation3408": {
@@ -39728,7 +40080,7 @@
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent lint/common and whole original A910-10 adjudication",
       "gateIds": [
@@ -40054,6 +40406,11 @@
           "command": "Independent original nine matrix and seven source semantic preservation plus six native Reader controls/four offline browser cases",
           "exitCode": 0,
           "observation": "All nine original SourceAccuracy/ReaderUsability/Quality scopes and old seven verification source claims substantively preserved on complete611file vectors, whole Testing/search and actual native/browser controls. Only precise release/cgroup preparation and inherited model cutover intent appended. Old limits/history unchanged; no new IDs/counts or actual host/model/release approval."
+        },
+        {
+          "command": "Actual complete SDKsupport review, original17scope semantic preservation and6nativeReader/4boundedoffline controls",
+          "exitCode": 0,
+          "observation": "All17original SourceAccuracy/ReaderUsability/Quality scopes preserved on complete670file vectors/fullchangedcode and exact whole-map reverse. Old7domains/177metadata exact;195qualified support bindings added. Original limits/history unchanged; no new gate/requirement/human/runtime approval."
         }
       ],
       "review": {
@@ -40141,6 +40498,23 @@
           "report": "docs/review/parity-developer-support-20261027.json",
           "reportSha256": "c8442a0d10502c8259cfc2f2b89264c4c78affd9434f2b3159f7a41fb2a5ebe3",
           "inspectionLimit": "Full original qualifications/contracts/611vectors, allold7source author/review/primary bodies and whole Testing/search supplied. Current Reader/browser coordinatornotfresh human/runtime. No current source/reference/native/deletion or release approval."
+        },
+        {
+          "previousReviewedRevision": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+          "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Pinned fe588b1a Terra/high/P2 actual real-target seventeen-original-duty assessment",
+          "changedDependencies": [
+            "docs/site/reference/documentation-governance.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-source-surface-map.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Complete additive28type/130member/37edge ownership join; actual anchors, all olddomain facts and inverse membership retained. Existing Source/Reader/Quality duties preserved with original limitations; no discovery-gap/reviewer-label waiver.",
+          "originalRecordSha256": "61f49cb2a015528d7ec9180b522ee30e0b7bf9b3971fc8291c84c7a2a0f26239",
+          "report": "docs/review/mnt015-sdk-support-family-20261027.json",
+          "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
+          "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ]
     }

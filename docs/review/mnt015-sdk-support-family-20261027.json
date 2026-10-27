@@ -1,0 +1,215 @@
+{
+  "scope": "Complete SDK reachable-support ownership family and original17scope semantic preservation; NOT wholeMNT015/current8source-valid/deletion/runtime approval. Frozen before matrix binding; never rewrite.",
+  "source": "535d73dbb872e2dbea8950c6584e1302a079613d",
+  "publishedBaseline": "a101146ac397af61bff8ab2451423ba828c9c419",
+  "completeFamily": {
+    "declarations": 28,
+    "resolvedMembers": 130,
+    "qualifiedEdges": 37,
+    "totalBindings": 195,
+    "namedExportsUnchanged": 119,
+    "actualIndependentVerdict": {
+      "findings": [],
+      "overall_correctness": "patch is correct",
+      "overall_explanation": "COMPLETE_SDK_SUPPORT_FAMILY=PASS. The new assertion rejects a support record whose display name differs from its source declaration symbol before heading lookup, closing the demonstrated wrong-existing-heading binding. The regression test exercises that corruption. Source accuracy, semantic reader binding, and quality remain supported for the bounded SDK support family; this does not grant whole-MNT-015 acceptance.",
+      "overall_confidence": 0.98
+    },
+    "identityCounterprobeResolved": "Actual type name must equal source.symbol before heading selection;15finalcontrols PASS."
+  },
+  "exactMapDelta": {
+    "oldRevision": "a101146ac397af61bff8ab2451423ba828c9c419",
+    "oldMapSha256": "9dade521d5f8cc780c58018fec992b8a6b682d7dd863fd8ff9ef7d52f9f0ce78",
+    "newMapSha256": "b2e07e48524973803a4cda837cf4ed75b0172ce994abf6b04dddc24bcad875db",
+    "all7OriginalDomainsDeepEqual": true,
+    "oldDomainSurfaceCounts": {
+      "sdk": 661,
+      "platform": 1015,
+      "workflow": 48,
+      "plugin": 116,
+      "configuration-value": 3913,
+      "configuration-schema": 872,
+      "operator-cli": 30
+    },
+    "newSupportSurfaceCount": 195,
+    "qualification": "Exact derived relationship equality, not independent content preservation or wholeMNT015 acceptance",
+    "allOtherRootFieldsAnd177PagesDeepEqual": true,
+    "onlyNew195InverseMembership": true,
+    "exactInverseReverseEqualsWholeOldMap": true,
+    "completeNewDomainSha256": "a7bffa58fa60c16fb9a174dd4f609309d35c7280aa10e767144adb786cc75f1c"
+  },
+  "actualOriginal17Verdict": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "ALL_SEVENTEEN_ORIGINAL_SCOPES_PRESERVED=PASS. The additive SDK support closure is source-qualified, links declarations/members/reference edges to validated reader anchors, preserves all prior domain mappings, and retains stated discovery limits. No actionable P0-P2 defect is evident.",
+    "overall_confidence": 0.96
+  },
+  "originalScopeIds": [
+    "AP09.1-ready-topics-20261020",
+    "Reviewed-corrections-20261020",
+    "AP09-reader-developers-20261020",
+    "AP09-reviewed-maintenance-20261020",
+    "AP09-closeout-config-reference-20261020",
+    "AP09-closeout-developer-maintenance-20261020",
+    "AP09-buster-lease-reference-20261020",
+    "AP09-documentation-agent-maintenance-20261021",
+    "AP09-complete-platform-change-content-20261021",
+    "AP09-complete-publication-reference-navigation-20261021",
+    "AP09-complete-developer-reader-contracts-20261021",
+    "AP09-complete-static-reader-search-20261021",
+    "A912-11-deterministic-page-records-20261022",
+    "AP09-publication-positive-scope-7ef16585",
+    "A98-02-13-whole-operator-procedure-contract-20261022",
+    "A910-03-whole-command-prerequisite-contract-20261022",
+    "A910-10-whole-supported-extension-lifecycle-20261026"
+  ],
+  "coordinatorReader": {
+    "sourceCommit": "535d73dbb872e2dbea8950c6584e1302a079613d",
+    "total": 6,
+    "completed": 6,
+    "results": [
+      {
+        "name": "build",
+        "command": [
+          "bash",
+          "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+          "node",
+          "--max-old-space-size=4096",
+          "scripts/docs-publication.mjs",
+          "build"
+        ],
+        "startedAt": "2026-10-27T06:47:04.344701+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-10-27T06:49:24.944672+00:00"
+      },
+      {
+        "name": "artifact",
+        "command": [
+          "bash",
+          "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+          "node",
+          "--max-old-space-size=4096",
+          "scripts/docs-reader/check-artifact.mjs"
+        ],
+        "startedAt": "2026-10-27T06:49:24.979943+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-10-27T06:49:50.712933+00:00"
+      },
+      {
+        "name": "search",
+        "command": [
+          "bash",
+          "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+          "node",
+          "--max-old-space-size=4096",
+          "scripts/docs-reader/check-search.mjs"
+        ],
+        "startedAt": "2026-10-27T06:49:50.753911+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-10-27T06:50:05.596163+00:00"
+      },
+      {
+        "name": "source-links",
+        "command": [
+          "bash",
+          "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+          "node",
+          "--max-old-space-size=4096",
+          "scripts/docs-reader/check-source-links.mjs"
+        ],
+        "startedAt": "2026-10-27T06:50:05.637626+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-10-27T06:51:51.778298+00:00"
+      },
+      {
+        "name": "source-previews",
+        "command": [
+          "bash",
+          "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+          "node",
+          "--max-old-space-size=4096",
+          "scripts/docs-reader/check-source-previews.mjs"
+        ],
+        "startedAt": "2026-10-27T06:51:51.808718+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-10-27T06:52:23.230855+00:00"
+      },
+      {
+        "name": "diagrams",
+        "command": [
+          "bash",
+          "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+          "node",
+          "--max-old-space-size=4096",
+          "scripts/docs-reader/check-diagrams.mjs"
+        ],
+        "startedAt": "2026-10-27T06:52:23.266294+00:00",
+        "exitCode": 0,
+        "finishedAt": "2026-10-27T06:52:42.244652+00:00"
+      }
+    ],
+    "scope": "Actual coordinator native publication/Reader controls only, no independent participant/live/runtime or wholeA91311 acceptance",
+    "ownedOutputNoActiveUsers": [],
+    "allCompletedPassed": true
+  },
+  "boundedOfflineBrowser": {
+    "scope": "Four coordinator offline governance/map/viewport observations only; not fresh personas, screenreader, live/runtime or whole-MNT015 acceptance.",
+    "observations": [
+      {
+        "width": 320,
+        "javaScriptEnabled": false,
+        "completeSupportGuidanceVisible": true,
+        "oldDiscoveryLimitsVisible": true,
+        "mapLinkCount": 2,
+        "all195PublishedBindings": true,
+        "exactPublishedMap": true,
+        "documentScrollWidth": 320,
+        "httpRequests": 0,
+        "passed": true
+      },
+      {
+        "width": 320,
+        "javaScriptEnabled": true,
+        "completeSupportGuidanceVisible": true,
+        "oldDiscoveryLimitsVisible": true,
+        "mapLinkCount": 2,
+        "all195PublishedBindings": true,
+        "exactPublishedMap": true,
+        "documentScrollWidth": 320,
+        "httpRequests": 0,
+        "passed": true
+      },
+      {
+        "width": 1440,
+        "javaScriptEnabled": false,
+        "completeSupportGuidanceVisible": true,
+        "oldDiscoveryLimitsVisible": true,
+        "mapLinkCount": 2,
+        "all195PublishedBindings": true,
+        "exactPublishedMap": true,
+        "documentScrollWidth": 1440,
+        "httpRequests": 0,
+        "passed": true
+      },
+      {
+        "width": 1440,
+        "javaScriptEnabled": true,
+        "completeSupportGuidanceVisible": true,
+        "oldDiscoveryLimitsVisible": true,
+        "mapLinkCount": 2,
+        "all195PublishedBindings": true,
+        "exactPublishedMap": true,
+        "documentScrollWidth": 1440,
+        "httpRequests": 0,
+        "passed": true
+      }
+    ]
+  },
+  "current8SourceContent": {
+    "allClaimPrimaryTargetLegacyRouteBodiesByteEqual": true,
+    "completeVectorSha256": "d3857df67c7107ba88c3c27e2c6e765729164dd27d3dc019711b6e6b96fe4205",
+    "currentNativeReferenceAndIndependentRiskBindingsRemainRequired": true
+  },
+  "retainedFirstPreservationFailureSha256": "12cc75ab899f5fdc32b147a19f99a9bce6d23016b551ab7f21d355bc1d18f823",
+  "firstFailureDisposition": "P2 accepted: generic assertions replaced by actual delivery targets and17scope-specific duty reasons before genuine verdict. No unchanged review/waiver.",
+  "limits": "Other MNT015/GOV002 discovery families remain NOT_READY. Owner review role inherited from existing policy, not new independent grant by label. All original Source/tool-role/DATAUNKNOWN/Knip/nativehost/model/CI/runtime/release/human/persona/screenreader/skip limits and complete histories unchanged. No Source redaction, scanner change, AP10 deletion or new gate/requirement IDs."
+}
