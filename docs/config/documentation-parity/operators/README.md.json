@@ -1,12 +1,371 @@
 {
-  "schemaVersion": "kubeclaw-documentation-parity-untriaged.v1",
-  "status": "untriaged",
+  "schemaVersion": "kubeclaw-documentation-parity-decision.v1",
   "source": {
     "originalPath": "docs/operators/README.md",
     "legacyPath": "docs/_legacy-source/operators/README.md",
-    "classification": "legacy-extraction-source",
     "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
     "gitObject": "89b6ddbeba0ea1bae5a848741f6728ba6964b112",
-    "extractionDigest": "204b6976c9ec05d7357636c5a1897b672861e2cf7599e37c0a08e82d95728b58"
-  }
+    "extractionDigest": "7d8906dd7a984105872ffb75ef015cc5cc66c041ef6b801007dbf8ad28526b78",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewedRevision": "8e733d6ae5fc95f7e436a61d8e00a1a7f2b921ef",
+  "author": {
+    "id": "parity-author:operator-handbook-sources",
+    "assignmentId": "parity-assignment:be1c31c6913ff08a6fd943e811418e9f6432ee727bef87545f998506406f690a"
+  },
+  "redirect": {
+    "status": "not-required",
+    "from": "/operators",
+    "to": null,
+    "basis": "no-authoritative-public-route",
+    "reason": "No authoritative historical public route is declared; current canonical operator hub preserves all six entry routes without inventing a redirect."
+  },
+  "visualEvidence": [],
+  "contentRoot": "a86dfeaef7da4137472c205c728c0439fd72b37f8ad7b5aa261ea333d2b52e3f",
+  "unitCoverage": [
+    {
+      "unitId": "dpu_f5caa7c29886e889191bb36aa42eab6f",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "operator-entry:dpu_f5caa7c29886e889191bb36aa42eab6f",
+          "reasonCode": null,
+          "byteStart": 0,
+          "byteEnd": 17
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_164b5293e20e3591182ad995512c9973",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "operator-entry:dpu_164b5293e20e3591182ad995512c9973",
+          "reasonCode": null,
+          "byteStart": 18,
+          "byteEnd": 64
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_d1298cb856d2a9e3a83c15adf11226bd",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "operator-entry:dpu_d1298cb856d2a9e3a83c15adf11226bd",
+          "reasonCode": null,
+          "byteStart": 64,
+          "byteEnd": 103
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_32687be9230580267d1078416114952a",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "operator-entry:dpu_32687be9230580267d1078416114952a",
+          "reasonCode": null,
+          "byteStart": 103,
+          "byteEnd": 162
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_2d664323ba9eaaf52e38290afa0f3c7b",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "operator-entry:dpu_2d664323ba9eaaf52e38290afa0f3c7b",
+          "reasonCode": null,
+          "byteStart": 162,
+          "byteEnd": 205
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_50103fdda2acb95ebf9d55f36395624a",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "operator-entry:dpu_50103fdda2acb95ebf9d55f36395624a",
+          "reasonCode": null,
+          "byteStart": 205,
+          "byteEnd": 256
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_53d57b7c143cbcd68f7405db7f01ccbe",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "operator-entry:dpu_53d57b7c143cbcd68f7405db7f01ccbe",
+          "reasonCode": null,
+          "byteStart": 256,
+          "byteEnd": 320
+        }
+      ]
+    },
+    {
+      "unitId": "dpu_b6e57c49b18bcfe5b73bdcde5b09dd54",
+      "codeBlockClassification": null,
+      "fragments": [
+        {
+          "kind": "claim",
+          "claimId": "operator-entry:dpu_b6e57c49b18bcfe5b73bdcde5b09dd54",
+          "reasonCode": null,
+          "byteStart": 321,
+          "byteEnd": 445
+        }
+      ]
+    }
+  ],
+  "claims": [
+    {
+      "claimId": "operator-entry:dpu_f5caa7c29886e889191bb36aa42eab6f",
+      "unitId": "dpu_f5caa7c29886e889191bb36aa42eab6f",
+      "summary": "Operator navigation heading",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 0,
+        "byteEnd": 17,
+        "lineStart": 1,
+        "lineEnd": 1,
+        "exactSha256": "68c46d65be03e1ca7d3bf28e1ec0e69ae31586b17989d4fbea8975430a3835ae",
+        "normalizedSha256": "12254ad0792b3c42225dbeb6cd442aabf84054381df61d355ce09a42b18cc177"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/README.md",
+          "anchor": "pipeline-operator-entry-points",
+          "excerpt": "## Pipeline Operator Entry Points",
+          "excerptSha256": "50b07ae215fc0a8ec5235f2be410fbae9dc49ec25c6ca289e7aafd3198bbc93a",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "operator-entry:dpu_164b5293e20e3591182ad995512c9973",
+      "unitId": "dpu_164b5293e20e3591182ad995512c9973",
+      "summary": "Run a pipeline entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 18,
+        "byteEnd": 64,
+        "lineStart": 3,
+        "lineEnd": 3,
+        "exactSha256": "9bdbc1cbf26ab006728324a54b9a2b33902e20b781ef979781dcc9d1d48d4f6f",
+        "normalizedSha256": "a34f37d1cbabd845e5926d8ffa6d4eec667e24e787513810e33d455041345953"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/README.md",
+          "anchor": "pipeline-operator-entry-points",
+          "excerpt": "[Run the pipeline](operate.md#start-a-project-run).",
+          "excerptSha256": "5d4c3d1f8a39c1c1abcc7d34789134d842254e11178a4d5c70f7d7887662eb06",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "operator-entry:dpu_d1298cb856d2a9e3a83c15adf11226bd",
+      "unitId": "dpu_d1298cb856d2a9e3a83c15adf11226bd",
+      "summary": "Recover an interrupted run entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 64,
+        "byteEnd": 103,
+        "lineStart": 4,
+        "lineEnd": 4,
+        "exactSha256": "bcc9aa7d7f9438ce988ea14ea5b65668764149c17f849477472b3783346cd078",
+        "normalizedSha256": "ba59815bb1d8a299f2013b0750eba3ad2e6f35c21d4d72b20454e6f5f535be64"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/README.md",
+          "anchor": "pipeline-operator-entry-points",
+          "excerpt": "[Recover a run after interruption](operate.md#recover-after-interruption).",
+          "excerptSha256": "33c774114fad5c5c6cb99eda73eab7c47ba01ecf03597def5ccb38fd35089737",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "operator-entry:dpu_32687be9230580267d1078416114952a",
+      "unitId": "dpu_32687be9230580267d1078416114952a",
+      "summary": "Install external plugins entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 103,
+        "byteEnd": 162,
+        "lineStart": 5,
+        "lineEnd": 5,
+        "exactSha256": "5cdb3c55b1fdb164f120aef2fd3d2904c7af7e250a1b2c3e4fa06304b0761c5c",
+        "normalizedSha256": "699b55f9e75081ddc30aa8e72d7a789bd19dbdc08466b3f0e248a63977203f2a"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/README.md",
+          "anchor": "pipeline-operator-entry-points",
+          "excerpt": "[Install external plugins](plugins.md#1-discover-and-select), then follow the\n  lifecycle validation and activation steps on that page.",
+          "excerptSha256": "fd2f7a4d3a2c06b59f1bdb3f4b7c035a3df2f8e3c722691a4f04ae13fdb916f5",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "operator-entry:dpu_2d664323ba9eaaf52e38290afa0f3c7b",
+      "unitId": "dpu_2d664323ba9eaaf52e38290afa0f3c7b",
+      "summary": "Operate observers entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 162,
+        "byteEnd": 205,
+        "lineStart": 6,
+        "lineEnd": 6,
+        "exactSha256": "4da369b467b418e135b8f387309f8f2cde4222d28b867125aa0a55af6d040e35",
+        "normalizedSha256": "173bba9f3f1bbdce9e7377c59626992117536a85690da9ae2cef31e718ec3034"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/README.md",
+          "anchor": "pipeline-operator-entry-points",
+          "excerpt": "[Operate observers](plugins.md#3-activate-and-prove-health), with the observer\n  selection and configuration rules in\n  [Pipeline Platform Configuration](../reference/pipeline-platform.md#adapter-selection-and-validation).",
+          "excerptSha256": "e2e58ea6e90593c2c45b90912ca0fb287a4d49ec651654033a056b3a2fb5d65d",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "operator-entry:dpu_50103fdda2acb95ebf9d55f36395624a",
+      "unitId": "dpu_50103fdda2acb95ebf9d55f36395624a",
+      "summary": "Plugin lifecycle entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 205,
+        "byteEnd": 256,
+        "lineStart": 7,
+        "lineEnd": 7,
+        "exactSha256": "c837826f865b015aee0702416a0c9cdbd7209a8b5edb520a81e54f3ac785d9cd",
+        "normalizedSha256": "8572d92cb6e8fa8bdc021ebf5967e7c5451c005830001b49504a99b5f8787a98"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/README.md",
+          "anchor": "pipeline-operator-entry-points",
+          "excerpt": "[Plugin lifecycle](plugins.md#canonical-plugin-lifecycle-procedure).",
+          "excerptSha256": "f1ea1b1ff2a26e15a094f26b7d3ab41e0730ed4bf8beaf6cb0e8b0d14fa09819",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "operator-entry:dpu_53d57b7c143cbcd68f7405db7f01ccbe",
+      "unitId": "dpu_53d57b7c143cbcd68f7405db7f01ccbe",
+      "summary": "Operate worker trust entry",
+      "claimType": "navigation-only",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 256,
+        "byteEnd": 320,
+        "lineStart": 8,
+        "lineEnd": 8,
+        "exactSha256": "7314f1100fa68ba76bdaacd15810d7b0064765102ae028f56d09a7c8f87e7df0",
+        "normalizedSha256": "b9d8cd5d843dea4d94f8e185b38dcf524092847ce7db49ff45f84707af300051"
+      },
+      "evidence": [],
+      "targets": [
+        {
+          "path": "docs/site/use/README.md",
+          "anchor": "pipeline-operator-entry-points",
+          "excerpt": "[Operate Worker Trust](worker-trust.md#canonical-worker-trust-procedure).",
+          "excerptSha256": "08157f1e2cf10be6beb386e582679ca8089c2c381a9b1c9bb012ccb222ffc821",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    },
+    {
+      "claimId": "operator-entry:dpu_b6e57c49b18bcfe5b73bdcde5b09dd54",
+      "unitId": "dpu_b6e57c49b18bcfe5b73bdcde5b09dd54",
+      "summary": "Platform configuration, not project content, owns plugin roots, trust, providers, grants and registration configuration",
+      "claimType": "constraint",
+      "truthState": "current",
+      "disposition": "mapped",
+      "source": {
+        "byteStart": 321,
+        "byteEnd": 445,
+        "lineStart": 10,
+        "lineEnd": 11,
+        "exactSha256": "366843b95ff8c331147c3dcbcbd34633fe6420d8285f50edb627bf907b8b37e1",
+        "normalizedSha256": "9f29a8b0c2aa2cc9ee4fd5d8015c6bb8a484960c3e965b395cffe4a2da4de194"
+      },
+      "evidence": [
+        {
+          "revision": "8e733d6ae5fc95f7e436a61d8e00a1a7f2b921ef",
+          "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+          "basis": "current-implementation",
+          "assertion": "loadPlatformConfig reads the separately selected file using realpathSync and JSON.parse, checks validate(value), and returns resolvePaths after schema validation; this is platform configuration loading, not a live execution result.",
+          "gitObject": "b9a28c6e89a9799cf76800bee1e7f340de677914",
+          "byteStart": 2591,
+          "byteEnd": 2982,
+          "lineStart": 63,
+          "lineEnd": 70,
+          "exactSha256": "7fcba3ae5ca30dbc01ae6c5cab5968b49103d0f170f4a07965496ff083d550be",
+          "normalizedSha256": "8aed0d5644ab3a2c94cbf9a00564205593597d6595c9c422986c126b4d55c3a6"
+        }
+      ],
+      "targets": [
+        {
+          "path": "docs/site/use/README.md",
+          "anchor": "pipeline-operator-entry-points",
+          "excerpt": "The [operator-owned platform configuration](../reference/pipeline-platform.md#purpose-and-authority),\nnot project content, controls plugin installation roots, trust, provider\nselection, grants, and adapter and observer registration configuration.",
+          "excerptSha256": "b1be51d58fb0b2e994d7897695fe3949175ad988b405663e6240ded409fb591a",
+          "occurrence": 1,
+          "relation": "expanded"
+        }
+      ],
+      "omission": null
+    }
+  ]
 }
