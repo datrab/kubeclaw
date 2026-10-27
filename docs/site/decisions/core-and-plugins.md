@@ -38,6 +38,8 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Supersession and related decisions.** Retires plugin-specific core phases and direct plugin lifecycle writes. No identified successor to the core-authority rule. See ADR-010 for waits and ADR-014 for quality policy.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-002: Use one neutral Worker Core below specialist engines
 
 **Context.** Buster, Prism and future specialists need the same attempt identity, limits, cancellation, logs and recovery mechanics while interpreting different work.
@@ -55,6 +57,8 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 **Evidence.** [skills/worker/core/worker/local-runtime.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/worker/core/worker/local-runtime.ts), [skills/worker/core/worker/native-attempt-executor.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/worker/core/worker/native-attempt-executor.ts), [contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json), [packaging/runtime/roles/buster.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/packaging/runtime/roles/buster.json), [packaging/runtime/roles/prism.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/packaging/runtime/roles/prism.json), [tests/verification/contracts/check-pipeline-worker-core-contracts.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-pipeline-worker-core-contracts.mts).
 
 **Supersession and related decisions.** Replaces specialist-owned copies of common worker mechanics. D-110 narrows the initial Buster connection to plan jobs; it does not prove rejection of the longer-term shared queue in D-098. See ADR-013.
+
+**Reevaluation condition.** Revisit the TypeScript-only worker host when measurements show a clear need for a Go host. Preserve the worker protocol and the same contract and behavior tests. This condition applies only to the host language, not the shared-core authority. [Historical D-103](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-103-typescript-first-with-a-language-neutral-worker-protocol).
 
 ## ADR-003: Keep Buster test semantics outside Nova and Worker Core
 
@@ -74,6 +78,8 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 
 **Supersession and related decisions.** Supersedes the implicit Common-directory deployment boundary through ADR-012. It preserves D-001 terminology; detailed test choices are retained in [Test-gate decisions](test-gate.md).
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-004: Use plugin system v2 as the sole extension runtime
 
 **Context.** Keeping old and new contracts active after a replacement creates ambiguous authority and requires every future consumer to understand both.
@@ -91,6 +97,8 @@ The original provider decisions are preserved in [Test-gate decisions](test-gate
 **Evidence.** [skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json), [skills/common/plugin-runtime/foundation/registry/schema.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/schema.ts), [skills/nova/plugins/remote-test-gate/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/remote-test-gate/README.md), [tests/verification/contracts/check-plugin-system-v2-phase12.mts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-phase12.mts).
 
 **Supersession and related decisions.** v2 replaces v1 and `needs_nova` with `orchestrator_required`. Historical suite bridge permission is time/suite bounded, not a permanent exception to one authority. D-119 reiterates single gate authority during comparison/cutover.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## ADR-005: Discover inert manifests and freeze exact registrations
 
@@ -112,6 +120,8 @@ Core implements the administrative exception through [authenticated reopen](http
 
 **Supersession and related decisions.** Supersedes executable metadata loading and implicit load-order choice. Exact role assembly is ADR-012. No identified successor to immutable run selection.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-006: Use five explicit registration surfaces
 
 **Context.** Stages, notifications, external operations and test/report execution have different contracts. A generic hook bus would hide ordering and authority rules.
@@ -129,6 +139,8 @@ Core implements the administrative exception through [authenticated reopen](http
 **Evidence.** [skills/common/plugin-runtime/foundation/registry/build.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/build.ts), [skills/common/plugin-runtime/foundation/registry/types.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/types.ts), [skills/common/plugin-runtime/foundation/registry/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/registry/README.md).
 
 **Supersession and related decisions.** Extends the earlier three-surface vision with test providers and report adapters. Exact installed counts belong in the generated inventory, not a permanent architectural default.
+
+**Reevaluation condition.** Reconsider excluded policy hooks only after a concrete cross-cutting requirement cannot fit correctly within the existing mechanisms. These are core policy, stages, capability adapters, schema validation, and observers. A resulting core/SDK contract change must define typed input and decision, ordering, timeout, conflicts, failure behavior, capabilities, and replay semantics. [Historical policy-hook boundary](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md#policy-hooks).
 
 ## ADR-007: Grant bounded capabilities instead of ambient authority
 
@@ -148,6 +160,8 @@ Core implements the administrative exception through [authenticated reopen](http
 
 **Supersession and related decisions.** Replaces package-wide grants; registration-specific capabilities in ADR-006 remain authoritative. No identified successor.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-008: Isolate activation and execution according to trust
 
 **Context.** A limited context object does not stop unrestricted process code from accessing files, network or subprocesses directly.
@@ -165,6 +179,8 @@ Core implements the administrative exception through [authenticated reopen](http
 **Evidence.** [skills/common/plugin-runtime/foundation/isolation/runner.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/foundation/isolation/runner.ts), [security and trust architecture](../understand/security-and-trust.md), [tests/verification/contracts/check-plugin-system-v2-isolation.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation.mjs), [tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs).
 
 **Supersession and related decisions.** A configured isolated runner can execute supported external packages. This does not permit arbitrary external code in-process. ADR-007 grants still apply inside isolation.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## ADR-009: Use durable idempotent effects and canonical resource locks
 
@@ -184,6 +200,8 @@ Core implements the administrative exception through [authenticated reopen](http
 
 **Supersession and related decisions.** No identified successor. Reconciles the general recovery promise with the explicit fail-closed case where a remote system cannot return an authoritative receipt.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-010: Represent waits and approvals as durable typed state
 
 **Context.** Human responses and delayed signals can outlive a process. A process-local promise cannot establish who may resume which attempt after a restart.
@@ -201,6 +219,8 @@ Core implements the administrative exception through [authenticated reopen](http
 **Evidence.** [skills/common/plugins/wait-store/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugins/wait-store/README.md), [skills/nova/plugins/human-approval/README.md](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/human-approval/README.md), [skills/nova/core/lifecycle/wait-request.ts](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/wait-request.ts), [tests/verification/contracts/check-plugin-system-v2-resume.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-plugin-system-v2-resume.mjs).
 
 **Supersession and related decisions.** Replaces process-local waiting and legacy control aliases; no successor to durable typed waits. See ADR-001 for budgets and administrative continuation.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## ADR-011: Observers consume immutable events without lifecycle mutation
 
@@ -220,6 +240,8 @@ Core implements the administrative exception through [authenticated reopen](http
 
 **Supersession and related decisions.** The requirement for a separate audit observer is retired; journal-derived audit replaces it. The optional required-sink contract remains distinct from a mandate to reinstall that removed observer.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-012: Assemble exact role-specific runtime bundles
 
 **Context.** Copying all shared source into every image leaks authority across roles and makes filesystem placement an accidental deployment API.
@@ -237,6 +259,8 @@ Core implements the administrative exception through [authenticated reopen](http
 **Evidence.** [packaging/runtime/roles/nova.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/packaging/runtime/roles/nova.json), [packaging/runtime/roles/buster.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/packaging/runtime/roles/buster.json), [packaging/runtime/roles/prism.json](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/packaging/runtime/roles/prism.json), [scripts/build-runtime-role-bundle.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/build-runtime-role-bundle.mjs), [tests/verification/contracts/check-runtime-package-cutover.mjs](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/tests/verification/contracts/check-runtime-package-cutover.mjs).
 
 **Supersession and related decisions.** Supersedes the overlay wording still present in the historical Plugin System Vision target layout. D-105 and exact manifest assembly are the later source-backed direction; do not recreate that overlay.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## ADR-013: Use authenticated durable Nova-to-Buster plan jobs
 
@@ -256,6 +280,8 @@ Core implements the administrative exception through [authenticated reopen](http
 
 **Supersession and related decisions.** D-110 refines the first transport scope relative to D-098; full withdrawal of the later queue target is not established. The remote-test-gate adapter explicitly does not invoke the historical suite bridge.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-014: Separate Buster execution evidence from Nova quality judgment
 
 **Context.** Executing a test and deciding whether its evidence permits pipeline progress are different responsibilities. Mixing them gives a specialist pipeline authority.
@@ -274,6 +300,8 @@ Core implements the administrative exception through [authenticated reopen](http
 
 **Supersession and related decisions.** Replaces Buster-owned final pipeline judgment. No identified successor. Exact unit-result and report rules remain separately identifiable as D-108/D-109/D-114–D-118 in [Test-gate decisions](test-gate.md).
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## Portable JSON encoding and preserved historical identities
 
 **Context and decision.** Canonical JSON was ordered using localeCompare, so distinct locales could produce different bytes and digests. Composed and decomposed Unicode keys could also compare equal while remaining distinct keys. A global in-place serializer change would silently change existing effect, wait, artifact, worktree and review identities. Use explicit versioned portable encoding for new paths, preserve original historical bytes and select historical verification by recorded format. Never try several codecs until a digest happens to match, normalize distinct keys into one, or silently rehash accepted work.
@@ -286,6 +314,8 @@ Core implements the administrative exception through [authenticated reopen](http
 
 **Pinned sources.** [Codec implementation](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/sdk/src/values.ts), [authenticated artifact bytes](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/common/plugin-runtime/sdk/src/artifact-json.ts), and [new-project selection](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/project/cli.ts). The [evidence policy](acceptance.md#d12--accepted-local-completion-policy) defines the verification limit.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## Integration evidence: asynchronous lint execution
 
 The two historical lint integration logs establish an interface-integration failure, not a separate accepted ADR. Git-based evidence partitioning must await the bounded asynchronous executor; its callers and tests must also await the result and preserve cancellation/failure. The first log fails Git enumeration. Despite its filename, lint-integration-fixed.log also fails: a test compares a Promise with a completed result. Neither is a passing integration proof.
@@ -293,3 +323,5 @@ The two historical lint integration logs establish an interface-integration fail
 The current implementation awaits safeExec in evidence-file-partition.ts, and the empty-target test awaits adapter.run before asserting its result. This evidence does not establish a passing whole-lint run. The lasting consequence under ADR-008 is that moving execution behind an asynchronous bounded boundary requires updating all consumers; a renamed “fixed” log cannot establish completion. No new approval is inferred from these diagnostics.
 
 **Pinned sources.** first failed integration, second failed integration, [awaited Git execution](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/lint/src/engine/evidence-file-partition.ts), [awaited test consumer](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs).
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.

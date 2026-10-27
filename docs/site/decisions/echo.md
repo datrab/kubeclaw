@@ -35,6 +35,20 @@ removing its identity.
 | Repair history | Core-certified remediation cycles and the immutable prior report control repair growth. | Attempt count as a repair counter and a fabricated replacement baseline are rejected. | A missing or corrupt history blocks instead of resetting the budget. | The decision has no named approver or separate approval date. | The governor history contains the required state. No live repair-cycle result is available. | Core-certified `remediationCyclesUsed` replaces plugin-owned cycle counting. |
 | Large changes and audit | Large reviews use deterministic slices. Whole-repository audit is a separate non-repairing registration. | Silent file omission, arbitrary browsing, and audit-triggered repair are rejected. | Complete evidence needs more planning and can require orchestration for oversized connected groups. | The decision record does not name an approver or approval date for this group. | Repository-audit source exists. Production model performance and completeness remain unverified. | The separate audit registration replaces the earlier implication that audit findings can request repair. |
 
+### Reevaluation conditions
+
+**Authority and policy.** Unknown: no reevaluation condition is established in this group record.
+
+**Evidence verification.** Unknown: no reevaluation condition is established in this group record.
+
+**Governor and repair.** Unknown except D-ER4-017: a later cross-project ledger may add a deployment namespace outside content identity if product needs require it. This optional addition does not change existing content identity. [Original D-ER4-017](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/echo-review-phase-4-design.md#d-er4-017-fingerprints-exclude-line-number-hints).
+
+**Simplification and reporting.** Unknown: no reevaluation condition is established in this group record.
+
+**Repair history.** Unknown: no reevaluation condition is established in this group record.
+
+**Large changes and audit.** Unknown: no reevaluation condition is established in this group record.
+
 The records below preserve stable decision IDs and their current requirements.
 Implementation does not by itself prove operator approval or production acceptance.
 The current rules in the next section replace intermediate rules explicitly.

@@ -16,7 +16,8 @@ A local finding closure does not prove deployment or human product acceptance.
 
 Each stable identifier keeps one meaning. A complete record states the context,
 decision, recorded alternatives, reason, consequences, approval, implementation,
-verification, and supersession state. A field can state that the source is silent.
+verification, supersession state, and the condition for reevaluating the choice.
+A field can state that the source is silent.
 It must not fill an evidence gap with an invented explanation.
 
 Decision status and implementation status are independent. `Accepted` means that
@@ -35,6 +36,7 @@ guarantees remain valid. Do not reuse an old identifier for the new choice.
 | [Echo decisions](echo.md) | Which original Echo decisions govern proposals, deterministic evidence, reduction and policy? |
 | [Prism decisions](prism.md) | How do product, editor, retrieval, preference, publication and recovery choices fit together? |
 | [Implementation decisions](implementation.md) | How do native ownership, signed human decisions, versioned data and integration history refine the core rules? |
+| [Evidence and acceptance policy](acceptance.md) | What does D12 permit local evidence to close, and which live or human claims remain separate? |
 
 Original identifiers remain attached to their decisions.
 Repeated explanations share a record; distinct approval or supersession boundaries remain explicit.

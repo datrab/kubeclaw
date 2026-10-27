@@ -19,6 +19,8 @@ Producer boot, run, attempt and claim identity, local sequences and terminal clo
 
 Sources: complete foundation, [versioned contract](https://github.com/datrab/kubeclaw/tree/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/contracts/pipeline-observability/v1).
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-016
 
 **Version telemetry contracts independently of telemetry services.** Correlation, envelope, payload and bundle definitions generate consistent schema/type artifacts. A version identifies the wire contract; a schema alone cannot prove durable admission, authentication, ordering, retention or ingestion.
@@ -26,6 +28,8 @@ Sources: complete foundation, [versioned contract](https://github.com/datrab/kub
 **Context and rationale:** a flat v1 envelope and the active plugin v2 envelope are different contracts. Treating v1 assets as the active event path would create a false compatibility promise. **Decision:** preserve v1 as a compatibility asset until external consumers are assessed. Its nullable fields, manifest, generated types, and validation obligations remain explicit. Go data models are not validators. No v1-to-v2 adapter is implied. **Alternative:** repository import absence alone cannot justify removal. **Implementation:** v1 schema generation remains available, but no active producer or consumer uses it. **Verification:** schema and type checks are local contract evidence, not transport tests. **Supersession:** v2 is active for plugins; it does not rewrite stored v1 data.
 
 Sources: [v1 contract README](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/contracts/telemetry/v1/README.md), [generator](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/generate-telemetry-contracts.mjs).
+
+**Reevaluation condition.** Reassess removal of the v1 compatibility assets only after external consumers are assessed. Repository import absence alone does not justify removal; this is not automatic retirement approval.
 
 ## ADR-017
 
@@ -35,6 +39,8 @@ Sources: [v1 contract README](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c
 
 Sources: [implementation protocol](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/implementation-agent/src/protocol.ts), [package rationale and workspace contract](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/implementation-agent/README.md).
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-018
 
 **Echo proposes; deterministic plugin policy governs effects.** Echo supplies assessments and proposals. The review plugin proves immutable source/evidence membership, verifies eligible proposals independently, freezes policy, reduces certified state and records immutable reports. Core alone schedules repairs, retries, waits and transitions. A parseable assertion is not a verified finding. Neither Echo nor Nova can forge Core's remediation counter.
@@ -42,6 +48,8 @@ Sources: [implementation protocol](https://github.com/datrab/kubeclaw/blob/ad67f
 **Rationale and alternatives:** canonical `stage-result.v2` reduction replaces agent PASS/FAIL. This boundary needs no second review scheduler, mutable cross-run backlog, or new verifier service. [Echo decisions](echo.md) preserve detailed rules and alternatives. **Implementation:** the bounded review and governor path exists. Live model quality and configured activation remain separate. **Evidence boundary:** package policy and governor reduction are present; no model-call result is available. **Supersession:** certified semantic verification replaces the temporary rejection of all proposals.
 
 Sources: [review package](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/README.md), [governor result reduction](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/plugins/review/src/review-governor-decision.ts).
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## ADR-019
 
@@ -51,6 +59,8 @@ Sources: [review package](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cf
 
 Sources: Prism architecture, historical integration choices, [role manifest](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/packaging/runtime/roles/prism.json). Historical fixed software versions in the integration note are not current release authority.
 
+**Reevaluation condition.** A separate vector store needs measured PostgreSQL limits that justify its operational and consistency cost. The initial colocated capture service depends on resource measurements; a separate sidecar or service is needed when Chromium isolation, concurrency, or scaling requires it. These conditions do not transfer product or worker authority. [Original architecture](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-design-engine-architecture.md).
+
 ## ADR-020
 
 **Distinguish roles, engines, specialists and activation.** Nova, Buster and Prism have runtime-role manifests. A role installs a declared dependency set. An engine owns specialist meaning. Forge and Echo are dispatched specialists in Nova's development environment. An OpenClaw host extension uses a different registration surface. Presence in an image, manifest, or inventory does not prove activation or deployment.
@@ -58,6 +68,8 @@ Sources: Prism architecture, historical integration choices, [role manifest](htt
 **Context and rationale:** formerly copying all shared source into every role blurred authority. Use one source/version installed into separate immutable images, with package digests and dependency-direction checks. Multiple installations do not mean multiple implementations. **Alternatives:** whole-directory overlays were replaced; DeepSec appears in the older target model, but there is no current DeepSec role manifest. **Approval:** packaging source declares its model authoritative; independent approval/date unconfirmed. **Implementation:** three role manifests and bundle builder exist. **Verification:** role file inventory and packaging document inspected, no role image built. **Supersession:** the `general` image name has been retired; role manifests and release selections own current installed bytes.
 
 Sources: packaging rationale, [actual roles](https://github.com/datrab/kubeclaw/tree/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/packaging/runtime/roles), image responsibilities.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## ADR-021
 
@@ -67,6 +79,8 @@ Sources: packaging rationale, [actual roles](https://github.com/datrab/kubeclaw/
 
 Sources: [current publication implementation](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/docs-publication.mjs).
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## ADR-022
 
 **Architecture visualization is optional presentation.** Use an accurate SVG or Mermaid diagram when it explains a relationship. Add an interactive architecture view when it helps the reader. A reference lock, compulsory HTML rewrite, or completed Archviewer is not a prerequisite for correct documentation or pipeline approval.
@@ -74,6 +88,8 @@ Sources: [current publication implementation](https://github.com/datrab/kubeclaw
 **Rationale and alternatives:** machine-authoritative design contracts and a human architecture view have different purposes. The existing SVG/Mermaid route and optional HTML presentation are actual alternatives in the documentation plan. **Approval:** the catalogue explicitly preserves this user requirement; no separate historical ADR approval date is established. **Implementation:** diagrams and an architecture-viewer surface exist; interactive presentation quality is separate future work. **Verification:** decision source and Prism integration note inspected; no visual/product acceptance claimed. **Supersession:** any universal interactive/HTML requirement is not carried forward; Prism design-baseline authority remains separate.
 
 Sources: decision catalogue, Prism versus Archviewer boundary.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## Product Decision Authority
 
@@ -85,17 +101,23 @@ D01–D16 are approved target decisions. Approval concerns intended behavior, no
 
 The explicit exception permits only pipeline-generated **demo** credentials in private logs and authorized operator notifications. It does not permit platform, GitHub, model, Tailscale or database secrets, real user data, or public disclosure. Credential origin and purpose decide the exception, not a namespace or field name. **Rationale/consequence:** usable diagnosis without silently dropping evidence or abolishing protection. **Alternative:** blanket unredacted logging is not the accepted rule. See D06/D07 for separate retention lifecycles.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D02
 
 **Technical delivery and human acceptance are different states.** Ready for acceptance requires completed implementation and all mandatory checks. It also requires a reachable demo of the exact checked revision. The operator must receive its URL and demo credentials. Accepted requires the operator's explicit agreement to that version. Changes require fresh verification and acceptance. An expired demo remains expired even if its historical acceptance remains valid.
 
 **Rationale/consequence:** build success, demo reachability and human agreement cannot substitute for one another. Pipeline Review and Case Study remain optional completion analyses. **Alternatives:** none separately recorded. D12 changes local remediation closure, not this product approval contract.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D03
 
 **Explicit mandatory checks and optional agents.** Lint follows every module change, including repairs. Each module has a declared deterministic test requirement, and the integrated project is checked cumulatively before technical delivery. Skipped mandatory checks do not pass; scope cannot be silently reduced. Architecture's deterministic structure/configuration/reference checks are mandatory; agentic architecture review is optional. Echo defaults off. Buster defaults on, with its Test-Agent separately disableable while deterministic obligations remain.
 
 **Rationale/consequence:** project-specific required evidence controls delivery, rather than running every possible suite or treating an optional agent as all of Buster. Enabled checks remain binding under D10. **Superseded alternative:** the earlier general requirement for agentic architecture review was explicitly corrected. Source configuration can show defaults; it cannot prove that a particular run selected or passed them.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## D04
 
@@ -105,11 +127,15 @@ An additional required repair beyond a category's exhausted budget returns `orch
 
 **Rationale/consequence:** bounded convergence without counting successful rechecks as repairs. **Rejected alternatives:** one shared two-round limit, three default rounds, two extra Nova rounds, or reset of every category. Echo's scope governor adds a separate constraint: a clean final repair cannot pass after unauthorized file/LOC/ownership expansion. It consumes Core-certified repair state, not an agent counter.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D05
 
 **Parallel isolated work; serialized shared Git integration.** Independent modules use separate authorized worktrees; dependencies must pass mandatory checks before dependents start. Configure maximum concurrency, serialize short shared integrations, and treat ordinary lock contention as controlled contention. Check the actual integrated revision cumulatively.
 
 **Rationale/consequence:** parallel implementation must not create competing repository authority or validate an unmerged approximation. **Alternatives:** none separately recorded.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## D06
 
@@ -117,11 +143,15 @@ An additional required repair beyond a category's exhausted budget returns `orch
 
 **Rationale/consequence:** users need time to inspect exactly the delivered version, while temporary infrastructure has a bounded lifetime. Expiry/explicit cleanup removes demo resources. **Alternatives:** none separately recorded. **Boundary:** seven days is not a log-retention policy; D07 owns retained evidence and acceptance history.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D07
 
 **Manual log cleanup; preserved project history.** Disk/Git logs remain indefinitely until explicit operator cleanup. Code, final reports, decisions and acceptance history remain until explicit project deletion. Preserve evidence needed by a waiting run; cleanup that makes recovery impossible must expose that consequence. ClawDeck's internal deletion period was not specified.
 
 **Rationale/consequence:** diagnosis and pending decisions must survive a demo expiration. This does not classify caches, unpacked sources or temporary build directories as permanent logs. Capacity budgets, backpressure and explicit errors must not hide silent truncation or loss. **Rejected alternative:** automatic 30-day log deletion.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## D08
 
@@ -129,17 +159,23 @@ An additional required repair beyond a category's exhausted budget returns `orch
 
 **Rationale/consequence:** restart must not duplicate an external authority-changing action or create an endless retry loop. **Alternative:** blind replay of uncertain effects is excluded. Core's durable-effect authority remains the shared architectural rule; this record preserves its operator-facing recovery semantics.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D09
 
 **One generic Worker Core with independent durable execution state.** Buster, Prism, and future workers use the same neutral execution mechanics. These mechanics cover job identity, state, timeout, cancellation, recovery, and results. Engines own domain logic. Operators configure worker capabilities and resources. Nova owns the overall process. Core imports no concrete plugin. Required job and result evidence remains durable when ClawDeck is unavailable.
 
 **Rationale/consequence:** specialist additions must not fork lifecycle or depend on log collection for recovery. **Alternative:** parallel specialist cores are excluded. This user-confirmed rule corroborates ADR-002 in the core decision set and ADR-019 here; it is not a second implementation contract.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D10
 
 **Only the operator can accept a quality risk.** Bind explicit acceptance and its reason to the checked revision. Nova cannot grant it. A failed required check remains failed; a deliberate requirement/test-scope change requires rechecking the affected revision. Corrupt evidence, wrong result identity or missing authorization cannot be overridden as an accepted risk.
 
 **Rationale/consequence:** preserve both human authority and truth of evidence. **Rejected alternative:** `force-passed` or an agent-made risk waiver. This decision does not mean every failed check can be bypassed.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## D11
 
@@ -149,9 +185,13 @@ An additional required repair beyond a category's exhausted budget returns `orch
 
 **Unresolved supersession:** current [projection source](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/preferences/index.ts) applies a 180-day half-life using the latest evidence time. The [generation snapshot](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/prism/control/preference-snapshot.ts) records `referenceTime` and `prism.preferences.v1.decay180-project-override`, and gives project traits precedence over matching personal traits. These source facts do not establish approval to replace the accepted no-decay rule. Do not publish either “no decay implemented” or “decay accepted”; alignment is tracked in open issues. Current traits are strings, and project events including retractions require project identity; the old contract examples are not a current wire reference.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D12
 
 The distinct decision about local finding closure versus later live acceptance is preserved in [acceptance decisions](acceptance.md). It neither supersedes D02 nor grants deployment authority.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## D13
 
@@ -159,17 +199,23 @@ The distinct decision about local finding closure versus later live acceptance i
 
 Consolidate operator settings through the existing `swarm.config.json`. Do not create another operator file as a central authority. **Rationale/consequence:** units and aggregate admission must remain meaningful during migration. **Alternatives:** exclude tight normal-load limits and silent process-to-task conversion. Host policy currently has a dedicated selected input. Complete settings consolidation remains roadmap work.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D14
 
 **Buster owns retained fixtures beyond setup.** Buster gives retained fixtures a durable separate lifetime, generous dedicated budget, dependency/readiness management and final cleanup evidence. Worker Core supplies neutral process ownership, measurement and recovery. Prism retains ordinary attempt lifetime. Readiness after setup is not proof of cleanup.
 
 Physical resource binding continues throughout fixture lifetime. Moving a process between cgroups does not transfer its previously incurred memory charges. Keep historical setup receipts/budgets readable; explicitly version and bind new lifetime receipts. **Rationale/consequence:** a retained service must not outlive its resource accounting. **Alternative:** release-at-setup or retroactive memory-charge transfer is excluded.
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## D15
 
 **Implementation scope, not a new product setting.** Completion requires implemented code and sufficient real local tests. Live checks remain separate under D12. Elapsed work time is not evidence of completion.
 
 **Decision:** completion requires the defined scope and evidence. Neither an elapsed-time target nor a historical item count is a product setting or a measure of completion. The accepted local-proof rule continues through D12. The decision record names no individual D15 confirmation date.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## D16
 
@@ -178,6 +224,8 @@ Physical resource binding continues throughout fixture lifetime. Moving a proces
 **Actual alternative:** option B keeps attempts in a runtime-delegated subtree beneath each worker container. Normal Pod accounting then covers their aggregate use. This choice requires different runtime integration and replacement or drain handling. A static host-path mount cannot substitute for it. A Node annotation cannot prove scheduler withholding. Option A supports durable role-scope and fixture recovery across supervisor replacement. Missing host, runtime, or accounting prerequisites must prevent activation. D13/D14 remain unchanged. The selection authorizes implementation, not a host change or purchase.
 
 **Implementation and proof:** pool generation/preflight and Prism native selection exist; complete Buster integration and actual scheduler/enforcement acceptance are separate. Proposed capacity values are not calibrated host measurements. Retain final observations before releasing scopes; unresolved cleanup fences capacity. Sources: actual A/B decision, current host-pool contract.
+
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
 
 ## Configuration and release authority
 
@@ -189,6 +237,8 @@ Build inputs, published artifacts and deployed images are different identities. 
 
 Sources: version policy, [manifest](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/versions.json), [generator](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/versions.mjs).
 
+**Reevaluation condition.** Unknown: this record does not establish a condition for reevaluating its choice.
+
 ## Frozen recovery and versioned retirement
 
 **Decision:** resume with the run's frozen graph, registry, package identities and versioned configuration/encoding. Verify their exact digests and supported versions. Rebuild missing wait/artifact projections from authoritative journal events rather than fabricate state. If configuration must change, use an explicit new run or verified migration; never substitute today's config merely because the old snapshot cannot be read.
@@ -196,6 +246,8 @@ Sources: version policy, [manifest](https://github.com/datrab/kubeclaw/blob/ad67
 **Context/rationale:** a retry with new policy or package bytes is different authorized work. Retire obsolete implementations through explicit drain/migration, preserving original receipts and unresolved ownership evidence. This is compatible with removing unused fallback code: retaining a supported historical data contract is not an excuse for a second active execution path. **Alternatives:** silent fallback, manual journal edits and relabelling old codecs are excluded. **Approval/date:** shared architectural rule corroborated by D08 and source; independent approval date for this editorial grouping unconfirmed. **Implementation:** snapshot validators support explicit v1–v4 run identities, pinned package comparison and profile separation. **Evidence boundary:** no process-replacement result is available. **Supersession:** each data version retains its original hash/codec semantics; no new migration is authorized here.
 
 Sources: [snapshot authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/execution/engine-snapshots.ts), [journal recovery](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/recovery.ts), [recovery contract](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/site/use/recovery.md).
+
+**Reevaluation condition.** A required configuration change uses an explicit new run or verified migration, not current defaults substituted into an old run. Obsolete implementation retirement needs explicit drain or migration with original receipts and unresolved ownership evidence preserved; no migration is authorized by this record.
 
 ## Prism recovery policy
 
@@ -206,6 +258,8 @@ Restore PostgreSQL, reconnect/restore artifacts, verify required digests, enter 
 **Rationale/actual alternatives:** avoid a separate Prism backup or telemetry platform. Daily backups are the v1 baseline; continuous WAL is added when the accepted loss limit becomes shorter than a day. Point-in-time recovery is therefore conditional, not an unconditional capability. **Approval:** the architecture contract carries accepted status; its record names neither actor nor date. **Implementation:** full deployed recovery remains unverified. **Verification:** no backup or restore exercise has completed. **Supersession:** the detailed v1 operations contract selects the supported backup mechanism without removing the need for tested recovery.
 
 Source: accepted recovery contract.
+
+**Reevaluation condition.** Add continuous WAL-based point-in-time recovery when the accepted data-loss limit becomes shorter than one day. This changes operations policy, not Prism domain contracts. Other recovery-target or replication triggers must be explicit deployment policy, not inferred numbers. [Original recovery policy](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-recovery-observability-v1.md#postgresql-backup).
 
 ## Supported operations access
 
@@ -218,3 +272,5 @@ Source: accepted recovery contract.
 **Implementation/proof:** supervisor, chart and verifier exist. Local app-server socket readiness does not prove login, mobile pairing, end-to-end task execution, or independent host access. Authorization checks do not execute a target command. The evidence contains no complete deployment, pairing, and management-recovery exercise. **Alternatives/supersession:** this design needs no new VM. The retired external bootstrap is not a fallback. A separately authenticated workspace would be a new design, not automatic failover.
 
 Sources: Ops architecture and explicit failure trade-off, [chart defaults](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/charts/ops-pod/values.yaml), [platform adoption](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/scripts/argocd-self-management.mjs), continuous GitOps.
+
+**Reevaluation condition.** Release management changes from Helm bootstrap only through explicit platform Argo adoption; the managers must not operate the same release independently. A condition for replacing the accepted access and failure-domain model is unknown; a separate authenticated workspace remains a new design, not automatic failover.

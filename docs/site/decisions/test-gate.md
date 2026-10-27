@@ -23,6 +23,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-001.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-001-base-system-structure).
+
 ## D-002: Testkube Use
 
 **Decision.** Use Testkube as a design source, not a runtime dependency or second general workflow engine.
@@ -30,6 +32,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Useful execution ideas do not justify a second lifecycle authority.
 
 **Approval/source.** Accepted direction, 2026-08-04; original D-002.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-002-testkube-use).
 
 ## D-003: Test Activation Is an Allowlist
 
@@ -39,6 +43,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-003.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-003-test-activation-is-an-allowlist).
+
 ## D-004: Provided Test Documentation
 
 **Decision.** Document every provided test's scope/non-scope, provider/version, inputs, capabilities, settings, results, artifacts, verdict, declaration example and common failures.
@@ -46,6 +52,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** The provider schema remains the machine contract; explanatory documentation cannot grant provided tests a special runtime path.
 
 **Approval/source.** Accepted, 2026-08-04; original D-004.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-004-provided-test-documentation).
 
 ## D-005: Pipeline File Name
 
@@ -55,6 +63,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-005.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-005-pipeline-file-name).
+
 ## D-006: Blocking and Advisory Tests
 
 **Decision.** Declared tests are blocking by default. mode: advisory explicitly runs and reports a test without blocking progression.
@@ -62,6 +72,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** The ordinary case stays small and weaker enforcement remains visible.
 
 **Approval/source.** Accepted, 2026-08-04; original D-006.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-006-blocking-and-advisory-tests).
 
 ## D-007: Agent Activation
 
@@ -71,6 +83,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-007.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-007-agent-activation).
+
 ## D-008: Retire the Manifest Test
 
 **Decision.** Retire manifest as a provided Buster test; static manifest validation belongs in lint.
@@ -78,6 +92,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Preserve YAML and raw/rendered Kubernetes schema checks, custom policy packs and useful environment, Secret-reference, registry, probe and resource checks. Live cluster behavior remains a separate test; avoid duplicate static findings.
 
 **Approval/source.** Accepted, 2026-08-04; original D-008.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-008-retire-the-manifest-test).
 
 ## D-009: Separate Container Build From Deployment
 
@@ -87,6 +103,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-009.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-009-separate-container-build-from-deployment).
+
 ## D-010: Container Build Definitions
 
 **Decision.** Container build explicitly selects either a project Dockerfile or a versioned template.
@@ -94,6 +112,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** No project-type guessing. Templates document commands, images, outputs and defaults; changed language/image defaults require an explicit choice or new immutable template version. Other build methods use provider contracts.
 
 **Approval/source.** Accepted, 2026-08-04; original D-010.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-010-container-build-definitions).
 
 ## D-011: Container Build Verdict and Evidence
 
@@ -103,6 +123,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-011.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-011-container-build-verdict-and-evidence).
+
 ## D-012: Small Container Build Configuration
 
 **Decision.** Normal build declarations contain context plus exactly one Dockerfile/template selection; advanced provider settings are optional.
@@ -110,6 +132,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Registry endpoint and credentials belong to platform infrastructure, not each project. Every successful build returns the verified digest from that registry.
 
 **Approval/source.** Accepted, 2026-08-04; original D-012.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-012-small-container-build-configuration).
 
 ## D-013: Retire the Health Test Type
 
@@ -119,6 +143,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-013.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-013-retire-the-health-test-type).
+
 ## D-014: Fixture Is a Base System Part
 
 **Decision.** Fixtures own bounded setup, readiness, typed outputs and cleanup, and run only when declared.
@@ -126,6 +152,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Preparation is not product quality judgment. A failed required fixture prevents dependent tests and makes the gate report execution failure.
 
 **Approval/source.** Accepted, 2026-08-04; original D-014.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-014-fixture-is-a-base-system-part).
 
 ## D-015: Kubernetes Deployment Fixture Scope
 
@@ -135,6 +163,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-015.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-015-kubernetes-deployment-fixture-scope).
+
 ## D-016: Bounded Deployment Retention
 
 **Decision.** Delete fixture environments at run end by default. Explicit retain keeps a lease only until a bounded operator-approved expiry or earlier human release.
@@ -142,6 +172,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** The result must expose namespace, creation/expiry, endpoints and release action. This is bounded inspection retention, not indefinite deployment.
 
 **Approval/source.** Accepted, 2026-08-04; original D-016.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-016-bounded-deployment-retention).
 
 ## D-017: Deploy the Checked Kubernetes YAML
 
@@ -151,6 +183,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-017.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-017-deploy-the-checked-kubernetes-yaml).
+
 ## D-018: Test Deployment Secret Visibility
 
 **Decision.** Fixture Secrets are test-deployment Secrets. Copy only approved objects and expose references, never decoded values in logs, messages or provider output.
@@ -158,6 +192,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Production uses separately configured Secrets; test values are not promoted. This follows the capability/reference boundary.
 
 **Approval/source.** Accepted, 2026-08-04; original D-018.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-018-test-deployment-secret-visibility).
 
 ## D-019: Tailscale Is an Exposure Fixture
 
@@ -167,6 +203,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-019.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-019-tailscale-is-an-exposure-fixture).
+
 ## D-020: Accessibility Test Purpose and Browser Execution
 
 **Decision.** Keep axe-core for automated accessibility checks on rendered pages; use one pinned Playwright browser worker with fresh contexts per route/setting and bounded parallelism.
@@ -174,6 +212,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Preserve full axe results and optional failed-element screenshots. Automated rules do not establish complete accessibility certification.
 
 **Approval/source.** Accepted, 2026-08-04; original D-020.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-020-accessibility-test-purpose-and-browser-execution).
 
 ## D-021: Accessibility Browser Coverage
 
@@ -183,6 +223,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-021.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-021-accessibility-browser-coverage).
+
 ## D-022: Accessibility Verdict Policy
 
 **Decision.** A blocking axe check fails for every violation not individually accepted with rule, route, selector, reason and expiry.
@@ -190,6 +232,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Numeric failure allowances could hide new problems and are excluded. Incomplete findings remain visible for declared review; browser/axe errors are execution errors. Truncated summaries never change actual counts.
 
 **Approval/source.** Accepted, 2026-08-04; original D-022.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-022-accessibility-verdict-policy).
 
 ## D-023: Separate Lighthouse Test Purposes
 
@@ -199,6 +243,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-023.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-023-separate-lighthouse-test-purposes).
+
 ## D-024: Repeat Lighthouse Performance Runs
 
 **Decision.** Run Lighthouse performance three times sequentially by default and evaluate medians; a final gate can explicitly request five.
@@ -206,6 +252,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Store every report and mark a representative run. Run SEO and best-practices once by default. Concurrent attempts on one worker would distort measurements.
 
 **Approval/source.** Accepted, 2026-08-04; original D-024.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-024-repeat-lighthouse-performance-runs).
 
 ## D-025: Named Lighthouse Profiles
 
@@ -215,6 +263,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-025.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-025-named-lighthouse-profiles).
+
 ## D-026: Combined Lighthouse Performance Budgets
 
 **Decision.** Blocking Lighthouse performance uses a named budget combining minimum category score with maximum configured LCP, CLS and TBT measurements.
@@ -222,6 +272,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Every route must meet every configured limit using medians; score catches wider regressions and measurements identify specifics. Advisory measurement may omit a budget.
 
 **Approval/source.** Accepted, 2026-08-04; original D-026.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-026-combined-lighthouse-performance-budgets).
 
 ## D-027: Lighthouse SEO and Best-Practices Verdicts
 
@@ -231,6 +283,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-027.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-027-lighthouse-seo-and-best-practices-verdicts).
+
 ## D-028: Replace Bundle With Size Budget
 
 **Decision.** Replace bundle with an optional size-budget check on an explicitly named build artifact.
@@ -238,6 +292,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** It supports assets, packages, binaries, or archives. It runs after build and before live tests. It does not guess directories or require a deployment, browser, or agent.
 
 **Approval/source.** Accepted, 2026-08-04; original D-028.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-028-replace-bundle-with-size-budget).
 
 ## D-029: Size-Budget Limits
 
@@ -247,6 +303,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-029.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-029-size-budget-limits).
+
 ## D-030: DeepSec Is a Later Isolated Provider
 
 **Decision.** Defer DeepSec to a later low-priority isolated specialist provider; it is outside the first test-gate implementation.
@@ -254,6 +312,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Give it read-only source, private workdir, approved model network and bounded resources/time/cost, with no Kubernetes or registry credentials. Changed-file review is normal; full audits are separate declared work. It does not replace deterministic security.
 
 **Approval/source.** Accepted, 2026-08-04; original D-030.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-030-deepsec-is-a-later-isolated-provider).
 
 ## D-031: Security Suite Is Extensible Composition
 
@@ -263,6 +323,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-031.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-031-security-suite-is-extensible-composition).
+
 ## D-032: Versioned Security-Header Profiles
 
 **Decision.** Security headers use versioned profiles per HTTP/HTTPS target type, with explicit additions, replacements, removals and expiring exceptions.
@@ -270,6 +332,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Record exact resolved rules; do not compile the policy list into Buster core.
 
 **Approval/source.** Accepted, 2026-08-04; original D-032.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-032-versioned-security-header-profiles).
 
 ## D-033: Replaceable Dependency-Scan Providers
 
@@ -279,6 +343,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-033.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-033-replaceable-dependency-scan-providers).
+
 ## D-034: Scan the Final Container Image
 
 **Decision.** Use an image-scan contract with Trivy as initial provider; scan the exact verified container-build digest.
@@ -286,6 +352,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Do not rebuild or select a mutable tag. Kubernetes deploys the same scanned digest. Image findings and verdict are separate from build success.
 
 **Approval/source.** Accepted, 2026-08-04; original D-034.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-034-scan-the-final-container-image).
 
 ## D-035: Defer Live Attack Testing
 
@@ -295,6 +363,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-035.
 
+**Reevaluation condition.** Revisit the live-attack deferral during the later security phase that introduces DeepSec. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-035-defer-live-attack-testing).
+
 ## D-036: Static and Live Kubernetes Security Checks
 
 **Decision.** Separate kubernetes-policy on final YAML from kubernetes-runtime-security on actual leased test resources.
@@ -302,6 +372,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Avoid duplicate rules: declared configuration versus admission changes, identity/RBAC/exposure/control drift. The namespace controller alone grants read-only lease-scoped access; the checker cannot self-grant cluster access.
 
 **Approval/source.** Accepted, 2026-08-04; original D-036.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-036-static-and-live-kubernetes-security-checks).
 
 ## D-037: Versioned Security Policies
 
@@ -311,6 +383,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-037.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-037-versioned-security-policies).
+
 ## D-038: Deterministic Visual Comparison With Optional Agent Review
 
 **Decision.** Visual regression uses fixed-condition screenshots and deterministic comparison against reviewed baselines before any optional agent judgment.
@@ -318,6 +392,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Keep baseline/current/difference artifacts and separate judgment. Discord consumes saved evidence and cannot change the verdict.
 
 **Approval/source.** Accepted, 2026-08-04; original D-038.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-038-deterministic-visual-comparison-with-optional-agent-review).
 
 ## D-039: Git-Managed Visual Baselines
 
@@ -327,6 +403,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-039.
 
+**Reevaluation condition.** Revisit Git-only visual baseline storage if Git-managed baselines become insufficient. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#deferred-roadmap).
+
 ## D-040: Conditional Approval for Baseline Candidates
 
 **Decision.** Configured candidate generation can publish approval_required; a conditional human approval uses durable request/wait/resume, then a separate apply stage updates baselines and reruns the check.
@@ -334,6 +412,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Approval itself cannot edit files. Without the declared flow execution never changes a baseline; an agent cannot provide human authorization.
 
 **Approval/source.** Accepted, 2026-08-04; original D-040.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-040-conditional-approval-for-baseline-candidates).
 
 ## D-041: Shared Browser Profiles
 
@@ -343,6 +423,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-04; original D-041.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-041-shared-browser-profiles).
+
 ## D-042: Stable Visual Defaults and Optional Masks
 
 **Decision.** Visual capture disables animations, uses the selected profile and waits for readiness by default.
@@ -350,6 +432,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Optional route masks handle known dynamic elements. The result records applied masks, and maintainers inspect changes. Masks are not mandatory configuration.
 
 **Approval/source.** Accepted, 2026-08-05; original D-042.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-042-stable-visual-defaults-and-optional-masks).
 
 ## D-043: Versioned Visual Comparison With Explicit Overrides
 
@@ -359,6 +443,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-043.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-043-versioned-visual-comparison-with-explicit-overrides).
+
 ## D-044: API Suite Uses Separate Test Types
 
 **Decision.** API is editable suite composition beginning with http assertions, api-flow and openapi runtime tests.
@@ -366,6 +452,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** No monolithic fixed API runtime in Buster. Imported Postman or other tools extend provider contracts without core changes.
 
 **Approval/source.** Accepted, 2026-08-05; original D-044.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-044-api-suite-uses-separate-test-types).
 
 ## D-045: Versioned API Flow Files
 
@@ -375,6 +463,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-045.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-045-versioned-api-flow-files).
+
 ## D-046: Strict API Assertions
 
 **Decision.** Every declared API assertion must pass. Request errors/timeouts fail; invalid configuration is an execution error.
@@ -382,6 +472,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Continue independent paths after failure; skip only dependencies missing required output. Setup failure can block dependent main work but cleanup still runs. No numeric failure allowance or routine agent judgment.
 
 **Approval/source.** Accepted, 2026-08-05; original D-046.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-046-strict-api-assertions).
 
 ## D-047: Explicit OpenAPI Runtime Operations
 
@@ -391,6 +483,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-047.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-047-explicit-openapi-runtime-operations).
+
 ## D-048: Extensible E2E Suite and Common Result Contract
 
 **Decision.** E2E is editable composition using a common result contract with Playwright first; Cypress, Selenium, Appium and custom tools can replace it.
@@ -398,6 +492,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Preserve cases/counts/errors, browser identity and all produced screenshots, video, traces, reports and logs; tool replacement needs no Buster core change.
 
 **Approval/source.** Accepted, 2026-08-05; original D-048.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-048-extensible-e2e-suite-and-common-result-contract).
 
 ## D-049: Project-Owned Playwright With a KubeClaw Execution Overlay
 
@@ -407,6 +503,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-049.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-049-project-owned-playwright-with-a-kubeclaw-execution-overlay).
+
 ## D-050: Strict E2E Verdict With Full Evidence Collection
 
 **Decision.** Any E2E case still failing after declared retries fails the result. Attempt all independent selected tests and preserve passed/failed/skipped/unexecuted counts.
@@ -414,6 +512,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Only dependencies, failed required setup, cancellation or total limits justify unexecuted work. Zero executed tests is configuration error; skipped is visible but nonblocking by default. Structured reports replace console parsing.
 
 **Approval/source.** Accepted, 2026-08-05; original D-050.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-050-strict-e2e-verdict-with-full-evidence-collection).
 
 ## D-051: Extensible Unit Suite and Multiple Test Instances
 
@@ -423,6 +523,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-051.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-051-extensible-unit-suite-and-multiple-test-instances).
+
 ## D-052: Run All Independent Unit-Test Instances
 
 **Decision.** Execute all independent unit instances, retaining separate results and bounded optional parallelism.
@@ -430,6 +532,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** One failure does not stop unrelated tests. Any failed blocking instance fails the suite; advisory remains visible. Summaries account for skipped and unexecuted instances.
 
 **Approval/source.** Accepted, 2026-08-05; original D-052.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-052-run-all-independent-unit-test-instances).
 
 ## D-053: Optional Coverage-Budget Check
 
@@ -439,6 +543,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-053.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-053-optional-coverage-budget-check).
+
 ## D-054: Registration Is the Activation Unit
 
 **Decision.** A package can expose several registrations; each has its own schema, input/output, capabilities, version and entrypoint. Registration is the activation/selection unit.
@@ -446,6 +552,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Suites may mix packages. Package delivery and registration authority remain different; a future upload/catalog management platform is deferred.
 
 **Approval/source.** Accepted, 2026-08-05; original D-054.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-054-registration-is-the-activation-unit).
 
 ## D-055: Common Load-Test Contract
 
@@ -455,6 +563,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-055.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-055-common-load-test-contract).
+
 ## D-056: Composable Application-Observation Checks
 
 **Decision.** Use separate log-check, metric-check, trace-check and event-check registrations with one normalized observation-result contract.
@@ -462,6 +572,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** They can use different packages/backends; none receives all signal authority. Preserve expectation, evidence, checked interval/correlation, assertions and artifact references.
 
 **Approval/source.** Accepted, 2026-08-05; original D-056.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-056-composable-application-observation-checks).
 
 ## D-057: Correlated Action and Observation Execution
 
@@ -471,6 +583,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-057.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-057-correlated-action-and-observation-execution).
+
 ## D-058: Central Test-Deployment Log Collection
 
 **Decision.** One platform collector selects test-deployment logs using namespace/workload pipeline, module, deployment and lease identity.
@@ -478,6 +592,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** stdout/stderr are defaults, structured JSON preferred. Before an action open a bounded observation session; Buster gets scoped query access, not cluster-wide logs. File/sidecar collection is deferred.
 
 **Approval/source.** Accepted, 2026-08-05; original D-058.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-058-central-test-deployment-log-collection).
 
 ## D-059: OpenTelemetry Is the Common Observation Entry Point
 
@@ -487,6 +603,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-059.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-059-opentelemetry-is-the-common-observation-entry-point).
+
 ## D-060: Versioned Observability Deployment Profile
 
 **Decision.** A test deployment can select a versioned observability profile providing identities, collector address and required labels/settings before lint.
@@ -494,6 +612,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Deploy the same checked YAML. stdout/stderr needs no app library; instrumentation dependencies for metrics/traces must never be silently injected into a custom image.
 
 **Approval/source.** Accepted, 2026-08-05; original D-060.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-060-versioned-observability-deployment-profile).
 
 ## D-061: Full ClawDeck Evidence View and Separate Signal Streams
 
@@ -503,6 +623,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-061.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-061-full-clawdeck-evidence-view-and-separate-signal-streams).
+
 ## D-062: Simple Log Expectations With Optional Provider Queries
 
 **Decision.** Default log expectations are structured/text matches with exact/minimum/maximum counts in linked deployment/time/correlation scope.
@@ -510,6 +632,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Advanced backend queries such as Loki syntax are optional and do not change the normalized result.
 
 **Approval/source.** Accepted, 2026-08-05; original D-062.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-062-simple-log-expectations-with-optional-provider-queries).
 
 ## D-063: Metric Value and Change Checks
 
@@ -519,6 +643,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-063.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-063-metric-value-and-change-checks).
+
 ## D-064: Required Trace Operation Checks
 
 **Decision.** Trace checks can require an operation and child spans, reject error spans and limit duration.
@@ -526,6 +652,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Record matched trace, present/missing spans, errors, duration and verdict; optional backend queries remain provider-specific.
 
 **Approval/source.** Accepted, 2026-08-05; original D-064.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-064-required-trace-operation-checks).
 
 ## D-065: Non-Destructive Application Event Checks
 
@@ -535,6 +663,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-065.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-065-non-destructive-application-event-checks).
+
 ## D-066: One Event Check With Replaceable Source Adapters
 
 **Decision.** Use one normalized event-check contract and common evidence store with replaceable copying source adapters; Redis and API are initial sources.
@@ -542,6 +672,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Bind adapters to stable workload and optional container identity, not transient Pod names. Multiple sources can coexist without changing expectations or result/view schemas.
 
 **Approval/source.** Accepted, 2026-08-05; original D-066.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-066-one-event-check-with-replaceable-source-adapters).
 
 ## D-067: Shared Buster Worker and Separate Specialist Workers
 
@@ -551,6 +683,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-067.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-067-shared-buster-worker-and-separate-specialist-workers).
+
 ## D-068: Reusable Tool Packages and Declarative Test Definitions
 
 **Decision.** Reusable tool behavior lives in installed provider packages; project tests and suite definitions are data selecting and composing those tools.
@@ -558,6 +692,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** This confirms existing provider/test/suite separation, not a new runtime component or an immediate upload platform.
 
 **Approval/source.** Accepted, 2026-08-05; original D-068.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-068-reusable-tool-packages-and-declarative-test-definitions).
 
 ## D-069: Stable Tool Contracts and Locked Packages
 
@@ -567,6 +703,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-069.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-069-stable-tool-contracts-and-locked-packages).
+
 ## D-070: Fixed Suite Versions Are Explicit Activation
 
 **Decision.** Selecting a fixed suite version explicitly allowlists exactly the tests in that version.
@@ -574,6 +712,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** No suite is default; install/update alone runs nothing. Adding a test needs a new suite version and every run stores its full expansion.
 
 **Approval/source.** Accepted, 2026-08-05; original D-070.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-070-fixed-suite-versions-are-explicit-activation).
 
 ## D-071: Explicit Suite Exclusions, Overrides, and Additions
 
@@ -583,6 +723,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-071.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-071-explicit-suite-exclusions-overrides-and-additions).
+
 ## D-072: Explicit Test and Fixture Links
 
 **Decision.** Tests/fixtures/suites explicitly link required producers by stable ID; validate the complete graph before Buster execution.
@@ -590,6 +732,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Do not infer names or silently add missing work. Missing links, bad outputs or excluded required items are plan errors.
 
 **Approval/source.** Accepted, 2026-08-05; original D-072.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-072-explicit-test-and-fixture-links).
 
 ## D-073: Optional Standard Conditions
 
@@ -599,6 +743,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-073.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-073-optional-standard-conditions).
+
 ## D-074: Automatic Parallel Work With Optional Group Limits
 
 **Decision.** Ready independent tests run automatically after declared dependencies, within operator concurrency ceilings; optional named group limits constrain shared resources.
@@ -606,6 +752,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** A group limit of one serializes only that group, avoiding manual execution groups. Projects can lower but never raise operator maxima.
 
 **Approval/source.** Accepted, 2026-08-05; original D-074.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-074-automatic-parallel-work-with-optional-group-limits).
 
 ## D-075: One Default Retry and Retry-Safe Tests
 
@@ -615,6 +763,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-075.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-075-one-default-retry-and-retry-safe-tests).
+
 ## D-076: Optional Common Test Variations
 
 **Decision.** Optional matrices expand only provider-supported typed values before execution and within an operator size limit.
@@ -622,6 +772,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Every variation has distinct identity/result; provider-aware shards preserve separate outcomes before parent aggregation. No unbounded dynamic expansion.
 
 **Approval/source.** Accepted, 2026-08-05; original D-076.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-076-optional-common-test-variations).
 
 ## D-077: Small Common Test Result With Provider Details
 
@@ -631,6 +783,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-077.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-077-small-common-test-result-with-provider-details).
+
 ## D-078: Providers Return an Explicit Evidence File List
 
 **Decision.** Providers explicitly list evidence files and types; KubeClaw validates, saves and links each to the attempt.
@@ -638,6 +792,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Do not search arbitrary directories or guess importance. Unlisted files are not published evidence.
 
 **Approval/source.** Accepted, 2026-08-05; original D-078.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-078-providers-return-an-explicit-evidence-file-list).
 
 ## D-079: Provider Evidence Defaults With Project Settings
 
@@ -647,6 +803,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-079.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-079-provider-evidence-defaults-with-project-settings).
+
 ## D-080: Specialist Agent Results and Nova Gate Ownership
 
 **Decision.** Declared specialist agents return typed findings/evidence/reasons; blocking results follow ordinary blocking rules. Nova owns final policy and checks completeness.
@@ -654,6 +812,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Nova cannot silently rewrite facts. Keep deterministic evidence and linked agent judgment separate; configured agents may perform bounded active QA or review.
 
 **Approval/source.** Accepted, 2026-08-05; original D-080.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-080-specialist-agent-results-and-nova-gate-ownership).
 
 ## D-081: Trust Installed Providers in the First Version
 
@@ -663,6 +823,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-081.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-081-trust-installed-providers-in-the-first-version).
+
 ## D-082: Declared Provider Access With Operator Limits
 
 **Decision.** Providers declare needed access and operator policy sets maximum authority; projects cannot grant new access.
@@ -670,6 +832,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Shared worker placement does not grant ambient permissions. First version avoids a separate approval ceremony for every request while maintaining declared runtime controls.
 
 **Approval/source.** Accepted, 2026-08-05; original D-082.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-082-declared-provider-access-with-operator-limits).
 
 ## D-083: Migrate and Switch One Old Suite at a Time
 
@@ -679,6 +843,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-083.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-083-migrate-and-switch-one-old-suite-at-a-time).
+
 ## D-084: Build the Minimum Provider System With Unit First
 
 **Decision.** Build the minimum shared provider system through the unit suite first, then add only functions required by later slices.
@@ -686,6 +852,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Unit proves registration/config/results/logs/reports/retry/parallelism/policy/replacement without requiring a browser, cluster, BuildKit or public network first.
 
 **Approval/source.** Accepted, 2026-08-05; original D-084.
+
+**Reevaluation condition.** Extend the minimum shared provider system only when later suite migrations need more functions. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-084-build-the-minimum-provider-system-with-unit-first).
 
 ## D-085: Layer Provider Schema, Suite Template, and Project Override
 
@@ -695,6 +863,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-085.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-085-layer-provider-schema-suite-template-and-project-override).
+
 ## D-086: Use Explicit Typed Links Between Tests and Fixtures
 
 **Decision.** Inputs select declared producer outputs through typed value or artifact links; validate and record transfers in the resolved plan.
@@ -702,6 +872,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** No free-form expressions or implicit shared directories. Links imply dependency order; a transformation needs an explicit provider, not a general expression language.
 
 **Approval/source.** Accepted, 2026-08-05; original D-086.
+
+**Reevaluation condition.** If a later test needs to transform a producer output, a declared transform provider can perform that work. This is a conditional option, not a required new provider or approval for a general expression language. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-086-use-explicit-typed-links-between-tests-and-fixtures).
 
 ## D-087: Use Fixtures for Setup and Buster for Cleanup
 
@@ -711,6 +883,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-087.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-087-use-fixtures-for-setup-and-buster-for-cleanup).
+
 ## D-088: Use One Dependency Model With Optional Result Filters
 
 **Decision.** Use one dependency model, with optional terminal-result filters and normal success expectation.
@@ -718,6 +892,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Typed links create dependencies; a nonmatching result skips the consumer. Do not add after, whenResult or a general expression system.
 
 **Approval/source.** Accepted, 2026-08-05; original D-088.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-088-use-one-dependency-model-with-optional-result-filters).
 
 ## D-089: Do Not Add a Gate-Level Expected-Failure Mode
 
@@ -727,6 +903,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-089.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-089-do-not-add-a-gate-level-expected-failure-mode).
+
 ## D-090: Normalize Standard Reports Through Replaceable Adapters
 
 **Decision.** Registered report adapters normalize explicitly declared standard formats, with JUnit first, while retaining original artifacts.
@@ -734,6 +912,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Adding a format does not change Buster core. The adapter reports facts, not gate policy; D-108/D-109 refine error counts and exact adapter selection.
 
 **Approval/source.** Accepted, 2026-08-05; original D-090.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-090-normalize-standard-reports-through-replaceable-adapters).
 
 ## D-091: Keep One Nova-Owned Execution Graph
 
@@ -743,6 +923,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-091.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-091-keep-one-nova-owned-execution-graph).
+
 ## D-092: Record Basic Resource Use for Each Test Attempt
 
 **Decision.** Record reliably measured attempt duration, CPU time, maximum memory, log/artifact bytes and exit code/signal.
@@ -750,6 +932,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Missing optional values are explicitly absent, never zero. Network/storage can follow when reliable; measurement alone does not block without a declared budget.
 
 **Approval/source.** Accepted, 2026-08-05; original D-092.
+
+**Reevaluation condition.** Add network and storage measurements when the worker can measure them reliably. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-092-record-basic-resource-use-for-each-test-attempt).
 
 ## D-093: Calculate Stability History Without Changing Current Results
 
@@ -759,6 +943,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-093.
 
+**Reevaluation condition.** Revisit the separate stability-gate deferral if teams want test history to affect a pipeline decision. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#deferred-roadmap).
+
 ## D-094: Limit First-Version Test Content to Snapshots and Packages
 
 **Decision.** Initially execute project test content from committed snapshots and reusable code from installed versioned packages.
@@ -766,6 +952,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** No runtime fetching of unknown Git/URL/archive code and credentials. Future content/upload services must first turn content into verified packages or immutable artifacts.
 
 **Approval/source.** Accepted, 2026-08-05; original D-094.
+
+**Reevaluation condition.** Revisit general content-source adapters after the snapshot-and-package model is stable. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#deferred-roadmap).
 
 ## D-095: Decision Traceability and Vertical Suite Migration
 
@@ -775,6 +963,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-095.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-095-decision-traceability-and-vertical-suite-migration).
+
 ## D-096: Neutral Worker Core With Specialist Engines
 
 **Decision.** Nova owns pipeline graph/policy; all specialists share one neutral Worker Core for immutable-attempt identity, limits, logs, cancel, evidence, cleanup, health/capacity and typed result.
@@ -782,6 +972,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Test/design/security/prompt/gate semantics stay in engines above core. Images may differ. Extract this boundary before remote Buster integration so later distribution does not change provider contracts.
 
 **Approval/source.** Accepted, 2026-08-05; original D-096.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-096-neutral-worker-core-with-specialist-engines).
 
 ## D-097: One Immutable Attempt Is the Worker Unit
 
@@ -791,6 +983,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-097.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-097-one-immutable-attempt-is-the-worker-unit).
+
 ## D-098: Shared Queue With Time-Limited Worker Claims
 
 **Decision.** The accepted distributed target uses a durable shared queue and bounded authenticated worker claims with generation fencing, not fixed Pod addresses.
@@ -798,6 +992,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Only the current authenticated owner may report progress/evidence/results; expired claims reject late completion and unmatched capabilities cannot claim. D-110 narrows the first transport to remote plan jobs; queue rollout is not implied by implementation of that first transport.
 
 **Approval/source.** Accepted, 2026-08-05; original D-098.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-098-shared-queue-with-time-limited-worker-claims).
 
 ## D-099: Worker Registration, Health, and Capacity
 
@@ -807,6 +1003,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-099.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-099-worker-registration-health-and-capacity).
+
 ## D-100: Global Work Control With Local Worker Execution
 
 **Decision.** Nova owns global scheduling/concurrency/loss retry/cancel; workers own bounded local execution and renew claims independently of test timeout.
@@ -814,6 +1012,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** A bounded loss grace permits recovery; interrupted attempts remain in history and late results are rejected. Cancellation stops new work, cooperates then forces termination, saves evidence and cleans up.
 
 **Approval/source.** Accepted, 2026-08-05; original D-100.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-100-global-work-control-with-local-worker-execution).
 
 ## D-101: Separate Result, Log, and Evidence Paths
 
@@ -823,6 +1023,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-101.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-101-separate-result-log-and-evidence-paths).
+
 ## D-102: Worker Lifecycle, Fixed Profiles, and Protocol Versions
 
 **Decision.** Workers have starting/ready/draining/stopped/unhealthy states and bounded drain/cleanup. Attempts freeze compatible core/engine/capability profiles and negotiated protocol.
@@ -830,6 +1032,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Do not route merely to a newer worker. Queue wait is bounded. Distributed draining/rolling update implementation remains deferred in the source even though compatible mixed versions are a design goal.
 
 **Approval/source.** Accepted, 2026-08-05; original D-102.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-102-worker-lifecycle-fixed-profiles-and-protocol-versions).
 
 ## D-103: TypeScript First With a Language-Neutral Worker Protocol
 
@@ -839,6 +1043,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-05; original D-103.
 
+**Reevaluation condition.** Revisit the TypeScript-only host when measurements show a clear need for a Go worker host. Preserve the same protocol, contract tests and behavior tests. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-103-typescript-first-with-a-language-neutral-worker-protocol).
+
 ## D-104: Minimum Necessary Worker Contracts
 
 **Decision.** Add Worker Core fields only for an identified execution/recovery/proof consumer and a concrete failure without them.
@@ -846,6 +1052,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Defer safely addable advanced queue controls, metrics, routing and authentication variants until actual distributed use needs them.
 
 **Approval/source.** Accepted, 2026-08-05; original D-104.
+
+**Reevaluation condition.** Add a protocol field only when a real execution, recovery or proof consumer needs it. Revisit advanced distributed controls only when distributed operation proves their necessity. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-104-minimum-necessary-worker-contracts).
 
 ## D-105: Role-Specific Runtime Packages From One Shared Source
 
@@ -855,6 +1063,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-09; original D-105.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-105-role-specific-runtime-packages-from-one-shared-source).
+
 ## D-106: ClawDeck Is the Canonical Observability System
 
 **Decision.** ClawDeck is the logical canonical observability system for durable action/attempt/agent/tool/signal/evidence records and verified content-addressed references; Nova retains scheduling/gate authority.
@@ -862,6 +1072,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Raw bytes go directly to typed stores, not Nova memory. Stable identities, sequence/causation and canonical admission cursor order evidence. Bounded durable outboxes/acks and restart reconciliation preserve results; gaps are explicit and strict final gates require completeness.
 
 **Approval/source.** Accepted, 2026-08-09; original D-106.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-106-clawdeck-is-the-canonical-observability-system).
 
 ## D-107: Earlier Stages Can Continue with Explicit Observability Degradation
 
@@ -871,6 +1083,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-09; original D-107.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-107-earlier-stages-can-continue-with-explicit-observability-degradation).
+
 ## D-108: Preserve Report Errors Without Adding a Pipeline Outcome
 
 **Decision.** Report adapters preserve passed, failed, errored and skipped case facts/counts, with suite/class identity and bounded detail lists pointing to the full original report.
@@ -878,6 +1092,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Errored is a case fact, not a new pipeline outcome. Adapter does not apply policy; truncating detail cannot alter exact counts.
 
 **Approval/source.** Accepted, 2026-08-09; original D-108.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-108-preserve-report-errors-without-adding-a-pipeline-outcome).
 
 ## D-109: Freeze and Run Exact Report Adapters
 
@@ -887,6 +1103,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-09; original D-109.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-109-freeze-and-run-exact-report-adapters).
+
 ## D-110: Remote Nova-to-Buster Plan Job
 
 **Decision.** Nova durably records and submits one immutable resolved plan through an authenticated replaceable submit/status/cancel API. Buster durably retains/verifies its bounded source archive/reference and results/evidence.
@@ -894,6 +1112,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Buster schedules attempts through Worker Core; Nova imports and owns judgment. A horizontal durable queue remains a later transport option without changing provider/plan/result contracts.
 
 **Approval/source.** Unconfirmed; acceptance date unknown; original D-110.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-110-remote-nova-to-buster-plan-job).
 
 ## D-111: Nova Remote Gate Import
 
@@ -903,6 +1123,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Unconfirmed; acceptance date unknown; original D-111.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-111-nova-remote-gate-import).
+
 ## D-112: Legacy Suite Bridge Containment
 
 **Decision.** The temporary legacy runtime accepts only exact ledger names marked unmigrated through unmigratedSuites configuration; mark migrated before removing the old mapping.
@@ -910,6 +1132,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Old bridge and resolved provider plan cannot both control one successor. This is migration containment, not permission for a permanent fallback.
 
 **Approval/source.** Unconfirmed; acceptance date unknown; original D-112.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-112-legacy-suite-bridge-containment).
 
 ## D-113: Connected Gate Boundary
 
@@ -919,6 +1143,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Unconfirmed; acceptance date unknown; original D-113.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-113-connected-gate-boundary).
+
 ## D-114: Direct Commands Use an Executable and Literal Arguments
 
 **Decision.** Direct-command selects one operator catalog executable and bounded literal argument array, never shell text or a project-selected arbitrary host path.
@@ -926,6 +1152,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Shared command.execute and isolation enforce process/output/time/files/env/no-network limits. Use a contained private writable repo/workdir, CI=true and bounded env; reject credentials, loader/runtime-control variables. It is ecosystem-neutral.
 
 **Approval/source.** Accepted, 2026-08-12; original D-114.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-114-direct-commands-use-an-executable-and-literal-arguments).
 
 ## D-115: Unit Result Authority Is Explicit and Fail-Closed
 
@@ -935,6 +1163,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-12; original D-115.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-115-unit-result-authority-is-explicit-and-fail-closed).
+
 ## D-116: First-Version Reports Use Exact Declarations
 
 **Decision.** Reports have unique stable IDs and exact contained relative paths, registered formats and allowed media types; save originals before normalization.
@@ -942,6 +1172,8 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** No first-version wildcards/globs. Several exact JUnit files normalize separately in declaration order; general collection is deferred until its ordering/duplication/path/size complexity is justified.
 
 **Approval/source.** Accepted, 2026-08-12; original D-116.
+
+**Reevaluation condition.** Revisit wildcard report collection if real project demand justifies its ordering, duplication, path, count and size complexity. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-116-first-version-reports-use-exact-declarations).
 
 ## D-117: Unit Instances Reuse Normal Test-Plan Nodes
 
@@ -951,6 +1183,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-12; original D-117.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-117-unit-instances-reuse-normal-test-plan-nodes).
+
 ## D-118: Coverage Is a Separate LCOV-First Linked Check
 
 **Decision.** A separately declared coverage-budget provider consumes immutable LCOV artifacts through typed links and evaluates compatible line measurements first.
@@ -959,6 +1193,8 @@ Each record below gives the source's actual approval state/date. No individual a
 
 **Approval/source.** Accepted, 2026-08-12; original D-118.
 
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-118-coverage-is-a-separate-lcov-first-linked-check).
+
 ## D-119: Every Suite Migration Uses One Documented Workflow
 
 **Decision.** Every suite migration follows baseline, decision mapping, implementation, vertical/parity proof, comparison, cutover, deletion and closeout, with only one real gate authority.
@@ -966,3 +1202,5 @@ Each record below gives the source's actual approval state/date. No individual a
 **Reason, consequences and actual alternatives.** Documentation must explain every field/default/limit/result/error/evidence/security/tradeoff/migration/troubleshooting rule with tested examples. A normal user must not need repository access or maintainer help to understand use.
 
 **Approval/source.** Accepted, 2026-08-12; original D-119.
+
+**Reevaluation condition.** Unknown: the cited historical decision does not establish a condition for reevaluating this choice. [Historical authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-119-every-suite-migration-uses-one-documented-workflow).

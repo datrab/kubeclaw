@@ -22,6 +22,18 @@ and linked source.
 | Human decisions | Bind a signed human action to the exact lease, source, revision, expiry, actor, and reason. | ServiceAccount identity alone and replay that changes content are rejected. | Lost successful responses can be replayed safely. Expired or deleting leases stay closed. | D02 and D06 retain the accepted human-authority and lifetime rules. | Controller source and local tests exist. Authenticated end-to-end delivery remains a live gate. | The signed extend path replaces the earlier missing-controller-extension statement. |
 | Reliable delivery | Preserve frozen identities and reconcile uncertain effects from receipts before retry. | Current configuration substitution, blind replay, and detached cleanup are rejected. | Recovery retains more evidence and can stop for explicit reconciliation. | These rules refine ADR-001, ADR-009, ADR-011, and D08; they are not new approval events. | Local crash, compiler, report, and receipt tests cover bounded paths. The complete user journey and whole-store retention remain open. | The refinements qualify earlier broad promises without creating a second lifecycle authority. |
 
+### Reevaluation conditions
+
+**Repository history.** The historical record names no condition for replacing this recovery method. Missing content comparison or remote reachability is a stop condition within the method, not approval to replace it.
+
+**Versioned JSON.** The record names no general reevaluation condition for these producer-profile decisions. The portability plan treats a mixed-history migration as separate work requiring its own design and authority; matching current bytes does not supply that authority.
+
+**Native admission.** The original A/B accounting decision names one conditional alternative: B is preferable if execution must remain entirely under ordinary Pod resource allocation. This does not reopen accepted D13/D14 or approve B. The record names no other reevaluation conditions for task units, fixture lifetime, native admission, or the broker recommendation. Missing host prerequisites block activation, not authorize fallback.
+
+**Human decisions.** The record names no condition for replacing the human-authority or lifetime decisions. A changed delivered version requires fresh verification and acceptance under D02; that is not a new policy approval. Signed run binding and authenticated live delivery remain implementation/evidence limits, not inferred historical reevaluation reasons.
+
+**Reliable delivery.** The record names no condition for replacing the frozen-identity, reconciliation, candidate-binding, storage-admission, or observer-authority decisions. An unresolved effect requires reconciliation and can stop recovery; it does not authorize blind replay or substitution of current configuration.
+
 ## Preserve history without retaining parallel implementations
 
 Integrate intended changes into the primary branch even when live acceptance remains open.

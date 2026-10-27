@@ -30,6 +30,24 @@ A technical finding can reach local completion when all of these conditions hold
 Local completion does not assert that a cluster, external service, browser,
 registry, Tailnet route, or human delivery path works in production.
 
+### Decision authority and reevaluation
+
+**Reason and benefit:** distinguish complete local correction from environment proof without
+claiming that unexecuted live checks passed. **Cost and consequence:** the original
+revision-bound local evidence and the separate live gates must both remain visible;
+local completion cannot replace product or deployment acceptance.
+
+**Status:** the owner explicitly accepted this local-completion policy on 2026-09-12.
+It replaces the earlier requirement to run every live, cluster, and receiving check
+before local finding closure, not runtime safety gates or D02 product acceptance.
+**Implementation and verification:** apply the six conditions above to each individual
+finding; the policy itself supplies no blanket completed-implementation or live result.
+**Reevaluation condition:** unknown: the original decision does not establish a
+condition for replacing this local/live separation. An unexecuted live check is a
+remaining proof obligation, not approval to change the policy.
+
+Source: [original D12 authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme).
+
 ## Evidence Levels
 
 | Level | What it proves | What it does not prove |

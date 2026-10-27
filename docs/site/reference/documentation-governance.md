@@ -147,7 +147,8 @@ A stable decision identifier never changes its meaning. A decision record includ
 - the reason for the choice;
 - benefits, costs, and operational consequences;
 - approval status and provenance;
-- implementation and verification status; and
+- implementation and verification status;
+- the condition for reevaluating the choice, or an explicit statement that it is unknown; and
 - its successor or related decisions.
 
 If historical evidence does not name an alternative, date, or approver, say that it is unknown.
