@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:platform-deployment-operations-and-security"
     }
   },
-  "decisionSha256": "7ead195326836cbd4156e97a289fa3f7cdd69385560028b2e17f697387662c96",
+  "decisionSha256": "f37ce52f76373dc8644bae31173d960ef3fc2d4036f7ed97ca1f8ff2ab9c7e5a",
   "contentRoot": "7de6e5cc31d700cf8e89aed232c01f13e5a9c41d421cfabb4f111f71777d8523",
   "claimIds": [
     "deployment-verification:dpu_31bf4f46a08bc501e2d5c41aec975072:0",
@@ -30,7 +30,7 @@
     "deployment-verification:dpu_d573166a609d9e69f4bfbfc494bfa396:0",
     "deployment-verification:dpu_ce44cc3c1862c1927cddbe5c70d93f0a:0"
   ],
-  "reviewedRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
+  "reviewedRevision": "abe18b28270e2af87d2926cf0a1f32dfa0d6edfa",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -85,8 +85,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
-    "reviewedTree": "4046309a8a16e4a995e8d9bfcb030b4fa82f3585",
+    "reviewedRevision": "abe18b28270e2af87d2926cf0a1f32dfa0d6edfa",
+    "reviewedTree": "e4ccdb4ce6cf651e8259e63c30059d82e97a6654",
     "contentRoot": "7de6e5cc31d700cf8e89aed232c01f13e5a9c41d421cfabb4f111f71777d8523",
     "scope": {
       "paths": [
@@ -137,7 +137,7 @@
       },
       {
         "kind": "scanner-result",
-        "detail": "Inspected and compared the actual frozen full249-source scanner record at a383c4f5287cca980ddacd59e1c34354e73fa47b across 5513 current Git-bound file inputs. Both original and extracted source paths have zero matches. Input root 9eb100c41d18cbc4f41d5a31de1f4e125e8fa4fe7d8813cdfbcaa2c36ec1b11f binds every scanned path/blob; current Source vectors and canonical/primary bytes equal the independently qualified7claim content source. Static zero matches alone do not prove arbitrary dynamic or external consumer absence."
+        "detail": "Inspected and compared the actual frozen full249-source scanner record at abe18b28270e2af87d2926cf0a1f32dfa0d6edfa across 5513 current Git-bound file inputs. Both original and extracted source paths have zero matches. Input root c4f0a3496e858c1d0abe68d461f07529107ff6388d416809579367ca3c4accaa binds every scanned path/blob; current Source vectors and canonical/primary bytes equal the independently qualified7claim content source. Static zero matches alone do not prove arbitrary dynamic or external consumer absence."
       }
     ],
     "findings": [],
@@ -149,7 +149,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "9eb100c41d18cbc4f41d5a31de1f4e125e8fa4fe7d8813cdfbcaa2c36ec1b11f",
+      "scannerInputRoot": "c4f0a3496e858c1d0abe68d461f07529107ff6388d416809579367ca3c4accaa",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",

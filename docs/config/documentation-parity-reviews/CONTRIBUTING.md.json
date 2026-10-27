@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:project-navigation-and-status"
     }
   },
-  "decisionSha256": "d3493fae96a3dbd0f236afc7f0f35ac3f577784e9aeb77c2b02359495a1ed24b",
+  "decisionSha256": "b04846eba6aebbe2ba3a951a2feb7b645ab96876897dd20b04163383743a8ea6",
   "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
   "claimIds": [
     "contributing:dpu_2a84a52e01dd0697f5bb7a0210d49126:0",
@@ -33,7 +33,7 @@
     "contributing:dpu_2619224de547c655eccef696386b3d54:3",
     "contributing:dpu_ef92f563384f9f05f65c4a05b9287555:0"
   ],
-  "reviewedRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
+  "reviewedRevision": "abe18b28270e2af87d2926cf0a1f32dfa0d6edfa",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -109,8 +109,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "a383c4f5287cca980ddacd59e1c34354e73fa47b",
-    "reviewedTree": "4046309a8a16e4a995e8d9bfcb030b4fa82f3585",
+    "reviewedRevision": "abe18b28270e2af87d2926cf0a1f32dfa0d6edfa",
+    "reviewedTree": "e4ccdb4ce6cf651e8259e63c30059d82e97a6654",
     "contentRoot": "6f2ba25e501b89b546729af7bcd0f3b86362a900ccf6df7dff17bb7dcf2a9524",
     "scope": {
       "paths": [
@@ -161,7 +161,7 @@
       },
       {
         "kind": "scanner-result",
-        "detail": "Inspected and compared the actual current full249-source scanner record at a383c4f5287cca980ddacd59e1c34354e73fa47b across 5513 frozen Git-bound file inputs. Both original and extracted contributor paths have zero matches. Input root 9eb100c41d18cbc4f41d5a31de1f4e125e8fa4fe7d8813cdfbcaa2c36ec1b11f binds every scanned path/blob. Current complete byteequal target/primary/route vectors retain the actual earlier substantive content approval; this static result does not prove arbitrary dynamic or external consumer absence."
+        "detail": "Inspected and compared the actual current full249-source scanner record at abe18b28270e2af87d2926cf0a1f32dfa0d6edfa across 5513 frozen Git-bound file inputs. Both original and extracted contributor paths have zero matches. Input root c4f0a3496e858c1d0abe68d461f07529107ff6388d416809579367ca3c4accaa binds every scanned path/blob. Current complete byteequal target/primary/route vectors retain the actual earlier substantive content approval; this static result does not prove arbitrary dynamic or external consumer absence."
       }
     ],
     "findings": [],
@@ -173,7 +173,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "9eb100c41d18cbc4f41d5a31de1f4e125e8fa4fe7d8813cdfbcaa2c36ec1b11f",
+      "scannerInputRoot": "c4f0a3496e858c1d0abe68d461f07529107ff6388d416809579367ca3c4accaa",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
