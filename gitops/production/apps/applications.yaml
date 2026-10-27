@@ -64,7 +64,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: '0'
     kubeclaw.dev/helm-releases: '["agent-buster"]'
-    kubeclaw.dev/immutable-bundle-path: releases/gitops/buster-diagnosis-ownership-40583424839/buster
+    kubeclaw.dev/immutable-bundle-path: releases/gitops/buster-diagnosis-terminal-40591869710/buster
   labels:
     kubeclaw.dev/gitops-project: kubeclaw
 spec:
@@ -72,7 +72,7 @@ spec:
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
     targetRevision: main
-    path: releases/gitops/buster-diagnosis-ownership-40583424839/buster
+    path: releases/gitops/buster-diagnosis-terminal-40591869710/buster
     directory:
       include: resources.yaml
   destination:
