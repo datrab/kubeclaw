@@ -1,0 +1,56 @@
+{
+  "source": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+  "publishedBaseline": "ff29c6ef83e3765302d2aec8c2cfd283effff373",
+  "frozenReceiptScope": "Original577byte10claim Developer index canonical navigation and14affected matrix scopes only. Source/reference registration and full original receiver separate; no wholeA91311/AP10 deletion or runtime success. Immutable after matrix binding.",
+  "actualContentA": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "CORRECTED_EXACT_ROUTING_A=PASS. The Hub now provides specific, discoverable routes for all original developer tasks. The added migration route preserves the retained/imported-behavior parity boundary, and the runtime.dispatch route accurately identifies provider selection and output-boundary requirements without claiming unproven full runtime authority.",
+    "overall_confidence": 0.98
+  },
+  "actualContentB": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "EXACT_ROUTING_B=PASS. “Add verification” is discoverable from the Extend hub through the extension-testing guide and its owning-boundary verification procedure. “Testing and CI” is directly routed to the developer handbook’s check-chain and CI sections. “Contributing” is covered by the hub-linked developer handbook’s checkout and documentation-change procedures. These routes accurately preserve the original index-level reader tasks without asserting unproven runtime success.",
+    "overall_confidence": 0.93
+  },
+  "actualWholeAuthor": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "ORIGINAL_DEVELOPER_TEN_CLAIM_AUTHOR_CONTENT=PASS. The candidate accurately binds all ten original units, preserves the eight navigation responsibilities through specific canonical routes, and maps the Core/package-boundary rule to supported current documentation and ownership evidence. This assessment does not claim source-valid, gate, deletion, or runtime success.",
+    "overall_confidence": 0.98
+  },
+  "actualFourteenScopePreservation": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "ALL_FOURTEEN_DEVELOPER_ORIGINAL_SCOPES_PRESERVED=PASS. The added hub routes and bounded migration/runtime.dispatch guidance preserve the original source, reader, quality, lifecycle, publication, offline, diagram, drift, and extension-guide scopes without claiming unproven runtime or release results.",
+    "overall_confidence": 0.98
+  },
+  "scopeIds": [
+    "AP09.2-ready-topics-20261020",
+    "AP09-reader-developers-20261020",
+    "AP09-reviewed-publication-navigation-20261020",
+    "AP09-closeout-developer-maintenance-20261020",
+    "AP09-complete-static-reader-search-20261021",
+    "AP09-complete-static-offline-fallback-20261021",
+    "AP09-complete-source-backed-diagrams-20261021",
+    "AP09-publication-positive-scope-7ef16585",
+    "A912-05-whole-source-excerpt-callouts-20261022",
+    "A910-03-whole-command-prerequisite-contract-20261022",
+    "AP09-whole-extension-drift-A91014-20261023",
+    "AP09-whole-extension-guides-A91013-20261023",
+    "A99-13-original-seven-dimension-drift-20261025",
+    "A910-10-whole-supported-extension-lifecycle-20261026"
+  ],
+  "coordinatorControls": {
+    "nativeReaderCommands": 6,
+    "offlineBrowserCases": 4,
+    "nativeOriginalAuthorClaims": 10,
+    "completeDeclaredFileUnion": 546,
+    "ownerMap": "byteequal published baseline",
+    "onlyChangedReaderSource": "docs/site/extend/README.md"
+  },
+  "limits": "No full legacy migration manual/underlying procedures, fresh persona/screenreader/live/human, arbitrary DATA/toolrole or selected release qualification. Existing failure histories and limits retained. Explicit requirement statements do not mean implemented runtime success.",
+  "newGateIds": [],
+  "newRequirementIds": []
+}
