@@ -72,3 +72,33 @@ test('production bridge uses shared session dispatch and collector result withou
     fs.rmSync(root, { recursive: true, force: true });
   }
 });
+
+
+test('production Helm target and persisted gateway reconciliation agree', async () => {
+  const { execFileSync } = await import('node:child_process');
+  const { parseAllDocuments } = await import('yaml');
+  const rendered = execFileSync('helm', ['template', 'agent-buster', 'charts/kubeclaw', '-f',
+    'my-values/buster-values.yaml', '--set', 'runtimeInfrastructure.registry.endpoint=http://registry.example:5000',
+    '--set', 'runtimeInfrastructure.registry.transport=http-lab'], { encoding: 'utf8' });
+  const documents = parseAllDocuments(rendered).map(document => document.toJSON());
+  const desired = JSON.parse(documents.find(document => document?.data?.['openclaw.json']).data['openclaw.json']);
+  const policy = desired.agents.entries['buster-diagnosis'].tools;
+  assert.deepEqual(policy.allow, ['ops__namespace_overview', 'ops__get_pod', 'ops__get_events', 'ops__get_pod_logs']);
+  assert.ok(policy.deny.includes('ops__exec_pod'));
+  const deployment = documents.find(document => document?.kind === 'Deployment' && document.metadata.name === 'agent-buster');
+  const environment = deployment.spec.template.spec.containers.find(container => container.name === 'buster-v2-runtime').env;
+  const configuration = JSON.parse(environment.find(variable => variable.name === 'BUSTER_FIXTURE_FAILURE_DIAGNOSIS').value);
+  assert.equal(configuration.target.agentId, 'buster-diagnosis');
+  assert.ok(fixtureDiagnosisAgent(configuration, { BUSTER_DIAGNOSIS_GATEWAY_TOKEN: token }));
+  assert.equal(environment.find(variable => variable.name === 'BUSTER_DIAGNOSIS_GATEWAY_TOKEN').valueFrom.secretKeyRef.key, 'gatewayToken-buster');
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'diagnosis-policy-'));
+  try {
+    const current = path.join(root, 'current.json'); const wanted = path.join(root, 'desired.json');
+    fs.writeFileSync(current, JSON.stringify({ agents: { entries: { main: { skills: ['preserved'] } } } }));
+    fs.writeFileSync(wanted, JSON.stringify(desired));
+    execFileSync(process.execPath, ['charts/kubeclaw/files/sync-ops-mcp-config.mjs', current, wanted]);
+    const reconciled = JSON.parse(fs.readFileSync(current, 'utf8'));
+    assert.deepEqual(reconciled.agents.entries['buster-diagnosis'], desired.agents.entries['buster-diagnosis']);
+    assert.deepEqual(reconciled.agents.entries.main, { skills: ['preserved'] });
+  } finally { fs.rmSync(root, { recursive: true, force: true }); }
+});

@@ -93,6 +93,14 @@ extraContainers:
     image: ghcr.io/datrab/kubeclaw-buster-runtime:latest
     imagePullPolicy: Always
     env:
+      - name: BUSTER_DIAGNOSIS_GATEWAY_TOKEN
+        valueFrom:
+          secretKeyRef:
+            name: openclaw-shared-secrets
+            key: gatewayToken-buster
+      - name: BUSTER_FIXTURE_FAILURE_DIAGNOSIS
+        value: >-
+          {"targetId":"buster-diagnosis","tokenEnvironmentVariable":"BUSTER_DIAGNOSIS_GATEWAY_TOKEN","timeoutMs":120000,"readOnlyPolicyReference":"buster-ops-bearer:test-prefix-read-only-tools","target":{"endpoint":"http://127.0.0.1:18789/tools/invoke","tokenSecret":"buster-diagnosis.gateway","runtime":"subagent","agentId":"buster-diagnosis","agentRole":"buster-diagnosis","model":"openai/gpt-6.1-sol","thinking":"high","cwd":"/home/node/.openclaw/workspace","repositoryRoot":"/home/node/.openclaw/workspace","resultPathPrefix":".swarm/diagnosis-results","collectorMode":true}}
       - name: BUSTER_V2_TOKEN
         valueFrom:
           secretKeyRef:

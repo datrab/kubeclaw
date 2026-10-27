@@ -15,6 +15,14 @@ if (fs.existsSync(configPath)) {
   } else if (config.mcp?.servers) {
     delete config.mcp.servers.ops;
   }
+  // Persisted gateways must receive the dedicated operator-managed diagnosis
+  // policy too; reconcile this entry only, never unrelated agent permissions.
+  const diagnosis = desired.agents?.entries?.['buster-diagnosis'];
+  if (diagnosis) {
+    config.agents ??= {};
+    config.agents.entries ??= {};
+    config.agents.entries['buster-diagnosis'] = diagnosis;
+  }
   const temporaryPath = `${configPath}.ops-mcp.tmp`;
   fs.writeFileSync(temporaryPath, `${JSON.stringify(config, null, 2)}\n`, { mode: 0o600 });
   fs.renameSync(temporaryPath, configPath);

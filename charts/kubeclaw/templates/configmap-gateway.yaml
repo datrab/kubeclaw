@@ -153,6 +153,16 @@ data:
           "contextInjection": "never"
         },
         "entries": {
+          {{- if eq .Values.agentRole "buster" }}
+          "buster-diagnosis": {
+            "skills": [],
+            "tools": {
+              "profile": "full",
+              "allow": ["ops__namespace_overview", "ops__get_pod", "ops__get_events", "ops__get_pod_logs"],
+              "deny": ["group:runtime", "group:fs", "group:sessions", "exec", "process", "sessions_spawn", "sessions_send", "subagents", "ops__exec_pod"]
+            }
+          },
+          {{- end }}
           "main": {
             "subagents": {
               "allowAgents": [

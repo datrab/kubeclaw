@@ -226,6 +226,9 @@ fs.writeFileSync(path.join(root, 'runtime.json'), `${JSON.stringify({
     maximumExecutionMs: 900000, maximumManifestBytes: 16777216,
   },
   kubernetesFixture: {
+    ...(process.env.BUSTER_FIXTURE_FAILURE_DIAGNOSIS ? {
+      failureDiagnosis: JSON.parse(process.env.BUSTER_FIXTURE_FAILURE_DIAGNOSIS),
+    } : {}),
     kubectlExecutable: '/usr/local/bin/kubectl', controllerNamespace: process.env.CONTROLLER_NAMESPACE,
     leaseApiGroup: process.env.BUSTER_LEASE_API_GROUP || 'kubeclaw.forgestack.ai',
     leaseApiVersion: process.env.BUSTER_LEASE_API_VERSION || 'v1alpha1', allowedNamespacePrefixes: ['test'],
