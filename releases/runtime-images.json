@@ -1,19 +1,19 @@
 {
   "schemaVersion": 1,
-  "commit": "669a892216595d3d6eca0a9327e8b80d63e6025b",
+  "commit": "adb96e1320427a802e8749fc3a99050a047eb513",
   "images": {
     "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:21bbeda9585eb53584e390c36854648ddb4cc7359e726d607ca5ad553e418cf7",
     "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:2054278d44f5523f110e0f6c91d21d838a4077e896524f45ccf93a39e14aa47d",
-    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:20ebd3d7fc73b3af25b84a28f274e49deda7f6a9333d716a8130bf7f283c335f",
-    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:141a5ec0c88a4e2ad15740d3e44ef74289d88d36053bee8b34361c64df439f1f",
-    "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:e0bdd83ec873256316ae1f439a94824f650fe961dd59ea6639575d1047f4e638",
+    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:f8a1b8c1179b3d41061c38731c3b342f7b549459aaf45b17212285eab42e9d30",
+    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:3b8ac2af5d3286cecc7f5d764916a0176eeb308523a3387b8fcc0affcd2a5905",
+    "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:2159980af3915f2994537212d87b47cb72d37667989e52d2fcd32cb0fc6d83b1",
     "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:b0d561e14b20aed5e9a308a6bfc112b6fdc1929e1f1bf7dc836c0aba0dc7e773",
     "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:40de287ee05073d2db74c26d3e955fab684d211168edb1c0079c72aed417689e",
     "prism-studio": "ghcr.io/datrab/kubeclaw-prism-studio@sha256:e275d9db52aa6c880ec7efcd1bf4d35bce0bcd0ab84b9a33744fccd48c6b4e3e",
     "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:de084768a1fd59f5c6b1b2903d3daad25c160a9fae571c308ebc51643bd2e9fc",
     "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:b1b537ccd303b210731d4b4d0f1066f40a284f659125bbc49356ff94c4b789c0"
   },
-  "sourceRunId": 40510945631,
+  "sourceRunId": 40578646470,
   "sourceRunAttempt": 1,
   "imageSources": {
     "nova": {
@@ -27,18 +27,18 @@
       "sourceRunAttempt": 1
     },
     "buster-gateway": {
-      "commit": "669a892216595d3d6eca0a9327e8b80d63e6025b",
-      "sourceRunId": 40510945631,
+      "commit": "adb96e1320427a802e8749fc3a99050a047eb513",
+      "sourceRunId": 40578646470,
       "sourceRunAttempt": 1
     },
     "buster-runtime": {
-      "commit": "669a892216595d3d6eca0a9327e8b80d63e6025b",
-      "sourceRunId": 40510945631,
+      "commit": "adb96e1320427a802e8749fc3a99050a047eb513",
+      "sourceRunId": 40578646470,
       "sourceRunAttempt": 1
     },
     "namespace-controller": {
-      "commit": "669a892216595d3d6eca0a9327e8b80d63e6025b",
-      "sourceRunId": 40510945631,
+      "commit": "adb96e1320427a802e8749fc3a99050a047eb513",
+      "sourceRunId": 40578646470,
       "sourceRunAttempt": 1
     },
     "archviewer": {
