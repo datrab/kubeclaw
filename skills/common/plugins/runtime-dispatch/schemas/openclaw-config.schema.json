@@ -53,8 +53,8 @@
         "allOf": [{
           "if": { "properties": { "terminalOnly": { "const": true } }, "required": ["terminalOnly"] },
           "then": {
-            "properties": { "runtime": { "const": "subagent" }, "collectorMode": { "const": false } },
-            "not": { "anyOf": [{ "required": ["resultEndpoint"] }, { "required": ["resultTokenSecret"] }] }
+            "properties": { "runtime": { "const": "subagent" }, "collectorMode": { "const": false },
+              "resultEndpoint": false, "resultTokenSecret": false }
           }
         }],
         "dependentRequired": {

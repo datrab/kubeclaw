@@ -96,13 +96,13 @@ test('production Helm target and persisted gateway reconciliation agree', async 
   const environment = deployment.spec.template.spec.containers.find(container => container.name === 'buster-v2-runtime').env;
   const configuration = JSON.parse(environment.find(variable => variable.name === 'BUSTER_FIXTURE_FAILURE_DIAGNOSIS').value);
   assert.equal(configuration.target.agentId, 'buster-diagnosis');
-  const { default: Ajv2020 } = await import('ajv/dist/2020.js');
-  const schema = JSON.parse(fs.readFileSync('skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json', 'utf8'));
-  const validate = new Ajv2020({ strict: false, validateFormats: false }).compile(schema);
-  assert.equal(validate({ targets: { diagnosis: configuration.target } }), true, JSON.stringify(validate.errors));
+  const { validateReferencedSchema } = await import('../../../skills/common/plugin-runtime/foundation/registry/schema.ts');
+  const schemaPath = 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json';
+  const schema = validateReferencedSchema(fs.readFileSync(schemaPath, 'utf8'), schemaPath);
+  assert.doesNotThrow(() => schema.validate({ targets: { diagnosis: configuration.target } }));
   for (const patch of [{ collectorMode: true }, { runtime: 'acp' },
     { resultEndpoint: 'https://example.test/result', resultTokenSecret: 'private.result' }]) {
-    assert.equal(validate({ targets: { diagnosis: { ...configuration.target, ...patch } } }), false);
+    assert.throws(() => schema.validate({ targets: { diagnosis: { ...configuration.target, ...patch } } }), /Value failed schema/);
   }
   assert.ok(fixtureDiagnosisAgent(configuration, { BUSTER_DIAGNOSIS_GATEWAY_TOKEN: token }));
   assert.equal(environment.find(variable => variable.name === 'BUSTER_DIAGNOSIS_GATEWAY_TOKEN').valueFrom.secretKeyRef.key, 'gatewayToken-buster');
