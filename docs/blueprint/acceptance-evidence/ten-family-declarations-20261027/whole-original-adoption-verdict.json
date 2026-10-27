@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Do not record A911-01 as PASS while its required whole-gate disposition is NOT_READY",
+      "body": "This completion record marks the whole original gate PASS with no open issues, but the supplied current gate remains `not-accepted` and requires an explicit fresh disposition of all eight original findings. Several retain open states and are specifically associated with A911-01; the record neither determines their current relevance to the ten-family declaration nor supplies a resolution. The stated limits preserve those findings, which conflicts with an empty `openIssues` and PASS verdict. Keep this record NOT_READY (or omit it) until that disposition supports closure.",
+      "priority": "P1",
+      "confidence": 0.99,
+      "category": "regression",
+      "code_location": {
+        "file_path": "proposed-whole-A91101-completion.json",
+        "line": 104
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "WHOLE_A91101=NOT_READY; sourceAccuracy=NOT_READY; readerUsability=NOT_READY; quality=NOT_READY; ORIGINAL_FINDING_DISPOSITION=NOT_READY. The proposed PASS record contradicts the controlling current not-accepted state and does not explicitly assess the eight original findings' relevance to the current full declaration.",
+  "overall_confidence": 0.99
+}

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "SCHEMA_SELECTION_COMPOSITION=PASS; SCHEMA_DECLARATION=PASS; sourceAccuracy=PASS; readerUsability=PASS; quality=PASS. The added declaration accurately reflects the registration, fixed-swarm, deployed-payload, and undeployed-payload selection branches, including their coverage guards and stated exclusions. Inspection is limited to declaration/source correspondence; it does not qualify parser execution, delivery/reader validation, runtime behavior, or output roles.",
+  "overall_confidence": 0.96
+}

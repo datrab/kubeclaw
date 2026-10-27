@@ -1,0 +1,134 @@
+{
+  "sourceHead": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+  "recordedAt": "2026-10-27T13:31:02.936086+00:00",
+  "inputs": [
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/blueprint/AP09-acceptance-contract.md",
+      "bytes": 42548,
+      "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f",
+      "lines": 316,
+      "inspectedRanges": [
+        [
+          1,
+          316
+        ]
+      ],
+      "scope": "Complete controlling contract, separating A911-01 from A98-10/11/14, A911-02/11/12 and whole-gate review.",
+      "snapshot": "inputs/00-AP09-acceptance-contract.md"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-configuration-inventory.mjs",
+      "bytes": 997027,
+      "sha256": "166c4fd8ac2856d658b747011c0acab6658055f06c6c1e07020b4d2cf2a4857b",
+      "lines": 9643,
+      "inspectedRanges": [
+        [
+          1,
+          110
+        ],
+        [
+          5173,
+          5206
+        ],
+        [
+          5588,
+          6180
+        ],
+        [
+          6181,
+          6314
+        ],
+        [
+          6315,
+          6580
+        ],
+        [
+          6850,
+          6980
+        ],
+        [
+          7000,
+          7080
+        ],
+        [
+          7304,
+          7340
+        ],
+        [
+          7380,
+          7435
+        ],
+        [
+          8593,
+          8663
+        ],
+        [
+          9455,
+          9595
+        ]
+      ],
+      "scope": "Current selector/declaration, complete shell/YAML Python acquisition, relevant Python role/protocol/namespace/NamedExpr/call/kwargs guard responsibilities. Unlisted parser control-flow/function interiors NOT inspected or qualified as universally correct.",
+      "snapshot": "inputs/01-docs-configuration-inventory.mjs"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/python-environment-discovery.test.mjs",
+      "bytes": 143724,
+      "sha256": "b33ceea5f9fb2d485f2ed83168b8094606e37385cb3f00112b5fea2dae508428",
+      "lines": 1794,
+      "inspectedRanges": [
+        [
+          1,
+          180
+        ],
+        [
+          1233,
+          1410
+        ],
+        [
+          1755,
+          1794
+        ]
+      ],
+      "scope": "Complete test harness/capability/native policy plus all selected focused test bodies and passive/name controls; other test bodies not inspected or executed.",
+      "snapshot": "inputs/02-python-environment-discovery.test.mjs"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91101-20261024/aggregate-owner-next/postpush-f6c76e67/actual-current-gate-and-original-findings.json",
+      "bytes": 13278,
+      "sha256": "8de8747a680d7f298112f4e3b971d2f2f568480f3be052582248f437d8f31929",
+      "lines": 305,
+      "inspectedRanges": null,
+      "scope": "Complete JSON parsed; original gate and six finding objects inspected; S4/S5 delegated and not assessed.",
+      "snapshot": "inputs/03-actual-current-gate-and-original-findings.json"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91101-owner-policy-20261027/current-seventeen-inventory-declarations.json",
+      "bytes": 67921,
+      "sha256": "37f59fb32a2885e58299a5498a42100bc1ed7b65752723a0faf4e4be7d9cf5ab",
+      "lines": 1257,
+      "inspectedRanges": null,
+      "scope": "Complete JSON parsed and all discovery/discoveryScope/owner fields inspected, platform sourceScopes keys/identity only; individual unrelated platform selected-source path lists not re-adjudicated.",
+      "snapshot": "inputs/04-current-seventeen-inventory-declarations.json"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91101-owner-policy-20261027/original-finding-current/python/current-configuration-declaration.json",
+      "bytes": 112131,
+      "sha256": "31177a12f64543c93355827bd40e01008aceabae243a7276f4b893d3ba4ee164",
+      "lines": 2247,
+      "inspectedRanges": null,
+      "scope": "Fresh production --describe-discovery output parsed completely; current complete Config runtime/CLI composition and qualifications inspected. Schema retained and not re-adjudicated.",
+      "snapshot": "inputs/05-current-configuration-declaration.json"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91101-owner-policy-20261027/whole-original-adoption-verdict.json",
+      "bytes": 1353,
+      "sha256": "4a9a255053b65ffed049cffc5d21cba47fd3cfe16347addab3af28491fa345e1",
+      "lines": 18,
+      "inspectedRanges": null,
+      "scope": "Complete prior whole-original NOT_READY control read and preserved unchanged; this report does not supersede whole adjudication.",
+      "snapshot": "inputs/06-whole-original-adoption-verdict.json"
+    }
+  ],
+  "currentWorktreeStatus": "",
+  "policy": "No source/receipt/register mutation; bounded existing test and read-only descriptor execution only. No original full report/witness reuse; historical association is not a current automatic blocker."
+}

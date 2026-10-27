@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "WHOLE_A91101=PASS; sourceAccuracy=PASS; readerUsability=PASS; quality=PASS; ORIGINAL_FINDING_DISPOSITION=PASS. The added in-band dispositions assess all eight original findings for current relevance to the A911-01 declaration criterion while preserving their broader states and limits. Together with the supplied ten-family declaration assessments, they substantiate the bounded original criterion without claiming parser, runtime, live, or other-gate acceptance.",
+  "overall_confidence": 0.96
+}

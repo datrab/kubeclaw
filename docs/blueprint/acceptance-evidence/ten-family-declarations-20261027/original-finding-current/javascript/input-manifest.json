@@ -1,0 +1,131 @@
+{
+  "at": "2026-10-27T13:28:04.062164+00:00",
+  "reviewer": "/root/whole_criterion_selection",
+  "files": [
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "bytes": 443283,
+      "sha256": "fac9825ff64d854fbf07a2bd0b205d9c49d0f5afd6322e5c287f557633ae9f91",
+      "matchesFrozen388d844b": true,
+      "inspectedRanges": [
+        [
+          1,
+          43
+        ],
+        [
+          273,
+          481
+        ],
+        [
+          481,
+          669
+        ],
+        [
+          685,
+          756
+        ],
+        [
+          1147,
+          1182
+        ],
+        [
+          1817,
+          1859
+        ]
+      ],
+      "rangeSha256": [
+        "c12ee10803ff0a84a5019b61f61f7a36a4e66f651f85d60ad217e7805461775f",
+        "fb24d39980ec058cb141f01b76e926418a65a6223e62d9b9bc5240837c2a49c2",
+        "d11d6187c3819d4a68fee43036d22c0fb926b64226692624ca225f8673c64982",
+        "2fe26641bf3dc3cd2231a989e233923f4afae6b44eff05785de9b838c72f1bfc",
+        "1320a78cc8e8f6968b44155b0f6b3a614f1c956da582ac0cd67a106c917b6be8",
+        "2fd5aadf69a3dbe630885441e6abb09c3eafe495cca052f7bbc3002411180e13"
+      ]
+    },
+    {
+      "path": "scripts/tests/api-output-publication.test.mjs",
+      "bytes": 90039,
+      "sha256": "92c1ac535fdd185ef2f4dd8daac06fa3b5a17eb8d0c5b8e67fa8ab77c8977d2c",
+      "matchesFrozen388d844b": true,
+      "inspectedRanges": [
+        [
+          1,
+          42
+        ],
+        [
+          640,
+          653
+        ],
+        [
+          730,
+          910
+        ]
+      ],
+      "rangeSha256": [
+        "218a0aa3ed89e3bcd7d42852dea0dbe0d9ecb00f781868ed45ff0f282b64dde3",
+        "c292b4a59f4c4f07266b223a6ea3f1ee910d4b40f2b646237574e513bb801eb4",
+        "dd1da7a510da64ffa56d28746477ebef77198b5cf5a0e54d2a99663508b337f5"
+      ]
+    },
+    {
+      "path": "scripts/docs-configuration-inventory.mjs",
+      "bytes": 997027,
+      "sha256": "166c4fd8ac2856d658b747011c0acab6658055f06c6c1e07020b4d2cf2a4857b",
+      "matchesFrozen388d844b": true,
+      "inspectedRanges": [
+        [
+          9457,
+          9490
+        ]
+      ],
+      "rangeSha256": [
+        "d492054be4abc6807b44d96ecbfe2732dc68095dcec1e8210fc68919f30c032d"
+      ]
+    },
+    {
+      "path": "scripts/docs-api-product-scope.mjs",
+      "bytes": 70670,
+      "sha256": "886954fc291ad77c42a92c9130e711565c27e14d58ebe2a74f14e1e873668125",
+      "matchesFrozen388d844b": true,
+      "inspectedRanges": [
+        [
+          296,
+          299
+        ],
+        [
+          527,
+          538
+        ]
+      ],
+      "rangeSha256": [
+        "2417db1a1e18bbc08640422e53375c0ba27bac6c49a9540c840640407f209844",
+        "7e1abcf2fd362ae7a78d916c6fea9c4b134af50320b34dc1617ff5da315a3209"
+      ]
+    },
+    {
+      "path": "docs/blueprint/AP09-acceptance-contract.md",
+      "bytes": 42548,
+      "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f",
+      "matchesFrozen388d844b": true,
+      "inspectedRanges": [
+        [
+          195,
+          207
+        ]
+      ],
+      "rangeSha256": [
+        "62b9d764866fd4f63f68887d12d25f1015269459aaa1ddd07beb25c74cd55ffe"
+      ]
+    }
+  ],
+  "originalFindingRecord": {
+    "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91101-20261024/aggregate-owner-next/postpush-f6c76e67/actual-current-gate-and-original-findings.json",
+    "sha256": "8de8747a680d7f298112f4e3b971d2f2f568480f3be052582248f437d8f31929",
+    "inspectedIds": [
+      "A98-20261012-CANONICAL-REFLECTION-S4",
+      "A98-20261012-CANONICAL-REFLECTION-S5"
+    ]
+  },
+  "testLogSha256": "0f71530131a166394a48f9ebd9568dc1a0cb71275a6a2f0a7ebf174e55d56bd1",
+  "inspectionLimit": "Only listed source ranges/full selected tests inspected; no blanket wholefile/global coverage claim."
+}

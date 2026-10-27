@@ -1,0 +1,43 @@
+{
+  "at": "2026-10-27T13:28:04.062164+00:00",
+  "reviewer": "/root/whole_criterion_selection",
+  "frozenRevision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+  "originalCriterion": "A911-01 machine-readable searchspace/parser/owner/exclusions for ten families; not inverse map or all-fields/runtime correctness",
+  "findings": [
+    {
+      "id": "A98-20261012-CANONICAL-REFLECTION-S4",
+      "originalFinding": "Intrinsic CommonJS module.require loses ordinary closure and protected public-caller guard.",
+      "currentRelevance": "Potential original source-boundary relevance, independently assessed rather than ignored by association-only scope rule.",
+      "currentDecision": "NO_PRESENT_A91101_BLOCKER_FOR_THIS_FACET",
+      "basis": "Current complete relevant capability/resolution/graph/public-caller implementation plus unchanged existing focused native and actual product consumer controls PASS.",
+      "historicalFindingResolved": false,
+      "exactHistoricalWitnessReproduced": false,
+      "nextAction": "Supply this bounded current disposition to independent whole-original adoption; preserve original historical open record and other associated requirements/facets."
+    },
+    {
+      "id": "A98-20261012-CANONICAL-REFLECTION-S5",
+      "originalFinding": "Own-package object/subpath self exports are silently treated as external.",
+      "currentRelevance": "Potential original source-boundary relevance, independently assessed rather than ignored by association-only scope rule.",
+      "currentDecision": "NO_PRESENT_A91101_BLOCKER_FOR_THIS_FACET",
+      "basis": "Current complete relevant capability/resolution/graph/public-caller implementation plus unchanged existing focused native and actual product consumer controls PASS.",
+      "historicalFindingResolved": false,
+      "exactHistoricalWitnessReproduced": false,
+      "nextAction": "Supply this bounded current disposition to independent whole-original adoption; preserve original historical open record and other associated requirements/facets."
+    }
+  ],
+  "focusedTests": {
+    "commandReceipt": "focused-tests-result.json",
+    "log": "focused-tests.log",
+    "exitCode": 0,
+    "tests": 6,
+    "passed": 6,
+    "failed": 0,
+    "skipped": 0,
+    "nativeRecordedWitnesses": 46,
+    "note": "46 are diagnostic witness rows from these six current tests, not original historical witness coverage or unique cases in the full suite."
+  },
+  "sourceAccuracy": "PASS bounded current S4/S5 originalA91101 relevance",
+  "readerUsability": "PASS bounded current S4/S5 originalA91101 relevance",
+  "quality": "PASS bounded current S4/S5 originalA91101 relevance",
+  "notGlobalResolution": true
+}

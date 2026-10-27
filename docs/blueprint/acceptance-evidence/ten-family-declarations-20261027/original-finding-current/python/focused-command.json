@@ -1,0 +1,12 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-name-pattern",
+    "native Python annotation capability|reader, mapping and annotation-getter protocols|capability protocol rules preserve|executable YAML applies finite env wrappers|recognized reader protocols fail closed|finite absolute wrappers and nested literal shell|named expressions reject global|Python known-name custody",
+    "scripts/tests/python-environment-discovery.test.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "start": "2026-10-27T13:26:06.486075+00:00",
+  "sourceHead": "388d844bc2612ffe23e08e19e34509c5f91d8515"
+}

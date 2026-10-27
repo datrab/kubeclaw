@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "FIVE_ORIGINAL_SCOPES_PRESERVED=PASS. AP09-reviewed-reference-20261020=PASS; AP09-documentation-agent-maintenance-20261021=PASS; A98-02-13-whole-operator-procedure-contract-20261022=PASS; AP09-whole-extension-drift-A91014-20261023=PASS; A99-13-original-seven-dimension-drift-20261025=PASS. The matrix updates each affected record to the reviewed source revision and appends a narrowly scoped preservation review. The supplied lossless context supports that only the declared configuration metadata changed, with prior descriptor fields and schema output preserved and existing failure limits retained.",
+  "overall_confidence": 0.96
+}

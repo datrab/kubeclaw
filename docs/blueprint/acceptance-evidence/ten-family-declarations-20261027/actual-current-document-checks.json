@@ -1,0 +1,21 @@
+{
+  "Source": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+  "checks": [
+    {
+      "command": "node scripts/docs-governance.mjs --check",
+      "exitCode": 0,
+      "log": "governance.log"
+    },
+    {
+      "command": "npm run docs:publication:check",
+      "exitCode": 0,
+      "log": "publication.log"
+    },
+    {
+      "command": "node scripts/docs-check-refs.mjs",
+      "exitCode": 0,
+      "log": "refs.log"
+    }
+  ],
+  "fullSchemaOutput": "Actual3361285bytes exact to prebatch; all old descriptor fields and all bytes outside existing descriptor exact"
+}

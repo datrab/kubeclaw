@@ -1,0 +1,113 @@
+{
+  "reviewedSource": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+  "files": [
+    {
+      "path": "schema-correction-verdict.json",
+      "bytes": 591,
+      "sha256": "acb71c31ef4dfafa32b8a1de4a0f29b652d7ba53cd1d5a86b9ab83476fe16f50"
+    },
+    {
+      "path": "config-cli-correction-verdict.json",
+      "bytes": 644,
+      "sha256": "385e4d5dfbb90c164f244daca791b1bc25cbdf799701373bc62fabddfca827d5"
+    },
+    {
+      "path": "coherent-metadata-controls.json",
+      "bytes": 934,
+      "sha256": "df05f537828da1d5b8057eabf05f4ed0934d456d8a36d00d9455d45c89da371b"
+    },
+    {
+      "path": "actual-current-document-checks.json",
+      "bytes": 566,
+      "sha256": "7c1e9b42f248c33fd97e699631bd1ad481e5eb116937287dfb75a58312e84076"
+    },
+    {
+      "path": "coherent-original-receiver-result.json",
+      "bytes": 234,
+      "sha256": "a0c1e018cdb6acdc780987bf285e2b6de6f67beb748514a8439f01b7afff2ff7"
+    },
+    {
+      "path": "five-original-preservation-verdict.json",
+      "bytes": 725,
+      "sha256": "ae941cfafcafac26dd9d929c05b0f1cbf15204efb5ec8c11f3c0007cb65ebf31"
+    },
+    {
+      "path": "whole-original-adoption-verdict.json",
+      "bytes": 1353,
+      "sha256": "4a9a255053b65ffed049cffc5d21cba47fd3cfe16347addab3af28491fa345e1"
+    },
+    {
+      "path": "corrected-whole-original-adoption-verdict.json",
+      "bytes": 588,
+      "sha256": "1ddfc3b1f03f7d9cba88f356617f5f93727bd16312e4b58b4c36cf4ffb3ef7e3"
+    },
+    {
+      "path": "eight-original-findings-current-disposition.json",
+      "bytes": 17381,
+      "sha256": "d98ce02bb95fae790753037e50346bb66acdf53c7b528a127c7c1a49c14b90cb"
+    },
+    {
+      "path": "second-round-original-finding-strategy.json",
+      "bytes": 2046,
+      "sha256": "d82c31bff8fee812466e7d2dfd2b99510ff0704ec881e6ac994c944cf3dbe809"
+    },
+    {
+      "path": "complementary-independent/report.md",
+      "bytes": 9746,
+      "sha256": "396edfa73735b1a9e0719cbc56abb3dc9b44006b3e27d88116071a9326a42b1d"
+    },
+    {
+      "path": "complementary-independent/input-manifest.json",
+      "bytes": 19300,
+      "sha256": "55b0636979dbc5c375de7edc54b00413232d4728e7a0cf5e1e32766223c060dd"
+    },
+    {
+      "path": "original-finding-current/python/assessment.json",
+      "bytes": 13557,
+      "sha256": "77e0e24acf600e0df301f0541fea4338f4324e34be8ff0ead41bb56913f4e742"
+    },
+    {
+      "path": "original-finding-current/python/report.txt",
+      "bytes": 7932,
+      "sha256": "76a2b13f0a44d572af338b1cc1d26f508de446c0ed7bd0bb70defd26de89a677"
+    },
+    {
+      "path": "original-finding-current/python/input-manifest.json",
+      "bytes": 5071,
+      "sha256": "364730c6c6e9e8d0c4956fd94c2ee851b0251d27034667d9733237a62382730e"
+    },
+    {
+      "path": "original-finding-current/python/focused-command.json",
+      "bytes": 625,
+      "sha256": "8b923371114bef7c403edc6e45a83677c5f30325f7b570b94185b972c9ea2819"
+    },
+    {
+      "path": "original-finding-current/python/focused-exit.json",
+      "bytes": 55,
+      "sha256": "1b031a5a4e4ce93c15ee32ccfe92cc1111b23b4c1cd0b29d2b9cde8e9e94f116"
+    },
+    {
+      "path": "original-finding-current/javascript/per-id-current-relevance.json",
+      "bytes": 2674,
+      "sha256": "560e01d1b4996750a11bdd52fe900be68e3ea0504de116e021b1de7f6ce42cb9"
+    },
+    {
+      "path": "original-finding-current/javascript/report.md",
+      "bytes": 7833,
+      "sha256": "ef708c59205f24e44954164a31604e6c1583ee344d8ccec7b7c63ed9aa90bbe7"
+    },
+    {
+      "path": "original-finding-current/javascript/input-manifest.json",
+      "bytes": 3766,
+      "sha256": "86b748159b1f90c369da9e0b83d9495e00b850b637f560e5714d4108fc56e81d"
+    },
+    {
+      "path": "original-finding-current/javascript/focused-tests-result.json",
+      "bytes": 565,
+      "sha256": "5a63eb8a62c5024d38e4e3e2c3f36f3def1baf41b92fea08757a314617204c59"
+    }
+  ],
+  "scope": "Original A911-01 only; five prior completion scopes preserved, not new acceptance",
+  "originalFindingsUnchanged": true,
+  "otherItemsUnchanged": true
+}

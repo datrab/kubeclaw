@@ -1,0 +1,13 @@
+{
+  "command": [
+    "node",
+    "--test",
+    "--test-name-pattern=intrinsic CommonJS module loaders|intrinsic module runtime operands|own package exact exports|intrinsic module and own package transfers|block var aliases|nearest package scopes",
+    "scripts/tests/api-output-publication.test.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "TMPDIR": "/home/node/.openclaw/workspace/tmp/a91101-js-disposition",
+  "startedAt": "2026-10-27T13:26:10.556680+00:00",
+  "completedAt": "2026-10-27T13:26:26.242458+00:00",
+  "exitCode": 0
+}

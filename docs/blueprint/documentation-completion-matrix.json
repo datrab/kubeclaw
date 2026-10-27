@@ -5348,7 +5348,7 @@
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+      "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -5883,6 +5883,14 @@
             "docs/blueprint/acceptance-evidence/README.md"
           ],
           "limits": "All original DATA artifacts.ts41content/all5UNKNOWN, original ordinary mismatches, Knip/fullgeneration, external provenance, human/live/runtime/release boundaries retained. No whole A91108 or other new gate/catalogue acceptance."
+        },
+        {
+          "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+          "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 complete5original-scope preservation",
+          "verdict": "PASS",
+          "summary": "Original bounded scope preserved after existing owner descriptor-only Schema/Config/CLI selection metadata addition. Complete original records and all572 relevant physical rows supplied; only configuration owner source differs, all bytes outside descriptor exact. Old descriptor fields and complete real schema output byte-equal.",
+          "limits": "Original checks/reviews/limits/history/practical dates retained, not recounted. No default parser/runtime/selector behavior change or global role/DATA/live/release acceptance; current global receiver remains failed at unchanged prebatch reader-CI-purpose profile."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -12341,7 +12349,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -13349,6 +13357,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 complete5original-scope preservation",
+          "verdict": "PASS",
+          "summary": "Original bounded scope preserved after existing owner descriptor-only Schema/Config/CLI selection metadata addition. Complete original records and all572 relevant physical rows supplied; only configuration owner source differs, all bytes outside descriptor exact. Old descriptor fields and complete real schema output byte-equal.",
+          "limits": "Original checks/reviews/limits/history/practical dates retained, not recounted. No default parser/runtime/selector behavior change or global role/DATA/live/release acceptance; current global receiver remains failed at unchanged prebatch reader-CI-purpose profile."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -34217,7 +34233,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -35168,6 +35184,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 complete5original-scope preservation",
+          "verdict": "PASS",
+          "summary": "Original bounded scope preserved after existing owner descriptor-only Schema/Config/CLI selection metadata addition. Complete original records and all572 relevant physical rows supplied; only configuration owner source differs, all bytes outside descriptor exact. Old descriptor fields and complete real schema output byte-equal.",
+          "limits": "Original checks/reviews/limits/history/practical dates retained, not recounted. No default parser/runtime/selector behavior change or global role/DATA/live/release acceptance; current global receiver remains failed at unchanged prebatch reader-CI-purpose profile."
         }
       ],
       "scopePreservation3408": {
@@ -38137,7 +38161,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+      "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a autoreview Codex gpt-5.6-terra high P2 whole-A91014 topic reviewer",
       "gateIds": [
@@ -38563,6 +38587,14 @@
           "report": "docs/review/parity-developer-entry-20261027.json",
           "reportSha256": "796043fe891b2803e8cc41e22d4546155ac2434a7556dd24f74aed7c8ffc73db",
           "inspectionLimit": "Complete original materialcontracts/limits/tasks/customfields and546whole-source vectors, full actualHubdelta and immutable history binding supplied. Coordinator controls are not fresh participants/runtime; prior receipts and limits unchanged."
+        },
+        {
+          "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "previousReviewedRevision": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+          "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 complete5original-scope preservation",
+          "verdict": "PASS",
+          "summary": "Original bounded scope preserved after existing owner descriptor-only Schema/Config/CLI selection metadata addition. Complete original records and all572 relevant physical rows supplied; only configuration owner source differs, all bytes outside descriptor exact. Old descriptor fields and complete real schema output byte-equal.",
+          "limits": "Original checks/reviews/limits/history/practical dates retained, not recounted. No default parser/runtime/selector behavior change or global role/DATA/live/release acceptance; current global receiver remains failed at unchanged prebatch reader-CI-purpose profile."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -39541,7 +39573,7 @@
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+      "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A99-13 reviewer",
       "gateIds": [
@@ -39678,6 +39710,14 @@
           "report": "docs/review/parity-developer-entry-20261027.json",
           "reportSha256": "796043fe891b2803e8cc41e22d4546155ac2434a7556dd24f74aed7c8ffc73db",
           "inspectionLimit": "Complete original materialcontracts/limits/tasks/customfields and546whole-source vectors, full actualHubdelta and immutable history binding supplied. Coordinator controls are not fresh participants/runtime; prior receipts and limits unchanged."
+        },
+        {
+          "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "previousReviewedRevision": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+          "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 complete5original-scope preservation",
+          "verdict": "PASS",
+          "summary": "Original bounded scope preserved after existing owner descriptor-only Schema/Config/CLI selection metadata addition. Complete original records and all572 relevant physical rows supplied; only configuration owner source differs, all bytes outside descriptor exact. Old descriptor fields and complete real schema output byte-equal.",
+          "limits": "Original checks/reviews/limits/history/practical dates retained, not recounted. No default parser/runtime/selector behavior change or global role/DATA/live/release acceptance; current global receiver remains failed at unchanged prebatch reader-CI-purpose profile."
         }
       ]
     },
@@ -40637,6 +40677,397 @@
         }
       },
       "evidence": "docs/blueprint/acceptance-evidence/technical-reader-20261027/"
+    },
+    {
+      "id": "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+      "author": "Nova documentation declaration implementation and closure coordinator",
+      "reviewer": "Fresh native complementary original Source assessor plus independent pinned fe588b1a Codex Terra/high/P2 complete Schema/Config/CLI and whole-original adjudication",
+      "gateIds": [
+        "A911-01"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "sources": [
+        "contracts/agent-observability/v1/src/constants.ts",
+        "docs/blueprint/07-documentation-quality-standard.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/generated/inventory/configuration-runtime-inputs.json",
+        "docs/generated/inventory/configuration-schemas.json",
+        "docs/generated/inventory/configuration-values.json",
+        "docs/generated/inventory/deploy-script.json",
+        "docs/generated/inventory/documentation-parity-batches.json",
+        "docs/generated/inventory/documentation-parity-status.json",
+        "docs/generated/inventory/documentation-parity-summary.json",
+        "docs/generated/inventory/documentation-source-revision.json",
+        "docs/generated/inventory/documentation-tree.json",
+        "docs/generated/inventory/helm-values.json",
+        "docs/generated/inventory/operator-tasks.json",
+        "docs/generated/inventory/ops-tool-versions.json",
+        "docs/generated/inventory/platform-surfaces.json",
+        "docs/generated/inventory/plugin-system.json",
+        "docs/generated/inventory/sdk-reference.json",
+        "docs/generated/inventory/secret-setup.json",
+        "docs/generated/inventory/workflows.json",
+        "scripts/check-capability-drift.mjs",
+        "scripts/check-capability-policy-drift.mjs",
+        "scripts/check-capability-registrations-drift.mjs",
+        "scripts/check-capability-swarm-boundary.mjs",
+        "scripts/check-capability-vocabulary-drift.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-helm-environment-projections.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-product-pipeline-reference.mjs",
+        "scripts/docs-runtime-consumer-contracts.mjs",
+        "scripts/docs-sdk-reference.mjs",
+        "scripts/docs-shell-source-custody.mjs",
+        "scripts/docs-yaml-inventory.mjs",
+        "scripts/generate-buster-error-reference.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/platform-surface-source-discovery.mjs",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/sdk/package.json",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugin-runtime/sdk/src/testing/index.ts",
+        "skills/common/plugin-runtime/sdk/tsconfig.build.json",
+        "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "tests/verification/e2e/support/optional-absence.ts",
+        "tests/verification/e2e/support/platform-config.ts"
+      ],
+      "checks": [
+        {
+          "command": "Current supported configuration describe-discovery plus actual schemas-only baseline/coherent inventory comparison",
+          "exitCode": 0,
+          "observation": "Full3,361,285byte schema output byte-exact; all previous descriptor fields and all code bytes outside existing declaration function exact. New metadata declares real selection/acquisition paths only."
+        },
+        {
+          "command": "Independent complete Schema and Config/CLI declaration/source correspondence plus fresh other-seven-family original inspection",
+          "exitCode": 0,
+          "observation": "All ten component declarations explicitly PASS in SourceAccuracy/ReaderUsability/Quality at inspected complete responsibilities; whole original gate transition still requires separate independent decision."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "Actual Source388d844b check terminalPASS; no generator rows/global runtime grant."
+        },
+        {
+          "command": "npm run docs:publication:check",
+          "exitCode": 0,
+          "observation": "Actual Source388d844b check terminalPASS; no generator rows/global runtime grant."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "Actual Source388d844b check terminalPASS; no generator rows/global runtime grant."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole original A911-01: existing owner-derived machine inventories/descriptors define truthful searchspace, parser, responsible owner and exclusions for all ten Schema/Config/CLI/Contract/Event/Error/Endpoint/Store/Capability/Workflow families. Complete selection composition includes registered/fixed/deployed/undeployed Schema and secondary Helm/receiver/consumer/stdin-validation Config acquisition with explicit CLI exclusions. Only necessary descriptor metadata changed; actual parser/selector/default behavior remains unchanged.",
+      "limits": [
+        "Declaration/source-boundary and maintenance-reader acceptance only; no generated-row completeness/freshness, field meaning, parser algorithm correctness, inverse Source-to-page mapping, runtime/output-role/DATA/release/human/live grant.",
+        "Original8historical finding objects, reviews, missing-report failures and global open states remain; this fresh original gate decision does not claim those broader generator/parser findings repaired or missing reports restored.",
+        "Independent source roles inspect complete relevant declaration/selection responsibilities and report exact source ranges, not every unrelated semantic-parser interior or every historical input. Components do not automatically count as whole gate acceptance.",
+        "Existing sourceSurfaceMap is only a Reader join. Actual global receiver still fails at preexisting reader-CI-purpose documentation-site profile drift; no receipt/purpose pins rewritten or failures waived.",
+        "Five directly affected original accepted scopes independently preserved in five-original-preservation-verdict.json; original fields and limits retained, only reviewed source revision plus append-only impact review transitions."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "originalFindingCurrentGateDisposition": {
+        "scope": "Explicit fresh current per-eight relevance to whole original A911-01; not historical finding resolution",
+        "source": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+        "python": {
+          "scope": "Fresh independent per-six CURRENT relevance/source-fact assessment for original A911-01 only; no whole-gate acceptance",
+          "sourceHead": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "SOURCE_FACTS": "ALL_6_QUALIFIED_BOUNDED_CURRENT",
+          "currentOriginalCriterionGapFoundForTheseSix": false,
+          "perFinding": [
+            {
+              "id": "A98-20261012-CANONICAL-REFLECTION-S1",
+              "historicalFacet": "Known Python reader/mapping protocol and namespace acquisition",
+              "currentOriginalCriterionRelevance": "NO_CURRENT_A91101_DECLARATION_FALSIFIER_SUBSTANTIATED",
+              "reason": "The current original criterion requires explicit machine source searchspace/parser/owner/exclusions. This facet concerns behavior inside an explicitly named finite Python/YAML parser, not an omitted file selector or undeclared hand-picked source boundary; current targeted facts below substantiate this distinction.",
+              "sourceFacts": "QUALIFIED_BOUNDED_CURRENT",
+              "currentSourceReferences": [
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6141,
+                  6158
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6443,
+                  6464
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6876,
+                  6949
+                ]
+              ],
+              "existingFocusedTests": [
+                "reader, mapping and annotation-getter protocols retain or reject complete capability custody",
+                "capability protocol rules preserve foreign objects, passive strings, safe metadata and direct getters"
+              ],
+              "actualObservation": "Current __call__ reader/known-function/method and environ __getitem__/setdefault routes retain known roles; reflected __globals__ acquisition fails explicitly. Nine protocol native synthetic rows exit0; scanner/exact receiving-source assertions pass. Foreign/passive controls pass.",
+              "limits": "No missing original report or historical namespace witness was recreated. New current controls do not prove all Python namespaces/protocols. Annotationlib native rows skipped separately.",
+              "historicalOriginalWitnessReproduced": false,
+              "historicalFindingGloballyResolved": false,
+              "broaderFieldCustodyParserDisposition": "NOT_ADJUDICATED_REMAINS_SEPARATE",
+              "finiteDeclarationFixRequiredByThisFacet": null
+            },
+            {
+              "id": "A98-20261012-CANONICAL-REFLECTION-S2",
+              "historicalFacet": "Annotation getter protocol/reflection/helper transfers",
+              "currentOriginalCriterionRelevance": "NO_CURRENT_A91101_DECLARATION_FALSIFIER_SUBSTANTIATED",
+              "reason": "The current original criterion requires explicit machine source searchspace/parser/owner/exclusions. This facet concerns behavior inside an explicitly named finite Python/YAML parser, not an omitted file selector or undeclared hand-picked source boundary; current targeted facts below substantiate this distinction.",
+              "sourceFacts": "QUALIFIED_BOUNDED_CURRENT",
+              "currentSourceReferences": [
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6148,
+                  6157
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6415,
+                  6493
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6876,
+                  6952
+                ]
+              ],
+              "existingFocusedTests": [
+                "reader, mapping and annotation-getter protocols retain or reject complete capability custody",
+                "capability protocol rules preserve foreign objects, passive strings, safe metadata and direct getters"
+              ],
+              "actualObservation": "Current annotation-reader role propagates supported __call__; reflection/helper argument/returned capability/string-evaluation/unresolved namespace branches reject explicitly, with passively safe metadata/direct-getter controls. Relevant current scanner and receiving-source assertions passed.",
+              "limits": "Actual Python3.11.2 has no annotationlib. Ten native protocol/annotationlib rows in shared protocol test skipped; no Python3.14 native annotation proof. Not a full annotation correctness or original witness resolution.",
+              "historicalOriginalWitnessReproduced": false,
+              "historicalFindingGloballyResolved": false,
+              "broaderFieldCustodyParserDisposition": "NOT_ADJUDICATED_REMAINS_SEPARATE",
+              "finiteDeclarationFixRequiredByThisFacet": null
+            },
+            {
+              "id": "A98-20261012-CANONICAL-REFLECTION-S3",
+              "historicalFacet": "Executable YAML env->shell->Python acquisition",
+              "currentOriginalCriterionRelevance": "NO_CURRENT_A91101_DECLARATION_FALSIFIER_SUBSTANTIATED",
+              "reason": "The current original criterion requires explicit machine source searchspace/parser/owner/exclusions. This facet concerns behavior inside an explicitly named finite Python/YAML parser, not an omitted file selector or undeclared hand-picked source boundary; current targeted facts below substantiate this distinction.",
+              "sourceFacts": "QUALIFIED_BOUNDED_CURRENT",
+              "currentSourceReferences": [
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  5588,
+                  5814
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  5815,
+                  5955
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  7304,
+                  7317
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  7386,
+                  7435
+                ]
+              ],
+              "existingFocusedTests": [
+                "executable YAML applies finite env wrappers to the selected shell and preserves argv source positions"
+              ],
+              "actualObservation": "Current YAML selection uses actual top-level/exec/direct containers or initContainers command/args scalar AST nodes, finite env wrapper/interpreter/shell argv acquisition and decoded source positions. Four supported direct/env/clean-env/env-options native commands exit0 with synthetic-value; corresponding exact receiving-source assertions reject new key. Passive description/script/module controls and unsupported shell options behave as expected.",
+              "limits": "Existing synthetic actual-parser/native command controls, not unseen historical YAML witness or full runtime inventory execution. No arbitrary YAML/shell evaluation claim.",
+              "historicalOriginalWitnessReproduced": false,
+              "historicalFindingGloballyResolved": false,
+              "broaderFieldCustodyParserDisposition": "NOT_ADJUDICATED_REMAINS_SEPARATE",
+              "finiteDeclarationFixRequiredByThisFacet": null
+            },
+            {
+              "id": "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+              "historicalFacet": "Known reader kwargs expansion with missing acquired key",
+              "currentOriginalCriterionRelevance": "NO_CURRENT_A91101_DECLARATION_FALSIFIER_SUBSTANTIATED",
+              "reason": "The current original criterion requires explicit machine source searchspace/parser/owner/exclusions. This facet concerns behavior inside an explicitly named finite Python/YAML parser, not an omitted file selector or undeclared hand-picked source boundary; current targeted facts below substantiate this distinction.",
+              "sourceFacts": "QUALIFIED_BOUNDED_CURRENT",
+              "currentSourceReferences": [
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6151,
+                  6157
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6934,
+                  6947
+                ]
+              ],
+              "existingFocusedTests": [
+                "recognized reader protocols fail closed when key custody is hidden in kwargs expansion"
+              ],
+              "actualObservation": "Current reader call chooses positional or explicit key keyword, and if neither exists raises unresolved environment reader arguments before successful discovery. Three protocol/mapping/direct-reader kwargs synthetic native programs exit0 reading observed; production AST/exact receiving-source guards reject each. Explicit key keyword and foreign-object controls pass.",
+              "limits": "No universal kwargs evaluator; failure is explicit bounded rejection. Historical witness JSON and original independent report absent; not replayed or globally resolved.",
+              "historicalOriginalWitnessReproduced": false,
+              "historicalFindingGloballyResolved": false,
+              "broaderFieldCustodyParserDisposition": "NOT_ADJUDICATED_REMAINS_SEPARATE",
+              "finiteDeclarationFixRequiredByThisFacet": null
+            },
+            {
+              "id": "A98-20261012-KNOWN-BINDING-R1",
+              "historicalFacet": "Absolute env/sudo and nested literal shell wrappers",
+              "currentOriginalCriterionRelevance": "NO_CURRENT_A91101_DECLARATION_FALSIFIER_SUBSTANTIATED",
+              "reason": "The current original criterion requires explicit machine source searchspace/parser/owner/exclusions. This facet concerns behavior inside an explicitly named finite Python/YAML parser, not an omitted file selector or undeclared hand-picked source boundary; current targeted facts below substantiate this distinction.",
+              "sourceFacts": "QUALIFIED_BOUNDED_CURRENT",
+              "currentSourceReferences": [
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  5597,
+                  5628
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  5640,
+                  5675
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  5815,
+                  5900
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  7009,
+                  7051
+                ]
+              ],
+              "existingFocusedTests": [
+                "finite absolute wrappers and nested literal shell bodies retain executable Python and decoded offsets"
+              ],
+              "actualObservation": "Current wrapperIdentity uses basename for literal absolute or bare env/sudo, supports finite wrapper options and nested literal shell bodies with depth/custody guards. Five synthetic native controls (absolute /usr/bin/env, nested shell/env, direct env, unsupported inherited stdin control) exit0 and expected source coverage outcomes pass. Source-only /bin/env,/usr/bin/sudo,/bin/sudo recognition checks pass.",
+              "limits": "No native sudo invocation, privilege change or original three-witness reproduction. This does not qualify every wrapper/control path.",
+              "historicalOriginalWitnessReproduced": false,
+              "historicalFindingGloballyResolved": false,
+              "broaderFieldCustodyParserDisposition": "NOT_ADJUDICATED_REMAINS_SEPARATE",
+              "finiteDeclarationFixRequiredByThisFacet": null
+            },
+            {
+              "id": "A98-20261012-KNOWN-BINDING-R2",
+              "historicalFacet": "Global/nonlocal NamedExpr known capability writes",
+              "currentOriginalCriterionRelevance": "NO_CURRENT_A91101_DECLARATION_FALSIFIER_SUBSTANTIATED",
+              "reason": "The current original criterion requires explicit machine source searchspace/parser/owner/exclusions. This facet concerns behavior inside an explicitly named finite Python/YAML parser, not an omitted file selector or undeclared hand-picked source boundary; current targeted facts below substantiate this distinction.",
+              "sourceFacts": "QUALIFIED_BOUNDED_CURRENT",
+              "currentSourceReferences": [
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6257,
+                  6272
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6364,
+                  6370
+                ],
+                [
+                  "scripts/docs-configuration-inventory.mjs",
+                  6494,
+                  6507
+                ]
+              ],
+              "existingFocusedTests": [
+                "named expressions reject global and nonlocal writes of known readers, mappings and annotation getters"
+              ],
+              "actualObservation": "visit_NamedExpr invokes reject_external_capability_write before binding, sharing explicit global/nonlocal denial with Assign/AnnAssign; recognized global/nonlocal declarations also guard scope writes. All selected AST/receiving assertions pass; global reader and mapping native programs exit0 reading observed, while scanner rejects. Ordinary local walrus and plain global/nonlocal values controls pass.",
+              "limits": "Five annotationlib native variants in this NamedExpr test skipped on Python3.11.2. No reproduction of original six native witnesses, no universal Python scope/write guarantee.",
+              "historicalOriginalWitnessReproduced": false,
+              "historicalFindingGloballyResolved": false,
+              "broaderFieldCustodyParserDisposition": "NOT_ADJUDICATED_REMAINS_SEPARATE",
+              "finiteDeclarationFixRequiredByThisFacet": null
+            }
+          ],
+          "focusedRun": {
+            "commandRecord": "focused-command.json",
+            "exit": 0,
+            "testsAndSubtests": 27,
+            "pass": 12,
+            "fail": 0,
+            "skipped": 15,
+            "nativeObservedSyntheticRows": 23,
+            "nativeAnnotationlibAvailable": false,
+            "python": "3.11.2",
+            "node": "v24.21.0",
+            "limit": "15 explicit unavailable annotationlib native subtests; source assertions still ran. No claim skipped checks passed."
+          },
+          "declarationCommand": {
+            "record": "declaration-command.json",
+            "exit": 0,
+            "result": "current-configuration-declaration.json",
+            "qualification": "Actual declaration output, not runtime generation/field-custody correctness."
+          },
+          "priorWholeVerdict": "Preserved as provided whole-original-adoption-verdict.json; not modified or superseded. Whole original adjudicator separate.",
+          "globalFindingStatesChanged": false,
+          "repositoryStatusAfter": "",
+          "temporaryFixtureRootCreated": false,
+          "temporaryRootExists": false,
+          "originalReportReuse": "blocked by missing original reports/witness; this is fresh bounded substantiation only"
+        },
+        "javascript": {
+          "at": "2026-10-27T13:28:04.062164+00:00",
+          "reviewer": "/root/whole_criterion_selection",
+          "frozenRevision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "originalCriterion": "A911-01 machine-readable searchspace/parser/owner/exclusions for ten families; not inverse map or all-fields/runtime correctness",
+          "findings": [
+            {
+              "id": "A98-20261012-CANONICAL-REFLECTION-S4",
+              "originalFinding": "Intrinsic CommonJS module.require loses ordinary closure and protected public-caller guard.",
+              "currentRelevance": "Potential original source-boundary relevance, independently assessed rather than ignored by association-only scope rule.",
+              "currentDecision": "NO_PRESENT_A91101_BLOCKER_FOR_THIS_FACET",
+              "basis": "Current complete relevant capability/resolution/graph/public-caller implementation plus unchanged existing focused native and actual product consumer controls PASS.",
+              "historicalFindingResolved": false,
+              "exactHistoricalWitnessReproduced": false,
+              "nextAction": "Supply this bounded current disposition to independent whole-original adoption; preserve original historical open record and other associated requirements/facets."
+            },
+            {
+              "id": "A98-20261012-CANONICAL-REFLECTION-S5",
+              "originalFinding": "Own-package object/subpath self exports are silently treated as external.",
+              "currentRelevance": "Potential original source-boundary relevance, independently assessed rather than ignored by association-only scope rule.",
+              "currentDecision": "NO_PRESENT_A91101_BLOCKER_FOR_THIS_FACET",
+              "basis": "Current complete relevant capability/resolution/graph/public-caller implementation plus unchanged existing focused native and actual product consumer controls PASS.",
+              "historicalFindingResolved": false,
+              "exactHistoricalWitnessReproduced": false,
+              "nextAction": "Supply this bounded current disposition to independent whole-original adoption; preserve original historical open record and other associated requirements/facets."
+            }
+          ],
+          "focusedTests": {
+            "commandReceipt": "focused-tests-result.json",
+            "log": "focused-tests.log",
+            "exitCode": 0,
+            "tests": 6,
+            "passed": 6,
+            "failed": 0,
+            "skipped": 0,
+            "nativeRecordedWitnesses": 46,
+            "note": "46 are diagnostic witness rows from these six current tests, not original historical witness coverage or unique cases in the full suite."
+          },
+          "sourceAccuracy": "PASS bounded current S4/S5 originalA91101 relevance",
+          "readerUsability": "PASS bounded current S4/S5 originalA91101 relevance",
+          "quality": "PASS bounded current S4/S5 originalA91101 relevance",
+          "notGlobalResolution": true
+        },
+        "limits": "All original finding objects and global states remain unchanged. Missing reports/witnesses not restored/reused. 15 annotationlib native subtests skipped on Python3.11.2; sudo recognition source-only. Current focused controls not unseen historical witness reproduction. Whole reviewer must adjudicate material declaration relevance, not auto-approve component decisions."
+      }
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -61406,7 +61837,7 @@
       "id": "A911-01",
       "passCondition": "Ein maschinenlesbares Quelleninventar definiert für Schema, Config, CLI, Contract, Event, Error, Endpoint, Store, Capability und Workflow jeweils Suchraum, Parser, Owner und Ausschlüsse.",
       "automaticFailure": "Ein Generator scannt nur handverlesene Dateien ohne deklarierte Grenze.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -61465,7 +61896,15 @@
         "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
         "A98-20261012-KNOWN-BINDING-R1",
         "A98-20261012-KNOWN-BINDING-R2"
-      ]
+      ],
+      "completionRecord": "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+        "completionRecord": "A911-01-whole-ten-family-discovery-declarations-20261027",
+        "reason": "Whole original A911-01: existing owner-derived machine inventories/descriptors define truthful searchspace, parser, responsible owner and exclusions for all ten Schema/Config/CLI/Contract/Event/Error/Endpoint/Store/Capability/Workflow families. Complete selection composition includes registered/fixed/deployed/undeployed Schema and secondary Helm/receiver/consumer/stdin-validation Config acquisition with explicit CLI exclusions. Only necessary descriptor metadata changed; actual parser/selector/default behavior remains unchanged.",
+        "historicalFindingLimit": "Original eight finding IDs, objects, reviews and broader global open states preserved. Fresh per-ID current relevance substantiation accepted only for original ten-family declaration criterion."
+      }
     },
     {
       "id": "A911-02",

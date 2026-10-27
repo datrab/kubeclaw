@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "CONFIG_DECLARATION=PASS; CLI_DECLARATION=PASS; sourceAccuracy=PASS; readerUsability=PASS; quality=PASS. The added descriptor accurately declares the previously omitted secondary acquisition paths, runtime modes, receiver/consumer branches, Python stdin validation boundary, and CLI exclusion/definition filter. Inspection is limited to the supplied bounded source responsibilities and declaration metadata; it does not approve parser correctness, emitted inventory rows, runtime behavior, or wider AP09/A911 acceptance.",
+  "overall_confidence": 0.96
+}

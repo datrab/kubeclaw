@@ -1,0 +1,1 @@
+{"at": "2026-10-27T13:12:48.334719+00:00", "exitCode": 1, "command": "PATH=/usr/local/go/bin:$PATH node --max-old-space-size=4096 scripts/generate-local-helm-authorities.mjs --check", "Source": "388d844b", "notScopeAcceptance": true}

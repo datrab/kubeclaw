@@ -1,0 +1,19 @@
+{
+  "actualBaselineAndCoherentSchemaBytesEqual": true,
+  "schemaBytes": 3361285,
+  "schemaSha256": "4593201cebc3393400d13777d36de450fb6d59b6d7fe5e0fd02ce582e4bf0c73",
+  "allOutsideDescriptorBytesExactToPublishedBase": true,
+  "alreadyReviewedSchemaDeclarationExact": true,
+  "allPreviouslyPublishedDescriptorFieldsExact": true,
+  "onlyNewFields": [
+    "schemas.selectionComposition",
+    "runtime.selectionComposition",
+    "cli.exclusions",
+    "cli.selectionRule",
+    "cli.qualification"
+  ],
+  "changedSourceSha256": "166c4fd8ac2856d658b747011c0acab6658055f06c6c1e07020b4d2cf2a4857b",
+  "round": 2,
+  "scope": "Collected four related mandatory Config/CLI declaration omissions corrected together, no parser/selector/runtime behavior change",
+  "remaining": "Independent changed Config/CLI source judgment; complete10family original final acceptance;5oldscopepreservation/checks/publication. No helper/scanner repair campaign."
+}
