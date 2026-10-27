@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:operator-handbook-sources"
     }
   },
-  "decisionSha256": "d616f39c134a5559a114533b16196ea09debb18fada421fbafdd7ff5cf27d769",
+  "decisionSha256": "cff56b4797b80efe7ca2c66fd8b16815e33038782837ac903d5ac04bdb5d0cb6",
   "contentRoot": "a86dfeaef7da4137472c205c728c0439fd72b37f8ad7b5aa261ea333d2b52e3f",
   "claimIds": [
     "operator-entry:dpu_f5caa7c29886e889191bb36aa42eab6f",
@@ -31,7 +31,7 @@
     "operator-entry:dpu_53d57b7c143cbcd68f7405db7f01ccbe",
     "operator-entry:dpu_b6e57c49b18bcfe5b73bdcde5b09dd54"
   ],
-  "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
+  "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -93,8 +93,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
-    "reviewedTree": "ee2aa2391658570ea60d3dd5b24514417f7f6513",
+    "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+    "reviewedTree": "63ab51aa40f52e1ca56e5e57ef4ec374706689e8",
     "contentRoot": "a86dfeaef7da4137472c205c728c0439fd72b37f8ad7b5aa261ea333d2b52e3f",
     "scope": {
       "paths": [
@@ -144,8 +144,12 @@
         "detail": "Inspected the complete authoritative route registry file and exact original /operators redirect decision. Compared current published hub content and route configuration: no authoritative historical route or consumer is declared, so no redirect is invented. The canonical hub supplies all six exact extant reader anchors. Repository inspection cannot disprove unknown external references or third-party consumers; preserve native static limitations and all whole-parity/AP10 obligations."
       },
       {
+        "kind": "manual-observation",
+        "detail": "Compared complete current source, canonical target, primary evidence and route file bindings against the exact already independently qualified source and retained manual risk observations. Whole declared files are unchanged except the one fully supplied appended Testing change for the original seven-claim verification source, independently judged preserved with actual9matrix/7source SourceAccuracy/ReaderUsability/Quality PASS. Current native full249-source scan supplies fresh reference input identity. Retained inspections remain retained evidence, not invented fresh human/runtime observation; unchanged consumer code and all external/dynamic limitations remain explicit."
+      },
+      {
         "kind": "scanner-result",
-        "detail": "Inspected and compared actual complete249-source native reference scan at 6d436bd8eae9f23b68387632c487af398f528835 across 5513 frozen Git-bound file inputs. Original and extracted source paths have zero matches; current scanner input root e550f6d70e1ce0310b5c7c60c64d78f9eae5f83fbe601af609bb829a86a222e6 binds every path/blob. Complete original domain/primary/target equality and semantic scoped review are separate evidence. This static observation is not arbitrary dynamic/external consumer absence; original methods and limitations remain in force."
+        "detail": "Inspected and compared the actual full249-source native reference scan at e85ad8305af241f4472282519c9047bdea9edb4a across 5513 frozen Git-bound path inputs. Both original and extracted source paths have zero matches; scanner input root 1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7 binds every scanned path and blob. Complete primary/target/legacy/route vectors and actual original content/preservation outcomes are supplied separately. This static control does not prove arbitrary dynamic or external absence."
       }
     ],
     "findings": [],
@@ -157,7 +161,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "e550f6d70e1ce0310b5c7c60c64d78f9eae5f83fbe601af609bb829a86a222e6",
+      "scannerInputRoot": "1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",

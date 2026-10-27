@@ -19,8 +19,8 @@
       "actorId": "parity-reviewer:developer-and-extension-sources"
     }
   },
-  "decisionSha256": "79af32e75fbd956ad6b2c6826672536321249441ce0db448345318585c7ba003",
-  "contentRoot": "9b11811c29b2de1f4aee0b713daa8a21175a761f1d8454b5342a296f5609710c",
+  "decisionSha256": "376692fe5bcf16b3e48665784351d07af0f42bf319179d449f44110fa0f80733",
+  "contentRoot": "df7a54d1268fdd3f56b63bfcf226507e34612e697b14ffd3d35d8d742c688cd3",
   "claimIds": [
     "adding-verification:dpu_e55fdbc2762fb5cf42ce06a2ac2c2299",
     "adding-verification:dpu_76eefcfa82b9d713869f25f65fd5ae59",
@@ -30,7 +30,7 @@
     "adding-verification:dpu_969f106b5e0e6eb715fca9ac19b3f1ce",
     "adding-verification:dpu_12fb3a8baa4c076e17a9ddf4a25d55fa"
   ],
-  "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
+  "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -85,9 +85,9 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
-    "reviewedTree": "ee2aa2391658570ea60d3dd5b24514417f7f6513",
-    "contentRoot": "9b11811c29b2de1f4aee0b713daa8a21175a761f1d8454b5342a296f5609710c",
+    "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+    "reviewedTree": "63ab51aa40f52e1ca56e5e57ef4ec374706689e8",
+    "contentRoot": "df7a54d1268fdd3f56b63bfcf226507e34612e697b14ffd3d35d8d742c688cd3",
     "scope": {
       "paths": [
         "docs/developers/adding-verification.md",
@@ -136,8 +136,12 @@
         "detail": "Inspected the complete authoritative route registry file and exact original /developers/adding-verification redirect decision. Current reader content routes to canonical testing, Core contracts and real E2E command reference; no authoritative historical route or consumer is declared, so no redirect is invented. Unknown external references cannot be disproven by repository inspection; retain native static limitations and all whole-parity/AP10 obligations."
       },
       {
+        "kind": "manual-observation",
+        "detail": "Compared complete current source, canonical target, primary evidence and route file bindings against the exact already independently qualified source and retained manual risk observations. Whole declared files are unchanged except the one fully supplied appended Testing change for the original seven-claim verification source, independently judged preserved with actual9matrix/7source SourceAccuracy/ReaderUsability/Quality PASS. Current native full249-source scan supplies fresh reference input identity. Retained inspections remain retained evidence, not invented fresh human/runtime observation; unchanged consumer code and all external/dynamic limitations remain explicit."
+      },
+      {
         "kind": "scanner-result",
-        "detail": "Inspected and compared actual complete249-source native reference scan at 6d436bd8eae9f23b68387632c487af398f528835 across 5513 frozen Git-bound file inputs. Original and extracted source paths have zero matches; current scanner input root e550f6d70e1ce0310b5c7c60c64d78f9eae5f83fbe601af609bb829a86a222e6 binds every path/blob. Complete original domain/primary/target equality and semantic scoped review are separate evidence. This static observation is not arbitrary dynamic/external consumer absence; original methods and limitations remain in force."
+        "detail": "Inspected and compared the actual full249-source native reference scan at e85ad8305af241f4472282519c9047bdea9edb4a across 5513 frozen Git-bound path inputs. Both original and extracted source paths have zero matches; scanner input root 1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7 binds every scanned path and blob. Complete primary/target/legacy/route vectors and actual original content/preservation outcomes are supplied separately. This static control does not prove arbitrary dynamic or external absence."
       }
     ],
     "findings": [],
@@ -149,7 +153,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "e550f6d70e1ce0310b5c7c60c64d78f9eae5f83fbe601af609bb829a86a222e6",
+      "scannerInputRoot": "1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",

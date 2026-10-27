@@ -8,7 +8,7 @@
     "extractionDigest": "7d8906dd7a984105872ffb75ef015cc5cc66c041ef6b801007dbf8ad28526b78",
     "classification": "legacy-extraction-source"
   },
-  "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
+  "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
   "author": {
     "id": "parity-author:operator-handbook-sources",
     "assignmentId": "parity-assignment:be1c31c6913ff08a6fd943e811418e9f6432ee727bef87545f998506406f690a"
@@ -342,7 +342,7 @@
       },
       "evidence": [
         {
-          "revision": "6d436bd8eae9f23b68387632c487af398f528835",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
           "basis": "current-implementation",
           "assertion": "loadPlatformConfig reads the separately selected file using realpathSync and JSON.parse, checks validate(value), and returns resolvePaths after schema validation; this is platform configuration loading, not a live execution result.",

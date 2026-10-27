@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:developer-and-extension-sources"
     }
   },
-  "decisionSha256": "d20eba578ce041d012a58720deab4c3d193b84b32502ef9293ba88dfae940c14",
+  "decisionSha256": "d95b588d5d0808d4b27203d53c83927942b0805b752b0af41a362c0bf1e6da3e",
   "contentRoot": "5fb4698b79d38175727d29c4202ab5f81ad8a5b093cb04cff3521affab41ccb4",
   "claimIds": [
     "developer-entry:dpu_1f64af900dbfcd647768171966c69585",
@@ -33,7 +33,7 @@
     "developer-entry:dpu_a9d1559a147ce1f773c167cef0238054",
     "developer-entry:dpu_e45bba3d3ed021ad5e77c061f45899b8"
   ],
-  "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
+  "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -109,8 +109,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "6d436bd8eae9f23b68387632c487af398f528835",
-    "reviewedTree": "ee2aa2391658570ea60d3dd5b24514417f7f6513",
+    "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+    "reviewedTree": "63ab51aa40f52e1ca56e5e57ef4ec374706689e8",
     "contentRoot": "5fb4698b79d38175727d29c4202ab5f81ad8a5b093cb04cff3521affab41ccb4",
     "scope": {
       "paths": [
@@ -160,8 +160,12 @@
         "detail": "Compared the current canonical Hub content and complete route configuration file with the original developer source. Inspected the /developers author redirect decision and the authoritative route registry file: no historical public route or external consumer is declared, so no redirect is invented. Existing canonical task paths and anchors remain available. Unknown third-party references or dynamic external consumers are not disproved; source removal and AP10 deletion remain separate and unapproved."
       },
       {
+        "kind": "manual-observation",
+        "detail": "Compared complete current source, canonical target, primary evidence and route file bindings against the exact already independently qualified source and retained manual risk observations. Whole declared files are unchanged except the one fully supplied appended Testing change for the original seven-claim verification source, independently judged preserved with actual9matrix/7source SourceAccuracy/ReaderUsability/Quality PASS. Current native full249-source scan supplies fresh reference input identity. Retained inspections remain retained evidence, not invented fresh human/runtime observation; unchanged consumer code and all external/dynamic limitations remain explicit."
+      },
+      {
         "kind": "scanner-result",
-        "detail": "Inspected and compared actual complete249-source native reference scan at 6d436bd8eae9f23b68387632c487af398f528835 across 5513 frozen Git-bound file inputs. Original and extracted source paths have zero matches; current scanner input root e550f6d70e1ce0310b5c7c60c64d78f9eae5f83fbe601af609bb829a86a222e6 binds every path/blob. Complete original domain/primary/target equality and semantic scoped review are separate evidence. This static observation is not arbitrary dynamic/external consumer absence; original methods and limitations remain in force."
+        "detail": "Inspected and compared the actual full249-source native reference scan at e85ad8305af241f4472282519c9047bdea9edb4a across 5513 frozen Git-bound path inputs. Both original and extracted source paths have zero matches; scanner input root 1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7 binds every scanned path and blob. Complete primary/target/legacy/route vectors and actual original content/preservation outcomes are supplied separately. This static control does not prove arbitrary dynamic or external absence."
       }
     ],
     "findings": [],
@@ -173,7 +177,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "e550f6d70e1ce0310b5c7c60c64d78f9eae5f83fbe601af609bb829a86a222e6",
+      "scannerInputRoot": "1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",

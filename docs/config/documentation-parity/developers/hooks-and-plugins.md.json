@@ -8,7 +8,7 @@
     "gitObject": "60a5232768e899332c3a38a836b8f999af1695ad",
     "extractionDigest": "e2834caecdf72804398c8ed6e19a32cf76c2eb99ca8bc3e450daf03822c229b8"
   },
-  "reviewedRevision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+  "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
   "author": {
     "id": "parity-author:developer-and-extension-sources",
     "assignmentId": "parity-assignment:458e6f91f72aa00e591dffc225112c6c6423a58806e90e6099f7f0fd7fa16c95"
@@ -158,7 +158,7 @@
       },
       "evidence": [
         {
-          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
           "basis": "current-schema",
           "assertion": "The pluginManifest schema requires stages, observers and adapters registration arrays and defines their typed entries.",
@@ -171,7 +171,7 @@
           "normalizedSha256": "f875ee55adf0e738e3f87ad0b41458ba8766819b2d8e03c8a199671125826bd1"
         },
         {
-          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
           "basis": "current-implementation",
           "assertion": "The discovery implementation reads plugin.json with fs.readFileSync, parses the manifest, computes package digest and returns deepFreeze metadata without executing package registration code.",
@@ -221,7 +221,7 @@
       },
       "evidence": [
         {
-          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
           "basis": "current-test",
           "assertion": "The package boundary test reads openclaw.plugin.json, requires activation.onStartup true and checks that pipeline plugin.json is absent for the maintained OpenClaw host extension.",
@@ -263,7 +263,7 @@
       },
       "evidence": [
         {
-          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/nova/core/telemetry/observers.ts",
           "basis": "current-implementation",
           "assertion": "The ObserverRuntime uses CanonicalEvent values typed as LifecycleEvent or PluginDomainEvent from a FileJournal; this establishes the event consumer boundary, not permission to rewrite scheduler state.",
@@ -276,7 +276,7 @@
           "normalizedSha256": "19df6e43cae2a151c11ff1eba8cb50a7649449d842ffb70f4959e5c53f0e0aa7"
         },
         {
-          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/nova/core/state/journal.ts",
           "basis": "current-implementation",
           "assertion": "The FileJournal uses snapshotJson for parsed records and appended entries, then writes a hash-bound frozen record; this preserves immutable canonical entries before observer delivery.",
@@ -289,7 +289,7 @@
           "normalizedSha256": "553be4cac8439c1aae84046904847aa942d607961a7802601eccdc584e88a04c"
         },
         {
-          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/nova/core/state/json-value.ts",
           "basis": "current-implementation",
           "assertion": "The snapshotJson function creates an owned JSON copy and Object.freeze applies to every completed nested object; this prevents observer mutation of canonical event snapshots.",
@@ -331,7 +331,7 @@
       },
       "evidence": [
         {
-          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
           "basis": "current-implementation",
           "assertion": "The hook normalizer exports typed normalization functions and validates incoming agent event values before durable ingress.",
@@ -344,7 +344,7 @@
           "normalizedSha256": "287b98f7e4c932b1d9067c78e08cb66e386723288034dda573f2742076941065"
         },
         {
-          "revision": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
+          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
           "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
           "basis": "current-implementation",
           "assertion": "The normalizeAgentEvent function validates raw input records and returns bounded normalized agent event fields before ingress.",

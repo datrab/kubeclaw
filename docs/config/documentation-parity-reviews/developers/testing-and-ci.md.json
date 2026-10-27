@@ -1,4 +1,240 @@
 {
-  "status": "NOT_READY",
-  "scope": "Reserved original review registration; actual27 AUTHOR/CONTENT clean, reference/manual-dependency/current-root/native/publication chain not yet accepted. No PASS registration or source-valid inference."
+  "schemaVersion": "kubeclaw-documentation-parity-review.v1",
+  "source": {
+    "originalPath": "docs/developers/testing-and-ci.md",
+    "legacyPath": "docs/_legacy-source/developers/testing-and-ci.md",
+    "classification": "legacy-extraction-source",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "bc9d4a5a292243b440cb7be0fe292280f59b542f",
+    "extractionDigest": "abfdea102d850a2673f4a9cd5d4108106949c5fa74c236e9dd7736db6d308a51"
+  },
+  "reviewer": {
+    "id": "parity-reviewer:developer-and-extension-sources",
+    "assignmentId": "parity-assignment:12fb52222abada1dab5b8ce7ce77b33a43a6aab439cdeca38653b882ab4aba75",
+    "freshContext": true,
+    "readOnly": true,
+    "provenance": {
+      "kind": "repository-review-assignment",
+      "revision": "4178d6ec07cac5e4b903126f9daba81aab908949",
+      "actorId": "parity-reviewer:developer-and-extension-sources"
+    }
+  },
+  "decisionSha256": "93b68af5069dd66d14c8a4d941a237c395962f4b1448170105ce24b5d48bce63",
+  "contentRoot": "20008b8c7531aa13d8f7985ce7f25e24b56deee573785b61786755431731aaaf",
+  "claimIds": [
+    "developer-support:dpu_87948db31a336a87005b17995c623c6e:0",
+    "developer-support:dpu_a0cb041189c7dbf86469298cf3f1c6c4:0",
+    "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:0",
+    "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:1",
+    "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:2",
+    "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:3",
+    "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:4",
+    "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:0",
+    "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:1",
+    "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:2",
+    "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:3",
+    "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:4",
+    "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:0",
+    "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:1",
+    "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:2",
+    "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:3",
+    "developer-support:dpu_869416af2fcc76c85d68d97e608926a8:0"
+  ],
+  "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+  "classificationVerdict": "PASS",
+  "claimVerdicts": [
+    {
+      "claimId": "developer-support:dpu_87948db31a336a87005b17995c623c6e:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_a0cb041189c7dbf86469298cf3f1c6c4:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:1",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:2",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:3",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_b4cab7eaa6134f719a81239d92b97a9f:4",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:1",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:2",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:3",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_f07fe0acaeae402b2625f1c3d9fb11d3:4",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:1",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:2",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_70cf7f0f8148cf5bc5c29bab6524b7ba:3",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "developer-support:dpu_869416af2fcc76c85d68d97e608926a8:0",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    }
+  ],
+  "visualVerdicts": [],
+  "activeDependencyReview": {
+    "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+    "reviewedTree": "63ab51aa40f52e1ca56e5e57ef4ec374706689e8",
+    "contentRoot": "20008b8c7531aa13d8f7985ce7f25e24b56deee573785b61786755431731aaaf",
+    "scope": {
+      "paths": [
+        "docs/developers/testing-and-ci.md",
+        "docs/_legacy-source/developers/testing-and-ci.md"
+      ],
+      "risks": [
+        "dynamic-configuration",
+        "generated-paths",
+        "runtime-lookup",
+        "external-consumers"
+      ]
+    },
+    "methods": [
+      {
+        "kind": "manual-inspection",
+        "detail": "dynamic-configuration: Inspected current root package command configuration and complete original parity checker and generation sources. For exact prerequisite-aware release chain, delegated cgroup-v2 failure/no-simulation boundaries and inherited historical model cutover/capacity intent with current owner authority unproven, package scripts select maintained source entrypoints and canonical reader destinations, not an old developer Markdown document as runtime configuration. Exact current Source/full index checks supported static and composed path references. Arbitrary computed configuration and unknown third-party consumers cannot be disproven."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "generated-paths: Inspected complete documentation blueprint generator, parity suggestion logic and current native reference classification. Generated inventory/extraction and author controls retain original source membership as structural AP10 provenance; canonical mappings use current docs/site paths. Original source bytes are not silently declared reader content or a runtime input. Full scanner observations and current complete content bindings cover supplied generated-source paths, not arbitrary future generators."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "runtime-lookup: Inspected actual Nova entrypoint and package declaration selection with the complete current parity/reference consumer code. exact prerequisite-aware release chain, delegated cgroup-v2 failure/no-simulation boundaries and inherited historical model cutover/capacity intent with current owner authority unproven is source-backed documentation, not an executable lookup of old developer Markdown. The current full scan checks all supported Git-bound runtime/reference input paths; original content remains available to the parity extractor until AP10. Unknown computed runtime paths remain an explicit limitation, not blanket absence proof."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "external-consumers: Inspected the complete authoritative documentation route registry, exact original /developers route decision and current canonical target fields. No authoritative historical public route is declared for this source, so no redirect or external-consumer success is invented. Unknown external bookmarks and arbitrary consumers cannot be disproven by this repository scan; preserve the original source and whole AP10 readiness constraints until the actual public receiver accepts it."
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected current root package command configuration and complete original parity checker and generation sources. For exact prerequisite-aware release chain, delegated cgroup-v2 failure/no-simulation boundaries and inherited historical model cutover/capacity intent with current owner authority unproven, package scripts select maintained source entrypoints and canonical reader destinations, not an old developer Markdown document as runtime configuration. Exact current Source/full index checks supported static and composed path references. Arbitrary computed configuration and unknown third-party consumers cannot be disproven."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected complete documentation blueprint generator, parity suggestion logic and current native reference classification. Generated inventory/extraction and author controls retain original source membership as structural AP10 provenance; canonical mappings use current docs/site paths. Original source bytes are not silently declared reader content or a runtime input. Full scanner observations and current complete content bindings cover supplied generated-source paths, not arbitrary future generators."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected actual Nova entrypoint and package declaration selection with the complete current parity/reference consumer code. exact prerequisite-aware release chain, delegated cgroup-v2 failure/no-simulation boundaries and inherited historical model cutover/capacity intent with current owner authority unproven is source-backed documentation, not an executable lookup of old developer Markdown. The current full scan checks all supported Git-bound runtime/reference input paths; original content remains available to the parity extractor until AP10. Unknown computed runtime paths remain an explicit limitation, not blanket absence proof."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected the complete authoritative documentation route registry, exact original /developers route decision and current canonical target fields. No authoritative historical public route is declared for this source, so no redirect or external-consumer success is invented. Unknown external bookmarks and arbitrary consumers cannot be disproven by this repository scan; preserve the original source and whole AP10 readiness constraints until the actual public receiver accepts it."
+      },
+      {
+        "kind": "scanner-result",
+        "detail": "Inspected and compared the actual full249-source native reference scan at e85ad8305af241f4472282519c9047bdea9edb4a across 5513 frozen Git-bound path inputs. Both original and extracted source paths have zero matches; scanner input root 1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7 binds every scanned path and blob. Complete primary/target/legacy/route vectors and actual original content/preservation outcomes are supplied separately. This static control does not prove arbitrary dynamic or external absence."
+      }
+    ],
+    "findings": [],
+    "scanner": {
+      "version": "kubeclaw-documentation-active-dependency-scanner.v2",
+      "searchedPaths": [
+        "docs/developers/testing-and-ci.md",
+        "docs/_legacy-source/developers/testing-and-ci.md"
+      ],
+      "scannedFileCount": 5513,
+      "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
+      "scannerInputRoot": "1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7",
+      "matches": []
+    },
+    "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
+    "verdict": "PASS"
+  },
+  "verdict": "PASS",
+  "findings": []
 }
