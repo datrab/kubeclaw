@@ -887,7 +887,7 @@ Last verified: generated from current inventory
 
 ## Summary
 
-This page lists product GitHub Actions workflows, their triggers, path filters, jobs, schedules, and command/action references. Use it when deployment, images, tests, skills, plugins, or CI behavior change.
+This page lists product GitHub Actions workflows, their triggers, path filters, jobs, schedules, and command/action references. When deployment, images, tests, skills, plugins or CI behavior change, use this inventory.
 
 ${generatedNotice(workflows.generatedFrom)}
 ## Workflows
@@ -897,7 +897,7 @@ ${pipeline}
 
 ## Product pipeline source revision
 
-The documentation generator derives the product pipeline declarations above from revision \`${sourceRevision}\`. These links identify their source bytes; they do not establish runtime execution or complete workflow-family coverage.
+The documentation generator derives the product pipeline declarations above from revision \`${sourceRevision}\`. These links identify their source bytes. They do not prove runtime execution or complete workflow-family coverage.
 
 ${pipelineSources.map(source => `### Source: ${source}\n\n${sourceRangeLinks(source)}`).join('\n\n')}
 
@@ -913,8 +913,8 @@ ${generatedEnd()}
 
 ## Maintenance Notes
 
-- Regenerate this page with \`npm run docs:inventory && npm run docs:generate\` after workflow files change.
-- Keep workflow path filters broad enough to catch documented runtime drift. Prefer catching drift over saving a small amount of CI time.
+- After workflow files change, regenerate this page with \`npm run docs:inventory && npm run docs:generate\`.
+- Keep workflow path filters broad enough to find documented runtime drift. If the coverage adds a small amount of CI time, keep the coverage.
 - If a workflow command changes, update the human docs only when the changed command affects a documented operator/developer procedure.
 
 ## Generated from
