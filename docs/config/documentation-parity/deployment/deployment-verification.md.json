@@ -8,7 +8,7 @@
     "extractionDigest": "d82febee5a0656d23cd63001880f9da04bdbe309a19b7f9724df84fca494082a",
     "classification": "legacy-extraction-source"
   },
-  "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+  "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
   "author": {
     "id": "parity-author:platform-deployment-operations-and-security",
     "assignmentId": "parity-assignment:b46dd355be30c27b37deda845c90e8f7c6453a4190a4533d841e655338913ddb"
@@ -189,7 +189,7 @@
       },
       "evidence": [
         {
-          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
           "path": "tests/verification/deployment/check-deployment-truth.mjs",
           "basis": "current-test",
           "assertion": "The sourceRootFromArgs function uses the source-root argument when present, otherwise process.cwd(), and returns a path.resolve result for the selected source directory.",
@@ -202,7 +202,7 @@
           "normalizedSha256": "e8b3c592c325167cd240a9548a377ec40a29a1f688c41847a91cf6ac5c0b4d2a"
         },
         {
-          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
           "path": "tests/verification/docs/check-install-schema-step.mjs",
           "basis": "current-test",
           "assertion": "The maintained guide check executes the complete documented subshell with the real pinned validator and toy schemas; it checks positive selected-role results, invalid and empty resources, missing schema or selection, rendering failure, validator version/availability, private permissions and exact owned directory cleanup. This is not product rendering or deployment proof.",
@@ -280,7 +280,7 @@
       },
       "evidence": [
         {
-          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
           "path": "tests/verification/deployment/check-deployment-truth.mjs",
           "basis": "current-test",
           "assertion": "The sourceRootFromArgs function uses the source-root argument when present, otherwise process.cwd(), and returns a path.resolve result for the selected source directory.",
@@ -358,7 +358,7 @@
       },
       "evidence": [
         {
-          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package defines docs:inventory as a Node invocation of scripts/docs-inventory.mjs; its separately declared check mode retains the inventory verification route.",
@@ -371,7 +371,7 @@
           "normalizedSha256": "02a615cdf1aa2c0bd07e8a4e6dd715a380766682ace3b192df316bb9030ce82a"
         },
         {
-          "revision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+          "revision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
           "path": "package.json",
           "basis": "current-configuration",
           "assertion": "The package defines docs:generate as a Node invocation of scripts/docs-generate.mjs and separately defines its check mode for generated-reference verification.",

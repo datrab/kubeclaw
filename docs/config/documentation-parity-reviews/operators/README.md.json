@@ -19,7 +19,7 @@
       "actorId": "parity-reviewer:operator-handbook-sources"
     }
   },
-  "decisionSha256": "cff56b4797b80efe7ca2c66fd8b16815e33038782837ac903d5ac04bdb5d0cb6",
+  "decisionSha256": "56c4b8967d7b7cf0c87d2a7b7afa43a4707e552f391b28450c338d7ccf3cea56",
   "contentRoot": "a86dfeaef7da4137472c205c728c0439fd72b37f8ad7b5aa261ea333d2b52e3f",
   "claimIds": [
     "operator-entry:dpu_f5caa7c29886e889191bb36aa42eab6f",
@@ -31,7 +31,7 @@
     "operator-entry:dpu_53d57b7c143cbcd68f7405db7f01ccbe",
     "operator-entry:dpu_b6e57c49b18bcfe5b73bdcde5b09dd54"
   ],
-  "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
+  "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
   "classificationVerdict": "PASS",
   "claimVerdicts": [
     {
@@ -93,8 +93,8 @@
   ],
   "visualVerdicts": [],
   "activeDependencyReview": {
-    "reviewedRevision": "e85ad8305af241f4472282519c9047bdea9edb4a",
-    "reviewedTree": "63ab51aa40f52e1ca56e5e57ef4ec374706689e8",
+    "reviewedRevision": "bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced",
+    "reviewedTree": "baa14789bcd0325afe2d59c62265d896ee38a4e1",
     "contentRoot": "a86dfeaef7da4137472c205c728c0439fd72b37f8ad7b5aa261ea333d2b52e3f",
     "scope": {
       "paths": [
@@ -124,6 +124,10 @@
       {
         "kind": "manual-inspection",
         "detail": "external-consumers: Inspected the complete authoritative route registry file and exact original /operators redirect decision. Compared current published hub content and route configuration: no authoritative historical route or consumer is declared, so no redirect is invented. The canonical hub supplies all six exact extant reader anchors. Repository inspection cannot disprove unknown external references or third-party consumers; preserve native static limitations and all whole-parity/AP10 obligations."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "Compared the complete changed SDK support ownership join, existing canonical SDK page selection and original full current reference input tree. The new parser reads canonical docs/site/reference/sdk-exports.md and already owned inventory only; it does not load extracted Markdown as runtime configuration, generated reader authority or a package entrypoint. All original dynamic/external limits remain and prior manual observations are reused only where actual whole bytes are unchanged."
       }
     ],
     "evidence": [
@@ -148,8 +152,12 @@
         "detail": "Compared complete current source, canonical target, primary evidence and route file bindings against the exact already independently qualified source and retained manual risk observations. Whole declared files are unchanged except the one fully supplied appended Testing change for the original seven-claim verification source, independently judged preserved with actual9matrix/7source SourceAccuracy/ReaderUsability/Quality PASS. Current native full249-source scan supplies fresh reference input identity. Retained inspections remain retained evidence, not invented fresh human/runtime observation; unchanged consumer code and all external/dynamic limitations remain explicit."
       },
       {
+        "kind": "manual-observation",
+        "detail": "Compared each complete primary/target/legacy/route file blob for docs/operators/README.md with its previously qualified source content and current revision. Every declared file matches its whole-body hash; claim text, truth, target spans and evidence assertions remain inverse-equal except revision/contentRoot bindings. The full current reference scanner binds all repository input paths separately. Original dynamic/external consumer limits and retained manual observations remain explicit; current file comparison and6Reader/4offline controls are coordinator evidence, not invented fresh human/runtime or independent approval."
+      },
+      {
         "kind": "scanner-result",
-        "detail": "Inspected and compared the actual full249-source native reference scan at e85ad8305af241f4472282519c9047bdea9edb4a across 5513 frozen Git-bound path inputs. Both original and extracted source paths have zero matches; scanner input root 1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7 binds every scanned path and blob. Complete primary/target/legacy/route vectors and actual original content/preservation outcomes are supplied separately. This static control does not prove arbitrary dynamic or external absence."
+        "detail": "Inspected and compared the actual full249-source native reference scan at bb63cc25f6a4ed1b65c5a6b54efe0aa5d6c8dced across 5513 frozen Git-bound path inputs. Both original and extracted source paths have zero matches; scanner input root 03fde05f3f3d1ba38601ca15d0d4969ba9481006cddd697e6fbcaf5ef57b303a binds every scanned path and blob. Complete primary/target/legacy/route vectors and actual original content/preservation outcomes are supplied separately. This static control does not prove arbitrary dynamic or external absence."
       }
     ],
     "findings": [],
@@ -161,7 +169,7 @@
       ],
       "scannedFileCount": 5513,
       "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
-      "scannerInputRoot": "1435f425a42e11a7e2ed31ee4c961ee9416f54492e5c58f745a6b48b819376b7",
+      "scannerInputRoot": "03fde05f3f3d1ba38601ca15d0d4969ba9481006cddd697e6fbcaf5ef57b303a",
       "matches": []
     },
     "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
