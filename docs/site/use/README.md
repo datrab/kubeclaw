@@ -44,6 +44,28 @@ suite procedure. It is not the authority for a human demo decision or the full
 Prism journey. Use [Prepare and release a Kubernetes fixture](workflows/kubernetes-fixture.md)
 for the fixture entry point, storage policy, observations and cleanup boundaries.
 
+## Pipeline Operator Entry Points
+
+Use these task-specific routes when operating a pipeline or its plugins:
+
+- [Run the pipeline](operate.md#start-a-project-run).
+- [Recover a run after interruption](operate.md#recover-after-interruption).
+- [Install external plugins](plugins.md#1-discover-and-select), then follow the
+  lifecycle validation and activation steps on that page.
+- [Operate observers](plugins.md#3-activate-and-prove-health), with the observer
+  selection and configuration rules in
+  [Pipeline Platform Configuration](../reference/pipeline-platform.md#adapter-selection-and-validation).
+- [Plugin lifecycle](plugins.md#canonical-plugin-lifecycle-procedure).
+- [Operate Worker Trust](worker-trust.md#canonical-worker-trust-procedure).
+
+These links select procedures; they do not establish a successful execution.
+Run recovery is not a full-platform backup or restore. Follow the destination's
+preconditions, stop conditions, and evidence requirements.
+
+The [operator-owned platform configuration](../reference/pipeline-platform.md#purpose-and-authority),
+not project content, controls plugin installation roots, trust, provider
+selection, grants, and adapter and observer registration configuration.
+
 ## Shared Operating Contract
 
 Every execution record must contain:
