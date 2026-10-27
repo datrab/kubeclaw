@@ -8,6 +8,7 @@ import {
   generatedNotice,
   renderCli,
   renderSecrets,
+  renderWorkflowTable,
   table,
 } from './docs-generate-core.mjs';
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
@@ -853,9 +854,6 @@ git diff --check
 }
 
 function renderWorkflows(workflows) {
-  // Documentation production belongs to the internal inventory. The reader
-  // reference describes automation that builds, validates, or delivers the product.
-  const productWorkflows = workflows.workflows.filter((workflow) => workflow.path !== '.github/workflows/docs-checks.yaml');
   const pipeline = renderProductPipeline(root);
   const pipelineSources = [...new Set([
     'skills/common/plugin-runtime/sdk/src/generated/contracts.ts',
@@ -877,14 +875,7 @@ This page lists product GitHub Actions workflows, their triggers, path filters, 
 ${generatedNotice(workflows.generatedFrom)}
 ## Workflows
 
-${table(['Workflow', 'Triggers', 'Path filters', 'Schedules', 'Jobs', 'Commands/actions'], productWorkflows.map((workflow) => [
-  `\`${workflow.path}\` (${workflow.name})`,
-  workflow.triggers.map((trigger) => `\`${trigger}\``).join(', '),
-  workflow.pathFilters.length ? workflow.pathFilters.map((filter) => `\`${filter}\``).join('<br>') : '',
-  workflow.schedules.length ? workflow.schedules.map((schedule) => `\`${schedule}\``).join('<br>') : '',
-  workflow.jobs.map((job) => `\`${job}\``).join(', '),
-  workflow.commandAndActionRefs.map((ref) => `\`${ref}\``).join('<br>'),
-]))}
+${renderWorkflowTable(workflows)}
 ${pipeline}
 
 ## Product pipeline source revision

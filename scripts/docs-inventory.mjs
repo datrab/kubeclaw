@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import fs from 'node:fs';
 import path from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { buildSecretSetupInventory as buildSecretInventory } from './docs-secret-inventory.mjs';
 import { yamlFileInventory } from './docs-yaml-inventory.mjs';
 
@@ -411,8 +412,8 @@ function parseWorkflowCommands(text) {
   return [...commands].sort();
 }
 
-function buildWorkflowInventory() {
-  const workflowDir = path.join(root, '.github/workflows');
+export function buildWorkflowInventory(sourceRoot = root) {
+  const workflowDir = path.join(sourceRoot, '.github/workflows');
   const files = fs.readdirSync(workflowDir)
     .filter((file) => file.endsWith('.yaml') || file.endsWith('.yml'))
     .sort();
@@ -436,7 +437,7 @@ function buildWorkflowInventory() {
     },
     workflows: files.map((file) => {
       const relPath = `.github/workflows/${file}`;
-      const text = read(relPath);
+      const text = fs.readFileSync(path.join(sourceRoot, relPath), 'utf8');
       const nameMatch = text.match(/^name:\s*(.+)$/m);
       const schedule = [...text.matchAll(/cron:\s*['"]([^'"]+)['"]/g)].map((match) => match[1]);
       return {
@@ -465,6 +466,7 @@ function outputs() {
   ]);
 }
 
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 const stale = [];
 const generated = outputs();
 
@@ -491,4 +493,5 @@ if (checkOnly) {
     process.exit(1);
   }
   console.log('docs inventory is current');
+}
 }

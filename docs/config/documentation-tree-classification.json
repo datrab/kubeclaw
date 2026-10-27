@@ -35857,6 +35857,30 @@
       "originalPath": "docs/status/open-issues.json",
       "expectedPath": "docs/status/open-issues.json",
       "introducedAfterBaseline": false
+    },
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "class": "internal-documentation-input",
+      "purpose": "Explicit whole-publication example ownership, authored procedure duties, source/prose/asset/native bindings; internal validation input, not native execution or accepted review receipt.",
+      "originalPath": "docs/config/publication-example-claims.json",
+      "expectedPath": "docs/config/publication-example-claims.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-binding.json",
+      "class": "internal-documentation-input",
+      "purpose": "Exact-source private nonroot PostgreSQL18.6 CI assertion provenance and archive/receipt/source vectors for run40537386596; no live product database or effective-policy proof.",
+      "originalPath": "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-binding.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-binding.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-result.json",
+      "class": "internal-documentation-input",
+      "purpose": "Actual native SQL eight-case, negative, restoration and owned-cleanup result from CI40537386596 at511db8c7; reuse only at exact input vectors, no fresh normal-check database execution.",
+      "originalPath": "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-result.json",
+      "expectedPath": "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-result.json",
+      "introducedAfterBaseline": true
     }
   ]
 }

@@ -1,0 +1,287 @@
+{
+  "schemaVersion": "kubeclaw-native-retention-sql-assertion.v1",
+  "sqlSha256": "28034b4198ba91b93f188bc5a202f99726fa84d50e422d6e1569392df6a0f977",
+  "fullSchemaSha256": "efcec102154d9747e6276347d93035a922dc429cca164206cd95857393846c8e",
+  "provenanceSha256": "581db7ce798d3342aac67c0103107ed68685cdbc268d5e60b0063e66c29f7ffc",
+  "harnessSha256": "9cc2eedabd1a00984df6b623230ef9f4cf6fcf570217e290a33f8e6380b0864f",
+  "binaries": {
+    "postgres": {
+      "sha256": "3072560a8e4bd70947decc6e4f31cd4712931f639c20812096ae8c77e122ae42"
+    },
+    "initdb": {
+      "sha256": "eaf2c832804feee51a69142a4a13f14a963c09ac5ecacb0506b4bca6e4f7ef1c"
+    },
+    "pg_ctl": {
+      "sha256": "3a85e125c916ac48715daccdfe8342eabb7408af25eaf451fcee0136d03d5508"
+    },
+    "psql": {
+      "sha256": "736c963c14862583db0959219e599c3c32a6812ec597d24bbd08719f076d6a8c"
+    }
+  },
+  "cases": [
+    {
+      "name": "absent-record",
+      "readOnly": true,
+      "rows": [
+        [
+          "maximum_autorouter_session_retention_period",
+          "f",
+          "",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_health_check_retention_period",
+          "f",
+          "",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_spend_logs_retention_period",
+          "f",
+          "",
+          "f",
+          "",
+          "[absent or withheld]"
+        ]
+      ],
+      "rollbackObserved": true
+    },
+    {
+      "name": "sql-null",
+      "readOnly": true,
+      "rows": [
+        [
+          "maximum_autorouter_session_retention_period",
+          "f",
+          "",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_health_check_retention_period",
+          "f",
+          "",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_spend_logs_retention_period",
+          "f",
+          "",
+          "f",
+          "",
+          "[absent or withheld]"
+        ]
+      ],
+      "rollbackObserved": true
+    },
+    {
+      "name": "json-null",
+      "readOnly": true,
+      "rows": [
+        [
+          "maximum_autorouter_session_retention_period",
+          "t",
+          "null",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_health_check_retention_period",
+          "t",
+          "null",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_spend_logs_retention_period",
+          "t",
+          "null",
+          "f",
+          "",
+          "[absent or withheld]"
+        ]
+      ],
+      "rollbackObserved": true
+    },
+    {
+      "name": "absent-object-keys",
+      "readOnly": true,
+      "rows": [
+        [
+          "maximum_autorouter_session_retention_period",
+          "t",
+          "object",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_health_check_retention_period",
+          "t",
+          "object",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_spend_logs_retention_period",
+          "t",
+          "object",
+          "f",
+          "",
+          "[absent or withheld]"
+        ]
+      ],
+      "rollbackObserved": true
+    },
+    {
+      "name": "valid-integer-duration-and-null",
+      "readOnly": true,
+      "rows": [
+        [
+          "maximum_autorouter_session_retention_period",
+          "t",
+          "object",
+          "t",
+          "string",
+          "7d"
+        ],
+        [
+          "maximum_health_check_retention_period",
+          "t",
+          "object",
+          "t",
+          "null",
+          "null"
+        ],
+        [
+          "maximum_spend_logs_retention_period",
+          "t",
+          "object",
+          "t",
+          "number",
+          "123"
+        ]
+      ],
+      "rollbackObserved": true
+    },
+    {
+      "name": "unexpected-values-withheld",
+      "readOnly": true,
+      "rows": [
+        [
+          "maximum_autorouter_session_retention_period",
+          "t",
+          "object",
+          "t",
+          "string",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_health_check_retention_period",
+          "t",
+          "object",
+          "t",
+          "object",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_spend_logs_retention_period",
+          "t",
+          "object",
+          "t",
+          "number",
+          "[absent or withheld]"
+        ]
+      ],
+      "rollbackObserved": true
+    },
+    {
+      "name": "non-object-stop-observation",
+      "readOnly": true,
+      "rows": [
+        [
+          "maximum_autorouter_session_retention_period",
+          "t",
+          "array",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_health_check_retention_period",
+          "t",
+          "array",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_spend_logs_retention_period",
+          "t",
+          "array",
+          "f",
+          "",
+          "[absent or withheld]"
+        ]
+      ],
+      "rollbackObserved": true
+    },
+    {
+      "name": "restored-exact-query",
+      "readOnly": true,
+      "rows": [
+        [
+          "maximum_autorouter_session_retention_period",
+          "t",
+          "object",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_health_check_retention_period",
+          "t",
+          "object",
+          "f",
+          "",
+          "[absent or withheld]"
+        ],
+        [
+          "maximum_spend_logs_retention_period",
+          "t",
+          "object",
+          "f",
+          "",
+          "[absent or withheld]"
+        ]
+      ],
+      "rollbackObserved": true
+    }
+  ],
+  "cleanup": {
+    "complete": true,
+    "onlyOwnedClusterRemoved": true,
+    "serverStopped": true
+  },
+  "targetDatabaseOrDeploymentUsed": false,
+  "serverVersionNum": "180006",
+  "nonRootUid": 1000,
+  "tcpListeners": false,
+  "localPeerAuthentication": true,
+  "fullSchemaLoaded": true,
+  "negative": {
+    "nativeUnknownColumnRejected": true,
+    "exitCode": 3
+  },
+  "ok": true
+}

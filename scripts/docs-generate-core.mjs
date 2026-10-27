@@ -257,3 +257,17 @@ bound_kubectl -n "$TAILSCALE_OPERATOR_NAMESPACE" get secret "$TAILSCALE_OAUTH_SE
 - \`../../scripts/docs-generate.mjs\`
 `;
 }
+
+export function renderWorkflowTable(workflows) {
+  // Documentation production belongs to the internal inventory. The reader
+  // reference describes automation that builds, validates, or delivers the product.
+  const productWorkflows = workflows.workflows.filter((workflow) => workflow.path !== '.github/workflows/docs-checks.yaml');
+  return table(['Workflow', 'Triggers', 'Path filters', 'Schedules', 'Jobs', 'Commands/actions'], productWorkflows.map((workflow) => [
+  `\`${workflow.path}\` (${workflow.name})`,
+  workflow.triggers.map((trigger) => `\`${trigger}\``).join(', '),
+  workflow.pathFilters.length ? workflow.pathFilters.map((filter) => `\`${filter}\``).join('<br>') : '',
+  workflow.schedules.length ? workflow.schedules.map((schedule) => `\`${schedule}\``).join('<br>') : '',
+  workflow.jobs.map((job) => `\`${job}\``).join(', '),
+  workflow.commandAndActionRefs.map((ref) => `\`${ref}\``).join('<br>'),
+]));
+}

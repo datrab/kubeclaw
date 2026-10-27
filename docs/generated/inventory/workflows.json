@@ -6,6 +6,7 @@
     ".github/workflows/build-ops-mcp.yaml",
     ".github/workflows/dependency-updates.yaml",
     ".github/workflows/docs-checks.yaml",
+    ".github/workflows/docs-native-retention.yaml",
     ".github/workflows/pipeline-reliability.yaml",
     ".github/workflows/promote-runtime.yaml",
     ".github/workflows/publish-image-receipts.yaml",
@@ -214,6 +215,33 @@
         "uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff",
         "uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020",
         "uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a"
+      ]
+    },
+    {
+      "path": ".github/workflows/docs-native-retention.yaml",
+      "name": "Native documentation retention query",
+      "triggers": [
+        "push",
+        "pull_request",
+        "workflow_dispatch"
+      ],
+      "pathFilters": [
+        ".github/workflows/docs-native-retention.yaml",
+        "tests/verification/docs/check-published-retention-sql.py",
+        "tests/verification/docs/prepare-retention-postgresql.py",
+        "tests/fixtures/postgresql-native/**",
+        "tests/fixtures/litellm-database/**",
+        "docs/site/understand/data-and-state.md"
+      ],
+      "schedules": [],
+      "jobs": [
+        "native-query",
+        "receipt-witness"
+      ],
+      "commandAndActionRefs": [
+        "test -n \"$NATIVE_RECEIPT",
+        "uses: actions/checkout@11d5960a326750d5838078e36cf38b85af677262",
+        "uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02"
       ]
     },
     {

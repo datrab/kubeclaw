@@ -190,6 +190,7 @@ The configuration must declare these groups:
 | `activeAdapters` | Adapters that start in this runtime | Does every required capability have one active provider? |
 | `observers` | Observer configuration | Is required delivery reachable and bounded? |
 | `storageRoot` | Durable run storage | Is it persistent, writable, private, and monitored? |
+| `shutdownTimeoutMs` | Bounded runtime shutdown interval | Does the interval allow the selected adapters and observers to settle? |
 | issuer fields | Nova and administrative identities | Do resume signals use an authorized exact identity? |
 
 Relative package and storage paths resolve from the platform file directory.
@@ -261,7 +262,8 @@ npm run pipeline -- \
   --project "<project.json>"
 ```
 
-Expected output is one JSON object.
+The CLI result is one JSON object. Npm can print lifecycle banners before it;
+do not parse the entire npm output as one JSON document.
 It includes `runId`, `status`, `completionScope`, `acceptanceReadiness`, and stage states.
 
 Exit code zero means the returned run status is `succeeded`.

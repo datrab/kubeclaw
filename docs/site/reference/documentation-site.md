@@ -270,6 +270,22 @@ do not make a runtime deployment or a cluster available. Git must resolve every
 pinned source revision needed by the reader. Preserve full clone history or
 fetch the exact missing objects through the repository owner.
 
+The publication example gate also needs Bash, a POSIX shell, Python 3,
+GNU `flock`, Helm, and the checksum-pinned `kubeconform` from `versions.json`.
+The read-only CI job prepares these tools before checking the examples.
+The gate runs the two project factories only in private directories with
+isolated Git configuration. It also runs one fixed, pure SDK example.
+Other documented procedures are not executed by their syntax or source checks.
+The SQL assertion reuses its exact-source native CI receipt; a normal publication
+check does not start PostgreSQL or connect to a product database.
+
+`docs/config/publication-example-claims.json` assigns each selected page, code
+block, prose region, and asset to its owner and check boundary. After a source
+change, review the complete affected procedure and update its declared duties,
+source anchors, and native input assignment together. Do not refresh hashes alone
+to hide a changed meaning, missing cleanup, or an unavailable native assertion.
+A changed SQL assertion needs a new successful native CI result before reuse.
+
 Source verification reads this repository through Git. Declared source blobs in
 other repositories use bounded primary HTTPS requests. An offline artifact does
 not prove that this network-dependent verification ran.
@@ -316,7 +332,7 @@ unprepared or restricted environment.
 | Mode | Reads and result | Writes and failure boundary |
 | --- | --- | --- |
 | `docs:publication:generate` | Builds plugin catalogue/capability content and the operator plugin matrix from their inputs | Writes those owned pages/sections sequentially. A failure can leave earlier writes; inspect the diff and first error. It is not the prose-page generator. |
-| `docs:publication:check` | Runs the two publication helper test files, then compares generated content and checks selected pages, assets, metadata, language, links, and bounded examples | Does not invoke publication `generate` or `build`. A nonzero helper or publisher result stops the chain. It does not render a website. |
+| `docs:publication:check` | Runs the declared publication helper tests, then compares generated content and checks selected pages, assets, metadata, language, links, and all classified examples at their native, projection, syntax, or authored-contract boundary | Does not invoke publication `generate` or `build`. A nonzero helper or publisher result stops the chain. It does not render a website. |
 | `docs:publication:build` | Runs publication input checks, then renders HTML, navigation, local search, Markdown and approved assets with reports | After successful input checks, removes and recreates `.tmp/docs-publication`. A later copy/write failure can leave partial output. Exit zero and the fresh report are required. |
 | `docs:publish-check` | Runs the broader `docs:check` chain, then the HTML build | Includes mutation tests and the staging replacement. It is not a lightweight link check or a hosting deployment. |
 

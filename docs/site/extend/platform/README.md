@@ -674,8 +674,8 @@ check's scope, not product, native, browser or deployed success.
 | `npm run docs:generate:check` | Follow documentation-maintenance source/input/native acquisition prerequisites; genuine source discovery and generated-output comparison | Selected generated outputs, not write-free execution merely because --check is present |
 | `npm run docs:governance:check` | Classification, registered dependencies and baseline inputs; compare governance outputs | Governance constraints, not independent content correctness |
 | `npm run docs:check:refs` | Actual referenced checkout/source objects and documented reference prerequisites | Selected repository references, not published browser routes |
-| `npm run docs:publication:check` | Runs docs:publication:test before publication check; test fixture/effect prerequisites apply | Current publication checks, not future HTML/browser/search implementation |
-| `npm run docs:publication:build` | Current publication input/output ownership and maintenance prerequisites; stages raw Markdown/assets and writes build output | Not a rendered HTML/search or live-site proof |
+| `npm run docs:publication:check` | Runs docs:publication:test before publication check; test fixture/effect prerequisites apply | Publication input checks, not an observed browser task or live site |
+| `npm run docs:publication:build` | Current publication input/output ownership and maintenance prerequisites; writes Markdown/assets, rendered HTML and the search index | Local Reader artifact; browser checks and live publication remain separate |
 | `npm run docs:site-boundary:check` | Current reader-site input boundary checker | Source boundary, not complete reader-task acceptance |
 | `npm run docs:core-guides:check` | Genuine Git objects and protected source revision; Git show and whole-file comparisons | Named Core guide byte/revision constraints; never fix by an unexplained repin |
 | `npm run versions:check` | Central versions and their selected consumer files | Named version drift, not an observed build |
@@ -720,7 +720,7 @@ This page does not establish actual remote branch protection, credentials,
 workflow execution or merge/release authority.
 
 The current Core guide checker selects protected revision
-`4f089958db97a551f406c157d774bda143a38946`, checks the required evidence metadata,
+`ce7740252864a9b547bee8a35260d6ab10c9f05e`, checks the required evidence metadata,
 and compares cited source files against Git objects. The handbook's historical
 example revision is not that current guard. When relevant source changes, use
 the owning Core-guide change procedure and have the affected explanation/source

@@ -209,7 +209,7 @@ of fixture-provider input/output ports.
 | `kubeclaw.container-build-suite@1` | None | `container-build: 1` | BuildKit and local OCI registry |
 | `kubeclaw.kubernetes-fixture-suite@1` | None | `kubernetes-fixture: 2` | Namespace broker and checked manifest |
 | `kubeclaw.http-suite@1` | None | `http: 8` | Approved origin or endpoint input |
-| `kubeclaw.tailscale-exposure-suite@1` | None | `tailscale: 1`, `http: 2` | Retained deployment and Tailscale operator |
+| `kubeclaw.tailscale-exposure-suite@1` | None | `tailscale-exposure: 1`, `http: 2` | Retained deployment and Tailscale operator |
 | `kubeclaw.api-suite@1` | HTTP, flow, OpenAPI | `http: 8`, `api-flow: 4` | Service endpoint and project files |
 | `kubeclaw.a11y-suite@1` | Axe | `browser-axe: 2` | Browser policy and endpoint |
 | `kubeclaw.lighthouse-suite@1` | Performance, SEO, best practices | `lighthouse: 1` | Chrome/Lighthouse profiles and endpoint |

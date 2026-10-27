@@ -30,6 +30,27 @@ jobs:
         uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
         with:
           version: "v3.22.0"
+      - name: Prepare checksum-pinned documentation schema validator
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import crypto from 'node:crypto';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import { execFileSync } from 'node:child_process';
+          assert.equal(process.platform, 'linux'); assert.equal(process.arch, 'x64');
+          const pins = JSON.parse(fs.readFileSync('versions.json', 'utf8')).buildArgs;
+          const directory = fs.mkdtempSync(path.join(process.env.RUNNER_TEMP, 'docs-kubeconform-'));
+          const archive = path.join(directory, 'kubeconform.tar.gz');
+          try {
+            execFileSync('curl', ['--fail', '--silent', '--show-error', '--location',
+              `https://github.com/yannh/kubeconform/releases/download/v${pins.KUBECONFORM_VERSION}/kubeconform-linux-amd64.tar.gz`, '-o', archive]);
+            assert.equal(crypto.createHash('sha256').update(fs.readFileSync(archive)).digest('hex'), pins.KUBECONFORM_SHA256_AMD64);
+            execFileSync('tar', ['-xzf', archive, '-C', directory, 'kubeconform']);
+            fs.chmodSync(path.join(directory, 'kubeconform'), 0o755);
+            fs.appendFileSync(process.env.GITHUB_PATH, directory + '\n');
+          } finally { fs.rmSync(archive, { force: true }); }
+          JS
       - name: Install repository dependencies
         run: npm ci --ignore-scripts && npm ci --prefix scripts/docs-reader --ignore-scripts
       - name: Install documentation diagram browser

@@ -672,6 +672,16 @@ function compareGenerated() {
   }
 }
 
+// Read-only library entry for the publication example dispatcher. This uses the
+// actual owning renderer/collector, including package scripts and matrix cells;
+// importing this module must not run the CLI or write generated output.
+export function verifyGeneratedPublicationExampleProjections() {
+  compareGenerated();
+  if (errors.length) throw new Error(`PUBLICATION_EXAMPLE_PROJECTION_INVALID:${errors.join('\n')}`);
+  return { generatedViews: generated.size, packages: plugins.length,
+    exactOwningProjection: true, packageTestsOrOperationalProceduresExecuted: false };
+}
+
 const metadataFields = ['Status', 'Audience', 'Owner', 'Evidence', 'Applies to', 'Last verified'];
 const vague = /\b(simply|obviously|appropriate|properly|normally|just|easy|easily|somehow|various)\b/iu;
 const passive = /\b(?:is|are|was|were|be|been)\s+(?:performed|handled|processed|executed|validated|generated|created|written|provided|configured|managed|implemented|defined|recorded|resolved|accepted|granted)\b/iu;
@@ -926,6 +936,26 @@ function checkSite() {
   }
   if (pages.some((file) => /(?:phase|audit|implementation-plan)/u.test(path.basename(file)))) errors.push('Published site contains an internal planning page');
   if (plugins.length !== walk(catalogueRoot).filter((file) => file.endsWith('.md') && path.basename(file) !== 'README.md').length) errors.push('Plugin catalogue coverage is incomplete');
+  // Both check and build use this gate before any publication output mutation.
+  // The child owns asynchronous native fixture lifetimes and returns one complete
+  // structured result; an absent, partial or failed result cannot be published.
+  if (errors.length === 0) {
+    try {
+      const result = JSON.parse(execFileSync(process.execPath,
+        [path.join(root, 'scripts/docs-publication-examples.mjs')], {
+          cwd: root, encoding: 'utf8', timeout: 300000, maxBuffer: 16 * 1024 * 1024,
+        }));
+      const claims = JSON.parse(fs.readFileSync(path.join(root, 'docs/config/publication-example-claims.json'), 'utf8'));
+      const expected = claims.checks.map(check => check.id).sort();
+      const actual = result.results?.map(item => item.id).sort();
+      if (result.schemaVersion !== 'kubeclaw-publication-example-results.v1' || result.ok !== true
+        || result.pages !== pages.length || result.assets !== publicationAssets(siteRoot).length
+        || result.blocks !== claims.pages.reduce((count, page) => count + page.blocks.length, 0)
+        || expected.length === 0 || JSON.stringify(actual) !== JSON.stringify(expected)) {
+        throw new Error('native publication examples returned missing or partial results');
+      }
+    } catch (error) { errors.push(`Publication example validation failed: ${error.message}`); }
+  }
   return pages;
 }
 
@@ -979,6 +1009,7 @@ async function build() {
   console.log(`built ${pages.length} publication pages for ${revision}`);
 }
 
+if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 if (command === 'dependency-authority-report') {
   console.log(JSON.stringify(acquireNativeDependencyReport({
     nativePackages: inventory.packages, root, plugins, configurationSemantics,
@@ -1003,3 +1034,4 @@ if (errors.length) {
   process.exit(1);
 }
 if (command === 'check') console.log(`documentation publication passed (${walk(siteRoot).filter((file) => file.endsWith('.md')).length} pages, ${plugins.length} plugins)`);
+}

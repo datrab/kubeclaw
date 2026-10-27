@@ -2109,7 +2109,7 @@ Use an isolated branch with a real configured Git author identity. Do not
 commit another contributor's files or invent identity/remote availability.
 
 The selected checker currently fixes
-`4f089958db97a551f406c157d774bda143a38946` in
+`ce7740252864a9b547bee8a35260d6ab10c9f05e` in
 `scripts/check-core-architecture-guides.mjs`. It protects exactly these three
 canonical guides as one source-revision set:
 

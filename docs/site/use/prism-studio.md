@@ -1800,7 +1800,10 @@ and complete [Inspect a Run](operate.md#inspect-a-run): preserve raw state,
 verify the copy, and strictly parse the copied journals. Stop on an incomplete
 record or hash/sequence error; retain the rejected bytes. Audit and resume can
 repair a partial journal tail before they reject a run or signal.
-The resume payload must contain the values below:
+The resume payload uses the substitution template below. Replace the issuer
+and approval ID placeholders with their verified values. For each digest field,
+replace the entire quoted value with the verified `sha256:`-prefixed digest.
+Do not add a second prefix; the displayed digest placeholders are not valid digests.
 
 ```json
 {
@@ -1816,8 +1819,9 @@ The resume payload must contain the values below:
 ```
 
 The complete resume signal also has the Nova-owned signal envelope fields:
-`schemaVersion`, `signalId`, `idempotencyKey`, `waitId`, `signalType`, and
-`issuedAt`. Use the [canonical run-control procedure](operate.md#canonical-run-control-procedure);
+`schemaVersion`, `signalId`, `idempotencyKey`, `waitId`, `signalType`, top-level
+`issuer`, and `issuedAt`, alongside `payload`. The top-level issuer is separate
+from `payload.issuer`. Use the [canonical run-control procedure](operate.md#canonical-run-control-procedure);
 do not construct an unvalidated journal record.
 
 The issuer is not authenticated by a signal signature. It is caller-supplied

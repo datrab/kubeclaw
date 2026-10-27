@@ -1,0 +1,54 @@
+{
+  "schemaVersion": "kubeclaw-publication-native-retention-binding.v1",
+  "sourceCommit": "511db8c75f0e5cf8dde9c762b46159f4b842b9cb",
+  "runId": 40537386596,
+  "runUrl": "https://github.com/datrab/kubeclaw/actions/runs/40537386596",
+  "nativeJobId": 122306208524,
+  "witnessJobId": 122306617592,
+  "archiveArtifactId": 12748498135,
+  "archiveSha256": "44401409c23d5e2acd8a60d6143d8f2858dfb4ab57cc5fdb25c59dfe60b5c452",
+  "receiptSha256": "6bf8fa3da4318b638b0cbaa8b126a174c5f40b429f2fca88c77f107215fab3d5",
+  "inputs": [
+    {
+      "path": "tests/verification/docs/check-published-retention-sql.py",
+      "sha256": "9cc2eedabd1a00984df6b623230ef9f4cf6fcf570217e290a33f8e6380b0864f"
+    },
+    {
+      "path": "tests/verification/docs/prepare-retention-postgresql.py",
+      "sha256": "db47035e2b1b879abb3a52de067eb5bf82b8b48121d2052c0fcb07a00cf818fc"
+    },
+    {
+      "path": "tests/fixtures/litellm-database/schema.sql",
+      "sha256": "efcec102154d9747e6276347d93035a922dc429cca164206cd95857393846c8e"
+    },
+    {
+      "path": "tests/fixtures/litellm-database/schema.prisma",
+      "sha256": "7b438bbeba36aacc3e9a73335f396320606ae66d5a4239645ac6fc9b8493c070"
+    },
+    {
+      "path": "tests/fixtures/litellm-database/provenance.json",
+      "sha256": "581db7ce798d3342aac67c0103107ed68685cdbc268d5e60b0063e66c29f7ffc"
+    },
+    {
+      "path": "tests/fixtures/postgresql-native/packages.json",
+      "sha256": "079995ca6a7bf594f3a339a973c5f276dd26f0a565e8ccd4edb5dbec97c24028"
+    },
+    {
+      "path": "tests/fixtures/postgresql-native/InRelease",
+      "sha256": "2bf75a4364195200cdead59af5b5ec19250803231962fe8032e34c596e470131"
+    },
+    {
+      "path": "tests/fixtures/postgresql-native/Packages.gz",
+      "sha256": "99f11b71cc60e9e9b5781ba36f80b5ba2bf339cc2d7bbfd4e04074da56b42d40"
+    },
+    {
+      "path": "tests/fixtures/postgresql-native/pgdg.gpg",
+      "sha256": "8ca1b2fb3a2533cc44b87ee146a03858f6e8ea31c1f165dfd38dc270c04ada0f"
+    },
+    {
+      "path": ".github/workflows/docs-native-retention.yaml",
+      "sha256": "af29492e7747f2e9972f3b865dc9aa2d77b5547adef922fe5602c7b9f7485638"
+    }
+  ],
+  "limit": "Reused exact native assertion from genuine private nonroot PostgreSQL18.6 CI; no production database, deployment, migration/recovery or current live retention-policy proof."
+}
