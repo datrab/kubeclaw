@@ -93,7 +93,7 @@ test('production Helm target and persisted gateway reconciliation agree', async 
   // excluding MCP even when the dedicated child's four-tool policy permits it.
   assert.equal(desired.agents.entries.main.tools.profile, 'full');
   assert.equal(desired.agents.entries.main.tools.allow, undefined);
-  assert.deepEqual(desired.agents.entries.main.tools.deny, ['browser', 'canvas', 'show_widget', 'message',
+  assert.deepEqual(desired.agents.entries.main.tools.deny, ['gateway', 'browser', 'canvas', 'show_widget', 'message',
     'heartbeat_respond', 'openclaw', 'nodes', 'computer', 'mobile_ui', 'agents_list', 'transcripts', 'tts', 'pdf']);
   const policy = desired.agents.entries['buster-diagnosis'].tools;
   assert.deepEqual(policy.allow, ['ops__namespace_overview', 'ops__get_pod', 'ops__get_events', 'ops__get_pod_logs']);

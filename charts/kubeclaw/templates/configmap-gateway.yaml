@@ -170,10 +170,12 @@ data:
             {{- if eq .Values.agentRole "buster" }}
             {{/* The HTTP core-tool ingress freezes restrictive allowlists before MCP
                  materialization. Keep the coding profile's core exclusions as denies
-                 so delegated diagnosis retains MCP access, without new core rights. */}}
+                 so delegated diagnosis retains MCP access, without new core rights.
+                 Deny gateway too: full would otherwise grant config reads that
+                 coding did not permit. Buster diagnostics need no gateway admin. */}}
             "tools": {
               "profile": "full",
-              "deny": ["browser", "canvas", "show_widget", "message", "heartbeat_respond", "openclaw", "nodes", "computer", "mobile_ui", "agents_list", "transcripts", "tts", "pdf"]
+              "deny": ["gateway", "browser", "canvas", "show_widget", "message", "heartbeat_respond", "openclaw", "nodes", "computer", "mobile_ui", "agents_list", "transcripts", "tts", "pdf"]
             },
             {{- end }}
             "subagents": {
