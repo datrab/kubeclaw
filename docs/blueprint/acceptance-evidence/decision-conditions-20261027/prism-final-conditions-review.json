@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "All five prior findings are addressed with source-accurate, separately stated conditions. The original seven table cells remain unchanged. For all four decision groups, bounded SourceAccuracy, semanticReaderUsability, and Quality are PASS based on the supplied sources; this makes no broader live, practical, or whole-gate claim.",
+  "overall_confidence": 0.98
+}

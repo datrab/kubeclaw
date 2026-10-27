@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "ADR-006 now records the original vision\u2019s concrete policy-hook reconsideration trigger and its required typed-contract obligations. The corrected text preserves the established boundaries and does not assert new approval; no unrelated published decision text changed.",
+  "overall_confidence": 0.99
+}

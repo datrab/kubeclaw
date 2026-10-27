@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "Bounded RUNTIME28 review: all 28 added reevaluation fields are covered. SourceAccuracy, ReaderUsability, and Quality are PASS within the supplied historical-authority and current-source limits; no new approval, migration, deployment, or live-runtime claim is implied.",
+  "overall_confidence": 0.91
+}

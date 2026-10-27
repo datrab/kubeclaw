@@ -1,0 +1,8 @@
+{
+  "source": "e0d82b13d56225da7c0e7561bf812f5e5c59bdb6",
+  "command": "PATH=/usr/local/go/bin:$PATH node --max-old-space-size=4096 scripts/generate-local-helm-authorities.mjs --check",
+  "exitCode": 1,
+  "failure": "DOCUMENTATION_READER_CI_PURPOSE_DRIFT: docs/site/reference/documentation-site.md",
+  "samePrebatchFailure": true,
+  "noReceiptPurposePinChanged": true
+}

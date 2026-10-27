@@ -1,0 +1,825 @@
+{
+  "at": "2026-10-27T14:03:59.853465+00:00",
+  "reviewer": "/root/whole_criterion_selection",
+  "verdict": "PASS",
+  "sourceAccuracy": "PASS",
+  "readerUsability": "PASS",
+  "quality": "PASS",
+  "WHOLE_A91307": "PASS",
+  "significantDecisionCoverage": "PASS",
+  "baselineSource": "d8733018e8a0a221d2f4651838dc29abd11af05b",
+  "candidateSource": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+  "scope": "Independent preservation of11complete original existing accepted scopes plus explicit independent sufficiency adjudication of original A913-07 significant-decision content on final Source. No main adoption or publication performed by assessor.",
+  "all11Ids": [
+    "AP09.1-ready-topics-20261020",
+    "Reviewed-corrections-20261020",
+    "AP09-reviewed-maintenance-20261020",
+    "AP09-closeout-developer-maintenance-20261020",
+    "AP09-decision-record-content-20261021",
+    "AP09-documentation-agent-maintenance-20261021",
+    "AP09-complete-static-reader-search-20261021",
+    "AP09-publication-positive-scope-7ef16585",
+    "A910-03-whole-command-prerequisite-contract-20261022",
+    "A910-10-whole-supported-extension-lifecycle-20261026",
+    "A911-01-whole-ten-family-discovery-declarations-20261027"
+  ],
+  "scopes": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "GOV-001",
+        "GOV-003",
+        "GOV-004",
+        "GOV-008",
+        "ENT-001",
+        "ENT-002",
+        "ENT-003",
+        "ENT-004",
+        "DEC-001",
+        "STA-001",
+        "STA-002"
+      ],
+      "originalSummary": "Independent PASS for entry/authority/completeness rules, product explanation/request, stable decision identity and public status/register consistency.",
+      "originalLimitsRetainedVerbatim": [
+        "Source and documentation acceptance only; no live deployment or global publication acceptance.",
+        "GOV-002 exhaustive inventory and DEC-002 full rationale review remain NOT_READY; GOV-006 metadata map stale.",
+        "Other-page/global refs/publication/boundary checks failed; not accepted by this scoped review."
+      ],
+      "reason": "Entry/authority/product explanation, stable decision identity and public status/register duties preserved: README keeps all existing identities/authority boundaries and adds explicit reevaluation plus distinct acceptance route. Governance does not change source/approval/implementation hierarchy; unchanged status/register/product sources retain original facts.",
+      "fullOriginalRecordSha256": "fa92b42b21141eb664d187d0a0e248c85bc4dc68a6c41e3effa5437cf9915dab",
+      "completeVectorRows": 27,
+      "actualChangedPaths": [
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/decisions/README.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "SPC-001",
+        "CFG-006",
+        "FLW-011",
+        "EXT-005",
+        "EXT-006",
+        "CFG-016",
+        "GOV-006"
+      ],
+      "originalSummary": "Seven concrete review findings corrected and independently re-reviewed: unsafe retry opt-in in4Buster reader paths,actual admission/invocation error codes,current lint facts and generated metadata freshness.",
+      "originalLimitsRetainedVerbatim": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Carries forward prior reviewed unchanged topic content; unrelated whole-file pin/publication failures remain open."
+      ],
+      "reason": "Seven original retry/admission/invocation/lint/metadata corrections remain unchanged. Governance merely adds one honest decision-maintenance field; no grants, runtime retry default, error family, lint policy, metadata ownership or generator behavior changed. Original focused resolver/registry/capability/lint controls remain qualified reuse, not fresh execution.",
+      "fullOriginalRecordSha256": "55938e03d4631c90f750fdf925db11e723c2c14d797a8106bfdca450aa4cb840",
+      "completeVectorRows": 33,
+      "actualChangedPaths": [
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "MNT-013",
+        "MNT-016"
+      ],
+      "originalSummary": "Independent PASS for MNT-013, MNT-016. No whole-gate acceptance inferred from narrower requirements.",
+      "originalLimitsRetainedVerbatim": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "Exhaustive configuration/error/event/store/public-source coverage remains unaccepted where independently failed or not established.",
+        "Passing focused checks do not assert all current repository links,generated outputs,publication,build,live services or deployed recovery are green."
+      ],
+      "reason": "MNT013/016 source/example/link and owned generated/authored guidance separation remains intact. New pinned historical references were actually checked on final rendered output; no asset/route-selector implementation or source-link parser changed. Unchanged fixture controls reused only at exact verified vectors.",
+      "fullOriginalRecordSha256": "6dd93348697b95368d80c472a2fff7bcea100b09502b246f3402f2fe19140fa8",
+      "completeVectorRows": 27,
+      "actualChangedPaths": [
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "AP09-closeout-developer-maintenance-20261020",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "DEV-005",
+        "DEV-008",
+        "EXT-007",
+        "EXT-008",
+        "CDV-005",
+        "OPL-003",
+        "OPL-004",
+        "PLG-004",
+        "PLG-012",
+        "GOV-005",
+        "GOV-007"
+      ],
+      "originalSummary": "Independent sourceAccuracy/readerUsability/quality PASS for DEV-005, DEV-008, EXT-007, EXT-008, CDV-005, OPL-003, OPL-004, PLG-004, PLG-012, GOV-005, GOV-007. Exact correction bytes reviewed; full scopes rather than file-existence or count proxies.",
+      "originalLimitsRetainedVerbatim": [
+        "Documentation/source acceptance only; no live deployment or globally green publication/CI claim.",
+        "No new whole-gate acceptance;all inherited scoped limits retained.",
+        "Remaining public reference/schema/error/event/store completeness,SDK/environment prerequisites,missing first-project/capability/integration journeys and integrated publication/language findings remain open."
+      ],
+      "reason": "Original developer/extension/lint/registry/governance subjects keep their complete task/source scope. Added governance reevaluation maintenance duty changes no version/prerequisite/registration/capability/task lifecycle contract. Original code/tests and guides outside9docs byte-exact; no new whole extension/runtime acceptance inferred.",
+      "fullOriginalRecordSha256": "28a4d4bab6e32d3358de2c72f8bb189127570720a9dc538cd87dbdf2e6a69ee6",
+      "completeVectorRows": 29,
+      "actualChangedPaths": [
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "AP09-decision-record-content-20261021",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "DEC-002"
+      ],
+      "originalSummary": "Whole rationale, recorded alternatives, consequences and supersession obligation; unknown approval remains explicit and independent of implementation.",
+      "originalLimitsRetainedVerbatim": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim."
+      ],
+      "reason": "DEC002 rationale, recorded alternatives, consequences, historical approval/unknowns, implementation and supersession remain. All original seven grouped-table cells/rows are byte-preserved; all old six decision-page lines retained. Source-backed or explicit unknown reevaluation additions refine maintenance, never create migration/fallback/approval. Concrete triggers and unresolved no-decay/latency/run-binding limits preserved. Final formatting/source-link corrections independently assessed.",
+      "fullOriginalRecordSha256": "cf0f57e59d8c93310c5deb454fc3c22b36e5177c295bcb168e0d48701cdceec6",
+      "completeVectorRows": 23,
+      "actualChangedPaths": [
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/implementation.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "MNT-017"
+      ],
+      "originalSummary": "Whole central documentation-agent maintenance contract: discovery, impact, owned generation, review, reader probe and safe retirement.",
+      "originalLimitsRetainedVerbatim": [
+        "Source-backed documentation acceptance only; no deployed encryption assurance, live restore, native host, rendered site or whole global generator/drift claim.",
+        "Other MNT global discovery/generator/drift obligations are NOT accepted from this authored maintenance guide audit; see scope.json."
+      ],
+      "reason": "MNT017 central discovery→impact→owned-generation→review→Reader→safe-retirement procedure is unchanged. Governance requires the original missing reevaluation/unknown field while retaining source authority and approval separation. No default generator/input-role behavior, global discovery coverage or disposal authorization changed.",
+      "fullOriginalRecordSha256": "5e1be2361ec0581d6a8229e00b5cf772d34b2ce7674de1ad4f7071d6c964f8ba",
+      "completeVectorRows": 153,
+      "actualChangedPaths": [
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [],
+      "originalRequirementIds": [
+        "PUB-002"
+      ],
+      "originalSummary": "Whole PUB-002: existing positive page/asset allowlists plus actual artifact-local full-text search across all167 canonical reader pages, headings and code/technical identifiers. Browser find/empty/no-JS behavior observed; code and output reviewed.",
+      "originalLimitsRetainedVerbatim": [
+        "Only whole PUB-002. Ranked/synonym reader search questions in A912-04 remain unaccepted; substring full-text search is stated honestly.",
+        "No other publication gate or whole documentation package acceptance.",
+        "Local HTML/search output is not external hosting, actual cluster/runtime behavior, rendered Mermaid, source-preview or human screenreader acceptance.",
+        "Global API source/caller discovery still blocked at bundle copier; site boundary still has three unchanged Helm generated-prose diagnostics."
+      ],
+      "reason": "PUB002 full artifact-local canonical-page text/search scope remains: renderer/search code and positive source/support authorities unchanged. Final actual177page build/artifact/search controls verify new text and full corpus,0internal artifacts and original12questions. Original no-JS/browser observations remain dated/limited; no ranked/synonym A91204 or fresh human exercise promoted.",
+      "fullOriginalRecordSha256": "a37338b6b159ad11b80707a2567157c4d104b80bf80657ef635c3272cddfd9ca",
+      "completeVectorRows": 202,
+      "actualChangedPaths": [
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/acceptance.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/implementation.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [
+        "A912-01"
+      ],
+      "originalRequirementIds": [],
+      "originalSummary": "Whole positive publication/reader boundary: exact revision-bound177canonical pages, finite declared support/output set, actual rogueMarkdown no-route/no-output negative and no internal documentation-work prose/link leakage.",
+      "originalLimitsRetainedVerbatim": [
+        "No Main/register writes; no scanned product module, target classifier, global graph/current custody/DATA/producer execution. Only original isolated publication fixture test executed.",
+        "Actual419file immutable first artifact7ef only; two normal builds determinism/current wholeReader browser/accessibility/freshpersona acceptance remain separate. Root browser title-comparison harness findings not used as PASS evidence here.",
+        "No wholeA91205/11, otherPUBgate, runtime/deployment/configuration/knip or release grant.",
+        "No new independent selfacceptance of prior authored Source content; exact independent workflow/root scopes retained."
+      ],
+      "reason": "A91201 positive canonical-page/support/output boundary is unchanged. Nine existing approved routes gain only decision/maintenance explanation, not internal review/campaign prose, hidden routes or new copied assets. Final artifact checks selected177pages,191HTML,254output digests and41724local links. Original rogue-page negative, finite selector/asset proof and no-live/browser limitations retained; unchanged selector fixtures not rerun unnecessarily.",
+      "fullOriginalRecordSha256": "6c1a7bbf5457cae2d8eaed9484e72edf70dbda4deb25b7bd0602feb59f06a495",
+      "completeVectorRows": 192,
+      "actualChangedPaths": [
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/acceptance.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/implementation.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "A910-03-whole-command-prerequisite-contract-20261022",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [
+        "A910-03"
+      ],
+      "originalRequirementIds": [],
+      "originalSummary": "Whole build/test/lint/release/version/compatibility/change-to-check command routes, with independently corrected actual publication build result and preserved component-specific prerequisites/stops.",
+      "originalLimitsRetainedVerbatim": [
+        "Original full-topic checks/limits retained, not recounted. No requirement IDs accepted; OPL001/005 not promoted.",
+        "No new live operation, fresh-persona run, full Program census/global determinism, global generator/graph/role/CI/deployment/release approval.",
+        "Quickstart author does not independently accept own correction: exact Root nonauthor proof is mandatory.",
+        "Actual current Reader supports this criterion only; not a new whole corpus/fresh persona/axe/accessibility acceptance.",
+        "No new dependency install/login/operator live executions are asserted or required; current SDK ownercheck is actual only within finite original scope."
+      ],
+      "reason": "A91003 build/test/lint/release/version/compatibility and change→check command prerequisites/stops remain unchanged. Governance adds a decision field, not an executable workflow, install/login prerequisite or toolchain claim. Original component sources/command guides unchanged; current output/link checks cover changed prose. Old bounded browser/practical scope not made fresh.",
+      "fullOriginalRecordSha256": "f0c21d0aeed7e914be73ef1b32fe7c7e139039887ed8198898f2f22454aad3ca",
+      "completeVectorRows": 218,
+      "actualChangedPaths": [
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [
+        "A910-10"
+      ],
+      "originalRequirementIds": [],
+      "originalSummary": "Original whole A910-10 documentation acceptance: every supported internal extension class has a clean-checkout change/registration/permission/configuration/test/activation/observation/compatibility/removal/rollback path or complete honest product-boundary owner/action/stop/resume procedure under controlling contract1–4. Actual new pinned local observer journey closes the previously missing practical authoring contribution; separate substantive lint/common and whole twelve-family assessments explicitly confirm all original steps without compile/unit-as-activation. Reuses unchanged qualified source/reader scopes only within their limits, not by counters.",
+      "originalLimitsRetainedVerbatim": [
+        "Documentation-content/source and reader-task acceptance only; no fresh independent participant, human screenreader, live host, deployment, native-worker, general migration, runtime release or product capability approval.",
+        "OpenClaw authenticated host enumeration/real-hook/independent disable/removal and Codex versioned install/connect/lifecycle controls remain explicitly unavailable product capabilities with concrete owners/actions/expected observations/safe stops. No image, Pod readiness, package test or compile success is presented as host activation.",
+        "Old primary Source/reader controls are reused only at exact unchanged complete268-path relevant vectors and original limits. New independent source inspection of every historical package or rerun of every old test is not claimed; coordinator native observations are not reviewer execution.",
+        "Observer compatibility pair changes package version with identical API/schema/module bytes; reconstructed persisted-journal runtime is not a killed-process restart or general upgrade proof.",
+        "All five DATA slots remain UNKNOWN and original global output-role receiver, historical artifacts.ts:41, selected-release Knip, live/receipt/human limits remain red and not waived. Raw refused common operator guide was not aliased/redacted/excerpted/reviewed anew; only its unchanged original FLW014 supported-task qualification reused."
+      ],
+      "reason": "A91010 every supported extension family/lifecycle duty remains unchanged: no observer fixture, guide steps, activation/compatibility/removal/rollback implementation altered. Explicit unavailable OpenClaw/Codex capabilities, owner/action/stop/resume and DATA/host/live limits remain. Exact code/fixture/source vectors support original qualified reuse, not new activation proof.",
+      "fullOriginalRecordSha256": "cbf01de47609ab2ef4298790de23e3b4f22ab1680a47a9f3a1a0ddee100eaed6",
+      "completeVectorRows": 275,
+      "actualChangedPaths": [
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    },
+    {
+      "id": "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "verdict": "PASS",
+      "sourceAccuracy": "PASS",
+      "readerUsability": "PASS",
+      "quality": "PASS",
+      "originalGateIds": [
+        "A911-01"
+      ],
+      "originalRequirementIds": [],
+      "originalSummary": "Whole original A911-01: existing owner-derived machine inventories/descriptors define truthful searchspace, parser, responsible owner and exclusions for all ten Schema/Config/CLI/Contract/Event/Error/Endpoint/Store/Capability/Workflow families. Complete selection composition includes registered/fixed/deployed/undeployed Schema and secondary Helm/receiver/consumer/stdin-validation Config acquisition with explicit CLI exclusions. Only necessary descriptor metadata changed; actual parser/selector/default behavior remains unchanged.",
+      "originalLimitsRetainedVerbatim": [
+        "Declaration/source-boundary and maintenance-reader acceptance only; no generated-row completeness/freshness, field meaning, parser algorithm correctness, inverse Source-to-page mapping, runtime/output-role/DATA/release/human/live grant.",
+        "Original8historical finding objects, reviews, missing-report failures and global open states remain; this fresh original gate decision does not claim those broader generator/parser findings repaired or missing reports restored.",
+        "Independent source roles inspect complete relevant declaration/selection responsibilities and report exact source ranges, not every unrelated semantic-parser interior or every historical input. Components do not automatically count as whole gate acceptance.",
+        "Existing sourceSurfaceMap is only a Reader join. Actual global receiver still fails at preexisting reader-CI-purpose documentation-site profile drift; no receipt/purpose pins rewritten or failures waived.",
+        "Five directly affected original accepted scopes independently preserved in five-original-preservation-verdict.json; original fields and limits retained, only reviewed source revision plus append-only impact review transitions."
+      ],
+      "reason": "A91101 ten-family machine-readable searchspace/parser/owner/exclusion acceptance remains: all actual declarations/selectors/parsers/owner sources unchanged. Governance new reevaluation bullet does not alter any declaration, selection boundary, inventory, inverse mapping or original eight-finding current dispositions. Original source-only/global receiver/DATA limits stay separate.",
+      "fullOriginalRecordSha256": "3ec829bac25a105d01fdb6eb15b23387a12ed84d1e4fa813983275fba695e3ff",
+      "completeVectorRows": 49,
+      "actualChangedPaths": [
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "proposalTransitionOriginalFieldsUnchanged": true,
+      "historicalChecksAndReviewsNotRecounted": true
+    }
+  ],
+  "wholeOriginalDecision": {
+    "criterion": "Every significant decision has evidenced or explicitly unknown reason, benefit, cost, status, implementation state and reevaluation condition; current Source behavior is not historical rationale.",
+    "decision": "PASS",
+    "basis": "Independent compositional original-duty assessment, not generic patchcorrect or named-field presence. Verified original DEC002 full content/limits and exact source vectors retain existing rationale/alternative/consequence/approval/implementation/supersession duties. Qualified independent original field reviews cover16Core,119TestGate,28Runtime,sixEcho,fourPrism,fiveImplementation groups and distinctD12. Final language/paragraph presentation and D113href deltas independently inspected. Complete final9page changes and existing significant-decision corpus mapping substantiate all original aspects.",
+    "coveredResponsibilities": [
+      {
+        "page": "docs/site/decisions/core-and-plugins.md",
+        "responsibility": "ADR001–014 plus portable JSON and integration evidence derived boundaries:16explicit conditions; original fact/authority bodies preserved. ADR006 typed-policy-hook obligations preserved through activevoice sentence split."
+      },
+      {
+        "page": "docs/site/decisions/test-gate.md",
+        "responsibility": "All119 stable D001–119 original records;109explicit unknowns and10concrete conditions; D086 remains conditional CAN, D103 protocol/tests retained; D113 approval Unconfirmed unchanged and exact historical href corrected."
+      },
+      {
+        "page": "docs/site/decisions/runtime-and-operations.md",
+        "responsibility": "All28 current stable/derived records including ADR015–022,D01–16, configuration/frozen identity, Prism recovery and access/operations boundaries.23unknown and5specific conditions; ordinary operating stops not transformed to redesign approval."
+      },
+      {
+        "page": "docs/site/decisions/echo.md",
+        "responsibility": "All stable Echo decision bodies through six qualified group responsibilities; original seven-cell rows unchanged; optional D-ER4-017 ledger namespace expansion does not change content identity."
+      },
+      {
+        "page": "docs/site/decisions/prism.md",
+        "responsibility": "All four significant groups/contained editor/schema/retrieval/preferences/durable recovery choices; original cells unchanged; accepted no-time-decay and250→300authority conflict remain unresolved, WAL policy threshold not new contract approval."
+      },
+      {
+        "page": "docs/site/decisions/implementation.md",
+        "responsibility": "All five groups and contained history/portable profile/native taskunit+fixture+broker/accounting/human/frozenidentity/storage/observer facets. Accepted alternativeB conditional not reopening D13/D14; signed run binding/live delivery remain implementation limits, not inferred historical triggers."
+      },
+      {
+        "page": "docs/site/decisions/acceptance.md",
+        "responsibility": "Distinct originalD12 all dimensions: owner2026-09-12policy evidence, local/live distinction, explicit unknown replacement trigger, no blanket implementation/deployment/human acceptance."
+      },
+      {
+        "page": "docs/site/decisions/README.md + docs/site/reference/documentation-governance.md",
+        "responsibility": "All seven content routes including distinctD12; original reevaluation-or-unknown field maintained; stable identity/successor authority and source-vs-approval separation retained."
+      }
+    ],
+    "notBasedSolelyOnRawReviewerLabels": true,
+    "rawVerdictTreatment": "First whole review failed missing explicit whole/coverage outcomes and remains failed. Corrected pinned review approves exact correction; this assessor independently adjudicates actual complete duty/component/source/presentation chain. Raw verdicts never rewritten into stronger claims.",
+    "noAdditionalMaterialUnqualifiedDutyFound": true
+  },
+  "physicalProof": {
+    "completeRows": 1228,
+    "uniquePaths": 529,
+    "changedOccurrences": 34,
+    "allActualGitBytesVerified": true,
+    "changedPaths": [
+      "docs/site/decisions/README.md",
+      "docs/site/decisions/acceptance.md",
+      "docs/site/decisions/core-and-plugins.md",
+      "docs/site/decisions/echo.md",
+      "docs/site/decisions/implementation.md",
+      "docs/site/decisions/prism.md",
+      "docs/site/decisions/runtime-and-operations.md",
+      "docs/site/decisions/test-gate.md",
+      "docs/site/reference/documentation-governance.md"
+    ],
+    "allCodeFixturesRuntimeAuthoritiesUnchanged": true,
+    "allThreeGroupedSevenCellTablesExact": true,
+    "e0dToFinalOnlyD113Href": true
+  },
+  "proposalTransition": {
+    "onlyTopLevelChangedKey": "completionRecords",
+    "exactly11ExistingRecordsChanged": true,
+    "onlyPerRecordChanges": [
+      "revision to finalSource",
+      "one append-only impact review"
+    ],
+    "allOldFieldsChecksLimitsHistoryOrderUnchanged": true,
+    "noNewGateOrRequirementByPreservation": true
+  },
+  "actualCurrentChecks": {
+    "at": "2026-10-27T14:02:00.049689+00:00",
+    "source": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+    "checks": [
+      {
+        "check": "artifact",
+        "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+        "exitCode": 0,
+        "log": "final-reader-artifact.log",
+        "bytes": 85,
+        "sha256": "9da48df72ca9c96d11d79ec601c1bbca90b8bf8a8308b25d5420a13b5e7d0c09",
+        "summary": {
+          "selectedPages": 177,
+          "htmlPages": 191,
+          "localLinks": 41724,
+          "verifiedOutputDigests": 254
+        }
+      },
+      {
+        "check": "search",
+        "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+        "exitCode": 0,
+        "log": "final-reader-search.log",
+        "bytes": 3055,
+        "sha256": "b647afdfb3094db600e80b6c4d4d3b700b9060c56418258cb818e31e1feff98b",
+        "summary": {
+          "indexedCanonicalPages": 177,
+          "internalArtifacts": 0,
+          "readerQuestionsPassed": 12,
+          "observed": [
+            {
+              "query": "disaster recovery",
+              "expectedRoute": "use/recovery.html",
+              "observedTopThree": [
+                "use/recovery.html",
+                "understand/data-and-state.html",
+                "status/open-issues.html"
+              ]
+            },
+            {
+              "query": "backup restore",
+              "expectedRoute": "use/recovery.html",
+              "observedTopThree": [
+                "use/recovery.html",
+                "understand/data-and-state.html",
+                "understand/prism-data.html"
+              ]
+            },
+            {
+              "query": "install platform",
+              "expectedRoute": "use/install.html",
+              "observedTopThree": [
+                "use/install.html",
+                "status/roadmap.html",
+                "understand/platform-and-operations.html"
+              ]
+            },
+            {
+              "query": "troubleshoot incident",
+              "expectedRoute": "use/diagnose.html",
+              "observedTopThree": [
+                "use/diagnose.html"
+              ]
+            },
+            {
+              "query": "create first plugin",
+              "expectedRoute": "extend/first-plugin.html",
+              "observedTopThree": [
+                "extend/first-plugin.html",
+                "use/plugins.html",
+                "reference/plugin-configuration.html"
+              ]
+            },
+            {
+              "query": "change core",
+              "expectedRoute": "extend/developer-handbook.html",
+              "observedTopThree": [
+                "extend/developer-handbook.html",
+                "understand/nova-core.html",
+                "extend/platform/buster.html"
+              ]
+            },
+            {
+              "query": "settings overrides",
+              "expectedRoute": "reference/configuration-precedence.html",
+              "observedTopThree": [
+                "reference/configuration-precedence.html",
+                "decisions/test-gate.html",
+                "reference/buster-suites.html"
+              ]
+            },
+            {
+              "query": "package ownership",
+              "expectedRoute": "reference/roles-and-package-ownership.html",
+              "observedTopThree": [
+                "reference/roles-and-package-ownership.html",
+                "extend/deep-guides/README.html",
+                "understand/plugin-runtime.html"
+              ]
+            },
+            {
+              "query": "first pipeline compile",
+              "expectedRoute": "use/workflows/README.html",
+              "observedTopThree": [
+                "use/workflows/README.html",
+                "extend/first-plugin.html",
+                "reference/pipeline-json.html"
+              ]
+            },
+            {
+              "query": "remove plugins",
+              "expectedRoute": "use/plugins.html",
+              "observedTopThree": [
+                "use/plugins.html",
+                "understand/openclaw.html",
+                "extend/lint.html"
+              ]
+            },
+            {
+              "query": "prism studio",
+              "expectedRoute": "use/prism-studio.html",
+              "observedTopThree": [
+                "use/prism-studio.html",
+                "extend/platform/prism.html",
+                "understand/prism-runtime.html"
+              ]
+            },
+            {
+              "query": "minimumLinePercent",
+              "expectedRoute": "reference/plugin-configuration.html",
+              "observedTopThree": [
+                "reference/plugin-configuration.html",
+                "reference/buster-suites.html",
+                "extend/plugin-catalogue/kubeclaw.coverage-budget.html"
+              ]
+            }
+          ]
+        }
+      },
+      {
+        "check": "source-links",
+        "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+        "exitCode": 0,
+        "log": "final-reader-source-links.log",
+        "bytes": 1504740,
+        "sha256": "dec3295df82f618607a9c8fb2f6838a9a167b1858078dfd56537c140f7ab3411",
+        "summary": {
+          "htmlPages": 191,
+          "uniqueVerifiedLinks": 15239,
+          "uniqueSourceObjects": 4139,
+          "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance."
+        }
+      },
+      {
+        "check": "source-previews",
+        "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+        "exitCode": 0,
+        "log": "final-reader-source-previews.log",
+        "bytes": 240,
+        "sha256": "534a49fd859d7717239a8a8cde153fc3f058339da3ae843c3d2128d6bdc571ef",
+        "summary": {
+          "pages": 177,
+          "sourceBoxes": 437,
+          "boxesWithPreviews": 436,
+          "excerpts": 2003,
+          "uniqueSourceObjects": 1073,
+          "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred."
+        }
+      },
+      {
+        "check": "diagrams",
+        "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+        "exitCode": 0,
+        "log": "final-reader-diagrams.log",
+        "bytes": 262,
+        "sha256": "306c2a7279307e42effa2d099b2ccf07db7669d840054fbd649f045949259e6e",
+        "summary": {
+          "pages": 177,
+          "diagrams": 28,
+          "freshRenderHashesMatched": 28,
+          "localOnly": true,
+          "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance."
+        }
+      }
+    ],
+    "qualification": "All five actual original commands terminal0 on same final committed artifact; no hypothetical/pass-from-skips/practical/human/live acceptance. Earlier failed source-link check preserved separately."
+  },
+  "actualFinalBuild": {
+    "at": "2026-10-27T13:59:51.681887+00:00",
+    "exitCode": 0,
+    "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+    "report": {
+      "schemaVersion": "kubeclaw-docs-publication.v1",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+      "sourceManifestSha256": "15858632cc67db446d945bda9a7209d0bdf05c776b7b4242e190cd3afeafefe5",
+      "pageCount": 177,
+      "readerManifest": "reader-manifest.json",
+      "renderedPageCount": 177,
+      "assetPaths": [
+        "extend/examples/minimal-stage/package.json",
+        "extend/examples/minimal-stage/plugin.json",
+        "extend/examples/minimal-stage/schemas/config.schema.json",
+        "extend/examples/minimal-stage/schemas/input.schema.json",
+        "extend/examples/minimal-stage/schemas/result.schema.json",
+        "extend/examples/minimal-stage/src/stage.js",
+        "extend/examples/minimal-stage/tests/stage.test.mjs",
+        "extend/examples/observer-lifecycle/journey.mjs",
+        "extend/examples/observer-lifecycle/plugin/package.json",
+        "extend/examples/observer-lifecycle/plugin/plugin.json",
+        "extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
+        "extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
+        "extend/examples/observer-lifecycle/plugin/src/observer.js",
+        "extend/examples/platform-change-nova-lifecycle.json",
+        "reference/documentation-route-registry.json",
+        "reference/generated-documentation-map.json",
+        "use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+        "use/workflows/examples/compiled-project-input.mjs",
+        "use/workflows/examples/compiled-project-verification.mjs",
+        "use/workflows/examples/compiled-project.mjs",
+        "use/workflows/examples/first-project.mjs",
+        "use/workflows/examples/local-core.mjs",
+        "use/workflows/examples/repair-retry.mjs",
+        "use/workflows/examples/request-trace-redis-unavailable.json",
+        "use/workflows/examples/request-trace-success.json",
+        "use/workflows/wait-resume/approval.pipeline.json",
+        "use/workflows/wait-resume/platform.template.json",
+        "use/workflows/wait-resume/signal.template.json"
+      ],
+      "pluginCount": 51,
+      "pageDigest": "0335f3b34f68fe2338a545a3762b8d75b8c1966e34f69a0faf2bca30642f7b9c",
+      "checks": [
+        "metadata",
+        "controlled-language",
+        "links",
+        "reader-journeys",
+        "plugin-coverage",
+        "release-pinned-evidence",
+        "documentation-ownership-map",
+        "route-registry"
+      ]
+    },
+    "previousBuildAndFailedSourceLinkCheckPreserved": true
+  },
+  "sourceAndReaderResultLimits": [
+    "Final native checks are coordinator-run actual technical controls, not reviewer execution or new independent practical/human/browser/screenreader/live acceptance.",
+    "Source links15239/4139objects validate primary objects/revisions/ranges/fragments only, not semantics/runtime. Complete1,504,740byte rawJSON parsed and SHA verified, not truncated context claimed.",
+    "Source previews437boxes/436withpreviews/2003excerpts/1073objects; no all437boxes claim.28diagram hashes validate declared static/local routing/rendering, not per-edge or human semantics.",
+    "Original artifact-local search scope retained; passing original12questions does not newly accept ranked/synonym/global search gates."
+  ],
+  "preservedFailures": [
+    "Initial eight-cell grouped table publication refusal and controlled-language correction failure retained; unchanged checker not weakened.",
+    "Initial build lacking native browser libraries retained; supported browser runtime environment used for successful bound builds.",
+    "Original e0d full source-links exit1 missingD113fragment retained unchanged in reader-source-links.log; auxiliary first collector overwrite explicitly documented, not reconstructed byteexact receipt claimed. Newf88 full originalcheck exit0 separately retained.",
+    "First whole verdict missing named outcomes retained; corrected metadata verdict and independent actual whole-duty judgment separate.",
+    "Original global default receiver failure remains unwaived reader-CI-purpose/documentation-site profile drift; no purpose/role/release receipt rewrite or allDATA promotion."
+  ],
+  "limits": [
+    "Preservation counts no new IDs; original11summaries/checks/limits/reviewdates/histories retain their original bounded meaning.",
+    "WholeA91307 is documentation/significant-decision content acceptance only, not runtime/live/deployment/migration/fallback/new historical approval or full controlled-language-corpus acceptance.",
+    "Qualified unchanged content/source/fixture reviews reused only on verified full vectors and original responsibilities. No assertion every unchanged source body was newly reread or every historical test rerun.",
+    "Final grouped seven original columns/history/status and sentence-level condition semantics inspected; prior eight-column candidate bytes not falsely called final byteequal.",
+    "Assessor writes operations evidence only; single lease owner separately adopts record, runs original register checker, commits/pushes and verifies exactremote."
+  ],
+  "materialFindings": [],
+  "inputs": [
+    {
+      "path": "eleven-affected-original-scope-baseline-contexts.json",
+      "bytes": 1279091,
+      "sha256": "cb105f4c92c2e3ff5816ca7a95024b3a93cad783284cb661ef3204bb890fc3bb"
+    },
+    {
+      "path": "eleven-affected-original-scope-final-contexts.json",
+      "bytes": 1484973,
+      "sha256": "7173021cd0db6943e0156dbe2916e4b17aed5052b5c3679dd45a803913e8de85"
+    },
+    {
+      "path": "preservation-input-verification.json",
+      "bytes": 7077,
+      "sha256": "a8609c300e8f28ae40a936840a5ec47b2e38a172d487590d915930871190bcd3"
+    },
+    {
+      "path": "proposed-eleven-preservation-matrix.json",
+      "bytes": 5596033,
+      "sha256": "f19bf75da87c23f21621a91b6b9bcc2d0fb00166568fbc7a8237c074426af4a4"
+    },
+    {
+      "path": "proposed-eleven-preservation-transitions.json",
+      "bytes": 3283,
+      "sha256": "b24c85fa87006559b4c6ba36805d5efec86efadd0982f7342c66470c362ed855"
+    },
+    {
+      "path": "four-page-review-reuse.json",
+      "bytes": 77248,
+      "sha256": "3e69a8aa2a6dc8af72a9cc75e5092429e4a86aeba2b2f8a7456f899a1b52b032"
+    },
+    {
+      "path": "runtime-supported-complete-conditions-review.json",
+      "bytes": 392,
+      "sha256": "17b0c91ea8a47fe4a9f13d09c0c70707e973f364ebe2f300986ed4d57454d70b"
+    },
+    {
+      "path": "implementation-independent/assessment.json",
+      "bytes": 2734,
+      "sha256": "fba5980de316ff4b51194c2a81306e729c1816858d45b69022919a0c629a604d"
+    },
+    {
+      "path": "implementation-independent/input-manifest.json",
+      "bytes": 4779,
+      "sha256": "b9b0b9a3440847b99f284acc029d1967ff66325464fa2580e65544655ab0ffe7"
+    },
+    {
+      "path": "mapping-independent/report.md",
+      "bytes": 4001,
+      "sha256": "5754a51c01c1bfc5c890258633f21b162558a87befd4655d58c2d49d98433d61"
+    },
+    {
+      "path": "mapping-independent/input-manifest.json",
+      "bytes": 7238,
+      "sha256": "e0a195a4558c27fe3faeebac273413650f852ebb6bac80ed08db51de3d4db5ed"
+    },
+    {
+      "path": "whole-original-adoption-verdict.json",
+      "bytes": 1047,
+      "sha256": "4238497e3a272f9fc04a72b09e460963f50ce254556bd6e6d313540c35904634"
+    },
+    {
+      "path": "corrected-whole-original-adoption-verdict.json",
+      "bytes": 360,
+      "sha256": "0c332ed9520a758f01c37b89f4feffd411a3e82222c38454eb81b418e87c97b8"
+    },
+    {
+      "path": "corrected-proposed-whole-gate-record.json",
+      "bytes": 7059,
+      "sha256": "50513a1716a100ce4be4fbf3c7e5172c952872dc461c8598dd112fc2fac93f11"
+    },
+    {
+      "path": "final-proposed-whole-gate-record.json",
+      "bytes": 7891,
+      "sha256": "be8d1646990de492d5d71e9071560e3b89761b432acb68b73d5e8f0876d97dfb"
+    },
+    {
+      "path": "d113-href-independent.json",
+      "bytes": 1641,
+      "sha256": "0c370470a9c93925fe5fa2103f06ea962f0b648f37b350297ca39a6f0619ce7e"
+    },
+    {
+      "path": "final-actual-committed-build-report.json",
+      "bytes": 2587,
+      "sha256": "ec2260bad237ebbc7ca459bbe4672f3d060a91d9aac91707c7b08dc921602ebb"
+    },
+    {
+      "path": "final-reader-manifest.json",
+      "bytes": 720462,
+      "sha256": "00c75e89d518bd9142e416c8f79afb96b624859d0375b7e33313c18ceb61af8a"
+    },
+    {
+      "path": "actual-reader-check-results.json",
+      "bytes": 6798,
+      "sha256": "839f61aae26995b790bffc7c31cf220cb3d6f73d9bbdad2545783d9df1b2fe6f"
+    },
+    {
+      "path": "original-source-link-failure-observation.json",
+      "bytes": 1036,
+      "sha256": "930c7b91b81380ed6c69fbda971925fca31c5c60d535d78060fc1f366e228f27"
+    },
+    {
+      "path": "reader-source-links.log",
+      "bytes": 1012,
+      "sha256": "7aeebaff494953e04b4f704ee2983ec8684376e6c05f8d36e120e9e809692a20"
+    },
+    {
+      "path": "publication.log",
+      "bytes": 4488,
+      "sha256": "c3e46e7621efc7531ebb9af561f13bb8abcf985bb6bc18542fcb2f1b58668995"
+    },
+    {
+      "path": "corrected-publication.log",
+      "bytes": 924,
+      "sha256": "eb5a6fdd13a75c5c159db5e54f156b8182782d57857ebeaa752e9d1b5de22a5e"
+    },
+    {
+      "path": "publication-two-round-strategy.json",
+      "bytes": 1088,
+      "sha256": "f99fc39dc39f1bd147f9dfbd05418687e9238f093864067eb6ec6475813e5be4"
+    },
+    {
+      "path": "committed-build.log",
+      "bytes": 8268,
+      "sha256": "f58765b9ef987c7232101e504d1c127e16bcc59f377ae92e4c23314e9e79314c"
+    },
+    {
+      "path": "original-global-receiver.log",
+      "bytes": 2212,
+      "sha256": "880f814eb5bd9e6a991cff70cf992f18c5b0b90158d7ab03ffb92e203e6834d5"
+    }
+  ]
+}

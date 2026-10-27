@@ -1,0 +1,1480 @@
+{
+  "at": "2026-10-27T13:39:59.655012+00:00",
+  "reviewer": "/root/whole_criterion_selection",
+  "currentMainRevision": "d8733018e8a0a221d2f4651838dc29abd11af05b",
+  "scope": "Complete actual datasets and change commits for four proposed/final positive-chain page reviews; exact retained candidate and current main comparison. Not new content acceptance.",
+  "groups": [
+    {
+      "family": "test-gate",
+      "targetPage": "docs/site/decisions/test-gate.md",
+      "currentPublishedSha256": "280f35e2d318793477b4ebc5170fcf157570019e8e9ddacf91d1628ff5a9b471",
+      "publishedEqualsOriginalProposedParent": true,
+      "candidatePage": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/decision-gap-review/docs/site/decisions/test-gate.md",
+      "candidateSha256": "8e6ec9060685f6a91747a1732026de90fcacc4c6f788c64ca53060787c3740b0",
+      "candidateEqualsFinalReviewDataset": true,
+      "candidateAlreadyAppliedToMain": false,
+      "priorReviewDataset": "prior-119-field-review.json",
+      "priorDatasetEqualsActualProposedReport": true,
+      "finalReviewPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/test-gate-final-conditions-review.json",
+      "finalReviewSha256": "91835189e8d3e0780ba4ae7f77413e4857ce8f9c63f228f551706fed70b59e16",
+      "finalReview": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "D-086 now preserves the historical conditional CAN language for a declared transform provider and explicitly avoids creating a required future provider or general-expression approval. The supplied current page matches the byte-exact historical authority for this condition; no unrelated decision text changed. Bounded reevaluation result using reused 118 fields plus corrected D-086: SourceAccuracy PASS, ReaderUsability PASS, Quality PASS.",
+        "overall_confidence": 0.99
+      },
+      "terminalPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/test-gate-final-conditions-terminal.json",
+      "terminal": {
+        "exitCode": 0,
+        "at": "2026-10-26T09:52:57.131016+00:00"
+      },
+      "reuseVerdict": "REUSABLE_WITHIN_ORIGINAL_BOUNDED_REEVALUATION_SCOPE"
+    },
+    {
+      "family": "core",
+      "targetPage": "docs/site/decisions/core-and-plugins.md",
+      "currentPublishedSha256": "94b47b5b4d59afb6233b3fbb86b12b049decf243cedaf4a511795a373288e022",
+      "publishedEqualsOriginalProposedParent": true,
+      "candidatePage": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/decision-gap-review/docs/site/decisions/core-and-plugins.md",
+      "candidateSha256": "db8a1bdf3260f3164a47eb289cdfdfba47ecec4d6ea49a8331c9773bbee81100",
+      "candidateEqualsFinalReviewDataset": true,
+      "candidateAlreadyAppliedToMain": false,
+      "priorReviewDataset": "prior-core-field-review.json",
+      "priorDatasetEqualsActualProposedReport": true,
+      "finalReviewPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/core-final-conditions-review.json",
+      "finalReviewSha256": "61837200e0e84f86c56334d6ed281f5b0eb062844ac74bc626eaab6636cfa3ce",
+      "finalReview": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "ADR-006 now records the original vision\u2019s concrete policy-hook reconsideration trigger and its required typed-contract obligations. The corrected text preserves the established boundaries and does not assert new approval; no unrelated published decision text changed.",
+        "overall_confidence": 0.99
+      },
+      "terminalPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/core-final-conditions-terminal.json",
+      "terminal": {
+        "exitCode": 0,
+        "at": "2026-10-26T09:57:01.538022+00:00"
+      },
+      "reuseVerdict": "REUSABLE_WITHIN_ORIGINAL_BOUNDED_REEVALUATION_SCOPE"
+    },
+    {
+      "family": "echo",
+      "targetPage": "docs/site/decisions/echo.md",
+      "currentPublishedSha256": "37a1904bdac312f978e484ebac9ee4ee8cca283b78ec108eba635e4eda877f4d",
+      "publishedEqualsOriginalProposedParent": true,
+      "candidatePage": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/decision-gap-review/docs/site/decisions/echo.md",
+      "candidateSha256": "7f98fb9f502aff02afae857e087eaced30490d5d02671ca792f5a3b91216dd3d",
+      "candidateEqualsFinalReviewDataset": true,
+      "candidateAlreadyAppliedToMain": false,
+      "priorReviewDataset": "prior-echo-field-review.json",
+      "priorDatasetEqualsActualProposedReport": true,
+      "finalReviewPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/echo-final-conditions-review.json",
+      "finalReviewSha256": "fd5f050e880e58965d0c60fb8eeb299a7ad000317451b9bb1ca8a428bfacce1e",
+      "finalReview": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "PASS: the grouped-record table now has eight cells in its header, separator, and all six data rows. Supersession content is retained in its original separate column, and all six reevaluation conditions are in the new final column. The D-ER4-017 optional deployment-namespace exception remains accurately bounded. SourceAccuracy, ReaderUsability, and Quality pass for the six explicit group reevaluation fields.",
+        "overall_confidence": 0.99
+      },
+      "terminalPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/echo-final-conditions-terminal.json",
+      "terminal": {
+        "exitCode": 0,
+        "at": "2026-10-26T10:00:01.463235+00:00"
+      },
+      "reuseVerdict": "REUSABLE_WITHIN_ORIGINAL_BOUNDED_REEVALUATION_SCOPE"
+    },
+    {
+      "family": "prism",
+      "targetPage": "docs/site/decisions/prism.md",
+      "currentPublishedSha256": "a2376d45afb66f18039d8b696cfa58ee24e5dc7e1b01bd206c447a364218b811",
+      "publishedEqualsOriginalProposedParent": true,
+      "candidatePage": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/decision-gap-review/docs/site/decisions/prism.md",
+      "candidateSha256": "aae4fa96a29b5a2f0e7dc426f9591bcd96e9963a8474149e2f2c05c6597622ff",
+      "candidateEqualsFinalReviewDataset": true,
+      "candidateAlreadyAppliedToMain": false,
+      "priorReviewDataset": "prior-prism-field-review.json",
+      "priorDatasetEqualsActualProposedReport": true,
+      "finalReviewPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/prism-final-conditions-review.json",
+      "finalReviewSha256": "17dd0c67e92b46dd6c4db1a182d4756d2503a702990aeb63ffec0fc71adc812e",
+      "finalReview": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "All five prior findings are addressed with source-accurate, separately stated conditions. The original seven table cells remain unchanged. For all four decision groups, bounded SourceAccuracy, semanticReaderUsability, and Quality are PASS based on the supplied sources; this makes no broader live, practical, or whole-gate claim.",
+        "overall_confidence": 0.98
+      },
+      "terminalPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/prism-final-conditions-terminal.json",
+      "terminal": {
+        "exitCode": 0,
+        "at": "2026-10-26T10:08:28.159530+00:00"
+      },
+      "reuseVerdict": "REUSABLE_WITHIN_ORIGINAL_BOUNDED_REEVALUATION_SCOPE"
+    }
+  ],
+  "vectors": [
+    {
+      "family": "test-gate",
+      "phase": "proposed",
+      "commandPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/test-gate-proposed-conditions-command.json",
+      "commandSha256": "d3f0fa8cc1b4609f98b4e6f12c9ee38146b2df6efa2d77c61d287ab078cbf9dd",
+      "reviewCommit": "d8fa9ad2c7f609ff0b101b25dcad720dac4d705c",
+      "datasets": [
+        {
+          "path": "docs/site/decisions/test-gate.md",
+          "reviewedBytes": 98659,
+          "reviewedSha256": "44d906736ae31621138214c8b0adf21fdce5ffc3d4adbd1eafa6a2ee33511adc",
+          "retainedSha256": "8e6ec9060685f6a91747a1732026de90fcacc4c6f788c64ca53060787c3740b0",
+          "retainedEqualsReviewed": false,
+          "currentMainExists": true,
+          "currentMainSha256": "280f35e2d318793477b4ebc5170fcf157570019e8e9ddacf91d1628ff5a9b471",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/pipeline-test-gate-design.md",
+          "reviewedBytes": 98181,
+          "reviewedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "docs/site/reference/documentation-governance.md",
+          "reviewedBytes": 11416,
+          "reviewedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "original-scope.json",
+          "reviewedBytes": 29893,
+          "reviewedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "historical-source-provenance.json",
+          "reviewedBytes": 328,
+          "reviewedSha256": "7e8589932227e008b2e39abbb92ab86c921a8a19232ca82cf47769ae051e2ffb",
+          "retainedSha256": "7e8589932227e008b2e39abbb92ab86c921a8a19232ca82cf47769ae051e2ffb",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        }
+      ],
+      "completeDatasetCount": 5,
+      "allRetainedEqualReviewed": false,
+      "reviewedDiffFiles": [
+        "docs/site/decisions/test-gate.md",
+        "historical-source-provenance.json"
+      ]
+    },
+    {
+      "family": "test-gate",
+      "phase": "final",
+      "commandPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/test-gate-final-conditions-command.json",
+      "commandSha256": "689f40914391ffa84199da2e2e3e342fe047d3033f3ba610edff565a1097444e",
+      "reviewCommit": "6bc2cce1c0d58c34b998b93303a97c6ff893c058",
+      "datasets": [
+        {
+          "path": "docs/site/decisions/test-gate.md",
+          "reviewedBytes": 98728,
+          "reviewedSha256": "8e6ec9060685f6a91747a1732026de90fcacc4c6f788c64ca53060787c3740b0",
+          "retainedSha256": "8e6ec9060685f6a91747a1732026de90fcacc4c6f788c64ca53060787c3740b0",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "280f35e2d318793477b4ebc5170fcf157570019e8e9ddacf91d1628ff5a9b471",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/pipeline-test-gate-design.md",
+          "reviewedBytes": 98181,
+          "reviewedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "docs/site/reference/documentation-governance.md",
+          "reviewedBytes": 11416,
+          "reviewedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "original-scope.json",
+          "reviewedBytes": 29893,
+          "reviewedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "historical-source-provenance.json",
+          "reviewedBytes": 328,
+          "reviewedSha256": "7e8589932227e008b2e39abbb92ab86c921a8a19232ca82cf47769ae051e2ffb",
+          "retainedSha256": "7e8589932227e008b2e39abbb92ab86c921a8a19232ca82cf47769ae051e2ffb",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "prior-119-field-review.json",
+          "reviewedBytes": 1180,
+          "reviewedSha256": "30df5a401cc11217c333ebd0c0940cfb9e707d18069e5594731dffb3b7e2aeef",
+          "retainedSha256": "30df5a401cc11217c333ebd0c0940cfb9e707d18069e5594731dffb3b7e2aeef",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        }
+      ],
+      "completeDatasetCount": 6,
+      "allRetainedEqualReviewed": true,
+      "reviewedDiffFiles": [
+        "docs/site/decisions/test-gate.md",
+        "prior-119-field-review.json"
+      ]
+    },
+    {
+      "family": "core",
+      "phase": "proposed",
+      "commandPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/core-proposed-conditions-command.json",
+      "commandSha256": "2ab2c8b2467ba0f8aa4eb1f7fa2d6b7f7e562ffaeec9a60bac4015d7212fc6e6",
+      "reviewCommit": "07218a11c4e7961b5a2a280380e7c1d75e29d784",
+      "datasets": [
+        {
+          "path": "docs/site/decisions/core-and-plugins.md",
+          "reviewedBytes": 47612,
+          "reviewedSha256": "28f53cf894ae913f65eb54fb2191e21d2e0efe69891382d70a7b0ba25686fdf9",
+          "retainedSha256": "db8a1bdf3260f3164a47eb289cdfdfba47ecec4d6ea49a8331c9773bbee81100",
+          "retainedEqualsReviewed": false,
+          "currentMainExists": true,
+          "currentMainSha256": "94b47b5b4d59afb6233b3fbb86b12b049decf243cedaf4a511795a373288e022",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/plugin-system-vision.md",
+          "reviewedBytes": 39436,
+          "reviewedSha256": "f7534acaf117d8ec68e65d8308c75f65332042034c30154833595dbe6b2e2fed",
+          "retainedSha256": "f7534acaf117d8ec68e65d8308c75f65332042034c30154833595dbe6b2e2fed",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/pipeline-test-gate-design.md",
+          "reviewedBytes": 98181,
+          "reviewedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "core-original-authority-provenance.json",
+          "reviewedBytes": 584,
+          "reviewedSha256": "2f3345b13bf7fe4c3f24ded7c00a1f717fb2ba3df9b6907a456293d85e8618b5",
+          "retainedSha256": "2f3345b13bf7fe4c3f24ded7c00a1f717fb2ba3df9b6907a456293d85e8618b5",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/site/reference/documentation-governance.md",
+          "reviewedBytes": 11416,
+          "reviewedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "original-scope.json",
+          "reviewedBytes": 29893,
+          "reviewedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        }
+      ],
+      "completeDatasetCount": 6,
+      "allRetainedEqualReviewed": false,
+      "reviewedDiffFiles": [
+        "core-original-authority-provenance.json",
+        "docs/architecture/plugin-system-vision.md",
+        "docs/site/decisions/core-and-plugins.md"
+      ]
+    },
+    {
+      "family": "core",
+      "phase": "final",
+      "commandPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/core-final-conditions-command.json",
+      "commandSha256": "e50601a0a0ceec067e42b23ab7254042e90b89dfa8e0b8a511f73bc1547e9fdb",
+      "reviewCommit": "a1945c6af7403c2283ce89fec4738a9d25d6e226",
+      "datasets": [
+        {
+          "path": "docs/site/decisions/core-and-plugins.md",
+          "reviewedBytes": 48065,
+          "reviewedSha256": "db8a1bdf3260f3164a47eb289cdfdfba47ecec4d6ea49a8331c9773bbee81100",
+          "retainedSha256": "db8a1bdf3260f3164a47eb289cdfdfba47ecec4d6ea49a8331c9773bbee81100",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "94b47b5b4d59afb6233b3fbb86b12b049decf243cedaf4a511795a373288e022",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/plugin-system-vision.md",
+          "reviewedBytes": 39436,
+          "reviewedSha256": "f7534acaf117d8ec68e65d8308c75f65332042034c30154833595dbe6b2e2fed",
+          "retainedSha256": "f7534acaf117d8ec68e65d8308c75f65332042034c30154833595dbe6b2e2fed",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/pipeline-test-gate-design.md",
+          "reviewedBytes": 98181,
+          "reviewedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "core-original-authority-provenance.json",
+          "reviewedBytes": 584,
+          "reviewedSha256": "2f3345b13bf7fe4c3f24ded7c00a1f717fb2ba3df9b6907a456293d85e8618b5",
+          "retainedSha256": "2f3345b13bf7fe4c3f24ded7c00a1f717fb2ba3df9b6907a456293d85e8618b5",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/site/reference/documentation-governance.md",
+          "reviewedBytes": 11416,
+          "reviewedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "original-scope.json",
+          "reviewedBytes": 29893,
+          "reviewedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "prior-core-field-review.json",
+          "reviewedBytes": 1072,
+          "reviewedSha256": "5e0ace80da40e0d32820ab762cadcf7c5164180131c1b2875401c8fc8facd63f",
+          "retainedSha256": "5e0ace80da40e0d32820ab762cadcf7c5164180131c1b2875401c8fc8facd63f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        }
+      ],
+      "completeDatasetCount": 7,
+      "allRetainedEqualReviewed": true,
+      "reviewedDiffFiles": [
+        "docs/site/decisions/core-and-plugins.md",
+        "prior-core-field-review.json"
+      ]
+    },
+    {
+      "family": "echo",
+      "phase": "proposed",
+      "commandPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/echo-proposed-conditions-command.json",
+      "commandSha256": "07e08f854ea5e677d29d2bcb8cc2a3c9701b90eb61e710dbeb156b009413df66",
+      "reviewCommit": "f4d8b8e37cf3d554f0ea6605df1dbe2526152316",
+      "datasets": [
+        {
+          "path": "docs/site/decisions/echo.md",
+          "reviewedBytes": 27618,
+          "reviewedSha256": "9bbd8bf5dfdc29778df167236154827b5c30a67eab81b423ade3c0753b76c4e8",
+          "retainedSha256": "7f98fb9f502aff02afae857e087eaced30490d5d02671ca792f5a3b91216dd3d",
+          "retainedEqualsReviewed": false,
+          "currentMainExists": true,
+          "currentMainSha256": "37a1904bdac312f978e484ebac9ee4ee8cca283b78ec108eba635e4eda877f4d",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-governance-implementation-plan.md",
+          "reviewedBytes": 11467,
+          "reviewedSha256": "3d4ccaf392aa729ac147562df0c27fb82efaaefa46132093f1c8312a3943ba5a",
+          "retainedSha256": "3d4ccaf392aa729ac147562df0c27fb82efaaefa46132093f1c8312a3943ba5a",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-1-baseline.md",
+          "reviewedBytes": 12433,
+          "reviewedSha256": "9f858e8906f782fa2a718684de2b3163d30cfa180091532aaf0f9feefc481f71",
+          "retainedSha256": "9f858e8906f782fa2a718684de2b3163d30cfa180091532aaf0f9feefc481f71",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-2-design.md",
+          "reviewedBytes": 36803,
+          "reviewedSha256": "e8374d0bb139d6c5b0c61f727c525b02e7a1d8a27d4c8dd1b7fcc8675e1134ab",
+          "retainedSha256": "e8374d0bb139d6c5b0c61f727c525b02e7a1d8a27d4c8dd1b7fcc8675e1134ab",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-3-design.md",
+          "reviewedBytes": 22400,
+          "reviewedSha256": "039071dac7b691d7670950d63cf517819210655164a8a7e2c6839cf01c07c17b",
+          "retainedSha256": "039071dac7b691d7670950d63cf517819210655164a8a7e2c6839cf01c07c17b",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-4-design.md",
+          "reviewedBytes": 32139,
+          "reviewedSha256": "b7a9fbab46bddc638ff3d0055c38dcf8106d94f7e65f3f8fd4b29137668debb9",
+          "retainedSha256": "b7a9fbab46bddc638ff3d0055c38dcf8106d94f7e65f3f8fd4b29137668debb9",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-4-plan.md",
+          "reviewedBytes": 10956,
+          "reviewedSha256": "fdcdfbdfc1644f7c2f7b27a6abd87b5febbd4728a0ceb9829f86b1f435fcbc6c",
+          "retainedSha256": "fdcdfbdfc1644f7c2f7b27a6abd87b5febbd4728a0ceb9829f86b1f435fcbc6c",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-5-design.md",
+          "reviewedBytes": 9002,
+          "reviewedSha256": "8038a0e0d705e7ea82850de374f585ee85116e36abe1e04ca27d33013bc3fafe",
+          "retainedSha256": "8038a0e0d705e7ea82850de374f585ee85116e36abe1e04ca27d33013bc3fafe",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-5-plan.md",
+          "reviewedBytes": 3646,
+          "reviewedSha256": "39d33e1fd44b3d2ac48b0140da1b9893eb44d58c8dff0a93066a3eb8ed4ebab5",
+          "retainedSha256": "39d33e1fd44b3d2ac48b0140da1b9893eb44d58c8dff0a93066a3eb8ed4ebab5",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-6-design.md",
+          "reviewedBytes": 10180,
+          "reviewedSha256": "793e0a4628474622a6fd9d7ba24082c0d427dfa1583f038facb183f4b263f569",
+          "retainedSha256": "793e0a4628474622a6fd9d7ba24082c0d427dfa1583f038facb183f4b263f569",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-6-plan.md",
+          "reviewedBytes": 2899,
+          "reviewedSha256": "416f3f00cd7d6523da840cade2a0b3a95657bfb5bb27131c75949d4c0e5fd243",
+          "retainedSha256": "416f3f00cd7d6523da840cade2a0b3a95657bfb5bb27131c75949d4c0e5fd243",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-7-design.md",
+          "reviewedBytes": 7895,
+          "reviewedSha256": "1819af8a02b07d34805b05f2d851ee49f731a8d93148514792567d209954472a",
+          "retainedSha256": "1819af8a02b07d34805b05f2d851ee49f731a8d93148514792567d209954472a",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-7-plan.md",
+          "reviewedBytes": 2183,
+          "reviewedSha256": "94c4f2d53e861b0985a2e0da171c3839be31ca78bfd3b2244f9793673f8ab2d8",
+          "retainedSha256": "94c4f2d53e861b0985a2e0da171c3839be31ca78bfd3b2244f9793673f8ab2d8",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-8-design.md",
+          "reviewedBytes": 8273,
+          "reviewedSha256": "ee9175ddc0d691b08c3c4951342cc7f0c470352e8cce82a488ad4e8431499f91",
+          "retainedSha256": "ee9175ddc0d691b08c3c4951342cc7f0c470352e8cce82a488ad4e8431499f91",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-8-plan.md",
+          "reviewedBytes": 2339,
+          "reviewedSha256": "5ba77784d12835079b44347d49e6331cb77ddfbf96194f288f476595939eeaa3",
+          "retainedSha256": "5ba77784d12835079b44347d49e6331cb77ddfbf96194f288f476595939eeaa3",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-9-evaluation.md",
+          "reviewedBytes": 12036,
+          "reviewedSha256": "3d32e1e921a9e9e5754474369fad5f56f4e57d65c9df7b76b2b027fb3f96cc92",
+          "retainedSha256": "3d32e1e921a9e9e5754474369fad5f56f4e57d65c9df7b76b2b027fb3f96cc92",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-9-hardening.md",
+          "reviewedBytes": 6025,
+          "reviewedSha256": "b419ca4dd7d0dcd0499f648943ead04f2ebc8380c0d16b72fc882035bfc36068",
+          "retainedSha256": "b419ca4dd7d0dcd0499f648943ead04f2ebc8380c0d16b72fc882035bfc36068",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-roadmap.md",
+          "reviewedBytes": 5328,
+          "reviewedSha256": "a29f0813448ebbf27a0ee3d6b9f0c4d09fd04f048a4501b92357b9330ae187d3",
+          "retainedSha256": "a29f0813448ebbf27a0ee3d6b9f0c4d09fd04f048a4501b92357b9330ae187d3",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-scalability-plan.md",
+          "reviewedBytes": 21394,
+          "reviewedSha256": "08c3739463c6c7a37510926642272711f0f306cbd4d4390e6e6dba0ca9bbbaeb",
+          "retainedSha256": "08c3739463c6c7a37510926642272711f0f306cbd4d4390e6e6dba0ca9bbbaeb",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "echo-original-authority-provenance.json",
+          "reviewedBytes": 4738,
+          "reviewedSha256": "ca5da6bf4fa1ad46b82f21ecaf8ec8f4eca1e17bf3089e985b64ec1141ab5192",
+          "retainedSha256": "ca5da6bf4fa1ad46b82f21ecaf8ec8f4eca1e17bf3089e985b64ec1141ab5192",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/site/reference/documentation-governance.md",
+          "reviewedBytes": 11416,
+          "reviewedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "original-scope.json",
+          "reviewedBytes": 29893,
+          "reviewedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        }
+      ],
+      "completeDatasetCount": 22,
+      "allRetainedEqualReviewed": false,
+      "reviewedDiffFiles": [
+        "docs/site/decisions/echo.md"
+      ]
+    },
+    {
+      "family": "echo",
+      "phase": "final",
+      "commandPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/echo-final-conditions-command.json",
+      "commandSha256": "aa19768accfb7c415a80d8f233034e4bf0880e4601f6c4c535e2e24d449e2d5c",
+      "reviewCommit": "eb67e8ce80969d633277d4d22bcf2843b84da53d",
+      "datasets": [
+        {
+          "path": "docs/site/decisions/echo.md",
+          "reviewedBytes": 27626,
+          "reviewedSha256": "7f98fb9f502aff02afae857e087eaced30490d5d02671ca792f5a3b91216dd3d",
+          "retainedSha256": "7f98fb9f502aff02afae857e087eaced30490d5d02671ca792f5a3b91216dd3d",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "37a1904bdac312f978e484ebac9ee4ee8cca283b78ec108eba635e4eda877f4d",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-governance-implementation-plan.md",
+          "reviewedBytes": 11467,
+          "reviewedSha256": "3d4ccaf392aa729ac147562df0c27fb82efaaefa46132093f1c8312a3943ba5a",
+          "retainedSha256": "3d4ccaf392aa729ac147562df0c27fb82efaaefa46132093f1c8312a3943ba5a",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-1-baseline.md",
+          "reviewedBytes": 12433,
+          "reviewedSha256": "9f858e8906f782fa2a718684de2b3163d30cfa180091532aaf0f9feefc481f71",
+          "retainedSha256": "9f858e8906f782fa2a718684de2b3163d30cfa180091532aaf0f9feefc481f71",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-2-design.md",
+          "reviewedBytes": 36803,
+          "reviewedSha256": "e8374d0bb139d6c5b0c61f727c525b02e7a1d8a27d4c8dd1b7fcc8675e1134ab",
+          "retainedSha256": "e8374d0bb139d6c5b0c61f727c525b02e7a1d8a27d4c8dd1b7fcc8675e1134ab",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-3-design.md",
+          "reviewedBytes": 22400,
+          "reviewedSha256": "039071dac7b691d7670950d63cf517819210655164a8a7e2c6839cf01c07c17b",
+          "retainedSha256": "039071dac7b691d7670950d63cf517819210655164a8a7e2c6839cf01c07c17b",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-4-design.md",
+          "reviewedBytes": 32139,
+          "reviewedSha256": "b7a9fbab46bddc638ff3d0055c38dcf8106d94f7e65f3f8fd4b29137668debb9",
+          "retainedSha256": "b7a9fbab46bddc638ff3d0055c38dcf8106d94f7e65f3f8fd4b29137668debb9",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-4-plan.md",
+          "reviewedBytes": 10956,
+          "reviewedSha256": "fdcdfbdfc1644f7c2f7b27a6abd87b5febbd4728a0ceb9829f86b1f435fcbc6c",
+          "retainedSha256": "fdcdfbdfc1644f7c2f7b27a6abd87b5febbd4728a0ceb9829f86b1f435fcbc6c",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-5-design.md",
+          "reviewedBytes": 9002,
+          "reviewedSha256": "8038a0e0d705e7ea82850de374f585ee85116e36abe1e04ca27d33013bc3fafe",
+          "retainedSha256": "8038a0e0d705e7ea82850de374f585ee85116e36abe1e04ca27d33013bc3fafe",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-5-plan.md",
+          "reviewedBytes": 3646,
+          "reviewedSha256": "39d33e1fd44b3d2ac48b0140da1b9893eb44d58c8dff0a93066a3eb8ed4ebab5",
+          "retainedSha256": "39d33e1fd44b3d2ac48b0140da1b9893eb44d58c8dff0a93066a3eb8ed4ebab5",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-6-design.md",
+          "reviewedBytes": 10180,
+          "reviewedSha256": "793e0a4628474622a6fd9d7ba24082c0d427dfa1583f038facb183f4b263f569",
+          "retainedSha256": "793e0a4628474622a6fd9d7ba24082c0d427dfa1583f038facb183f4b263f569",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-6-plan.md",
+          "reviewedBytes": 2899,
+          "reviewedSha256": "416f3f00cd7d6523da840cade2a0b3a95657bfb5bb27131c75949d4c0e5fd243",
+          "retainedSha256": "416f3f00cd7d6523da840cade2a0b3a95657bfb5bb27131c75949d4c0e5fd243",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-7-design.md",
+          "reviewedBytes": 7895,
+          "reviewedSha256": "1819af8a02b07d34805b05f2d851ee49f731a8d93148514792567d209954472a",
+          "retainedSha256": "1819af8a02b07d34805b05f2d851ee49f731a8d93148514792567d209954472a",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-7-plan.md",
+          "reviewedBytes": 2183,
+          "reviewedSha256": "94c4f2d53e861b0985a2e0da171c3839be31ca78bfd3b2244f9793673f8ab2d8",
+          "retainedSha256": "94c4f2d53e861b0985a2e0da171c3839be31ca78bfd3b2244f9793673f8ab2d8",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-8-design.md",
+          "reviewedBytes": 8273,
+          "reviewedSha256": "ee9175ddc0d691b08c3c4951342cc7f0c470352e8cce82a488ad4e8431499f91",
+          "retainedSha256": "ee9175ddc0d691b08c3c4951342cc7f0c470352e8cce82a488ad4e8431499f91",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-8-plan.md",
+          "reviewedBytes": 2339,
+          "reviewedSha256": "5ba77784d12835079b44347d49e6331cb77ddfbf96194f288f476595939eeaa3",
+          "retainedSha256": "5ba77784d12835079b44347d49e6331cb77ddfbf96194f288f476595939eeaa3",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-9-evaluation.md",
+          "reviewedBytes": 12036,
+          "reviewedSha256": "3d32e1e921a9e9e5754474369fad5f56f4e57d65c9df7b76b2b027fb3f96cc92",
+          "retainedSha256": "3d32e1e921a9e9e5754474369fad5f56f4e57d65c9df7b76b2b027fb3f96cc92",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-9-hardening.md",
+          "reviewedBytes": 6025,
+          "reviewedSha256": "b419ca4dd7d0dcd0499f648943ead04f2ebc8380c0d16b72fc882035bfc36068",
+          "retainedSha256": "b419ca4dd7d0dcd0499f648943ead04f2ebc8380c0d16b72fc882035bfc36068",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-roadmap.md",
+          "reviewedBytes": 5328,
+          "reviewedSha256": "a29f0813448ebbf27a0ee3d6b9f0c4d09fd04f048a4501b92357b9330ae187d3",
+          "retainedSha256": "a29f0813448ebbf27a0ee3d6b9f0c4d09fd04f048a4501b92357b9330ae187d3",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/echo-review-scalability-plan.md",
+          "reviewedBytes": 21394,
+          "reviewedSha256": "08c3739463c6c7a37510926642272711f0f306cbd4d4390e6e6dba0ca9bbbaeb",
+          "retainedSha256": "08c3739463c6c7a37510926642272711f0f306cbd4d4390e6e6dba0ca9bbbaeb",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "echo-original-authority-provenance.json",
+          "reviewedBytes": 4738,
+          "reviewedSha256": "ca5da6bf4fa1ad46b82f21ecaf8ec8f4eca1e17bf3089e985b64ec1141ab5192",
+          "retainedSha256": "ca5da6bf4fa1ad46b82f21ecaf8ec8f4eca1e17bf3089e985b64ec1141ab5192",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/site/reference/documentation-governance.md",
+          "reviewedBytes": 11416,
+          "reviewedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "original-scope.json",
+          "reviewedBytes": 29893,
+          "reviewedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "prior-echo-field-review.json",
+          "reviewedBytes": 1433,
+          "reviewedSha256": "9ef5dab860396471f5ede69db19eac9698b0382a3d858a5470f4fba232b1fadd",
+          "retainedSha256": "9ef5dab860396471f5ede69db19eac9698b0382a3d858a5470f4fba232b1fadd",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        }
+      ],
+      "completeDatasetCount": 23,
+      "allRetainedEqualReviewed": true,
+      "reviewedDiffFiles": [
+        "docs/site/decisions/echo.md",
+        "prior-echo-field-review.json"
+      ]
+    },
+    {
+      "family": "prism",
+      "phase": "proposed",
+      "commandPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/prism-proposed-conditions-command.json",
+      "commandSha256": "f89ffe3082e018f87e52fa3ab83687d09f9ded7450454da74d5bebae645b3233",
+      "reviewCommit": "b5b982447e84ede949c4ce912416a9d8106f636d",
+      "datasets": [
+        {
+          "path": "docs/site/decisions/prism.md",
+          "reviewedBytes": 13977,
+          "reviewedSha256": "d86eb57624cec0ce16017052735038932b122208cd8538d2e729887e09ff109d",
+          "retainedSha256": "aae4fa96a29b5a2f0e7dc426f9591bcd96e9963a8474149e2f2c05c6597622ff",
+          "retainedEqualsReviewed": false,
+          "currentMainExists": true,
+          "currentMainSha256": "a2376d45afb66f18039d8b696cfa58ee24e5dc7e1b01bd206c447a364218b811",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/prism-design-engine-architecture.md",
+          "reviewedBytes": 49764,
+          "reviewedSha256": "a8333fc710d3b28055709f73f827c32cf673d7ea893384a6adcabc663d34f0e5",
+          "retainedSha256": "a8333fc710d3b28055709f73f827c32cf673d7ea893384a6adcabc663d34f0e5",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/prism-recovery-observability-v1.md",
+          "reviewedBytes": 7160,
+          "reviewedSha256": "5d1b2287ad92e2eace31673a7d5369327462035d82fc81de3102947882f9b574",
+          "retainedSha256": "5d1b2287ad92e2eace31673a7d5369327462035d82fc81de3102947882f9b574",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/implementation/prism-production-integration-plan.md",
+          "reviewedBytes": 37714,
+          "reviewedSha256": "c3966893021a9c7543ff0ba407f1cf2cf971f22be8fc8c9d2828ec430a17d182",
+          "retainedSha256": "c3966893021a9c7543ff0ba407f1cf2cf971f22be8fc8c9d2828ec430a17d182",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "9eeed00971aa08c770cb3e3c6f2f8f9571a202df24f931e2c0dae10bcad110f3",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/spikes/prism-foundation-spikes.md",
+          "reviewedBytes": 9976,
+          "reviewedSha256": "4b7eca14912170a218698cb8146cd6c4c502041bb16085a3127af55a52a2ec12",
+          "retainedSha256": "4b7eca14912170a218698cb8146cd6c4c502041bb16085a3127af55a52a2ec12",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "4b7eca14912170a218698cb8146cd6c4c502041bb16085a3127af55a52a2ec12",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "docs/blueprint/05-decision-record-catalogue.md",
+          "reviewedBytes": 10253,
+          "reviewedSha256": "995dc29ce4259a0fcc1781674f2ceb183b2b557749c92934dc53f1f7e91390d7",
+          "retainedSha256": "995dc29ce4259a0fcc1781674f2ceb183b2b557749c92934dc53f1f7e91390d7",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "995dc29ce4259a0fcc1781674f2ceb183b2b557749c92934dc53f1f7e91390d7",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "docs/review/remediation/decisions.md",
+          "reviewedBytes": 15221,
+          "reviewedSha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+          "retainedSha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "prism-original-authority-provenance.json",
+          "reviewedBytes": 1578,
+          "reviewedSha256": "810e0909b4872f8773a5e60e3e2cc0059ba71070fb77d0b3551616813192bea3",
+          "retainedSha256": "ef7c512c2ecaf5e8018154c575c5ea99b126d1efd56638d46d901c6416a571bf",
+          "retainedEqualsReviewed": false,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/site/reference/documentation-governance.md",
+          "reviewedBytes": 11416,
+          "reviewedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "original-scope.json",
+          "reviewedBytes": 29893,
+          "reviewedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        }
+      ],
+      "completeDatasetCount": 10,
+      "allRetainedEqualReviewed": false,
+      "reviewedDiffFiles": [
+        "docs/site/decisions/prism.md"
+      ]
+    },
+    {
+      "family": "prism",
+      "phase": "final",
+      "commandPath": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/prism-final-conditions-command.json",
+      "commandSha256": "7728c0bff886073fb31db8f33d589379f53d31f95c8c10e1b0f93fc32af1c63a",
+      "reviewCommit": "f2aeed761e9bc4317e829a44b4ff7c3b3f08e499",
+      "datasets": [
+        {
+          "path": "docs/site/decisions/prism.md",
+          "reviewedBytes": 15252,
+          "reviewedSha256": "aae4fa96a29b5a2f0e7dc426f9591bcd96e9963a8474149e2f2c05c6597622ff",
+          "retainedSha256": "aae4fa96a29b5a2f0e7dc426f9591bcd96e9963a8474149e2f2c05c6597622ff",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "a2376d45afb66f18039d8b696cfa58ee24e5dc7e1b01bd206c447a364218b811",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/prism-design-engine-architecture.md",
+          "reviewedBytes": 49764,
+          "reviewedSha256": "a8333fc710d3b28055709f73f827c32cf673d7ea893384a6adcabc663d34f0e5",
+          "retainedSha256": "a8333fc710d3b28055709f73f827c32cf673d7ea893384a6adcabc663d34f0e5",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/prism-recovery-observability-v1.md",
+          "reviewedBytes": 7160,
+          "reviewedSha256": "5d1b2287ad92e2eace31673a7d5369327462035d82fc81de3102947882f9b574",
+          "retainedSha256": "5d1b2287ad92e2eace31673a7d5369327462035d82fc81de3102947882f9b574",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/implementation/prism-production-integration-plan.md",
+          "reviewedBytes": 37714,
+          "reviewedSha256": "c3966893021a9c7543ff0ba407f1cf2cf971f22be8fc8c9d2828ec430a17d182",
+          "retainedSha256": "c3966893021a9c7543ff0ba407f1cf2cf971f22be8fc8c9d2828ec430a17d182",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "9eeed00971aa08c770cb3e3c6f2f8f9571a202df24f931e2c0dae10bcad110f3",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/spikes/prism-foundation-spikes.md",
+          "reviewedBytes": 9976,
+          "reviewedSha256": "4b7eca14912170a218698cb8146cd6c4c502041bb16085a3127af55a52a2ec12",
+          "retainedSha256": "4b7eca14912170a218698cb8146cd6c4c502041bb16085a3127af55a52a2ec12",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "4b7eca14912170a218698cb8146cd6c4c502041bb16085a3127af55a52a2ec12",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "docs/blueprint/05-decision-record-catalogue.md",
+          "reviewedBytes": 10253,
+          "reviewedSha256": "995dc29ce4259a0fcc1781674f2ceb183b2b557749c92934dc53f1f7e91390d7",
+          "retainedSha256": "995dc29ce4259a0fcc1781674f2ceb183b2b557749c92934dc53f1f7e91390d7",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "995dc29ce4259a0fcc1781674f2ceb183b2b557749c92934dc53f1f7e91390d7",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "docs/review/remediation/decisions.md",
+          "reviewedBytes": 15221,
+          "reviewedSha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+          "retainedSha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+          "currentMainEqualsReviewed": true
+        },
+        {
+          "path": "prism-original-authority-provenance.json",
+          "reviewedBytes": 1842,
+          "reviewedSha256": "ef7c512c2ecaf5e8018154c575c5ea99b126d1efd56638d46d901c6416a571bf",
+          "retainedSha256": "ef7c512c2ecaf5e8018154c575c5ea99b126d1efd56638d46d901c6416a571bf",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/site/reference/documentation-governance.md",
+          "reviewedBytes": 11416,
+          "reviewedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": true,
+          "currentMainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "original-scope.json",
+          "reviewedBytes": 29893,
+          "reviewedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedSha256": "26bb786373bb5a6b2f817c3b11527cd3dcbb7a73e208eb1a4bb10e283a5c4069",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "docs/architecture/prism-preference-learning-v1.md",
+          "reviewedBytes": 7267,
+          "reviewedSha256": "fb9fa66a49aa82e8f7ec64b32c44d9dfe4b40f43b209b9e15a159532c8fe8637",
+          "retainedSha256": "fb9fa66a49aa82e8f7ec64b32c44d9dfe4b40f43b209b9e15a159532c8fe8637",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        },
+        {
+          "path": "prior-prism-field-review.json",
+          "reviewedBytes": 3855,
+          "reviewedSha256": "211bcc8d92615b21455c2adc95e7b8a58dedad96f028e0e3bb2f9148513f2249",
+          "retainedSha256": "211bcc8d92615b21455c2adc95e7b8a58dedad96f028e0e3bb2f9148513f2249",
+          "retainedEqualsReviewed": true,
+          "currentMainExists": false,
+          "currentMainSha256": null,
+          "currentMainEqualsReviewed": false
+        }
+      ],
+      "completeDatasetCount": 12,
+      "allRetainedEqualReviewed": true,
+      "reviewedDiffFiles": [
+        "docs/architecture/prism-preference-learning-v1.md",
+        "docs/site/decisions/prism.md",
+        "prior-prism-field-review.json",
+        "prism-original-authority-provenance.json"
+      ]
+    }
+  ],
+  "historicalAuthorityProvenance": [
+    {
+      "record": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/decision-gap-review/historical-source-provenance.json",
+      "recordSha256": "7e8589932227e008b2e39abbb92ab86c921a8a19232ca82cf47769ae051e2ffb",
+      "sources": [
+        {
+          "path": "docs/architecture/pipeline-test-gate-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": true,
+          "currentMainSamePathEqualsHistorical": true
+        }
+      ],
+      "allVerified": true
+    },
+    {
+      "record": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/decision-gap-review/core-original-authority-provenance.json",
+      "recordSha256": "2f3345b13bf7fe4c3f24ded7c00a1f717fb2ba3df9b6907a456293d85e8618b5",
+      "sources": [
+        {
+          "path": "docs/architecture/plugin-system-vision.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "f7534acaf117d8ec68e65d8308c75f65332042034c30154833595dbe6b2e2fed",
+          "retainedSha256": "f7534acaf117d8ec68e65d8308c75f65332042034c30154833595dbe6b2e2fed",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/pipeline-test-gate-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "retainedSha256": "7f9fa657621d2119633c02acf6ae359fa858245fef6bbd26f58178ceeee9acf4",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": true,
+          "currentMainSamePathEqualsHistorical": true
+        }
+      ],
+      "allVerified": true
+    },
+    {
+      "record": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/decision-gap-review/echo-original-authority-provenance.json",
+      "recordSha256": "ca5da6bf4fa1ad46b82f21ecaf8ec8f4eca1e17bf3089e985b64ec1141ab5192",
+      "sources": [
+        {
+          "path": "docs/architecture/echo-review-governance-implementation-plan.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "3d4ccaf392aa729ac147562df0c27fb82efaaefa46132093f1c8312a3943ba5a",
+          "retainedSha256": "3d4ccaf392aa729ac147562df0c27fb82efaaefa46132093f1c8312a3943ba5a",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-1-baseline.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "9f858e8906f782fa2a718684de2b3163d30cfa180091532aaf0f9feefc481f71",
+          "retainedSha256": "9f858e8906f782fa2a718684de2b3163d30cfa180091532aaf0f9feefc481f71",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-2-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "e8374d0bb139d6c5b0c61f727c525b02e7a1d8a27d4c8dd1b7fcc8675e1134ab",
+          "retainedSha256": "e8374d0bb139d6c5b0c61f727c525b02e7a1d8a27d4c8dd1b7fcc8675e1134ab",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-3-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "039071dac7b691d7670950d63cf517819210655164a8a7e2c6839cf01c07c17b",
+          "retainedSha256": "039071dac7b691d7670950d63cf517819210655164a8a7e2c6839cf01c07c17b",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-4-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "b7a9fbab46bddc638ff3d0055c38dcf8106d94f7e65f3f8fd4b29137668debb9",
+          "retainedSha256": "b7a9fbab46bddc638ff3d0055c38dcf8106d94f7e65f3f8fd4b29137668debb9",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-4-plan.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "fdcdfbdfc1644f7c2f7b27a6abd87b5febbd4728a0ceb9829f86b1f435fcbc6c",
+          "retainedSha256": "fdcdfbdfc1644f7c2f7b27a6abd87b5febbd4728a0ceb9829f86b1f435fcbc6c",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-5-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "8038a0e0d705e7ea82850de374f585ee85116e36abe1e04ca27d33013bc3fafe",
+          "retainedSha256": "8038a0e0d705e7ea82850de374f585ee85116e36abe1e04ca27d33013bc3fafe",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-5-plan.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "39d33e1fd44b3d2ac48b0140da1b9893eb44d58c8dff0a93066a3eb8ed4ebab5",
+          "retainedSha256": "39d33e1fd44b3d2ac48b0140da1b9893eb44d58c8dff0a93066a3eb8ed4ebab5",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-6-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "793e0a4628474622a6fd9d7ba24082c0d427dfa1583f038facb183f4b263f569",
+          "retainedSha256": "793e0a4628474622a6fd9d7ba24082c0d427dfa1583f038facb183f4b263f569",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-6-plan.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "416f3f00cd7d6523da840cade2a0b3a95657bfb5bb27131c75949d4c0e5fd243",
+          "retainedSha256": "416f3f00cd7d6523da840cade2a0b3a95657bfb5bb27131c75949d4c0e5fd243",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-7-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "1819af8a02b07d34805b05f2d851ee49f731a8d93148514792567d209954472a",
+          "retainedSha256": "1819af8a02b07d34805b05f2d851ee49f731a8d93148514792567d209954472a",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-7-plan.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "94c4f2d53e861b0985a2e0da171c3839be31ca78bfd3b2244f9793673f8ab2d8",
+          "retainedSha256": "94c4f2d53e861b0985a2e0da171c3839be31ca78bfd3b2244f9793673f8ab2d8",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-8-design.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "ee9175ddc0d691b08c3c4951342cc7f0c470352e8cce82a488ad4e8431499f91",
+          "retainedSha256": "ee9175ddc0d691b08c3c4951342cc7f0c470352e8cce82a488ad4e8431499f91",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-8-plan.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "5ba77784d12835079b44347d49e6331cb77ddfbf96194f288f476595939eeaa3",
+          "retainedSha256": "5ba77784d12835079b44347d49e6331cb77ddfbf96194f288f476595939eeaa3",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-9-evaluation.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "3d32e1e921a9e9e5754474369fad5f56f4e57d65c9df7b76b2b027fb3f96cc92",
+          "retainedSha256": "3d32e1e921a9e9e5754474369fad5f56f4e57d65c9df7b76b2b027fb3f96cc92",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-phase-9-hardening.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "b419ca4dd7d0dcd0499f648943ead04f2ebc8380c0d16b72fc882035bfc36068",
+          "retainedSha256": "b419ca4dd7d0dcd0499f648943ead04f2ebc8380c0d16b72fc882035bfc36068",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-roadmap.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "a29f0813448ebbf27a0ee3d6b9f0c4d09fd04f048a4501b92357b9330ae187d3",
+          "retainedSha256": "a29f0813448ebbf27a0ee3d6b9f0c4d09fd04f048a4501b92357b9330ae187d3",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/echo-review-scalability-plan.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "08c3739463c6c7a37510926642272711f0f306cbd4d4390e6e6dba0ca9bbbaeb",
+          "retainedSha256": "08c3739463c6c7a37510926642272711f0f306cbd4d4390e6e6dba0ca9bbbaeb",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        }
+      ],
+      "allVerified": true
+    },
+    {
+      "record": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-20261026/decision-gap-review/prism-original-authority-provenance.json",
+      "recordSha256": "ef7c512c2ecaf5e8018154c575c5ea99b126d1efd56638d46d901c6416a571bf",
+      "sources": [
+        {
+          "path": "docs/architecture/prism-design-engine-architecture.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "a8333fc710d3b28055709f73f827c32cf673d7ea893384a6adcabc663d34f0e5",
+          "retainedSha256": "a8333fc710d3b28055709f73f827c32cf673d7ea893384a6adcabc663d34f0e5",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/architecture/prism-recovery-observability-v1.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "5d1b2287ad92e2eace31673a7d5369327462035d82fc81de3102947882f9b574",
+          "retainedSha256": "5d1b2287ad92e2eace31673a7d5369327462035d82fc81de3102947882f9b574",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/implementation/prism-production-integration-plan.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "c3966893021a9c7543ff0ba407f1cf2cf971f22be8fc8c9d2828ec430a17d182",
+          "retainedSha256": "c3966893021a9c7543ff0ba407f1cf2cf971f22be8fc8c9d2828ec430a17d182",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": true,
+          "currentMainSamePathEqualsHistorical": false
+        },
+        {
+          "path": "docs/spikes/prism-foundation-spikes.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "4b7eca14912170a218698cb8146cd6c4c502041bb16085a3127af55a52a2ec12",
+          "retainedSha256": "4b7eca14912170a218698cb8146cd6c4c502041bb16085a3127af55a52a2ec12",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": true,
+          "currentMainSamePathEqualsHistorical": true
+        },
+        {
+          "path": "docs/blueprint/05-decision-record-catalogue.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "995dc29ce4259a0fcc1781674f2ceb183b2b557749c92934dc53f1f7e91390d7",
+          "retainedSha256": "995dc29ce4259a0fcc1781674f2ceb183b2b557749c92934dc53f1f7e91390d7",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": true,
+          "currentMainSamePathEqualsHistorical": true
+        },
+        {
+          "path": "docs/review/remediation/decisions.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+          "retainedSha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": true,
+          "currentMainSamePathEqualsHistorical": true
+        },
+        {
+          "path": "docs/architecture/prism-preference-learning-v1.md",
+          "authorityRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+          "recordedSha256": "fb9fa66a49aa82e8f7ec64b32c44d9dfe4b40f43b209b9e15a159532c8fe8637",
+          "retainedSha256": "fb9fa66a49aa82e8f7ec64b32c44d9dfe4b40f43b209b9e15a159532c8fe8637",
+          "exactOriginalGitBlob": true,
+          "recordedSha256Matches": true,
+          "currentMainSamePathExists": false,
+          "currentMainSamePathEqualsHistorical": false
+        }
+      ],
+      "allVerified": true
+    }
+  ],
+  "actualPresentContextDeltas": [
+    {
+      "path": "docs/site/reference/documentation-governance.md",
+      "retainedSha256": "00137bc3ef8eb485965618d09f5dec7ec25d9a00d59a3afaf34c043400f78e6f",
+      "mainSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+      "completeDiff": "--- reviewed/docs/site/reference/documentation-governance.md\n+++ current/docs/site/reference/documentation-governance.md\n@@ -83,7 +83,8 @@\n map generator before the change is called covered.\n \n The same map contains a `sourceSurfaceMap` join for SDK exports, members and\n-variants; the nine mapped platform groups; CI workflows and jobs; plugin packages\n+variants; every reachable SDK support declaration, resolved member and qualified\n+local reference; the nine mapped platform groups; CI workflows and jobs; plugin packages\n and registrations; recursive configuration values and registered schema fields;\n and operator-runtime CLI flags. Each domain names its inventory, generator,\n checks, reader task and discovery limit. Source-qualified IDs retain the entrypoint,\n",
+      "relevance": "No decision reevaluation, historical rationale, approval, status or implementation semantics changed. Governance expands unrelated source-map coverage; Prism plan changes three legacy source link destinations only."
+    },
+    {
+      "path": "docs/implementation/prism-production-integration-plan.md",
+      "retainedSha256": "c3966893021a9c7543ff0ba407f1cf2cf971f22be8fc8c9d2828ec430a17d182",
+      "mainSha256": "9eeed00971aa08c770cb3e3c6f2f8f9571a202df24f931e2c0dae10bcad110f3",
+      "completeDiff": "--- reviewed/docs/implementation/prism-production-integration-plan.md\n+++ current/docs/implementation/prism-production-integration-plan.md\n@@ -14,9 +14,9 @@\n \n - [Prism implementation plan](prism-implementation-plan.md)\n - [Prism final foundation audit](prism/phase-10-final-audit.md)\n-- [Prism Design Engine contract](../architecture/prism-design-engine-contract-v1.md)\n-- [Prism Baseline Bundle contract](../architecture/prism-baseline-bundle-v1.md)\n-- [Worker Core architecture](../architecture/pipeline-worker-core-phase-5-5-audit.md)\n+- [Prism Design Engine contract](../_legacy-source/architecture/prism-design-engine-contract-v1.md)\n+- [Prism Baseline Bundle contract](../_legacy-source/architecture/prism-baseline-bundle-v1.md)\n+- [Worker Core architecture](../_legacy-source/architecture/pipeline-worker-core-phase-5-5-audit.md)\n \n ## 1. Required result\n \n",
+      "relevance": "No decision reevaluation, historical rationale, approval, status or implementation semantics changed. Governance expands unrelated source-map coverage; Prism plan changes three legacy source link destinations only."
+    }
+  ],
+  "overall": "REUSE_FOUR_SAVED_SCOPED_REVIEW_CHAINS_NO_RERUN_REQUIRED_FOR_UNCHANGED_FIELDS",
+  "limits": [
+    "Historical source documents remain immutable original rationale authorities; old main path absence/relocation does not invalidate exact pinned source bytes. Never use current implementation as historical approval.",
+    "Proposed review candidate pages differ from final retained candidates by the explicitly corrected finding; use final review plus its exact embedded original report, not initial FAIL as PASS.",
+    "Four final all-dataset vectors are retained byte-exact. This is original scoped119/16/6/4 reevaluation-field reuse only, not DEC002/global runtime or wholeA91307 acceptance.",
+    "Current four published pages equal original pre-addition baselines; candidates are not yet applied. Integration must use exact final page bytes or independently assess any changed semantic delta.",
+    "Current governance and Prism plan link-only changes are independently relevance-assessed here; source-map/interface publication correctness not newly accepted.",
+    "No tests/reviews rerun, no main product/receipt/register write, no integration. Runtime28fields/implementation5groups/index and finalwhole gate remain separate."
+  ]
+}

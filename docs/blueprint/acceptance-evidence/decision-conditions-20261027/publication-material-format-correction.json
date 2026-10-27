@@ -1,0 +1,27 @@
+{
+  "originalFailure": "All15eight-cell rows conflict with actual seven-field publication contract; two condition sentences exceed25words",
+  "strategy": "No checker/source/guard change. Preserve all original seven cells, same complete group conditions in adjacent paragraphs; split/rephrase two sentences without changing triggers. Independent actual final Source review still required.",
+  "changes": [
+    {
+      "path": "docs/site/decisions/echo.md",
+      "action": "Keep exact seven original table cells; move same complete new condition text into explicit per-group paragraphs immediately after table",
+      "groups": 6,
+      "originalSha256": "7f98fb9f502aff02afae857e087eaced30490d5d02671ca792f5a3b91216dd3d",
+      "candidateSha256": "0fc4c700ffa2f55359b04371fda1d1325505d8752c49f1b3960295e57fb83183"
+    },
+    {
+      "path": "docs/site/decisions/prism.md",
+      "action": "Keep exact seven original table cells; move same complete new condition text into explicit per-group paragraphs immediately after table",
+      "groups": 4,
+      "originalSha256": "aae4fa96a29b5a2f0e7dc426f9591bcd96e9963a8474149e2f2c05c6597622ff",
+      "candidateSha256": "193e96c41eb37f9941bf92b09a38d56cb4a9b2138976677c387c054b6a30d80f"
+    },
+    {
+      "path": "docs/site/decisions/implementation.md",
+      "action": "Keep exact seven original table cells; move same complete new condition text into explicit per-group paragraphs immediately after table",
+      "groups": 5,
+      "originalSha256": "b33f06375e97e23be3ad48937d9c6fb97c5db56fba82688586230b8ff535376b",
+      "candidateSha256": "c238fb5adebc83ab1fba09c490a7269b0a947b0f12604df2aa0dd821696f553b"
+    }
+  ]
+}

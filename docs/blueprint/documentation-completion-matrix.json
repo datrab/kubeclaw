@@ -339,7 +339,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -883,6 +883,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "revisionHistory": [
@@ -2621,7 +2629,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -3318,6 +3326,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "previousReviewedRevision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
@@ -5992,7 +6008,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -6632,6 +6648,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -8423,7 +8447,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -9137,6 +9161,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
@@ -12039,7 +12071,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "7ff6afabab5e8c4c67253a05dbeb1aa56d224d86",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -12343,13 +12375,21 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/prism-final-three-1421-verdict.json",
           "reportSha256": "d847f53d9ad956ad448816a82a63d1d97b711a25d7e5490358222c4aa7ace070",
           "inspectionLimit": "Independent complete supplied page/actualGoSource/full originalscope contracts/losslessvectors/finalPrismSourceverdict+manifest. No reviewer-run tests or live/runtime exercise. Coordinator original checks separate; full Source-link raw stdout retained unchanged, explicit terminalprojection not fresh semantic inventory."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "7ff6afabab5e8c4c67253a05dbeb1aa56d224d86",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "previousReviewedRevision": "d07cacd6f820abf98a74b23e799a23fde30f5133"
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -13365,6 +13405,14 @@
           "verdict": "PASS",
           "summary": "Original bounded scope preserved after existing owner descriptor-only Schema/Config/CLI selection metadata addition. Complete original records and all572 relevant physical rows supplied; only configuration owner source differs, all bytes outside descriptor exact. Old descriptor fields and complete real schema output byte-equal.",
           "limits": "Original checks/reviews/limits/history/practical dates retained, not recounted. No default parser/runtime/selector behavior change or global role/DATA/live/release acceptance; current global receiver remains failed at unchanged prebatch reader-CI-purpose profile."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -17654,7 +17702,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -19612,6 +19660,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "scopePreservation3408": {
@@ -32353,7 +32409,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -33518,6 +33574,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "scopePreservation3408": {
@@ -35296,7 +35360,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -36079,6 +36143,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ],
       "scopePreservation3408": {
@@ -40120,7 +40192,7 @@
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent lint/common and whole original A910-10 adjudication",
       "gateIds": [
@@ -40555,6 +40627,14 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
         }
       ]
     },
@@ -40680,7 +40760,7 @@
     },
     {
       "id": "A911-01-whole-ten-family-discovery-declarations-20261027",
-      "revision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
       "author": "Nova documentation declaration implementation and closure coordinator",
       "reviewer": "Fresh native complementary original Source assessor plus independent pinned fe588b1a Codex Terra/high/P2 complete Schema/Config/CLI and whole-original adjudication",
       "gateIds": [
@@ -41067,6 +41147,154 @@
           "notGlobalResolution": true
         },
         "limits": "All original finding objects and global states remain unchanged. Missing reports/witnesses not restored/reused. 15 annotationlib native subtests skipped on Python3.11.2; sudo recognition source-only. Current focused controls not unseen historical witness reproduction. Whole reviewer must adjudicate material declaration relevance, not auto-approve component decisions."
+      },
+      "impactReviews": [
+        {
+          "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+          "previousReviewedRevision": "388d844bc2612ffe23e08e19e34509c5f91d8515",
+          "scope": "Original full existing acceptance scope preserved after only nine decision/governance pages: original seven grouped table fields/history/status/source meanings intact, source-backed or explicit unknown reevaluation additions, distinct D12 mapping. Complete original record/full1228combinedpath before/after vectors and final corrected Source independently inspected; unchanged original source/fixture duties reused within limits. Actual committed publication and five Reader checks required; no fresh practical/human/live or global parser grant.",
+          "reviewer": "Independent native whole_criterion_selection original eleven-scope assessor",
+          "verdict": "PASS",
+          "evidence": "docs/blueprint/acceptance-evidence/decision-conditions-20261027/eleven-original-scope-preservation.json"
+        }
+      ]
+    },
+    {
+      "id": "A913-07-whole-significant-decision-fields-20261027",
+      "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+      "author": "Nova documentation condition implementation and integration",
+      "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 whole-original adjudicator; bounded current Source/Reader/Quality assessors and exact reusable prior field reviews",
+      "gateIds": [
+        "A913-07"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/acceptance.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/implementation.md",
+        "docs/site/reference/documentation-governance.md"
+      ],
+      "sources": [
+        "cmd/buster-namespace-controller/demo-product.go",
+        "contracts/pipeline-test-gate/v1/src/index.ts",
+        "docs/blueprint/07-documentation-quality-standard.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/review/remediation/decisions.md",
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
+        "scripts/docs-publication.mjs",
+        "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts",
+        "skills/nova/plugins/review/src/review-governor-decision.ts",
+        "skills/nova/plugins/review/src/review-policy-profiles.ts",
+        "skills/prism/corpus/index.ts",
+        "skills/prism/domain/index.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "spikes/prism/postgres-retrieval/verify.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Complete original significant-decision field Source/Reader/Quality component assessments plus actual original source-vector reuse",
+          "exitCode": 0,
+          "observation": "Four saved complete field responsibilities verified byteexact to final responsibility facts; runtime28 fresh full source PASS, implementation5 and mapping/D12 independently assessed. Final whole original verdict required, corrected final presentation inspected."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "Actual governance passes all167mapped pages."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "Actual6352local links,3421anchors,8645repo refs,33215pinnedlinks validated."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check",
+          "exitCode": 0,
+          "observation": "Final corrected page corpus actual177pages51plugins PASS; original sevenfield checker unchanged, all initial failures retained."
+        },
+        {
+          "command": "Committed documentation publication build plus five original Reader artifact/search/source-link/preview/diagram commands",
+          "exitCode": 0,
+          "observation": "Exact Sourcef88 build177selectedpages; all5actual original checks terminalPASS. 191HTML support outputs/254digests;437sourceboxes436previews, no claim everyboxpreview. Full original source-link result retained, no human/live grant."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Every significant stable or derived decision in the current decision corpus has source-backed or explicitly unknown reason, benefit, cost, status, implementation state and reevaluation condition. Preserve all prior identifiers, recorded approval/unknowns, consequences and supersession distinctions; current behavior never establishes historical rationale. Complete per-record/group conditions and distinct D12/local-live policy are maintained through index and governance.",
+      "limits": [
+        "Documentation original A91307 only; existing bounded content acceptance and source reviews reused solely on verified exact relevant inputs. No practical/human/live/deployment or complete language-corpus acceptance.",
+        "Original concrete change triggers distinguished from ordinary operating predicates and unproved current behavior; unknown rationale/approval/change authority remains explicit. No new migration, fallback or implementation authorization.",
+        "Eleven affected earlier original completion scopes independently preserved on complete1228path vectors and corrected final Source; existing tests/limits reused only on unchanged duties. Actual committed Reader checks passed; no extra gate/requirement counted.",
+        "All original findings/reviews/failures remain unchanged. Global receiver remains unwaived preexisting failure; no sourcepurpose or receipt pins changed."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "WHOLE_A91307": "PASS",
+      "significantDecisionCoverage": "PASS",
+      "significantDecisionCoverageBasis": {
+        "allSevenAspects": [
+          "reason",
+          "benefit",
+          "cost",
+          "status",
+          "implementationState",
+          "reevaluationCondition",
+          "historicalRationaleNotInferredFromSourceBehavior"
+        ],
+        "completeCorpus": [
+          {
+            "page": "docs/site/decisions/core-and-plugins.md",
+            "responsibility": "ADR001-014 and derived specialist boundaries; all16 new explicit reevaluation conditions"
+          },
+          {
+            "page": "docs/site/decisions/test-gate.md",
+            "responsibility": "All119original D-001..D-119 stable decisions, original fields preserved; concrete CAN and host triggers qualified"
+          },
+          {
+            "page": "docs/site/decisions/runtime-and-operations.md",
+            "responsibility": "ADR015-022,D01-D16 and configuration/frozenrecovery/Prismrecovery/access grouped choices, all28 new conditions; no new approval inferred"
+          },
+          {
+            "page": "docs/site/decisions/echo.md",
+            "responsibility": "All stable Echo identifiers through six explicit original group responsibilities, historical replacements preserved; conditionalledger only scoped opt-in"
+          },
+          {
+            "page": "docs/site/decisions/prism.md",
+            "responsibility": "Four full significant groups and contained editor/schema/retrieval/preference/recovery choices; no-decay and latency authority conflicts remain explicit"
+          },
+          {
+            "page": "docs/site/decisions/implementation.md",
+            "responsibility": "All five derived groups and contained units/fixtures/broker/nativeaccounting/human/frozenidentity/storage/observer facets; original seven cells/prose preserved; no operatingstop implies changeapproval"
+          },
+          {
+            "page": "docs/site/decisions/acceptance.md",
+            "responsibility": "Distinct original D12 seven dimensions, explicit unknown reevaluation; original accepted policy vs actual implementation and liveproof separated"
+          }
+        ],
+        "mapping": "README lists all7decisioncontent routes including distinct acceptance; governance requires reevaluation or explicitunknown. Existing DEC002 complete accepted content and full exactbaselinevectors preserve unchanged reason/alternative/consequence/approval/implementation/supersession obligations. Specific fresh/reused scoped judgments substantiate additions; final independent whole decision still required.",
+        "limits": "Proposed explicit whole and coverage status, not self-adoption. Does not claim global runtime/parser/fieldlanguage/live acceptance or restore missing historical reports."
+      },
+      "originalWholeReviewSourceRevision": "e0d82b13d56225da7c0e7561bf812f5e5c59bdb6",
+      "sourceTransition": {
+        "previousRevision": "e0d82b13d56225da7c0e7561bf812f5e5c59bdb6",
+        "currentRevision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+        "onlyChangedPath": "docs/site/decisions/test-gate.md",
+        "onlyChange": "D113historicalhref fragment corrected to exact original Phase7heading",
+        "independentNarrowSourceDecision": "PASS by whole_criterion_selection; original meaning/unknowns/status and all other fields exact; full current Sourcevectors rechecked",
+        "evidence": "source-link-final-correction-strategy.json and final eleven-original-scope-preservation.json",
+        "originalWholeResponsibilityReuse": "Complete unchanged qualified original obligations reused; not clean whole replay or new content execution"
       }
     }
   ],
@@ -62651,7 +62879,7 @@
       "id": "A913-07",
       "passCondition": "Jede signifikante Entscheidung besitzt belegten oder ausdrücklich unbekannten Grund, Nutzen, Kosten, Status, Implementierungsstand und Neubewertungsbedingung.",
       "automaticFailure": "Sourceverhalten wird als historische Begründung ausgegeben.",
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -62664,7 +62892,15 @@
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "A913-07-whole-significant-decision-fields-20261027",
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+        "completionRecord": "A913-07-whole-significant-decision-fields-20261027",
+        "reason": "Every significant stable or derived decision in the current decision corpus has source-backed or explicitly unknown reason, benefit, cost, status, implementation state and reevaluation condition. Preserve all prior identifiers, recorded approval/unknowns, consequences and supersession distinctions; current behavior never establishes historical rationale. Complete per-record/group conditions and distinct D12/local-live policy are maintained through index and governance.",
+        "scopeLimit": "Whole original significant-decision documentation criterion; preserved all original findings/reviews and practical/live/implementation limits."
+      }
     },
     {
       "id": "A913-08",

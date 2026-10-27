@@ -1,0 +1,100 @@
+{
+  "at": "2026-10-27T13:42:20.129764+00:00",
+  "reviewer": "/root/whole_criterion_selection",
+  "scope": "Independent complete three mapping-candidate pages against native d8733018 and complete pinned original D12 authority; bounded A913-07 mapping/acceptance-policy facets only",
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "materialFindings": [],
+  "candidates": [
+    {
+      "candidate": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-owner-policy-20261027/mapping-candidates/README.md",
+      "targetPath": "docs/site/decisions/README.md",
+      "candidateBytes": 3714,
+      "candidateSha256": "af652f14daa7af29dbd7eea8ef9d26c9054cc71010627519e69d7b9617fe9836",
+      "candidateInspectedRanges": [
+        [
+          1,
+          58
+        ]
+      ],
+      "nativeRevision": "d8733018e8a0a221d2f4651838dc29abd11af05b",
+      "nativeBytes": 3523,
+      "nativeSha256": "533940c396d62234ecf7b743d2d2b8b33aa52ae92da3f5e3cf3f9bdb73ef3d1c",
+      "workingNativeMatchesRevision": true,
+      "completeDiff": "--- docs/site/decisions/README.md\n+++ README.md\n@@ -16,7 +16,8 @@\n \n Each stable identifier keeps one meaning. A complete record states the context,\n decision, recorded alternatives, reason, consequences, approval, implementation,\n-verification, and supersession state. A field can state that the source is silent.\n+verification, supersession state, and the condition for reevaluating the choice.\n+A field can state that the source is silent.\n It must not fill an evidence gap with an invented explanation.\n \n Decision status and implementation status are independent. `Accepted` means that\n@@ -35,6 +36,7 @@\n | [Echo decisions](echo.md) | Which original Echo decisions govern proposals, deterministic evidence, reduction and policy? |\n | [Prism decisions](prism.md) | How do product, editor, retrieval, preference, publication and recovery choices fit together? |\n | [Implementation decisions](implementation.md) | How do native ownership, signed human decisions, versioned data and integration history refine the core rules? |\n+| [Evidence and acceptance policy](acceptance.md) | What does D12 permit local evidence to close, and which live or human claims remain separate? |\n \n Original identifiers remain attached to their decisions.\n Repeated explanations share a record; distinct approval or supersession boundaries remain explicit.\n"
+    },
+    {
+      "candidate": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-owner-policy-20261027/mapping-candidates/acceptance.md",
+      "targetPath": "docs/site/decisions/acceptance.md",
+      "candidateBytes": 4246,
+      "candidateSha256": "68611715163b7cf004cbf64a488bfc5d392f3a5d077eb7d33f204808fa48d37f",
+      "candidateInspectedRanges": [
+        [
+          1,
+          82
+        ]
+      ],
+      "nativeRevision": "d8733018e8a0a221d2f4651838dc29abd11af05b",
+      "nativeBytes": 3021,
+      "nativeSha256": "864571a768072172f76248e1fa16625810fb88c079ff856ad49c8cce5d15b25e",
+      "workingNativeMatchesRevision": true,
+      "completeDiff": "--- docs/site/decisions/acceptance.md\n+++ acceptance.md\n@@ -29,6 +29,24 @@\n \n Local completion does not assert that a cluster, external service, browser,\n registry, Tailnet route, or human delivery path works in production.\n+\n+### Decision authority and reevaluation\n+\n+**Reason and benefit:** distinguish complete local correction from environment proof without\n+claiming that unexecuted live checks passed. **Cost and consequence:** the original\n+revision-bound local evidence and the separate live gates must both remain visible;\n+local completion cannot replace product or deployment acceptance.\n+\n+**Status:** the owner explicitly accepted this local-completion policy on 2026-09-12.\n+It replaces the earlier requirement to run every live, cluster, and receiving check\n+before local finding closure, not runtime safety gates or D02 product acceptance.\n+**Implementation and verification:** apply the six conditions above to each individual\n+finding; the policy itself supplies no blanket completed-implementation or live result.\n+**Reevaluation condition:** unknown: the original decision does not establish a\n+condition for replacing this local/live separation. An unexecuted live check is a\n+remaining proof obligation, not approval to change the policy.\n+\n+Source: [original D12 authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/review/remediation/decisions.md#d12--lokaler-abschluss-und-separate-live-abnahme).\n \n ## Evidence Levels\n \n"
+    },
+    {
+      "candidate": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91307-owner-policy-20261027/mapping-candidates/documentation-governance.md",
+      "targetPath": "docs/site/reference/documentation-governance.md",
+      "candidateBytes": 11594,
+      "candidateSha256": "2c0335b3f9a4b8d9e9d742388979f8b909a324f67bca7cbbed378ab18cbbc2b0",
+      "candidateInspectedRanges": [
+        [
+          1,
+          206
+        ]
+      ],
+      "nativeRevision": "d8733018e8a0a221d2f4651838dc29abd11af05b",
+      "nativeBytes": 11504,
+      "nativeSha256": "457a97cf020c5fad5f3152a46b77b37301fe5b4327625314fcf64714031121f4",
+      "workingNativeMatchesRevision": true,
+      "completeDiff": "--- docs/site/reference/documentation-governance.md\n+++ documentation-governance.md\n@@ -147,7 +147,8 @@\n - the reason for the choice;\n - benefits, costs, and operational consequences;\n - approval status and provenance;\n-- implementation and verification status; and\n+- implementation and verification status;\n+- the condition for reevaluating the choice, or an explicit statement that it is unknown; and\n - its successor or related decisions.\n \n If historical evidence does not name an alternative, date, or approver, say that it is unknown.\n"
+    }
+  ],
+  "originalAuthority": {
+    "path": "docs/review/remediation/decisions.md",
+    "bytes": 15221,
+    "sha256": "6eb4b5a2b44570886eeb295695ecb27e6e46942b767651dce665a59497ce6f64",
+    "historicalRevision": "ad67f9bb5c75cfa8cc1b926668aec1dd0168452c",
+    "completeAuthorityInspectedRanges": [
+      [
+        1,
+        170
+      ]
+    ],
+    "matchesHistoricalPinnedBlob": true,
+    "matchesCurrentNativeD873": true
+  },
+  "contract": {
+    "path": "docs/blueprint/AP09-acceptance-contract.md",
+    "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f",
+    "inspectedRanges": [
+      [
+        1,
+        65
+      ],
+      [
+        288,
+        300
+      ]
+    ],
+    "originalGate": "A913-07"
+  },
+  "wholeGateAccepted": false,
+  "limits": [
+    "No main/candidate mutation; no content-review helper/tests/global gates executed.",
+    "Full candidate pages and all actual native-to-candidate diffs inspected. Unchanged native bodies are identified by exact diff, not relabelled new global source/behavior approval.",
+    "No new policy, blanket implementation result, live/human acceptance or wholeA91307 acceptance.",
+    "Existing six local conditions remain unchanged; this review accepts the new historical authority/field mapping, not a rewrite of D12 or generic release receipts."
+  ]
+}

@@ -1,0 +1,187 @@
+{
+  "at": "2026-10-27T14:02:00.049689+00:00",
+  "source": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+  "checks": [
+    {
+      "check": "artifact",
+      "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+      "exitCode": 0,
+      "log": "final-reader-artifact.log",
+      "bytes": 85,
+      "sha256": "9da48df72ca9c96d11d79ec601c1bbca90b8bf8a8308b25d5420a13b5e7d0c09",
+      "summary": {
+        "selectedPages": 177,
+        "htmlPages": 191,
+        "localLinks": 41724,
+        "verifiedOutputDigests": 254
+      }
+    },
+    {
+      "check": "search",
+      "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+      "exitCode": 0,
+      "log": "final-reader-search.log",
+      "bytes": 3055,
+      "sha256": "b647afdfb3094db600e80b6c4d4d3b700b9060c56418258cb818e31e1feff98b",
+      "summary": {
+        "indexedCanonicalPages": 177,
+        "internalArtifacts": 0,
+        "readerQuestionsPassed": 12,
+        "observed": [
+          {
+            "query": "disaster recovery",
+            "expectedRoute": "use/recovery.html",
+            "observedTopThree": [
+              "use/recovery.html",
+              "understand/data-and-state.html",
+              "status/open-issues.html"
+            ]
+          },
+          {
+            "query": "backup restore",
+            "expectedRoute": "use/recovery.html",
+            "observedTopThree": [
+              "use/recovery.html",
+              "understand/data-and-state.html",
+              "understand/prism-data.html"
+            ]
+          },
+          {
+            "query": "install platform",
+            "expectedRoute": "use/install.html",
+            "observedTopThree": [
+              "use/install.html",
+              "status/roadmap.html",
+              "understand/platform-and-operations.html"
+            ]
+          },
+          {
+            "query": "troubleshoot incident",
+            "expectedRoute": "use/diagnose.html",
+            "observedTopThree": [
+              "use/diagnose.html"
+            ]
+          },
+          {
+            "query": "create first plugin",
+            "expectedRoute": "extend/first-plugin.html",
+            "observedTopThree": [
+              "extend/first-plugin.html",
+              "use/plugins.html",
+              "reference/plugin-configuration.html"
+            ]
+          },
+          {
+            "query": "change core",
+            "expectedRoute": "extend/developer-handbook.html",
+            "observedTopThree": [
+              "extend/developer-handbook.html",
+              "understand/nova-core.html",
+              "extend/platform/buster.html"
+            ]
+          },
+          {
+            "query": "settings overrides",
+            "expectedRoute": "reference/configuration-precedence.html",
+            "observedTopThree": [
+              "reference/configuration-precedence.html",
+              "decisions/test-gate.html",
+              "reference/buster-suites.html"
+            ]
+          },
+          {
+            "query": "package ownership",
+            "expectedRoute": "reference/roles-and-package-ownership.html",
+            "observedTopThree": [
+              "reference/roles-and-package-ownership.html",
+              "extend/deep-guides/README.html",
+              "understand/plugin-runtime.html"
+            ]
+          },
+          {
+            "query": "first pipeline compile",
+            "expectedRoute": "use/workflows/README.html",
+            "observedTopThree": [
+              "use/workflows/README.html",
+              "extend/first-plugin.html",
+              "reference/pipeline-json.html"
+            ]
+          },
+          {
+            "query": "remove plugins",
+            "expectedRoute": "use/plugins.html",
+            "observedTopThree": [
+              "use/plugins.html",
+              "understand/openclaw.html",
+              "extend/lint.html"
+            ]
+          },
+          {
+            "query": "prism studio",
+            "expectedRoute": "use/prism-studio.html",
+            "observedTopThree": [
+              "use/prism-studio.html",
+              "extend/platform/prism.html",
+              "understand/prism-runtime.html"
+            ]
+          },
+          {
+            "query": "minimumLinePercent",
+            "expectedRoute": "reference/plugin-configuration.html",
+            "observedTopThree": [
+              "reference/plugin-configuration.html",
+              "reference/buster-suites.html",
+              "extend/plugin-catalogue/kubeclaw.coverage-budget.html"
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "check": "source-links",
+      "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+      "exitCode": 0,
+      "log": "final-reader-source-links.log",
+      "bytes": 1504740,
+      "sha256": "dec3295df82f618607a9c8fb2f6838a9a167b1858078dfd56537c140f7ab3411",
+      "summary": {
+        "htmlPages": 191,
+        "uniqueVerifiedLinks": 15239,
+        "uniqueSourceObjects": 4139,
+        "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance."
+      }
+    },
+    {
+      "check": "source-previews",
+      "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+      "exitCode": 0,
+      "log": "final-reader-source-previews.log",
+      "bytes": 240,
+      "sha256": "534a49fd859d7717239a8a8cde153fc3f058339da3ae843c3d2128d6bdc571ef",
+      "summary": {
+        "pages": 177,
+        "sourceBoxes": 437,
+        "boxesWithPreviews": 436,
+        "excerpts": 2003,
+        "uniqueSourceObjects": 1073,
+        "limit": "Exact linked source and rendered excerpt verification; no semantic claim or test/runtime result inferred."
+      }
+    },
+    {
+      "check": "diagrams",
+      "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+      "exitCode": 0,
+      "log": "final-reader-diagrams.log",
+      "bytes": 262,
+      "sha256": "306c2a7279307e42effa2d099b2ccf07db7669d840054fbd649f045949259e6e",
+      "summary": {
+        "pages": 177,
+        "diagrams": 28,
+        "freshRenderHashesMatched": 28,
+        "localOnly": true,
+        "limit": "Source/owner/question/visible alternative routing, static SVG and deterministic render checks only; not per-edge semantic or human screenreader acceptance."
+      }
+    }
+  ],
+  "qualification": "All five actual original commands terminal0 on same final committed artifact; no hypothetical/pass-from-skips/practical/human/live acceptance. Earlier failed source-link check preserved separately."
+}

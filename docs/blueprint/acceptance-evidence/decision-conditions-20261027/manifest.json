@@ -1,0 +1,141 @@
+{
+  "reviewedSource": "f88c70821652f30bcfb1917565d80da5d8ecc287",
+  "files": [
+    {
+      "path": "four-page-review-reuse.json",
+      "bytes": 77248,
+      "sha256": "3e69a8aa2a6dc8af72a9cc75e5092429e4a86aeba2b2f8a7456f899a1b52b032"
+    },
+    {
+      "path": "four-page-review-reuse.md",
+      "bytes": 3600,
+      "sha256": "72ad8023bc2cecfdc15b9c49b3652e3b8eaf87ae4b493bf1e0e74ff1f89f4b58"
+    },
+    {
+      "path": "runtime-supported-complete-conditions-review.json",
+      "bytes": 392,
+      "sha256": "17b0c91ea8a47fe4a9f13d09c0c70707e973f364ebe2f300986ed4d57454d70b"
+    },
+    {
+      "path": "runtime-context-headroom-strategy.json",
+      "bytes": 380,
+      "sha256": "4bf62901efba5e1522bae43f6b6b05fe359dbc9635dd09405ed2629a91df0273"
+    },
+    {
+      "path": "implementation-independent/assessment.json",
+      "bytes": 2734,
+      "sha256": "fba5980de316ff4b51194c2a81306e729c1816858d45b69022919a0c629a604d"
+    },
+    {
+      "path": "implementation-independent/report.md",
+      "bytes": 2286,
+      "sha256": "7367c1b155f7d8814c4315e921625f655f007da3dfbb4aa9dda011f8299a848c"
+    },
+    {
+      "path": "implementation-independent/input-manifest.json",
+      "bytes": 4779,
+      "sha256": "b9b0b9a3440847b99f284acc029d1967ff66325464fa2580e65544655ab0ffe7"
+    },
+    {
+      "path": "mapping-independent/report.md",
+      "bytes": 4001,
+      "sha256": "5754a51c01c1bfc5c890258633f21b162558a87befd4655d58c2d49d98433d61"
+    },
+    {
+      "path": "mapping-independent/input-manifest.json",
+      "bytes": 7238,
+      "sha256": "e0a195a4558c27fe3faeebac273413650f852ebb6bac80ed08db51de3d4db5ed"
+    },
+    {
+      "path": "publication-material-format-correction.json",
+      "bytes": 1669,
+      "sha256": "04c9c24803646cf0334e2466676f2b6d9f97edf9690cd8adc3fa7b7829163a88"
+    },
+    {
+      "path": "publication-two-round-strategy.json",
+      "bytes": 1088,
+      "sha256": "f99fc39dc39f1bd147f9dfbd05418687e9238f093864067eb6ec6475813e5be4"
+    },
+    {
+      "path": "whole-original-adoption-verdict.json",
+      "bytes": 1047,
+      "sha256": "4238497e3a272f9fc04a72b09e460963f50ce254556bd6e6d313540c35904634"
+    },
+    {
+      "path": "corrected-whole-original-adoption-verdict.json",
+      "bytes": 360,
+      "sha256": "0c332ed9520a758f01c37b89f4feffd411a3e82222c38454eb81b418e87c97b8"
+    },
+    {
+      "path": "eleven-original-scope-preservation.json",
+      "bytes": 46114,
+      "sha256": "6b6bd7de72b833f65a5beb0b0205f36c5ac8b0fe07290bbb9a56cd0f7332f31b"
+    },
+    {
+      "path": "actual-reader-check-results.json",
+      "bytes": 6798,
+      "sha256": "839f61aae26995b790bffc7c31cf220cb3d6f73d9bbdad2545783d9df1b2fe6f"
+    },
+    {
+      "path": "actual-committed-build-report.json",
+      "bytes": 2679,
+      "sha256": "6f7f1513dd52b207839df00c84953a3d354a6a8435a438f291641ddcace6f3e3"
+    },
+    {
+      "path": "final-actual-committed-build-report.json",
+      "bytes": 2587,
+      "sha256": "ec2260bad237ebbc7ca459bbe4672f3d060a91d9aac91707c7b08dc921602ebb"
+    },
+    {
+      "path": "source-link-final-correction-strategy.json",
+      "bytes": 864,
+      "sha256": "be2820f04e3e81d9e8f56872816d9783df86d8ec6344e3364c821ed19ef6a0c9"
+    },
+    {
+      "path": "original-source-link-failure-observation.json",
+      "bytes": 1036,
+      "sha256": "930c7b91b81380ed6c69fbda971925fca31c5c60d535d78060fc1f366e228f27"
+    },
+    {
+      "path": "actual-original-receiver-result.json",
+      "bytes": 370,
+      "sha256": "5bac52e0d374b041c8e3b3e48434053a00884a9ed6bea455650e53c6e1c21ab3"
+    },
+    {
+      "path": "test-gate-final-conditions-review.json",
+      "bytes": 565,
+      "sha256": "91835189e8d3e0780ba4ae7f77413e4857ce8f9c63f228f551706fed70b59e16"
+    },
+    {
+      "path": "core-final-conditions-review.json",
+      "bytes": 397,
+      "sha256": "61837200e0e84f86c56334d6ed281f5b0eb062844ac74bc626eaab6636cfa3ce"
+    },
+    {
+      "path": "echo-final-conditions-review.json",
+      "bytes": 535,
+      "sha256": "fd5f050e880e58965d0c60fb8eeb299a7ad000317451b9bb1ca8a428bfacce1e"
+    },
+    {
+      "path": "prism-final-conditions-review.json",
+      "bytes": 454,
+      "sha256": "17dd0c67e92b46dd6c4db1a182d4756d2503a702990aeb63ffec0fc71adc812e"
+    }
+  ],
+  "newGateOnly": "A913-07",
+  "requirementsUnchanged": true,
+  "findingsUnchanged": true,
+  "elevenPriorScopesPreservedNotNewAcceptance": [
+    "AP09.1-ready-topics-20261020",
+    "Reviewed-corrections-20261020",
+    "AP09-reviewed-maintenance-20261020",
+    "AP09-closeout-developer-maintenance-20261020",
+    "AP09-decision-record-content-20261021",
+    "AP09-documentation-agent-maintenance-20261021",
+    "AP09-complete-static-reader-search-20261021",
+    "AP09-publication-positive-scope-7ef16585",
+    "A910-03-whole-command-prerequisite-contract-20261022",
+    "A910-10-whole-supported-extension-lifecycle-20261026",
+    "A911-01-whole-ten-family-discovery-declarations-20261027"
+  ]
+}

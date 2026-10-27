@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The added explicit whole-gate and significant-decision-coverage statuses are tied to the complete decision corpus, all required aspects, mapping, and stated limits. No actionable P0-P2 defect is evident in this metadata-only correction.",
+  "overall_confidence": 0.9
+}

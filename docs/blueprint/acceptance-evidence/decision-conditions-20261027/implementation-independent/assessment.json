@@ -1,0 +1,32 @@
+{
+  "baseline": "NOT_READY: five groups missing reevaluation fields",
+  "candidateFields": {
+    "Repository history": "No historical condition for replacing this recovery method is recorded. Missing content comparison or remote reachability is a stop condition within the method, not approval to replace it.",
+    "Versioned JSON": "No general reevaluation condition for these producer-profile decisions is recorded. The portability plan treats a mixed-history migration as separate work requiring its own design and authority; matching current bytes does not supply that authority.",
+    "Native admission": "The original A/B accounting decision names one conditional alternative: B is preferable if execution must remain entirely under ordinary Pod resource allocation. This does not reopen accepted D13/D14 or approve B. Other reevaluation conditions for task units, fixture lifetime, native admission, and the broker recommendation are not recorded; missing host prerequisites block activation rather than authorize a fallback.",
+    "Human decisions": "No condition for replacing the human-authority or lifetime decisions is recorded. A changed delivered version requires fresh verification and acceptance under D02; that is not a new policy approval. Signed run binding and authenticated live delivery remain implementation/evidence limits, not inferred historical reevaluation reasons.",
+    "Reliable delivery": "No condition for replacing the frozen-identity, reconciliation, candidate-binding, storage-admission, or observer-authority decisions is recorded. An unresolved effect requires reconciliation and can stop recovery; it does not authorize blind replay or substitution of current configuration."
+  },
+  "sourceAccuracy": "PASS bounded added-field assessment",
+  "semanticReader": "PASS bounded model desk review; not human execution",
+  "quality": "PASS exact original cells and prose preserved by reversible last-column removal",
+  "preservationCheck": "PASS",
+  "scope": "All five implementation-page decision groups, including native task/fixture/broker and delivery sub-boundaries. Not whole A913-07 acceptance. No runtime/build/live tests or new historical approval. Historical unknown bounded to inspected authorities.",
+  "commandResults": [
+    {
+      "command": "initial candidate preservation assertion",
+      "exit": 1,
+      "cause": "generation omitted column separator; candidate corrected before delivery"
+    },
+    {
+      "command": "corrected exact preservation assertion",
+      "exit": 0
+    },
+    {
+      "command": "guessed saved recovery path cat",
+      "exit": 1,
+      "cause": "incorrect saved path; actual path subsequently read successfully"
+    }
+  ],
+  "productMutation": false
+}

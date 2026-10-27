@@ -1,0 +1,18 @@
+{
+  "originalRenderedCommand": "reader-source-links.log",
+  "actualExitCode": 1,
+  "actualError": "Missing source Markdown anchor: docs/architecture/pipeline-test-gate-design.md#d-113-connected-gate-boundary",
+  "collectAllActualToolOutput": {
+    "links": 220,
+    "failures": [
+      {
+        "url": "https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-113-connected-gate-boundary",
+        "pages": [
+          "docs/site/decisions/test-gate.md"
+        ],
+        "error": "Missing source Markdown anchor: docs/architecture/pipeline-test-gate-design.md#d-113-connected-gate-boundary"
+      }
+    ]
+  },
+  "qualification": "Original full rendered failure log retained unchanged. Initial auxiliary collectall JSON was inadvertently overwritten by corrected diagnostic command; this is explicit observed initial result, not reconstructed byteexact original receipt. Corrected diagnostic separate copy preserved; no acceptance/release receipt rewritten."
+}
