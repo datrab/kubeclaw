@@ -4011,7 +4011,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     return {
       id: `Gives one matching-file budget a stable evidence identifier in ${context}.`,
       maximumBytes: `Sets the largest allowed aggregate byte size of all files matched by one budget rule.`,
-      pattern: `Selects repository-relative files for one size-budget rule.`,
+      pattern: `Selects measured build-output artifact entries by their relative paths for one size-budget rule.`,
       requireMatch: `Controls whether a size-budget rule fails when its pattern matches no file.`,
     }[leaf] ?? null;
   }
