@@ -1,5 +1,14 @@
 name: Native documentation retention query
 on:
+  push:
+    branches: ['docs/documentation-overhaul']
+    paths:
+      - '.github/workflows/docs-native-retention.yaml'
+      - 'tests/verification/docs/check-published-retention-sql.py'
+      - 'tests/verification/docs/prepare-retention-postgresql.py'
+      - 'tests/fixtures/postgresql-native/**'
+      - 'tests/fixtures/litellm-database/**'
+      - 'docs/site/understand/data-and-state.md'
   pull_request:
     paths:
       - '.github/workflows/docs-native-retention.yaml'
