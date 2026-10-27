@@ -23,6 +23,15 @@ if (fs.existsSync(configPath)) {
     config.agents.ownership = 'explicit';
     config.agents.entries ??= {};
     config.agents.entries['buster-diagnosis'] = diagnosis;
+    // This operator-managed main policy preserves the coding core exclusions,
+    // while avoiding a core-only inherited allowlist at HTTP sessions_spawn.
+    const mainTools = desired.agents?.entries?.main?.tools;
+    if (mainTools) {
+      config.agents.entries.main ??= {};
+      const currentTools = config.agents.entries.main.tools ?? {};
+      config.agents.entries.main.tools = { ...currentTools, profile: mainTools.profile,
+        deny: [...new Set([...(currentTools.deny ?? []), ...(mainTools.deny ?? [])])] };
+    }
   }
   const temporaryPath = `${configPath}.ops-mcp.tmp`;
   fs.writeFileSync(temporaryPath, `${JSON.stringify(config, null, 2)}\n`, { mode: 0o600 });

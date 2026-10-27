@@ -89,6 +89,12 @@ test('production Helm target and persisted gateway reconciliation agree', async 
   const documents = parseAllDocuments(rendered).map(document => document.toJSON());
   const desired = JSON.parse(documents.find(document => document?.data?.['openclaw.json']).data['openclaw.json']);
   assert.equal(desired.agents.ownership, 'explicit');
+  // A restrictive parent allowlist is frozen as core-only by HTTP ingress,
+  // excluding MCP even when the dedicated child's four-tool policy permits it.
+  assert.equal(desired.agents.entries.main.tools.profile, 'full');
+  assert.equal(desired.agents.entries.main.tools.allow, undefined);
+  assert.deepEqual(desired.agents.entries.main.tools.deny, ['browser', 'canvas', 'show_widget', 'message',
+    'heartbeat_respond', 'openclaw', 'nodes', 'computer', 'mobile_ui', 'agents_list', 'transcripts', 'tts', 'pdf']);
   const policy = desired.agents.entries['buster-diagnosis'].tools;
   assert.deepEqual(policy.allow, ['ops__namespace_overview', 'ops__get_pod', 'ops__get_events', 'ops__get_pod_logs']);
   assert.ok(policy.deny.includes('ops__exec_pod'));
@@ -115,7 +121,7 @@ test('production Helm target and persisted gateway reconciliation agree', async 
     const reconciled = JSON.parse(fs.readFileSync(current, 'utf8'));
     assert.equal(reconciled.agents.ownership, 'explicit');
     assert.deepEqual(reconciled.agents.entries['buster-diagnosis'], desired.agents.entries['buster-diagnosis']);
-    assert.deepEqual(reconciled.agents.entries.main, { skills: ['preserved'] });
+    assert.deepEqual(reconciled.agents.entries.main, { skills: ['preserved'], tools: desired.agents.entries.main.tools });
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
 
