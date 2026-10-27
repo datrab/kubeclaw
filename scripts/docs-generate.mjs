@@ -268,7 +268,7 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
     const description = `${literalText(text)}<br>Inventory meaning status: ${literalText(meaning.status)}`;
     if (!/blocker/u.test(meaning.status)) return description;
     if (!meaning.blockerOwner || !meaning.closureCondition) throw new Error(`swarm collection blocker lacks owner or closure: ${field.path}`);
-    return `${description}<br>Not a completed operator option. Authority owner: ${literalText(meaning.blockerOwner)}.<br>Closure condition: ${literalText(meaning.closureCondition).replace(/charts\/[A-Za-z0-9./#$-]+/gu, coordinate => `<code>${coordinate}</code>`)}<br>Stop before you use unknown keys or assume that empty, omitted or null input is accepted.`;
+    return `${description}<br>Not a completed operator option. Authority owner: ${literalText(meaning.blockerOwner)}.<br>Closure condition: ${literalText(meaning.closureCondition).replace(/charts\/[A-Za-z0-9./#$-]+/gu, coordinate => `<code>${coordinate}</code>`)}<br>Stop before you use unknown keys. Do not assume that the loader accepts empty, omitted or null input.`;
   };
   const swarmTable = swarm ? table(['Field', 'Type and value', 'Required and constraint authority', 'Owner and consumers', 'Precedence and proof', 'Impact, failure, and closure'], swarm.fields.map((field) => {
     const wrapper = field.required === 'not-applicable-container';
@@ -315,9 +315,9 @@ ${swarmTable}
 
 The compact swarm file has no bound field schema in the current source. The chart embeds it in a ConfigMap and the init path materializes it for the OpenClaw gateway. Leaf rows therefore identify the external loader contract and its closure condition. Do not infer validation rules that the loader does not publish.
 
-A structural inventory marker does not prove whole-object requiredness, accepted keys or runtime constraints. The \`$.overrides\` collection contract remains open with the owner and closure condition in its row. Until that contract is qualified, do not use unknown keys or assume that empty, omitted or null input is accepted.
+A structural inventory marker does not prove whole-object requiredness, accepted keys or runtime constraints. The \`$.overrides\` collection contract remains open with the owner and closure condition in its row. Until the owner qualifies that contract, stop before you use unknown keys. Do not assume that the loader accepts empty, omitted or null input.
 
-Consumer coordinates in the table are recorded inventory metadata. They are not a new verification of current line positions.
+Consumer coordinates in the table come from recorded inventory metadata. They are not a new verification of current line positions.
 
 Current source evidence: [ConfigMap embedding](${pinnedSourceUrl('charts/kubeclaw/templates/configmap-swarm-config.yaml', 10, 15)}), [JSON parsing](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 699, 704)}), [JSON writing](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 745, 746)}) and [runtime mount](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 1486, 1487)}). These source statements prove materialization and mounting only. They do not prove a whole-object loader contract or live acceptance.
 
