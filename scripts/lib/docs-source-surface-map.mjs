@@ -2,7 +2,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import { createHash } from 'node:crypto';
-import { markdownAnchors } from './docs-markdown-anchors.mjs';
+import { markdownAnchors, markdownAnchorEntries } from './docs-markdown-anchors.mjs';
 
 const digest = value => createHash('sha256').update(JSON.stringify(value)).digest('hex');
 const id = (...parts) => parts.map(part => encodeURIComponent(String(part))).join(':');
@@ -53,6 +53,53 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
       for (const [index, variant] of item.unionVariants.entries()) {
         // The compiler inventory supplies ordered variants, not invented names.
         add([item.entrypoint, item.name, 'variant', index], item.source.source, target, variant);
+      }
+    }
+  }
+  {
+    const file = inventory('sdk-reference'), data = read(file);
+    const page = reference('sdk-exports');
+    const text = fs.readFileSync(path.join(root, page), 'utf8');
+    const headingAnchors = new Map(markdownAnchorEntries(text)
+      .filter(entry => entry.level === 3).map(entry => [entry.start, entry.anchor]));
+    const targets = new Map();
+    for (const item of data.exports) for (const declaration of item.declarations) {
+      const qualified = `${declaration.source}#${declaration.symbol}`;
+      const target = `${item.generatedPage}#${item.name.toLowerCase()}`;
+      assert(!targets.has(qualified) || targets.get(qualified) === target,
+        `source-map ambiguous SDK public declaration: ${qualified}`);
+      targets.set(qualified, target);
+    }
+    for (const item of data.supportTypes) {
+      assert.equal(item.publicNamedExport, false, `source-map support declaration is a named export: ${item.qualifiedName}`);
+      assert.equal(item.name, item.source.symbol,
+        `source-map SDK support heading differs from declaration: ${item.qualifiedName}`);
+      assert.equal(item.qualifiedName, `${item.source.source}#${item.source.symbol}`,
+        `source-map invalid qualified SDK support identity: ${item.qualifiedName}`);
+      const heading = `### ${item.name} — ${item.source.source}\n`;
+      const position = text.indexOf(heading);
+      assert(position >= 0 && (position === 0 || text[position - 1] === '\n')
+        && text.indexOf(heading, position + 1) < 0,
+      `source-map missing/ambiguous SDK support heading: ${item.qualifiedName}`);
+      const anchor = headingAnchors.get(Buffer.byteLength(text.slice(0, position)));
+      assert(anchor, `source-map SDK support heading is not a real heading: ${item.qualifiedName}`);
+      assert(!targets.has(item.qualifiedName), `source-map duplicate SDK support identity: ${item.qualifiedName}`);
+      targets.set(item.qualifiedName, `${page}#${anchor}`);
+    }
+    const add = domain('sdk-support', file, 'scripts/docs-sdk-reference.mjs', ['node scripts/docs-sdk-reference.mjs --check'],
+      'Find the source-qualified support declaration, its members and referenced declaration before changing a public SDK callback or wrapper contract.',
+      'Every compiler-discovered KubeClaw support declaration reachable through the public SDK, its resolved members and qualified local reference edges; these are not extra named exports.');
+    for (const item of data.supportTypes) {
+      const target = targets.get(item.qualifiedName);
+      add(['declaration', item.qualifiedName], item.source.source, target, item);
+      for (const member of item.members) {
+        add(['member', item.qualifiedName, member.name], member.source, target, member);
+      }
+      for (const qualified of item.referencedSupport) {
+        const destination = targets.get(qualified);
+        assert(destination, `source-map unresolved qualified SDK reference: ${item.qualifiedName} -> ${qualified}`);
+        add(['reference', item.qualifiedName, qualified], item.source.source, destination,
+          { declaration: item.source, reference: qualified });
       }
     }
   }
@@ -137,7 +184,7 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
   }
   return {
     authority: 'Inventory-to-reader ownership join only. Run the declared owning inventory checks to establish source freshness; this map does not independently discover source APIs or prove semantic completeness.',
-    unmappedScope: 'Network exposure details outside the nine platform mapping groups, environment/secret/derived-value occurrence ownership, deployed payload fields, SDK support-type closure and API/error/capability/contract families outside these explicit adapters are not asserted covered.',
+    unmappedScope: 'Network exposure details outside the nine platform mapping groups, environment/secret/derived-value occurrence ownership, deployed payload fields and API/error/capability/contract families outside these explicit adapters are not asserted covered.',
     domains,
     pageSources: [...exhaustivePages].sort(([a], [b]) => a.localeCompare(b, 'en')).map(([page, sourceIds]) => ({ page, sourceIds: sourceIds.sort() })),
   };

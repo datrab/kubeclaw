@@ -4066,7 +4066,7 @@
   ],
   "sourceSurfaceMap": {
     "authority": "Inventory-to-reader ownership join only. Run the declared owning inventory checks to establish source freshness; this map does not independently discover source APIs or prove semantic completeness.",
-    "unmappedScope": "Network exposure details outside the nine platform mapping groups, environment/secret/derived-value occurrence ownership, deployed payload fields, SDK support-type closure and API/error/capability/contract families outside these explicit adapters are not asserted covered.",
+    "unmappedScope": "Network exposure details outside the nine platform mapping groups, environment/secret/derived-value occurrence ownership, deployed payload fields and API/error/capability/contract families outside these explicit adapters are not asserted covered.",
     "domains": [
       {
         "domain": "sdk",
@@ -8704,6 +8704,1383 @@
             "target": "docs/site/reference/sdk-exports.md#valuerecord",
             "owner": "documentation automation",
             "factsSha256": "6216df4fa888e554e02d3742b76129a4953e34f0c0520668d53475dd01363f42"
+          }
+        ]
+      },
+      {
+        "domain": "sdk-support",
+        "inventory": "docs/generated/inventory/sdk-reference.json",
+        "generator": "scripts/docs-sdk-reference.mjs",
+        "checks": [
+          "node scripts/docs-sdk-reference.mjs --check"
+        ],
+        "readerTask": "Find the source-qualified support declaration, its members and referenced declaration before changing a public SDK callback or wrapper contract.",
+        "scope": "Every compiler-discovered KubeClaw support declaration reachable through the public SDK, its resolved members and qualified local reference edges; these are not extra named exports.",
+        "surfaces": [
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bd4cd04d3335fc6061c1489d1474fdac90a24560fb8c729d2b78db1f9b75165c"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#declaredevidencev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "4b41670fa072e314b159f9d5b165308e9301f36e54c5565d2618421852c515c0"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#evidencepolicyv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "391cd72b6fcdf6b2f2b4cdedc3787e44eb32180390232480d466ff0e387266a5"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#executionlimitsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "23c2bc710385bef4a2131fa890e5493ed6445a23ad46f4658fcd9ae84b315cf6"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "a2e4105bbe8b2b6c3214ce740abe75e9d071ee5c77a7437bbda2a619d9903372"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#jsonvalue--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "f09c42e96a218ca8d6656a04e7f08faa51d99b57de56865a1bd7f16d4ec1570f"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#metricv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "efbf1924e8c4449594096593b088011f599e8417b43c1a83313ff965814ca3ba"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#packagerefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d0ddbfc12b88720d7f090b9f143020c50a3a26ad96f0360b6c9ab53eb72548e4"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PlanNodeKind",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#plannodekind--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "63735549fce31f3de233ed0ac2b7fb9732d7329b908177b45ceef36ae1fe4265"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerconfigurationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d42a5f1a18af319717e728c01f4dbdf9786d844e5ae6894585b5e95cd38d0b7f"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerdetailsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "4e8a5a93ebf91a36595eb1a48062d7950f1d3ce11ebde7c0024d0677db13d759"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d83534d599c712b6b10355e411105f53f768033e42f2172e90d1189bb68636ac"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#provideroutputv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "5bbb8f0d1b7f18a0789502470eb0b09a76901b7b45c2eec18b8e01ac56cee7b1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "c44703869547b6cf03126119599d94914c1d6f3ce4df373a188d4a43c0f8724d"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderReportV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerreportv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6713f446e449273e1e0db47147a8aa4e0bab408235aed04889d6dc981fdf32c9"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "edadc2555d7c51638a1b6d782f77313c5522b883172f2008a9bbfda963aa3e42"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6275e70f112ca0046a49121b1eba54ea3ff2319b04d9c27da9c9603d71355008"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "1b6b928c3384b0025db3071fa9c2cf41f9a9b0fdb4d164600557983c2a1916c0"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseOutcome",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcaseoutcome--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "84cad0ed8ad36d91a8585abe1a74405bce1ebfd9a137b69434c5ac06759e5a3f"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "9d66fad0b74809406dcbdbd0533f53c94a4ee9930c287471c0552c446f94b568"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "7b469e5b9fda9d76a6c8b7108e8c1a33ed0c35706f75213a7b84fc3069226e69"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#resolvedinputv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "f16546f8f3133977042beb5c94b59465e523455139bd4c20923a0e1a891c551b"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#testcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "456eaffbcbf3ad47a0604766133fbb26941e718980a54bdd3b575db4f32b263e"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestOutcome",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#testoutcome--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "ea63ea57e093cf4d4f647ed738709c1011202da0c95dfe4433487bf86b2423c1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:artifactId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d525eefecb7b2a1ab946895d47371896ea47594a6f087599362a9e80a7146324"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:contentDigest",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "c32e2fd4dbfe26d656d91b61955f50db10424d8440eaa27ea6f203888b776013"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:mediaType",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "ec4592606d987e2ec1541840e80d6b41b3c6ce01ef66b40cc3c70dad21629369"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:sizeBytes",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "b3bba75f9218cee9568cffa07c65c53e742f109f346b1530e2abb48da00389a3"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:storageUrl",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "664e6d9c063e1d93a7a1db6fd8ed4a0fccaad2a133c0747ec5285dffa5edbf01"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:type",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "4218b61c26bf7431d3b7dc2245340526f7c93a06477d2a195f74f7e633c884a1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1:evidenceId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#declaredevidencev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "5f939cbe9afdcdf0faeda57237a09a21f0fd96d50519f921ec02a0d1c81f57eb"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1:file",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#declaredevidencev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "8e45ecd5bd8cc0d6e705a3c985882a3beccdbdbf0ca400f07e2827cef6c256f9"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1:mediaType",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#declaredevidencev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "a2ff6a7fcd9d10e1c0ad3026ee6c0ccf9101d2c2aefb7d68ba3d1f8e7efc34df"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1:type",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#declaredevidencev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "c2e0fb849ed9ccea79aa12341867eccd1a61640bd7598f5b5bf4168a9bc027c0"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1:onError",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#evidencepolicyv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d867f063409ddfb356ee36a371e3dfe03d52b563e2f0f888e071e359b82b43bb"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1:onFail",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#evidencepolicyv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "840762682b4feab2c901fc3a7e19e14afe23d850dae8d6ffc2de34da60ab7ee9"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1:onPass",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#evidencepolicyv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bae9449c705636cdd9eef6afa6d736f477739c0d67933ebefde6d71dac1a83bd"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:artifactBytes",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#executionlimitsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "e55d45edc7bd01e4caa1c72267bb4a835bee213c54bfb369b6b348bf222c6471"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:artifactFiles",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#executionlimitsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bf2c5b0858476212e9f4170c7d34c0da9e4e726339d6574861e0945f38df25d7"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:cpuMillis",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#executionlimitsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "cc812baa44d369e307954c1780f3dfbc34967b468c199fa3b93e49b70ce2fd46"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:logBytes",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#executionlimitsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "dfd63a6d75aaeb38a21be512f694d59f7a3d182c129b82afe34625deb0069962"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:memoryBytes",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#executionlimitsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d570595ed49d66f6ac8ce1b4c8f0b4a2231a453b63d849bb38f5f73ad3685a01"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:processes",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#executionlimitsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "318a4ec072bce074b3a2fdad96e46630ee4f12eeb9b48a0e9ae2305b5d69ab32"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:file",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "0bf0baef7bb2038c223ab02c014c54183ec5cd683f20c6e78e6ce1bfb2a6ef16"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:id",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "4ac8ea1d143491003fc12a796db6be006ce530976cf47c918ffa6a919ed4ade1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:line",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "40f293e12bc732b30a737836968078f99993d0d7e8f92716233ef191ee62e072"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:message",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "df7de6c80525ab451e88dadce732579030bef5b6c48aa1c718e2a253b3df6455"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:rule",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "4339d97f9dba76e188fd457b025d84617ed1a26d97fc6d115dd2b33f1a67ff0f"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:severity",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "8fb9650a2a6fdbcb6218a7523255bccee8bb60f4fccc1265eaf6ec4c7defec86"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1:name",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#metricv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "046ddf5f7db4c610ffdc9ab426efc3c65f11de63504eec326cbb6647756df0c3"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1:unit",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#metricv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "c430da19b8b18407c6d2eb4ea800bd75b858b31531fdb8637513e38109d280ee"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1:value",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#metricv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6c7f9692369f0e90ef5826619fb09520494845c1711bd0971dc37d458b56a711"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1:contentDigest",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#packagerefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "0561b274851c2d44a2278cf8337c237e27e30329c9f6a7c11c86ebef2349110d"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1:packageId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#packagerefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "81ef66c5f0fe48113131e6304f4d30b59f41fdbfc44fa689aeae7d72ec295912"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1:packageVersion",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#packagerefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "01694895d45abb8c195cae836400d35abef1f2d9e66fdd820b60523b544a1b39"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:contractId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerconfigurationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bb9905d15e872ce52040cfe912122259069b6f467fddae9e4b47f8b2e9b32e67"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:schemaDigest",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerconfigurationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "62d88de6ddad310c181820a332be7e4f939995d0a34b0b0955bad6bc58cdda1e"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:schemaVersion",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerconfigurationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "e4d44747dd4df10ceed09a90af721fc833e89b3852fd8dd9411d9da3a280d29a"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:values",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerconfigurationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "7d96a5c86ed3da867bd4fe829414832466790d5f1510c652fbd8007106d3cc9c"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1:schemaDigest",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerdetailsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "2e32c372b63bfe8c0c6cfc1afc2d15efe0c9dd6789cb937648f6019ce2b3bc12"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1:schemaId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerdetailsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "4f8f088ee05ef40386039b732e003ccaa5f01167986d41580d2d42015e658acd"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1:values",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerdetailsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d76eb824ddd77ec6b95bbcaec890857dddda53d96b372142fba703514191c415"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:attemptId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "8600d7182efdf459eaca7dbdc1a65488be45f384e7db97fd631fc77d5d12daef"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:attemptNumber",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "099af824b889bf102aba40856bb100c5a49348f3b97cdd4cdb4981bfbf97a682"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:configuration",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "64031425f5d84edfd761ace6a77b569ba966bc89a436c2d925f01b1cf6739e96"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:evidence",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "e6208a543f5996074ecab30b63e956eba639012bacfae0dc7e3696c9a6626e0c"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:executionId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "f8cb18dcf78df97c8214adacc825f54d1d7cfbecc03893ef6ce93f273b2fb9f1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:gateId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "fbcdbf58a3eac85f8d836f0c4864558b505d4575e6025a9b3a6f93eadac471f1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:grantedCapabilities",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "1a7bf4d8042ecb85a07bee9f3ff0634f4e73d57d7ebf721cc73e78886ee6368b"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:inputs",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "f80a391dd1bd8b81326373b41d4e5c542f803d671ed3d21df65d269ed7de63f8"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:limits",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "585b54b5f97c4abe1676de0c15ff7827def7e8627fcd18d233c64051b9637b8e"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:moduleId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "15295f765a2084e9c9d488aff1d0db23ef9cabb7fa5945fc6934a6cffc1df714"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:nodeId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "aa9032419e9d98e2e8424f5f1da165ae0f621c90a0036f7ad7fa1d15cdb43de3"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:nodeKind",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "5a22f47780308a425dd6d95e5eddd984339e2086da7c56263be7a528192669fb"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:planId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d480a79358f0c0fb49d627bdbbe59c5ad9fba33f3e8b071b4f35ca36f906af94"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:provider",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "b288452c43583f008b4cca87efc02b10a20eaf732621ae7a4d67df153cbbf6d6"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:runId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "8f33b4890b72300e68d433c9903be6e3d960385250996c532a73f3b263639e9b"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:schemaVersion",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "80c405fda4ead84fffc87708dc1b546b347b20c3b8db9716e23c8370d54c7dd8"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:suiteInstanceId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "33aec7af945497abd6b5276ae913d4423aa22d2b1010396c076357ddff629521"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:testIdentity",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "69b0a36221d9030532ab705a35fb097fa9d181060e7a0a49ce66b97ad28b1ae1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:timeoutMs",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "8ca4ea0d1b0056a465b03a10f22b5a363c0b6219ca20d54824e4b0c55963da2c"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:workspace",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerinvocationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "55b6b0ef7967bdc179be8e739bb04ec5d6af272510075cdd76d348db74771275"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1:kind",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#provideroutputv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6acce44d2247bc3b99046bcd7c349fb9125ef3ff1a966271252b3d9190ffc06f"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1:name",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#provideroutputv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "5550ed4611bd481542cae150640f97a086ccd744de81a7862389bdeb84af7701"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:contentDigest",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "0561b274851c2d44a2278cf8337c237e27e30329c9f6a7c11c86ebef2349110d"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:contractId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "b56ed0fd8b83812ffd4e38a1ba35724e8878b2181787d9131a5cbefd27380489"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:packageId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "81ef66c5f0fe48113131e6304f4d30b59f41fdbfc44fa689aeae7d72ec295912"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:packageVersion",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "01694895d45abb8c195cae836400d35abef1f2d9e66fdd820b60523b544a1b39"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:registrationId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "fe301e7bfc3c3e61cfeaec8088864da2aea95b52fd6be4dca606ee4a996dcaf2"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderReportV1:evidenceId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerreportv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d1c4fda6e655a8dce60a66be8eea1ee9d672b145e16a8c24c00b41e997c3f740"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderReportV1:format",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerreportv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "67125f07df65ac46abedf94a9b2b188c37e993a41bd4d45aff43c00ec0f6ee62"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:counts",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d9a2dca459f763cca802385efbf2f26ac9d4f11723aa84f721b15fab5115fe69"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:evidenceFiles",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "2b04a554ea72db6c0d0b6ecb2674a9799b630ed34f5e2f0c3f77fb4886d1d3c4"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:exitCode",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "5e63891b50d0d6a0c44248cefe5108f4ca916d224527732cfced221388697459"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:findings",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "8ef43d15ffb6f81b640049d3d511ff80bbe7a99ebe4fca47b017ebae358ac678"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:metrics",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bd90bfa2357559cd5cb2fde14737df2165bbfd20d2197f349b7059da00d3cefb"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:outcome",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "3b8e32c99df81fec768a3b9d512ba5dca9f187b85caa8a6efbe70c3928d3b905"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:outputs",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "b01e6a05ce07cdce0b9a0889018b81482bcf4da89f026991856b8bcfefc77b6c"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:providerDetails",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d10f2866ac5a34646af6e49cd03f3e1c4de7bc85c40dc0f2e6774ae58c29b7b3"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:reports",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "1feadce6f78591b1e50c4809b5f21db6e062f81085794bddcec7e3b82119d7f0"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:schemaVersion",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6abc008e01ec9700ab72469a8fbacc83ca0fe821fb6a5d3ca812d5c04d0d5b94"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:signal",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "aa9dd7e78ac69ae483a14a347131acc8d2fa06b6fef61d4580a20fff7c9e42be"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:summary",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "ad35ea8cf758fb8f1a35ccc316c06cb2b6c3385de7659b7075716954307b9a22"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:adapterId",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "3b35ea2ba7bf4ae3eb0627845f3bd12df49727bdd09fe4b43cc87fe7c1ceccf2"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:contractVersion",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "98a29159b2277a454f165d9961ea635653340ba243080bc6af086e671692dfab"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:format",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "3d006221c29fc846bd75d3e6e1f4ee1ba8ac885c091808d1610b02dac40d4acd"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:package",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bae1fdeb3f7e71ae6d168e5976d4e2970b803eeb9b5f7609826e6fec5ef9794d"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:adapter",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "c9c32fc8cda2587b3b307b1d7481bb7db0bf1e9c3f8d998824e27370123af362"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:cases",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6a346a1358ccf78a1d8a4717287f4c9d0145107993e814ebd4c4f2cf1849ee1b"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:casesTruncated",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "5a7af8256487bb9407e470f527727855104e6e3888607623134dd47a0699ac39"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:counts",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "38e8d87c5b8160dfdaf59ffd8c9b96f7980ebee47319831d8f02734a4110772b"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:durationMs",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "7dc7b4a61d6a1e404de2f57d0bc3da348821d8eddc0e4a41ac11f1e4a9dfb536"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:findings",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "aac6593827a834083ec5bb5d089330c994b85174482f6c03300a90af3b045173"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:findingsTruncated",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6eac5361af61a812b5eec4de30a793972d6dc798b6f09deea13cef591d54503e"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:omittedCaseCount",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "e961f347cf221ad7a8fbb94552c1affcc2ef40e0be4bc34f48adbbbeca8a52e2"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:omittedFindingCount",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d7ad6f1a59e46c528c7223a34abe8e8d8a13122a54d1a96847262252b204abfb"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:schemaVersion",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d561a2110f055dd0492f2b2c20523ebbdc0ddca13e93dc61c4a8100c0a907851"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:sourceArtifact",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterresultv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "2604fe15b0a88c025eb156b6eb2caf4a523673e099af843610f3194b7385c7fe"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:className",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "f295e74f89bc5d01f1a239a3e3ab5b54312fd5146639e68c49d73cc7d073ac22"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:durationMs",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "b73520307bb8468b6207811290fbbcc355eb757d258b48ef81cc363248746929"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:findings",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "3b0c95d84c6d0392dd134ba17c29f48554f153c91136fe62aa8a56a06682dc7f"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:findingsTruncated",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "12d64f4cb9722abaf264a7c5c29092ed03a028c530b0b52756239806bf557205"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:id",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bce6a8cd1e24909d4f7a9074d385af634a286fefa1e1038286ea73deddc673ae"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:name",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "ffd79303a8597b16fa7ad43413203568d0545fc0598ece8a9734670b054b5610"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:omittedFindingCount",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "58c6485f81e42f1cddcf6ac6ad09bd9f7de0a046e5ca14759048e4eb0423d477"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:outcome",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "02efba624cd4ce269fb2e430a37b4e3a66180695549d452697139dca95c848dd"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:suitePath",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "4e8cefc59ca5b8b5895752d93bdd2b1942a266d3fd60ec4d04095b880678414a"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:errored",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "44632344fdf320f274f2a0c1580c124b1553e2f4eaad2fd81eb8cf4de9289000"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:failed",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "1204f020871d41ab114ca1e0afdb29f50c1a701312edbf2bddf0e2d9af0a8183"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:passed",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "677af12014bb2c583fe06a03d0c9d8e756f0db5e4a3b5168d78e1c8aaf3ad83e"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:skipped",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "a39e400820ec9f3c13f50ef07890bec7315477750ed7fab1f16b192e24a879d1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:total",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "00f578292c7d70c157f66893bab2fc972f84ff638157ea98b6b1ace39694461a"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1:kind",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#resolvedinputv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bac28c0d0c7171cf3a2c5836999cdb6be395213395fc36c8457a2d2400501c3d"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1:name",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#resolvedinputv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "c334606033df0f436cd0cdae4799a2ae0dd10203533b32f946bd39ad70d34a4f"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1:failed",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#testcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "2518aec3a6ddaaef48d574a50bad57e146fa14c8d44a20fc83a41355e8553675"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1:passed",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#testcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "5d3595f203a95c149fcdb4a2738ed6d5be9729766792cb69d16260d9bf767701"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1:skipped",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#testcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "ff9082be07529a3df882cf0370155a950369dcd53928a473c338d5a34d4db2f8"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1:total",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#testcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "bcc28cc3aa91859ea4d45f776c0284d6021962a8d1affc20e21b80c145fd9dee"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#jsonvalue--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "ffbd2b442b4a837813c2ac38dd5ed2145fb8618ae9d75d93deb69518cff1bb89"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#jsonvalue--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "19930c71415e7139f0dae618b1c16364932b27c8053d9131138295292539179c"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#jsonvalue--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "f6d1daca0d762713dbb9771966b725a724bc8602ec6f80057fdf029da10afc73"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#evidencepolicyv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "b9e19c5beca6e8b9f185b1d5213affe7689488913d22e417881e96d4cc982a9e"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#executionlimitsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d79fba8a12803828deaf56ebfdeb141dcf7ee340945240dbc0b5d50eaa4a8803"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PlanNodeKind",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#plannodekind--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "429df0744475d7f445f2a1ba2510b56bcb682e5c021cb3b69b64919cfd580633"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerconfigurationv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "49a7aef2a911928424cc677fc466bb02e6c39faa49b31bdb5b52a5118fb477ea"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "7e87446274e4bba168cdff37279c3533bf3891517fc364cc9efba8e2f254c944"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#resolvedinputv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "1493ae9b1ff7250509506b19544af6b51cb60baeb8bb7cab360b315629cfe323"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#jsonvalue--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "1ae2090c14ddfeedc554d609db65f93203d98cb6e23b05274aa1671fc481633a"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#packagerefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "fdf8b750f13b9608ee61281467878ab6dd66a527b5d4f960ef6bf74792114ebd"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#declaredevidencev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "0f5798eef39485311ee2247b728850edb010836dcc0de66149dc193d6fc5f15c"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "644d931ec64a240ca46547bb2c2d4dfaf484caf5d107d84475bfbc3d2e6e6b8c"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#metricv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "150d36d53060778e587d96c1ca697b625ef80b6a4aa0b7333ddcd8eb7e00edfa"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerdetailsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "780c203230cc0a5443a8907623bab66f9d25e1488850c127c5c8d3a5058f6521"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#provideroutputv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "cbc04c1160f91b6495adbaa8f3d71da439fa2e6b80228c536f0ed35872153974"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderReportV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#providerreportv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "49189b5b71c31e0e6a2bab006a5df9dcab4d7dfb96bddffab5edb72c231141b1"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#testcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "5bda545f8c9ecec8d82e01ae614410839f5ff52ffece427a53118fccc0d25c7a"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestOutcome",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#testoutcome--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "59af1f132aea0e5762d2be9903793ba2014a74b69683ff1d9b941b45d0a0771e"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#packagerefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "e207e15bf7ebbb0281045fdfb3208adceb2d4b9e6845e60b963fc0896ee25d33"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "d38b6efa0633f91f4dc75e8039ed61da08fe115bd1a44a5b5b788df8ead8ad1f"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "16d0c5d8e2aa01d56807a3fab5c29e1a6842d60728fa38f6837a9efa2bb9780e"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportadapterrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "052643837d95bcafec484ec1113d1e04c11a69edf5862c03046cbd530f1483a9"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcasev1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "ed1ff1b4d0bcd470449ae2d29bbe9d9212795a028657f0fdbd022db844c3c506"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcountsv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "65ea53f4e2830e4af15f1df38ad869b13997751d64fb76eeb6784cf9ad6ec954"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#findingv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "0a059d2048ea11560051cf9596970dc671ab0106108b557dcb579aed60844ae6"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseOutcome",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#reportcaseoutcome--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6c2ad23e87a165a45da1fc4704f54fdabd0ba49999d45dfa864ad7a59a96da06"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#artifactrefv1--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "02e610ac89e178a3474d9f56c07fb3dc0e590ef61cd757af6bd9bf1ff76e6fb6"
+          },
+          {
+            "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+            "source": "contracts/pipeline-test-gate/v1/src/types.ts",
+            "target": "docs/site/reference/sdk-exports.md#jsonvalue--contractspipeline-test-gatev1srctypests",
+            "owner": "documentation automation",
+            "factsSha256": "6db8eb8cf5e1c1d7a8eeed03eb52793ea7ab3bb7a5cfb91bb749a5e51d90f770"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:declaration:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation",
+            "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+            "target": "docs/site/reference/sdk-exports.md#capabilityinvocation--skillscommonplugin-runtimesdksrcgeneratedcontractsts",
+            "owner": "documentation automation",
+            "factsSha256": "87d2bf02beb8fbd498ca5d07b7ec2f0276b247c7623e15cc5acadd3cc825440b"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:operation",
+            "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+            "target": "docs/site/reference/sdk-exports.md#capabilityinvocation--skillscommonplugin-runtimesdksrcgeneratedcontractsts",
+            "owner": "documentation automation",
+            "factsSha256": "99eb39b634f2854e5dd7793291bfbe9996b41bfbdf09aeb9c876cc9672bdcc78"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:payload",
+            "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+            "target": "docs/site/reference/sdk-exports.md#capabilityinvocation--skillscommonplugin-runtimesdksrcgeneratedcontractsts",
+            "owner": "documentation automation",
+            "factsSha256": "44c1312b8d5eceedb83bcb62c5dc09cd73deb4465f9e18562e0df1b58b2992d6"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:resource",
+            "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+            "target": "docs/site/reference/sdk-exports.md#capabilityinvocation--skillscommonplugin-runtimesdksrcgeneratedcontractsts",
+            "owner": "documentation automation",
+            "factsSha256": "fb126f423bfb5f8ea710e7ed94f86c9242e1edb6f226d707490d3a7574f56fab"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:runtimeDispatchProfile",
+            "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+            "target": "docs/site/reference/sdk-exports.md#capabilityinvocation--skillscommonplugin-runtimesdksrcgeneratedcontractsts",
+            "owner": "documentation automation",
+            "factsSha256": "3bce7cc0ca561d534ee9e9e6ec8c69cd5c60678c4b66b7cd716425738368c4a2"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23JsonObject",
+            "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+            "target": "docs/site/reference/sdk-exports.md#jsonobject",
+            "owner": "documentation automation",
+            "factsSha256": "ecc09432137c8905c2b3bbe04fe19a6ab1c184ac711ee3fabf24eae6b6a84d07"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23ResourceIdentity",
+            "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+            "target": "docs/site/reference/sdk-exports.md#resourceidentity",
+            "owner": "documentation automation",
+            "factsSha256": "b6f102ea54d734153925a110b404769b9ed617c2fb6c8adc373963b98a45acd8"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23RuntimeDispatchProfile",
+            "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+            "target": "docs/site/reference/sdk-exports.md#runtimedispatchprofile",
+            "owner": "documentation automation",
+            "factsSha256": "685f88f161be9ef74cef41ae51e294204acd31a5a344368c376c2eabfaab071f"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:declaration:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#adapterresourcefence--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "c65bc449927623967f5b93a0f8a1e520f8c7e5e2094e86c4acbdd4711f74f365"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:declaration:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#confidentialadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "c55f2c053371eaa5e340ed5428c2418d463eeff81f0eb78dc2fb74b6ada7bfca"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:declaration:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#fencedadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "003f8df5e10c6040c59b0e530022954f57ade23a266c267897cea8b17a5fb381"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence:assertCurrent",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#adapterresourcefence--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "25e573dd22c0002525ea7c422b008182f29d0d1b381f2ddd84e2e155db014d8c"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence:contract",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#adapterresourcefence--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "bc0bce9fc6dc4c507407cae0c2b22054c23c0d65a5765d3614d57a426236c44a"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:confidential",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#confidentialadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "b6c11e197264efeff4c0cd6546deef11e70274142efd0c307435086233bb4f78"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:fence",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#confidentialadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "bbaace5621b77de424690e8cabce80b166b6733f2bf0ce07bc28ba8bf1a85383"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:lock",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#confidentialadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "38de8b58e83b1b162b08a86aeec7d6a9acad3ce7d5fb6d40fec7703e21385d77"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:request",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#confidentialadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "61a9f04c93ee762a52f1a93261bf4d4d77d8f39e692eacf47346f60a35f0ea33"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:signal",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#confidentialadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "d549a932d9cb9de83c2f8abb5b7aeec0dbe2a161692c70a51a7e741d4ac3db5e"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:confidential",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#fencedadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "10de2fbd49653c47248fdbc2dc76c00dfef659c1743bedf2be84c8133732067f"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:fence",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#fencedadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "55025787a28e02ba7f5e4fe5d25697446503cc648967261fe22c17f7ffc8f609"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:lock",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#fencedadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "08c6e80c8c062918c2b3abd6c25bfafdbde354b8a5628f0adf31f157934c300a"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:request",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#fencedadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "299ab2c9a9274dee0358257824882053d4cf282347d791b2c995f90ac7a83d96"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:signal",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#fencedadapterinvocation--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "b9c7dd05217297b8661b3309b966da6f52d1fb41cb152356b285ba83fa0521cd"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23ResourceLock",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#resourcelock",
+            "owner": "documentation automation",
+            "factsSha256": "a868c26369df8aa1a87847e56f282080c861e1180ef6f768413528d6a1992615"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23EffectRequest",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#effectrequest",
+            "owner": "documentation automation",
+            "factsSha256": "c4aa90ef77ec2f402094fbb62ac88819629b6f96dff2b6c12a34a74f4f9c0f5c"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23EffectRequest",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#effectrequest",
+            "owner": "documentation automation",
+            "factsSha256": "4d6a86416b149c0e7afa5956b15fdf3626dbcf32dc107cb3fcfe271971f23587"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23ResourceLock",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#resourcelock",
+            "owner": "documentation automation",
+            "factsSha256": "2807664d12c31c8ee3d33bc44611f804ebfde1e9b70a0916b95644359fb95ad4"
+          },
+          {
+            "sourceId": "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence",
+            "source": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+            "target": "docs/site/reference/sdk-exports.md#adapterresourcefence--skillscommonplugin-runtimesdksrcruntimets",
+            "owner": "documentation automation",
+            "factsSha256": "4b28d4206efc426adc88cd7c2775b614046b29b01c8e8c6c63b7f86252daa129"
           }
         ]
       },
@@ -55953,6 +57330,201 @@
       {
         "page": "docs/site/reference/sdk-exports.md",
         "sourceIds": [
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PlanNodeKind",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderReportV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseOutcome",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestOutcome",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:artifactId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:contentDigest",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:mediaType",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:sizeBytes",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:storageUrl",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1:type",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1:evidenceId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1:file",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1:mediaType",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1:type",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1:onError",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1:onFail",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1:onPass",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:artifactBytes",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:artifactFiles",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:cpuMillis",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:logBytes",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:memoryBytes",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1:processes",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:file",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:id",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:line",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:message",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:rule",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1:severity",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1:name",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1:unit",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1:value",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1:contentDigest",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1:packageId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1:packageVersion",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:contractId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:schemaDigest",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:schemaVersion",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:values",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1:schemaDigest",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1:schemaId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1:values",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:attemptId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:attemptNumber",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:configuration",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:evidence",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:executionId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:gateId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:grantedCapabilities",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:inputs",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:limits",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:moduleId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:nodeId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:nodeKind",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:planId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:provider",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:runId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:schemaVersion",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:suiteInstanceId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:testIdentity",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:timeoutMs",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:workspace",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1:kind",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1:name",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:contentDigest",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:contractId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:packageId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:packageVersion",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:registrationId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderReportV1:evidenceId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderReportV1:format",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:counts",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:evidenceFiles",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:exitCode",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:findings",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:metrics",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:outcome",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:outputs",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:providerDetails",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:reports",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:schemaVersion",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:signal",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:summary",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:adapterId",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:contractVersion",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:format",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:package",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:adapter",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:cases",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:casesTruncated",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:counts",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:durationMs",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:findings",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:findingsTruncated",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:omittedCaseCount",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:omittedFindingCount",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:schemaVersion",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:sourceArtifact",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:className",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:durationMs",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:findings",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:findingsTruncated",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:id",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:name",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:omittedFindingCount",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:outcome",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:suitePath",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:errored",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:failed",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:passed",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:skipped",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1:total",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1:kind",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1:name",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1:failed",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1:passed",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1:skipped",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:member:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1:total",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23EvidencePolicyV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ExecutionLimitsV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PlanNodeKind",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderConfigurationV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderInvocationV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderRefV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23DeclaredEvidenceV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23MetricV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderDetailsV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderOutputV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderReportV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestCountsV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ProviderResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23TestOutcome",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23PackageRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportAdapterResultV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCountsV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23FindingV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ReportCaseOutcome",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1",
+          "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:reference:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ResolvedInputV1:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23JsonValue",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:declaration:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:operation",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:payload",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:resource",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:runtimeDispatchProfile",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23JsonObject",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23ResourceIdentity",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23CapabilityInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23RuntimeDispatchProfile",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:declaration:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:declaration:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:declaration:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence:assertCurrent",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence:contract",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:confidential",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:fence",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:lock",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:request",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:signal",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:confidential",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:fence",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:lock",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:request",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:member:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:signal",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23ResourceLock",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23ConfidentialAdapterInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23EffectRequest",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23EffectRequest",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts%23ResourceLock",
+          "sdk-support:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts:reference:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23FencedAdapterInvocation:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fruntime.ts%23AdapterResourceFence",
           "sdk:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:.:ReportAdapterOutput:member:casesTruncated:0",
           "sdk:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:.:ReportAdapterOutput:member:durationMs:0",
           "sdk:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:.:ReportAdapterOutput:member:findingsTruncated:0",

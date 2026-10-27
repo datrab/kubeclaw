@@ -73,6 +73,69 @@ test('internal workflow and each package route to their actual owning reader pag
   }
 });
 
+test('complete SDK support closure keeps declarations, members and qualified reference destinations', () => {
+  const inventory = read('docs/generated/inventory/sdk-reference.json');
+  const support = baseline.domains.find(item => item.domain === 'sdk-support');
+  assert.equal(support.surfaces.length, inventory.supportTypes.reduce((count, item) =>
+    count + 1 + item.members.length + item.referencedSupport.length, 0));
+  const declarations = new Map(support.surfaces.filter(item => item.sourceId.includes(':declaration:'))
+    .map(item => [decodeURIComponent(item.sourceId.split(':').at(-1)), item]));
+  for (const item of inventory.supportTypes) {
+    assert.equal(declarations.get(item.qualifiedName).source, item.source.source);
+    assert.notEqual(declarations.get(item.qualifiedName).target.split('#')[1], item.name.toLowerCase());
+    for (const qualified of item.referencedSupport) {
+      const edge = support.surfaces.find(surface => surface.sourceId.endsWith(
+        `:reference:${encodeURIComponent(item.qualifiedName)}:${encodeURIComponent(qualified)}`));
+      assert(edge, `missing qualified reference: ${item.qualifiedName} -> ${qualified}`);
+      if (declarations.has(qualified)) assert.equal(edge.target, declarations.get(qualified).target);
+      assert(edge.owner && support.checks.includes('node scripts/docs-sdk-reference.mjs --check'));
+    }
+  }
+});
+
+test('SDK support member changes/removal and complete declaration removal are not count-only matches', () => {
+  const file = 'docs/generated/inventory/sdk-reference.json';
+  stale(build(file, data => { data.supportTypes[0].members[0].signature += ' | null'; }));
+  stale(build(file, data => { data.supportTypes[0].members.pop(); }));
+  const data = read(file);
+  const referenced = new Set(data.supportTypes.flatMap(item => item.referencedSupport));
+  const removable = data.supportTypes.find(item => !referenced.has(item.qualifiedName));
+  assert(removable, 'control requires a reachable declaration without incoming support edges');
+  stale(build(file, value => {
+    value.supportTypes = value.supportTypes.filter(item => item.qualifiedName !== removable.qualifiedName);
+  }));
+});
+
+test('new undocumented SDK support, forged identity, unresolved edge and named-export promotion fail closed', () => {
+  const file = 'docs/generated/inventory/sdk-reference.json';
+  assert.throws(() => build(file, data => {
+    const item = structuredClone(data.supportTypes[0]);
+    item.name += 'New';
+    item.source.symbol = item.name;
+    item.qualifiedName = `${item.source.source}#${item.name}`;
+    data.supportTypes.push(item);
+  }), /missing\/ambiguous SDK support heading/u);
+  assert.throws(() => build(file, data => { data.supportTypes[0].qualifiedName += 'Forged'; }), /invalid qualified SDK support identity/u);
+  assert.throws(() => build(file, data => { data.supportTypes[0].referencedSupport.push('unknown/source.ts#Missing'); }), /unresolved qualified SDK reference/u);
+  assert.throws(() => build(file, data => { data.supportTypes[0].publicNamedExport = true; }), /support declaration is a named export/u);
+  assert.throws(() => build(file, data => {
+    const item = data.supportTypes[0];
+    item.name = data.supportTypes.find(other => other.source.source === item.source.source && other.name !== item.name).name;
+  }), /support heading differs from declaration/u);
+});
+
+test('wrong existing SDK support destination and inverse omission remain detectable', () => {
+  const bad = structuredClone(baseline);
+  const support = bad.domains.find(item => item.domain === 'sdk-support');
+  const wrongTarget = support.surfaces.find(item => item.target !== support.surfaces[0].target).target;
+  support.surfaces[0].target = wrongTarget;
+  stale(bad);
+  const inverse = structuredClone(baseline);
+  const page = inverse.pageSources.find(item => item.page === 'docs/site/reference/sdk-exports.md');
+  page.sourceIds = page.sourceIds.filter(sourceId => !sourceId.startsWith('sdk-support:'));
+  stale(inverse);
+});
+
 test('wrong existing page, valid existing source ID, member omission and inverse omission fail', () => {
   let bad = structuredClone(baseline);
   bad.domains[0].surfaces[0].target = 'docs/site/reference/cli.md#defined-flags';

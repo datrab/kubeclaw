@@ -83,7 +83,8 @@ A missing or stale page entry must be corrected through its metadata and the
 map generator before the change is called covered.
 
 The same map contains a `sourceSurfaceMap` join for SDK exports, members and
-variants; the nine mapped platform groups; CI workflows and jobs; plugin packages
+variants; every reachable SDK support declaration, resolved member and qualified
+local reference; the nine mapped platform groups; CI workflows and jobs; plugin packages
 and registrations; recursive configuration values and registered schema fields;
 and operator-runtime CLI flags. Each domain names its inventory, generator,
 checks, reader task and discovery limit. Source-qualified IDs retain the entrypoint,
