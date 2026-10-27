@@ -1,8 +1,226 @@
 {
-  "status": "NOT_READY",
-  "frozenReceiptScope": "Reservation only, not final bound acceptance receipt. Actual27 AUTHOR/CONTENT adjudication complete; nine old matrix scopes and one existing source still require original preservation. Final current-source/reference/native/Reader stage pending. Never bind this reservation in an acceptance record.",
+  "frozenReceiptScope": "Actual original3developer files13units27claims AUTHOR/CONTENT at89d89f0a and actual9matrix+old7claim source semantic preservation with six native Reader/four offline browser controls at23c3dbd1. Not final current-root reference/native/source-valid/Gate/AP10/runtime/live/model/release approval. Never rewrite after matrix hash binding.",
   "contentSource": "89d89f0a909dfd5e00a769e1d85c9ab05e4c802c",
-  "originalClaims": 27,
-  "newGates": [],
-  "newRequirements": []
+  "source": "23c3dbd1b874fbb1eedc1333be19c29821945455",
+  "publishedBaseline": "ae32a72e0a5f4dc32326416dccb69b9e312f9d23",
+  "actualOriginalAuthorContentParts": [
+    {
+      "part": "contributing",
+      "originalPath": "docs/developers/contributing.md",
+      "claimCount": 5,
+      "rawVerdict": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The corrected candidate substantively covers all selected original claims: it maps the package-registration boundary and shared plugin-runtime location to excerpts that state those responsibilities, preserves the refactor preference as a historical decision with relevant canonical context, and correctly omits the now-invalid unconditional aggregate-check instruction with current script evidence.",
+        "overall_confidence": 0.95
+      },
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91311-developer-support-20261027/contributing-evidence-final-author-content-verdict.json",
+      "sha256": "6a7ec1dc3a5117f85ea2d5a5dc5c3f3d0428b96e1042f92eaa15785fe83c6e0b",
+      "qualification": "Actual explanation adjudicates selected original duties. Requested marker not an extra acceptance criterion. Full necessary input responsibility partitions and all first failures retained."
+    },
+    {
+      "part": "hooks",
+      "originalPath": "docs/developers/hooks-and-plugins.md",
+      "claimCount": 5,
+      "rawVerdict": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The lossless candidate substantively covers all five selected atomic responsibilities with specific canonical targets and current primary evidence. The corrected normalizer locator now covers normalization and validation behavior, and the mapped content preserves the original distinctions without inventing host activation or current release authority.",
+        "overall_confidence": 0.9
+      },
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91311-developer-support-20261027/hooks-locator-final-author-content-verdict.json",
+      "sha256": "57c6050af28721f0939719a5b28df194c370f47979c68d967c4c560c1fa45157",
+      "qualification": "Actual explanation adjudicates selected original duties. Requested marker not an extra acceptance criterion. Full necessary input responsibility partitions and all first failures retained."
+    },
+    {
+      "part": "release",
+      "originalPath": "docs/developers/testing-and-ci.md",
+      "claimCount": 16,
+      "rawVerdict": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The decoded candidate substantively maps all selected release and cgroup claims to the canonical extension-testing guidance, with current script/validator evidence and explicit limits. It preserves the model-cutover scheduling statement as a historical decision without claiming current release authority or execution.",
+        "overall_confidence": 0.9
+      },
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91311-developer-support-20261027/release-final-author-content-verdict.json",
+      "sha256": "524eec2bd83db12d4005995f897ea74627acd0bd152c249dc7682525d3fa97f5",
+      "qualification": "Actual explanation adjudicates selected original duties. Requested marker not an extra acceptance criterion. Full necessary input responsibility partitions and all first failures retained."
+    },
+    {
+      "part": "model",
+      "originalPath": "docs/developers/testing-and-ci.md",
+      "claimCount": 1,
+      "rawVerdict": {
+        "findings": [],
+        "overall_correctness": "patch is correct",
+        "overall_explanation": "The decoded author candidate correctly treats the selected model-backed harness/cutover statement as a historical decision, maps it to the canonical section that preserves both the obligation and its capacity rationale, and explicitly avoids claiming current scheduling authority or an executed release result.",
+        "overall_confidence": 0.94
+      },
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91311-developer-support-20261027/model-final-author-content-verdict.json",
+      "sha256": "e66c224b28b880c06f6f65255f4e0ec6dc7b6ca279eec3176a9cfdfcfc512b64",
+      "qualification": "Actual explanation adjudicates selected original duties. Requested marker not an extra acceptance criterion. Full necessary input responsibility partitions and all first failures retained."
+    }
+  ],
+  "contentToReaderSourceCompleteBindings": [
+    {
+      "originalSource": "contributing.md",
+      "path": "docs/site/extend/README.md",
+      "wholeFileSha256": "44d97b43659bf67407add6719a2223a742de8e54dd3d06809d767036661ec1c1",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "contributing.md",
+      "path": "docs/site/extend/developer-handbook.md",
+      "wholeFileSha256": "c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "contributing.md",
+      "path": "package.json",
+      "wholeFileSha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "contributing.md",
+      "path": "scripts/check-runtime-package-ownership.mjs",
+      "wholeFileSha256": "c3e065454ab8c36912c760e61e273417eed4f902e0bcbf8b2d7a99de9818c5fc",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "contributing.md",
+      "path": "skills/nova/core/src/index.ts",
+      "wholeFileSha256": "2cd478afa23772e88241245bbab2f9f5bcd86fb75e216250a7a6364c19bac9b8",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "contributing.md",
+      "path": "skills/nova/pipeline.ts",
+      "wholeFileSha256": "57df2fece0a125211784d8ffdea446860e031f50b03fa5ae09a99f50177db821",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "docs/site/extend/README.md",
+      "wholeFileSha256": "44d97b43659bf67407add6719a2223a742de8e54dd3d06809d767036661ec1c1",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "docs/site/extend/contracts.md",
+      "wholeFileSha256": "1ba210f4603a26665e3b7a14939c79109968c95a80b58ad48fd512d08dbfc8b5",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "docs/site/extend/host-and-engine.md",
+      "wholeFileSha256": "e3ca4cd74b44044a7df51fecaac44cf7b5aa7187cb04ee3162ffe004e2dcb683",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "docs/site/extend/testing.md",
+      "wholeFileSha256": "4892ff1feaa1a5ff99f66e8581c0a376136982a3d9279c6161764e6d9f948583",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "wholeFileSha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+      "wholeFileSha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+      "wholeFileSha256": "665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
+      "wholeFileSha256": "58976e1ae44055663149b4cd830f593e2fdebb41705413c88f99e858722cbab0",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "skills/common/plugins/openclaw-agent-observer/tests/package-boundary.test.mjs",
+      "wholeFileSha256": "d8664a4238624069f323d0b2edaa25aa5ef08b305495c2fb8a4331b93de49ed6",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "skills/nova/core/state/journal.ts",
+      "wholeFileSha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "skills/nova/core/state/json-value.ts",
+      "wholeFileSha256": "c99b7a8c16e3c8c6860e7e469d9feb454448fab311f8d5f7bbf6dd690e59a58b",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "hooks-and-plugins.md",
+      "path": "skills/nova/core/telemetry/observers.ts",
+      "wholeFileSha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "testing-and-ci.md",
+      "path": "docs/site/extend/testing.md",
+      "wholeFileSha256": "4892ff1feaa1a5ff99f66e8581c0a376136982a3d9279c6161764e6d9f948583",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "testing-and-ci.md",
+      "path": "package.json",
+      "wholeFileSha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "testing-and-ci.md",
+      "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+      "wholeFileSha256": "054104fb7041d0712721b94da5985a0f93540c0457bfe06ce601ce985a450737",
+      "contentAndReaderSourceByteIdentical": true
+    },
+    {
+      "originalSource": "testing-and-ci.md",
+      "path": "tests/verification/deployment/check-deployment-truth.mjs",
+      "wholeFileSha256": "69ba694c5e8ec3a64cc1ced7903bbb69fe549ae19c505351afa038d167fab693",
+      "contentAndReaderSourceByteIdentical": true
+    }
+  ],
+  "nineOriginalMatrixAndSevenSourcePreservation": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "NINE_MATRIX_AND_SEVEN_SOURCE_ORIGINAL_SCOPES_PRESERVED=PASS. The appended release guidance preserves the prior testing content verbatim, retains all seven original verification duties, accurately distinguishes host-bound cgroup prerequisites from completed checks, and explicitly preserves NOT_READY limits for live/model/release evidence. It introduces no new approval, runtime claim, or contradictory lifecycle instruction; the nine scoped records remain bounded by their existing qualifications.",
+    "overall_confidence": 0.9
+  },
+  "scopeIds": [
+    "AP09-closeout-developer-maintenance-20261020",
+    "AP09-complete-developer-reader-contracts-20261021",
+    "AP09-complete-static-reader-search-20261021",
+    "FLW014-plugin-operator-supported-lifecycle-20261021",
+    "AP09-publication-positive-scope-7ef16585",
+    "A98-02-13-whole-operator-procedure-contract-20261022",
+    "A910-03-whole-command-prerequisite-contract-20261022",
+    "AP09-whole-extension-guides-A91013-20261023",
+    "A910-10-whole-supported-extension-lifecycle-20261026"
+  ],
+  "coordinatorControls": {
+    "nativeReaderCommands": 6,
+    "offlineBrowserCases": 4,
+    "originalNewSourceAuthorClaims": 27,
+    "completeDeclaredFileUnion": 611,
+    "ownerMap": "Whole4MB byte-identical published baseline",
+    "changedReaderSource": "Only Testing, all previous bytes preserved unchanged as prefix"
+  },
+  "limits": "Current capacity/cutover authority and CI enforcement unproven, inherited model scheduling intent retained as historical decision. No delegated-host/native/model/live/release execution or all-existingpackage green. All original Source/toolrole/DATAUNKNOWN/receipt/human/persona/skip/selectedreleaseKnip qualifications and histories retained. Final whole current source/reference/manualrisk/native receiver mandatory later.",
+  "newGateIds": [],
+  "newRequirementIds": []
 }
