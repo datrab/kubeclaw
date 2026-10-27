@@ -1,6 +1,168 @@
 {
-  "schemaVersion": "kubeclaw-documentation-parity-review.pending.v1",
-  "originalPath": "docs/operators/README.md",
-  "verdict": "NOT_READY",
-  "reason": "Content/author stage independently PASS; full current reference/index/native review and affected-scope preservation not yet completed. This placeholder reserves the existing control filename and must not be treated as acceptance."
+  "schemaVersion": "kubeclaw-documentation-parity-review.v1",
+  "source": {
+    "originalPath": "docs/operators/README.md",
+    "legacyPath": "docs/_legacy-source/operators/README.md",
+    "baselineRevision": "8da6157b77247dcbdf209ef12f491f0b92ca858a",
+    "gitObject": "89b6ddbeba0ea1bae5a848741f6728ba6964b112",
+    "extractionDigest": "7d8906dd7a984105872ffb75ef015cc5cc66c041ef6b801007dbf8ad28526b78",
+    "classification": "legacy-extraction-source"
+  },
+  "reviewer": {
+    "id": "parity-reviewer:operator-handbook-sources",
+    "assignmentId": "parity-assignment:be1c31c6913ff08a6fd943e811418e9f6432ee727bef87545f998506406f690a",
+    "freshContext": true,
+    "readOnly": true,
+    "provenance": {
+      "kind": "repository-review-assignment",
+      "revision": "4178d6ec07cac5e4b903126f9daba81aab908949",
+      "actorId": "parity-reviewer:operator-handbook-sources"
+    }
+  },
+  "decisionSha256": "f528cfcec0fe1be9624f2fdebbaa74ffff97224dbe3bda977295e43c1cd236cb",
+  "contentRoot": "a86dfeaef7da4137472c205c728c0439fd72b37f8ad7b5aa261ea333d2b52e3f",
+  "claimIds": [
+    "operator-entry:dpu_f5caa7c29886e889191bb36aa42eab6f",
+    "operator-entry:dpu_164b5293e20e3591182ad995512c9973",
+    "operator-entry:dpu_d1298cb856d2a9e3a83c15adf11226bd",
+    "operator-entry:dpu_32687be9230580267d1078416114952a",
+    "operator-entry:dpu_2d664323ba9eaaf52e38290afa0f3c7b",
+    "operator-entry:dpu_50103fdda2acb95ebf9d55f36395624a",
+    "operator-entry:dpu_53d57b7c143cbcd68f7405db7f01ccbe",
+    "operator-entry:dpu_b6e57c49b18bcfe5b73bdcde5b09dd54"
+  ],
+  "reviewedRevision": "4adf07245caf302607a07916febfb91a5dedd04c",
+  "classificationVerdict": "PASS",
+  "claimVerdicts": [
+    {
+      "claimId": "operator-entry:dpu_f5caa7c29886e889191bb36aa42eab6f",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "operator-entry:dpu_164b5293e20e3591182ad995512c9973",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "operator-entry:dpu_d1298cb856d2a9e3a83c15adf11226bd",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "operator-entry:dpu_32687be9230580267d1078416114952a",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "operator-entry:dpu_2d664323ba9eaaf52e38290afa0f3c7b",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "operator-entry:dpu_50103fdda2acb95ebf9d55f36395624a",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "operator-entry:dpu_53d57b7c143cbcd68f7405db7f01ccbe",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    },
+    {
+      "claimId": "operator-entry:dpu_b6e57c49b18bcfe5b73bdcde5b09dd54",
+      "semanticParity": "PASS",
+      "currentAccuracy": "PASS",
+      "targetSpecificity": "PASS",
+      "dispositionJustification": "PASS"
+    }
+  ],
+  "visualVerdicts": [],
+  "activeDependencyReview": {
+    "reviewedRevision": "4adf07245caf302607a07916febfb91a5dedd04c",
+    "reviewedTree": "922f612a7794517ddeaefcd821faa7247ed2a0b7",
+    "contentRoot": "a86dfeaef7da4137472c205c728c0439fd72b37f8ad7b5aa261ea333d2b52e3f",
+    "scope": {
+      "paths": [
+        "docs/operators/README.md",
+        "docs/_legacy-source/operators/README.md"
+      ],
+      "risks": [
+        "dynamic-configuration",
+        "generated-paths",
+        "runtime-lookup",
+        "external-consumers"
+      ]
+    },
+    "methods": [
+      {
+        "kind": "manual-inspection",
+        "detail": "dynamic-configuration: Inspected the entire native reference checker and complete current operator hub/platform reference/schema/loader. Six old navigation entries now select current canonical anchors; separately selected platform configuration owns roots, trust, providers, grants and registration configuration. The full frozen repository scan checks supported static and composed references; arbitrary dynamic configuration is not proved absent."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "generated-paths: Inspected and compared maintained blueprint/author source files and structural tree configuration paths. Current generated output selects canonical operator navigation from the published hub and manifest. Legacy extraction content and parity registry membership remain structural source provenance, not current reader procedure consumers. No deletion, historical receipt rewrite or path exemption is proposed."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "runtime-lookup: Inspected the complete native parity/reference scanner and platform loader. Platform runtime reads selected JSON, not the legacy operator index. Legacy bytes remain mandatory extraction/content verification inputs only. Actual complete Source scan plus current consumer controls identify no old original/extracted operator-index consumer; this is not arbitrary-program analysis or destination-procedure acceptance."
+      },
+      {
+        "kind": "manual-inspection",
+        "detail": "external-consumers: Inspected the complete authoritative route registry file and exact original /operators redirect decision. Compared current published hub content and route configuration: no authoritative historical route or consumer is declared, so no redirect is invented. The canonical hub supplies all six exact extant reader anchors. Repository inspection cannot disprove unknown external references or third-party consumers; preserve native static limitations and all whole-parity/AP10 obligations."
+      }
+    ],
+    "evidence": [
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected the entire native reference checker and complete current operator hub/platform reference/schema/loader. Six old navigation entries now select current canonical anchors; separately selected platform configuration owns roots, trust, providers, grants and registration configuration. The full frozen repository scan checks supported static and composed references; arbitrary dynamic configuration is not proved absent."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected and compared maintained blueprint/author source files and structural tree configuration paths. Current generated output selects canonical operator navigation from the published hub and manifest. Legacy extraction content and parity registry membership remain structural source provenance, not current reader procedure consumers. No deletion, historical receipt rewrite or path exemption is proposed."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected the complete native parity/reference scanner and platform loader. Platform runtime reads selected JSON, not the legacy operator index. Legacy bytes remain mandatory extraction/content verification inputs only. Actual complete Source scan plus current consumer controls identify no old original/extracted operator-index consumer; this is not arbitrary-program analysis or destination-procedure acceptance."
+      },
+      {
+        "kind": "manual-observation",
+        "detail": "Inspected the complete authoritative route registry file and exact original /operators redirect decision. Compared current published hub content and route configuration: no authoritative historical route or consumer is declared, so no redirect is invented. The canonical hub supplies all six exact extant reader anchors. Repository inspection cannot disprove unknown external references or third-party consumers; preserve native static limitations and all whole-parity/AP10 obligations."
+      },
+      {
+        "kind": "scanner-result",
+        "detail": "Inspected and compared the actual full249-source reference scan at 4adf07245caf302607a07916febfb91a5dedd04c across 5513 frozen Git-bound file inputs. Both original and extracted source paths have zero matches. Input root 168adc06f674406ba35bec84abd52f18f3ae697c5fc947b46ab219f5b2307827 binds every scanned path/blob; actual complete qualified content/primary/route byte equality is separately supplied. This static observation does not establish arbitrary dynamic or external-consumer absence."
+      }
+    ],
+    "findings": [],
+    "scanner": {
+      "version": "kubeclaw-documentation-active-dependency-scanner.v2",
+      "searchedPaths": [
+        "docs/operators/README.md",
+        "docs/_legacy-source/operators/README.md"
+      ],
+      "scannedFileCount": 5513,
+      "scannedPathsSha256": "a4498429dd609b0f8f2fbc183ec73501ff41598a51be2bb91580126c20dc0122",
+      "scannerInputRoot": "168adc06f674406ba35bec84abd52f18f3ae697c5fc947b46ab219f5b2307827",
+      "matches": []
+    },
+    "limitation": "Static literal, link, and simple path-composition scanning is not complete program analysis; independent reviewer attestation remains required.",
+    "verdict": "PASS"
+  },
+  "verdict": "PASS",
+  "findings": []
 }
