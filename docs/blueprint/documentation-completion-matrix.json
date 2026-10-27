@@ -40517,6 +40517,126 @@
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
         }
       ]
+    },
+    {
+      "id": "QUA-006-fresh-independent-technical-reader-20261027",
+      "revision": "53b330b2ed2667d75ef326e233a0674812d53a28",
+      "author": "Nova documentation continuation coordinator",
+      "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 original criterion adjudicator; fresh native model Reader /root/fresh_technical_reader",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-006"
+      ],
+      "pages": [
+        "docs/site/README.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/reference/glossary.md",
+        "docs/site/status/acceptance.md",
+        "docs/site/understand/README.md",
+        "docs/site/use/README.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/quickstart.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sources": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        ".github/workflows/remediation-native.yaml",
+        "tests/verification/contracts/check-production-receipt-attestation.mjs",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/07-documentation-quality-standard.md"
+      ],
+      "checks": [
+        {
+          "command": "Fresh context-isolated technical Reader: central public entry navigation, terms, workflow, reference, documented error/safe-stop path",
+          "exitCode": 0,
+          "observation": "Native model reader (not human), no prior exercise context, current complete canonical navigation pages and explicitly limited handbook section inspected. Operator supplied documented Gateway authority only; no product fixes or route hints."
+        },
+        {
+          "command": "Fresh locked-source da43fa5 compiled-project.mjs prepare → run → verify → cleanup, isolated dependencies and original artifacts",
+          "exitCode": 0,
+          "observation": "Actual same compiler output8stages224events10originalartifacts, authoritative original audit and byte/provenance verification; separate successful helper cleanup and removal of owned temporary checkout/deps. Not joined historical runs."
+        },
+        {
+          "command": "Expected-negative nested-source fixture preparation, followed by target-absence and clean-source checks",
+          "exitCode": 0,
+          "observation": "Actual child exit1 Unsafe fixture path, target absent and source clean; correction is keeping the declared external owned destination. Expected failure preserved, not claimed successful operation."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "Actual frozen Source53b330b2 technical check PASS; complete output retained under technical-reader-20261027."
+        },
+        {
+          "command": "npm run docs:publication:check",
+          "exitCode": 0,
+          "observation": "Actual frozen Source53b330b2 technical check PASS; complete output retained under technical-reader-20261027."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "Actual frozen Source53b330b2 technical check PASS; complete output retained under technical-reader-20261027."
+        },
+        {
+          "command": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 whole QUA-006 adjudication plus actual current canonical Source correction",
+          "exitCode": 0,
+          "observation": "First independent RU/Quality PASS and Source NOT_READY preserved. Full canonical acceptance page plus both declared native owners supplied; corrective actual CANONICAL_SOURCE_INSPECTION/sourceAccuracy/readerUsability/quality/WHOLE_QUA006 explicit PASS, no findings. No participant or global release rerun/waiver."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole QUA-006 independent new technical Reader end-to-end navigation, terminology, workflow, reference and error-path acceptance. Fresh context-isolated model Reader independently found and executed documented first-project route with supplied operator Gateway prerequisite: same compiled graph, actual audit/original artifacts, owned cleanup and meaningful ownership-error safe stop. Independent current canonical claim/source inspection resolves previous missing source evidence; original failures retained.",
+      "limits": [
+        "Model-based fresh-context technical Reader, not a human/screenreader/operator/five-persona/live deployment/release acceptance. No other gate or requirement accepted.",
+        "Handbook inspected only dependency-preparation section; whole Site navigation task does not assert inspection of every177page or all handbook sections. Truncated intermediate outputs recovered via recorded complete semantic ranges.",
+        "Actual original precleanup verifier reports cleanup pending; separate actual cleanup command exit0 establishes completed cleanup. Original bytes retained, not rewritten.",
+        "Initial optional Go probe and misplaced Semgrep settings failed; documented environment corrected the latter without product changes. Early helper cleanup after inaccessible infrastructure proc scan is explicitly retained as reader sequencing lapse; no owned-path users found, full temp deletion waited for scope clarification.",
+        "Existing qualified Source/Quality scopes reused only at complete unchanged original vectors, not promoted to this fresh exercise or all-product acceptance. Global DATA/output-role, human/live and unexecuted release checks remain open."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "nativeObservation": {
+        "status": "verified-actual-compiled-workflow",
+        "runId": "run:first-project-001",
+        "compiledDigest": "sha256:150374cb5e57dc008655ced7cdd165256e1985105891d10606cd3a3db1d44a27",
+        "stageCount": 8,
+        "artifactCount": 10,
+        "eventCount": 224,
+        "journalHead": "sha256:330ae7e32d71f775c9ed66b1582d30a79ed4ddcb5eaa9044f8269ba827d0564b",
+        "auditDigest": "sha256:5c3927091c316de286e0cb047141715546f47083430565519f15d94f935b93d0",
+        "allOriginalArtifactsVerified": true,
+        "rawBytesPreservedBeforeAudit": true,
+        "cleanup": "See actualSeparateCleanup; original raw precleanup status remains preserved unchanged",
+        "actualSeparateCleanup": {
+          "helper": "verified-owned-cleanup",
+          "temporaryRoot": "/home/node/.openclaw/workspace/tmp/qua006-policy-reader",
+          "temporaryRootAbsent": true,
+          "activeAccessibleOwnedPathUsers": [],
+          "inaccessibleInfrastructurePids": [
+            1,
+            1526,
+            1554,
+            1555,
+            1556,
+            1557,
+            1558,
+            1559,
+            1560,
+            1561,
+            1562,
+            1563,
+            1564,
+            1565,
+            1566
+          ],
+          "protectedEvidenceRetained": true
+        }
+      },
+      "evidence": "docs/blueprint/acceptance-evidence/technical-reader-20261027/"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -58303,7 +58423,7 @@
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-current-canonical-source-claim-review-PASS; see completionRecord",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -58333,7 +58453,7 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
+      "state": "accepted",
       "evidence": [],
       "reviews": [
         {
@@ -58416,13 +58536,22 @@
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L425",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- QUA-006 — Leserprobe neuer technischer Leser: FAIL. SA PASS for inspected actual input boundary / RU FAIL / Q PASS for sampled prose. Actual bounded path followed: site root → quickstart → operate → workflow index → concrete approval guide. Site root explicitly states no self-contained first operator pipeline input is supplied; the published approval graph is explicitly not a nova-project.v2/project compiler example. A new reader cannot complete the intended full first pipeline journey solely from supplied inputs. This is an independent bounded task inspection, not a fabricated fresh-context human exercise or successful deployment. F1.",
-        "requiresAffectedRereview": true,
-        "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "53b330b2ed2667d75ef326e233a0674812d53a28",
+        "completionRecord": "QUA-006-fresh-independent-technical-reader-20261027",
+        "reason": "Whole QUA-006 independent new technical Reader end-to-end navigation, terminology, workflow, reference and error-path acceptance. Fresh context-isolated model Reader independently found and executed documented first-project route with supplied operator Gateway prerequisite: same compiled graph, actual audit/original artifacts, owned cleanup and meaningful ownership-error safe stop. Independent current canonical claim/source inspection resolves previous missing source evidence; original failures retained."
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- QUA-006 — Leserprobe neuer technischer Leser: FAIL. SA PASS for inspected actual input boundary / RU FAIL / Q PASS for sampled prose. Actual bounded path followed: site root → quickstart → operate → workflow index → concrete approval guide. Site root explicitly states no self-contained first operator pipeline input is supplied; the published approval graph is explicitly not a nova-project.v2/project compiler example. A new reader cannot complete the intended full first pipeline journey solely from supplied inputs. This is an independent bounded task inspection, not a fabricated fresh-context human exercise or successful deployment. F1.",
+          "requiresAffectedRereview": true,
+          "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "QUA-006-fresh-independent-technical-reader-20261027"
     },
     {
       "id": "QUA-007",

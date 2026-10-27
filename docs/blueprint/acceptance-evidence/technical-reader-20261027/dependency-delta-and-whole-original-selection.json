@@ -1,0 +1,51 @@
+{
+  "at": "2026-10-27T12:25:54.129204+00:00",
+  "originalDispositionPreserved": true,
+  "policyReceipt": "operations/pr13/evidence/owner-review-policy-20261027/installation.json",
+  "actualFullInputs": [
+    {
+      "path": "docs/site/use/diagnose.md",
+      "bytes": 169909,
+      "sha256": "dee4a18a94c13fde032c1d4eb07141567b00a677d5485fee05ac4428971e9940",
+      "fullUnchangedAdmission": true
+    },
+    {
+      "path": "docs/site/reference/buster-runtime-configuration.md",
+      "bytes": 34158,
+      "sha256": "cca61ece09026e023b8482d3058a61acfdd78b8c99b30be5b74b04ab0dcd48c9",
+      "fullUnchangedAdmission": true
+    },
+    {
+      "path": "docs/site/reference/configuration-precedence.md",
+      "bytes": 38564,
+      "sha256": "2f002e12766479b159c91f62f19b8c5e910bc00b8106187e2bbf055089793637",
+      "fullUnchangedAdmission": true
+    },
+    {
+      "path": "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+      "bytes": 6531,
+      "sha256": "52ba5eff35c441ee727753a3d154a357257df525c0461b6f81941ceadaf1add1",
+      "fullUnchangedAdmission": true
+    },
+    {
+      "path": "docs/site/use/plugins.md",
+      "bytes": 1116272,
+      "sha256": "f89b58eb364dcf305cb9bf3fbfdbf6e7f7eb1c8b1ce3fe6b1294535996429b04",
+      "fullUnchangedAdmission": true
+    }
+  ],
+  "dependencyDelta": {
+    "D1,D3,D4,D5,D6,D8,D10,D11,D12,D13,D14,D16": "Heuristic admission refusal/perfile cap obsolete; original source completeness, controls, context responsibility and independent review still required. No automatic acceptance.",
+    "D2": "Missing historical reports block reuse only; fresh original substantiation available.",
+    "D7,D9": "Actual host/runtime authority constraints unchanged where original criterion requires them; not prerequisites for QUA-006.",
+    "D15,D17,D18": "Substantive corpus/projection/parity/governance obligations unchanged; no deletion authorized."
+  },
+  "selection": {
+    "id": "QUA-006",
+    "originalCriterion": "Independent new technical Reader end-to-end navigation, terms, workflow, reference and meaningful error path across central Site",
+    "why": "Known original stop was diagnose.md admission; policy delta directly removes it. Fresh clean isolated Reader executes whole task, not borrowed install or replay. No cluster/live/human qualification claimed.",
+    "finiteClosure": "Actual fresh journey and negative/recovery outcome, independent complete Source/Reader/Quality original-criterion decision, original checker/preservation, coherent commit/push/exact remote only on PASS.",
+    "limits": "Participant outcome is not automatically acceptance; retain original failures and actual incomplete outcomes."
+  },
+  "all59OldRows": "Historical NO_GO no longer operative as a blanket claim; rows require substantive reassessment at original scope. No claim all newly executable."
+}

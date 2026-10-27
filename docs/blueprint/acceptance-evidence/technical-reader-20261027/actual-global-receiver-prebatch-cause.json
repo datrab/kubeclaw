@@ -1,0 +1,129 @@
+{
+  "originalReceiverExitCode": 1,
+  "actualTerminal": "DOCUMENTATION_READER_CI_PURPOSE_DRIFT: docs/site/reference/documentation-site.md",
+  "causalProfileSourceUnchanged": true,
+  "allProfileInputsByteEqualPrebatch53b330b2": true,
+  "inputs": [
+    {
+      "path": "scripts/docs-reader/check-search.mjs",
+      "expectedProfileHash": "6eb9c612a24e87e3697094de6e0853b865644e0ed95bf12877c6ab214b644452",
+      "actualAndPrebatchHash": "6eb9c612a24e87e3697094de6e0853b865644e0ed95bf12877c6ab214b644452",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/docs-reader/search-questions.json",
+      "expectedProfileHash": "10657354f2e2cef6dbd7e748a01874b008541944755894914e4ce781df1b0fd5",
+      "actualAndPrebatchHash": "10657354f2e2cef6dbd7e748a01874b008541944755894914e4ce781df1b0fd5",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/docs-reader/check-artifact.mjs",
+      "expectedProfileHash": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67",
+      "actualAndPrebatchHash": "7f4e8cb928a5fba48bbd590e5349ce6247264f9cae1935a1e3679ae54c1a2a67",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/docs-reader/page-records.mjs",
+      "expectedProfileHash": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f",
+      "actualAndPrebatchHash": "6268501ef047b13e0794950a85d57e2c7aaf54e85a16d77ca8c1263237691a2f",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "expectedProfileHash": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943",
+      "actualAndPrebatchHash": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/docs-reader/renderer.mjs",
+      "expectedProfileHash": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+      "actualAndPrebatchHash": "a0bf02d079637cf862fe0a40bbc34e4bfbd982c58126e347d8aea079047abd87",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/docs-reader/redirects.mjs",
+      "expectedProfileHash": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
+      "actualAndPrebatchHash": "0b186c9da87055e1a13afb0aace0b72e04099c3ed49879a422ca3acbbe778caf",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "expectedProfileHash": "464f8b4ce8aacba8d175307e03b959dc2763f1d3b80c31079c24c085076860c5",
+      "actualAndPrebatchHash": "464f8b4ce8aacba8d175307e03b959dc2763f1d3b80c31079c24c085076860c5",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-page-records.test.mjs",
+      "expectedProfileHash": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83",
+      "actualAndPrebatchHash": "0333fffb872837af59396ff47dafb1401a87b00627d96de524e9322e12f15d83",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/tests/docs-reader.test.mjs",
+      "expectedProfileHash": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28",
+      "actualAndPrebatchHash": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/tests/docs-reader-redirects.test.mjs",
+      "expectedProfileHash": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155",
+      "actualAndPrebatchHash": "4d08e2533bda82a536a9c61ab27a3fca94939a484a5a2154e012ff9507f26155",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "expectedProfileHash": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0",
+      "actualAndPrebatchHash": "fc3b0f2b34553f24f74af8acc2397a45000f53897dbda9e3f256da73bcc78dbb",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": false
+    },
+    {
+      "path": "package.json",
+      "expectedProfileHash": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "actualAndPrebatchHash": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "expectedProfileHash": "71764219d05fd7f4ea0c715d2414315eb5869834f4ebe9eb5d9ce2d22153c295",
+      "actualAndPrebatchHash": "c0d58d0680bb42186370cb13a346e72e739e3ff64e146541c9f36c5dfd2ab294",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": false
+    },
+    {
+      "path": "scripts/lib/docs-route-continuity.mjs",
+      "expectedProfileHash": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449",
+      "actualAndPrebatchHash": "95ebc24186da8c7b446a5bd3edb36f8514b79cb4104dc0394f0b381ddb5dd449",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/docs-reader/metadata.mjs",
+      "expectedProfileHash": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc",
+      "actualAndPrebatchHash": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    },
+    {
+      "path": "scripts/plugin-registration-dependencies.mjs",
+      "expectedProfileHash": "0e5cc4599edcd642b3c7c6190be62b869d8f57aa5fc45d0acd9bd5a78e7e28b2",
+      "actualAndPrebatchHash": "0e5cc4599edcd642b3c7c6190be62b869d8f57aa5fc45d0acd9bd5a78e7e28b2",
+      "unchangedFromBeforeQUA006": true,
+      "profileMatches": true
+    }
+  ],
+  "noReceiptOrGuardRewrite": true,
+  "limit": "Global receiver remains failed; QUA006-only matrix/proof addition did not create this source/profile mismatch. Earlier API output-role failure remains historical, not this run terminal. Separate local unfinished purpose validation, not external blockage or fresh accepted scope."
+}

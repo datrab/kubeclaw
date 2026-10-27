@@ -1,0 +1,58 @@
+[
+  {
+    "path": "docs/site/README.md",
+    "bytes": 4740,
+    "sha256": "4763cdcb5b2c025e5669cb733a1f42797258e7515e12c77dd69ad5cfd984eadc",
+    "lines": 61,
+    "inspected": "full"
+  },
+  {
+    "path": "docs/site/understand/README.md",
+    "bytes": 15663,
+    "sha256": "e85dbee9eabba65faa19629f1d7ff98de5b8cb9b1466c15e77cfa1cbbc7a86e9",
+    "lines": 244,
+    "inspected": "full"
+  },
+  {
+    "path": "docs/site/use/quickstart.md",
+    "bytes": 9964,
+    "sha256": "682a5f91bf9a2d84294cb07cb181a4b3d71cd143d6f26d4599d1ded81f32f550",
+    "lines": 216,
+    "inspected": "full"
+  },
+  {
+    "path": "docs/site/use/workflows/README.md",
+    "bytes": 24517,
+    "sha256": "9c9b1aeb86337e331717815a520d67135e93fa2f578645aeea16b3960f25f522",
+    "lines": 371,
+    "inspected": "full; recovered initial truncation by complete rereads 1-195,196-209,210-371"
+  },
+  {
+    "path": "docs/site/use/operate.md",
+    "bytes": 51060,
+    "sha256": "bb2973932c6750da060670b27a10a136b38c59d0aa2c96dc337c8d3d8a783c79",
+    "lines": 892,
+    "inspected": "full; reread complete chunks 1-300,301-490,491-700,701-892 after first combined truncation"
+  },
+  {
+    "path": "docs/site/extend/developer-handbook.md",
+    "bytes": 186330,
+    "sha256": "c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1",
+    "lines": 2378,
+    "inspected": "1-290 only, selected host/dependency preparation; remaining sections not inspected"
+  },
+  {
+    "path": "docs/site/reference/glossary.md",
+    "bytes": 22558,
+    "sha256": "5ad457b77e66176c01ee5899ef46823d22bc499ba2a84ae2781a55f4cdad4e4a",
+    "lines": 316,
+    "inspected": "full"
+  },
+  {
+    "path": "docs/site/use/README.md",
+    "bytes": 11963,
+    "sha256": "26dff14ecff68d3a55b63f02c04df95765cf81e611f01c717dcfd1db8284ebb8",
+    "lines": 162,
+    "inspected": "full frozen copy; initially also read pinned executable copy, not used as current navigation authority"
+  }
+]

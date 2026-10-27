@@ -1,0 +1,26 @@
+[
+  {
+    "path": "project/project.json",
+    "bytes": 12705,
+    "sha256": "b879f65e025f908610556b8f28b11ca362cecea44308f1585808b0d873e1c099",
+    "inspection": "complete semantic sections; compiled JSON by all top-level keys and all eight stages; policy 1-340,341-700,701-973; project/platform full reread after first combined truncation"
+  },
+  {
+    "path": "project/compiled.json",
+    "bytes": 13645,
+    "sha256": "150374cb5e57dc008655ced7cdd165256e1985105891d10606cd3a3db1d44a27",
+    "inspection": "complete semantic sections; compiled JSON by all top-level keys and all eight stages; policy 1-340,341-700,701-973; project/platform full reread after first combined truncation"
+  },
+  {
+    "path": "project/operator-selected-lint-policy.json",
+    "bytes": 23438,
+    "sha256": "0c7ab94547e9d385336340992500d0400c0db3bd55be0e855f4fa55dc12f5a55",
+    "inspection": "complete semantic sections; compiled JSON by all top-level keys and all eight stages; policy 1-340,341-700,701-973; project/platform full reread after first combined truncation"
+  },
+  {
+    "path": "compiled-platform.local-providers.json",
+    "bytes": 9533,
+    "sha256": "bc32216bfbe3e99bfe81bf0312ef077174b0698a37fb01384d277847c7f210e6",
+    "inspection": "complete semantic sections; compiled JSON by all top-level keys and all eight stages; policy 1-340,341-700,701-973; project/platform full reread after first combined truncation"
+  }
+]

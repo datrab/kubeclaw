@@ -1,0 +1,1 @@
+{"at": "2026-10-27T12:38:35.040565+00:00", "command": "PATH=/usr/local/go/bin:$PATH node --max-old-space-size=4096 scripts/generate-local-helm-authorities.mjs --check", "exitCode": 1, "acceptanceScope": "Global receiver, not scoped QUA006 task"}

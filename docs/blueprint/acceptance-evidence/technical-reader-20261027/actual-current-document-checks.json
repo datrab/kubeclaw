@@ -1,0 +1,21 @@
+{
+  "at": "2026-10-27T12:34:31.398068+00:00",
+  "revision": "53b330b2ed2667d75ef326e233a0674812d53a28",
+  "checks": [
+    {
+      "command": "node scripts/docs-governance.mjs --check",
+      "exitCode": 0,
+      "log": "governance.log"
+    },
+    {
+      "command": "npm run docs:publication:check",
+      "exitCode": 0,
+      "log": "publication.log"
+    },
+    {
+      "command": "node scripts/docs-check-refs.mjs",
+      "exitCode": 0,
+      "log": "refs.log"
+    }
+  ]
+}

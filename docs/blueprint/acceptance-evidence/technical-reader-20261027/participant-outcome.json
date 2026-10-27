@@ -1,0 +1,201 @@
+{
+  "schemaVersion": "qua006-fresh-model-reader.v1",
+  "participant": "fresh_technical_reader (model, not human)",
+  "recordedAt": "2026-10-27T12:31:18.383798+00:00",
+  "documentationHead": "53b330b2ed2667d75ef326e233a0674812d53a28",
+  "executableRevision": "da43fa58743934a7a98dc8f2fb6205b062e83870",
+  "navigationStart": "docs/site/README.md",
+  "navigationManifest": "navigation-manifest.json",
+  "preparedManifest": "prepared-manifest.json",
+  "outcome": "completed-local-technical-exercise; no acceptance assertion",
+  "compileRunAudit": {
+    "status": "verified-actual-compiled-workflow",
+    "runId": "run:first-project-001",
+    "compiledDigest": "sha256:150374cb5e57dc008655ced7cdd165256e1985105891d10606cd3a3db1d44a27",
+    "stageCount": 8,
+    "artifactCount": 10,
+    "eventCount": 224,
+    "journalHead": "sha256:330ae7e32d71f775c9ed66b1582d30a79ed4ddcb5eaa9044f8269ba827d0564b",
+    "auditDigest": "sha256:5c3927091c316de286e0cb047141715546f47083430565519f15d94f935b93d0",
+    "allOriginalArtifactsVerified": true,
+    "rawBytesPreservedBeforeAudit": true,
+    "cleanup": "pending"
+  },
+  "commands": [
+    {
+      "name": "01-clone",
+      "command": "bash -c set\\ -euo\\ pipefail\\;\\ git\\ clone\\ --no-hardlinks\\ /home/node/.openclaw/workspace/kubeclaw-pr13-recovery\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/source\\;\\ cd\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/source\\;\\ git\\ checkout\\ --detach\\ da43fa58743934a7a98dc8f2fb6205b062e83870\\;\\ git\\ rev-parse\\ HEAD\\;\\ test\\ -z\\ \\\"\\$\\(git\\ status\\ --porcelain\\)\\\"\\;\\ node\\ --version\\;\\ npm\\ --version\\;\\ /usr/bin/git\\ --version\\;\\ /usr/bin/flock\\ --version\\;\\ cc\\ --version\\;\\ bash\\ --version\\;\\ /usr/bin/tar\\ --version\\;\\ /usr/bin/script\\ --version\\;\\ python3\\ --version\\;\\ command\\ -v\\ go\\;\\ go\\ version",
+      "exit": 1,
+      "started": "2026-10-27T12:26:06Z",
+      "stdout": "01-clone.stdout",
+      "stderr": "01-clone.stderr"
+    },
+    {
+      "name": "02-install",
+      "command": "bash -c set\\ -euo\\ pipefail\\;\\ umask\\ 077\\;\\ mkdir\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/npm-cache\\;\\ npm\\ config\\ get\\ omit\\;\\ sha256sum\\ package-lock.json\\;\\ npm\\ config\\ get\\ registry\\ \\|\\ node\\ -e\\ \\'let\\ v=\\\"\\\"\\;process.stdin.on\\(\\\"data\\\"\\,c=\\>v+=c\\).on\\(\\\"end\\\"\\,\\(\\)=\\>\\{const\\ u=new\\ URL\\(v.trim\\(\\)\\)\\;u.username=\\\"\\\"\\;u.password=\\\"\\\"\\;u.search=\\\"\\\"\\;u.hash=\\\"\\\"\\;console.log\\(u.toString\\(\\)\\)\\}\\)\\'\\;\\ npm\\ ci\\ --include=dev\\ --ignore-scripts\\ --cache\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/npm-cache\\;\\ node\\ -e\\ \\'for\\(const\\ n\\ of\\ \\[\\\"typescript\\\"\\,\\\"json-schema-to-typescript\\\"\\]\\)console.log\\(require.resolve\\(n\\)\\)\\'\\;\\ git\\ status\\ --short",
+      "exit": 0,
+      "started": "2026-10-27T12:26:15Z",
+      "stdout": "02-install.stdout",
+      "stderr": "02-install.stderr"
+    },
+    {
+      "name": "03-semgrep",
+      "command": "bash -c set\\ -euo\\ pipefail\\;\\ python3\\ -m\\ venv\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep\\;\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep/bin/python\\ -m\\ pip\\ install\\ --cache-dir\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/pip-cache\\ --require-hashes\\ --only-binary=:all:\\ -r\\ docker/python-tools/semgrep-nova.txt\\;\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep/bin/semgrep\\ --version",
+      "exit": 1,
+      "started": "2026-10-27T12:26:34Z",
+      "stdout": "03-semgrep.stdout",
+      "stderr": "03-semgrep.stderr"
+    },
+    {
+      "name": "04-nova-tools",
+      "command": "bash -c set\\ -euo\\ pipefail\\;\\ mkdir\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/nova-tools\\;\\ cp\\ docker/nova-tools/package.json\\ docker/nova-tools/package-lock.json\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/nova-tools/\\;\\ npm\\ ci\\ --prefix\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/nova-tools\\ --ignore-scripts\\ --no-audit\\ --no-fund\\ --cache\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/npm-cache\\;\\ npm\\ run\\ plugin-system:sandbox:build",
+      "exit": 0,
+      "started": "2026-10-27T12:26:35Z",
+      "stdout": "04-nova-tools.stdout",
+      "stderr": "04-nova-tools.stderr"
+    },
+    {
+      "name": "05-prepare",
+      "command": "bash -c set\\ -euo\\ pipefail\\;\\ export\\ SEMGREP_SETTINGS_FILE=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep-settings.yml\\ SEMGREP_LOG_FILE=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep.log\\;\\ export\\ PATH=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep/bin:\\$PATH\\;\\ export\\ COMPILED_TOOLS_BIN=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/nova-tools/node_modules/.bin\\;\\ semgrep\\ --version\\;\\ node\\ docs/site/use/workflows/examples/compiled-project.mjs\\ prepare\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/journey",
+      "exit": 0,
+      "started": "2026-10-27T12:26:58Z",
+      "stdout": "05-prepare.stdout",
+      "stderr": "05-prepare.stderr"
+    },
+    {
+      "name": "06-run",
+      "command": "bash -c set\\ -euo\\ pipefail\\;\\ export\\ SEMGREP_SETTINGS_FILE=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep-settings.yml\\ SEMGREP_LOG_FILE=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep.log\\;\\ export\\ PATH=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep/bin:\\$PATH\\;\\ export\\ COMPILED_TOOLS_BIN=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/nova-tools/node_modules/.bin\\;\\ python3\\ /home/node/.openclaw/workspace/operations/pr13/evidence/qua006-owner-policy-20261027/approved-gateway-exec.py\\ node\\ docs/site/use/workflows/examples/compiled-project.mjs\\ run\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/journey",
+      "exit": 0,
+      "started": "2026-10-27T12:27:30Z",
+      "stdout": "06-run.stdout",
+      "stderr": "06-run.stderr"
+    },
+    {
+      "name": "07-negative-owned-boundary",
+      "command": "bash -c export\\ COMPILED_TOOLS_BIN=/home/node/.openclaw/workspace/tmp/qua006-policy-reader/nova-tools/node_modules/.bin\\;\\ node\\ docs/site/use/workflows/examples/compiled-project.mjs\\ prepare\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/source/negative-owned-fixture",
+      "exit": 1,
+      "started": "2026-10-27T12:27:51Z",
+      "stdout": "07-negative-owned-boundary.stdout",
+      "stderr": "07-negative-owned-boundary.stderr"
+    },
+    {
+      "name": "08-provenance",
+      "command": "bash -c set\\ -euo\\ pipefail\\;\\ date\\ -u\\ +%FT%TZ\\;\\ id\\;\\ uname\\ -a\\;\\ cat\\ /etc/os-release\\;\\ pwd\\;\\ git\\ rev-parse\\ HEAD\\;\\ git\\ status\\ --short\\;\\ sha256sum\\ package-lock.json\\ docker/nova-tools/package-lock.json\\ docker/python-tools/semgrep-nova.txt\\;\\ df\\ -Pk\\ .\\;\\ findmnt\\ -T\\ .\\ -o\\ TARGET\\,FSTYPE\\;\\ node\\ --version\\;\\ npm\\ --version\\;\\ python3\\ --version\\;\\ /home/node/.openclaw/workspace/tmp/qua006-policy-reader/semgrep/bin/python\\ -m\\ pip\\ freeze\\;\\ test\\ \\!\\ -e\\ negative-owned-fixture",
+      "exit": 0,
+      "started": "2026-10-27T12:28:33Z",
+      "stdout": "08-provenance.stdout",
+      "stderr": "08-provenance.stderr"
+    },
+    {
+      "name": "09-verify",
+      "command": "node docs/site/use/workflows/examples/compiled-project.mjs verify /home/node/.openclaw/workspace/tmp/qua006-policy-reader/journey",
+      "exit": 0,
+      "started": "2026-10-27T12:28:48Z",
+      "stdout": "09-verify.stdout",
+      "stderr": "09-verify.stderr"
+    },
+    {
+      "name": "10-secure-proof",
+      "command": "python3 -",
+      "exit": 0,
+      "started": "2026-10-27T12:29:15Z",
+      "stdout": "10-secure-proof.stdout",
+      "stderr": "10-secure-proof.stderr"
+    },
+    {
+      "name": "11-active-check",
+      "command": "python3 /home/node/.openclaw/workspace/operations/pr13/evidence/qua006-owner-policy-20261027/participant/check-active.py",
+      "exit": 1,
+      "started": "2026-10-27T12:29:29Z",
+      "stdout": "11-active-check.stdout",
+      "stderr": "11-active-check.stderr"
+    },
+    {
+      "name": "12-cleanup",
+      "command": "node docs/site/use/workflows/examples/compiled-project.mjs cleanup /home/node/.openclaw/workspace/tmp/qua006-policy-reader/journey",
+      "exit": 0,
+      "started": "2026-10-27T12:29:29Z",
+      "stdout": "12-cleanup.stdout",
+      "stderr": "12-cleanup.stderr"
+    },
+    {
+      "name": "13-infrastructure-process-scope",
+      "command": "python3 -",
+      "exit": 0,
+      "started": "2026-10-27T12:29:49Z",
+      "stdout": "13-infrastructure-process-scope.stdout",
+      "stderr": "13-infrastructure-process-scope.stderr"
+    },
+    {
+      "name": "14-owned-temp-cleanup",
+      "command": "bash -c $'set -euo pipefail; python3 /home/node/.openclaw/workspace/operations/pr13/evidence/qua006-owner-policy-20261027/participant/check-active-scoped.py; test ! -e /home/node/.openclaw/workspace/tmp/qua006-policy-reader/journey; test -f /home/node/.openclaw/workspace/operations/pr13/evidence/qua006-owner-policy-20261027/participant/proof/proof-manifest.json; cd /home/node/.openclaw/workspace; python3 - <<\\'PY\\'\\nfrom pathlib import Path\\nimport shutil,json\\np=Path(\"/home/node/.openclaw/workspace/tmp/qua006-policy-reader\")\\nassert p.parent==Path(\"/home/node/.openclaw/workspace/tmp\") and not p.is_symlink()\\nshutil.rmtree(p)\\nassert not p.exists()\\nprint(json.dumps({\"status\":\"owned-temporary-root-removed\",\"root\":str(p)}))\\nPY'",
+      "exit": 0,
+      "started": "2026-10-27T12:30:10Z",
+      "stdout": "14-owned-temp-cleanup.stdout",
+      "stderr": "14-owned-temp-cleanup.stderr"
+    }
+  ],
+  "negative": {
+    "basis": "docs/site/use/workflows/README.md: keep helper destination outside selected Source; helper rejects destination inside/containing checkout",
+    "action": "prepare at source/negative-owned-fixture",
+    "exit": 1,
+    "observation": "AssertionError Unsafe fixture path; target absent; checkout worktree clean",
+    "recovery": "do not relax ownership check; correct out-of-source fixture already independently prepared/run; no failed-path output removal needed"
+  },
+  "assistance": [
+    {
+      "type": "operator prerequisite",
+      "supplied": "approved-gateway-exec.py supplies authorized Gateway endpoint/bearer and existing agent main/model openai/gpt-6.1-sol in memory",
+      "use": "documentation-directed fixture run only; bearer not displayed or stored"
+    },
+    {
+      "type": "operator infrastructure ownership",
+      "supplied": "Denied /proc PIDs were pre-existing pause/nginx/envoy infrastructure; parent authorized scope-limited owned temp cleanup after accessible-process check",
+      "limitation": "No exhaustive host visibility claimed"
+    }
+  ],
+  "readerErrors": [
+    "Optional Go probe unavailable exited setup group 1; compiled-route tool prerequisites do not include Go; quickstart generated-documentation checks were not run or claimed.",
+    "Initial Semgrep version probe omitted documented SEMGREP_SETTINGS_FILE/SEMGREP_LOG_FILE, hit read-only /home/node/.semgrep. Locked install itself succeeded; exact documented env fixed probe without source/dependency change.",
+    "Some combined tool outputs were truncated; canonical docs and prepared inputs subsequently reread completely in recorded semantic sections; native verification reread by all 10 artifacts. Audit raw bytes machine-verified and retained, not exhaustively read by model.",
+    "Initial active-user check exit1 on inaccessible infrastructure PIDs. Cleanup helper nevertheless launched before infrastructure clarification (reader sequencing lapse); helper returned verified-owned-cleanup. Whole temp root deletion waited for clarification and successful scope-limited check."
+  ],
+  "effects": {
+    "local": "fresh no-hardlinks clone; private npm and pip caches; private Semgrep venv; locked root and Nova-tool dependencies; sandbox build; private Git fixture/worktree/commit; Core journals/artifacts; loopback Buster production runtime",
+    "external": "approved Gateway implementation session created/completed/cleaned by product runtime; package registry/Python wheel downloads; no Kubernetes/registry provision or external system configuration changes",
+    "implementationSession": "agent:main:subagent:9287b670-b9f4-4b6f-af0c-93201ab53d88"
+  },
+  "cleanup": {
+    "helper": "verified-owned-cleanup",
+    "temporaryRoot": "/home/node/.openclaw/workspace/tmp/qua006-policy-reader",
+    "temporaryRootAbsent": true,
+    "activeAccessibleOwnedPathUsers": [],
+    "inaccessibleInfrastructurePids": [
+      1,
+      1526,
+      1554,
+      1555,
+      1556,
+      1557,
+      1558,
+      1559,
+      1560,
+      1561,
+      1562,
+      1563,
+      1564,
+      1565,
+      1566
+    ],
+    "protectedEvidenceRetained": true
+  },
+  "claimsNotMade": [
+    "human acceptance",
+    "live cluster readiness",
+    "deployment",
+    "cgroup-qualified isolation",
+    "release acceptance",
+    "register acceptance"
+  ],
+  "sourceChanges": []
+}

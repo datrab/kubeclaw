@@ -1,0 +1,1303 @@
+[
+  {
+    "record": {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "revision": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+      "author": "Documentation implementation authors",
+      "reviewer": "/root/review_publication",
+      "gateIds": [
+        "A912-02"
+      ],
+      "requirementIds": [
+        "PUB-001"
+      ],
+      "pages": [
+        "docs/site/reference/documentation-site.md",
+        "docs/site/README.md",
+        "docs/site/understand/README.md",
+        "docs/site/use/README.md",
+        "docs/site/extend/README.md",
+        "docs/site/reference/README.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/product-surfaces.md"
+      ],
+      "sources": [
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "scripts/docs-publication.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node --test scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs scripts/tests/docs-tree-boundary.test.mjs scripts/tests/docs-markdown-anchors.test.mjs scripts/tests/docs-check-links.test.mjs",
+          "exitCode": 0,
+          "observation": "Independent reviewer executed 66 passing tests, zero skips; finite selector, unexpected Markdown and symlink rejection, link rebasing and anchors."
+        },
+        {
+          "command": "Independent shared-parser canonical navigation traversal and role/task label review",
+          "exitCode": 0,
+          "observation": "166 of 166 positively registered pages reachable within three local page decisions: depth counts 1/22/142/1. Meaningful home and role/task labels inspected."
+        },
+        {
+          "command": "Independent static-reader Source/reader-quality impact review plus original 76-test custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "17 impacted existing records re-bound only for their affected files. Positive publication/asset selection retained; no broader API/live/deployment/all-accessibility acceptance. Review docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "command": "Independent search-only Source/Reader/Quality impact review and 77-test original custody/publication/adapter/reader run",
+          "exitCode": 0,
+          "observation": "Same prior facts and publication boundaries preserved; changed files re-bound, not a broader re-approval. Source report docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "command": "Independent rendered-Source whole gate and narrow 21-record Source/Reader/Quality impact review; original 84-test custody/publication/adapter/reader/Source run",
+          "exitCode": 0,
+          "observation": "Changed Source boundaries preserve previous facts and limits. Complete actual built output and Source bytes verified; not broader historical semantic/runtime approval. docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "command": "Independent whole PUB004 and narrow 21-record changed-boundary review with current original88tests/fullSource/preview/browser observations",
+          "exitCode": 0,
+          "observation": "180output hashes matched,all1660excerpts freshlyverified;unchanged priorsemantic/runtime boundaries. docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent whole A91207 and narrow24-record changed-boundary review; original91tests and final actual Source/preview/SVG/browser proof",
+          "exitCode": 0,
+          "observation": "209output hashes,27freshSVGhashes,1660fresh excerpts; prior scoped facts and limits preserved without whole semantic/runtime reapproval. docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "command": "Independent eleven-record bounded tree/metadata/receipt preservation review; tree and custody checks",
+          "exitCode": 0,
+          "observation": "54 tree-protection tests,30 custody tests,64 documentation roles PASS. All2965old classification entries unchanged;954explicit internal additions;3926files,0misplaced or active stale legacy references. Governance167pages/publication167pages51plugins/docs167Markdown PASS. docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent nineteen-record preservation plus actual c0584fc0 reader build/checks",
+          "exitCode": 0,
+          "observation": "27freshSVGs;177HTML/209hashes/36952localtargets;1692excerpts886objects;14464SourceLinks3739objects;12searchquestions;4changeddiagrams\u00d73widths offline/noJS/keyboard=12observations,0findings. SixPNGs visuallyinspected. Full501page/81diagram/27fallback/9Axe remainshistoricalbaseline, not freshly rerun. docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json"
+        },
+        {
+          "command": "Independent d0bb scoped preservation addendum plus actual publication Reader artifact/search/Source/previews/diagram and offline-browser checks",
+          "exitCode": 0,
+          "observation": "handoffs/pr13-finish-20261021/checkpoint-d0bb-53-record-preservation-addendum.md plus named source-only/new-topic reviews. 171canonical/181HTML/38517targets/213hashes;12search;14635SourceLinks3829objects;1741excerpts905objects;27freshSVG;52browser observations0findings0network. No global config/CI/runtime/release success."
+        },
+        {
+          "command": "Current6d Reader artifact/search/Source/previews/diagrams/offline-browser and extracted delivered archive checks",
+          "exitCode": 0,
+          "observation": "171canonical/181HTML/38554localtargets/213digests;12search;14665SourceLinks3851objects;1763excerpts921objects;27freshSVG(allrecords unchanged);13offline/browser observations0findings0network under corrected canonical-destination criterion; final ZIP233members18copiedassets Sourcecompared, extraction artifact/searchPASS. reader-6d-scope-preservation.md retains failed expectation/environment attempts and boundaries. No overall/runtime/release approval."
+        },
+        {
+          "command": "Current cfc97 Reader and extracted archive checks with independent22scope preservation",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        },
+        {
+          "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
+          "exitCode": 0,
+          "observation": "Understand route changed to the substantive central Ops guide; no canonical destination removal or redirect-only loop is introduced. Historical at-most-three-decision navigation observation remains historical, not a new browser traversal. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250\u21923408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual unchanged original six separate commands:177-page committed Source6b773aef Reader build, artifact/search/Source-link/source-preview/diagram checks pass via retained shared browser runtime. eb7bc20f changes only selected native-entry matcher custody digest, no Reader input or output bytes.153 focused and35 final owner-purpose controls pass; original capability6/6 Add/Change/Remove preserve green baseline/restoration and separate parser errors. Complete70 rich dependency report equals original; native51package/70registration strict join and physical1006caller1249selected/all105operation consequences independently Source-reviewed. No new practical participant, runtime, live-host, human/screenreader, release or global DATA acceptance. Final separately reviewed exact private-helper consumer qualification adds15selectors/34facts/0children,3docs-only entries and only two fixed physical purpose inputs;80 refreshed generic guard controls and8 cold/warm physical refusal/restoration observations pass. Reader inputs remain exact."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Six separate original Reader commands passed against committed8fa9ed9b:177pagebuild and artifact/search/Source-link/source-preview/diagram checks.53original custody/purpose controls and54original tree controls pass;110originalrole guards pass with affected tree role rechecked after classification. Complete37original contracts/3089physical scoped references/1264unique files accounted;17semantic+19publication reviews reused and exact19classification/nine-scope followup independently clean. No new gate, practical/human/live/runtime/release/DATA acceptance."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build\nnode --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-search.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs\nnode --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual six separate original commands pass at committed c0d892fb;177canonical/187HTML/241outputdigests/40887localLinks,12searchquestions,15062verifiedSourceLinks/4082objects,435previewboxes/2000excerpts/1070objects,28deterministicSVGs. Complete31original scoped contracts/physical vectors independently preserved in six pinned Terra/high/P2 one-pass groups; unchanged Source reviews and156controls/110role guards reused. Supported aggregate --check and ownership checker pass. No new human/practical/runtime/release/DATA/gate acceptance."
+        },
+        {
+          "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
+          "exitCode": 0,
+          "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "Independent complete19 original-scope preservation; six native Reader controls and four bounded browser cases",
+          "exitCode": 0,
+          "observation": "ALL19_ORIGINAL_SCOPES_PRESERVED=PASS. Complete additive canonical navigation, one generated metadata row, full changed-page search record and 727-file vectors preserve original Source/Reader/Quality scopes and limits; no new accepted IDs."
+        },
+        {
+          "command": "Independent actual five original scopes Source/Reader/Quality preservation; six native Reader controls and four bounded offline browser cases",
+          "exitCode": 0,
+          "observation": "All five original scopes substantively preserved on complete457-file vectors and full operator hub. Only six original entry routes/platform ownership clarified; owner map unchanged. Prior human/runtime/toolrole/DATAUNKNOWN/release limits and all historical receipts retained; no new accepted IDs or destination-body approval."
+        },
+        {
+          "command": "Independent actual14 original scopes Source/Reader/Quality preservation; committed6Reader controls and4bounded offline browser cases",
+          "exitCode": 0,
+          "observation": "All14 original scopes substantively preserved on full546-file vectors and actual canonical Hub delta. Only eight explicit taskroutes and bounded migration/runtime.dispatch entries added. Whole owner map unchanged. All historical failures/qualifications/runtime/human/toolrole/DATAUNKNOWN/release limits retained; no newacceptedIDs or downstreamprocedure approval."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent navigation-only acceptance for PUB-001 and A912-02; all canonical pages reachable through meaningful role/task links in at most three decisions. Reviewed sources and pages unchanged since baseline.",
+      "limits": [
+        "Navigation reachability only, not substantive acceptance of all destinations.",
+        "Publication/reference/boundary checks remain failed; no successful current output build, search, accessibility, rendered/offline task or live acceptance claimed.",
+        "Pre-existing dirty events.md excluded and preserved."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "reviewer": "/root/close_developer_maintenance",
+          "verdict": "PASS",
+          "previousReviewedRevision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "changedDependencies": [
+            "docs/site/extend/developer-handbook.md",
+            "docs/site/extend/plugin-catalogue/README.md",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "summary": "Independent targeted source/reader/quality impact review explicitly preserves the original accepted requirement/gate scope. Runtime/configuration/developer reviews combined where shared dependencies cross; full reference/publication/live exclusions retained."
+        },
+        {
+          "reviewer": "/root/review_example_publication",
+          "previousReviewedRevision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "revision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
+          "changedDependencies": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent exact additive first-project impact review preserves prior accepted scopes. Old workflowbody and all166publicationroutes unchanged;exactsourceassetcopiedbyte-for-byte,unapprovedneighborstillrejected."
+        },
+        {
+          "reviewer": "/root/review_first_project",
+          "previousReviewedRevision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
+          "revision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+          "changedDependencies": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent SPC008 impact review: one exact new canonical lease page/classification/route,167pages within3steps;old entries unchanged. Generated map adds only newpage and accepted firstprojectmetadata. Prior accepted requirements/gates and limits preserved."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
+          "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+          "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "changedDependencies": [
+            "docs/site/README.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Independent publication impact preserves original requirement/gate scopes and limits.53generated pages change only commit IDs;505cited source pairs byte-identical. Prose corrections/entry links preserve technical meaning. Derived page-map lastVerified fields use the same audited revision substitution only; ownership/routes/sources/checks byte-identical after revision normalization."
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; schema-and-pin-review plus communication-fifth-review",
+          "previousReviewedRevision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
+          "revision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "changedDependencies": [
+            "docs/site/extend/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Extension citation revisions changed only to byte-identical Source; prose and ranges unchanged. Documentation map changes only communication lastVerified metadata. Whole communication review explicitly preserves COM002/006/007 scopes and does not weaken existing facets. All other bound pages/Source dependencies byte-identical; no runtime or global gate extension.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/schema-and-pin-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/communication-complete-20261021/communication-fifth-review.json"
+          ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21; core-guide-byte-review and host-release-followup",
+          "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+          "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "changedDependencies": [
+            "docs/site/extend/developer-handbook.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Source URLs/evidence headers only:125cited Source files checked; only capability-security test differs, strengthening exact28-capability provider and case parity with four added cases; original native test passes. Core checker retains exact current/pinned byte guard. MCP/handbook citation endpoints exclude only blank line51, retaining all assertions. Existing whole content scopes preserved, no runtime/host-kernel/global/gate qualification. Other bound dependencies byte-identical.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/core-guide-byte-review-20261021.json",
+            "docs/blueprint/acceptance-evidence/host-release-followup-20261021.json"
+          ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview 2026-10-21 whole-state correction/final, platform correction and publication scoped impact",
+          "previousReviewedRevision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
+          "revision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "changedDependencies": [
+            "docs/site/extend/platform/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "State final audit preserves DAT002/003/007/008 and OPR007 after path/encryption/offline Redis corrections. Platform correction review preserves already accepted router topics. Publication scoped review preserves accepted COM002/003/004/005/006/007/009/012 and OPL topics after language-only and generator-owned Secret-copy correction. All other bound dependencies unchanged. No global generator/publication/runtime acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/ready-topics-20261021/publication-scope-review.json",
+            "docs/blueprint/acceptance-evidence/ready-topics-20261021/state-final-review.json",
+            "docs/blueprint/acceptance-evidence/ready-topics-20261021/platform-final-review.json"
+          ]
+        },
+        {
+          "reviewer": "Independent Codex autoreview ready-correction-final plus source-freshness and freshness-receipt scopes",
+          "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "changedDependencies": [
+            "docs/site/extend/platform/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Whole completed Source/reader audits reused; provenance corrections preserve prior data/platform/reader scopes. Metadata map only mirrors scoped verification. Generator change excludes only internal completion JSON while denying input/citation authority; unchanged rendering/CLI/configuration/SDK contracts and exact native guards preserved. No global/runtime/rendered gate acceptance.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/ready-correction-final-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/source-freshness-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-receipt-review.json",
+            "docs/blueprint/acceptance-evidence/finished-reader-closeout-20261021/freshness-role-propagation.json"
+          ]
+        },
+        {
+          "previousReviewedRevision": "c5d0062db699056ebc044c0a016a77ace6a1ede9",
+          "revision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "changedDependencies": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/extend/README.md",
+            "docs/site/product-surfaces.md",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "reviewer": "Scope-aware independent union: original topic reviewers; operator_acceptance checkpoint53; custody_review maintenance locator correction; /root independent authored package/telemetry/pin scopes",
+          "verdict": "PASS",
+          "summary": "Only changed dependencies preserved against the named independent topic reports and actual d0bb Reader. Original summary and limitations retained; no duplicate or aggregate/release approval."
+        },
+        {
+          "previousReviewedRevision": "d0bb52c4d8bcf323c0ff32b95e8e3120ffa6eefb",
+          "revision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "reviewer": "/root independent semantic delta/Reader review; workflow_acceptance exact portal correction and Buster followup; operator_acceptance nonauthor finite-code review",
+          "verdict": "PASS",
+          "summary": "Only exact changed dependencies independently reviewed against named reports; unchanged original scopes/limits reused. Reader6d public bytes unchanged ataf1; no duplicate topic/gate acceptance or aggregate claim. See reader-6d-scope-preservation.md and finite-context-ap08-independent.md."
+        },
+        {
+          "previousReviewedRevision": "af1b987ee4d461fc6205a18553db3e21461ca203",
+          "revision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "operator_acceptance independent22scope preservation; HTTP chapter reused nonauthor workflow_acceptance verdict; parent actual177Reader",
+          "changedDependencies": [
+            "docs/site/use/workflows/README.md",
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original scope and limits preserved; no new approval. See checkpoint-cfc97-22-record-preservation and reader-cfc97-closeout."
+        },
+        {
+          "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "revision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/workflow_acceptance",
+          "verdict": "PASS",
+          "summary": "Existing canonical role/task routes and all old docsite H2 targets retained. New preview/redirect sections supplement rather than replace the original page. Navigation-only acceptance persists, not substantive destination acceptance.",
+          "report": "handoffs/pr13-finish-20261021/accepted-scope-preservation-8522e25d.json",
+          "limit": "Existing named scope/reviewers/observations/limits retained; zero new counts or global approval."
+        },
+        {
+          "previousReviewedRevision": "8522e25d9b284e9bf1a34dedf313a806d97c28ee",
+          "revision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/custody_review; /root actual native Reader checks",
+          "verdict": "PASS",
+          "summary": "New documentation-site subsection stays within the same canonical page/section hierarchy. Positive pages, task links and route ownership are unchanged; metadata binding is not a new navigation gate. Historical reachability result needs separate fresh mechanical binding. Actual frozen Reader/2normalbuilds and output/Git inspection separately witnessed; historical checks and original scopes/limits remain unchanged.",
+          "report": "handoffs/pr13-finish-20261021/a91211-final-57-preservation.json",
+          "limit": "Existing named scope preserved only; no new count or globalqualification/runtime/release approval."
+        },
+        {
+          "previousReviewedRevision": "0ded6b68eb6170c4ea5e76251ad5e13adf2f664b",
+          "revision": "7ef16585ba04eba3628cead304be85307436f091",
+          "changedDependencies": [
+            "docs/site/extend/README.md",
+            "docs/site/understand/README.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "reviewer": "/root/operator_acceptance",
+          "verdict": "PASS",
+          "summary": "Within this original declared scope, the exact recent changed paths are individually bound to the coherent semantic/consumer review above; unchanged named original product mechanisms and original limits remain supported. These are purpose/content preservation decisions, not hash-only source refresh or a new full transitive product audit. Actual7ef177canonical/187HTML/240outputs normal artifact and complete local/source/excerpt/diagram checks are terminal0; current two normal419file builds byte-equal; exact declared route/source metadata checked. All531page and1233box observations preserve noJS/native fields/links/containment; initial6titlemeasurement failures retained and exact6case retake passes. Whole search12 plus actualoffline2, real240GET preview and forensic242member/19Sourceasset ZIP/extracted checks preserve only original reader scope. Four selected320px visual views are explicitly limited, not full accessibility/freshpersona proof. Original technical meaning, negative-vs-execution distinction, historical/revision/live limits and reader-task decisions retained via named nonauthor topic/delta reviews. No removed condition or broader authority was hidden by field completion. Existing historical failure/unexecuted/native/global configuration stops stay unchanged.",
+          "report": "handoffs/pr13-finish-20261021/reader7ef-prior88-preservation.json",
+          "limit": "Only original named supported or NOT_READY scope preserved; original author/reviewer/checks/summary/limits/verdict/gate/requirement IDs remain immutable. No new count, global qualification or release grant."
+        },
+        {
+          "previousReviewedRevision": "7ef16585ba04eba3628cead304be85307436f091",
+          "revision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+          "changedDependencies": [
+            "docs/site/extend/developer-handbook.md"
+          ],
+          "reviewer": "/root/operator_acceptance; authored quickstart delta supported by independent /root review",
+          "verdict": "PASS",
+          "summary": "Corrects misleading Markdown-only staging description to the actual original publisher build: previews/diagrams/HTML/page records/report. Keeps separate checks and unexecuted/failed outcomes, owner cleanup and all outside procedure scopes. Two final Sourceboxes accurately separate map/input selector from current full build; no new combined execution proof. Root independent full bounded Source/procedure review supplies this correction. Actual original6a4normal Reader/five checks terminal0:177canonical187HTML240verifiedoutputs40834localtargets;12search;14851SourceLinks3977objects;411/411previewboxes1888excerpts983objects;27freshSVG. Actual focusedv3browser12page/84box/2search0findings0network, all177physical/staged/HTML/pageRecord bindings stable; oldfull7ef531/1233+6retakes and5543/42 retained only for exactunchanged scopes. Root visually viewed5real320viewport screenshots; bounded readability, not fullaccessibility. v2element screenshot timeout/incomplete1/28 retained separately. Current archive242safeunique members/19Sourceassets/extracted artifact+search0 and240byte-exactloopbackGET preserve delivery only.",
+          "report": "handoffs/pr13-finish-20261021/reader6a4-nineteen-record-preservation.json",
+          "limit": "Only exact original scope preserved. Original author/reviewer/checks/summary/limits/verdict and IDs immutable; no new count or global/runtime/release grant."
+        },
+        {
+          "previousReviewedRevision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+          "revision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+          "changedDependencies": [],
+          "reviewer": "/root/reader_closeout (independent final Reader); original named nonauthor Source/Quality delta proofs retained; /root integration",
+          "verdict": "PASS",
+          "summary": "Preserve this exact original accepted scope after independently reviewed Source deltas and actual current Reader receiving. Original attribution, checks, summary, limits, review, verdict, pages, sources and accepted IDs are retained; no new acceptance or recount.",
+          "sourceReviewBasis": {
+            "originalRecordCanonicalSha256": "0087fd05e73e6d1958383ee5fbaeaa44a6c9086cb9f343b5315222427aca6033",
+            "originalRecordRawObjectSha256": "56245d8bf7f9d80ba2ead538e7bee7201cc88e68863b477ec9134698ef8a962d",
+            "originalRevision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+            "latestPreviouslyAcceptedImpactRevision": "6a4e6de68411c4fe21ddb10b003f17c979a67825",
+            "ownRevisionLiteralIntersections": [],
+            "latestAcceptedImpactLiteralIntersections": [],
+            "sourceAffected": false,
+            "renderedCorpusOutputAffected": true,
+            "transitiveMappings": [],
+            "perRecordSemanticReason": [
+              {
+                "group": "NO_IDENTIFIED_SCOPE_DELTA",
+                "basis": "Ownrevision and latestaccepted-impact actualGitdiffs have no declaredpage/source-prefix intersection; actual changed3code import ancestry has no boundsource intersection. No semantic readoption is needed; retain originalscope/verdict/evidence/limits and pendingcurrentartifact binding only."
+              },
+              {
+                "group": "CURRENT_RENDERED_CORPUS_ONLY",
+                "basis": "Underlying owned Source/pages remain exact within declaredscope, but whole reader/noJS/offline/redirect/page-record output universe incorporates12changedcanonical inputs. Require original currentartifact/pageRecords/Source/packaging checks and bounded fallback evidence without reaccepting unchanged mechanism."
+              }
+            ],
+            "sourceAssessment": "ORIGINAL_SCOPE_UNCHANGED_CURRENT_ARTIFACT_BINDING_PENDING",
+            "nonAuthorAttribution": "Exact named Source/semanticReader/Quality proofs in frozen source-change-groups; authored Buster/Echo/style/repin covered by Root/Custody nonauthor review, not this author selfapproval."
+          },
+          "actualNonBrowserEvidence": {
+            "report": {
+              "path": "/home/node/.openclaw/workspace/tmp/pr13-finish-20261021/preservation-487f4e00/reader-results-addendum.json",
+              "sha256": "323a1ebc75be001d4221ed6b9f058b0cdff5b2825a97a857994a12c953db7732",
+              "bytes": 88607
+            },
+            "terminalScope": "2normalbuild0+7successfuloriginalchecker0; initialSVG1 retained; previewserver teardown-15 separately",
+            "summary": {
+              "normalBuildPair419FilesByteEqual": true,
+              "canonicalPages": 177,
+              "htmlPages": 187,
+              "manifestOutputs": 240,
+              "localLinks": 40855,
+              "searchQuestions": 12,
+              "sourceLinks": 14972,
+              "sourceObjects": 4054,
+              "sourceBoxes": 433,
+              "boxesWithPreviews": 433,
+              "excerpts": 2006,
+              "previewSourceObjects": 1064,
+              "freshSvgHashes": 27,
+              "safeZipMembers": 242,
+              "gitAssets": 19,
+              "httpGetExactBodies": 240
+            }
+          },
+          "readerEvidenceDisposition": {
+            "R1": "PASS",
+            "R2": "PASS",
+            "R3": "PASS",
+            "R4": "PASS",
+            "R5": "PASS",
+            "R6": "PASS",
+            "R7": "PASS"
+          },
+          "requiredCurrentReaderEvidence": [
+            "R1",
+            "R2",
+            "R3",
+            "R4",
+            "R5",
+            "R6",
+            "R7"
+          ],
+          "focusedChangedCanonicalPages": [],
+          "browserFinalization": {
+            "status": "PASS_BOUNDED_RECEIVING",
+            "independentReader": {
+              "path": "docs/blueprint/acceptance-evidence/reader-487f4e00-closeout-20261022/reader-resume-final-20261022/final-adjudication.json",
+              "sha256": "ceab00f3b38b44f3409bfc3aafe46ae85e81603dbf6076a4e1ce26c8c3f80ff3"
+            },
+            "all94IndividualDispositions": {
+              "path": "docs/blueprint/acceptance-evidence/reader-487f4e00-closeout-20261022/reader-resume-final-20261022/all94-reader-dispositions.json",
+              "sha256": "af3a6cdd22fe36dfc6476c8f76967e9b5c8de168d0a328f09d01ffd0395f7d04"
+            },
+            "whole433Ledger": {
+              "path": "docs/blueprint/acceptance-evidence/reader-487f4e00-closeout-20261022/reader-resume-final-20261022/current433-ledger.json",
+              "sha256": "d464aae4c8e3494c01a3493a2efbc7bda2647ffcd282eb5eadb3272b3716773d"
+            },
+            "observations": "Original60 page widths,432 selected-box widths and633 table cases; original137 native endpoint failures retained. Exact137 retests plus57 supplement table cases and3 offline native searches pass. All23 changed/new boxes have same-block six fields and native disclosure at3 widths.",
+            "visualScope": {
+              "path": "docs/blueprint/acceptance-evidence/reader-487f4e00-closeout-20261022/resumed-root-visual-observation.json",
+              "sha256": "43aa46e254a6233acd29bea1ffc9aea430fb2d8f59c7558c2206e251489fdbd2"
+            },
+            "limits": "Scroll-mediated access, not simultaneous columns. No fresh persona, axe/screenreader or live product/runtime/role-consumer approval."
+          },
+          "report": "docs/blueprint/acceptance-evidence/reader-487f4e00-closeout-20261022/root-adoption.json",
+          "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
+          "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
+          "wholeRenderedOutputChangedCanonicalPages": [
+            "docs/site/extend/lint.md",
+            "docs/site/reference/buster-error-codes.md",
+            "docs/site/reference/buster-suites.md",
+            "docs/site/reference/lint-policy.md",
+            "docs/site/reference/lint-rules.md",
+            "docs/site/understand/buster.md",
+            "docs/site/understand/data-and-state.md",
+            "docs/site/understand/echo.md",
+            "docs/site/understand/openclaw.md",
+            "docs/site/understand/telemetry.md",
+            "docs/site/use/workflows/redis-replay-recovery.md",
+            "docs/site/use/workflows/wait-resume.md"
+          ]
+        },
+        {
+          "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "revision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+          "changedDependencies": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "reviewer": "Pinned independent Codex gpt-5.6-terra/high/P2; full8chunk delta and3chunk source-only nine-scope assessment",
+          "verdict": "PASS",
+          "summary": "Preserve only original accepted scope and limits:522finite internal additions;3941oldrowobjects and immutablebaseline exact;all declared pages/other sources byte-identical against original reviewed revision. Canonical publication selection unchanged. No new counts or fresh Reader exercises.",
+          "originalRecordSha256": "676915a1b4185f9db4a6cccd3383bb1ed62270cd44c668c70f87ebe53403914c",
+          "report": "handoffs/pr13-finish-20261023/tree-classification.md",
+          "evidence": "operations/pr13/evidence/tree-classification-20261023/",
+          "inspectionLimit": "Source-only independent assessment with complete necessary adjacent sources/contract fields supplied in-band; no reviewer checkout inspection or tests. Coordinator67tree+14publication controls and complete nine-scope vectors separately attributed. Unchanged historical checks/impact histories retained, not reapproved. Baseline API DATA and Knip failures unchanged."
+        },
+        {
+          "revision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "previousReviewedRevision": "1b2921a14c0a5b1342a83fadadb4316fa21071c5",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 bounded original-scope Source/Reader/quality review",
+          "result": "PASS \u2014 original bounded scope preserved, not recounted; independent Source-only noP0-P2 review in two complete original-contract groups,3chunks each, .87/.87. Original review aspects and practical observations retain their original scope; no fresh independent Reader exercise claimed.",
+          "scope": "Complete original contracts and original Git scoped vectors/1210file union supplied losslessly. Existing shared generator extraction preserves full70rich report and current Reader outputs; opt-in strict native registration dependency authority report remains source observation, not operational owner or runtimeDATA. Exact finite purpose/qualification/scalar/native/matcher consequences only; historical observations and all original summaries/limits unchanged.",
+          "limits": "Original DATA artifacts.ts41/all5UNKNOWN, selected-release Knip, unrelated publication SourceURL pins and human/live/screenreader obligations remain open. Six coordinator artifact checks are not fresh independent participant exercises. This appends preservation only, never whole-topic/global or new counter acceptance.",
+          "evidence": "handoffs/pr13-finish-20261023/native-dependency-authority.md"
+        },
+        {
+          "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+          "previousReviewedRevision": "d0a5db771218b7a23e615c72f7159c3f0f3f5dec",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2;17semantic+19publication preservation plus exact19internalclassification/9affected-scope followup",
+          "result": "PASS \u2014 original bounded scope preserved, not recounted",
+          "scope": "Complete37original contracts/checks/summary/limits and3089physical scoped references/1264unique files accounted. Existing17semantic+19publication clean onepass topic reviews reused; only19internal evidence classifications and9shared-classification scope effects followed up, adding1original first-project-example scope whose guide/code remain unchanged. All4463prior classification records retain originalUTF8bytes/values; all4470prior tree paths/classes retained,19newinternal paths only. Supported Source-pin regeneration and final6actualReadercommands at committed8fa9ed9b pass. Original review/verdict/summary/limits/practical observations and accepted counts unchanged; no new category verdict fabricated.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-semantic-original-scope-preservation-review.json",
+            "docs/blueprint/acceptance-evidence/opl005-common-owner-candidate-20261024/run1251-publication-original-scope-preservation-review.json"
+          ],
+          "limits": "Original API/DATA artifacts.ts41/all5UNKNOWN, selected-releaseKnip and human/live/screenreader/participant constraints remain. Negative runtime-schema and unchanged cwd-prefixed consumer-discovery advisories retained in operations next-batch/dispositions; no runtime/schema/validator code or guard waived. Provisional36author-owned draft preserved outsideRepo, not finalacceptance; only final37revision bindings and append-only actualcheck/impact metadata applied. No newwhole70/OPL005acceptance.",
+          "classificationFollowup": {
+            "reviewer": "Independent pinned Terra/high/P2 exact19internalmetadata and9originalscope followup",
+            "structuredVerdict": {
+              "findings": [],
+              "overall_correctness": "patch is correct",
+              "overall_explanation": "The bundle is a scoped evidence/package update. It preserves the stated 19-record classification delta as an external patch, retains the prior negative finding, and does not introduce executable or runtime changes. No P0-P2 defect is demonstrated within the supplied changes.",
+              "overall_confidence": 0.86
+            },
+            "scope": "19explicit internal-documentation-input additions; zero existingclassificationline deletions/rewrites; canonical/legacy/deletion roles unchanged. Oneadditional originalexample scope preserved, not recounted."
+          }
+        },
+        {
+          "revision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+          "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2; six complete semantic preservation groups",
+          "result": "PASS \u2014 original bounded scope preserved, not recounted",
+          "scope": "Exact31original full summaries/limits/checks/pages/sources plus complete physical vectors. Supported reusable native report, raw schema closure and deterministic aggregate; exact finite native/purpose consequences reviewed, no role grant. Six committed original Reader commands pass; no fresh practical/human observations.",
+          "evidence": [
+            "docs/blueprint/acceptance-evidence/README.md"
+          ],
+          "limits": "Original artifacts.ts41 DATA/all5UNKNOWN, Knip, human/live/runtime limits unchanged. Initial B2 import-path advisory retained and disproved by actual single-JSON51package report, then independently clean with full omitted consumer context; no Source correction or gate waiver."
+        },
+        {
+          "revision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+          "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 complete32scope preservation plus bounded final new-section/sourcepin adoption",
+          "result": "PASS \u2014 original bounded scope preserved, not recounted",
+          "scope": "Complete original record and full declared page/source vector reviewed atbd655794. Only workflow index metadata/taskrow/newsection and exactly3 explicit publicexample asset allowances changed; original othercontents/sourcevectors unchanged. Final delta only new-section codepin, explicit HTTPS/query contract, source-external destination explanation and activevoice; codeguard follow-up independently assessed. Actual current6publication/Reader controls pass.",
+          "limits": "Original summary/author/reviewer/checks/review/limits/history/verdict and practical dates unchanged; no newpersona or globalDATA/Knip/product/runtime/live/deployment/release qualification."
+        },
+        {
+          "previousReviewedRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+          "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete26originalscope preservation",
+          "changedDependencies": [
+            "docs/site/extend/first-plugin.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original bounded scope preserved after independently reviewed observer companion/guide and six literal asset additions, complete three-row owner-generated metadata delta and final native Reader controls. Historical observations retained at original scope; no new acceptance.",
+          "originalRecordSha256": "01d3f5028578af70098ee3a1a3e5edf29afb1b56e0272d98202d02194cb561cb",
+          "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
+          "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
+          "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        },
+        {
+          "previousReviewedRevision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "revision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 independent complete19 original-scope preservation",
+          "changedDependencies": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "verdict": "PASS",
+          "summary": "New10topicmap routesall25destinations to positivelyselectedcanonicalpages; currentfullpage/12searchqueries/nativeartifact and4offlinebrowsercases preserve real reader find/navigation duty.",
+          "originalRecordSha256": "5f2e3637f3f478541b202d2cbf8497017dccca8cb04f699b207e132a71dc5507",
+          "report": "docs/review/parity-topic-map-20261026.json",
+          "reportSha256": "a73d41327f2166dc5e67afc8345c58fe68504373617855f9396f94be11efca66",
+          "inspectionLimit": "Complete original contracts/limits and 727-file vectors; unchanged historical receipts reused without revision. Coordinator checks are not new independent human/runtime qualification."
+        },
+        {
+          "previousReviewedRevision": "343810187d8897412b5f49b21b2f9c684718cb5e",
+          "revision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 actual five original-scope preservation",
+          "changedDependencies": [
+            "docs/site/use/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only adds exact original six operator entry routes, clear run-recovery vs restore boundary and source-backed platform ownership. Full old hub procedures/contracts unchanged; generated owner map exact unchanged. Actual native Reader/bounded browser results supplied separately; no fresh human/live/destination-body approval.",
+          "originalRecordSha256": "bfc4a2ac311eb8f57eb628a2ba5acec01758f0b08cd32c3868e2a948c9fef208",
+          "report": "docs/review/parity-operator-entry-20261027.json",
+          "reportSha256": "d5736303591e5fd9a0e1ab47f41aa7efd18122833f983d948ead84f5d040ef4e",
+          "inspectionLimit": "Complete original nonhistory fields/qualifications, contracts and full vectors plus immutable history bindings supplied. No fresh runtime/persona, no oversized destination-body approval. All old receipts and limits retained."
+        },
+        {
+          "previousReviewedRevision": "4c5719bf853cfebe04fdae9cd271d3aa0420520d",
+          "revision": "d041dd5919b42c544d93614c91aee0a8336e2ae6",
+          "reviewer": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 actual fourteen original-scope preservation",
+          "changedDependencies": [
+            "docs/site/extend/README.md"
+          ],
+          "verdict": "PASS",
+          "summary": "Only adds eight explicit developer task routes and two bounded migration-parity/runtime.dispatch-provider entry procedures. No existing Hub paragraph, source evidence, lifecycle contract or baseline limit changed. Migration preserves observable behavior and separately proven consumer cutover; dispatch is capability provider selection, not Worker engine replacement. New entries state requirements, not existing runtime success or legacy removal approval. Actual independent A and B CONTENT judgments plus complete original author judgment are PASS. Whole changed Hub must still preserve each old original Source/Reader/Quality scope; all other old files and whole owner map byteequal.",
+          "originalRecordSha256": "1d1b779754e964bb1821e5e9933ece95f5bbd971e46181d18914dcbb6caafcdb",
+          "report": "docs/review/parity-developer-entry-20261027.json",
+          "reportSha256": "796043fe891b2803e8cc41e22d4546155ac2434a7556dd24f74aed7c8ffc73db",
+          "inspectionLimit": "Complete original materialcontracts/limits/tasks/customfields and546whole-source vectors, full actualHubdelta and immutable history binding supplied. Coordinator controls are not fresh participants/runtime; prior receipts and limits unchanged."
+        }
+      ],
+      "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+      "revisionHistory": [
+        {
+          "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
+          "reason": "Preserved by independent local static-reader review; original publisher delta limited to new renderer import/build, CI validation gates and truthful reader/map projection. Original content facts, grants, role boundaries and stated execution limits unchanged.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/static-reader-closeout-20261021/reader-closeout-review.json"
+        },
+        {
+          "revision": "744b9a15e06d202eed24884ac2248c36074354f1",
+          "reason": "Narrow independent Source/Reader/Quality impact check: search-only renderer improvements, corresponding native receipts, typed search checker and CI command/guide. Earlier non-search reader/product facts and limits unchanged; no new broader historical approval.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/reader-search-gate-20261021/search-native-impact-review.json"
+        },
+        {
+          "revision": "187986569952cbbb26fe683c5217bbe6ea1db5fb",
+          "reason": "Independent whole A912-09 and narrow changed-Source/Reader/Quality impact review: typed directory/file locators, exact same-version kubectl commits, actual historical shared-SDK sources, metadata header formatting and Source-check CI command. Earlier semantic/runtime facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/product-surfaces.md",
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-source-links-20261021/rendered-source-gate-review.json"
+        },
+        {
+          "revision": "287a0f0e46bd373fce8f7a605599e3b9a66cd867",
+          "reason": "Independent whole PUB004 and narrow changed-Source/Reader/Quality impact: inert same-revision previews, fresh excerpt receipts and current actual reader/Source/browser rerun. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/source-preview-closeout-20261021/whole-content-and-prior-impact-review.json"
+        },
+        {
+          "revision": "a531ba490cd23cf0d064fe01ebc68ce56da20d79",
+          "reason": "Independent whole A91207 responsive-layout and narrow changed-Source/Reader/Quality impact: registered static SVG, source-owned questions/owners/alternatives, exact native custody, two independently verified semantic corrections and final actual artifact checks. Previous facts and limits preserved, not broadly re-approved.",
+          "changedFiles": [
+            "docs/site/reference/documentation-site.md",
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/rendered-diagrams-closeout-20261021/whole-layout-and-prior-impact-review.json"
+        },
+        {
+          "revision": "8f775411fdd8e0232bdd45135accb61f23768f0b",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+          "reason": "Independent narrow preservation of exact internal tree additions, source-bound documentation validators retaining read edges, one derived AST receipt renewal/63unchanged, two canonical catalog links and three owner-generated metadata fields. No reapproval of unchanged historical content or runtime claims."
+        },
+        {
+          "revision": "0da0ecd98738705c5f7fe17da8abfe8beb55c1b6",
+          "changedFiles": [
+            "docs/config/documentation-tree-classification.json"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+          "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
+        },
+        {
+          "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+          "changedFiles": [
+            "scripts/docs-publication.mjs"
+          ],
+          "review": "docs/blueprint/acceptance-evidence/README.md",
+          "reason": "Independent finite aggregate31 Source/Reader/Quality preservation; original summary/limits/historical checks and accepted membership unchanged."
+        }
+      ],
+      "scopePreservation3408": {
+        "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
+        "priorReviewer": "/root/review_publication",
+        "contentReviewer": "/root/ops_upstream_content_source_review",
+        "changedSourceReviewer": "/root/upstream_pin_source_review",
+        "contentDisposition": "PRESERVED_SEMANTIC_CONTENT",
+        "contentReason": "Understand route changed to the substantive central Ops guide; no canonical destination removal or redirect-only loop is introduced. Historical at-most-three-decision navigation observation remains historical, not a new browser traversal.",
+        "historicalChecksRemainAtOriginalRevisions": true,
+        "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
+        "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      }
+    },
+    "completeVector": [
+      {
+        "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "bytes": 29063,
+        "sha256": "56f1f4db2e6962db11f55a8fbfcd3ef9b18a0ab336ac469c5f0d85f38660ad6f",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+        "bytes": 2247,
+        "sha256": "0e4d6c1e1832dd5331db134162b603635feed18500ee0eb5edecfbac3c87ea57",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "bytes": 1591,
+        "sha256": "d27cddd017bc8e46ab24c701a521cdfed47b8d5a873afcd5799f1eb4e6227ae9",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+        "bytes": 2422,
+        "sha256": "88b33ceedfdd1d90bee212e4af5890f7b8834de1558e978182ad70c9e679722d",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/config/documentation-publication-manifest.json",
+        "bytes": 34701,
+        "sha256": "15858632cc67db446d945bda9a7209d0bdf05c776b7b4242e190cd3afeafefe5",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/config/documentation-tree-classification.json",
+        "bytes": 2372509,
+        "sha256": "e0bc70ed11160c026db2888f686bdbd55cae13877b155a1ce266f5d707c96e87",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/README.md",
+        "bytes": 4740,
+        "sha256": "4763cdcb5b2c025e5669cb733a1f42797258e7515e12c77dd69ad5cfd984eadc",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/extend/README.md",
+        "bytes": 46130,
+        "sha256": "44d97b43659bf67407add6719a2223a742de8e54dd3d06809d767036661ec1c1",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/extend/developer-handbook.md",
+        "bytes": 186330,
+        "sha256": "c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/extend/platform/README.md",
+        "bytes": 78321,
+        "sha256": "b59f075664c4425c1caf1a032d9302667197900857347fb879cd6835021bdb03",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/extend/plugin-catalogue/README.md",
+        "bytes": 4329,
+        "sha256": "792ae2645d1ccc34c417899e5f11d9195b6b5d0d7901a2d5201f30074b6cc95f",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/product-surfaces.md",
+        "bytes": 27426,
+        "sha256": "1fc6c2712849c9b251ee713ee33aef5aae87a74b0292f7650d408c94981d2145",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/reference/README.md",
+        "bytes": 7544,
+        "sha256": "be817131c12a4c58b592c14189812704f1f2cb09acf8b2ee6e38fbfa9239800f",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/reference/documentation-site.md",
+        "bytes": 33176,
+        "sha256": "fc3b0f2b34553f24f74af8acc2397a45000f53897dbda9e3f256da73bcc78dbb",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/understand/README.md",
+        "bytes": 15663,
+        "sha256": "e85dbee9eabba65faa19629f1d7ff98de5b8cb9b1466c15e77cfa1cbbc7a86e9",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/use/README.md",
+        "bytes": 11963,
+        "sha256": "26dff14ecff68d3a55b63f02c04df95765cf81e611f01c717dcfd1db8284ebb8",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/use/workflows/README.md",
+        "bytes": 24517,
+        "sha256": "9c9b1aeb86337e331717815a520d67135e93fa2f578645aeea16b3960f25f522",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "bytes": 66817,
+        "sha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "scripts/lib/docs-markdown-anchors.mjs",
+        "bytes": 17308,
+        "sha256": "b0358c0f628781c5056376f673ca23465b7b8cc54a722c1e0892f0268c42c652",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "scripts/lib/docs-publication-assets.mjs",
+        "bytes": 5685,
+        "sha256": "c0d58d0680bb42186370cb13a346e72e739e3ff64e146541c9f36c5dfd2ab294",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "scripts/lib/docs-publication-links.mjs",
+        "bytes": 1304,
+        "sha256": "7e73aec54f5ca370dea96c1b8332e55b5c38bf86a846052cc2534f40c5d6d019",
+        "exactAtReviewedRevision": true
+      }
+    ],
+    "reuseLimit": "Only original Source/Quality/navigation scopes. Not fresh participant task, not whole QUA006 acceptance."
+  },
+  {
+    "record": {
+      "id": "A99-06-actual-compiled-minimal-project-20261026",
+      "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+      "author": "PR13 documentation continuation coordinator",
+      "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 SourceQuality and fresh semantic Reader reviewers; final original-scope adoption reviewer",
+      "gateIds": [
+        "A99-06"
+      ],
+      "requirementIds": [
+        "FLW-001"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/extend/developer-handbook.md"
+      ],
+      "sources": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/core/execution/engine.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/state/read-run-evidence.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/buster/engine/test-gates/provider-loader.ts",
+        "skills/buster/engine/test-gates/direct-command-runtime.ts",
+        "scripts/lib/docs-publication-assets.mjs",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/07-documentation-quality-standard.md"
+      ],
+      "checks": [
+        {
+          "command": "Actual clean local git clone --no-hardlinks; checkout --detach da43fa58743934a7a98dc8f2fb6205b062e83870; npm ci --include=dev --ignore-scripts --cache <owned>; npm run plugin-system:sandbox:build",
+          "exitCode": 0,
+          "observation": "Real clean executable checkout and lockfile-selected dependencies; not a dirty overlay or remote-availability claim before coherent push. Original3helpers match executedda43 byte-exact at reviewed Source."
+        },
+        {
+          "command": "node docs/site/use/workflows/examples/compiled-project.mjs prepare|run|verify|cleanup <exact-owned-root> (separate ordered commands)",
+          "exitCode": 0,
+          "observation": "One actual compiler-produced8stage graph unchanged into original Core; real configured Gateway implementation; six shipped lint tools twice; signed shipped Buster mandatory module+cumulative provider tests; authoritative succeeded run224events;10originalartifactbytes/digests/producers, full originalPTYaudit and actual ownedcleanup verified. No joined separate compile-only/explicit-graph runs."
+        },
+        {
+          "command": "Expected-negative guard harnesses: dirtySource; changedpreparedcompilerbytes; nestedSource destination; remoteHTTP/query/userinfo/fragment endpoints",
+          "exitCode": 0,
+          "observation": "Assertions passed: dirtySource and mutated compiler bytes reject before runtime; nestedSource destination rejects before creation and Source remains clean; four unsafe endpoints reject before credential read/runtime admission. Their expected child exits1 are not successful workflow executions or waived failures."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual current committedf6c818c0 publication/Reader control terminalPASS; technical scope only."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Actual current committedf6c818c0 publication/Reader control terminalPASS; technical scope only."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Actual current committedf6c818c0 publication/Reader control terminalPASS; technical scope only."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "Actual current committedf6c818c0 publication/Reader control terminalPASS; technical scope only."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "Actual current committedf6c818c0 publication/Reader control terminalPASS; technical scope only."
+        },
+        {
+          "command": "node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual current committedf6c818c0 publication/Reader control terminalPASS; technical scope only."
+        },
+        {
+          "command": "Pinned fe588b1a Terra/high/P2 independent complete SourceQuality and fresh semanticReader original minimal-workflow review",
+          "exitCode": 0,
+          "observation": "Completed original-adoption-verdict.json explicitly SourceAccuracy,ReaderUsability,Quality,A99-06,FLW-001 PASS and32scope preservationPASS. Actual source-external target negative/currentexactda43native proof closes priorpathfinding; currentfullpublishedsemanticReaderPASS. No selfapproval/freshpracticalparticipant claim."
+        },
+        {
+          "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
+          "exitCode": 0,
+          "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Original A99-06/FLW-001 same-journey obligation closed by maintained real project compilation, exact compiled graph execution, authoritative audit, original artifact verification and actual owned cleanup with fixed executable source and full prerequisites. Earlier explicit-graph-only NOT_READY record and failed attempts remain historical, not relabelled compilation.",
+      "limits": [
+        "Local minimal compiled-project documentation only. No overall AP09/product/release/deployment/human/screenreader/practicalpersona or cgroup isolation acceptance; supported sampled-process limit explicitly identified.",
+        "All5 DATA slots remain UNKNOWN. Historical product receiver failure API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED skills/buster/engine/test-gates/artifacts.ts:41:content is retained; the latest actual receiver stops at the pre-existing docs-plugin-complexity executable-operation inventory mismatch, reproduced by the original1e84 own-module directguard. No fullisolatedbaseline pass beyond its canonicalRoot guard is claimed; tinyfixture lint does not qualify repository-wideKnip or provider output.",
+        "Original failures, historical prior local controls and originalNOT_READY completion record remain unchanged. Final evidence is one currentda43 compiler/run/audit/artifact/cleanup journey; earlier distinct pilots are not combined into this proof.",
+        "32 preexisting bounded records preserved only original reviewed scopes after complete vectors and independent preservation; original dated observations not promoted to new independent practical exercises."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "nativeObservation": {
+        "status": "verified-actual-compiled-workflow",
+        "runId": "run:first-project-001",
+        "compiledDigest": "sha256:7d65e34ba9cb3947032609c430a6c126f1ce5d564cdad0db1d16bf81565f4fe8",
+        "stageCount": 8,
+        "artifactCount": 10,
+        "eventCount": 224,
+        "journalHead": "sha256:bb7144c0cb7092c4731cc370dc7ee158ae2680891eb220de761e2992a4b2e3d5",
+        "auditDigest": "sha256:8b487d9455076d94a36c5b08c2bf03d25d60cd2b2344f54f146f0a60cf172dfa",
+        "allOriginalArtifactsVerified": true,
+        "rawBytesPreservedBeforeAudit": true,
+        "executableSource": "da43fa58743934a7a98dc8f2fb6205b062e83870",
+        "artifactReferences": [
+          {
+            "artifactId": "source-preflight",
+            "digest": "sha256:1732bee4e46e68d48ea1d49bc7de70029ab94c151f8eab77f5654bb75811b591",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.preflight-contract",
+            "producer": {
+              "attemptId": "attempt:8a79dc84-5311-4b8f-b366-48e402201502",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "source-preflight"
+            },
+            "sizeBytes": 2179
+          },
+          {
+            "artifactId": "blueprint-sync:first-project",
+            "digest": "sha256:c0dd2ad5340e3e310fc131509aaa02ef770cb3d498def31528e308774faf6dc5",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.blueprint-sync",
+            "producer": {
+              "attemptId": "attempt:c76e58c8-9f3f-419c-94e3-351c3e3d8292",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "blueprint-sync"
+            },
+            "sizeBytes": 503
+          },
+          {
+            "artifactId": "implementation:app:1",
+            "digest": "sha256:eed9bc8e960cf696bff8ac6e2378d33f96996b1940fcdf39ca31df576f6d7421",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.implementation-agent",
+            "producer": {
+              "attemptId": "attempt:c09a9043-3c8d-4c1c-99e8-545d6618af60",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "implement-app"
+            },
+            "sizeBytes": 766
+          },
+          {
+            "artifactId": "lint:full:first-project",
+            "digest": "sha256:c40767b5206d6234e446d7e7a9f561e4a700e04888434c7d007e13b1052769bf",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.lint",
+            "producer": {
+              "attemptId": "attempt:6286941f-f20e-481f-a7b4-771c487e0935",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "lint-app"
+            },
+            "sizeBytes": 3793
+          },
+          {
+            "artifactId": "buster-quality:test-app:decision:1",
+            "digest": "sha256:3bcf6c168dbe853f9c23a14d32fd6ee49604446aa8e5c079806e0e3ee511f4f1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:933b632d-04c7-483c-b303-f724692444b7",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "test-app"
+            },
+            "sizeBytes": 1635
+          },
+          {
+            "artifactId": "buster-quality:test-app:1",
+            "digest": "sha256:9143937b4d4a3ea845ed491de4acd86327f21b7975aa25e3a660c54f308ad817",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:933b632d-04c7-483c-b303-f724692444b7",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "test-app"
+            },
+            "sizeBytes": 207
+          },
+          {
+            "artifactId": "lint:full:first-project",
+            "digest": "sha256:e9f4743f8cd4b73e7456ae7e3868fcc5325502742dd5679d5252021b6909380f",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.lint",
+            "producer": {
+              "attemptId": "attempt:d169978b-958c-4993-a06d-7b345de0554b",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "final-lint"
+            },
+            "sizeBytes": 3791
+          },
+          {
+            "artifactId": "buster-quality:final-test:decision:1",
+            "digest": "sha256:5c945a99c049e021ab97fb994c7f83814319c8de599d0b66d8447181a68441a6",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:9fc1f6a5-7d91-4f0b-8d68-c9255fac0a66",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "final-test"
+            },
+            "sizeBytes": 1657
+          },
+          {
+            "artifactId": "buster-quality:final-test:1",
+            "digest": "sha256:5c01051a6c66a56c329aa5a43018d39c93dbe0e723de22ffc214dd2b344bacc5",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:9fc1f6a5-7d91-4f0b-8d68-c9255fac0a66",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "final-test"
+            },
+            "sizeBytes": 207
+          },
+          {
+            "artifactId": "project-summary:run:first-project-001",
+            "digest": "sha256:8fd67afcaf63ffd3dba47fa4325416895eefcde74677e5012f30201f5eef5c35",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.project-summary",
+            "producer": {
+              "attemptId": "attempt:a5ef58a6-494f-4c93-ad45-6870f697e2e0",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "project-summary"
+            },
+            "sizeBytes": 6867
+          }
+        ],
+        "cleanup": {
+          "status": "verified-owned-cleanup",
+          "root": "/home/node/.openclaw/workspace/operations/pr13/runtime/a9906-final-journey-da43",
+          "runId": "run:first-project-001",
+          "artifacts": 10
+        },
+        "evidenceRetention": "Full original state/artifact/command/audit/verification/cleanup bytes retained in operations/pr13/evidence/a9906-20261026/da43-current; compact acceptance record, not release receipt."
+      },
+      "impactReviews": [
+        {
+          "previousReviewedRevision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+          "revision": "040bcddda6977efb7abcd1a524c7d856d3cc008f",
+          "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent complete26originalscope preservation",
+          "changedDependencies": [
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "verdict": "PASS",
+          "summary": "Exact original bounded scope preserved after independently reviewed observer companion/guide and six literal asset additions, complete three-row owner-generated metadata delta and final native Reader controls. Historical observations retained at original scope; no new acceptance.",
+          "originalRecordSha256": "c0e9684fad183776f810734d6308f9659e493b41fba9583f73591e1a6c32a386",
+          "report": "docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/observer-26-scope-preservation-corrected-verdict.json",
+          "reportSha256": "042f58eb25bb548c3c8d8a62724683d0b435e5dd65aea45a26fe888011462498",
+          "inspectionLimit": "Complete original summary/limits/role/requirement contracts and all676 relevant paths supplied; full historical ledger unchanged. Coordinator native observations are not reviewer execution or fresh participant/live/deployment qualification. Original global output-role/DATAUNKNOWN/release/human limits retained."
+        }
+      ]
+    },
+    "completeVector": [
+      {
+        "path": "docs/blueprint/07-documentation-quality-standard.md",
+        "bytes": 17971,
+        "sha256": "b3b55207ed0dfd864cbe15b5dd43def4a840dc65752c9ff69c2a90f129384185",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/blueprint/AP09-acceptance-contract.md",
+        "bytes": 42548,
+        "sha256": "1574710477433d27cade59dbc42ce6ecc6ae56f944271fbddbe7d03be2f9cd2f",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/extend/developer-handbook.md",
+        "bytes": 186330,
+        "sha256": "c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/use/workflows/README.md",
+        "bytes": 24517,
+        "sha256": "9c9b1aeb86337e331717815a520d67135e93fa2f578645aeea16b3960f25f522",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "bytes": 7512,
+        "sha256": "534cd37c8b4b26ea08df27a9c88360bcaf6f1e4080a164ece80bbca4f9f6fe92",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "bytes": 4725,
+        "sha256": "320037f605100ed6650501a44049c6ffa82b43a5202b0441d5a672e4a22a2674",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/compiled-project.mjs",
+        "bytes": 22637,
+        "sha256": "d43b9c96b43c7af9c141f882342a548d6603d44f21382c02c3a8202f662cd3de",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "scripts/lib/docs-publication-assets.mjs",
+        "bytes": 5685,
+        "sha256": "c0d58d0680bb42186370cb13a346e72e739e3ff64e146541c9f36c5dfd2ab294",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+        "bytes": 7657,
+        "sha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "bytes": 22181,
+        "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "bytes": 46877,
+        "sha256": "837efd7975991aa21b8c92b57881194e9bc8c7adc4370f238d1a15b6d85d44db",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "bytes": 5817,
+        "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/nova/core/execution/engine-snapshots.ts",
+        "bytes": 12185,
+        "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/nova/core/execution/engine.ts",
+        "bytes": 2798,
+        "sha256": "a75ed99915780e157a54f684a7cb9202a13e6cdcea6229af7f2aceaf79710839",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/nova/core/state/read-run-evidence.ts",
+        "bytes": 15217,
+        "sha256": "bd33a3503d61236a03fcd19ae61fc3fde838d0dfefacacb7c1e75ff820444065",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/nova/project/compiler.ts",
+        "bytes": 14415,
+        "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5",
+        "exactAtReviewedRevision": true
+      }
+    ],
+    "reuseLimit": "Only original Source/Quality/navigation scopes. Not fresh participant task, not whole QUA006 acceptance."
+  },
+  {
+    "record": {
+      "id": "FLW007-supported-failure-task-20261021",
+      "revision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+      "author": "/root/workflow_acceptance",
+      "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-007"
+      ],
+      "pages": [
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/repair-retry.md"
+      ],
+      "sources": [
+        "docs/site/use/workflows/examples/repair-retry.mjs",
+        "skills/nova/core/execution/graph-repair-budget.ts",
+        "skills/nova/core/lifecycle/remediation.ts",
+        "skills/nova/core/lifecycle/repair-authorization.ts",
+        "skills/nova/core/lifecycle/repair-budget.ts",
+        "tests/fixtures/repair-budget/plugin/stage.mjs",
+        "tests/verification/reliability/repair-budget-fixture.mjs"
+      ],
+      "checks": [
+        {
+          "command": "Independent source/semantic-reader/quality review of the complete task and current canonical integration",
+          "exitCode": 0,
+          "observation": "Independent four-guide review plus exact four-correction rereview, installed helper closeout, build-tailnet parent Source review and current Reader. Source-proven limits stay explicit; not author selfacceptance."
+        },
+        {
+          "command": "Installed maintained repair helper prepare/run/verify and two independent negative controls; owned cleanup",
+          "exitCode": 0,
+          "observation": "Actual24Source helper bytes unchanged atcfc: mixed succeeded132events, technical-exhausted blocked21, extra-order blocked98;251total. Existing intent EEXIST before runtime mutation; missing original capture rejects, exactrestoreverify0; cleanupboth0. Original359regular-file evidence retained, notproductionquality."
+        },
+        {
+          "command": "node scripts/docs-publication.mjs check; node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual177page/51package check and cfc97be0 build terminal0."
+        },
+        {
+          "command": "Reader artifact/search/source-links/source-previews/diagrams checks; offline browser; extracted artifact/search checks",
+          "exitCode": 0,
+          "observation": "177canonical/187HTML/40815localtargets/219outputdigests;12search questions;14753SourceLinks/3910objects;1783previews/925objects;27freshSVG, exact27diagram records unchanged;28offline browser observations0findings0network. ZIP240members/19Source-compared copiedassets; actualfresh extracted artifact/searchPASS. Source/Reader checkpoint, not accessibility/globalgenerator/runtime/release approval."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole supported retry/repair task now has actual trusted TEST fixture input, deliberate failures, separate technical retry and per-category repair histories, mandatory rechecks, one authorized extra assignment, original-state capture, strict replay, success and bounded exhaustion, and owned cleanup.",
+      "limits": [
+        "Not production implementation/quality-agent or compiled-project execution; local TEST stage boundary explicit.",
+        "No full AP09/package, fresh-context persona, global generator or runtime release approval."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "revision": "f6c818c09b94b75a95c8d40efbf8b23b8f3466a1",
+          "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+          "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 complete32scope preservation plus bounded final new-section/sourcepin adoption",
+          "result": "PASS \u2014 original bounded scope preserved, not recounted",
+          "scope": "Complete original record and full declared page/source vector reviewed atbd655794. Only workflow index metadata/taskrow/newsection and exactly3 explicit publicexample asset allowances changed; original othercontents/sourcevectors unchanged. Final delta only new-section codepin, explicit HTTPS/query contract, source-external destination explanation and activevoice; codeguard follow-up independently assessed. Actual current6publication/Reader controls pass.",
+          "limits": "Original summary/author/reviewer/checks/review/limits/history/verdict and practical dates unchanged; no newpersona or globalDATA/Knip/product/runtime/live/deployment/release qualification."
+        }
+      ]
+    },
+    "completeVector": [
+      {
+        "path": "docs/site/use/workflows/README.md",
+        "bytes": 24517,
+        "sha256": "9c9b1aeb86337e331717815a520d67135e93fa2f578645aeea16b3960f25f522",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/repair-retry.mjs",
+        "bytes": 10131,
+        "sha256": "4f18a7ff3aba3e53c9e80b757f8eb0711f3d57ae246410b39d06d67be2466698",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "docs/site/use/workflows/repair-retry.md",
+        "bytes": 12489,
+        "sha256": "81dd334d8bf5ac98ac06da9261cfcd9697890c9a0ab867a3b513cbc1de5be2c4",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/nova/core/execution/graph-repair-budget.ts",
+        "bytes": 2150,
+        "sha256": "f5cd06815a0d7d631276b256fd80bcbd57e018f68326909d69b424f2e08a284e",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/nova/core/lifecycle/remediation.ts",
+        "bytes": 3024,
+        "sha256": "49c26f15b12f2281bf86a10c5b21669f7e8ab423c5d0f7ce317ce546e1254535",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/nova/core/lifecycle/repair-authorization.ts",
+        "bytes": 2060,
+        "sha256": "148d198ec0458ef5bdb95f1932ab7fc59db8f0ebbb7bcf31555cda901a27a283",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "skills/nova/core/lifecycle/repair-budget.ts",
+        "bytes": 7232,
+        "sha256": "6bd3d5f44d67edf626ce45301a716d5a6ea06d1f0f870b47d6f071b7930872d4",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "tests/fixtures/repair-budget/plugin/stage.mjs",
+        "bytes": 1840,
+        "sha256": "507d17499588f789534262ed9478e062eabc3f1b72b6a572a6fc7abcbe02102e",
+        "exactAtReviewedRevision": true
+      },
+      {
+        "path": "tests/verification/reliability/repair-budget-fixture.mjs",
+        "bytes": 2723,
+        "sha256": "f9b87ecf53b9cb7828aa73cd37207a813f5744584a210f28bad1739458c62f2e",
+        "exactAtReviewedRevision": true
+      }
+    ],
+    "reuseLimit": "Only original Source/Quality/navigation scopes. Not fresh participant task, not whole QUA006 acceptance."
+  }
+]

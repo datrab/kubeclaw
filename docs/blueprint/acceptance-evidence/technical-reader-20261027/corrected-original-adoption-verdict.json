@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "CANONICAL_SOURCE_INSPECTION=PASS. The inspected canonical status page truthfully remains planned/not executed and its claims about the native workflow and receipt-attestation test match the supplied sources and their bounded roles; neither is presented as live or release acceptance. sourceAccuracy=PASS; readerUsability=PASS; quality=PASS; WHOLE_QUA006=PASS. The documented reader limitations and cleanup sequencing lapse are disclosed and do not demonstrate a material defect in the scoped fresh technical-reader exercise.",
+  "overall_confidence": 0.93
+}
