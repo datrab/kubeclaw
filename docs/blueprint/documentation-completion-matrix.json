@@ -387,7 +387,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -1060,6 +1060,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "revisionHistory": [
@@ -2952,7 +2973,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -3775,6 +3796,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
@@ -4704,7 +4746,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -5492,6 +5534,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
@@ -5579,7 +5642,7 @@
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -6009,6 +6072,27 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
@@ -6064,7 +6148,7 @@
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -6714,6 +6798,27 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-configuration-inventory.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -6815,7 +6920,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -7546,6 +7651,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -8839,7 +8965,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -9436,6 +9562,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "b4f3d630d6a6d15ab84036ec62bdab2d8a4949d3",
@@ -9510,7 +9657,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -10354,6 +10501,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
@@ -11035,7 +11203,7 @@
     },
     {
       "id": "AP09-complete-public-cli-20261020",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "/root/review_example_publication",
       "reviewer": "/root/review_example_publication/review_cli_complete",
       "gateIds": [],
@@ -11432,6 +11600,29 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate-core.mjs",
+            "scripts/docs-generate.mjs",
+            "scripts/generate-local-helm-authorities.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Publicoperator/developerCLI grammar/generatedfacts unchanged. Newsemantic-owner-revision is internaldocumentationtoolflag excluded byoriginalscope; no newpublicruntimecommand or changedexternalCodexCLI contract inferred. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "4db128da05fabcf1cc4f345e54c343877e2f782b",
@@ -14024,7 +14215,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -15178,6 +15369,28 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-configuration-inventory.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -15717,7 +15930,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -16397,6 +16610,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
@@ -18269,7 +18503,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -19051,6 +19285,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -19068,7 +19323,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -19920,13 +20175,34 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f"
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -22127,6 +22403,30 @@
           "actualOriginalSemanticResponsibility": "WholePUB002 positive canonical allowlist and searchablecontent duty: same page/route retained; sole46line ordinaryprose/links add correct duplicate/STOP topic, no newpage/asset/internalrouting. Search/index/content integrity must be checked by actual finalowners; do not claim oldbrowser rerun or rankedtop3 newquestion.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/environment-variables.md",
+            "docs/site/reference/helm-values.md",
+            "docs/site/reference/host-and-prism-configuration.md",
+            "docs/site/reference/secrets.md"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -28226,7 +28526,7 @@
     },
     {
       "id": "AP09-whole-trust-and-spiffe-contract-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -28362,6 +28662,27 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/secrets.md"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual15DBconsumerAuthority changes remove falseStudio/ingestion DBreaders; all123otherfactproperties/names/keys/rotation/producers/unknownkeys reverseexact. CurrentartifactSecret is notdispatch; rootownedpool is notsignature; SPIFFEdeclarations/admission/schema do not proveissuedidentity/enforcement. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -31813,7 +32134,7 @@
     },
     {
       "id": "AP09-reference-network-paths-80178-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Documentation authors; /root/operator_acceptance for separately independently reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance (whole remaining reference topic); /root (independent399d and d477 authored corrections), /root/custody_review (unchanged Worker/package constituent scope)",
       "gateIds": [],
@@ -32208,6 +32529,27 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -33404,7 +33746,7 @@
       ]
     },
     {
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -33652,6 +33994,27 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/secrets.md"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Secretcurrentmeaning/fact boundaries and Codexpercontainercredential distinction preserve redaction/noleak/safeSTOP. No credentialvalues acquired or freshredaction performed; allworkflow execution/grants/signature/resultauthority untouched. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -35977,7 +36340,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -36503,6 +36866,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -36539,7 +36923,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -37955,6 +38339,31 @@
           "actualOriginalSemanticResponsibility": "WholeA91201 positive publicationboundary: soleexistingcanonical page remains allowed, registry is private source not publicoutput; no newrawHTML/scripts/asset/route. Newprimary/repocitations use existing sourcecomponent; no internal evidence path introduced in publishedprose. Actual currentbuild/Reader validates delivery, not newdeterminism/hosting.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/environment-variables.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/helm-values.md",
+            "docs/site/reference/host-and-prism-configuration.md",
+            "docs/site/reference/secrets.md"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -38031,7 +38440,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -38707,6 +39116,27 @@
           "actualOriginalSemanticResponsibility": "Originalsix-field sourcebox body and historicalteststatus remain byteexact; newordinarysource links qualify preciseupstreamreceivers not falsely introduced as newbox/nativeproof. Existing sourceexcerpt machinery and annotations unchanged. Current source-links/previews integrity must confirm actualnewlinked ranges; no newfullbrowser/historicalexecution.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/host-and-prism-configuration.md"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -38757,7 +39187,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -39858,6 +40288,29 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-configuration-inventory.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -39962,7 +40415,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -40878,6 +41331,27 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "scopePreservation3408": {
@@ -43200,7 +43674,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a autoreview Codex gpt-5.6-terra high P2 whole-A91014 topic reviewer",
       "gateIds": [
@@ -43746,6 +44220,28 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-configuration-inventory.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -44545,7 +45041,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 A911-06 gate-decision reviewer",
       "gateIds": [
@@ -44981,12 +45477,33 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A99-13 reviewer",
       "gateIds": [
@@ -45244,6 +45761,28 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-configuration-inventory.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Actual delta changes no original product implementation, canonical task procedure, protocol/schema/identity or execution source in this bounded responsibility. Reviewed optionalretaineddoc branches, native2metadata and exactcurrentcontract successors preserve original checked-source/reader context and alldeclared limits. Qualified unchanged original scope is reused only at actualbinding equality; no newlive/exhaustiveglobal grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
@@ -45693,7 +46232,7 @@
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent lint/common and whole original A910-10 adjudication",
       "gateIds": [
@@ -46325,6 +46864,28 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "New nativeCodexconfig observations explain existingprocess only; no versionedhostplugin install/connect/enumeration/hook/disable/removal/lifecycle proof added. Original unavailablehostcontrols staySTOP. Noextendedliveplatformjourney from6supervisortests. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
@@ -46505,7 +47066,7 @@
     },
     {
       "id": "A911-01-whole-ten-family-discovery-declarations-20261027",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova documentation declaration implementation and closure coordinator",
       "reviewer": "Fresh native complementary original Source assessor plus independent pinned fe588b1a Codex Terra/high/P2 complete Schema/Config/CLI and whole-original adjudication",
       "gateIds": [
@@ -47006,6 +47567,28 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-configuration-inventory.mjs",
+            "scripts/docs-runtime-consumer-contracts.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Native inventory declaration/searchspace/parser/owner/exclusions unmodified. Purelookupsharedmeanings and authenticatedretainedsnapshot are not newcurrentdiscovery or changedselection boundary. Alloriginalbroaderparser/globalfindings retained. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
@@ -47200,7 +47783,7 @@
       ]
     },
     {
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -47783,11 +48366,39 @@
           "actualOriginalSemanticResponsibility": "Fulloriginal177/28/205 completeclaimscope retained: no newcommand/fence/nativeinput, original6blocks same; genuine newprose duty now governed by exactprocedurecontract error/expected/safereferenceanchors and source-only/live limits. Nativecoverage actual0 and13ops fullreverse proof; normal28/build finalpending, no source-onlyexemption/globalpurposegrant.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/environment-variables.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/helm-values.md",
+            "docs/site/reference/host-and-prism-configuration.md",
+            "docs/site/reference/secrets.md",
+            "scripts/docs-generate-core.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Fourcompletepagecontracts/5prose/2nativeauthority appends independentlyqualified exactb006; actualgovasset/wholemapcontract v3qualified exact84a. Alloriginalfences/checkIDs/statementmembers/flags/oldanchors exceptexactmapassetfullanchor preserved; unchanged201+then204scope responsibilities exact. Nativeinput/syntax/compiler/SQL/live limits remain; no allinstructions execution. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
     {
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -48370,6 +48981,34 @@
           "actualOriginalSemanticResponsibility": "Separatelyoriginaldiscoverable/correctlychecked examples/failpredicates retained: no hidden newoperationalinput,6blocks same, realnewsourceconflict explicitly not tested by distinctHelmexample; conditionalrequiredsourceerror and owningvalue/STOP/privateinspection preserved in actualcontract. Actualnativecoverage is supporting structural check, not automaticsemanticPASS or liveexecution.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/environment-variables.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/helm-values.md",
+            "docs/site/reference/host-and-prism-configuration.md",
+            "docs/site/reference/secrets.md",
+            "scripts/docs-generate-core.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Independent actualfourpage procedure/prerequisite/error/effect/expected/cleanup boundary fit plus twoownerroles/mapassetreview preserve wholeexampleclaim classification; wholemapsource anchor legitimately changeswithnative2metadata, notruntime receipt. Alloldinstruction executionlimits remain. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
@@ -48495,7 +49134,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent /root/fresh_technical_reader original whole QUA005 Source/semanticReader/Quality adjudicator, qualified complete cross-author content assessors",
       "gateIds": [],
@@ -49057,12 +49696,40 @@
           "actualOriginalSemanticResponsibility": "Fullclaimhonesty obligation: repeatedenv text is explicitly pinned/sourcequalified and says nolivePod/Secretavailability/admission/ready proof; newactualsyntheticrender is not relabeled historical3.22/24checks. No allcurrentinventory/API/purpose/deploymentclaims introduced; allold508lines retain historical/unexecutedlimits.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/environment-variables.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/helm-values.md",
+            "docs/site/reference/host-and-prism-configuration.md",
+            "docs/site/reference/secrets.md",
+            "scripts/docs-generate-core.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "New fullcurrentcontent audited: seed≠existingpersistedhome, modelrouting≠credentials/capacity, status≠pairing/toolsuccess, retainedfacts≠currentdiscovery/redaction, schema/render≠deployedreadiness. Native15+3/6/3andfourstep receipts limited; originalglobalpurposeREFUSED remains actualdebt. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality assessor; fresh /root/a91310_clean_operator_restore_reader original Operator02 participant; qualified cross-author topic peers",
       "gateIds": [
@@ -49854,12 +50521,41 @@
           "actualOriginalSemanticResponsibility": "All294/ninefamily/25ownerboundary duties remain substantive: missingrequiredSecret is an actualenvironmentconstructionfailure not exemptedN/A; exact owningauth/gatewayvalues and unintentionalduplicateSTOP now explicit. No liveproof granted/oldproductlimitsclosed; newprose does not alter registereddecision scopes, raw inventories or prior openCFG007historical limit.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/environment-variables.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/helm-values.md",
+            "docs/site/reference/host-and-prism-configuration.md",
+            "docs/site/reference/secrets.md",
+            "scripts/docs-configuration-inventory.mjs",
+            "scripts/docs-generate.mjs",
+            "scripts/lib/docs-retained-configuration-renderer.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "No missingexecution is disguisedN/A. Actualschema/localprocess/DBnonce/credential boundaries are explained and truthfulSTOP; alloriginal294/ninefamilies/25issues/unsupportedrestore remainunchanged. Correctedtechnicalduties do not globallyerase original26Helm/env/Secret orlanguage/endpoint history. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection original Source/semanticReader/Quality adjudicator, with independent /root/language_projection_architecture authored-family Source/codeQuality and actual delivery/preservation peers",
       "gateIds": [],
@@ -50299,12 +50995,36 @@
           "actualOriginalSemanticResponsibility": "Actual857recursive/15Swarm/selectedoperatorfullsemantic duties unchanged byteforbyte; registrychanged only a different authoredprecedencecontract, allother204completeobjects exactlypreserved, all73authorities/28checks exact. No defaults/normalization/runtime/schema or own plugincontract reinterpretation; earlierartifact/root/budgetfailures/history retained.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-configuration-inventory.mjs",
+            "scripts/docs-generate-core.mjs",
+            "scripts/docs-generate.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "All857plugin schema meanings/15Swarm and actualschema inventory unchanged. Sharedinventory file edits onlyPrismENV/Secret meanings/Helmhelperimport; pluginrecursive/default/admission/path/budget49/53/29family bodies unmodified. No artifact/durable/lifecycle/globalfield grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
     {
       "id": "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/mnt014_operator_prism_classification whole original Source/semanticReader/Quality adjudicator plus independent architecture/native owner and maintained-binding peers",
       "gateIds": [],
@@ -50752,11 +51472,34 @@
         "Artifact metadata readiness is not blob write/read success; metadata precedes blob, missing content may leave retained intent, same-identity completion is bounded by actual protocol. Shutdown does not erase data or create retention/removal facilities. Observer upstream queues/replay and real SDK integration retain actual documented limits."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "scripts/docs-configuration-inventory.mjs"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "All51/70pluginmatrix and package/registration/dependency/capability/root/endpoint/artifactcustody source unchanged; PrismselectedENV/DBhelper source changes not acceptance of everylivecredential. Actualmetadata/blobquota/order/readiness semantics untouched. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
+        }
+      ]
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation",
       "gateIds": [],
@@ -50910,6 +51653,28 @@
           "actualOriginalSemanticResponsibility": "Sevenfamily/fiveduty ownership/review route unchanged: maintenance/contracts/governance/syntax/library and exactMNTcontract remain byteexact; newprecedenceprose actually source-reviewed and bound through existingowner/no newblock. No missingreviewer-column/per-symbol/MNT009/A91107grant; futureowner still must review/check actualaffected duties.",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        },
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Existing nativegeneration/owner/sharedindependentreview route exercised for dochelpers and canonicalpage; actual9headerSources propagatednativegov. Promptlibrary/exportedroute/tests/handbook/maintenanceprocedure unchanged; no mandatory newreviewercolumn/globalMNT009inversemap. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
         }
       ]
     },
@@ -51084,7 +51849,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer",
       "gateIds": [],
@@ -51283,6 +52048,255 @@
         "Maintained205scope contract source is a finite13semantic-operation successor for this onepage/prose7 and three new anchors; other204scope records,73authorities,28nativecheck declarations, allsix codeblocks, oldanchors/obligations/execution flags preserved. V2 restores raw bytes outside actualtwo affected top-level records; V1 Unicode serialization normalization and first source commit retained, no history rewrite or global qualification refresh.",
         "All117 prior scopes independently preserved:10 exact revision-plus-appended-impact transitions and107 entirely unchanged records, including historicalNOT_READY. Earlier reviews, summaries, checks, limits, histories, failedreceipts and all oldimpactprefixes unchanged. Original23findingIDs preserved and individually dispositioned only at CFG013 relevance; every globalfinding object and other requirement/gate unchanged.",
         "Original wholeNOT_READY and new materialP2 negative remain historical evidence; correction resolves only its concrete documentation duty. Initial missing-root fixture assertion failure remains exit1, corrected fixture reaches intended guard without product/assertion waiver. No prior historical report is recast as a fresh execution or automatic whole-documentation approval."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "status": "PASS",
+          "reviewer": "/root/whole_criterion_selection independent original118 Source/semanticReader/Quality preservation",
+          "sourceRevision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "publishedBaseline": "e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/host-and-prism-configuration.md"
+          ],
+          "review": {
+            "sourceAccuracy": "PASS",
+            "readerUsability": "PASS",
+            "quality": "PASS"
+          },
+          "basis": "Original10familymerge/absence/conflict/requiredSecretfailure/optionalSkip source andcanonical554lines unchanged. Currenthost/Prism companion corrections accuratelydistinguish targetselection/persistedhome and perconsumerENV; actualfixedenvbeforeextraEnv collision proof unaffected. Nativeprojection isnotnewallcurrentToolSource grant. Declared changed inputs are substantively covered by exact core/nativeowner/sevenseam/projection/range/delivery/claimv2/governancev3 peers, not a blindrevisionrepin. Original fields/checks/history remain unchanged; lateronlyminimalrevision+appendimpact permitted afterfinalcontrols.",
+          "actualCommittedControls": "Actual75d committed build + five originalReader owners + refs all7exit0; rawlogSHA and fullsource/output binding independentlyverified. Build28nativeID/result validation has suppressedchild details, not separatelyparsedcurrent28input proof.",
+          "nativeRequalification": "Actual reviewed finite nativeowner/projection Source/P2, v1equal-provenance parity and actual1940 v2produce/check/threepagegenerate/check; range54failure and53correction/native3test proof retained. Later maintainedclaimsv2/b006 and nativegovv3/84a plus normal75d build currentproof; no endlessbannerSHA repin or strictSourceguard waiver.",
+          "publicationBinding": "254registeredoutputs/177Source→HTML/177nativeMetadata-transformedMarkdown/433physicalfiles/1132bindings771uniqueSourceobjects; all1815olddeclaredpaths and124currentreviewedregularfiles verified. This is automatedbyte/control evidence, notallHTMLmodelread/livepracticalacceptance.",
+          "evidence": "operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "wholeContentEvidence": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "limits": "Originalacceptedtopiconly. Alloriginalauthor/reviewer/checks/summary/limits/openissues/verdict/history/previousimpactprefix retained; no newgates/requirements/globalfindings/ToolSource/API/purpose/SourceLock/profile/live/human/screenreader/runtimeaward. Newconfigurationtruth doesnotretroactivelyrewrite historicalA91310openCFG007/Prism/global/debt orfailedreceipts."
+        }
+      ]
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+      "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
+      "reviewer": "Independent /root/whole_criterion_selection whole original Source/semanticReader/Quality, finite current native/projection/delivered/governance/maintained-source qualification and complete original118 preservation; pinned Terra/high P2 independently clean",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-010"
+      ],
+      "pages": [
+        "docs/site/reference/host-and-prism-configuration.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/secrets.md"
+      ],
+      "sources": [
+        ".agents/plugins/marketplace.json",
+        "charts/gitops/templates/applications.yaml",
+        "charts/gitops/values.yaml",
+        "charts/kubeclaw/files/reset-managed-plugin-projects.mjs",
+        "charts/kubeclaw/files/restore-managed-plugin-config.mjs",
+        "charts/kubeclaw/templates/_helpers.tpl",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/templates/secret.yaml",
+        "charts/kubeclaw/values.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/values.yaml",
+        "charts/prism/ci-values.yaml",
+        "charts/prism/templates/_helpers.tpl",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/prism/templates/_worker-trust-readiness.tpl",
+        "charts/prism/templates/backup.yaml",
+        "charts/prism/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/ingestion.yaml",
+        "charts/prism/templates/jobs.yaml",
+        "charts/prism/templates/postgresql.yaml",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.schema.json",
+        "charts/prism/values.yaml",
+        "docker/Dockerfile.prism-worker",
+        "docker/buster-runtime-entrypoint.sh",
+        "docs/site/understand/codex-integration.md",
+        "ops/pod/Dockerfile",
+        "ops/pod/bootstrap.py",
+        "ops/pod/config.toml",
+        "ops/pod/package.json",
+        "ops/pod/supervisor.py",
+        "ops/pod/test/supervisor_test.py",
+        "ops/pod/verify.py",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "scripts/deploy.sh",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-generate-core.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-publication-example-native.mjs",
+        "scripts/docs-retained-language-projection.mjs",
+        "scripts/docs-runtime-consumer-contracts.mjs",
+        "scripts/generate-local-helm-authorities.mjs",
+        "scripts/gitops.mjs",
+        "scripts/lib/docs-prism-helm-semantic-corrections.mjs",
+        "scripts/lib/docs-retained-configuration-renderer.mjs",
+        "scripts/lib/docs-retained-language-bundle.mjs",
+        "scripts/lib/docs-retained-prism-historical-models.mjs",
+        "scripts/lib/docs-retained-prism-semantics.mjs",
+        "scripts/lib/docs-retained-semantic-evidence.mjs",
+        "scripts/lib/docs-retained-source.mjs",
+        "scripts/prepare-native-worker-pools.mjs",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "skills/common/plugins/runtime-dispatch/plugin.json",
+        "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+        "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/dispatch-adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-cleanup.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-session.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+        "skills/nova/core/test-gates/pipeline.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json",
+        "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+        "skills/nova/plugins/implementation-agent/src/protocol.ts",
+        "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "skills/nova/plugins/review/src/stage.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/control/native-operation.ts",
+        "skills/prism/control/product-decisions.ts",
+        "skills/prism/control/session.ts",
+        "skills/prism/control/worker-operation-transport.ts",
+        "skills/prism/server/bootstrap-database.ts",
+        "skills/prism/server/control-config.ts",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/server/control.ts",
+        "skills/prism/server/database-roles.ts",
+        "skills/prism/server/ingestion.ts",
+        "skills/prism/server/internal-artifacts.ts",
+        "skills/prism/server/migrate.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/product-controller.ts",
+        "skills/prism/server/studio-config.ts",
+        "skills/prism/server/studio-request.ts",
+        "skills/prism/server/studio.ts",
+        "skills/prism/server/worker-artifacts.ts",
+        "skills/prism/server/worker-config.ts",
+        "skills/prism/server/worker-lifecycle.ts",
+        "skills/prism/server/worker-readiness.ts",
+        "skills/prism/server/worker-service.ts",
+        "skills/prism/server/worker.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-node-identity.ts",
+        "skills/worker/core/worker/native-pool-policy.ts",
+        "skills/worker/core/worker/native-resource-observation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/worker/core/worker/native-resource-scope.ts",
+        "skills/worker/core/worker/native-runtime-identity.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "skills/worker/core/worker/native-worker-process.ts",
+        "skills/worker/core/worker/resource-reservations.ts",
+        "tests/documentation/retained-prism-projection.test.mjs",
+        "tests/verification/e2e/real-run-workspace.mjs",
+        "tests/verification/e2e/support/config-profiles/standard.json",
+        "tests/verification/e2e/support/optional-absence.ts",
+        "tests/verification/e2e/support/platform-config.ts",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "checks": [
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual committed75d original native control0; 214.284s; rawlogSHA5206cdd871871a6e2e46b0cc6a73286f232e783fbba6ac429875c2a389f1e626. Scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed75d original native control0; 27.585s; rawlogSHAeea96af4da867f8fb3fa25a2d5260b5b0bb5bf27f60fd0bd69bf05411d911573. Scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed75d original native control0; 15.3s; rawlogSHAb647afdfb3094db600e80b6c4d4d3b700b9060c56418258cb818e31e1feff98b. Scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed75d original native control0; 103.554s; rawlogSHA70a72aba7e9d50ba8df589c0b50ed1dffc4090cd36b310b09c9d2fa39395a10f. Scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed75d original native control0; 36.365s; rawlogSHA534a49fd859d7717239a8a8cde153fc3f058339da3ae843c3d2128d6bdc571ef. Scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed75d original native control0; 28.809s; rawlogSHA306c2a7279307e42effa2d099b2ccf07db7669d840054fbd649f045949259e6e. Scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed75d original native control0; 56.851s; rawlogSHA5c4e89d28dd358d81cc03a05faf61da9b23310ead4e3d02d65a39c578d0ecf48. Scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "node --test --test-concurrency=1 tests/documentation/retained-language-source.test.mjs tests/documentation/retained-language-renderer.test.mjs tests/documentation/retained-semantic-evidence.test.mjs tests/documentation/retained-prism-projection.test.mjs tests/documentation/retained-prism-cli.test.mjs",
+          "exitCode": 0,
+          "observation": "Actual15/15 zero, meaningful nativeCLI/history/currentSource/reversal/bundle/nonwrite/fullcontext controls; rootlogs separate from independentSource."
+        },
+        {
+          "command": "node --test --test-concurrency=1 tests/documentation/retained-prism-projection.test.mjs tests/documentation/retained-prism-cli.test.mjs",
+          "exitCode": 0,
+          "observation": "Actual3/3 successor zero after negative54>53 regressionexit1; actual allcurrentmeaning evidence ranges fit whole actualreceiver files."
+        },
+        {
+          "command": "Actual source-first retained v1 native producer/check atb444 and v2 producer/check/selected3page generator/check at1940",
+          "exitCode": 0,
+          "observation": "All actual commands0; current meaning inputs unchanged at75d, historical values and SourceLock/registry/rawinventories byte exact. No false currentSource rerun or currentacquisition claim."
+        },
+        {
+          "command": "Pinned upstream fe588b1a autoreview Terra/high explicit P2, actual full154173byte1pass +focused7659byte1pass",
+          "exitCode": 0,
+          "observation": "Both actualexit0/no acceptedactionablefindings, frozenvectors unchanged. Source inspection/wholeoriginal semanticjudgment separately done by independentpeer; no truncated fullcontext coverage claim."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs and node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "Actual existing native generate/check0,177page map only2actualmetadata records changed; unchanged175/root/routes/checks/roles. Original stale-governance buildexit1 retained."
+        },
+        {
+          "command": "Actual unchanged exported bindPublicationExampleCoverage + validatePublicationClaimContracts on maintained source successors",
+          "exitCode": 0,
+          "observation": "Actual177pages28assets28checks205contracts1060anchors0; independent current4scope2authority and2metadata/mapasset-contractSource qualification separate from nativecoverage and execution."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole original CFG-010 independently passed across all seven actual host/Prism/OpenClaw/standalone-Codex families: configuration sources, defaults, Secret consumers, precedence, startup capture and safe verification. Stage agentRole versus actual config.agent selection and standalone Codex persisted-home/forced-MCP/credential boundaries corrected centrally. Complete63 Prism names/77 consumer contracts and158 Helm meaning cells were source-reconciled; eight real semantic families corrected through existing shared native owners and genuinely implemented authenticated finite v2 delivery (11 ENV tuples/16 Helm identities/15 DB Secret consumers), not hand-edited raw inventories. Current meaning provenance is separate from retained historical observations. Whole13 original finding facets qualified only locally. Actual committed publication7, full physical/Git output/source binding and original118 semantic preservation independently passed; no count/hash-only or unexecuted live closure.",
+      "limits": [
+        "CFG-010 only, no gate or other requirement award. Original globalfinding objects, API/producer/current-role/ToolSource parser/custody/purpose/SourceLock/profile debts remain unchanged; no blanket exemption or full modern inventory acquisition grant.",
+        "Four delivered pages plus120 regular tracked source/context paths retain precise full/range/delegated/analytical qualifications. No fictitious full model-read of17MB Helm,4MB map, large classifier/raw inventory or every124file. Complete finite semantic responsibilities compose the original topic; whole-object/native output reversals preserve remaining observations/unknown fields.",
+        "Original complete compact/platform/managed OpenClaw/Codex/Prism trust/worker/native/Studio/ingestion/bootstrap consumers and verification scope qualified. Native supervisor/root policy is ownership/no-follow/content validation, not cryptographic signing. Standalone Codex seedonly-if-absent/persisted HOME and two forced MCP settings are not OpenClaw ACP, full upstream Codex schema, account login, MCP, PVC, pairing or session success.",
+        "No live cluster/DB/Secret availability/authentication/readiness/Redis/SPIFFE/controller/capacity/runtimeworker or fresh human/browser/persona operation claimed. Actual existing3Controlconfig and6Ops socket/process tests remain only their bounded local fixtures, not live product acceptance.",
+        "Actual15 native integration tests plus3 focused successor controls passed, with real isolated Git nativeCLI v1/v2, full native reconstruction/reversal and protected nonwrites. Actual originalv1 native production/check atb444 and equal-provenance complete two-renderer byte parity retained; unchanged controls are explicitly reused, not falsely rerun/relabelled at75d. Actual current v2 production/check and threepage generation/check all0 at1940; all semantic/editorial/receiver input bytes remain qualified unchanged afterward. Strict whole-source-first/physical/Git/destination/bundle guards remain implemented unchanged, not bypassed for later non-semantic maintained binding commits.",
+        "V2 finite datatype authenticates source6fa/artifact145 whole tree/sourcegrammar/complete parsed objects/static oldmodel, current33 reviewed receiver bodies and actual current owner modules. All selected historical values/types/default annotations/source coordinates/producer evidence/qualification states remain unchanged; only source-bound semantic string leaves change and reverse exactly, including all123 Secret facts. V1 remains editorial-only106changes/exacttwooutputs/allSecretsEqual; v2 preservation separates legacy and semantic steps instead of a false top-level secretsEqual.",
+        "Actual committed75d build/five automatedReaders/repositoryrefs all0. Build validates28native IDs/results but suppresses child detailJSON; no separately parsed current28input/result log or every native/SDK/product behavior claimed. Complete254registeredoutputs,177Source→HTML,177publishedMarkdown through actual native first-metadata transformation,433artifactfiles and1132bindings/771unique objects verified. These bindings are not semantic accuracy from hashes alone.",
+        "Maintained v2 fourpage/fourcontract/two registered native-authority Source successors independently qualified;201 othercontracts/173pages/71authorities and all28actions/assets remained exact atthatstage. Nativegovernance regenerated exactly host+9source dependencies and Secret retained verification metadata;175other maprecords unchanged. Subsequent v3 onlymapasset/mapcontract source successor qualified;204othercontracts/177pages/73authorities/28actions/27otherassets exact. Original failed fullmap anchor remains immutable Git/evidence; new anchor exactly actualgeneratedmap. Execution flags/history/basis/statement prefixes preserved, no runtime receipt rewrite.",
+        "All118 original scopes independently preserved:35 exact revision+one appended impact transitions,83 whole records unchanged including historicalNOT_READY. Every original summary/check/history/limit/verdict/prefix/otherfield retained.13finding IDs retained historically and requirement-local dispositions only; no globalfinding/gate or legacy failure promoted.",
+        "Initial wholeNOT_READY/core/delegated negatives, b444 range54>53 failed generation-beforewrites, meaningful negative regression, oldauthority-binding rejection, stale governance build and coordinator raw-Markdown equality assumption failure all retained. Exact54→53 corrected with exhaustive allmeaning-range regression and independently/pinned reviewed Source successor; publisher rawMarkdown deliberately transforms metadata via unchanged native owner. No acceptance from scaffold/tests alone or historical receipt rewrites."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -62087,18 +63101,30 @@
       "pageOwner": "platform operations and Prism",
       "readerTask": "Prism-, OpenClaw- und Codex-Konfiguration",
       "sourceDependencies": [
+        "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
         "charts/kubeclaw/files/config/swarm.config.json",
         "tests/verification/e2e/support/platform-config.ts",
         "charts/prism/values.yaml",
         "charts/prism/values.schema.json",
         "skills/prism/server/control-config.ts",
         "skills/prism/server/worker-config.ts",
-        "skills/prism/config/native-worker.ts"
+        "skills/prism/config/native-worker.ts",
+        "ops/pod/config.toml",
+        "ops/pod/supervisor.py",
+        "ops/pod/Dockerfile",
+        "ops/pod/verify.py",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/values.yaml"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-whole-original-CFG010-Source-semanticReader-Quality-with-qualified-delivery-and-governance-successors-at75d04e70",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -62131,8 +63157,20 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
-      "evidence": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "completionRecord": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+          "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "verdict": "PASS",
+          "scope": "Whole originalCFG010 only, no othergate/globalfinding/requirementaward",
+          "independentWholeContent": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+          "qualifiedSourceUnion": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg010-whole-original-20261028/current-integrated75d-source-qualification-union.json",
+          "actualFinalChecks": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg010-final-publication-20261028/metadata-successor/actual-seven-results.json",
+          "original118Preservation": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg010-whole-original-20261028/original118-preservation/final-verdict.json",
+          "nativeActualDelivery": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg010-native-v2-integration-20261028/source-range-successor/actual-three-page-delivery-proof.json"
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/a98_source_review_round2",
@@ -62195,35 +63233,174 @@
           "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
           "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
           "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole original Source/semanticReader/Quality, finite current native/projection/delivered/governance/maintained-source qualification and complete original118 preservation; pinned Terra/high P2 independently clean",
+          "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "verdict": "PASS",
+          "role": "source",
+          "scope": "WholeCFG010 coherent topic under AP09sections1-3; originalmanual/mapping/review/failure histories preserved, no globalgrant.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole original Source/semanticReader/Quality, finite current native/projection/delivered/governance/maintained-source qualification and complete original118 preservation; pinned Terra/high P2 independently clean",
+          "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "verdict": "PASS",
+          "role": "reader",
+          "scope": "WholeCFG010 coherent topic under AP09sections1-3; originalmanual/mapping/review/failure histories preserved, no globalgrant.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole original Source/semanticReader/Quality, finite current native/projection/delivered/governance/maintained-source qualification and complete original118 preservation; pinned Terra/high P2 independently clean",
+          "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "verdict": "PASS",
+          "role": "quality",
+          "scope": "WholeCFG010 coherent topic under AP09sections1-3; originalmanual/mapping/review/failure histories preserved, no globalgrant.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json"
         }
       ],
-      "openFindingIds": [
-        "A98-QUALITY-DUPLICATE-FACTS",
-        "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
-        "A98-R2-PRISM-CURRENT-STATUS",
-        "A98-R2-PRISM-DUPLICATE-DEFAULTS",
-        "A98-ARGO-TRACKING-CONTROLLER-VERSION",
-        "A98-20261012-CANONICAL-REFLECTION-S1",
-        "A98-20261012-CANONICAL-REFLECTION-S2",
-        "A98-20261012-CANONICAL-REFLECTION-S3",
-        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
-        "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2",
-        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
-        "A98-20261012-YAML-FILE-STDIN-R2"
-      ],
+      "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L285",
       "acceptanceMappingBasis": {
         "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
         "reason": "Actual host/Prism/OpenClaw/Codex settings and swarm/environment mutation sensitivity.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **CFG-010 — `reference/host-and-prism-configuration.md`.** Compact-shape/consumer separation, Prism trust/worker/native and startup-capture narrative inspected against shipped compact JSON, expander, Control/Worker/native loaders and chart schema. No new material falsehood established there. Complete delegated environment/Secret/Helm field coverage and all host-consumer paths were not independently reconciled; those owning checks are blocked/stale below. Overall exhaustive scope NOT_READY.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- **CFG-010 — `reference/host-and-prism-configuration.md`.** Compact-shape/consumer separation, Prism trust/worker/native and startup-capture narrative inspected against shipped compact JSON, expander, Control/Worker/native loaders and chart schema. No new material falsehood established there. Complete delegated environment/Secret/Helm field coverage and all host-consumer paths were not independently reconciled; those owning checks are blocked/stale below. Overall exhaustive scope NOT_READY.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "legacyFindingHistory": [
+        {
+          "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+          "originalOpenFindingIds": [
+            "A98-QUALITY-DUPLICATE-FACTS",
+            "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
+            "A98-R2-PRISM-CURRENT-STATUS",
+            "A98-R2-PRISM-DUPLICATE-DEFAULTS",
+            "A98-ARGO-TRACKING-CONTROLLER-VERSION",
+            "A98-20261012-CANONICAL-REFLECTION-S1",
+            "A98-20261012-CANONICAL-REFLECTION-S2",
+            "A98-20261012-CANONICAL-REFLECTION-S3",
+            "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+            "A98-20261012-KNOWN-BINDING-R1",
+            "A98-20261012-KNOWN-BINDING-R2",
+            "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+            "A98-20261012-YAML-FILE-STDIN-R2"
+          ],
+          "scope": "All13 originalIDs/history retained; onlyCFG010 relevance dispositioned, globalfindingobjects unchanged."
+        }
+      ],
+      "findingDispositions": [
+        {
+          "id": "A98-QUALITY-DUPLICATE-FACTS",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Central page delegates complete field/default inventories to generated references and gives consumer/task boundaries instead; current Prism journey sections525–585 similarly delegate complete defaults with operational decisions, not a competing exhaustive default table. No global authored-doc duplicate policy award.",
+          "originalFindingObjectSha256": "066d84b5f98fc1b007a401d86a46812b9d453996896c30f10e72456d6920503b",
+          "originalState": "open-pending-correction-and-fresh-review",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Full selected Prism63names77contracts and158Helm cells joined to actual receiving and producer bodies, with all finite incorrect11tuples/16Helm/15DB facts corrected through authenticated native delivery. Host managed config/dispatch/compact/Codex native sources directly inspected. This establishes CFG010 relevant consumer semantics, not global435reader/discovery/producer qualification.",
+          "originalFindingObjectSha256": "d295ef79f14207b4ddab6f936ff3d53d3b8216b8927bb4c9eabad64a1bab16f3",
+          "originalState": "open-under-correction-pending-new-independent-review",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-R2-PRISM-CURRENT-STATUS",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Current canonical describes source loader and configuration boundaries without live success. Prism journey explicitly preserves historical missing-release/browser facts and routes current selected release to canonical preflight/STOP; new native proofs are narrowly localControl/supervisor/projection, not cluster/nativeHost/DB/pairing proof. Operator-task/generatedstatus/fulljourney global facets remain unclosed.",
+          "originalFindingObjectSha256": "f7fdae371e5935e1502b34599b20e80d3509c8f4731ebc8fecec4df6c8289ee0",
+          "originalState": "partially-resolved-current-content-facets-remaining-scope-open",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-R2-PRISM-DUPLICATE-DEFAULTS",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Actual current journey mainHelm/runtime sections delegate exhaustive defaults to generated inventories and canonical host process conditions. Task decisions retain conditions/STOP rather than duplicate a full private default list. CFG010 facet only; no blanket wholePrismJourney grant.",
+          "originalFindingObjectSha256": "217694495f9769eeff01be122e6d701c3e87ff2ac7d64a968daa9b21213270d8",
+          "originalState": "open-under-correction-pending-new-independent-review",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-ARGO-TRACKING-CONTROLLER-VERSION",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Actual delivered application.resourceTrackingMethod row attributes supported methods to ArgoCD controller selected by pinned chart, while10.8.0 is explicitly chart identity and annotation is selected overlay, not controller productversion. Row unchanged by finitePrism v2; no current externalchart acquisition or wholeCFG009 role qualification inferred.",
+          "originalFindingObjectSha256": "1158cddbf359bcd5f6ffc78bf9320f4feb020ae6a9e96ed3c09a545d1434a11f",
+          "originalState": "root-corrected-pending-inventory-and-new-source-review",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-20261012-CANONICAL-REFLECTION-S1",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Selected receiving modules/config defaults manually joined as actual complete/relevant source bodies; no claimed native Python protocol/mapping namespace acquisition coverage underpins this decision. NativeCodex supervisor explicit os.environ/file/MCPargs source inspected. Global parser protocol witness not rerun or resolved.",
+          "originalFindingObjectSha256": "bd340d454ada646908d12ee792b553e4e244894129aafc7edb3ccce1f8834f14",
+          "originalState": "open",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-20261012-CANONICAL-REFLECTION-S2",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Actual host/Prism config/Secret authority functions and direct receivers inspected independently of annotation-getter reflection custody. Historical artifact frozen and fullyauthenticated; current finite meaning evidence uses fixed reviewed bodies, not an annotation getter discovery claim. Global annotationcustody defect remains.",
+          "originalFindingObjectSha256": "c75eb7c356538afb96e71ea32fcc11b7f1fa51776c29dbc43a352100eda31e18",
+          "originalState": "open",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-20261012-CANONICAL-REFLECTION-S3",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Selected Helm direct env/Secret/template readers and Python native supervisor consumer chain inspected as source, not inferred from executable YAML→shell→Python acquisition. No new wholecurrentYAML discovery result granted; retained sourcecoordinates remain historical. Global acquisition witness remains open.",
+          "originalFindingObjectSha256": "c72df8e70a9ad82defb576eb1fdda8472d321acdb7c44bd46913fe54e40d5e78",
+          "originalState": "open",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Existing bounded assigned-source resolution remains historical; this decision directly acquires selected actual receiver/config bodies without invoking or relying on general kwargs evaluator. No universal kwargs or global receiving gate closure.",
+          "originalFindingObjectSha256": "b68359ae40e5b3ac4a7807d60a03e76c3d4ab365d52811500b2ba72984108ba8",
+          "originalState": "independently-resolved-assigned-source-facet-global-gates-pending",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-20261012-KNOWN-BINDING-R1",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "NativeOps direct supervisor source, Docker/chart entrypoint and credential/control helpers inspected; no global absoluteenv/sudo/nestedPythonwrapper acquisition success asserted. Actual selected explicit entrypoint chain suffices CFG010 consumer scope; original wrapper findings remain.",
+          "originalFindingObjectSha256": "92f63e4955707b293261aa03f25f51dd40519bf592e7aad1edd50385c7c7b2cb",
+          "originalState": "open-under-coherent-author-correction",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-20261012-KNOWN-BINDING-R2",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Selected bodies inspected for actual configuration authority and admission; no assertion generic global/nonlocalNamedExpr externalwrite guard is complete. Retained projection does not execute input Python or claim parser role; original guard defect remains global.",
+          "originalFindingObjectSha256": "1eedb8542e1dd49f02a6277b0c6c629d85432797900b89ad730422edb87dee6e",
+          "originalState": "open-under-coherent-author-correction",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "Exact selected current Prism/host receiving contracts, fixed field names and actual compiled/template/config flows directly joined; no scope sensitivity/general aliased-key custody resolution claimed. Original eight falsegreen cases remain historical/open globally.",
+          "originalFindingObjectSha256": "e41227d28e5191c78367165ae1ce58f525c4916aeb77270427a7f3aa2016cefe",
+          "originalState": "open-pending-joint-correction-and-fresh-review",
+          "globalObjectMutation": false
+        },
+        {
+          "id": "A98-20261012-YAML-FILE-STDIN-R2",
+          "decision": "CFG010_ORIGINAL_FACET_SATISFIED_NO_GLOBAL_FINDING_CLOSURE",
+          "reason": "No selected canonical configuration/consumer proof relies on YAML fileInput decoded positions.map or a global source acquisition run. Historical snapshot and source direct reads are authenticated; actual native projection output is explicitly notcurrentdiscovery. Fileinput receiver failure not reproduced/resolved globally.",
+          "originalFindingObjectSha256": "82fbb0bbce7dd6138fa4984bc5f45580b777997ec1c3384e5691f39bc47074a8",
+          "originalState": "open-pending-joint-correction-and-fresh-review",
+          "globalObjectMutation": false
+        }
+      ]
     },
     {
       "id": "CFG-011",
