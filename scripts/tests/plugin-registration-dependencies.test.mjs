@@ -92,6 +92,25 @@ try {
   const authAuthority = collect({ plugins: [authPlugin], sourceLink: () => 'pinned-fixture' })
     .registrationDependencyAuthority(authPlugin, authRegistration);
   assert.deepEqual(authAuthority.schema.secrets.map(field => field.path), ['passwordSecret']);
+  // These four controls have no endpoint-name heuristic. Exercise the actual
+  // schema/semantic join and collector projection, including absent/foreign forms.
+  const artifactDirectory = path.join(root, 'skills/common/plugins/artifact-store');
+  const artifactPlugin = { ...plugin, directory: artifactDirectory, openclaw: false };
+  const artifactFields = ['artifactRoot', 'maxArtifactBytes', 'maximumRecords', 'maximumStoreBytes'];
+  const artifactRegistration = { ...registration, module: undefined, configSchema: 'schemas/config.schema.json',
+    configSchemaObject: { type: 'object', properties: Object.fromEntries(artifactFields.map(name => [name, { type: name === 'artifactRoot' ? 'string' : 'integer' }])) } };
+  const artifactSemantics = { files: [{ path: 'skills/common/plugins/artifact-store/schemas/config.schema.json',
+    fields: artifactFields.map(name => ({ path: `$.${name}`, meaning: { text: `Native ${name} scope.` } })) }] };
+  const artifactCollect = overrides => collect({ plugins: [artifactPlugin], configurationSemantics: artifactSemantics,
+    sourceLink: () => 'pinned-fixture', ...overrides }).registrationDependencyFacts(artifactPlugin, artifactRegistration);
+  const artifactFacts = artifactCollect({});
+  for (const name of artifactFields) assert.ok(artifactFacts.endpoint.includes(`Native ${name} scope.`), name);
+  const withoutControls = artifactCollect({ configurationSemantics: { files: [] } });
+  for (const name of artifactFields) assert.ok(!withoutControls.endpoint.includes(`Native ${name} scope.`), name);
+  const foreignPlugin = { ...artifactPlugin, directory: path.join(root, 'unselected-store') };
+  const foreignFacts = collect({ plugins: [foreignPlugin], sourceLink: () => 'pinned-fixture' })
+    .registrationDependencyFacts(foreignPlugin, artifactRegistration);
+  for (const name of artifactFields) assert.ok(!foreignFacts.endpoint.includes(`Native ${name} scope.`), name);
   const native = [{ id: 'fixture', host: 'openclaw', manifest: 'plugin.json', registrations: [
     { id: 'one', kind: 'openclaw-extension' },
   ] }];

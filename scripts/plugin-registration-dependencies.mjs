@@ -100,6 +100,7 @@ function registrationDependencyFacts(plugin, registration) {
     operationFields.add(field);
   }
   const durableSchemaControls = {
+    'skills/common/plugins/artifact-store/schemas/config.schema.json': ['artifactRoot', 'maxArtifactBytes', 'maximumRecords', 'maximumStoreBytes'],
     'skills/common/plugins/state-store/schemas/config.schema.json': ['root', 'maxEntryBytes', 'maximumRecords', 'maximumStoreBytes'],
     'skills/common/plugins/telemetry-store/schemas/config.schema.json': ['root', 'maxRecordBytes', 'maximumRecords', 'maximumStoreBytes'],
     'skills/common/plugins/wait-store/schemas/config.schema.json': ['root', 'maxEntryBytes', 'maximumRecords', 'maximumStoreBytes'],

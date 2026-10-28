@@ -128,6 +128,41 @@ test('fixed durable-store subprocess authority requires compatible flock and pre
   assert.ok(record.evidence.every((item) => item.endLine >= item.line));
 });
 
+test('selected artifact metadata/blob custody is direct, guarded and not inherited by foreign sources', (t) => {
+  const relative = 'skills/common/plugins/artifact-store/src/adapter.ts';
+  const invocation = facts(relative);
+  const boundary = invocationDependencyBoundaries(invocation, root);
+  const record = boundary.records.find(item => item.scope === 'local-store' && item.service.includes('FileDurableBlobStore'));
+  assert.ok(record);
+  assert.match(record.endpoint, /records\/store.json.*blobs\/sha256.*working directory.*separately.*not their combined/u);
+  assert.match(record.dataOwner, /backup\/removal.*shutdown does not erase/u);
+  assert.match(record.check, /ready\(\).*metadata only.*metadata before.*same idempotent/u);
+  assert.ok(boundary.records.some(item => item.service.includes('/usr/bin/flock')));
+  const removed = new Map(invocation.selectedSources);
+  removed.delete(path.join(root, relative));
+  removed.set(path.join(root, 'foreign.ts'), 'const records = new FileDurableRecordStore(configured,');
+  assert.ok(!invocationDependencyBoundaries({ ...invocation, selectedSources: removed }, root).records
+    .some(item => item.service.includes('FileDurableBlobStore')));
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'artifact-boundary-'));
+  t.after(() => fs.rmSync(temporary, { recursive: true, force: true }));
+  // Selected constructor alone cannot qualify an unknown lifecycle/store implementation.
+  const selected = new Map([[path.join(temporary, relative), 'const records = new FileDurableRecordStore(configured,']]);
+  const missing = invocationDependencyBoundaries({ selectedSources: selected, diagnostics: [], evidence: [] }, temporary);
+  assert.ok(!missing.records.some(item => item.service.includes('FileDurableBlobStore')));
+  assert.match(missing.diagnostics.join(' '), /Selected artifact metadata\/blob custody could not be qualified/u);
+});
+
+test('agent-events is Nova-selected SDK integration, not the separate OpenClaw host extension', () => {
+  const record = invocationDependencyBoundaries(facts('skills/common/plugins/openclaw-agent-events/src/adapter.ts'), root)
+    .records.find(item => item.scope === 'host-subscription');
+  assert.match(record.endpoint, /Nova platform.*Nova process.*exact SDK version.*topology/u);
+  assert.doesNotMatch(record.endpoint, /operator installs the adapter inside/u);
+  assert.match(record.check, /Stop until.*Nova process.*real host event source/u);
+  const observer = invocationDependencyBoundaries(facts('skills/common/plugins/openclaw-agent-observer/src/index.ts', 'registerOpenClawAgentObserver'), root)
+    .records.find(item => item.scope === 'host-subscription');
+  assert.match(observer.endpoint, /installed host.*in-process diagnostic SDK/u);
+});
+
 test('selected Trivy operations distinguish local input from remote image credential projection', () => {
   const routes = pluginCapabilityRoutes(path.join(root, 'skills/buster/engine/test-gates/remote-plan-service.ts'), root);
   for (const [entry, operation] of [['dependency', 'dependency'], ['image', 'image'], ['kubernetes-policy', 'kubernetes-policy']]) {
