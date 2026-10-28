@@ -5,7 +5,7 @@ Audience: new reader, operator, maintainer, security reviewer, plugin author
 Owner: platform architecture
 Evidence: packaging/runtime/roles; skills/nova/core; skills/worker/core
 Evidence revision: `85e73b1885f04a9494f388cf6622ad0bde2db447`
-Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; runtime adoption in this checkout and the deployed release must be verified separately
+Upstream source scope: Ops changes on main at `34cf38ef53ee41381543785d0ffae90a37fac9ca`. Runtime adoption in this checkout and the deployed release must be verified separately
 Applies to: current source and declared runtime roles
 Last verified: source and contract inspection on 2026-09-19
 
@@ -55,7 +55,7 @@ The [glossary](../reference/glossary.md) defines all KubeClaw terms used in this
 | How are static architecture presentations published privately? | [Archviewer](archviewer.md) |
 | What are the schema, identity, timeout, retry, and failure rules for each connection? | [Communication](communication.md) |
 | Which store owns each record, and how do backup and restore work? | [Data and state](data-and-state.md) |
-| How do events reach observers and telemetry sinks without becoming pipeline truth? | [Telemetry](telemetry.md) |
+| How do events reach observers and telemetry sinks but not become pipeline truth? | [Telemetry](telemetry.md) |
 | How do identities, secrets, network policy, and supply-chain checks work together? | [Security and trust](security-and-trust.md) |
 | Why does a retry differ from recovery? | [Request, state, and recovery](request-state-recovery.md#failure-paths) |
 | Which required services support the pipeline? | [Pipeline dependencies](pipeline-dependencies.md) |
@@ -94,7 +94,7 @@ A specialist returns a typed result, but cannot declare the full run successful.
 >
 > **Revision:** `85e73b1885f04a9494f388cf6622ad0bde2db447`.
 >
-> **Claim:** Core records canonical lifecycle decisions; specialists return typed results rather than directly mutating run state.
+> **Claim:** Core records canonical lifecycle decisions. Specialists return typed results rather than change run state directly.
 >
 > **Test evidence:** No fresh scheduling, illegal-result or terminal-closure execution accompanies these source and decision links.
 >
@@ -138,7 +138,7 @@ It uses three scopes so that infrastructure does not look like pipeline authorit
 | Optional platform extensions | Argo CD, monitoring, and the Ops Pod. | Valuable platform capabilities, but not pipeline prerequisites. |
 
 Kubernetes networking remains required.
-The current secured deployment requires Cilium. A Flannel fallback is planned, but is not implemented or proved; see [the CNI support boundary](platform-and-operations.md#one-network-owner-flannel-or-cilium).
+The current secured deployment requires Cilium. A Flannel fallback is planned, but is not implemented or proved. See [the CNI support boundary](platform-and-operations.md#one-network-owner-flannel-or-cilium).
 Direct Helm deployment can replace Argo CD when one controller retains exclusive ownership.
 
 ## Role Words Have Exact Meanings
@@ -164,7 +164,7 @@ They are not separate runtime roles in the current package inventory.
 >
 > **Limit:** A role declaration proves intended package assembly. It does not prove deployment or reachability.
 >
-> **Claim:** Runtime roles assemble bounded package sets; package ownership does not itself activate registrations or grant operations.
+> **Claim:** Runtime roles assemble bounded package sets. Package ownership does not itself activate registrations or grant operations.
 >
 > **Test evidence:** No fresh bundle assembly, activation or runtime reachability exercise accompanies these declarations.
 >
@@ -223,6 +223,8 @@ The project does not require or claim formal ASD-STE100 certification.
 Human-reader acceptance remains a publication check.
 
 ## Choose Your Next Page
+
+These pages cover the next topics:
 
 - [Components and authority](components-and-authority.md) explains each part and each decision boundary.
 - [Request, state, and recovery](request-state-recovery.md) follows success, retry, repair, wait, cancellation, and uncertain effects.

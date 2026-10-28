@@ -19,9 +19,8 @@ The chart fails when another agent role enables it. This makes storage ownership
 clear and avoids several roles publishing different content under one hostname.
 
 The source proves the Nova-only rule but does not record its historical design
-reason. The current assessment is an inference: a static, read-only server has
-a small attack and maintenance surface, and Nova placement avoids a separate
-writable publication service. The cost is that Archviewer cannot validate,
+reason. The current assessment is an inference. A static, read-only server has a small attack and maintenance surface.
+Nova placement avoids a separate writable publication service. The cost is that Archviewer cannot validate,
 version, atomically publish, or retire content. Reconsider this design when the
 product needs a supported publisher, revision selection, or independent scaling.
 
@@ -35,7 +34,7 @@ product needs a supported publisher, revision selection, or independent scaling.
 >
 > [The chart refuses non-Nova roles, invalid policy providers, and legacy duplicate port ownership](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/charts/kubeclaw/templates/archviewer.yaml#L1-L13).
 >
-> **Contract or setting:** The linked chart checks role, selected policy provider and duplicate port ownership; it does not implement a publisher.
+> **Contract or setting:** The linked chart checks role, selected policy provider and duplicate port ownership. It does not implement a publisher.
 >
 > **Test evidence:** [Chart policy-provider checks](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/tests/verification/deployment/archviewer-policy-provider.test.mjs#L37-L45) contains Cilium selection and unknown-provider render rejection assertions. These assertions are not a recorded execution result for this callout.
 >
@@ -53,24 +52,26 @@ respectively. Both select Nova pods and admit TCP 3456 from the Tailscale operat
 namespace and the proxy labels for this exact Ingress.
 
 The Tailscale Ingress controller is required for both variants. Only the `cilium`
-variant requires the Cilium CRD. For a non-Cilium deployment, explicitly select
-`kubernetes` and use a CNI that enforces Kubernetes NetworkPolicy. Any other
-provider value fails chart rendering. A successful render proves the selected
+variant requires the Cilium CRD. For a non-Cilium deployment, explicitly select `kubernetes`.
+Then use a CNI that enforces Kubernetes NetworkPolicy. Any other
+provider value fails chart rendering.
+
+A successful render proves the selected
 resource shape, not live network enforcement or equivalent whole-platform
-security. Verify permitted proxy access and denied unrelated-pod access before
-relying on the policy. Policies are additive: another applicable allow policy
-can broaden access, so inspect all policies selecting the Nova pod.
+security. Before you accept enforcement of the policy, verify permitted proxy access and denied unrelated-pod access.
+
+Policies are additive. Another applicable allow policy can broaden access.
+Inspect all policies that select the Nova pod.
 
 This policy is additional defense, not the only authentication. Nginx requires
 HTTP Basic authentication for documents. The htpasswd file comes from key
 `htpasswd` in `archviewer.existingSecret`. `/healthz` is the only unauthenticated
-path and returns a fixed `ok` response. Directory listing is disabled, and an
-unknown document returns 404.
+path and returns a fixed `ok` response. Nginx disables directory listing. An unknown document returns 404.
 
 | Value | Default or rule |
 | --- | --- |
 | `archviewer.enabled` | `false` |
-| `archviewer.networkPolicyProvider` | `cilium`; accepts `cilium` or `kubernetes` |
+| `archviewer.networkPolicyProvider` | `cilium`. Accepts `cilium` or `kubernetes` |
 | `archviewer.existingSecret` | Required when enabled |
 | `archviewer.hostname` | `nova-architecture` |
 | `archviewer.tailscaleOperatorNamespace` | `tailscale` |
@@ -80,13 +81,13 @@ unknown document returns 404.
 selected network policy, and authentication Secret volume. It does not inject
 the Nginx container or `/designs` mount. The current Nova deployment supplies those
 separately through `extraContainers`. Thus both configuration parts must agree:
-enabling the access resources without the sidecar leaves a Service with no
-listener on pod port 3456; adding the sidecar without `archviewer.enabled` leaves no
-dedicated private publication route or auth volume.
+
+- If you enable the access resources without the sidecar, the Service has no listener on pod port 3456.
+- If you add the sidecar without `archviewer.enabled`, no dedicated private publication route or auth volume exists.
 
 > **Source evidence — three access checks**
 >
-> **Claim:** Document requests require Basic authentication; only health bypasses it, while chart policies select the private proxy path.
+> **Claim:** Document requests require Basic authentication. Only health bypasses it, while chart policies select the private proxy path.
 >
 > **Implementation:** Nginx, chart access resources, defaults and Secret mount below define the independent checks.
 >
@@ -100,20 +101,19 @@ dedicated private publication route or auth volume.
 >
 > [The deployment mounts only the named htpasswd key from the existing Secret](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L1716-L1724).
 >
-> **Contract or setting:** The named htpasswd Secret/key and selected networkPolicyProvider control access; all policies selecting the Pod still matter.
+> **Contract or setting:** The named htpasswd Secret/key and selected networkPolicyProvider control access. All policies selecting the Pod still matter.
 >
-> **Test evidence:** [Native Nginx access assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/archviewer-native.test.mjs#L43-L56) contains unauthenticated/wrong-password denial, retrieval, listing denial and credential-removal checks. These assertions are not a recorded execution result for this callout. Execution requires ARCHVIEWER_TEST_NGINX pointing to a real Nginx binary; no run result accompanies this callout.
+> **Test evidence:** [Native Nginx access assertions](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/archviewer-native.test.mjs#L43-L56) contains unauthenticated/wrong-password denial, retrieval, listing denial and credential-removal checks. These assertions are not a recorded execution result for this callout. Execution requires ARCHVIEWER_TEST_NGINX to identify a real Nginx binary. No run result accompanies this callout.
 >
 > **Revision:** `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`; `f99aecbb00cb399b46dfbbeb3ddb375fba6218e7`; `0e35889a3c4e65d5c47ba88e924611aace67eb1d`. These are the source bindings for the explanation above, not execution receipts.
 >
-> **Limit:** The native local listener does not establish Tailnet DNS/TLS or CNI enforcement; health does not prove authenticated document availability.
+> **Limit:** The native local listener does not establish Tailnet DNS/TLS or CNI enforcement. Health does not prove authenticated document availability.
 
 ## Publication And Lifecycle
 
 Archviewer reads the Nova workspace volume subpath `prism/designs` through a
 read-only mount at `/designs`. Nginx maps the request path directly to that
-tree. The image starts with an empty `/designs` directory, but that image
-directory is hidden by the mounted workspace in the deployed sidecar.
+tree. The image starts with an empty `/designs` directory, but the mounted workspace hides that image directory in the deployed sidecar.
 
 There is no implemented production publisher for this directory. The inspected
 source creates the directory and configures the read-only consumer, but it does
@@ -126,16 +126,24 @@ infer that Prism baselines, Prism Studio, or Nova stage artifacts publish here.
 
 This missing producer is the extension boundary. The Nova and Archviewer owners
 must define and implement a writer contract before they promise end-to-end
-publication. A supported publisher requires an authenticated producer identity, admitted
-source artifact and revision, safe filename mapping, complete-write/atomic
-visibility rule, content and size validation, conflict behavior, retention and
-removal, failure recovery, and an end-to-end test that starts with the producer
-request and ends with authenticated retrieval. Until then, a 404 for a missing
+publication. A supported publisher requires:
+
+- An authenticated producer identity
+- An admitted source artifact and revision
+- Safe filename mapping
+- A complete-write/atomic visibility rule
+- Content and size validation
+- Conflict behavior
+- Retention and removal
+- Failure recovery
+- An end-to-end test that starts with the producer request and ends with authenticated retrieval.
+
+ Until then, a 404 for a missing
 document is a stop condition, not a reason to restart Nginx or write into the
 volume manually.
 
 The empty directory is valid, so health can be green while no presentation is
-published. Health proves only that Nginx is running and its configuration loaded.
+published. Health proves only that Nginx runs and its configuration loaded.
 It does not prove authentication, Tailnet routing, network-policy enforcement,
 Secret quality, or document presence.
 
@@ -147,7 +155,7 @@ release receipt before deployment.
 
 > **Source evidence — current lab wiring**
 >
-> **Claim:** The lab values add access resources and the sidecar/mount separately; startup creates a directory, not a supported presentation publisher.
+> **Claim:** The lab values add access resources and the sidecar/mount separately. Startup creates a directory, not a supported presentation publisher.
 >
 > **Implementation:** The values and startup lines below are the deployed-wiring inputs for this distinction.
 >
@@ -157,9 +165,9 @@ release receipt before deployment.
 >
 > [Nova startup creates the directory but does not publish a document](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/charts/kubeclaw/templates/deployment.yaml#L454-L467).
 >
-> **Contract or setting:** The read-only prism/designs mount and separate extraContainers configuration must agree; the lab image tag is not an immutable release receipt.
+> **Contract or setting:** The read-only prism/designs mount and separate extraContainers configuration must agree. The lab image tag is not an immutable release receipt.
 >
-> **Test evidence:** No maintained end-to-end producer test is identified because this inspected wiring supplies no publisher contract. The [native viewer test](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/archviewer-native.test.mjs#L10-L26) creates its own presentation file; it is not a producer test or recorded run here.
+> **Test evidence:** No maintained end-to-end producer test is identified because this inspected wiring supplies no publisher contract. The [native viewer test](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/tests/verification/reliability/archviewer-native.test.mjs#L10-L26) creates its own presentation file. It is not a producer test or recorded run here.
 >
 > **Revision:** `0e35889a3c4e65d5c47ba88e924611aace67eb1d`; `569f7b4933d4859cc67c80ddf40d5154ffd95ce5`. These are the source bindings for the explanation above, not execution receipts.
 >
@@ -169,19 +177,28 @@ release receipt before deployment.
 
 | Symptom | Likely boundary | Recovery |
 | --- | --- | --- |
-| Helm render fails | Wrong role, invalid policy provider, missing hostname/Secret, or duplicate legacy port. | Correct values; do not bypass the template guard. |
+| Helm render fails | Wrong role, invalid policy provider, missing hostname/Secret, or duplicate legacy port. | Correct values. Do not bypass the template guard. |
 | Health works, document returns 401 | Credentials absent or wrong. | Use an account present in the mounted htpasswd file. |
 | Document returns 403 | htpasswd file is unavailable or Nginx cannot read it. | Repair the Secret mount and file mode. |
-| Document returns 404 | File is not present under `/designs`; no supported publisher creates it. | Stop. Preserve the request and mounted-volume observations. Do not restart Nginx or write a file manually; publication needs an implemented producer contract. |
-| Tailnet hostname does not connect | Tailscale Ingress, DNS, Service, or proxy ownership failed. | Trace the Ingress and exact proxy labels before changing Nginx. |
-| Connection is denied by the selected network policy | Policy does not recognize the owning proxy. | Compare namespace and parent-resource labels with the rendered CiliumNetworkPolicy or NetworkPolicy; do not disable the policy. |
+| Document returns 404 | File is not present under `/designs`. No supported publisher creates it. | Stop. Preserve the request and mounted-volume observations. Do not restart Nginx or write a file manually. Publication needs an implemented producer contract. |
+| Tailnet hostname does not connect | Tailscale Ingress, DNS, Service, or proxy ownership failed. | Before you change Nginx, trace the Ingress and exact proxy labels. |
+| Connection is denied by the selected network policy | Policy does not recognize the owning proxy. | Compare namespace and parent-resource labels with the rendered CiliumNetworkPolicy or NetworkPolicy. Do not disable the policy. |
 
 ## Operation And Supported Changes
 
-After a deployment change, render the chart and verify the Nova-only guard,
-policy provider and CNI enforcement support, Secret name and `htpasswd` key,
-sidecar port, read-only `/designs` mount,
-Service selector, Ingress hostname, and exact Tailscale proxy labels. In the
+After a deployment change, render the chart.
+Then verify:
+
+- The Nova-only guard
+- The policy provider and CNI enforcement support
+- The Secret name and `htpasswd` key
+- The sidecar port
+- The read-only `/designs` mount
+- The Service selector
+- The Ingress hostname
+- The exact Tailscale proxy labels.
+
+ In the
 running environment, distinguish these observations:
 
 - `/healthz` proves only Nginx process and configuration availability.
@@ -189,15 +206,14 @@ running environment, distinguish these observations:
   credentials.
 - 403 with credentials can indicate an unreadable or missing htpasswd file.
 - 404 after authentication proves that Nginx did not resolve that path in its
-  current mount; it does not prove why the producer-side file is absent.
+  current mount. It does not prove why the producer-side file is absent.
 - 200 proves retrieval of the current bytes only. It does not prove their
   source revision or completeness because no publication manifest exists.
 
 Supported changes to the viewer are static-server or access changes: the Nginx
 configuration, fixed port, Basic-auth Secret contract, Nova-only chart guard,
 private Service/Ingress/policy, or sidecar image and mount wiring. Update the
-native Nginx test and rendered chart tests with each such change. Adding a
-publisher is not a small Nginx extension; it is the missing product contract
+native Nginx test and rendered chart tests with each such change. If you add a publisher, that change is not a small Nginx extension. It is the missing product contract
 described above.
 
 The native reliability test starts real Nginx and proves unauthenticated and

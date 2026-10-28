@@ -6,7 +6,7 @@ Owner: buster
 Evidence: skills/nova/core/test-gates; skills/buster/engine/test-gates; contracts/pipeline-test-gate/v1; skills/nova/plugins/buster-quality-gate
 Evidence revision: `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`
 Applies to: the current Nova-to-Buster remote test-gate path
-Last verified: source and contract inspection on 2026-09-19. Optional-evaluator section source-reviewed 2026-10-22; original other-scope dates and execution limits unchanged.
+Last verified: source and contract inspection on 2026-09-19. Optional-evaluator section source-reviewed 2026-10-22. Original other-scope dates and execution limits unchanged.
 
 ## Product Boundary
 
@@ -22,6 +22,8 @@ to advisory, or declare the complete pipeline successful.
 
 ### Decision record: freeze the plan before remote execution
 
+This decision record has these facets:
+
 - **Problem and constraints:** Nova can restart and Buster can execute on a
   different host. Both sides must still agree on the nodes, package bytes,
   configuration, limits, links, and source revision.
@@ -33,8 +35,8 @@ to advisory, or declare the complete pipeline successful.
   retain the actual transport decision and its alternatives.
 - **Reason:** A later discovery step would let caller and executor use different
   meanings for the same job identity.
-- **Cost:** The plan is traceable and repeatable, but it cannot absorb a
-  later provider or configuration change; Nova must resolve a new plan and digest.
+- **Cost:** The plan is traceable and repeatable. It cannot include a later provider or configuration change.
+  Nova must resolve a new plan and digest.
 - **Reconsider when:** Reconsider the transport when the accepted queue target in
   D-098 replaces the first authenticated service transport. Do not reconsider the
   fixed-plan identity rule unless a replacement preserves the same authority.
@@ -45,11 +47,11 @@ to advisory, or declare the complete pipeline successful.
 - **Implementation status:** Implemented for the inspected Nova resolver, Buster
   runner, and remote result path. Live multi-host acceptance is separate.
 - **Supersession:** No successor replaces the fixed-plan rule. D-110 narrows the
-  initial transport relative to D-098; it does not replace plan immutability.
+  initial transport relative to D-098. It does not replace plan immutability.
 
 > **Source evidence — authority split**
 >
-> **Claim:** Nova fixes the plan identity; Buster validates that identity; Nova
+> **Claim:** Nova fixes the plan identity. Buster validates that identity. Nova
 > owns the final gate decision after result verification.
 >
 > **Implementation:** [Nova resolver, `resolveTestPlan`](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/resolver.ts#L720-L754) ·
@@ -74,19 +76,19 @@ to advisory, or declare the complete pipeline successful.
 The canonical decision records are [ADR-003, ADR-013, and ADR-014](../decisions/core-and-plugins.md)
 and [D-001 through D-119](../decisions/test-gate.md). The table below is a
 mechanism map. It explains the consequence of current behavior. Its contrast
-column identifies the failure that the mechanism prevents; it does not claim
+column identifies the failure that the mechanism prevents. It does not claim
 that every contrast was a historically considered alternative.
 
 | Current mechanism | Why the flow needs it | Failure it prevents | Cost and consequence |
 | --- | --- | --- | --- |
 | Send one committed Git archive. | Buster must execute the same bytes that Nova identified. | Send the mutable working tree or let Buster clone a moving branch. | The author must commit every required file before execution. |
 | Sign the source statement with Nova's Ed25519 key. | Buster must know which trusted source authority created the archive identity. | Trust a repository name, transport token, or archive digest alone. | Operators must provision, protect, and rotate an asymmetric key pair. |
-| Keep Buster result receipts hash-bound instead of signing them. | The authenticated service boundary and exact digests provide the implemented result authority. | Describe deterministic receipt hashes as cryptographic signatures. | A receipt proves internal identity binding, not independent non-repudiation. |
+| Keep Buster result receipts hash-bound with no signatures. | The authenticated service boundary and exact digests provide the implemented result authority. | Describe deterministic receipt hashes as cryptographic signatures. | A receipt proves internal identity binding, not independent non-repudiation. |
 | Store status, result, and evidence as separate objects. | Polling must stay small while result and evidence bytes retain exact identities. | Put all bytes into every status response. | Operators must preserve and recover several related durable objects. |
 | Reserve result capacity during admission. | An accepted job must not create storage debt that can fail only after execution. | Admit work until the result store becomes full. | Conservative reservations can reject work before the store is physically full. |
 | Run providers through Worker Core capabilities. | A package receives only declared, bounded authority for one attempt. | Let provider code open host processes, sockets, cluster clients, or scanners directly. | Each new authority needs a policy, adapter, limits, tests, and operator configuration. |
 | Keep original evidence and normalized report facts. | Normalization supports common decisions, while original bytes preserve diagnostic detail. | Keep only parsed counts or only raw files. | Evidence storage must account for both forms and their separate limits. |
-| Import a verified result once in Nova. | A retry must continue the same durable import instead of duplicating evidence or changing identity. | Mark the gate complete before every evidence object is present. | Nova needs pending and complete import records plus conflict handling. |
+| Import a verified result once in Nova. | A retry must continue the same durable import. It must not duplicate evidence or change identity. | Mark the gate complete before every evidence object is present. | Nova needs pending and complete import records plus conflict handling. |
 
 This table is not a decision register. Decision status, implementation status,
 reconsideration conditions, evidence, and supersession remain in the canonical
@@ -127,7 +129,7 @@ sequenceDiagram
 
 **Text alternative to the diagram**
 
-Read the following messages in order. A self-action stays with the same participant; a dashed reply is identified explicitly.
+Read the following messages in order. A self-action stays with the same participant. A dashed reply is identified explicitly.
 
 Participants: Pipeline declaration, Nova, Nova durable stores, Buster plan service, Buster runner, Worker Core, Provider sandbox.
 
@@ -168,16 +170,16 @@ code or grant authority.
 
 The resolver performs these operations:
 
-1. Validate every suite contract and build a unique catalogue.
-2. Apply exclusions and permitted overrides.
-3. combine suite nodes with project-local nodes;
-4. validate provider configuration against the selected package schema;
-5. expand permitted matrix fields within the policy limit;
-6. bind input ports to exact upstream output ports;
-7. reject cycles, missing dependencies, and incompatible ports;
-8. bind provider and report-adapter package digests;
-9. calculate stable execution and test identities; and
-10. calculate the final plan digest.
+1. The resolver validates every suite contract. It builds a unique catalog.
+2. The resolver applies exclusions and permitted overrides.
+3. The resolver combines suite nodes with project-local nodes.
+4. The resolver validates provider configuration against the selected package schema.
+5. The resolver expands permitted matrix fields within the policy limit.
+6. The resolver binds input ports to exact upstream output ports.
+7. The resolver rejects cycles, missing dependencies, and incompatible ports.
+8. The resolver binds provider and report-adapter package digests.
+9. The resolver calculates stable execution and test identities.
+10. The resolver calculates the final plan digest.
 
 The resolved plan records what will run. It does not prove that a provider,
 cluster, browser, scanner, or network target is available.
@@ -188,9 +190,8 @@ cluster, browser, scanner, or network target is available.
 
 ## 2. Committed Source Snapshot
 
-Nova never sends the mutable working tree to Buster. It resolves a commit and
-its tree, creates a compressed Git archive, and binds repository, stage,
-revision, tree, archive digest, size, and creator authority. An Ed25519
+Nova never sends the mutable working tree to Buster. It resolves a commit and its tree.
+It creates a compressed Git archive. It binds repository, stage, revision, tree, archive digest, size, and creator authority. An Ed25519
 signature protects this source statement.
 
 Buster verifies the configured authority and public key before admission. The
@@ -225,7 +226,7 @@ The Buster API has these routes:
 
 The transport permits HTTPS or loopback HTTP. Bearer mode requires a token of
 at least 32 characters. SPIFFE-proxy mode requires a loopback endpoint because
-the local proxy owns peer authentication. Redirects are rejected. Request,
+the local proxy owns peer authentication. The transport rejects redirects. Request,
 response, result, archive, evidence, and store limits remain separate.
 
 > [The Nova transport defines job, status, cancellation, result, and evidence calls](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/core/test-gates/remote-dispatch.ts#L94-L197).
@@ -268,7 +269,7 @@ Fixtures can retain a live resource for dependent tests. Their cleanup runs
 after consumers finish. Tests return facts and evidence, not fixture lifecycle
 authority. A non-retry-safe provider receives no retries by default. A suite can explicitly
 request retries with `acceptUnsafeRetry: true`, within the policy retry limit.
-This acknowledges the risk; it does not make the provider retry-safe.
+This acknowledges the risk. It does not make the provider retry-safe.
 
 > [Provider loading verifies the package digest and imports an attempt-owned snapshot](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/engine/test-gates/provider-loader.ts#L37-L86).
 >
@@ -300,9 +301,8 @@ separate Ed25519 signature described above.
 ## 7. Nova Verification and One-Time Import
 
 Nova accepts only a terminal status that belongs to the submitted job and
-request. For a completed job, it downloads the exact result object, validates
-the content and result digests, checks all job, run, plan, node, attempt,
-receipt, and source identities, and derives the gate decision.
+request. For a completed job, Nova downloads the exact result object. It validates the content and result digests.
+It checks all job, run, plan, node, attempt, receipt, and source identities. It then derives the gate decision.
 
 Nova then stores a pending import record, imports every referenced evidence
 blob by digest, and changes the record to `complete`. A retry with the same
@@ -316,7 +316,7 @@ does not use the Buster status alone as the pipeline verdict.
 ### Optional evaluator after the native decision
 
 The Nova stage `kubeclaw.test.quality-evaluation` adds an optional evaluator
-judgment to the native result; it does not replace Buster execution. Follow the
+judgment to the native result. It does not replace Buster execution. Follow the
 [existing native production procedure](../use/workflows/buster-suite.md#5-submit-and-observe-in-production)
 for compilation, submission, verified import and audit. The existing
 `testAgentEnabled` setting controls only the branch below, not a new submission
@@ -324,23 +324,20 @@ path or permission to accept caller-supplied test evidence.
 
 The closed stage input contains `gateId`, `task`, `providerPlan`, and optional
 `expectedCoverage`. Caller-supplied `suiteEvidence`, `runId`, or `attempt` is not
-an alternative input contract. The stage resolves the admitted source revision,
-checks coverage expectations when present, invokes `test.plan.execute`, parses
-the returned digest-bound native decision and checks its run against Core's
-leased run. An enabled evaluator needs a nonblank configured `agent`; that
+an alternative input contract. The stage resolves the admitted source revision and checks coverage expectations when present.
+It invokes `test.plan.execute`. It parses the returned digest-bound native decision and checks its run against Core's leased run. An enabled evaluator needs a nonblank configured `agent`. That
 configuration check happens before the native invocation. An invalid native
 plan, import or coverage decision does not become evaluator evidence.
 
 The stage writes the native decision through `artifacts.write` in namespace
 `kubeclaw.buster-quality-gate`, object
-`buster-quality:<gateId>:decision:<attemptNumber>`, before choosing a judgment
-branch. This ordering preserves native facts independently of evaluator output.
+`buster-quality:<gateId>:decision:<attemptNumber>`, before it chooses a judgment branch. This ordering preserves native facts independently of evaluator output.
 
 | Native decision / evaluator branch | Result and retained artifacts |
 | --- | --- |
-| Native state is not `passed` | Return the native stage result with the native decision artifact; never dispatch the optional evaluator. Native `failed` reduces to `request_fix` / `test_gate.failed`; `cancelled` stays cancelled, and `execution_error` or `review_required` is blocked with its native reason. |
-| Native passed; evaluator disabled | Write a second assessment object `buster-quality:<gateId>:<attemptNumber>` containing `testAgent.enabled: false`, `nativeOutcome`, `sourceRevision`, and `decisionDigest`; return the native passed result plus both artifacts. |
-| Native passed; evaluator enabled | Dispatch the configured agent with protocol `kubeclaw.buster-quality-gate.v2`, task, runtime-supplied identity and suite evidence derived from the parsed native decision. A valid assessment writes the second object with `testAgent.enabled: true`, bound `verdict`, `sourceRevision`, `decisionDigest`, and `suiteEvidence`. |
+| Native state is not `passed` | Return the native stage result with the native decision artifact. Never dispatch the optional evaluator. Native `failed` reduces to `request_fix` / `test_gate.failed`. `cancelled` stays cancelled, and `execution_error` or `review_required` is blocked with its native reason. |
+| Native passed. Evaluator disabled | Write a second assessment object `buster-quality:<gateId>:<attemptNumber>` with these fields: `testAgent.enabled: false`, `nativeOutcome`, `sourceRevision`, and `decisionDigest`. Return the native passed result plus both artifacts. |
+| Native passed. Evaluator enabled | Dispatch the configured agent with protocol `kubeclaw.buster-quality-gate.v2`. The request contains task, runtime-supplied identity and suite evidence from the parsed native decision. A valid assessment writes the second object with `testAgent.enabled: true`, bound `verdict`, `sourceRevision`, `decisionDigest`, and `suiteEvidence`. |
 
 The request describes a **four-field agent-owned output**, not a copy of the
 request envelope:
@@ -352,20 +349,23 @@ request envelope:
 | `failureClass` | `none` |
 | `findings` | Empty list. |
 
-The evaluator must return `outcome` as `passed`, `request_fix`, or `blocked`;
+The evaluator must return `outcome` as `passed`, `request_fix`, or `blocked`.
 `failureClass` is `none`, `test_failure`, `contract`, `configuration`,
 `infrastructure`, `rate_limit`, or `timeout`. Do not add `protocol`, `agent`,
 `identity`, `task`, evidence, or contract fields. Core's lease supplies run and
-attempt; the stage's input supplies gate ID. The parser attaches those values
-to the verdict itself, so an agent cannot select another run/gate/attempt by
-copying identity fields into its output.
+attempt. The stage's input supplies gate ID. The parser attaches those values to the verdict itself. An agent cannot select another run/gate/attempt even if it copies identity fields into its output.
 
-Beyond the request's declared shape, the parser requires a nonblank summary of
-at most 8,192 JavaScript string code units, at most 128 findings, and nonblank
-finding strings of at most 4,096 code units each. These are not UTF-8 byte limits.
+Beyond the request's declared shape, the parser requires:
+
+- A nonblank summary of at most 8,192 JavaScript string code units
+- At most 128 findings
+- Nonblank finding strings of at most 4,096 code units each.
+
+ These are not UTF-8 byte limits.
+
 A passed verdict must have `failureClass: none`, no findings, and no failing
 suite evidence. A nonpassing verdict needs a non-`none` class and at least one
-finding. The parser retains the supplied summary/findings; it does not replace
+finding. The parser retains the supplied summary/findings. It does not replace
 them with a generic issue list. These consistency rules cannot authorize a pass
 for a failed native decision: that branch never dispatches the agent.
 
@@ -374,49 +374,50 @@ valid nonpassing verdict, it keeps the requested `request_fix` or `blocked`
 outcome and emits `buster_quality.<failureClass>`, the summary, findings and
 native decision digest. It does not choose `request_fix` solely because the
 class is `test_failure`, or automatically turn every infrastructure class into
-`blocked`; the explicit admissible outcome and class are separate fields.
+`blocked`. The explicit admissible outcome and class are separate fields.
 
 Only an exception from `parseVerdict(response.result, judgedInput)` becomes a
 blocked `buster_quality.invalid_verdict` result. That result returns the native
 decision artifact, not a successfully stored evaluator assessment. A dispatch
 failure, source/coverage/native-decision error, or either artifact-write failure
 lies outside that catch and propagates to Core's existing effect/error/recovery
-policy. Do not relabel those failures as malformed model output, assume an
-already-written native artifact disappeared, or resubmit native tests merely
-because an evaluator response was lost. Preserve the run, native decision,
-assessment if present, effect receipts and exact input/package identities;
-follow [the existing recovery boundary](#8-failure-cancellation-restart-and-recovery)
-before any permitted continuation. Disabling an evaluator neither repairs native
-evidence nor proves that a failed external dispatch had no effect.
+policy.
+
+Do not relabel those failures as malformed model output.
+Do not assume that an already-written native artifact disappeared.
+Do not resubmit native tests merely because the evaluator response was lost.
+
+Preserve the run, native decision, assessment if present, effect receipts and exact input/package identities.
+Before any permitted continuation, follow [the existing recovery boundary](#8-failure-cancellation-restart-and-recovery). If you disable an evaluator, that action neither repairs native evidence nor proves that a failed external dispatch had no effect.
 
 > **Source evidence — native-first optional evaluator contract**
 >
-> **Claim:** The optional evaluator judges already-verified native evidence, with runtime-owned identity and a separate assessment artifact; it cannot overrule a nonpassing native decision.
+> **Claim:** The optional evaluator judges already-verified native evidence, with runtime-owned identity and a separate assessment artifact. It cannot overrule a nonpassing native decision.
 >
 > **Implementation:** [Native decision, artifact order and optional branches](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/src/stage.ts#L13-L70) [Request/output contract, limits, consistency and identity](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/src/protocol.ts#L18-L45)
 >
 > **Contract or setting:** [Closed stage input and native provider-plan requirement](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/schemas/input.schema.json#L1-L43) [Native decision stage reduction](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/contracts/pipeline-test-gate/v1/src/gate-decision.ts#L39-L56)
 >
-> **Test evidence:** [Protocol vectors](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts#L1-L28) [Native input authority assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts#L1-L21) The assertions reject caller-owned evidence and contradictory or identity-bearing verdicts. They attach runtime input identity to a valid verdict. They were inspected, not executed for this addition; the package live-function test is a negative caller-evidence test, not proof of the complete optional dispatch path.
+> **Test evidence:** [Protocol vectors](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/tests/protocol.test.ts#L1-L28) [Native input authority assertions](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts#L1-L21) The assertions reject caller-owned evidence and contradictory or identity-bearing verdicts. They attach runtime input identity to a valid verdict. They were inspected, not executed for this addition. The package live-function test is a negative caller-evidence test, not proof of the complete optional dispatch path.
 >
-> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; all linked whole Source objects equal this checkout at that immutable revision.
+> **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`. All linked whole Source objects equal this checkout at that immutable revision.
 >
-> **Limit:** Source and protocol assertions do not prove live agent, native Buster, artifact-store or resumed pipeline success. Only parser exceptions enter `invalid_verdict`; external-effect uncertainty still belongs to Core recovery.
+> **Limit:** Source and protocol assertions do not prove live agent, native Buster, artifact-store or resumed pipeline success. Only parser exceptions enter `invalid_verdict`. External-effect uncertainty still belongs to Core recovery.
 
 ## 8. Failure, Cancellation, Restart, and Recovery
 
 | Failure | Current behavior | Safe action |
 | --- | --- | --- |
 | Dispatch response lost | Nova keeps the stored job and polls the derived job ID. | Reuse the same idempotency key and inspect durable status. |
-| Retryable HTTP failure | Dispatcher retries within the one gate deadline. | Restore transport; do not create a different job. |
+| Retryable HTTP failure | Dispatcher retries within the one gate deadline. | Restore transport. Do not create a different job. |
 | Job deadline | Nova requests cancellation and records interruption facts. | Inspect both Nova and Buster records before another run. |
 | Buster restart | Runtime calls recovery before it listens. | Keep readiness closed until recovery finishes. |
 | Running work after restart | Service reconciles durable jobs and terminal workspaces. | Preserve workspaces that cannot prove cleanup. |
 | Provider crash | Attempt becomes errored or unresolved according to Worker proof. | Read attempt, cleanup, and process evidence. |
 | Fixture cleanup failure | Cleanup error remains in the remote result. | Do not treat a passed test as complete cleanup. |
-| Evidence import interruption | Nova retains `pending_evidence` and retries the same import. | Restore the missing blob path; do not re-execute tests. |
-| Store capacity exhausted | Admission fails before accepting more result liability. | Free only verified retained data or add capacity. |
-| Completed archive pressure | Manual compaction can remove inline archive bytes after full proof. | Use an exact compaction intent; retain source, result, and evidence authority. |
+| Evidence import interruption | Nova retains `pending_evidence` and retries the same import. | Restore the missing blob path. Do not re-execute tests. |
+| Store capacity exhausted | Admission fails before it accepts more result liability. | Free only verified retained data or add capacity. |
+| Completed archive pressure | Manual compaction can remove inline archive bytes after full proof. | Use an exact compaction intent. Retain source, result, and evidence authority. |
 
 Cancellation is cooperative across boundaries. Nova aborts transport and asks
 Buster to cancel. Buster aborts the running job. Worker Core and capability
@@ -436,6 +437,8 @@ explains Kubernetes fixture ownership. The [workflow](../use/workflows/buster-su
 shows one complete suite, fixture, matrix, report, and decision path.
 
 ## 10. Implemented Limits
+
+These implemented limits apply:
 
 - The durable stores use one local filesystem. They do not provide replication.
 - Result receipts are deterministic integrity bindings, not asymmetric Buster signatures.

@@ -66,7 +66,7 @@ Operators must be able to trace those identities across the boundary.
 >
 > **Implementation:** Runtime exports, the role manifest and pipeline adapter below identify those distinct responsibilities.
 >
-> **Contract or setting:** Digest-bound design baselines constrain test targets and read-only implementation assignments; packaging does not grant lifecycle authority.
+> **Contract or setting:** Digest-bound design baselines constrain test targets and read-only implementation assignments. Packaging does not grant lifecycle authority.
 >
 > **Test evidence:** No fresh design-to-assignment execution or deployed Prism path accompanies these source links.
 >
@@ -88,7 +88,7 @@ flowchart LR
     Core --> Engine[Prism Engine]
     Engine --> Render[Renderer and evaluation]
     Control -->|uploaded or metadata source| Ingest[Ingestion service]
-    Ingest -.->|public-web capability; blocked at Control| Source[External web source]
+    Ingest -.->|public-web capability, blocked at Control| Source[External web source]
     Worker -->|artifact HTTP| Control
     Control --> Artifacts[Content-addressed artifacts]
     Control --> Baseline[Approved baseline bundle]
@@ -99,7 +99,7 @@ flowchart LR
 
 **Text alternative to the diagram**
 
-Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs. Dotted relationships are identified explicitly.
 
 | From | Relationship | To |
 | --- | --- | --- |
@@ -113,7 +113,7 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Worker Core | Directed connection | Prism Engine |
 | Prism Engine | Directed connection | Renderer and evaluation |
 | Prism Control | Directed connection — uploaded or metadata source | Ingestion service |
-| Ingestion service | Dotted connection — public-web capability; blocked at Control | External web source |
+| Ingestion service | Dotted connection — public-web capability, blocked at Control | External web source |
 | Prism Worker | Directed connection — artifact HTTP | Prism Control |
 | Prism Control | Directed connection | Content-addressed artifacts |
 | Prism Control | Directed connection | Approved baseline bundle |
@@ -124,20 +124,32 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 
 Text version: A user works through Studio or calls Control through an allowed
 agent path. Control validates identity and intent, and stores the durable
-request. Model-driven generation uses a durable Agent job, the Agent Bridge,
-and OpenClaw. Deterministic render, evaluation, embedding, and low-level
+request.
+
+Model-driven generation uses a durable Agent job, the Agent Bridge,
+and OpenClaw.
+
+Deterministic render, evaluation, embedding, and low-level
 publication work goes through the Prism Worker and neutral Worker Core before
 the Prism Engine interprets it. The production native Worker rejects
-`generate`. Source ingestion uses uploaded content or metadata through a
+`generate`.
+
+Source ingestion uses uploaded content or metadata through a
 separate service and rights gate. Control rejects `public-web` before acquisition.
+
 The ingestion service implements public-web fetching, but that implementation
-does not enable the route through Control. Do not bypass Control's admission
-by calling the ingestion service directly.
+does not enable the route through Control. Do not call the ingestion service directly to bypass Control's admission.
+
 PostgreSQL holds relational authority. The Worker reads and writes
-immutable artifact bytes through Control. Human approval binds one revision
+immutable artifact bytes through Control.
+
+Human approval binds one revision
 and its evidence into a baseline. The pipeline adapter then creates a
-digest-bound Buster plan or read-only Forge assignments. Nova calls Control
-directly; the adapter does not create a Nova input.
+digest-bound Buster plan or read-only Forge assignments.
+
+Nova requests a design through Control's API. The production transport uses
+the [proxy and agent bridge path](communication.md#prism-request-topology).
+The adapter does not create a Nova input.
 
 [Control's public-web rejection precedes the acquisition request](https://github.com/datrab/kubeclaw/blob/d303e57edad20b27f2332c6d037c8daeadb8e1ba/skills/prism/server/control-server.ts#L810-L817).
 The [separate fetch implementation](https://github.com/datrab/kubeclaw/blob/d303e57edad20b27f2332c6d037c8daeadb8e1ba/skills/prism/server/ingestion.ts#L49-L62)
@@ -160,16 +172,14 @@ is not proof of an admitted or successfully executed public-web journey.
 
 The separation is deliberate. It makes a partial failure visible. For example,
 Control can retain a durable job while a worker is unavailable. A restart can
-then reconcile the recorded intent instead of guessing whether the user asked
-for the operation.
+then reconcile the recorded intent. It does not need to guess whether the user asked for the operation.
 
 ## The Durable Spine
 
 The project is the long-lived product container. A round groups one design
 cycle. A Design Document is the typed design value. Each accepted operation
 creates a revision. The current-revision pointer can move only with a
-compare-and-swap rule. This rule rejects a stale edit instead of overwriting a
-newer revision.
+compare-and-swap rule. This rule rejects a stale edit and does not overwrite a newer revision.
 
 Directions and preference events provide design input and learning evidence.
 Corpus sources and revisions provide rights-qualified retrieval material.
@@ -215,11 +225,11 @@ artifact cleanup need explicit rules.
 The Prism Engine accepts five operations in contract major 1:
 
 - `generate` proposes typed document changes when a caller supplies a design
-  provider; the production native Worker does not admit this operation;
-- `render` creates bounded preview or export output;
-- `evaluate` creates quality findings;
-- `ingest` validates text and requests an embedding from the provider; it does
-  not acquire a source or grant rights; and
+  provider. The production native Worker does not admit this operation.
+- `render` creates bounded preview or export output.
+- `evaluate` creates quality findings.
+- `ingest` validates text and requests an embedding from the provider. It does
+  not acquire a source or grant rights.
 - `publish` requires an `approved: true` input and emits a small manifest. It
   does not perform the governed approval checks or assemble the complete
   baseline archive.
@@ -240,7 +250,7 @@ Engine operations.
 >
 > [The Engine owns fingerprinting, idempotent execution, document validation, and application of provider operations](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/engine/index.ts#L69-L176).
 >
-> **Claim:** The Prism Engine owns specialist execution; Worker binding admits and validates its supported operation contracts.
+> **Claim:** The Prism Engine owns specialist execution. Worker binding admits and validates its supported operation contracts.
 >
 > **Implementation:** The operation-specific binding and Engine execution paths below separate transport admission from specialist state changes.
 >
@@ -256,9 +266,7 @@ Engine operations.
 
 Retrieval does not search every stored item and rank it later. Eligibility
 comes first. Current state, rights, validity, model identity, required traits,
-and avoid rules remove records that must not participate. Text and vector
-candidates are then combined with deterministic ranking and source-family
-limits.
+and avoid rules remove records that must not participate. The retrieval path then combines text and vector candidates with deterministic ranking and source-family limits.
 
 Preference data is append-only evidence. A projection can group and decay that
 evidence, but it retains its origins and respects retractions. This prevents one
@@ -281,11 +289,11 @@ nearest-neighbor query.
 >
 > [Preference projection deduplicates events, applies retractions, retains origins, and calculates time-dependent scores](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/preferences/index.ts#L1-L89).
 >
-> **Claim:** Prism retrieval admits eligible current corpus records; preference projection separately retains event and retraction provenance.
+> **Claim:** Prism retrieval admits eligible current corpus records. Preference projection separately retains event and retraction provenance.
 >
 > **Implementation:** Corpus ingestion/search and preference projection below own transaction, filtering, ranking and learning state.
 >
-> **Contract or setting:** Rights/current-revision eligibility precedes corpus ranking; deduplication, retractions and recorded origins constrain preference scores.
+> **Contract or setting:** Rights/current-revision eligibility precedes corpus ranking. Deduplication, retractions and recorded origins constrain preference scores.
 >
 > **Test evidence:** No fresh ingestion, ranking, rights-revocation or preference-replay execution accompanies these source links.
 >
@@ -299,15 +307,15 @@ Prism has distinct answers for different failures:
 
 | Failure | Safe response |
 | --- | --- |
-| Stale Studio edit | Keep the local intent, load the current revision, and reconcile explicitly. |
+| Stale Studio edit | Keep the local intent. Load the current revision. Then reconcile explicitly. |
 | Duplicate request | Return or reconcile the result only when the stable identity and input fingerprint agree. |
-| Lost worker response | Inspect durable job and attempt state before dispatching again. |
+| Lost worker response | Before you dispatch again, inspect the durable job and attempt state. |
 | Cancellation | Treat cancellation as boundary-specific. Worker Core propagates its accepted attempt signal into Engine and cleanup. Studio aborts its Control HTTP request, but Control does not currently bind that disconnect to a request-wide operation signal. |
 | Process restart | Reconcile durable intent, ownership, journal, and result state. Do not infer success from process exit. |
 | Database uncertainty | Stop the transition and inspect the transaction outcome through stable record identity. |
 | Missing artifact | Treat the baseline as incomplete. Do not replace content under the expected digest. |
 | Ineligible source | Keep it outside retrieval even when its content or embedding exists. |
-| Evaluation finding | Report and remediate it. Do not confuse a passing evaluation with human approval. |
+| Evaluation finding | Report and remediate it. Do not confuse an evaluation that passed with human approval. |
 
 The runtime, data, and operator pages give the exact records and procedures for
 these cases.
@@ -331,7 +339,9 @@ checks.
 
 ## Current Limits
 
-- The repository can prove source contracts without proving a live cluster.
+These current limits apply:
+
+- The repository can prove source contracts but does not prove a live cluster.
 - Native PostgreSQL checks need a compatible database with pgvector.
 - Native worker checks need the documented launcher, cgroup, browser, and host
   controls.
@@ -345,6 +355,8 @@ Keep these limits visible in acceptance records. Do not turn an unavailable
 environment check into a pass.
 
 ## Start Here for a Change
+
+Use this sequence for a change:
 
 1. Use the authority map to select the smallest owner.
 2. Trace the request in [Prism runtime architecture](prism-runtime.md).

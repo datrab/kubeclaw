@@ -6,21 +6,27 @@ Owner: plugin-foundation
 Evidence: docs/site/extend/examples/minimal-stage; docs/site/extend/examples/observer-lifecycle; package.json; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; packaging/runtime/roles/nova.json
 Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
 Applies to: one capability-free `pipeline-plugin-v2` stage in the Nova role and the separately pinned local observer companion
-Last verified: original stage source/local check on 2026-09-16; observer source/local journey on 2026-10-26
+Last verified: original stage source/local check on 2026-09-16. Observer source/local journey on 2026-10-26
 
 ## Objective
 
 Create one small stage plugin and take it through the complete local plugin path:
 
-1. inspect and test the package;
-2. make the Nova role own it;
-3. verify that role packaging can include it;
-4. discover, register, grant, and activate it;
-5. invoke it in a local runner harness and inspect its decision fact;
-6. invoke one intentional failure;
-7. reject one invalid input before stage execution;
-8. remove the package and prove that new activation stops;
-9. identify the run evidence that remains after removal.
+1. Inspect the package.
+2. Test it.
+3. Make the Nova role own it.
+4. Verify that role packaging can include it.
+5. Discover it.
+6. Register it.
+7. Resolve its grants.
+8. Activate it.
+9. Invoke it in a local runner harness.
+10. Inspect its decision fact.
+11. Invoke one intentional failure.
+12. Reject one invalid input before stage execution.
+13. Remove the package.
+14. Prove that new activation stops.
+15. Identify the run evidence that remains after removal.
 
 The example does not access a network, filesystem, secret, process, or database.
 It requests no capabilities and creates no external state.
@@ -40,9 +46,9 @@ an end-to-end system test.
 
 This separation keeps two different developer tasks clear:
 
-- this guide proves that an installed plugin can register, activate, and return a
-  result through the local runtime boundary;
-- the Use and Operate guides own pipeline configuration, submission, observation,
+- This guide proves that an installed plugin can register, activate, and return a
+  result through the local runtime boundary.
+- The Use and Operate guides own pipeline configuration, submission, observation,
   and deployed execution.
 
 Do not copy the in-memory test definition as a `.swarm/pipeline.json` file. The two
@@ -77,13 +83,14 @@ project adds a dedicated development-only runtime role.
 
 ## Prerequisites
 
+Before you start, do these steps:
+
 - Start from a clean checkout of the product revision that you plan to extend.
   A pinned source link can show an earlier verified revision. Use that link as
   evidence, but edit and test the files in your selected product revision.
 - Install Node.js major version 24.
-- Complete the canonical
-  [Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation)
-  in a disposable checkout and retain its sanitized evidence.
+- Complete the canonical [Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation) in a disposable checkout.
+  Then retain its sanitized evidence.
 - Use a branch. The procedure changes one role manifest and creates one package copy.
 - Keep released package bytes for any nonterminal run that can still recover.
 - Do not use this tutorial package in a production deployment.
@@ -199,10 +206,10 @@ It also reports 49 pipeline plugins while the tutorial copy exists.
 
 Why the `plugins` array is necessary:
 
-- the source directory declares who owns the package;
-- the role manifest declares which deployable identity includes it;
-- the bundle builder copies only selected role content;
-- deployment receives the built bundle, not the complete repository.
+- The source directory declares who owns the package.
+- The role manifest declares which deployable identity includes it.
+- The bundle builder copies only selected role content.
+- Deployment receives the built bundle, not the complete repository.
 
 The plugin requests no capabilities.
 Therefore, role closure needs no additional adapter or external-capability record.
@@ -236,18 +243,18 @@ npm run docs:extensions:minimal-plugin:check
 
 The check performs these operations with the real KubeClaw components:
 
-1. copy the canonical example to a temporary installation root;
-2. parse the manifest and all referenced schemas;
-3. build the registry and resolve the empty capability grant set;
-4. reject the owned package before the Nova role selects it;
-5. accept a Nova role addition through the normal role checker;
-   the role probe uses a separate ID so the installed tutorial cannot collide;
-6. activate exactly one stage through Foundation;
-7. invoke that stage through a local Nova `PipelineRunner` harness;
-8. inspect the successful decision fact;
-9. run the explicit failure input;
-10. reject an empty name through the input schema;
-11. remove the temporary package and require stage-owner failure.
+1. The check copies the canonical example to a temporary installation root.
+2. The check parses the manifest and all referenced schemas.
+3. The check builds the registry and resolves the empty capability grant set.
+4. The check rejects the owned package before the Nova role selects it.
+5. The check accepts a Nova role addition through the normal role checker.
+   The role probe uses a separate ID so the installed tutorial cannot collide.
+6. The check activates exactly one stage through Foundation.
+7. The check invokes that stage through a local Nova `PipelineRunner` harness.
+8. The check inspects the successful decision fact.
+9. The check runs the explicit failure input.
+10. The check rejects an empty name through the input schema.
+11. The check removes the temporary package and requires stage-owner failure.
 
 Expected output includes these fields:
 
@@ -270,15 +277,15 @@ Persistent file-lock and recovery verification remain outside this local result.
 
 The successful result has three separate meanings:
 
-- `activatedStages: 1` proves that Foundation loaded the selected stage export;
-- `successFact` proves that Nova invoked the export with validated config and input;
-- the succeeded stage state proves that Core interpreted the typed result.
+- `activatedStages: 1` proves that Foundation loaded the selected stage export.
+- `successFact` proves that Nova invoked the export with validated config and input.
+- The succeeded stage state proves that Core interpreted the typed result.
 
 The intentional harness failure also has three meanings:
 
-- the plugin ran and returned a valid `failed` result;
-- Core recorded the stage as failed;
-- the local one-stage harness ended as failed because no later stage can repair it.
+- The plugin ran and returned a valid `failed` result.
+- Core recorded the stage as failed.
+- The local one-stage harness ended as failed because no later stage can repair it.
 
 The invalid-name case fails earlier.
 Nova validates the input schema before it calls the plugin.
@@ -360,13 +367,13 @@ remain a separate deployed-environment evidence boundary.
 | `selects unknown plugin` | Role entry exists but the package path or manifest ID does not match | Restore the package or correct the exact ID |
 | `PIPELINE_STAGE_OWNER_MISSING` | Installation roots do not contain the package, or the stage type differs | Inspect the effective root and `stages[].type` |
 | `REGISTRY_PACKAGE_UNTRUSTED` | The package is neither a trusted built-in nor an approved external digest | Keep operator trust separate from project input |
-| `REGISTRY_RESULT_INVALID` before execution | Manifest, config, input, or result violates its schema | Fix the named contract; do not weaken the schema |
+| `REGISTRY_RESULT_INVALID` before execution | Manifest, config, input, or result violates its schema | Fix the named contract. Do not weaken the schema |
 | `PIPELINE_STAGE_NOT_ACTIVATED` | Discovery succeeded but enablement or activation did not select the stage | Inspect the graph, registration identity, and grants |
 | Pipeline status is `failed` | The tutorial used `fail: true` or the stage returned a terminal failure | Inspect the stage result and reason code |
 | Bundle output already exists | Bundle assembly requires a new output path | Select a new empty child path |
 | `flock: unrecognized option: timeout` | BusyBox `flock` lacks the GNU timeout option | Use a supported host for persistent-run verification |
 
-Do not solve a trust, role, or activation error by importing private Core modules.
+Do not import private Core modules to solve a trust, role, or activation error.
 Each failure identifies a different ownership boundary.
 
 ## Recovery
@@ -376,7 +383,8 @@ Reverse the tutorial changes as one reviewed change:
 1. Remove `example.greeting` from `packaging/runtime/roles/nova.json`.
 2. Remove only `skills/nova/plugins/tutorial-greeting`.
 3. Remove the temporary bundle directory that you created.
-4. Run the role and documented journey checks again.
+4. Run the role check again.
+5. Run the documented journey check again.
 
 Example commands after you have removed the role entry:
 
@@ -388,10 +396,10 @@ npm run docs:extensions:minimal-plugin:check
 git status --short
 ```
 
-Confirm the exact paths before either removal command.
+Before either removal command, confirm the exact paths.
 Do not remove a released bundle that a nonterminal run still needs for recovery.
 
-Removing the package prevents new discovery and activation.
+Package removal prevents new discovery and activation.
 It does not erase old event journals, snapshots, logs, artifacts, or released images.
 The journey check confirms that its earlier success and failure evidence remains
 readable after it removes the temporary package.
@@ -409,9 +417,9 @@ change an observer registration and exercise its actual runtime consumer.
 
 Select the complete Source commit
 `91c40217c7a439a2264f9aab6383e6616712c71b` in a disposable development branch. This commit
-contains the companion files; the older evidence revision at the top of this
+contains the companion files. The older evidence revision at the top of this
 page applies to the original stage and Core citations, not these new files.
-Follow [Prepare a clean checkout](developer-handbook.md#prepare-a-clean-checkout)
+Use [Prepare a clean checkout](developer-handbook.md#prepare-a-clean-checkout)
 with this explicit commit and its locked development dependencies. Require Node
 24 and GNU util-linux `flock` at `/usr/bin/flock`. This fixture needs no service credentials or
 external service.
@@ -432,7 +440,7 @@ root. It does not install either package in your checkout's Nova role.
 The [observer manifest](examples/observer-lifecycle/plugin/plugin.json) registers
 observer ID `watch` and selects export `observe` from the
 [handler](examples/observer-lifecycle/plugin/src/observer.js). Its subscription
-is `run.succeeded`; delivery is `at_least_once`, ordering is `per_run`, and the
+is `run.succeeded`. Delivery is `at_least_once`, ordering is `per_run`, and the
 required failure policy allows one attempt. The
 [configuration schema](examples/observer-lifecycle/plugin/schemas/config.schema.json)
 accepts an optional Boolean `fail`. The
@@ -441,14 +449,14 @@ binds the committed event sequence and ID.
 
 The package requests no capabilities. The helper configures an explicit empty
 grant set. The handler attempts `state.read` and requires
-`PLUGIN_CAPABILITY_DENIED:state.read`; it then emits a fact in its own plugin
+`PLUGIN_CAPABILITY_DENIED:state.read`. It then emits a fact in its own plugin
 event namespace. This proves denial through `PluginContext`, not operating-system
-isolation. The fixture trusts its own in-process packages; it is not a third-party
+isolation. The fixture trusts its own in-process packages. It is not a third-party
 sandbox or a credential-provider example. A nonempty capability grant needs the
 provider and constraint checks described in [Capability Adapter Contract](contracts.md#capability-adapter-contract).
 
-The helper also runs the real role-manifest checker twice. Omission must fail;
-an explicit simulated Nova role addition must pass. That check validates the
+The helper also runs the real role-manifest checker twice. Omission must fail.
+An explicit simulated Nova role addition must pass. That check validates the
 proposed ownership entry. It does not modify or deploy a role.
 
 ### Read the runtime observations
@@ -481,8 +489,8 @@ Expected output includes:
 | `temporaryRootRemoved` | `true` | The helper removed only the temporary tree it created |
 
 The required-failure case still reports `pipelineStatus: succeeded`. Its
-canonical stage work had already completed. The observer drain fails separately;
-the helper asserts that no observer rewrites the committed lifecycle facts.
+canonical stage work had already completed. The observer drain fails separately.
+The helper asserts that no observer rewrites the committed lifecycle facts.
 Do not report that case as a failed pipeline or a successful required drain.
 
 The reconstructed runtime reopens actual disk journals. This is checkpoint replay
@@ -492,8 +500,8 @@ unchanged. It does not prove arbitrary package upgrade compatibility.
 
 ### Change the subscription
 
-Use one shell for the edit and restore steps. Save the delivered manifest before
-changing it; retain the printed backup path if that shell closes:
+Use one shell for the edit and restore steps. Before you change the delivered manifest, save it.
+If that shell closes, retain the printed backup path:
 
 ```bash
 set -eu
@@ -544,11 +552,10 @@ rm -- "$OBSERVER_MANIFEST_BACKUP"
 The helper verifies the original success journal, checkpoint, and delivery bytes
 again after package removal. It prints their byte lengths and SHA-256 digests
 under `retainedSuccessJournals`. It then removes its owned scratch tree, including
-those demonstration files. Save the JSON output if you need the bounded result;
-it is not a retained production run or a durable artifact archive.
+those demonstration files. If you need the bounded result, save the JSON output.
+It is not a retained production run or a durable artifact archive.
 
-A nonzero exit is a failed step. Keep its error and correct the reported
-configuration, registration, schema, role, or host prerequisite before retrying.
+A nonzero exit is a failed step. Keep its error. Before you retry, correct the reported configuration, registration, schema, role, or host prerequisite.
 Do not treat a different error as the expected negative result. The helper's
 assertions require the specific failure classes in the table and clean up its
 private scratch on both success and failure. Your manually saved manifest backup
@@ -556,7 +563,9 @@ remains yours until you restore and remove it.
 
 The helper changes versions only inside its inactive disposable copy. Do not
 perform these in-place edits on a released package. Keep the exact package bytes
-needed by any real nonterminal run. Disable new work, reconcile pending effects,
-and follow the applicable deployment and retention procedure before production
-replacement or removal. This local observer recipe does not qualify other
+needed by any real nonterminal run.
+
+Disable new work. Reconcile pending effects. Before production replacement or removal, use the applicable deployment and retention procedure.
+
+This local observer recipe does not qualify other
 extension types or a deployed release.

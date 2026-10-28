@@ -50,7 +50,7 @@ for (const required of [
   '## Build An OpenClaw Tool Extension',
   '## Build A Codex Plugin Or Skill',
   '## Extend Worker Core With A Specialist Engine',
-  '## Follow One Real Prism Worker Attempt',
+  '## One real Prism worker attempt', '<a id="follow-one-real-prism-worker-attempt"></a>',
   '## Create Or Change A Runtime Role',
   '## Compatibility And Replacement',
   '**Benefit:**', '**Cost:**', '**Rejected alternative:**', '**Reconsider when:**',

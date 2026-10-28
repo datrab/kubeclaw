@@ -1,6 +1,6 @@
 # Worker Trust
 
-Status: implemented; live cluster proof pending
+Status: implemented. Live cluster proof pending
 Audience: architecture reader, maintainer, security reviewer
 Owner: Worker Core and platform operations
 Evidence: skills/worker/core/worker/trust.ts; charts/kubeclaw/templates/configmap-worker-trust.yaml; charts/prism/templates/configmap-worker-trust.yaml
@@ -18,11 +18,11 @@ X.509-SVIDs. Envoy uses those certificates for mutual TLS.
 Worker Core checks the verified identity after Envoy accepts the connection.
 
 Envoy does not replace the OpenClaw gateway. It protects selected internal
-worker routes; agent-session traffic on port `18789` uses a separate route.
+worker routes. Agent-session traffic on port `18789` uses a separate route.
 
 ## Security Layers
 
-Worker Trust uses four independent layers.
+Worker Trust uses four independent layers:
 
 1. SPIRE attests the Kubernetes workload.
 2. Envoy authenticates and encrypts the connection.
@@ -82,7 +82,7 @@ Nova -> 127.0.0.1:28891 -> Nova Envoy -> SPIFFE mTLS
 ```
 
 The Buster Service targets the Envoy port. It does not target the runtime port.
-The runtime remains reachable on the pod network for kubelet health probes;
+The runtime remains reachable on the pod network for kubelet health probes.
 NetworkPolicy denies workload ingress to that port.
 
 ### Exact listener and Service boundaries
@@ -96,12 +96,12 @@ runtime address for a proxy address.
 | `0.0.0.0:18891` in Buster | Buster Envoy mTLS ingress. | The Buster Service targets the named Envoy port `buster-plan`. |
 | `127.0.0.1:28891` in Buster | Buster plan runtime, named `plan-runtime`. | Kubelet probes and the colocated Envoy can reach it. No Service may target the runtime ports. |
 | `127.0.0.1:28080` in Nova | Nova Envoy egress for the Prism agent. | Nova dispatch enters the protected Prism path here. |
-| `127.0.0.1:28080` in a Prism agent or worker | Envoy egress to Prism Control. | The colocated process calls this address; Envoy verifies the Control identity. |
+| `127.0.0.1:28080` in a Prism agent or worker | Envoy egress to Prism Control. | The colocated process calls this address. Envoy verifies the Control identity. |
 | `0.0.0.0:18082` in the Prism agent | Envoy mTLS ingress for Nova, Prism Control, and the isolated test runner. | Envoy forwards an admitted request to the local agent bridge on `127.0.0.1:18080`. |
 | `127.0.0.1:18081` in Prism Control | Envoy egress to a Prism worker. | Control uses it for authenticated worker calls. |
-| `127.0.0.1:18080` in Prism Control and workers | Envoy egress back to Prism Control. | The local role determines the destination cluster; the port is not a public listener. |
+| `127.0.0.1:18080` in Prism Control and workers | Envoy egress back to Prism Control. | The local role determines the destination cluster. The port is not a public listener. |
 | `127.0.0.1:18443` in the live test runner | Envoy egress to Prism Control. | The runner uses this isolated path for positive and negative trust checks. |
-| `127.0.0.1:18444` in the live test runner | Envoy egress to the Prism agent. | The runner uses this address to test the protected agent route without opening a public listener. |
+| `127.0.0.1:18444` in the live test runner | Envoy egress to the Prism agent. | The runner uses this address to test the protected agent route with no public listener. |
 
 Kubernetes limits container port names to 15 characters. The names
 `buster-plan` and `plan-runtime` fit that limit and also show the security
@@ -159,8 +159,7 @@ key must not enter Buster, logs, evidence, or generated configuration.
 
 Nova removes the `attestation` field, serializes the remaining snapshot with
 canonical JSON, and prefixes the bytes with the domain separator
-`kubeclaw-source-snapshot-v1\0`. The separator prevents the same signature from
-being interpreted as a signature for another message format. Buster verifies
+`kubeclaw-source-snapshot-v1\0`. The separator prevents interpretation of the same signature as a signature for another message format. Buster verifies
 the authority, revision, tree, archive digest, archive size, repository, stage,
 and signature before it extracts or executes source.
 
@@ -169,7 +168,7 @@ and signature before it extracts or executes source.
 > **Implementation:** [The source-snapshot contract constructs the exact signed bytes](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/contracts/pipeline-test-gate/v1/src/remote.ts#L61-L75) ·
 > [the deployment gives Buster only the public key](https://github.com/datrab/kubeclaw/blob/8da6157b77247dcbdf209ef12f491f0b92ca858a/my-values/buster-values.yaml#L90-L104).
 >
-> **Claim:** Nova signs canonical source-snapshot metadata; Buster receives the public verification key, not the private signing key.
+> **Claim:** Nova signs canonical source-snapshot metadata. Buster receives the public verification key, not the private signing key.
 >
 > **Contract or setting:** The source-snapshot domain separator and canonical unsigned metadata determine the signed message.
 >
@@ -194,8 +193,14 @@ signed artifact provenance.
 Worker Core defines the neutral `worker-trust-envelope.v1` format for signed
 request or artifact digests. It binds the kind, issuer, audience, purpose,
 subject digest, context digest, issue time, expiry, nonce, key ID, algorithm,
-and signature. Verification requires the expected issuer, audience, and purpose;
-valid time bounds; an Ed25519 key; and a valid signature. The current Prism path
+and signature. Verification requires:
+
+- The expected issuer, audience, and purpose
+- Valid time bounds
+- An Ed25519 key
+- A valid signature.
+
+ The current Prism path
 does not create or verify this envelope.
 
 > **Source evidence — the neutral envelope is a contract, not a Prism claim**
@@ -205,7 +210,7 @@ does not create or verify this envelope.
 >
 > **Limit:** A reusable contract does not prove that a product path uses it.
 >
-> **Claim:** The neutral Worker trust envelope signs request or artifact identities; its existence does not establish Prism use.
+> **Claim:** The neutral Worker trust envelope signs request or artifact identities. Its existence does not establish Prism use.
 >
 > **Implementation:** Signing and verification below use a canonical domain-separated message and explicit Ed25519 key validation.
 >
@@ -235,7 +240,10 @@ A forged identity header cannot replace the verified certificate identity.
 
 ## Human Identity
 
-Keycloak can provide human sign-in, roles, groups, and external-client tokens.
+The [Deployment and Trust model](deployment-and-trust.md#identity-boundaries) identifies Keycloak as an unimplemented architectural option here.
+It describes no implemented Keycloak deployment, client configuration, Prism session exchange, or live acceptance procedure.
+A future deployment could select Keycloak for human sign-in, roles, groups, and external-client tokens.
+Use only the implemented human-authentication path in the selected application procedure.
 
 Keycloak does not replace SPIFFE workload identity. It also does not replace
 artifact signatures.
@@ -252,6 +260,8 @@ Each level proves different properties. A source test cannot prove the running
 cluster.
 
 ## Read More
+
+These pages provide more detail:
 
 - [Deployment and Trust](deployment-and-trust.md) explains the complete workload, network, storage, and failure-domain model.
 - [Operate Worker Trust](../use/worker-trust.md) gives the deployment and proof procedure.

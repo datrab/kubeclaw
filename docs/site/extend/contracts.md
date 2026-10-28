@@ -10,14 +10,14 @@ Last verified: source and contract checks on 2026-09-16
 
 ## Objective
 
-Select and implement the correct registration inside a pipeline plugin package.
+Select the correct registration inside a pipeline plugin package. Then implement it.
 KubeClaw supports five registration contracts:
 
-1. stage;
-2. observer;
-3. capability adapter;
-4. test provider;
-5. report adapter.
+1. Stage
+2. Observer
+3. Capability adapter
+4. Test provider
+5. Report adapter.
 
 They share package discovery and immutable package identity. They do not share the
 same caller, data, authority, retry rules, or failure meaning. A package can contain
@@ -63,10 +63,10 @@ has a stable authority model of its own.
 
 | Registration | Use it when | Caller | Can return a result that Core maps to stage state? |
 | --- | --- | --- | --- |
-| Stage | Ordered project work must return a typed result | Nova stage executor | Yes, through `stage-result.v2`; Core still owns the transition |
+| Stage | Ordered project work must return a typed result | Nova stage executor | Yes, through `stage-result.v2`. Core still owns the transition |
 | Observer | Committed events need a side effect or projection | Nova observer runtime | No |
 | Capability adapter | A stage or observer needs controlled external authority | Nova adapter runtime | No |
-| Test provider | Buster must execute one test or fixture contract | Buster test-plan runner | No; Buster imports its result |
+| Test provider | Buster must execute one test or fixture contract | Buster test-plan runner | No. Buster imports its result |
 | Report adapter | Buster must normalize an existing report artifact | Buster report runtime | No |
 
 Choose the contract from the owner of the result, not from the programming language
@@ -83,10 +83,10 @@ non-empty.
 Foundation calculates a content digest over the selected package files. Registry
 identity therefore contains four different values:
 
-- package ID identifies the product-owned package name;
-- package version communicates author compatibility intent;
-- content digest identifies the exact bytes;
-- registration ID identifies one contract inside the package.
+- Package ID identifies the product-owned package name.
+- Package version communicates author compatibility intent.
+- Content digest identifies the exact bytes.
+- Registration ID identifies one contract inside the package.
 
 The runtime does not treat a matching version string as proof of matching bytes.
 This decision makes recovery and audit records precise. Its cost is that every byte
@@ -107,9 +107,9 @@ schema validity, registration conflicts, and global ownership before activation.
 A stage is an ordered unit in a Nova execution graph. Its manifest names a stage
 type, executable export, required capabilities, and three schemas:
 
-- configuration describes operator- or graph-selected behavior;
-- input describes data supplied to this stage instance;
-- result constrains the returned `stage-result.v2` value.
+- Configuration describes operator- or graph-selected behavior.
+- Input describes data supplied to this stage instance.
+- Result constrains the returned `stage-result.v2` value.
 
 Nova validates configuration and input before it invokes the export. The stage
 receives the validated input, a bounded invocation context, and an abort signal.
@@ -184,7 +184,7 @@ Activation creates a long-lived instance with `ready`, `invoke`, and `shutdown`
 operations. Ordinary effect calls carry a resource lock and fence. The adapter must
 check the fence before a mutation and again where a long operation can outlive its
 authority. Confidential operations replace the audit payload and resource identity
-with redacted markers; they do not produce an ordinary durable effect receipt.
+with redacted markers. They do not produce an ordinary durable effect receipt.
 Top-level calls select this path for confidential capabilities such as
 `secrets.read`. An adapter can also explicitly call a declared, granted dependency
 through `invokeConfidential`, even when that capability is not classified as
@@ -213,7 +213,7 @@ not prove cleanup completed. Do not retry startup or external work while its
 outcome remains uncertain.
 
 Explicit shutdown aborts active lifecycle signals and waits up to
-`shutdownTimeoutMs`. A timeout clears the runtime's instance maps; it does not
+`shutdownTimeoutMs`. A timeout clears the runtime's instance maps. It does not
 prove external operations stopped or resources disappeared. Preserve their
 identities and reconcile with the owning provider before a retry.
 [Startup sequence](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/nova/core/execution/adapter-startup.ts#L23-L62)
@@ -235,14 +235,14 @@ executor, loads and calls it.
 
 Its registration declares:
 
-- a versioned `contractId` used by suites and direct test declarations;
-- `test` or `fixture` meaning;
-- configuration schema;
-- typed value and artifact input/output ports;
-- required capabilities;
-- whether a retry is safe;
-- allowed matrix fields and report formats;
-- evidence types and default evidence policy.
+- A versioned `contractId` used by suites and direct test declarations
+- `test` or `fixture` meaning
+- Configuration schema
+- Typed value and artifact input/output ports
+- Required capabilities
+- Whether a retry is safe
+- Allowed matrix fields and report formats
+- Evidence types and default evidence policy.
 
 The resolver binds the exact package version and digest into an immutable test plan.
 It validates configuration, connects compatible ports, expands bounded matrices,
@@ -276,8 +276,7 @@ source bytes, execution time, cases, findings, and findings per case.
 The adapter returns normalized counts, cases, findings, duration, and explicit
 truncation facts. It cannot hide omitted data. Finalization combines provider outcome
 and normalized report outcome. A command failure remains a failure even when its
-report contains no failed case. A required-execution policy rejects an all-skipped
-report without inventing a fake test case.
+report contains no failed case. A required-execution policy rejects an all-skipped report and does not invent a fake test case.
 
 > **Report registration:** [The manifest binds format, contract version, export, and accepted media types](https://github.com/datrab/kubeclaw/blob/bcf032f241b432bf920baa9ee5f727947921447d/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json#L391-L409).
 >
@@ -293,7 +292,7 @@ report without inventing a fake test case.
 | Observer | One committed event delivery | No canonical stage result | Delivery journal and checkpoint | Observer grant set |
 | Adapter | Effect request and bounded activation config | Result or durable receipt | Effect journal and external receipt | Provider selection, caller grant, lock fence |
 | Test provider | Resolved provider invocation and workspace | `provider-result.v1` | Attempt records, logs, artifacts, reports | Buster policy and allowed capability invoker |
-| Report adapter | Bounded report bytes and limits | Normalized report result | Imported report evidence | Selected format adapter; no external capability context |
+| Report adapter | Bounded report bytes and limits | Normalized report result | Imported report evidence | Selected format adapter. No external capability context |
 
 ## Move From A Need To An Implemented Registration
 
@@ -302,16 +301,19 @@ Use this sequence before you write the executable module:
 1. State the result that the new code must own.
 2. Select the caller from the comparison table.
 3. List every input, output, durable record, and external mutation.
-4. Select one registration type. Split unrelated responsibilities.
-5. Define strict schemas before implementation code.
-6. Declare each required capability and its resource type.
-7. Define duplicate, retry, cancellation, recovery, and cleanup behavior.
-8. Add the package manifest and test inert discovery first.
-9. Test activation or Buster binding through the real registry path.
-10. Test one success, one validation rejection, and each recovery class.
-11. Add explicit role ownership and inspect the built bundle.
+4. Select one registration type.
+5. Split unrelated responsibilities.
+6. Define strict schemas before implementation code.
+7. Declare each required capability and its resource type.
+8. Define duplicate, retry, cancellation, recovery, and cleanup behavior.
+9. Add the package manifest.
+10. Then test inert discovery first.
+11. Test activation or Buster binding through the real registry path.
+12. Test one success, one validation rejection, and each recovery class.
+13. Add explicit role ownership.
+14. Inspect the built bundle.
 
-Do not start implementation if step 4 or step 6 has no supported answer. That gap
+If step 4 or step 7 has no supported answer, do not start implementation. That gap
 means the work needs a different contract, an engine change, or a Core review.
 
 The [minimal stage journey](first-plugin.md) supplies the package and activation
@@ -323,7 +325,7 @@ specific contracts.
 `apiVersion` selects the package contract and currently equals
 `pipeline-plugin-v2`. Package semantic version and content digest describe the
 implementation. A stage type, provider contract ID, and report format are consumer
-selection keys; changing them can break existing definitions or suites.
+selection keys. Changing them can break existing definitions or suites.
 
 Adding an optional registration can remain compatible for existing consumers, but
 it changes the package digest. Removing or renaming a selected registration is
@@ -332,15 +334,16 @@ media type, value schema ID, evidence name, capability, retry safety, or result
 meaning also requires consumer review.
 
 Active runs retain exact package provenance in their snapshots and events. Do not
-replace package bytes underneath a recoverable run. Install a new version, direct new
-work to it, drain old work, and remove old bytes only after recovery no longer needs
-them.
+replace package bytes underneath a recoverable run. Install a new version. Direct new work to it. Drain old work.
+Only after recovery no longer needs old bytes, remove them.
 
-For a same-ID replacement, follow the [exclusive discovery-root procedure](../use/plugins.md#5-replace-or-remove).
+For a same-ID replacement, use the [exclusive discovery-root procedure](../use/plugins.md#5-replace-or-remove).
 The new candidate must not discover both versions of the package.
 Retain the original configuration and exact packages for old pinned runs.
 
 ## Unsupported Shortcuts
+
+These shortcuts are unsupported:
 
 - A stage cannot call the network or process API merely because Node exposes it.
 - An observer cannot change a failed stage to passed.
@@ -356,8 +359,8 @@ Retain the original configuration and exact packages for old pinned runs.
 The five registrations above are runtime contracts. `@kubeclaw/prompt-contract`
 is a separate workspace library, not a sixth registration. It has no runtime plugin manifest,
 capability, activation, effect or lifecycle authority. At the source revision
-listed below, it has no production consumer. Its package tests call the library;
-they do not prove a plugin invocation or a deployed agent task.
+listed below, it has no production consumer. Its package tests call the library.
+They do not prove a plugin invocation or a deployed agent task.
 
 The `Owner`, `Evidence` and required checks in the generated documentation map
 route changes below `skills/common/plugins/prompt-contract` to this page and
@@ -373,31 +376,38 @@ committed source, not installed dependencies or an inferred runtime consumer.
 | `PromptLimits` | Declares optional byte, depth and entry limits |
 | `PromptEnvelopeInput`, `PromptEnvelope`, `PROMPT_CONTRACT_VERSION` | Declare the input, output and version identities |
 
-The library rejects unsupported values instead of silently discarding them.
+The library rejects unsupported values and does not silently discard them.
 This includes cycles, non-finite numbers, sparse arrays, class instances,
 prototype-sensitive keys, accessors, proxies, symbol or hidden properties, and
 extra array properties. It checks the byte limit after serialization. That limit
 is not a peak-memory bound for an already allocated oversized string.
 Domain instructions, response meaning and any future caller authority remain
-with the consuming package; the envelope grants no authority.
+with the consuming package. The envelope grants no authority.
 
-For a change to serialization, acceptance or `PromptLimits.maxBytes`, the
-plugin-foundation owner must compare the complete changed source and its tests,
-update this section, and run both package checks from the repository root:
+For a change to serialization, acceptance or `PromptLimits.maxBytes`, the plugin-foundation owner must:
+
+1. Compare the complete changed source and its tests.
+2. Update this section.
+3. Run the package build check from the repository root.
+4. Run the package test check from the repository root.
+
+Use these check commands:
+
+
 
 ```bash
 npm run build --workspace @kubeclaw/prompt-contract
 npm test --workspace @kubeclaw/prompt-contract
 ```
 
-`build` runs `tsc --noEmit -p tsconfig.json`; `test` runs
+`build` runs `tsc --noEmit -p tsconfig.json`. `test` runs
 `node tests/live-function.test.ts`. These are library type and behavior checks,
 not registration, runtime, effect or production-consumer tests. After a change to
 this page or its route, generate the existing governance map and run its check,
 the publication check and the reference check. Use the existing
 [independent topic review procedure](documentation-maintenance.md) for Source,
 Reader and Quality review. Stop if the owner, source route or required package
-check cannot be established; do not substitute a successful unrelated check.
+check cannot be established. Do not substitute a successful unrelated check.
 
 **Source scope:** This library section is based on the
 [export and script declarations](https://github.com/datrab/kubeclaw/blob/9b612b15c3605bef6b0afb3f9427cccf6e00cc31/skills/common/plugins/prompt-contract/package.json#L1-L12),
@@ -432,7 +442,9 @@ They do not prove package-specific effects, persistent recovery, or deployment.
 
 ## Continue
 
+Continue with these guides:
+
 - [Build an effectful plugin](effectful-plugin.md)
 - [Extend Buster](buster.md)
 - [Extend Nova](nova.md)
-- [Test a plugin](testing.md)
+- [Test a plugin](testing.md).

@@ -22,10 +22,12 @@ Use [Maintain documentation](documentation-maintenance.md) to connect a source
 change to its page owner, generated facts, checks, reader task, and safe retirement.
 
 Use the [Developer handbook](developer-handbook.md) to prepare a checkout,
-choose component checks, and follow build and release procedures.
+choose component checks, and use build and release procedures.
 For a bounded Core change, use the [administrative retry diagnostic exercise](examples/platform-change-nova-lifecycle.json)
 with the handbook’s [lifecycle change procedure](developer-handbook.md#practice-a-bounded-lifecycle-change-and-removal).
 Use the [technical verb definitions](../reference/glossary.md#technical-verbs) for the exercise instructions.
+
+Platform component guidance is available here:
 
 - [Platform component changes](platform/README.md) selects the smallest internal owner, required checks, compatibility, and recovery boundaries.
 
@@ -53,7 +55,7 @@ It explains KubeClaw-specific boundaries when they affect your choice.
 
 ## Developer Task Routes
 
-Choose the task before choosing a package or registration type.
+Before you choose a package or registration type, choose the task.
 
 | Task | Start here |
 | --- | --- |
@@ -64,33 +66,42 @@ Choose the task before choosing a package or registration type.
 | Replace agent dispatch | [Replace the runtime.dispatch provider](#replace-the-runtimedispatch-provider) |
 | Add verification | [Add verification at the owning boundary](testing.md#add-verification-at-the-owning-boundary) |
 | Testing and CI | [Select the smallest complete check chain](developer-handbook.md#select-the-smallest-complete-check-chain) and [check CI authority and failure handling](developer-handbook.md#ci-triggers-authority-and-failure-handling) |
-| Contributing | [Prepare a clean checkout](developer-handbook.md#prepare-a-clean-checkout); use the [documentation change chain](developer-handbook.md#documentation-change-chain) for documentation changes |
+| Contributing | [Prepare a clean checkout](developer-handbook.md#prepare-a-clean-checkout). Use the [documentation change chain](developer-handbook.md#documentation-change-chain) for documentation changes |
 
 ### Plan A Behavior-Preserving Migration
 
 Use this route when retained or imported behavior must become a self-contained
 v2 package. An update or a new package alone does not prove migration parity.
 
-1. Name one cohesive behavior and its producers, consumers, configuration,
-   effects, fixtures, and tests. Record the observable inputs, results, artifacts,
-   lifecycle, failures, retry, cancellation, and recovery guarantees to preserve.
-2. Choose reuse, refactor, or rewrite explicitly for each parity scenario.
-   Preserve behavior rather than copying source structure. For an intentional
-   change, record the old and new expectations, rationale, complexity impact,
-   approval, and tests that demonstrate the difference. Undocumented drift fails
-   parity.
-3. Use [the behavior-owner decision](#first-identify-the-behavior-owner) and
+**1. Define the parity scope:**
+
+1. Name one cohesive behavior and its producers, consumers, configuration, effects, fixtures, and tests.
+2. Record the observable inputs, results, artifacts, lifecycle, failures, retry, cancellation, and recovery guarantees to preserve.
+
+**2. Plan each parity scenario:**
+
+1. Choose reuse, refactor, or rewrite explicitly for each parity scenario. Preserve behavior rather than copying source structure.
+2. For an intentional change, record the old and new expectations, rationale, complexity impact, approval, and tests that demonstrate the difference.
+
+Undocumented drift fails parity.
+
+**3. Put behavior in its registered owner:**
+
+1. Use [the behavior-owner decision](#first-identify-the-behavior-owner) and
    [the first-plugin procedure](first-plugin.md#create-and-activate-a-first-pipeline-plugin)
    to put the implementation and its contracts in the owning registered package.
-   Stages decide domain results; adapters own privileged effects. Do not retain
-   forwarding wrappers, imports into the old implementation, or parallel runtime
-   authority. If a required capability or Core-issued authority is unavailable,
-   record that prerequisite before claiming parity; do not invent it locally.
-4. Compare legacy and replacement results for the declared scenarios, including
-   failures and recovery. Use [verification at the owning boundary](testing.md#add-verification-at-the-owning-boundary)
-   and [update or replacement checks](testing.md#update-or-replace) to plan the
-   check chain and rollback. Retire old authority only after the comparison and
-   consumer cutover are proven.
+
+Stages decide domain results. Adapters own privileged effects. Do not retain
+forwarding wrappers, imports into the old implementation, or parallel runtime authority.
+
+2. If a required capability or Core-issued authority is unavailable, record that prerequisite before you claim parity. Do not invent it locally.
+
+**4. Compare behavior before retirement:**
+
+1. Compare legacy and replacement results for the declared scenarios, including failures and recovery.
+2. Use [verification at the owning boundary](testing.md#add-verification-at-the-owning-boundary)
+   and [update or replacement checks](testing.md#update-or-replace) to plan the check chain and rollback.
+3. Only after the comparison and consumer cutover are proven, retire old authority.
 
 This is the migration entry and planning boundary, not a claim that a particular
 package has passed parity or that legacy files may now be deleted.
@@ -100,9 +111,8 @@ package has passed parity or that legacy files may now be deleted.
 Agent-dispatch replacement is a [capability-provider](../reference/glossary.md#capability-provider) change, not a specialist
 Worker engine replacement. Start with the
 [runtime-dispatch package and its adapter registrations](plugin-catalogue/kubeclaw.runtime-dispatch.md).
-Install an adapter that declares `runtime.dispatch`, then have the operator
-select its exact registration ID in `pipeline-platform.v2.providers` for that
-capability. Follow [adapter selection and validation](../reference/pipeline-platform.md#adapter-selection-and-validation)
+Install an adapter that declares `runtime.dispatch`.
+Then have the operator select its exact registration ID in `pipeline-platform.v2.providers` for that capability. Use [adapter selection and validation](../reference/pipeline-platform.md#adapter-selection-and-validation)
 for configuration, required-provider activation, grants, dependencies, and
 recovery. A provider mapping alone does not start an adapter.
 
@@ -110,17 +120,18 @@ Preserve the agent-output boundary during the replacement. An agent-backed
 registration owns a closed `outputContract`: protocol, agent, identity, task,
 evidence, and rules supplied in the request are input, not fields the agent may
 echo into its domain output. The runtime owns invocation identity and durable
-session evidence; trusted runtime code adds that evidence before the extension
+session evidence. Trusted runtime code adds that evidence before the extension
 parser validates the completion. Bind run, stage, module, gate, project, and
 attempt identity from trusted invocation input, not agent-supplied identity.
-Reject unknown output fields and keep durable output outside disposable
-worktrees, with atomic writes. Provider replacement must preserve terminal-state,
-cancellation, and durable-result behavior; a package listing or configuration
+Reject unknown output fields. Keep durable output outside disposable worktrees, with atomic writes. Provider replacement must preserve terminal-state,
+cancellation, and durable-result behavior. A package listing or configuration
 change is not proof of a successful dispatch or live end-to-end execution.
 
 ## First Identify The Behavior Owner
 
 Ask one question first: which component must own the new behavior?
+
+These component boundaries apply:
 
 - A project declaration selects existing behavior.
 - A pipeline registration adds bounded behavior to an existing runtime.
@@ -155,7 +166,7 @@ flowchart TD
 
 **Text alternative to the diagram**
 
-Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs; dotted relationships are identified explicitly.
+Each row names a directed connection. Labels preserve the diagram’s conditions or handoffs. Dotted relationships are identified explicitly.
 
 | From | Relationship | To |
 | --- | --- | --- |
@@ -204,12 +215,12 @@ Use an adapter for an external effect, an observer for event delivery, or a host
 
 ### Registry Extension Class Indexes
 
-The registry snapshot exposes the following registration indexes. Primary maps
+The registry snapshot exposes these registration indexes. Primary maps
 select stages, observers, capability adapters, test providers, and report adapters.
 Capability, contract, and format indexes are alternate lookups, not additional
 extension classes. Each entry retains its package and provenance. This table
-records type contracts, not evidence that a package was installed or activated;
-use the individual extension guides below for activation and safe removal.
+records type contracts, not evidence that a package was installed or activated.
+Use the individual extension guides below for activation and safe removal.
 
 | Snapshot index | Entry contract |
 | --- | --- |
@@ -232,11 +243,11 @@ It cannot create a new implementation.
 
 Project configuration can:
 
-- choose implementation, lint, review, and test behavior that the project compiler supports;
-- supply stage configuration and a complete, digest-bound provider plan;
-- select installed stage types in an explicit `pipeline-definition.v2` graph;
-- set graph concurrency and stage execution limits in that explicit graph;
-- use only registrations and capability grants that the platform already supplies.
+- Choose implementation, lint, review, and test behavior that the project compiler supports.
+- Supply stage configuration and a complete, digest-bound provider plan.
+- Select installed stage types in an explicit `pipeline-definition.v2` graph.
+- Set graph concurrency and stage execution limits in that explicit graph.
+- Use only registrations and capability grants that the platform already supplies.
 
 The higher-level project file and an explicit pipeline graph are not the same input.
 The project compiler owns its graph shape and several execution limits.
@@ -249,13 +260,13 @@ Project input does not independently load a report adapter.
 
 Platform configuration can:
 
-- point to operator-staged installation roots;
-- identify trusted built-in roots and approved external package digests;
-- map each capability ID to an installed capability-adapter registration;
-- grant bounded capability constraints to registrations;
-- configure adapters and observers;
-- activate adapters explicitly and observers through their configured registration IDs;
-- set storage, shutdown, isolation, and administrative identities.
+- Point to operator-staged installation roots.
+- Identify trusted built-in roots and approved external package digests.
+- Map each capability ID to an installed capability-adapter registration.
+- Grant bounded capability constraints to registrations.
+- Configure adapters and observers.
+- Activate adapters explicitly and observers through their configured registration IDs.
+- Set storage, shutdown, isolation, and administrative identities.
 
 Capability-provider selection is not test-provider selection.
 The `providers` field in `pipeline-platform.v2` maps capability IDs to adapters.
@@ -294,10 +305,10 @@ Combining both powers would let a repository approve its own executable dependen
 >
 > **Local result:** The focused platform-configuration check passed on 2026-09-16.
 >
-> **Claim:** Project input selects installed behavior; platform policy owns installation roots, trust, provider mappings and grants.
+> **Claim:** Project input selects installed behavior. Platform policy owns installation roots, trust, provider mappings and grants.
 > **Implementation:** `prepareRuntime()` discovers packages, resolves grants, validates selected configurations and activates the permitted registrations.
 > **Contract or setting:** `pipeline-platform.v2.providers` maps capability IDs to adapters, not Buster test-provider contracts.
-> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; linked configuration, compiler and runtime sources retain those bytes.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`. Linked configuration, compiler and runtime sources retain those bytes.
 > **Limit:** The recorded platform check does not establish package installation, external isolation or permission in a deployed host.
 
 ## Choose A Pipeline Registration
@@ -308,18 +319,18 @@ Each registration has its own identity and contract fields.
 Configuration and capability fields differ by registration type.
 
 The repository currently contains 48 pipeline packages and 67 registrations.
-The [plugin catalogue](plugin-catalogue/README.md) lists the installed packages.
+The [plugin catalog](plugin-catalogue/README.md) lists the installed packages.
 
 The five registration types are not interchangeable.
 Choose the type that matches the responsibility.
 
 | Surface | Selection owner | Execution owner | Authority model |
 | --- | --- | --- | --- |
-| Stage | Pipeline graph plus Nova runtime preparation | Nova through Foundation activation | Requests declared capabilities; Core interprets the result |
-| Observer | Platform observer configuration | Nova observer runtime through Foundation activation | Requests capabilities; cannot change lifecycle state |
+| Stage | Pipeline graph plus Nova runtime preparation | Nova through Foundation activation | Requests declared capabilities. Core interprets the result |
+| Observer | Platform observer configuration | Nova observer runtime through Foundation activation | Requests capabilities. Cannot change lifecycle state |
 | Capability adapter | Platform provider mapping and active-adapter list | Nova adapter runtime through Foundation activation | Provides declared capability IDs and can request declared dependencies |
 | Test provider | Resolved test plan bound to an installed provider contract | Buster provider sandbox | Receives the provider context and the plan's bounded grants |
-| Report adapter | Resolver policy or one unambiguous installed format implementation | Buster report-adapter sandbox | Receives bounded report bytes and runtime limits; the manifest has no capability request |
+| Report adapter | Resolver policy or one unambiguous installed format implementation | Buster report-adapter sandbox | Receives bounded report bytes and runtime limits. The manifest has no capability request |
 
 ### Stage
 
@@ -328,10 +339,10 @@ Core interprets that result and changes canonical lifecycle state.
 
 Choose a stage when:
 
-- the graph must order the new operation;
-- the operation needs declared input and result schemas;
-- retry, timeout, remediation, or wait behavior applies to the graph step;
-- the result can use the existing stage-result outcomes.
+- The graph must order the new operation.
+- The operation needs declared input and result schemas.
+- Retry, timeout, remediation, or wait behavior applies to the graph step.
+- The result can use the existing stage-result outcomes.
 
 Do not use a stage to bypass a capability adapter.
 A stage requests authority through its invocation context.
@@ -395,8 +406,8 @@ Do not let a report adapter execute tests or decide gate policy.
 >
 > **Claim:** Stages, observers, adapters, test providers and report adapters retain different selection, configuration and execution contracts.
 > **Implementation:** `buildRegistry()` creates separate registration indexes and rejects conflicting package, registration, stage-type and test-contract ownership.
-> **Test evidence:** The recorded contract/registry passes remain dated 2026-09-16; those checks were not rerun for this inspection.
-> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; the linked manifest schema, registry builder and SDK exports remain byte-identical.
+> **Test evidence:** The recorded contract/registry passes remain dated 2026-09-16. Those checks were not rerun for this inspection.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`. The linked manifest schema, registry builder and SDK exports remain byte-identical.
 > **Limit:** Recognized registration shapes and conflict checks do not prove activation or successful provider/report execution.
 
 ## Understand Discovery, Binding, And Activation
@@ -406,8 +417,8 @@ KubeClaw uses two execution paths after common discovery.
 
 | Step | Applicable surfaces | What happens | What it proves |
 | --- | --- | --- | --- |
-| Discovery and registry build | All five pipeline surfaces | Foundation reads `plugin.json`, schemas, package bytes, trust evidence, and provenance; it then indexes every registration | The package is present, trusted for discovery, and structurally acceptable |
-| Nova enablement | Stage, observer, capability adapter | The graph and platform configuration select registrations; Nova resolves capability grants | Policy permits those selected registrations and resources |
+| Discovery and registry build | All five pipeline surfaces | Foundation reads `plugin.json`, schemas, package bytes, trust evidence, and provenance. It then indexes every registration | The package is present, trusted for discovery, and structurally acceptable |
+| Nova enablement | Stage, observer, capability adapter | The graph and platform configuration select registrations. Nova resolves capability grants | Policy permits those selected registrations and resources |
 | Foundation activation | Stage, observer, capability adapter | Foundation checks package integrity and loads only selected executable exports | Nova can invoke those three selected surface types |
 | Test-plan binding | Test provider, report adapter | The resolver binds provider contracts and report formats to exact installed package identities | The resolved plan names the implementation that Buster must use |
 | Buster execution | Test provider, report adapter | Buster verifies package identity, snapshots code, and invokes a bounded child process | Buster can execute the plan-bound provider or normalize its report |
@@ -439,11 +450,11 @@ Buster loads them through separate sandboxed runtimes after test-plan binding.
 > **Decision:** [ADR-005 explains inert discovery and frozen registration identity](../decisions/core-and-plugins.md#adr-005-discover-inert-manifests-and-freeze-exact-registrations).
 >
 > **Claim:** Inert package discovery precedes separate Nova activation and Buster plan-bound execution.
-> **Implementation:** Discovery records package provenance; activation loads selected Nova surfaces, while Buster verifies and snapshots plan-bound provider/report packages.
-> **Contract or setting:** External adapters require the missing persistent isolated adapter runtime; `activateRegistry()` does not activate test providers or report adapters.
-> **Test evidence:** No discovery, activation or Buster sandbox execution was run for this inspection; the links specify their distinct admission checks.
-> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; all six linked discovery, activation, binding and execution implementations retain those bytes.
-> **Limit:** Discovery acceptance is not executable activation; external stage/observer isolation and Buster execution require their own supported environments.
+> **Implementation:** Discovery records package provenance. Activation loads selected Nova surfaces, while Buster verifies and snapshots plan-bound provider/report packages.
+> **Contract or setting:** External adapters require the missing persistent isolated adapter runtime. `activateRegistry()` does not activate test providers or report adapters.
+> **Test evidence:** No discovery, activation or Buster sandbox execution was run for this inspection. The links specify their distinct admission checks.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`. All six linked discovery, activation, binding and execution implementations retain those bytes.
+> **Limit:** Discovery acceptance is not executable activation. External stage/observer isolation and Buster execution require their own supported environments.
 
 ## Choose A Host Extension
 
@@ -478,9 +489,9 @@ Use host-specific inspection to prove activation and a real invocation to prove 
 >
 > **Claim:** OpenClaw hook/tool manifests and the Codex skill manifest use their hosts, not pipeline registration arrays.
 > **Implementation:** The observer declares startup activation, Prism declares two tools, and the Codex manifest selects its skill directory.
-> **Contract or setting:** Host configuration must match the corresponding manifest schema; Nova installation and grants do not activate either host.
-> **Test evidence:** This inspection did not activate or invoke OpenClaw or Codex; these three manifest declarations supply no host execution result.
-> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; the three linked host manifests remain byte-identical.
+> **Contract or setting:** Host configuration must match the corresponding manifest schema. Nova installation and grants do not activate either host.
+> **Test evidence:** This inspection did not activate or invoke OpenClaw or Codex. These three manifest declarations supply no host execution result.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`. The three linked host manifests remain byte-identical.
 
 ## Choose A Worker Engine Or Runtime Role
 
@@ -518,10 +529,10 @@ The role limits which code and authority reach one deployed process.
 >
 > **Local result:** The runtime-role manifest check passed for all three roles on 2026-09-16.
 >
-> **Claim:** Worker profiles bind specialist engine identity; explicit package ownership and role manifests assemble deployable code.
-> **Implementation:** `WorkerAttemptOperation` supplies attempt hooks; the package map and Nova role independently select bundled owners and components.
-> **Contract or setting:** `WorkerProfileV1.engine` contains contract, version and content digest; it is not a generic engine-registration manifest.
-> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; linked profile, attempt interface, ownership map and Nova role retain those bytes.
+> **Claim:** Worker profiles bind specialist engine identity. Explicit package ownership and role manifests assemble deployable code.
+> **Implementation:** `WorkerAttemptOperation` supplies attempt hooks. The package map and Nova role independently select bundled owners and components.
+> **Contract or setting:** `WorkerProfileV1.engine` contains contract, version and content digest. It is not a generic engine-registration manifest.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`. Linked profile, attempt interface, ownership map and Nova role retain those bytes.
 > **Limit:** The recorded role-manifest pass does not prove an installed bundle, native execution or a drop-in engine loader.
 
 ## Choose A Core Or Foundation Change
@@ -530,13 +541,13 @@ Change Core or Foundation only when no public extension contract can own the beh
 
 A Core or Foundation change applies when you must:
 
-- add or change canonical lifecycle states or transitions;
-- change graph scheduling, retry, remediation, wait, or cancellation authority;
-- add a capability ID or change its resource constraints;
-- change discovery, trust, grant, isolation, or activation rules;
-- change frozen snapshot or compatibility semantics;
-- add a public extension surface;
-- change the neutral Worker Core protocol or ownership model.
+- Add or change canonical lifecycle states or transitions.
+- Change graph scheduling, retry, remediation, wait, or cancellation authority.
+- Add a capability ID or change its resource constraints.
+- Change discovery, trust, grant, isolation, or activation rules.
+- Change frozen snapshot or compatibility semantics.
+- Add a public extension surface.
+- Change the neutral Worker Core protocol or ownership model.
 
 Plugins cannot receive `lifecycle.write`, `scheduler.advance`, `canonical_events.modify`, or `registry.mutate`.
 These names describe forbidden authority, not grantable capabilities.
@@ -545,7 +556,7 @@ These names describe forbidden authority, not grantable capabilities.
 
 **Cost:** A Core change affects every compatible extension and requires wider regression evidence.
 
-**Reconsider when:** A repeated need has stable semantics and can become a bounded public contract without leaking Core authority.
+**Reconsider when:** A repeated need has stable semantics and can become a bounded public contract with no leak of Core authority.
 
 > **Source evidence — Core keeps control authority**
 >
@@ -557,9 +568,9 @@ These names describe forbidden authority, not grantable capabilities.
 >
 > **Claim:** Extensions cannot acquire Core lifecycle, scheduling, canonical-history or registry-mutation authority through grants.
 > **Implementation:** Foundation recognizes a closed public capability vocabulary and separately identifies the four Core-only names.
-> **Contract or setting:** Unknown capability constraints reject with `REGISTRY_CAPABILITY_UNKNOWN`; Core-only names are not entries in the public grant vocabulary.
-> **Test evidence:** This inspection did not execute a capability-denial check; the linked vocabulary defines rejection rather than a runtime test result.
-> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`; the capability vocabulary retains those bytes; linked ADRs explain design boundaries.
+> **Contract or setting:** Unknown capability constraints reject with `REGISTRY_CAPABILITY_UNKNOWN`. Core-only names are not entries in the public grant vocabulary.
+> **Test evidence:** This inspection did not execute a capability-denial check. The linked vocabulary defines rejection rather than a runtime test result.
+> **Revision:** `bcf032f241b432bf920baa9ee5f727947921447d`. The capability vocabulary retains those bytes. Linked ADRs explain design boundaries.
 > **Limit:** Vocabulary rejection alone does not establish every caller, adapter or operating-system containment boundary.
 
 ## Unsupported Shortcuts
@@ -587,7 +598,7 @@ The current implementation does not support these shortcuts:
 | Add another existing Buster suite to a gate | Configuration | The suite composes installed providers |
 | Run a new kind of source check in the graph | Stage | The graph must order a new typed operation |
 | Send committed failure events to a new sink | Observer | The sink consumes events and does not control state |
-| Call a new service through existing HTTP authority | Configuration or adapter | Reuse the adapter when its resource model fits; otherwise add an adapter |
+| Call a new service through existing HTTP authority | Configuration or adapter | Reuse the adapter when its resource model fits. Otherwise add an adapter |
 | Grant access to a new network origin | Platform configuration | The existing `network.http` capability already models origins |
 | Introduce a new external authority type | Foundation plus adapter | An adapter cannot invent a capability ID |
 | Execute a new browser test contract | Test provider | Buster must run and record test evidence |
@@ -595,7 +606,7 @@ The current implementation does not support these shortcuts:
 | Add an OpenClaw design tool | OpenClaw extension | OpenClaw owns tool registration |
 | Change the Redis endpoint of the installed OpenClaw observer | OpenClaw host configuration | The installed extension already exposes Redis settings |
 | Add Codex troubleshooting instructions | Codex plugin or skill | Codex owns skill discovery |
-| Add a new specialist worker family | Engine plus role packaging | Worker Core supplies mechanics; use a new role only when no current role can own the package set |
+| Add a new specialist worker family | Engine plus role packaging | Worker Core supplies mechanics. Use a new role only when no current role can own the package set |
 | Add a new terminal pipeline state | Core | Canonical lifecycle semantics change |
 
 If two rows appear to fit, choose the row with the narrower authority.
@@ -640,6 +651,8 @@ These checks did not use a target cluster, OpenClaw host, Codex host, or externa
 
 ## Continue With The Correct Guide
 
+These guides cover the extension boundaries:
+
 - [Create And Activate A First Pipeline Plugin](first-plugin.md) covers package testing, role inclusion, activation, success, intentional failure, and reversal.
 - [Understand The Five Pipeline Extension Contracts](contracts.md) compares stages, observers, capability adapters, test providers, and report adapters.
 - [Build A Plugin That Uses External State Or Effects](effectful-plugin.md) explains idempotency, uncertain outcomes, retry, cancellation, resume, and cleanup.
@@ -647,9 +660,9 @@ These checks did not use a target cluster, OpenClaw host, Codex host, or externa
 - [Extend Nova](nova.md) covers stages, adapters, observers, role inclusion, and the lint authoring boundary.
 - [Extend Hosts, Worker Engines, And Runtime Roles](host-and-engine.md) covers OpenClaw, Codex, specialist engines, and deployable role identities.
 - [Test And Manage An Extension](testing.md) covers proof, diagnosis, update, replacement, disablement, removal, and remaining state.
-- [Plugin Catalogue](plugin-catalogue/README.md) joins maintained guidance with generated facts and local results for every discovered package.
+- [Plugin Catalog](plugin-catalogue/README.md) joins maintained guidance with generated facts and local results for every discovered package.
 - [System Components And Authority](../understand/components-and-authority.md) explains how extensions fit the complete platform.
 - [Core And Plugin Decisions](../decisions/core-and-plugins.md) preserves the design reasons and their evidence limits.
 
-The linked pipeline, effect, Buster, Nova, host, lifecycle, and catalogue guides add detailed procedures.
+The linked pipeline, effect, Buster, Nova, host, lifecycle, and catalog guides add detailed procedures.
 This page remains the authority for selecting the correct extension class.

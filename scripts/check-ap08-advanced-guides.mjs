@@ -63,7 +63,7 @@ const specifications = [
       '## Author A Nova Stage', '## Author Or Select A Capability Adapter',
       '### Build a Nova stage end to end', '### Build or add an adapter',
       '## Author A Nova Observer', '## Understand Nova Lint',
-      '## Change Lint Policy Or Rules', '### Follow the lint change path',
+      '## Change Lint Policy Or Rules', '### Lint change procedure', '<a id="follow-the-lint-change-path"></a>',
       '**Benefit:**', '**Cost:**', '**Rejected alternative:**', '**Reconsider when:**',
       '21 stages and six adapters',
       'No Nova-owned package currently registers an observer.',
