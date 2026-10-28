@@ -3541,6 +3541,28 @@ function webProviderTargetRules(authorityPath, fieldPath) {
 }
 
 function schemaRuntimeValidationRules(authorityPath, field) {
+  if (authorityPath === "skills/common/plugins/artifact-store/schemas/config.schema.json") {
+    const rules = {
+      "$.artifactRoot": {
+        accepted: "The schema and activation require a nonempty string. The adapter does not trim it or confine it to a repository. Metadata uses records/store.json below the resolved root; blobs use blobs/sha256 below that root. Access depends on the process identity and filesystem permissions.",
+        failure: "Missing or non-string root rejects activation with artifactRoot is required. Filesystem, path-type or permission failures can occur during readiness or operations. ready() reads metadata only and does not establish blob read/write success.",
+        evidence: ["skills/common/plugins/artifact-store/src/adapter.ts:159", "skills/common/plugins/artifact-store/src/adapter.ts:160", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:229", "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:133"],
+      },
+      "$.maximumRecords": {
+        accepted: "The native adapter requires a positive safe integer from 1 through 9007199254740991; the schema minimum alone does not express that upper bound.",
+        failure: "Activation rejects a non-positive or unsafe integer with maximumRecords is invalid. A new metadata append at the record limit fails with DURABLE_RECORD_STORE_FULL. A matching idempotent existing record is returned before the new-record count check; byte and per-record limits remain separate.",
+        empty: 'Null and an empty string fail the declared integer type. Neither is a valid authored omission value.',
+        evidence: ["skills/common/plugins/artifact-store/src/adapter.ts:165", "skills/common/plugins/artifact-store/src/adapter.ts:167", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:88", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:92"],
+      },
+      "$.maximumStoreBytes": {
+        accepted: "The native adapter requires a positive safe integer from 1 through 9007199254740991; the schema minimum alone does not express that upper bound. Metadata capacity includes serialized store state. Blob capacity counts stored blob-subtree file bytes independently.",
+        failure: "Activation rejects a non-positive or unsafe integer with maximumStoreBytes is invalid. An over-budget new metadata state fails with DURABLE_RECORD_STORE_FULL; an over-budget blob write fails with DURABLE_BLOB_STORE_LIMIT_EXCEEDED. Existing metadata reads also obey the byte bound. Metadata is admitted before the blob, so a later blob failure does not undo the metadata intent; do not infer successful whole-artifact storage from metadata readiness.",
+        empty: 'Null and an empty string fail the declared integer type. Neither is a valid authored omission value.',
+        evidence: ["skills/common/plugins/artifact-store/src/adapter.ts:164", "skills/common/plugins/artifact-store/src/adapter.ts:166", "skills/common/plugins/artifact-store/src/adapter.ts:170", "skills/common/plugins/artifact-store/src/adapter.ts:173", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:251", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:281", "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:111"],
+      },
+    }[field.path];
+    if (rules) return rules;
+  }
   if (authorityPath === 'skills/buster/plugins/http/schemas/config.schema.json'
     && ['$.expectedStatuses', '$.expectedText', '$.expectedContentType', '$.path'].includes(field.path)) {
     const omission = {
@@ -3808,6 +3830,14 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  if (authorityPath === "skills/common/plugins/artifact-store/schemas/config.schema.json") {
+    const purpose = {
+      "$.artifactRoot": "Selects the artifact filesystem root for metadata and content-addressed blobs. Relative values resolve against the Node process working directory, not a repository or project directory.",
+      "$.maximumRecords": "Caps the number of metadata records in this artifact store across its namespaces. It is not a blob count or a separate allowance per namespace.",
+      "$.maximumStoreBytes": "Applies this byte limit independently to the serialized metadata store and the blob subtree. It is not one combined artifact-root or filesystem-space limit.",
+    }[fieldPath];
+    if (purpose) return purpose;
+  }
   if (['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json'].includes(authorityPath)) {
     const purpose = {
       '$.policy.profile': 'Names the identity of this complete review-policy object. The separate profile field selects a built-in gate, lean or audit policy. A supplied policy replaces that whole object.',
