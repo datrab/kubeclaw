@@ -24,6 +24,16 @@ export function schemaConditions(conditions) {
 
 export function schemaSemanticText(field) {
   const text = field.meaning?.text ?? '';
+  const fallback = field.meaning?.runtimeDefault;
+  const fallbackLiteral = fallback !== null && typeof fallback === 'object' ? JSON.stringify(fallback) : null;
+  const defaultBehavior = field.meaning?.defaultBehavior;
+  const fallbackPrefix = 'the linked runtime uses ';
+  const fallbackContext = fallbackLiteral && field.meaning?.runtimeDefaultEvidence
+    ? `${fallbackPrefix}${fallbackLiteral} (${field.meaning.runtimeDefaultEvidence})` : null;
+  const omissionStart = typeof defaultBehavior === 'string' ? text.indexOf(`Omission: ${defaultBehavior}`) : -1;
+  const contextStart = fallbackContext && typeof defaultBehavior === 'string' ? defaultBehavior.indexOf(fallbackContext) : -1;
+  const fallbackStart = omissionStart >= 0 && contextStart >= 0
+    ? omissionStart + 'Omission: '.length + contextStart + fallbackPrefix.length : -1;
   const visible = stripMarkdownCodeAndRawHtml(text);
   const links = markdownInlineLinks(text);
   const values = [...new Set([
@@ -33,8 +43,11 @@ export function schemaSemanticText(field) {
   ].filter(Boolean))].sort((a, b) => b.length - a.length);
   let result = '';
   for (let cursor = 0; cursor < text.length;) {
-    const insideLink = links.some((link) => cursor >= link.start && cursor < link.end);
-    const value = !insideLink && values.find((candidate) => visible.startsWith(candidate, cursor));
+    const insideLink = links.find((link) => cursor >= link.start && cursor < link.end);
+    const ownedFallback = cursor === fallbackStart && visible.startsWith(fallbackLiteral, cursor)
+      && (!insideLink || (insideLink.start === cursor
+        && insideLink.raw === `${fallbackLiteral} (${field.meaning.runtimeDefaultEvidence})`));
+    const value = ownedFallback ? fallbackLiteral : !insideLink && values.find((candidate) => visible.startsWith(candidate, cursor));
     if (value) { result += markdownInlineCode(value); cursor += value.length; }
     else result += text[cursor++];
   }

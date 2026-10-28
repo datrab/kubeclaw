@@ -5,7 +5,29 @@ import os from 'node:os';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
-import { createRegistrationDependencyCollector, joinNativeDependencyAuthorities, acquireNativeDependencyReport } from '../plugin-registration-dependencies.mjs';
+import { createRegistrationDependencyCollector, joinNativeDependencyAuthorities, acquireNativeDependencyReport, schemaSemanticText } from '../plugin-registration-dependencies.mjs';
+
+// Quote source-owned structured fallback data; preserve links, Markdown code and raw HTML blocks.
+for (const fallback of [[], {}, ['accept', 'content-type']]) {
+  const literal = JSON.stringify(fallback);
+  const evidence = 'skills/fixture/provider.js:49';
+  const defaultBehavior = `The schema declares no default. When absent, the linked runtime uses ${literal} (${evidence}).`;
+  const text = `Omission: ${defaultBehavior} See [owner](../owner.md).`;
+  const field = { path: '$.secretReferences', constraints: [], meaning: {
+    text, defaultBehavior, runtimeDefault: fallback, runtimeDefaultEvidence: evidence } };
+  const rendered = schemaSemanticText(field);
+  assert.ok(rendered.includes(`uses \`${literal}\` (${evidence})`));
+  assert.ok(rendered.includes('[owner](../owner.md)'));
+  assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: rendered } }), rendered);
+  for (const protectedText of [`\`${text}\``, `<pre>\n${text}\n</pre>`]) {
+    assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: protectedText } }), protectedText);
+  }
+  const nestedGenuineLink = `[Omission: ${defaultBehavior}](../defaults.md)`;
+  assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: nestedGenuineLink } }), nestedGenuineLink);
+  const genuineLink = `See [${literal}](../defaults.md).`;
+  assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: genuineLink } }), genuineLink);
+  assert.equal(schemaSemanticText({ ...field, meaning: { text, runtimeDefault: fallback } }), text);
+}
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'registration-dependencies-'));
 const moduleFile = fileURLToPath(new URL('../plugin-registration-dependencies.mjs', import.meta.url));
