@@ -787,11 +787,19 @@ function build() {
   const discoveredOutbound = [
     ...discoverOutboundConnections(sourceInputs),
     ...discoverGoKubernetesConnections(goControllerSources.map((source) => ({ source, origin: source, text: read(source) })), {
-      activationFor: ({ input }) => /\/demo-readiness(?:-sources|-lifecycle)?\.go$/u.test(input.source)
-        ? { activationState: 'conditional', activationCondition: 'the Buster demo-readiness listener is enabled; the selected profile leaves it disabled' }
-        : /\/demo-product\.go$/u.test(input.source)
-          ? { activationState: 'conditional', activationCondition: 'BUSTER_PRODUCT_ENABLED=true; the selected profile leaves product decisions disabled' }
-          : undefined,
+      activationFor: ({ input, caller }) => {
+        // Ordinary provisioning, expiry and finalizer cleanup share these
+        // helpers even when the optional readiness listener is disabled.
+        if (input.source.endsWith('/demo-readiness-lifecycle.go')
+          && ['patchLeaseStatus', 'removeFinalizerCAS', 'deleteNamespaceCAS'].includes(caller)) return undefined;
+        if (/\/demo-readiness(?:-sources|-lifecycle)?\.go$/u.test(input.source)) {
+          return { activationState: 'conditional', activationCondition: 'the Buster demo-readiness listener is enabled; the selected profile leaves it disabled' };
+        }
+        if (/\/demo-product\.go$/u.test(input.source)) {
+          return { activationState: 'conditional', activationCondition: 'BUSTER_PRODUCT_ENABLED=true; the selected profile leaves product decisions disabled' };
+        }
+        return undefined;
+      },
     }),
   ];
   const outboundConnections = discoveredOutbound.map((original) => {

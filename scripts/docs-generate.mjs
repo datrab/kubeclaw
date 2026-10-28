@@ -31,8 +31,8 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language'].includes(only)) {
-  throw new Error('--only supports workflows, plugin-configuration or retained-configuration-language');
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints'].includes(only)) {
+  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language or endpoints');
 }
 if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
@@ -208,6 +208,11 @@ function stableWriteMap() {
   // Keep bounded workflow publication independent of unrelated SDK inventories.
   if (only === 'workflows') return new Map([
     ['docs/site/reference/workflows.md', renderWorkflows(readJson('docs/generated/inventory/workflows.json'))],
+  ]);
+  // Publish the existing endpoint renderer without acquiring or rewriting
+  // unrelated SDK, configuration or retained historical references.
+  if (only === 'endpoints') return new Map([
+    ['docs/site/reference/endpoints.md', renderEndpoints(readJson('docs/generated/inventory/platform-surfaces.json'))],
   ]);
   const deploy = readJson('docs/generated/inventory/deploy-script.json');
   const secrets = readJson('docs/generated/inventory/secret-setup.json');
@@ -402,6 +407,12 @@ ${table(['Method and path', 'Role or class', 'Activation and exclusions', 'Imple
 
 ## Services, Ports, And Ingress
 
+These rows describe rendered declarations, not live reachability. If a Service
+omits \`targetPort\`, the Kubernetes API defaults it to the numeric Service
+\`port\`; the row preserves that omission beside the effective default. Named
+targets remain names resolved against the selected workload's container ports.
+See the [pinned Service defaulting implementation](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/apis/core/v1/defaults.go#L125-L134).
+
 ${table(['Resource', 'Exposure', 'Port or backend', 'Activation', 'Implementation authority'], exposures.map((exposure) => [
   `\`${exposure.kind}/${exposure.namespace}/${exposure.name}\``,
   exposure.kind === 'Service'
@@ -410,7 +421,7 @@ ${table(['Resource', 'Exposure', 'Port or backend', 'Activation', 'Implementatio
       ? `class=\`${exposure.ingressClassName ?? '<default>'}\`<br>route=\`default backend\`<br>host/path=\`not applicable\``
       : `class=\`${exposure.ingressClassName ?? '<default>'}\`<br>route=\`${exposure.routeKind}\`<br>host=\`${exposure.host ?? '<none>'}\`<br>path=\`${exposure.path ?? '<none>'}\``,
   exposure.kind === 'Service'
-    ? `\`${exposure.protocol} ${exposure.portName ?? '<unnamed>'}:${exposure.port ?? '<none>'} -> ${exposure.targetPort ?? '<none>'}\`${exposure.nodePort ? `<br>nodePort=\`${exposure.nodePort}\`` : ''}`
+    ? `\`${exposure.protocol} ${exposure.portName ?? '<unnamed>'}:${exposure.port ?? '<none>'} -> ${exposure.targetPort ?? exposure.port ?? '<none>'}\`${exposure.targetPort == null && exposure.port != null ? '<br>targetPort omitted; API default equals port' : ''}${exposure.nodePort ? `<br>nodePort=\`${exposure.nodePort}\`` : ''}`
     : `service=\`${exposure.backendService ?? '<none>'}:${exposure.backendPort ?? '<none>'}\`${exposure.tlsHosts?.length ? `<br>TLS hosts: ${exposure.tlsHosts.map((host) => `\`${host}\``).join(', ')}` : ''}`,
   `${exposure.activationState}: ${exposure.activationCondition ?? 'selected rendered profile'}`,
   sourceLink(exposure),
