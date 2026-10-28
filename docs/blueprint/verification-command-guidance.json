@@ -1268,7 +1268,7 @@
       "purpose": "Validate package-local TypeScript live-test conventions, then run package tests, repeat live files and inject registration crashes.",
       "scope": "Current47 packages with nonempty stage/observer/adapter/testProvider arrays. Today its own preflight refuses before execution at demo-auth-smoke; current integration-based/nested test routes do not meet its literal convention.",
       "environment": "Repository root through npm, current Node/npm and locked dependencies. All three wrappers derive root from their own file, run children there or selected package cwd, inherit full process.env and use stdio inherit. They specify no child-process timeout and do not centrally sandbox package tests. Package npm pretest/test/posttest and nested script behavior applies; a failing lifecycle step stops that package/aggregate.",
-      "effects": "ACTUAL CURRENT STOP: first sorted incompatible package skills/buster/plugins/demo-auth-smoke has no tests/live-function.test.ts. The assert throws before verify-plugin-packages, repeated direct live tests or crash matrix. Before refusal it only reads discovery/registration/package metadata. If owner resolves compatibility, intended later path runs full49 npm package lifecycles, then selected47 direct Node live files again without npm hooks, then actual crash matrix using explicitly injected throwers and temporary journals. No blanket production/live success or cleanup grant.",
+      "effects": "ACTUAL CURRENT STOP: first sorted incompatible package skills/buster/plugins/demo-auth-smoke lacks the tests directory and its required live-function.test.ts file. The path join is explicit in scripts/verify-plugin-live-capabilities.mjs:32. The assert throws before verify-plugin-packages, repeated direct live tests or crash matrix. Before refusal it only reads discovery/registration/package metadata. If owner resolves compatibility, intended later path runs full49 npm package lifecycles, then selected47 direct Node live files again without npm hooks, then actual crash matrix using explicitly injected throwers and temporary journals. No blanket production/live success or cleanup grant.",
       "expected": "Source-predicted current diagnostic: Plugin package is missing its TypeScript package-local live capability test: skills/buster/plugins/demo-auth-smoke. This was not executed. Resume only after native wrapper/package owner provides a reviewed supported route and the unchanged intended controls actually complete.. Limits: No signing/runtime/model/cluster acceptance; no current successful wrapper run claimed. Preserve all later child limitations if route becomes supported.",
       "owner": "[plugin Foundation/SDK maintainers](../extend/developer-handbook.md#change-sdk-or-shared-contracts)",
       "changeToCheck": "Changing discovery, package scripts/hooks, registration forms, fixture receivers or tool requirements changes the aggregate. Review and run the exact selected aggregate and affected direct package/scaffold controls in a prepared environment. Do not substitute a direct integration test for a wrapper that still refuses its current registration form.",
@@ -7668,7 +7668,7 @@
         },
         {
           "path": "scripts/lib/docs-verification-reference.mjs",
-          "sha256": "0f2a24a3da76121f34f838e6b368b6bf936a2e641a2b69dd905e9d86162f95d1"
+          "sha256": "a32d0d4a9cbeccb458ccc62dae22f9c75e2673ac7ccc2267b20387ff3909c456"
         },
         {
           "path": "docs/site/extend/documentation-maintenance.md",
@@ -7705,7 +7705,7 @@
         },
         {
           "path": "scripts/lib/docs-verification-reference.mjs",
-          "sha256": "0f2a24a3da76121f34f838e6b368b6bf936a2e641a2b69dd905e9d86162f95d1"
+          "sha256": "a32d0d4a9cbeccb458ccc62dae22f9c75e2673ac7ccc2267b20387ff3909c456"
         },
         {
           "path": "docs/site/extend/documentation-maintenance.md",
@@ -7884,7 +7884,7 @@
         },
         {
           "path": "scripts/lib/docs-verification-reference.mjs",
-          "sha256": "0f2a24a3da76121f34f838e6b368b6bf936a2e641a2b69dd905e9d86162f95d1"
+          "sha256": "a32d0d4a9cbeccb458ccc62dae22f9c75e2673ac7ccc2267b20387ff3909c456"
         },
         {
           "path": "scripts/plugin-system-inventory.mjs",
@@ -9210,7 +9210,7 @@
         },
         {
           "path": "scripts/lib/docs-verification-reference.mjs",
-          "sha256": "0f2a24a3da76121f34f838e6b368b6bf936a2e641a2b69dd905e9d86162f95d1"
+          "sha256": "a32d0d4a9cbeccb458ccc62dae22f9c75e2673ac7ccc2267b20387ff3909c456"
         },
         {
           "path": "scripts/plugin-system-inventory.mjs",
@@ -9329,7 +9329,7 @@
       "purpose": "Check plugin-system contracts, builds, capability boundaries and local engine/isolation behavior.",
       "scope": "Exact shell sequence starts with the OpenClaw agent-observer workspace build, then SDK check, temporary plugin builds, sandbox binary build, runtime typecheck, explicit contract programs, provider catalogue test, live-capability wrapper, and the local engine/recovery/isolation/installation/external-engine suffix.",
       "environment": "Repository root with Node/npm dependencies, TypeScript and C compiler. Native isolation steps require a genuine delegated cgroup-v2 subtree in KUBECLAW_TEST_CGROUP_ROOT, plus supported Linux isolation facilities and built sandbox binary. The shell requires the variable when it reaches phase11; earlier build effects are not rolled back if it is missing.",
-      "effects": "First build @kubeclaw/openclaw-agent-observer. Its syncContract deletes/replaces src/generated/agent-observability before compilation. TypeScript compiles into an owned temporary tree; success replaces the plugin dist directory. Finally removes compiler temporary output, not the synchronized source or successful dist. A compiler or later stage failure can therefore leave repository changes. The SDK alias checks bytes; plugin build emits into owned temporary output; sandbox build replaces its native binary. Local fixtures create and mutate plugin packages, state/effect/telemetry journals and owned Git/workspace trees. Checkpoint recovery deliberately SIGKILLs a child and invokes recovery CLI. Phase7 spawns a lock-holder process; security cases use injected capability callbacks, not real provider effects. Isolation invokes genuine restricted children. Several test trees are removed only at successful end. CURRENT STOP: verify:plugin-live-capabilities rejects demo-auth-smoke missing tests/live-function.test.ts before its package executions; this occurs after earlier aggregate steps, and prevents the following suffix from running.",
+      "effects": "First build @kubeclaw/openclaw-agent-observer. Its syncContract deletes/replaces src/generated/agent-observability before compilation. TypeScript compiles into an owned temporary tree; success replaces the plugin dist directory. Finally removes compiler temporary output, not the synchronized source or successful dist. A compiler or later stage failure can therefore leave repository changes. The SDK alias checks bytes; plugin build emits into owned temporary output; sandbox build replaces its native binary. Local fixtures create and mutate plugin packages, state/effect/telemetry journals and owned Git/workspace trees. Checkpoint recovery deliberately SIGKILLs a child and invokes recovery CLI. Phase7 spawns a lock-holder process; security cases use injected capability callbacks, not real provider effects. Isolation invokes genuine restricted children. Several test trees are removed only at successful end. CURRENT STOP: verify:plugin-live-capabilities rejects demo-auth-smoke because its tests directory and required live-function.test.ts file are absent, before its package executions; this occurs after earlier aggregate steps, and prevents the following suffix from running.",
       "expected": "Retain the first actual failed stage. On current source the live-capability wrapper has a declared incompatibility, so this command is not an assured green path. Later programs are intended only after that source incompatibility is resolved. Limits: Schema, fixture, local engine and isolation checks do not establish deployed provider or complete production workflow acceptance. No execution is inferred for a suffix skipped after failure.",
       "owner": "[plugin Foundation/SDK maintainers](../extend/developer-handbook.md#change-sdk-or-shared-contracts)",
       "changeToCheck": "Changes to the listed receivers, their selected inputs or this command require this exact check and its named delegates. Plugin-system SDK, registry, runtime isolation and engine maintainers must inspect complete diagnostics and partial effects, restore owned fixtures where applicable, and obtain independent review of the changed topic. Keep the declared environment, skips and STOP conditions; do not refresh expected data merely to hide a mismatch.",
@@ -9883,7 +9883,7 @@
         },
         {
           "path": "scripts/lib/docs-verification-reference.mjs",
-          "sha256": "0f2a24a3da76121f34f838e6b368b6bf936a2e641a2b69dd905e9d86162f95d1"
+          "sha256": "a32d0d4a9cbeccb458ccc62dae22f9c75e2673ac7ccc2267b20387ff3909c456"
         },
         {
           "path": "scripts/plugin-system-inventory.mjs",
@@ -13734,7 +13734,7 @@
       "purpose": "The intended infrastructure smoke is currently blocked by a missing local receiver; no working proof is claimed.",
       "scope": "Selected render/deployment/inspection procedure; exact entry and receiver ranges are in sourceEvidence. ",
       "environment": "The wrapper requires kubectl/Node and the intended cluster context; a complete production smoke receiver is also needed.",
-      "effects": "STOP: the wrapper names tests/verification/live/buster-infra-production-smoke.mjs, which is absent from the current checkout/Git tree. Earlier prerequisite checks can fail first.",
+      "effects": "STOP: the wrapper in scripts/deploy.sh:2668 selects buster-infra-production-smoke.mjs under the existing tests/verification/live directory. That named file is absent from the current checkout/Git tree. Earlier prerequisite checks can fail first.",
       "expected": "No current Redis→Buster→BuildKit→deployment result is supported by this missing local receiver. Deployment integration must supply and qualify the receiver before this command can prove that path; do not treat the gap as external permission or claim a successful smoke.",
       "owner": "[platform deployment maintainers](../extend/developer-handbook.md#change-charts-or-gitops)",
       "changeToCheck": "When changing this entry, its defaults, values/Secret policy, or delegated receiver, update the CLI/reference meaning and check the affected render/contract receiver. For live procedures, use the intended context and required authority; inspect original job/resource/receipt outcomes before retrying uncertain effects.",
@@ -15576,7 +15576,7 @@
     },
     {
       "purpose": "Check actual API-flow HTTP/WebSocket execution, endpoint selection, assertions, extraction and cleanup/cancellation semantics.",
-      "scope": "live-function and remediation exercise real loopback NetworkHttpCapabilityInvoker; missing/ambiguous deployment endpoint, malformed flow/expectations, all-skipped coverage, policy denial, response bounds and active cancellation. Not a deployed API or exhaustive flow-language proof. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts && node tests/remediation.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "live-function and remediation exercise real loopback NetworkHttpCapabilityInvoker; missing/ambiguous deployment endpoint, malformed flow/expectations, all-skipped coverage, policy denial, response bounds and active cancellation. Not a deployed API or exhaustive flow-language proof. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Loopback HTTP/WebSocket binding and ws dependency; writable OS temporary directory.",
       "effects": "Creates api-flow-* and api-flow-semantics-* repository/evidence fixtures and actual HTTP/WebSocket traffic; provider writes result evidence. Finally closes sockets/server and removes owned trees. Bind/setup before try can leave partial state; close failure can prevent later removal.",
       "expected": "Both scripts exit0 and print provider api-flow JSON (first realHttp/realWebSocket; second realHttp); expected negative outcomes/rejections are asserted. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15609,11 +15609,27 @@
           "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts",
           "sha256": "78bc3bd731052a460fe70a118ba4868ab848715f1be46cedeba59116db79b280"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/api-flow/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual Axe browser provider findings, acceptances and network egress restrictions.",
-      "scope": "Real Chromium+axe scans good/bad pages; screenshot/evidence assertions, acceptance expiry, redirect/WebSocket/popup egress denial, local redirect/WebSocket and disabled WebRTC. Not deployed accessibility acceptance or all WCAG coverage. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real Chromium+axe scans good/bad pages; screenshot/evidence assertions, acceptance expiry, redirect/WebSocket/popup egress denial, local redirect/WebSocket and disabled WebRTC. Not deployed accessibility acceptance or all WCAG coverage. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Installed Playwright Chromium plus native browser libraries and loopback server; writable temp/evidence directories.",
       "effects": "Creates axe-provider-* fixtures, real browser contexts/processes, screenshots/results and local HTTP server. Runtime closes contexts and browsers in finally; test closes server then removes root. Setup before try and sequential cleanup can retain partial state.",
       "expected": "Exit0 JSON provider axe realBrowser/realAxe true after all pass/fail/rejection assertions. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15646,11 +15662,27 @@
           "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
           "sha256": "162a6c598cdd19f4add0d723a0f5081baa319a2e91ddcd93922e501876188376"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/axe/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check container registry HTTP deadlines/errors and build-provider selection/path/input rejection.",
-      "scope": "Real local manifest HTTP reader checks digest/status/declared-size/body deadline/cancellation; deliberate missing OS executable checks diagnostic preservation. Provider test stops deliberately at container.build capability boundary and asserts defaults/normalization/invalid args. NO BuildKit success, image build/push or remote registry execution. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/deadline.test.mts && node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real local manifest HTTP reader checks digest/status/declared-size/body deadline/cancellation; deliberate missing OS executable checks diagnostic preservation. Provider test stops deliberately at container.build capability boundary and asserts defaults/normalization/invalid args. NO BuildKit success, image build/push or remote registry execution. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Loopback binding, Node child-process launch ability, writable temp directories; no buildctl prerequisite for these selected tests.",
       "effects": "Local manifest server connections and intentional ENOENT launch; container-build-provider-* temporary Dockerfile/workspace. Deadline disposal/closeAllConnections/server close and fixture rm in finally; no build output/image. Setup before try may remain on early failure.",
       "expected": "First exit0 JSON suite container-registry-deadline buildkitExecution not-exercised; second exit0 provider container-build validation real-files; negative probe exceptions are expected. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15687,11 +15719,27 @@
           "path": "skills/buster/plugins/container-build/tests/live-function.test.ts",
           "sha256": "af27438a323433963b4cea1f89debd7b44efc0e093c6b09238f5d947d6b9b31f"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/container-build/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check LCOV artifact measurement and coverage thresholds/combine policy.",
-      "scope": "Real digest-bearing LCOV files, combined/default/individual aggregation, thresholdless mode, duplicate/missing/malformed input rejection. Not executed application tests or coverage generation. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real digest-bearing LCOV files, combined/default/individual aggregation, thresholdless mode, duplicate/missing/malformed input rejection. Not executed application tests or coverage generation. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Writable OS temp directory and package/SDK dependencies; no browser/provider service.",
       "effects": "Creates coverage-budget-provider-* LCOV fixtures, reads files; finally removes own root. No external call or generated application coverage.",
       "expected": "Exit0 JSON provider coverage-budget format lcov after expected passed/failed/rejection cases. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15720,11 +15768,27 @@
           "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
           "sha256": "9a94bc174399e298b53d980665fdd0f2052d1bb9120f79c1ec327887d9b63ae1"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/coverage-budget/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check native generated credential provenance against actual local authenticated session application.",
-      "scope": "Original Go credential producer plus real NetworkHttp runtime/provider; negative anonymous control, business result, malformed response, redirect/method/cancel/source mismatch, protocol/cookie rejection and actual registry discovery. Deployment/image/lease metadata are contract vectors, not deployed evidence. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node --test ../../../../tests/verification/integration/demo-auth-smoke-live.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Original Go credential producer plus real NetworkHttp runtime/provider; negative anonymous control, business result, malformed response, redirect/method/cancel/source mismatch, protocol/cookie rejection and actual registry discovery. Deployment/image/lease metadata are contract vectors, not deployed evidence. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Go toolchain/module dependencies and Node package exports; loopback HTTP. KUBECLAW_DEMO_AUTH_TEST_GO overrides Go; KUBECLAW_DEMO_AUTH_TEST_TLS_ROOT selects existing key.pem/cert.pem HTTPS input and caller TLS trust; optional KUBECLAW_DEMO_AUTH_TEST_RESULT destination must be writable.",
       "effects": "Creates demo-auth-app-*; invokes Go test -count=1 -run ^TestDemoAuthenticationCredentialProducer$ ./cmd/buster-namespace-controller in repository, inheriting env and overriding KUBECLAW_DEMO_AUTH_TEST_OUTPUT; real Go httptest Secret/status endpoint generates random credential file0600. Go caches/modules may persist. Local session HTTP(S), cookie secrets in memory. Optional caller RESULT writes invocation/result/produced credentials mode0600 and is NOT removed. Finally closes app and removes temp root; Go/setup before try can retain tree.",
       "expected": "Node --test TAP must complete all3 declared tests; actual Go helper must finish0 and produce credential input; no live cluster/image/auth acceptance follows. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15769,11 +15833,27 @@
           "path": "tests/verification/integration/demo-auth-smoke-live.test.ts",
           "sha256": "474d974cb4025ea77466102e60744446925bf7faf0cd885329773140bdc1788b"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/demo-auth-smoke/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check exact output artifact contracts and direct-command report/environment adapter behavior.",
-      "scope": "Actual registry/resolver/FileEvidenceStore output contract vectors across8 slots/media types; selected package live test injects command.execute return records and does NOT launch configured node test.js. Real command-runner artifacts are separate test:native-artifacts, NOT in npm test. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node ../../../../tests/verification/integration/direct-command-output-contract.test.mts && node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Actual registry/resolver/FileEvidenceStore output contract vectors across8 slots/media types; selected package live test injects command.execute return records and does NOT launch configured node test.js. Real command-runner artifacts are separate test:native-artifacts, NOT in npm test. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Readable Buster package registry/schemas, Node/SDK and writable OS temp.",
       "effects": "Creates output-contract-* files/evidence and direct-command-provider-* reports/artifact fixtures, reads/copies selected artifacts; both roots removed in finally. Command callback is injected; no actual external command from selected provider test.",
       "expected": "First exit0 suite output-contract artifactSlots8; second exit0 provider direct-command shell false reports exact after size/env rejection assertions. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15806,11 +15886,27 @@
           "path": "tests/verification/integration/direct-command-output-contract.test.mts",
           "sha256": "e83e096dc3ad081584b3d33f3913a9c1c17fc303b83b3e0d7e50ceb185ed8ea7"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/direct-command/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual HTTP provider, resolved configuration and network capability policy.",
-      "scope": "Real loopback server; response/text/status/default/public/deployment endpoints, resolver path omission/override, timeout, redirects/size/origin/path/ambiguity, method/header/WebSocket/cancel/body policy, denied contact counter and scoped mutation. No deployed target or provider-registry temp helper is selected by THIS package test. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node ../../../../tests/verification/integration/http-provider-live.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real loopback server; response/text/status/default/public/deployment endpoints, resolver path omission/override, timeout, redirects/size/origin/path/ambiguity, method/header/WebSocket/cancel/body policy, denied contact counter and scoped mutation. No deployed target or provider-registry temp helper is selected by THIS package test. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Node/registry package exports and loopback binding; no browser or cluster.",
       "effects": "Actual local HTTP requests and server response timers; registry reads package/schema inputs; no test fixture file writes. Finally awaits server.close (no closeAllConnections); no blanket immediate no-process assertion.",
       "expected": "Exit0 JSON provider http boundary real-local-http-server; every intentional failed outcome/rejection and contact count must assert. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15843,11 +15939,27 @@
           "path": "tests/verification/integration/http-provider-live.test.ts",
           "sha256": "51fbff1efd614e136c598eb603b2b54b18c9582cc212fbe4e3b9390967e82787"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/http/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual JUnit report adapter dialect, bounds and unsafe XML rejection.",
-      "scope": "live-function imports adapter.test.mjs; real adapt on in-memory JUnit/pytest/namespaced/nested cases, counts/duration/findings, truncation, entities/PI/DTD/tags/control bytes/UTF8/BOM/attribute whitespace and malformed trailing input. Not external test execution. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "live-function imports adapter.test.mjs; real adapt on in-memory JUnit/pytest/namespaced/nested cases, counts/duration/findings, truncation, entities/PI/DTD/tags/control bytes/UTF8/BOM/attribute whitespace and malformed trailing input. Not external test execution. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Node and installed adapter dependencies only.",
       "effects": "In-memory Buffer/XML parsing and module reads; no receiver filesystem fixture, external service or process.",
       "expected": "Imported adapter.test.mjs must finish0 and print ok dialects junit/pytest bounded safeXml; each rejection asserted. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15880,11 +15992,27 @@
           "path": "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts",
           "sha256": "14d1030b8a9d68828865ef1d84d8999daff41b8241bcb27c04d540135f826ea3"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/junit-report-adapter/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check Kubernetes fixture configuration/identity/input and cleanup return contracts.",
-      "scope": "Actual pure configuration/image binding/deterministic namespace bounds. execute tested only invalid/missing input; cleanup invokes injected ok:false/ok:true callbacks. NO actual kubectl/API/controller/namespace deployment or release. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Actual pure configuration/image binding/deterministic namespace bounds. execute tested only invalid/missing input; cleanup invokes injected ok:false/ok:true callbacks. NO actual kubectl/API/controller/namespace deployment or release. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Node/package exports only; no Kubernetes credentials required by selected body.",
       "effects": "In-memory configuration and injected cleanup callback calls; no actual cluster mutation or test-owned filesystem output.",
       "expected": "Exit0 JSON provider kubernetes-fixture deterministicIdentity true after identity/image/prefix/input/release-failure assertions. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15913,11 +16041,27 @@
           "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
           "sha256": "59f85c44388dd5e8ae8659a88b4f6edd8585bd5afc0a154d52f9cbe21406c6eb"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/kubernetes-fixture/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual Lighthouse performance provider budgets and origin enforcement.",
-      "scope": "Real Chromium/Lighthouse13.4.1, permissive/impossible budgets and settings rejection, representative evidence and denied off-origin resource contacts. Not deployed performance acceptance. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real Chromium/Lighthouse13.4.1, permissive/impossible budgets and settings rejection, representative evidence and denied off-origin resource contacts. Not deployed performance acceptance. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Installed Chromium executable and native libraries, Lighthouse dependency, loopback binding, writable temporary profile/evidence.",
       "effects": "Creates lighthouse-provider-* settings/reports, two local HTTP servers and runtime kubeclaw-lighthouse-* Chrome user profile; runtime launches Chrome+exact-origin proxy, finally best-effort kills Chrome, closes proxy and removes profile. Test closes servers then removes own root; setup/cleanup failure can retain partial state.",
       "expected": "Exit0 provider lighthouse realChrome/realLighthouse;3 reports and1 representative, fixed version and failed-LCP/denial assertions pass. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15950,11 +16094,27 @@
           "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
           "sha256": "7b6404af53e7442b1d716d2ddb559ecbe294c5a09886f2e41295169ff20d5e93"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/lighthouse/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual OpenAPI provider request/response and remediation semantics.",
-      "scope": "Real HTTP+NetworkHttpCapabilityInvoker with OpenAPI3.0/3.1 local specs; refs, declared params/media/headers/body, booleans/composition/array/object schema cases, unsafe pattern/depth, duplicates, missing inputs, cleanup on validation/policy error and no cleanup after active cancel. Does not certify complete OpenAPI/JSON Schema semantics. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts && node tests/remediation.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real HTTP+NetworkHttpCapabilityInvoker with OpenAPI3.0/3.1 local specs; refs, declared params/media/headers/body, booleans/composition/array/object schema cases, unsafe pattern/depth, duplicates, missing inputs, cleanup on validation/policy error and no cleanup after active cancel. Does not certify complete OpenAPI/JSON Schema semantics. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Loopback HTTP, writable temp directory and package dependencies.",
       "effects": "Creates openapi-* and openapi-semantics-* local specs/evidence, real GET/POST/DELETE requests to loopback. Finally server close + rm; remediation uses closeAllConnections. Setup before try/cleanup failure may retain partial state.",
       "expected": "Both scripts exit0 provider openapi realHttp JSON; second schemaCases40; expected negative findings/rejections and cleanup contact counts assert. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -15991,11 +16151,27 @@
           "path": "skills/buster/plugins/openapi/tests/remediation.test.ts",
           "sha256": "0c157e593df364b8837168f42e3a6eb6a3aa2ac8c8ec0d8766fb41071ae5fbbd"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/openapi/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual sandboxed Playwright provider project/report/process/origin boundaries.",
-      "scope": "Copies project fixture and runs actual Chromium via native plugin-sandbox/exact-origin proxy;2 pass+1 declared skip, retry/failure/independent continuation, worker clamp, zero-tests, process-limit, cancel, overlay cleanup/path rejection. Sampled limits explicitly used, not cgroup enforcement. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Copies project fixture and runs actual Chromium via native plugin-sandbox/exact-origin proxy;2 pass+1 declared skip, retry/failure/independent continuation, worker clamp, zero-tests, process-limit, cancel, overlay cleanup/path rejection. Sampled limits explicitly used, not cgroup enforcement. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Absolute PLAYWRIGHT_BROWSERS_PATH, installed Chromium/native libraries, executable root node_modules/.bin/playwright and built @kubeclaw/plugin-foundation/isolation/plugin-sandbox, Linux sandbox/proc capability and read-only roots /usr /lib /lib64 /etc/fonts,/hosts,/nsswitch.conf,/resolv.conf,/ssl,/proc,/sys,/dev; loopback/temp writable.",
       "effects": "Creates playwright-provider-* copied repository, screenshots/reports/trace/output, scratch/home/tmp, two loopback servers and native sandbox/Node/browser process trees. Runtime temporarily adds node_modules link/config/report/output overlay, closes proxy/removes these in finally; test removes whole root after servers close. Cancellation assertion checks no .kubeclaw-playwright-* overlay. No actual target environment cgroup claim.",
       "expected": "Exit0 JSON provider playwright realChromium/structuredReporter; expected3-case pass/fail/skip counts, failed attempts2, denial/no-contact and cancellation cleanup must assert; declared fixture skip is intentional, not missing prerequisite skip. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16036,11 +16212,27 @@
           "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
           "sha256": "e1ad40bfd668ed5a6b3aad21397d09b1b96f5d3d8ad378c818b287e25777b52a"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/playwright/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check native security providers and real Trivy database freshness/stability boundaries.",
-      "scope": "Live headers HTTP, real npm lockfiles/dependency scan known lodash CVE, pinned alpine remote image and Kubernetes manifest policy; findings identity bounds. Concurrent Node --test also runs actual/copy DB freshness/metadata/schema/missingJava/abort/1ms timeout/FIFO tests. Not cluster security acceptance. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node --test tests/live-function.test.ts tests/database-freshness.test.mts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Live headers HTTP, real npm lockfiles/dependency scan known lodash CVE, pinned alpine remote image and Kubernetes manifest policy; findings identity bounds. Concurrent Node --test also runs actual/copy DB freshness/metadata/schema/missingJava/abort/1ms timeout/FIFO tests. Not cluster security acceptance. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Actual Trivy default /usr/local/bin/trivy or KUBECLAW_SECURITY_TEST_TRIVY; fresh real vulnerability+Java DB metadata/bytes, KUBECLAW_SECURITY_TEST_CACHE (live fallback candidates differ from freshness default ~/.cache/trivy), npm registry/network+docker.io/library image access, mkfifo, loopback, writable .swarm/temp and scanner cache. Missing prerequisite fails, no supported skip.",
       "effects": "Creates repository .swarm/security-live-* healthy/vulnerable package-lock fixtures via npm install --package-lock-only --ignore-scripts; actual scanner HTTP/image registry traffic and shared cache/tool files may persist. Live finally closes server/removes its fixtures but .swarm parent/shared cache not restored. Freshness makes trivy-freshness-* roots and real COPYFILE_FICLONE DB copies/metadata mutations+FIFO, removed via t.after. Scanner deliberately uses offline DB flags but remote image/npm still network; policy config separate. Node --test files can run concurrently.",
       "expected": "Native scan outcomes/known CVE/KSV-0001 and actual DB evidence identities/ages plus all4 freshness TAP tests must pass; live JSON providers4 realTrivy/realImage runtimeClusterAcceptance pending. Image outcome intentionally passed OR failed according to current findings; no hardcoded clean-image success. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16105,11 +16297,27 @@
           "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
           "sha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/security-providers/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check real file/tar/gzip size artifacts and baseline-growth/admission behavior.",
-      "scope": "Real ustar/tar-gzip generation; total/file/matching/compressed/growth limits, verified-descriptor path-swap, single binary, cancel/digest/baseline/unsafe symlink/duplicate/remoteURL rejection. Not application build or approved baseline update. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real ustar/tar-gzip generation; total/file/matching/compressed/growth limits, verified-descriptor path-swap, single binary, cancel/digest/baseline/unsafe symlink/duplicate/remoteURL rejection. Not application build or approved baseline update. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. GNU-compatible tar supporting --format=ustar and gzip, symlink-capable filesystem, writable temp, Node dependencies.",
       "effects": "Creates size-budget-provider-* source/tar/gzip/binary/evidence/baseline JSON and deliberate path swaps/symlink to /etc/passwd (archive entry rejected, not read as application artifact); actual tar children; finally removes whole root. No actual application build.",
       "expected": "Exit0 provider size-budget realArtifacts file/tar/tar-gzip and all expected budget failures/rejections assert. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16138,11 +16346,27 @@
           "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts",
           "sha256": "0db789a82964e2676582e0bee7afd31e046d6f4b6e9604ccaf63474f78207408"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/size-budget/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check Tailscale exposure configuration and internal deployment endpoint contract.",
-      "scope": "Pure testContract configuration/deploymentInput vectors for default retention release, path/readiness, ports80/8080 and same-service namespace host rejection; NO execute, Tailscale API, ingress or real endpoint. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Pure testContract configuration/deploymentInput vectors for default retention release, path/readiness, ports80/8080 and same-service namespace host rejection; NO execute, Tailscale API, ingress or real endpoint. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Node/package dependencies only; no cluster/tailnet credential.",
       "effects": "In-memory contract vectors; no declared fixture writes, child processes or network.",
       "expected": "Exit0 provider tailscale-exposure contractValidation true; output points to separate verify:test-gate:tailscale-exposure-live, not its success. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16171,11 +16395,27 @@
           "path": "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
           "sha256": "3e2524bee3df8bec94f757d87e03122395280c0fc7a80d42776669430f142c56"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/tailscale-exposure/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check real browser screenshots/pixel comparison and visual provider identity/evidence limits.",
-      "scope": "Actual Chromium captures baseline and compares changed/uncertain/multiple targets; digest/browser/profile/path immutability, network/WebSocket, dimensions/result/screenshot/time/cancel/combinations/malformed PNG rejection. Not live site design or baseline approval. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Actual Chromium captures baseline and compares changed/uncertain/multiple targets; digest/browser/profile/path immutability, network/WebSocket, dimensions/result/screenshot/time/cancel/combinations/malformed PNG rejection. Not live site design or baseline approval. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Installed Chromium/native libraries, pngjs/pixel comparison dependencies, loopback binding and writable temp.",
       "effects": "Creates visual-provider-* baseline/profile/manifest/evidence PNG/difference/report files and two local servers; runtime actual browser contexts/processes, closes them in finally. Test proves its baseline bytes unchanged, closes servers and removes root; does not change tracked maintained baselines.",
       "expected": "Exit0 provider visual realBrowser/realPngComparison after changed and uncertain findings/limit rejections; baseline hash equality required. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16212,11 +16452,27 @@
           "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
           "sha256": "c8dfbac810f6b1be0db10368b203eb5731f9ebdb6ab2afde87171748cd4f7109"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/buster/plugins/visual/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check agent event observer projection/redaction/subscription parity and real local durable delivery.",
-      "scope": "Observer unit+manifest subscriptions parity+real Nova registry/adapters/ObserverRuntime writes telemetry/artifact/effect/checkpoint stores;2 delivered then0 and secret redaction. Package-boundary regex checks. Not real OpenClaw gateway or external telemetry deployment. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/observers.unit.test.mjs && node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Observer unit+manifest subscriptions parity+real Nova registry/adapters/ObserverRuntime writes telemetry/artifact/effect/checkpoint stores;2 delivered then0 and secret redaction. Package-boundary regex checks. Not real OpenClaw gateway or external telemetry deployment. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Package cwd for relative src/manifest; readable common/Nova/Buster installations, GNU /usr/bin/flock with --timeout, /bin/sh,/bin/cat and writable temp durable stores.",
       "effects": "Creates kubeclaw-agent-observability-* telemetry/artifact/event/effect/checkpoint/delivery journals; native flock child locks. Finally adapter shutdown then recursive rm; setup before try/shutdown failure can retain tree. No live gateway connection.",
       "expected": "4 script-chain stages exit0 JSON observers-unit/parity/live-function/package-boundary; actual local drain2/0 and no-secret assertions. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16265,11 +16521,27 @@
           "path": "skills/common/plugins/agent-observability/tests/parity.test.ts",
           "sha256": "34b2f2e1d4c501a3ef88a793ea44ff8fd6d90b0665c8aa9b1600dadefac567bf"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/agent-observability/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check artifact durable JSON storage, identity/integrity/admission and package boundary.",
-      "scope": "Real adapter+FileDurableRecordStore files: canonical digest, pending metadata skip, per-run latest, size/capacity/no-orphan, maximum namespace, missing/corrupt/cancel rejection. No external object store. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/package-boundary.test.mjs && node tests/live-function.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real adapter+FileDurableRecordStore files: canonical digest, pending metadata skip, per-run latest, size/capacity/no-orphan, maximum namespace, missing/corrupt/cancel rejection. No external object store. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. GNU /usr/bin/flock --timeout, /bin/sh,/bin/cat; writable temp durable store and Node dependencies.",
       "effects": "Creates kubeclaw-artifacts-* metadata/blob/lock files, deliberate pending record and corrupt blob; bounded sub-adapter shutdown, outer finally adapter shutdown then rm root (failure may interrupt cleanup).",
       "expected": "package-boundary then live-function exit0 JSON; expected errors and rejected metadata leaves no blob assertion. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16310,11 +16582,27 @@
           "path": "skills/common/plugins/artifact-store/tests/package-boundary.test.mjs",
           "sha256": "fa88a4ad989aca346fb2bdab14779f2e0f46e933c15e9f060290cd45cf1c7a7e"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/artifact-store/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check native command adapter and descendant process-group termination.",
-      "scope": "Real Node children for exit/stdout/stderr/env-empty, deny policy, output/time/cancel/shutdown SIGKILL; direct unsandboxed filesystem-boundary rejection. Two /proc process tests exercise exited leader+descendants for timeout/abort/shutdown and8x3 descendant cleanup. No production command catalog acceptance. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/process-group.test.ts && node tests/process-group-exit.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real Node children for exit/stdout/stderr/env-empty, deny policy, output/time/cancel/shutdown SIGKILL; direct unsandboxed filesystem-boundary rejection. Two /proc process tests exercise exited leader+descendants for timeout/abort/shutdown and8x3 descendant cleanup. No production command catalog acceptance. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Linux /proc process visibility, signals/setsid detached process groups, writable temp, /bin/echo and executable Node. No native plugin-sandbox needed for selected direct invocation; boundary-bearing direct call must reject without sandbox.",
       "effects": "Creates kubeclaw-command-runner-*, command-exited-leader-*, command-group-exit-* fixtures, launches/kills actual descendant groups. Main live test removes temp at normal tail ONLY, so early failures retain root; per-adapter finally shutdown. Process regression tests finally kill own PIDs/groups/await cleanup then rm; never signal unrelated identities.",
       "expected": "package-boundary/live-function and both process tests exit0; actual shutdown SIGKILL, no live descendant at settlement, mode JSON and iterations8 descendant3 assertions. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16379,11 +16667,27 @@
           "path": "skills/common/plugins/command-runner/tests/process-group.test.ts",
           "sha256": "4c1489bc6b7d3f3716b010c6369db6e2dc8232b0e72d3b28cfe7956606fe84b7"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/command-runner/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual Git workspace/commit/sync/merge policy and partial sync disposition.",
-      "scope": "Real local bare origin+worktree commits/push/fetch/rebase/merge, selected index path and hooks suppression, source-moved/invalidref/path/symlink denial; injected executable shell programs exercise output/time/cancel/shutdown. Sync regression proves missing vs invalidref, literal path and completed partial update remains. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/sync-disposition.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real local bare origin+worktree commits/push/fetch/rebase/merge, selected index path and hooks suppression, source-moved/invalidref/path/symlink denial; injected executable shell programs exercise output/time/cancel/shutdown. Sync regression proves missing vs invalidref, literal path and completed partial update remains. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. /usr/bin/git, /usr/bin/env which git, /bin/sh and sleep plus writable executable temp/symlinks; inherited Git config can affect fixture init/commit, fixture specifies author where shown; no external Git remote.",
       "effects": "Creates kubeclaw-git-workspace-* local repos/bare origin/worktrees/scripts and git-sync-disposition-*; actual local commits/pushes change only owned temp Git. Main live removes root at normal tail, not outer finally, so failure retains; sync regression finally shutdown/rm. Adapter shutdown does not erase external/global Git caches/config.",
       "expected": "3 selected scripts exit0 JSON; live real Git assertions and sync missingDistinct/invalidRef/outputLimit/cancellation/partialSync/literalPath all true. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16440,11 +16744,27 @@
           "path": "skills/common/plugins/git-workspace/tests/sync-disposition.test.ts",
           "sha256": "be4295cfa7980404d9b738312405f7e1d685e330e5d2d1ed222efe30738e254f"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/git-workspace/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual network adapter HTTP and streaming/deadline/resource policy.",
-      "scope": "Real local GET/POST JSON/text, redirect/method/header/body/origin/cancel bounds; gzip decoding/exact128/chunked/declared/gzip size early close, headers/body timeout+abort reason and prompt response closure. No external endpoint acceptance. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node tests/streaming.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real local GET/POST JSON/text, redirect/method/header/body/origin/cancel bounds; gzip decoding/exact128/chunked/declared/gzip size early close, headers/body timeout+abort reason and prompt response closure. No external endpoint acceptance. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Loopback binding, Node HTTP/zlib, package cwd; no secret credentials.",
       "effects": "Local HTTP servers/timers/gzip streams and actual loopback requests; no fixture file writes. live finally adapter shutdown then server close; streaming finally closeAllConnections/server close; aggregate failure list asserted empty.",
       "expected": "live-function/package-boundary exit0 JSON, streaming per-case ok JSON and all cases asserted; no single synthetic passed response substitutes actual transport. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16481,11 +16801,27 @@
           "path": "skills/common/plugins/network-http/tests/streaming.test.ts",
           "sha256": "5732265d9df917410ad613816e9ce8ca179ac5d21392cec38d8bea7d1ab4934c"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/network-http/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check lifecycle/preview notification projections, parity and actual local delivery/replay.",
-      "scope": "Unit+manifest parity/suppression tests; real registry/observer->operator->network/secret adapters,3 loopback messages+0 replay, labels/reason/truncation/secret redaction/audit. Not Discord or production operator delivery. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/observer.unit.test.mjs && node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Unit+manifest parity/suppression tests; real registry/observer->operator->network/secret adapters,3 loopback messages+0 replay, labels/reason/truncation/secret redaction/audit. Not Discord or production operator delivery. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Loopback HTTP, GNU /usr/bin/flock --timeout + /bin/sh,/bin/cat, readable plugin roots and writable temp.",
       "effects": "Creates kubeclaw-notifications-* event/checkpoint/delivery/effect stores and actual loopback message POSTs; sets KUBECLAW_NOTIFICATION_TEST_TOKEN, finally shuts adapters/deletes that env variable (does not restore old value), closes server and removes root. Setup before try or cleanup error can retain.",
       "expected": "4 ordered scripts exit0 unit/parity/live-function/boundary JSON;3 unique delivered,0 replay, no raw secret in audit/effects and no artifact store assertion. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16534,11 +16870,27 @@
           "path": "skills/common/plugins/notification-observer/tests/parity.test.ts",
           "sha256": "975df180de9994abdd3b56546ca673782fd75b2c2985edfa6737abf1a7e0acba"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/notification-observer/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check agent-event hook normalization/subscription and rollback contract.",
-      "scope": "activateWithSdk uses in-memory injected sdk.on callbacks, not actual gateway; verifies allowed hook schema, identity fallback/redaction, emits real FileJournal, unsubscribe, unsupported hook and partial registration rollback. Boundary source regex separate. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.mjs\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "activateWithSdk uses in-memory injected sdk.on callbacks, not actual gateway; verifies allowed hook schema, identity fallback/redaction, emits real FileJournal, unsubscribe, unsupported hook and partial registration rollback. Boundary source regex separate. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Node/FileJournal dependencies, readable plugin roots/manifest, package cwd and writable temp. Actual FileJournal constructor/read/append requires executable GNU-compatible `/usr/bin/flock` supporting `--exclusive`, `--timeout` and `--conflict-exit-code`, with a Linux-compatible shared-file-description lock filesystem. Missing or incompatible utility blocks the test; injected SDK callbacks do not waive the native journal prerequisite.",
       "effects": "Creates kubeclaw-agent-events-* events journal; installs/releases in-memory subscriptions. Root removal occurs normal tail ONLY after assertions; no outer finally, so failures can retain journal/subscription state until process exit. The actual FileJournal creates persistent append-lock inode files inside its owned fixture and spawns `/usr/bin/flock` on shared fd3 for construction/read/append. The parent retains the kernel lock after the child exits and releases it by closing that descriptor in finally; acquire errors/timeout are failures, not successful skips. This FileMutex protocol is distinct from the durable-store sh/cat lock-holder.",
       "expected": "live-function then package-boundary exit0 JSON; released2/handlers0, delivery event and partialReleased1 assertions. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16583,11 +16935,27 @@
           "path": "skills/nova/core/state/file-mutex.ts",
           "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/openclaw-agent-events/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check clean observer build/generated contract and bounded service configuration/ingress behavior.",
-      "scope": "Actual TypeScript clean copied build/detached contract-source/missing source rejection; node --check build/sync; npm typecheck triggers pretypecheck sync-contract in REAL checkout; config/live/remediation use injected Redis client and diagnostic subscriber, verify flush/dedupe/queue/cycle/accessor/proxy/complexity. NO actual Redis or running gateway. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/clean-build.test.mjs && node --check scripts/build.mjs && node --check scripts/sync-contract.mjs && npm run typecheck && node tests/config.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node --test tests/remediation.test.ts\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Actual TypeScript clean copied build/detached contract-source/missing source rejection; node --check build/sync; npm typecheck triggers pretypecheck sync-contract in REAL checkout; config/live/remediation use injected Redis client and diagnostic subscriber, verify flush/dedupe/queue/cycle/accessor/proxy/complexity. NO actual Redis or running gateway. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Root locked TypeScript, @types/node/undici-types, canonical contracts/agent-observability/v1/src and writable package src/generated; package cwd, Node/npm, temp copy capacity. Redis service/credential not required by selected injected callbacks.",
       "effects": "Clean-build creates observer-clean-source-* copy and nested kubeclaw-observer-build-* output, compiles/copies dist within temp and removes root finally. REAL nested npm run typecheck pretypecheck deletes/recreates package src/generated/agent-observability from canonical source and leaves it; no restore. Actual build/sync scripts read source/write generated; --check only parses those scripts. Observer instances use in-memory Redis writes, stop explicitly/finally per test; no real Redis network.",
       "expected": "All lifecycle stages exit0; actual compiler emitted copied dist then missing canonical source fails as intended; config/live/boundary JSON and4 remediation TAP cases pass. Typecheck emits no declarations but generated contract write remains. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16680,11 +17048,27 @@
           "path": "skills/common/plugins/openclaw-agent-observer/tests/remediation.test.ts",
           "sha256": "28e8a17382c6f2201662cfab581e7ea0a64d6bb1a73c508ac050490b1f249031"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/openclaw-agent-observer/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "purpose": "Check actual local signed/confidential operator transport and durable retry/idempotency boundaries.",
-      "scope": "Real registry/runtime/network/secret integration on loopback for HMAC, Discord-shaped bodies, confidential endpoint, dedupe/redaction/midflight cancel/failure. Direct injected callbacks additionally test unresolved retry, capacity reservation and concurrent success wins. NO real external Discord or approval action. Exact package lifecycle from package cwd: {\"pretest\": null, \"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.mjs\", \"posttest\": null}. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
+      "scope": "Real registry/runtime/network/secret integration on loopback for HMAC, Discord-shaped bodies, confidential endpoint, dedupe/redaction/midflight cancel/failure. Direct injected callbacks additionally test unresolved retry, capacity reservation and concurrent success wins. NO real external Discord or approval action. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not an inferred no-effect child. Invoked from repository root through npm --prefix; nested scripts keep their native cwd/order.",
       "environment": "Prepared repository root with supported Node/npm and installed locked package dependencies; npm inherits caller environment/PATH and package lifecycle authority. Loopback HTTP, GNU /usr/bin/flock --timeout + /bin/sh,/bin/cat, plugin registry, Node Promise.withResolvers and writable durable temp.",
       "effects": "Creates operator-messaging-test-* delivery/direct/capacity/concurrent stores; sets two env token/endpoint values saving prior state; actual local message POSTs, timers/abort; direct callbacks injected. Finally adapter shutdown catch, server close, restores/deletes original env values and removes root, but prior cleanup rejection may interrupt later steps.",
       "expected": "live-function then package-boundary exit0 JSON; real signature/dedupe/redaction, connection cancellation failed receipt, capacitySends0 and concurrent outcomes assertions. First nonzero lifecycle/&& stage stops subsequent children; npm signal/error is not successful completion.",
@@ -16753,13 +17137,29 @@
           "path": "skills/common/plugins/operator-messaging/tests/package-boundary.test.mjs",
           "sha256": "1ea2ce16290cf8b38e1d062857d94310802502ac321614950f68e0e253f7131d"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/operator-messaging/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/common/plugins/redis-transport",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
       "purpose": "Check Redis publisher/telemetry adapter wire framing and package boundaries.",
-      "scope": "Actual local TCP receiver captures AUTH/EVAL/MAXLEN for publisher and telemetry; controlled secret callback, not a real Redis service. Exact npm lifecycle: {\"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.ts\"}. npm --prefix starts in skills/common/plugins/redis-transport; no absent pre/post hook is assumed.",
+      "scope": "Actual local TCP receiver captures AUTH/EVAL/MAXLEN for publisher and telemetry; controlled secret callback, not a real Redis service. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/common/plugins/redis-transport; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Loopback TCP bind and Node/npm dependencies; no Redis installation or production password. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing.",
       "effects": "Creates local TCP sockets and in-memory received strings. Finally shuts both adapters and server; sequential awaited shutdown can interrupt later cleanup. No external Redis writes. Ordered && scripts stop at first failure, without aggregate rollback.",
       "expected": "Two captured requests, expected stream/entry IDs and package-boundary assertions; each script emits ok:true. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -16778,13 +17178,24 @@
           "path": "skills/common/plugins/redis-transport/tests/package-boundary.test.ts",
           "sha256": "017922285ed4cd0e90f5dba92bf9f1532b67b1cc268438be120f8b5761a0834f"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/redis-transport/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/common/plugins/runtime-dispatch",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
       "purpose": "Check runtime dispatch authentication, collector recovery, budgets and result-path confinement.",
-      "scope": "Real Nova adapter stack calls a controlled loopback HTTP server returning synthetic gateway/collector responses; no actual model/subagent dispatch. Separate reliability test races real symlink replacement against repository/result readers and writer. Exact npm lifecycle: {\"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.mjs && node ../../../../tests/verification/reliability/repository-result-paths.test.mjs\"}. npm --prefix starts in skills/common/plugins/runtime-dispatch; no absent pre/post hook is assumed.",
+      "scope": "Real Nova adapter stack calls a controlled loopback HTTP server returning synthetic gateway/collector responses; no actual model/subagent dispatch. Separate reliability test races real symlink replacement against repository/result readers and writer. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/common/plugins/runtime-dispatch; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Writable repository .swarm/runtime-dispatch-test plus OS temp, loopback HTTP, Node fork/IPC, sh and Python3 with libc renameat2 exchange on a supporting Linux filesystem. Installed tokenizer dependencies and actual plugin registry are required. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates .swarm/runtime-dispatch-test/artifacts and gateway-artifacts/work results; synthetic secret env is deleted, adapters shut down, fixed fixture root removed in inner finally, HTTP server closed in outer finally. Path test forks Node and executes Python3 2000 rename exchanges, writes owned collector-paths-* files/symlinks and removes root after adapter shutdown. Early setup/awaited-cleanup failure can leave partial state; no actual gateway/model request. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Dispatch/HMAC/idempotency/terminal/model/budget/admission assertions, collector lossless result/recovery; path JSON outsideWrites:0 and concurrentAttempts:300 with some denials. All three selected scripts finish0. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -16827,13 +17238,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/runtime-dispatch/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/common/plugins/secret-resolver",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
       "purpose": "Check environment-only secret resolver allowlisting and cancellation.",
-      "scope": "Real resolver receives synthetic KUBECLAW_TEST_SECRET and empty variable; unknown/empty/cancelled requests fail. Package text check forbids pipeline coupling/console. Exact npm lifecycle: {\"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/common/plugins/secret-resolver; no absent pre/post hook is assumed.",
+      "scope": "Real resolver receives synthetic KUBECLAW_TEST_SECRET and empty variable; unknown/empty/cancelled requests fail. Package text check forbids pipeline coupling/console. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/common/plugins/secret-resolver; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm dependencies and access to controlled process environment; no production credential, network or external resolver. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing.",
       "effects": "Sets two synthetic environment variables in the test child and deletes both in finally before shutdown; does not restore preexisting same-named child values. No fixture files or external secret lookup in selected body. Ordered && scripts stop at first failure, without aggregate rollback.",
       "expected": "Expected private value returned only for mapped name; SECRET_DENIED/UNAVAILABLE/ADAPTER_CANCELLED assertions and both ok:true script records. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -16852,13 +17274,24 @@
           "path": "skills/common/plugins/secret-resolver/tests/package-boundary.test.mjs",
           "sha256": "8cb51a813070435a71785dd1613eeb479aea2c3f46bce0d698ec61abdefd0f4d"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/secret-resolver/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/common/plugins/state-store",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
       "purpose": "Check durable state append/read idempotency, bounds and namespace admission.",
-      "scope": "Real state-store adapter uses local records/store.json; controlled fence callback, not a multi-process fence test. Exact npm lifecycle: {\"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/common/plugins/state-store; no absent pre/post hook is assumed.",
+      "scope": "Real state-store adapter uses local records/store.json; controlled fence callback, not a multi-process fence test. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/common/plugins/state-store; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Writable OS temp filesystem supporting file modes and installed Node dependencies; no Redis service. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates kubeclaw-state-store-* and real durable records, tests mode0600, conflicting idempotency, size/path/cancellation errors. Finally awaits shutdown then recursively removes exactly its root; shutdown failure can prevent removal. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Two sequenced entries and duplicate suppression, named rejection assertions, source-boundary check and both scripts0/ok:true. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -16885,13 +17318,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/state-store/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/common/plugins/telemetry-observer",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
       "purpose": "Check telemetry observer subscription parity and redacted delivery projection.",
-      "scope": "For every declared subscription compare retries and controlled event fields; invoke telemetry.emit through capture callback; propagate sink crash. No actual durable sink or Redis. Exact npm lifecycle: {\"test\": \"node tests/parity.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/common/plugins/telemetry-observer; no absent pre/post hook is assumed.",
+      "scope": "For every declared subscription compare retries and controlled event fields; invoke telemetry.emit through capture callback; propagate sink crash. No actual durable sink or Redis. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/common/plugins/telemetry-observer; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm, readable plugin manifest and observer source; in-memory fixtures only. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing.",
       "effects": "Reads source/manifest, builds redacted objects and captured callback arrays; selected bodies create no files/listeners/remote deliveries. Synthetic sink failure is asserted. Ordered && scripts stop at first failure, without aggregate rollback.",
       "expected": "Parity, live-function and package-boundary JSON ok:true after redaction/retry/sink-error assertions; no delivery-storage result. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -16914,13 +17358,24 @@
           "path": "skills/common/plugins/telemetry-observer/tests/package-boundary.test.mjs",
           "sha256": "927a807043d570f908a61bd4b69fb5853656f320d896a8eadc7814baf24bf717"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/telemetry-observer/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/common/plugins/telemetry-store",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
       "purpose": "Check durable telemetry emission and lossless bounded projection.",
-      "scope": "Real file-backed telemetry store and FileResourceLockManager exercise secret-field projection, canonical log references and cycle/depth/node/byte rejection, then adapter/package checks. Exact npm lifecycle: {\"test\": \"node ../../../../tests/verification/integration/telemetry-store-projection.test.mts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/common/plugins/telemetry-store; no absent pre/post hook is assumed.",
+      "scope": "Real file-backed telemetry store and FileResourceLockManager exercise secret-field projection, canonical log references and cycle/depth/node/byte rejection, then adapter/package checks. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/common/plugins/telemetry-store; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Writable OS temp with file modes/locks and installed Node dependencies; no external telemetry service. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates telemetry-projection-* files, canonical diagnostic log, locks and exact-limit store plus separate kubeclaw-telemetry-store-* durable records. Selected projection never changes producer log. Finally shuts stores, releases lock and removes exact root; sequential cleanup failure can retain state. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Projection JSON persistence:real-file-store/fence:file-resource-lock, exact boundary accepted, invalid graphs not partially appended, store mode0600, duplicate suppression; all three scripts0. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -16955,13 +17410,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/telemetry-store/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/common/plugins/transport-publisher",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
       "purpose": "Check transport publisher configuration, authenticated delivery and durable retry boundaries.",
-      "scope": "Real loopback HTTP through Nova registry/adapter stack checks HMAC/idempotency/rejection/503; additional direct cases inject network/secret callbacks for retry, capacity, concurrent outcome and payload limit. Exact npm lifecycle: {\"test\": \"node tests/config-validation.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/common/plugins/transport-publisher; no absent pre/post hook is assumed.",
+      "scope": "Real loopback HTTP through Nova registry/adapter stack checks HMAC/idempotency/rejection/503; additional direct cases inject network/secret callbacks for retry, capacity, concurrent outcome and payload limit. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/common/plugins/transport-publisher; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm dependencies, loopback HTTP and writable OS temp; no remote transport endpoint or production signing key. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Sets synthetic KUBECLAW_TRANSPORT_TEST_KEY, creates transport-publisher-test-* plugins/schema/delivery stores; actual local HTTP requests for main stack, callbacks only for direct cases. Finally shuts adapters, asserts stopping, deletes env, closes server and removes root; pre-finally setup or awaited cleanup failure can leave files/listener. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Configuration validation and boundary checks plus main publication signature/duplicate/error and direct durable concurrency/capacity assertions; all3 script ok:true; not actual external receiver acceptance. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -16992,13 +17458,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/transport-publisher/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/common/plugins/wait-store",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
       "purpose": "Check durable wait creation/read, idempotency and trust validation.",
-      "scope": "Real wait store with parallel create, maximum key, expiry/issuer/kind/schema/cancellation/fence vectors; test corrupts stored wait with recomputed payload digest to prove read rejection. Exact npm lifecycle: {\"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/common/plugins/wait-store; no absent pre/post hook is assumed.",
+      "scope": "Real wait store with parallel create, maximum key, expiry/issuer/kind/schema/cancellation/fence vectors; test corrupts stored wait with recomputed payload digest to prove read rejection. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/common/plugins/wait-store; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Writable OS temp supporting mode0600 and installed Node dependencies; synthetic issuer only, no real human decision. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates kubeclaw-wait-store-* real record file, mutates owned fixture store for malformed-state negative; fence callbacks controlled. Finally shutdown then remove exact root, subject to awaited-cleanup failure. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Parallel requests yield one created wait, expected counts/0600, all named admission errors and source uses FileDurableRecordStore with sync; both scripts0/ok:true. Not an operator wait/resume rehearsal. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17025,13 +17502,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/common/plugins/wait-store/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/nova/plugins/architecture-validator",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
       "purpose": "Check architecture request/output protocol and approval-required fact projection.",
-      "scope": "Real local Nova pipeline/adapter stack receives controlled loopback architecture response; protocol vectors reject invalid scope/verdict; source boundary scan. Exact npm lifecycle: {\"test\": \"node tests/protocol.unit.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/nova/plugins/architecture-validator; no absent pre/post hook is assumed.",
+      "scope": "Real local Nova pipeline/adapter stack receives controlled loopback architecture response; protocol vectors reject invalid scope/verdict; source boundary scan. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/nova/plugins/architecture-validator; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm, writable OS temp and loopback HTTP; synthetic HMAC key, no actual architecture model or operator approval. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates kubeclaw-architecture-* journal/effect/artifact stores, sets/deletes synthetic env, starts HTTP server. Nested finally shuts adapters, closes server/removes root; setup/shutdown failure can retain partial state. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Pipeline succeeded with architecture.review=approval_required, persisted architecture-validation artifact, protocol rejection and package checks; every selected script0/ok:true, not a human decision. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17062,13 +17550,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/architecture-validator/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/nova/plugins/blueprint-sync",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
       "purpose": "Check blueprint control synchronization through native Git and durable stores.",
-      "scope": "Actual temporary Git repository branches/control file, native Git adapter sync/commit and Nova runner; no remote repository push. Exact npm lifecycle: {\"test\": \"node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/nova/plugins/blueprint-sync; no absent pre/post hook is assumed.",
+      "scope": "Actual temporary Git repository branches/control file, native Git adapter sync/commit and Nova runner; no remote repository push. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/nova/plugins/blueprint-sync; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm plus executable /usr/bin/git, writable temp/worktrees and working local Git fixture author configuration; no remote credential. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates kubeclaw-blueprint-sync-* repository/workspaces, commits initial and architecture branch, checks out main, then adapter sync makes real control commit plus state/artifact/journals. Finally adapter shutdown then removes root; initial Git setup occurs before finalizer and may retain failure state. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "FORGE.md becomes architecture content, final commit subject blueprint-sync, durable blueprint artifact/state present; live-function and boundary scripts0/ok:true. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17095,13 +17594,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/blueprint-sync/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/nova/plugins/buster-quality-gate",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
       "purpose": "Check Buster quality-gate protocol and reject caller-owned success before contact.",
-      "scope": "Protocol vectors and Ajv input-authority checks; real Nova stack rejects invalid graph before any HTTP request, not a successful Buster plan/provider execution. Exact npm lifecycle: {\"test\": \"node tests/protocol.test.ts && node tests/suite-first.test.ts && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/nova/plugins/buster-quality-gate; no absent pre/post hook is assumed.",
+      "scope": "Protocol vectors and Ajv input-authority checks; real Nova stack rejects invalid graph before any HTTP request, not a successful Buster plan/provider execution. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/nova/plugins/buster-quality-gate; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm+Ajv formats, Git on PATH, writable temp and loopback HTTP; generated local Ed25519 key/synthetic token only. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates kubeclaw-buster-quality-* Git repository/dist fixture/key and durable stores, local500 receiver; sets/deletes two synthetic env vars. Nested adapter shutdown then server close/root removal; early Git/setup or awaited cleanup failure may retain state. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Input schema rejects retired caller evidence, contacts stays0, protocol/failure-class checks and package required-capability checks all0/ok:true. No fresh actual suite run result. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17136,13 +17646,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/buster-quality-gate/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/nova/plugins/case-study",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
       "purpose": "Check case-study report source identity and draft narrative contract.",
-      "scope": "Protocol source-bundle vectors plus shared report-identity fixture runs actual compiled historical source, native Git/artifact history, authenticated controlled HTTP report responses, administrative reopen/replay and exact stored-report identity. No model execution/entailment proof. Exact npm lifecycle: {\"test\": \"node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts in skills/nova/plugins/case-study; no absent pre/post hook is assumed.",
+      "scope": "Protocol source-bundle vectors plus shared report-identity fixture runs actual compiled historical source, native Git/artifact history, authenticated controlled HTTP report responses, administrative reopen/replay and exact stored-report identity. No model execution/entailment proof. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/nova/plugins/case-study; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm, Git/project-source fixture support, writable OS temp and loopback HTTP; synthetic REPORT_TRANSPORT_PLATFORM_TOKEN. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Shared fixture creates report-identity-case-study-* with compiled source/history, native local Git/worktrees, journals/artifacts and controlled HTTP transport. Restores prior secret env, closes server and removes exact root in finally; receiver closures and source fixture cleanup remain sequential and can fail. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "First foreign execution response blocks, authorized native reopen succeeds, replay does not resend, second run yields exactly3 requests and two stored reports with verified-source-bundle/draft-not-entailment-verified. Protocol/boundary and shared live script all0. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17185,13 +17706,24 @@
           "path": "tests/verification/reliability/approval-source-fixture.mjs",
           "sha256": "9783832bafdaaf91d8d4095e39a9a9ee619c9ff95d48e805f8ed438943c91e99"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/case-study/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/nova/plugins/delivery-lint",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
       "purpose": "Check Dockerfile/static-delivery analysis and result/error classification.",
-      "scope": "Actual Nova runner with local repository/artifact adapters exercises COPY syntax/WORKDIR/multistage/variables and unsafe/missing paths, remediation outcomes and deliberately unusable artifact path. Does not build/container-run Dockerfile. Exact npm lifecycle: {\"test\": \"node tests/package-boundary.test.mjs && node tests/live-function.test.ts\"}. npm --prefix starts in skills/nova/plugins/delivery-lint; no absent pre/post hook is assumed.",
+      "scope": "Actual Nova runner with local repository/artifact adapters exercises COPY syntax/WORKDIR/multistage/variables and unsafe/missing paths, remediation outcomes and deliberately unusable artifact path. Does not build/container-run Dockerfile. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/nova/plugins/delivery-lint; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm, writable OS temp supporting actual artifact/journal files; Docker/daemon and live registry not required by selected body. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates kubeclaw-delivery-lint-* Dockerfile fixture repeatedly, real effects/events/artifact catalog and an intentionally directory-shaped store.json. Each runtime shuts adapters; outerfinally removes root. Failed awaited cleanup can retain state; no image build or deployment. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Passed/request_fix/blocked/retry outcomes match finite cases; crash core.plugin_runtime_failed and static_path_unverifiable exact reasons, catalog entries and source-boundary checks; both scripts0/ok:true. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17218,13 +17750,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/delivery-lint/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/nova/plugins/demo-handoff",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
       "purpose": "Check demo compiler, bounded TLS client and local handoff reconciliation lifecycle.",
-      "scope": "Exact package script returns to repository root and selects three .test.mts/.test.mjs bodies: compiler policy; real loopback TLS client; actual local Nova/Go-controller delivery, terminal and lost-response reconciliation. Remote build/deploy inputs remain contract vectors. Exact npm lifecycle: {\"test\": \"cd ../../../.. && node --test skills/nova/plugins/demo-handoff/tests/*.test.mts skills/nova/plugins/demo-handoff/tests/*.test.mjs\"}. npm --prefix starts in skills/nova/plugins/demo-handoff; no absent pre/post hook is assumed.",
+      "scope": "Exact package script returns to repository root and selects three .test.mts/.test.mjs bodies: compiler policy; real loopback TLS client; actual local Nova/Go-controller delivery, terminal and lost-response reconciliation. Remote build/deploy inputs remain contract vectors. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/nova/plugins/demo-handoff; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Supported locked Node/npm, Git/project-source fixture, OpenSSL req with addext, mkfifo/FIFO filesystem, Go compatible with root go.mod and loopback HTTP/TLS. Actual nested demo-auth Node test invokes original Go credential producer; inherited compiler/Go cache environment applies. No production cluster/model/Discord credentials. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates demo-compiler-*,demo-ready-client-*,nova-demo-handoff-* OS temp roots with Git/compiler/cert/key/token/FIFO/artifact/journal/intent files. Runs nested demo-auth Node child and Go TestNovaDemoHandoffProducerInterop with explicit fixture paths, starts local HTTP/TLS and synthetic secret env. Finalizers shut adapters, SIGTERM/await Go child, close connections and remove owned roots/env; sequential awaited failure can interrupt later cleanup. No real Discord send. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "All3 Node tests pass including child assertions and foreign/changed-artifact/receipt rejection; any nonzero/skip or count otherthan3passes STOP per demo guide. Historical OpenSSL ENOENT remains failure, not current execution. No human/live acceptance. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17271,13 +17814,24 @@
           "path": "cmd/buster-namespace-controller/demo-producer-interop_test.go",
           "sha256": "e39ea612f49e0ec0772a6d8a1b5f12015168ca2a4291312a93b6c8368e425399"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/demo-handoff/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/nova/plugins/human-approval",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
       "purpose": "Check human/architecture approval parsing, wait-before-notification and artifact trust.",
-      "scope": "Unit guidance/time/issuer checks; native file artifact architecture-approval test with controlled invocation; real local Nova wait-store/operator-messaging stack receives loopback notification, no actual human response. Exact npm lifecycle: {\"test\": \"node tests/package-boundary.test.mjs && node tests/approval.unit.test.mjs && node ../../../../tests/verification/integration/architecture-approval.test.mts && node tests/live-function.test.ts\"}. npm --prefix starts in skills/nova/plugins/human-approval; no absent pre/post hook is assumed.",
+      "scope": "Unit guidance/time/issuer checks; native file artifact architecture-approval test with controlled invocation; real local Nova wait-store/operator-messaging stack receives loopback notification, no actual human response. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/nova/plugins/human-approval; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm, writable temp and loopback HTTP, synthetic issuer/webhook key; no production operator or Discord credential. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates architecture-approval-* artifact root and kubeclaw-human-approval-* wait/delivery/effect/journal stores, HTTP server; restores previous synthetic secret and removes exactroot in finally; nested adapter shutdown and sequentialcleanup can leave partialstate onfailure. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Approved/rejected guidance makes no notification; pending creates durable wait before one signed local request; wrongissuer blocks, source/evidence ambiguity/change rejected. Allfour selected scripts0/ok:true, not human authorization. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17312,13 +17866,24 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/human-approval/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "id": "npm test --prefix skills/nova/plugins/implementation-agent",
       "procedure": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
       "purpose": "Check implementation protocol, real Git integration and uncertain-result retention.",
-      "scope": "Actual Nova stack uses loopback controlled HTTP worker that writes TypeScript/transcript and runs a Node smoke child; real local Git workspace create/commit/merge plus locked cleanup failure and lost response scenarios. No actual model call. Exact npm lifecycle: {\"test\": \"node tests/protocol.test.ts && node tests/package-boundary.test.mjs && node tests/live-function.test.ts\"}. npm --prefix starts in skills/nova/plugins/implementation-agent; no absent pre/post hook is assumed.",
+      "scope": "Actual Nova stack uses loopback controlled HTTP worker that writes TypeScript/transcript and runs a Node smoke child; real local Git workspace create/commit/merge plus locked cleanup failure and lost response scenarios. No actual model call. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts in skills/nova/plugins/implementation-agent; no absent pre/post hook is assumed.",
       "environment": "Invoke from repository root; npm and supported Node.js24 with current locked dependencies unless the selected procedure narrows further. Node/npm supporting TypeScript, sh and Git on PATH resolved to physical executable, writable OS temp/worktrees, loopbackHTTP; fixture-only secret. Child process inherits caller environment/PATH; a missing tool/input/assertion fails rather than silently passing. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates kubeclaw-implementation-* source/transcript/artifact/effect/journal and real Git repositories/worktrees; worker child executes local TS. Locked removal failure intentionally retains worktree and source revision; uncertain dispatch writes retained tree with no retry/remove. Outerfinally deletes env, closes HTTP and finally removes exact test root; these retained-within-fixture checks do not retain a production worktree. Early setup/awaited cleanup failure may leave root. Ordered && scripts stop at first failure, without aggregate rollback. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Protocol rejects invalid completion; initial smoke succeeds, locked cleanup remains succeeded with failed cleanup receipt; lost response blocks after1attempt while workspace and writes remain. All3 scripts0/ok:true; claimed check name not real unit-suite execution. Outcomes are derived from inspected Source, not a newly executed test.",
@@ -17349,11 +17914,22 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/implementation-agent/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "purpose": "Check lint stage/report contracts, configured discovery and registry completeness, ESLint discipline/type-evidence rules, and actual pre-check/full adapter outcomes, candidate revisions and cancellation.",
-      "scope": "Focused assertions precede actual local shell lint and remediation controls. These test fixture findings, denied paths, report corruption, failed artifact storage, timeouts and process termination; they do not certify the entire checkout or every configured linter. Exact lifecycle and selected nested npm script definitions from skills/nova/plugins/lint/package.json: {\"test\": \"npm run test:focused && npm run test:live\"}. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
+      "scope": "Focused assertions precede actual local shell lint and remediation controls. These test fixture findings, denied paths, report corruption, failed artifact storage, timeouts and process termination; they do not certify the entire checkout or every configured linter. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
       "environment": "Run npm test --prefix skills/nova/plugins/lint from the checkout, or npm test in that package. npm supplies the package cwd and executable path. Install locked workspace dependencies, ESLint, TypeScript, shellcheck, shfmt and Git; remediation also needs /bin/sleep and Linux /proc/process signalling. Inherited Git and tool configuration can affect subprocesses. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Writes owned temporary repositories, policies, artifact stores, journals and Git commits. ESLint-rule fixtures are also created inside this package src, and the report-contract test creates src/report-contract-hostile-fixture.json. Native ESLint/tsc/shell tools and Git execute; cancellation tests create TERM-resistant descendants and send signals. Individual finally blocks remove owned fixtures, stop adapters and kill known descendants. A process killed before finally can leave fixtures; no aggregate rollback is promised. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Each focused Node program and test:live must exit zero. Expected negative findings, crashes and blocked stages are asserted successes, not evidence that every linted source is clean. Any failed command stops the && chain; there is no package-wide success JSON beyond individual summaries.",
@@ -17422,11 +17998,22 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/lint/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "purpose": "Check report protocol/source-bundle binding and package boundaries, then actual authenticated local report transport, persisted identity and administrative replay.",
-      "scope": "The live fixture runs an actual bounded compiled source/Git prefix and a loopback reporting endpoint with deterministic responses. It rejects foreign execution identity, reopens a blocked attempt, checks replay and binds stored reports. It does not run a reviewer model or establish narrative entailment. Exact lifecycle and selected nested npm script definitions from skills/nova/plugins/pipeline-review/package.json: {\"test\": \"node tests/protocol.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
+      "scope": "The live fixture runs an actual bounded compiled source/Git prefix and a loopback reporting endpoint with deterministic responses. It rejects foreign execution identity, reopens a blocked attempt, checks replay and binds stored reports. It does not run a reviewer model or establish narrative entailment. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
       "environment": "Use npm test --prefix skills/nova/plugins/pipeline-review with installed workspace dependencies, a Node runtime able to load the selected TypeScript sources, native Git including /usr/bin/git for the shared fixture, a writable temporary directory and loopback ports. The helper temporarily sets and restores REPORT_TRANSPORT_PLATFORM_TOKEN and NOVA_SOURCE_APPROVAL_TEST_TOKEN. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates temporary Git repositories, branches/commits/workspaces, copied plugin installations, journals and content-addressed artifacts. Local HTTP handlers supply deterministic implementation and reporting results. The shared source prefix excludes lint, remote provider execution and LLM verdict quality. Owned servers close and temporary roots are removed in finally; interruption before cleanup can retain them. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Protocol, live transport and boundary commands must all exit zero. The first hostile report response is expected to block before an explicit administrative retry succeeds; duplicate administrative replay must not dispatch again. Printed live-function success explicitly says no model execution.",
@@ -17479,11 +18066,22 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/pipeline-review/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "purpose": "Check exact authored deliverable declarations, path and substep identity rules, package boundaries, and actual local Core preflight stage outcomes.",
-      "scope": "Exercises valid, missing, ambiguous, foreign and escaping FORGE declarations through the actual repository adapter and artifact store, including passed, request_fix and blocked results. It does not produce or deploy the declared application outputs. Exact lifecycle and selected nested npm script definitions from skills/nova/plugins/preflight-contract/package.json: {\"test\": \"node tests/package-boundary.test.mjs && node tests/declarations.unit.test.mjs && node tests/live-function.test.ts\"}. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
+      "scope": "Exercises valid, missing, ambiguous, foreign and escaping FORGE declarations through the actual repository adapter and artifact store, including passed, request_fix and blocked results. It does not produce or deploy the declared application outputs. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
       "environment": "Use npm test --prefix skills/nova/plugins/preflight-contract with installed workspace dependencies, TypeScript-capable Node and a writable temporary directory. Tests discover the current local plugin roots under an explicit test trust policy; no cluster or external agent credentials are required by the inspected harness. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates temporary module FORGE files, adapter artifact records and per-case event/effect journals. Starts local adapters and executes Core stages. The live fixture finally shuts down adapters and removes its owned temporary root; process interruption can leave partial files. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Package-boundary, declaration and live-function commands must each exit zero. Negative declaration cases are expected blocked/request_fix outcomes, and the test checks that actual artifact records were written; they are not a production preflight grant.",
@@ -17524,11 +18122,22 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/preflight-contract/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "purpose": "Check the design-not-required stage branch and actual local wait-store and baseline archive integrity contracts.",
-      "scope": "The package live test only invokes requiresDesign:false. The two integration children use real local wait/artifact storage and a generated one-pixel PNG to test wait identity/idempotence and archive digest, project, path and content rejection. They do not generate a design, call Prism services or accept visual quality. Exact lifecycle and selected nested npm script definitions from skills/nova/plugins/prism-design/package.json: {\"test\": \"node tests/live-function.test.ts && node ../../../../tests/verification/integration/prism-wait.test.mts && node ../../../../tests/verification/integration/prism-archive.test.mts\"}. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
+      "scope": "The package live test only invokes requiresDesign:false. The two integration children use real local wait/artifact storage and a generated one-pixel PNG to test wait identity/idempotence and archive digest, project, path and content rejection. They do not generate a design, call Prism services or accept visual quality. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
       "environment": "Use npm test --prefix skills/nova/plugins/prism-design with installed workspace dependencies including pngjs, TypeScript-capable Node and writable temporary storage. The integration child paths resolve from the package cwd; no production Prism endpoint, approval credential or render service is supplied. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates owned temporary wait records and content-addressed archive blobs, including deliberately invalid archives. Finally shuts down the wait adapter and removes owned roots. No inspected child starts an external service or modifies the repository source. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "All three commands must exit zero. requiresDesign:false must return passed with no artifacts; expected hostile archive/wait cases must reject. Success is a local contract result, not proof of the requiresDesign:true production lifecycle.",
@@ -17569,11 +18178,22 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/prism-design/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "purpose": "Check delivery manifests against actual local artifact storage, cumulative gate coverage and source/review bindings, plus package boundaries and missing-evidence behavior.",
-      "scope": "The integration stores explicit report/decision contract fixtures and checks summary acceptance and rejection. The live stage is expected to block without the required evidence. Neither test executes providers or an agent to obtain a genuine delivery verdict. Exact lifecycle and selected nested npm script definitions from skills/nova/plugins/project-summary/package.json: {\"test\": \"node ../../../../tests/verification/integration/project-summary.test.mjs && node tests/live-function.test.ts && node tests/package-boundary.test.mjs\"}. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
+      "scope": "The integration stores explicit report/decision contract fixtures and checks summary acceptance and rejection. The live stage is expected to block without the required evidence. Neither test executes providers or an agent to obtain a genuine delivery verdict. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
       "environment": "Use npm test --prefix skills/nova/plugins/project-summary with installed workspace dependencies, TypeScript-capable Node and writable temporary storage. Local plugin discovery uses an explicit test trust policy, not production installation approval. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates temporary content-addressed artifacts, metadata, effect journals and stage event journals. The integration starts and shuts down the artifact adapter; the live fixture starts Core adapters. Both remove owned temporary roots in finally. There is no deployment or remote model request in the inspected harness. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "All three commands must exit zero. Assertions include matching source and coverage, corrupt/foreign/missing evidence rejection and blocked missing-evidence stage without a store.json. A fixture passed decision remains an artifact-contract vector, not provider execution.",
@@ -17614,11 +18234,22 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/project-summary/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "purpose": "Check remote evidence projection and durable ownership/reopen behavior using an actual local demo authentication application and original importer/artifact adapters.",
-      "scope": "The five-line live-function command checks the activation export only. The subsequent evidence-projection test launches demo-auth-smoke-live.test.ts, which invokes a narrowly selected native Go controller credential test and uses an actual loopback session app. Remote plan/source terminal envelopes are explicit contract vectors, not native worker, image, cluster or Tailscale execution. Exact lifecycle and selected nested npm script definitions from skills/nova/plugins/remote-test-gate/package.json: {\"test\": \"node tests/live-function.test.ts && node --test tests/evidence-projection.test.ts\"}. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
+      "scope": "The five-line live-function command checks the activation export only. The subsequent evidence-projection test launches demo-auth-smoke-live.test.ts, which invokes a narrowly selected native Go controller credential test and uses an actual loopback session app. Remote plan/source terminal envelopes are explicit contract vectors, not native worker, image, cluster or Tailscale execution. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
       "environment": "Use npm test --prefix skills/nova/plugins/remote-test-gate with installed workspace dependencies, TypeScript-capable Node, Go (or KUBECLAW_DEMO_AUTH_TEST_GO), writable temporary storage and loopback ports. The child inherits environment except NODE_TEST_CONTEXT is removed. Optional KUBECLAW_DEMO_AUTH_TEST_TLS_ROOT selects local key.pem/cert.pem HTTPS; it is not a production endpoint. The package sets KUBECLAW_DEMO_AUTH_TEST_RESULT to its owned temporary auth.json. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Runs native Go test -count=1 for TestDemoAuthenticationCredentialProducer, generates credentials and starts a local HTTP/optional HTTPS session application. Writes temporary credential/result JSON, plugin fixture manifests/modules, imported result/evidence state, artifact blobs/records, effects and lock files; starts another loopback evidence server. Finally closes servers/adapters and removes owned roots. Go build/test cache can persist outside those roots. External executable or TLS overrides are caller authority and can alter effects. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Both commands must exit zero. Actual credential/session authentication must pass and bypass, wrong business data, redirects, malformed JSON, denied method, cancellation and foreign source cases must reject. Import reopen, foreign ownership and missing typed-link checks must pass. Printed vector outcomes are not deployment/live-cluster acceptance.",
@@ -17667,11 +18298,22 @@
           "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
           "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/remote-test-gate/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "purpose": "Check repository read boundaries, revision freezing/proofs, scoped manifests/inventories/references and physical path safety.",
-      "scope": "Uses actual temporary Git history and the real repository adapter to test reads, cancellation, symlink confinement, frozen revision ownership, source object/size checks and limit failures. freeze_head records a revision proof; it does not lock the repository against later commits. Exact lifecycle and selected nested npm script definitions from skills/nova/plugins/repository-adapter/package.json: {\"test\": \"node tests/package-boundary.test.mjs && node tests/live-function.test.ts && node tests/path-safety.test.ts\"}. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
+      "scope": "Uses actual temporary Git history and the real repository adapter to test reads, cancellation, symlink confinement, frozen revision ownership, source object/size checks and limit failures. freeze_head records a revision proof; it does not lock the repository against later commits. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
       "environment": "Use npm test --prefix skills/nova/plugins/repository-adapter with installed workspace dependencies, TypeScript-capable Node, native Git and a writable filesystem supporting symlinks. npm runs the scripts in the package directory. Git is used only against the fixture repository in the inspected harness.",
       "effects": "Creates a temporary repository, files/symlinks, Git configuration and multiple commits, including commits after freeze_head. The path-safety fixture renames its owned repository and substitutes a symlink to check refusal. Finally shuts down adapters and removes owned temporary roots; termination before finally can leave partial roots.",
       "expected": "All three commands must exit zero. Valid reads and exact frozen identities must match, while traversal, external/dangling links, replaced roots, wrong attempt/revision/object/size and exceeded limits must reject. Success does not certify an arbitrary production repository or freeze its writes.",
@@ -17704,11 +18346,22 @@
           "path": "docs/site/extend/developer-handbook.md",
           "sha256": "e4be792c6e013d11b066c6cb7f76d1e7a17327276654b6630a13e8b717d0b85d"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/repository-adapter/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [],
+        "order": [
+          "test"
+        ]
+      }
     },
     {
       "purpose": "Check review protocol, policy, budgets, source/evidence identity, reduction, verification, repository audit/revalidation and report encoding/storage contracts, including local Core/Git/HTTP integration.",
-      "scope": "npm test runs pretest audit/revalidation contracts, the ordered main suite (cluster contracts and schema checks first), coverage checks, then posttest report-encoding and a second portable live-function run. Native HTTP fixtures return deterministic review/verifier responses; they do not call a real model or prove review quality on production source. Exact lifecycle and selected nested npm script definitions from skills/nova/plugins/review/package.json: {\"pretest\": \"node tests/repository-audit-stage.unit.test.mjs && node tests/repository-revalidation.unit.test.mjs\", \"test\": \"npm run test:cluster && npm run schema:check && node tests/repository-review-profile.unit.test.mjs && node tests/review-prompt-budget.unit.test.mjs && node tests/review-quality-corpus.unit.test.mjs && node tests/review-snapshot-inventory.unit.test.mjs && node tests/review-map-artifacts.unit.test.mjs && node tests/review-fact-extractors.unit.test.mjs && node tests/review-graph.unit.test.mjs && node tests/review-scale-slicing.unit.test.mjs && node tests/scalable-review-topology.unit.test.mjs && node tests/scalable-review-jobs.unit.test.mjs && node tests/scalable-review-verification.unit.test.mjs && node tests/review-content-cache.unit.test.mjs && node tests/scalable-review-compiler.unit.test.mjs && node tests/review-governor.unit.test.mjs && node tests/review-report-contract.unit.test.mjs && node tests/review-report-builder.unit.test.mjs && node tests/simplification-contract.unit.test.mjs && node tests/simplification-miner.unit.test.mjs && node tests/simplification-manifest.unit.test.mjs && node tests/review-bundle-contract.unit.test.mjs && node tests/review-bundle-snapshot.unit.test.mjs && node tests/review-context-selection.unit.test.mjs && node tests/review-context-production.unit.test.mjs && node tests/review-slicing.unit.test.mjs && node tests/echo-review-output.unit.test.mjs && node tests/echo-review-verification.unit.test.mjs && node tests/review-proposal-preflight.unit.test.mjs && node tests/review-verification-reconciliation.unit.test.mjs && node tests/review-verdict-policy.unit.test.mjs && node tests/review-verified-findings.unit.test.mjs && node tests/review-policy-contract.unit.test.mjs && node tests/review-invariants.unit.test.mjs && node tests/review-policy-resolver.unit.test.mjs && node tests/review-policy-profiles.unit.test.mjs && node tests/review-reducer.unit.test.mjs && node tests/review-decision-matrix.unit.test.mjs && node tests/review-contract-parity.unit.test.mjs && node tests/review-evaluation-metadata.unit.test.mjs && node tests/review-stage-input.unit.test.mjs && node tests/review-stage-verification.unit.test.mjs && node tests/protocol.unit.test.mjs && node tests/stage.unit.test.mjs && node tests/live-function.test.ts && node --test tests/review-evidence-encoding-independent.test.mjs tests/review-evidence-live-locales.test.mjs tests/review-evidence-schema-independent.test.mjs && node tests/package-boundary.test.mjs && node tests/remediation.test.mjs && node tests/repository-review-io.test.ts && npm run test:coverage\", \"posttest\": \"npm run test:report-encoding\"}. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
+      "scope": "npm test runs pretest audit/revalidation contracts, the ordered main suite (cluster contracts and schema checks first), coverage checks, then posttest report-encoding and a second portable live-function run. Native HTTP fixtures return deterministic review/verifier responses; they do not call a real model or prove review quality on production source. The complete selected npm script declarations appear in the read-only definition below. npm --prefix starts at the package cwd; explicit cd/nested scripts preserve their native execution places. No absent hook is assumed.",
       "environment": "Use npm test --prefix skills/nova/plugins/review with installed workspace dependencies (including Ajv and tokenizer packages), TypeScript-capable Node, Git, writable temporary storage and loopback ports. Locale children require Node ICU support for the selected en-US/da-DK/tr-TR/sv-SE locales and set LANG/LC_ALL while removing NODE_TEST_CONTEXT. The live fixture sets and then deletes KUBECLAW_REVIEW_TEST_TOKEN in its child process. No production gateway/model credential is required by the inspected local harness. GNU-compatible `/usr/bin/flock` supporting `--exclusive --timeout`, executable `/bin/sh` and `/bin/cat`, and a compatible file-lock/durability filesystem are required by actual durable-store readiness/read/write. Missing or incompatible lock utility blocks this check.",
       "effects": "Creates temporary Git histories, journals, durable records/blobs, effect/lock stores and local HTTP/TCP servers, including a TCP endpoint that intentionally destroys connections to exercise uncertain dispatch. Locale tests spawn Node children, persist and truncate exact owned journal prefixes, write report/summary evidence and materialize current/historical source overlays with node_modules symlinks. Schema commands are invoked with --check and compare generated text without rewriting schemas. Finally blocks close adapters/servers and remove owned roots; they are not a transaction covering interruption or every subprocess before finally. Actual durable-store operations create lock/store state and spawn the native flock-to-sh/cat lock-holder; release is awaited. Lock/start/unlock failure remains a test failure, not a skip.",
       "expected": "Every pretest/main/posttest command must exit zero. Main && failures stop later main commands, and a failed test prevents successful lifecycle completion. Expected blocked, retry and reconciliation-required cases must remain expected negatives, not successful external review. TAP and per-suite summaries are local test outcomes; live-function explicitly reports nativeGatewayOrModelProof:false.",
@@ -18017,13 +18670,28 @@
           "path": "skills/nova/plugins/review/tests/review-cluster-identity.unit.test.mjs",
           "sha256": "4a82b4c61990c4a483fd3235d7d906ba00750d9a553930b51b8cdf19cfcf8b7d"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/review/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "pretest",
+          "test",
+          "posttest"
+        ],
+        "absentHooks": [],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     },
     {
       "id": "npm run test:focused --prefix skills/nova/plugins/lint",
       "procedure": "docs/site/extend/lint.md#proof-ladder",
       "purpose": "Check lint declarations, discovery, rule behavior, report integrity, adapter confinement and native remediation/cancellation regressions without running the separate pipeline live fixture.",
-      "scope": "Runs nine ordered Node commands: stage, package boundary, adapter boundary, discovery, registry lifecycle, ESLint discipline, ESLint type evidence, report contract and remediation. This focused selection still executes actual native tools; it is not a static-only check and does not run test:live. Exact declared standalone npm lifecycle: {\"cwd\": \"Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.\", \"script\": \"node tests/stage.unit.test.mjs && node tests/package-boundary.test.mjs && node tests/adapter-boundary.test.mjs && node tests/discovery.test.mjs && node tests/registry-lifecycle.test.mjs && node tests/eslint-discipline.test.mjs && node tests/eslint-type-evidence.test.mjs && node tests/report-contract.test.mjs && node --test tests/remediation.test.mjs\", \"preHook\": null, \"postHook\": null}. Null means no declared hook, not a generic no-effect guarantee.",
+      "scope": "Runs nine ordered Node commands: stage, package boundary, adapter boundary, discovery, registry lifecycle, ESLint discipline, ESLint type evidence, report contract and remediation. This focused selection still executes actual native tools; it is not a static-only check and does not run test:live. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not a generic no-effect guarantee. Execution place: Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.",
       "environment": "Use the prepared Node24/npm checkout with locked workspace dependencies. npm supplies node_modules/.bin for installed ESLint and TypeScript. Require Git, /bin/sleep, executable temporary files, symlink support, Linux /proc and process-group signalling for the remediation cases. No selected focused command requires shellcheck/shfmt merely because the separate live command does. Inherited PATH/Git configuration can affect native subprocesses.",
       "effects": "Creates temporary policies, repositories, symlinks, local Git commits and real ESLint/tsc processes. Two ESLint suites create transient directories inside package src; the report suite writes then removes src/report-contract-hostile-fixture.json. Remediation executes sleeps, output overflow, Git smudge and TERM-resistant descendants, then timeout/abort/shutdown signalling. Selected finally blocks remove fixtures and restore GIT_CONFIG_GLOBAL; interruption or cleanup failure can retain partial state. No cluster or remote model is selected.",
       "expected": "Every &&-joined command must exit zero and Node remediation TAP must have no failed subtests. The report-contract JSON must name hostileCases:8 and cleanup:true. Expected findings/errors/cancellation are asserted negatives, not a clean-source result. A nonzero command stops the focused chain and must not be hidden by later output; successful focus does not establish the separate live stage or deployed activation.",
@@ -18078,13 +18746,29 @@
           "path": "skills/nova/plugins/lint/tests/stage.unit.test.mjs",
           "sha256": "992df99a0639e628e482af18b8c5942da0c0fcbb67eb5439901469afffa58abd"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/lint/package.json",
+        "selectedScript": "test:focused",
+        "scriptNames": [
+          "test:focused"
+        ],
+        "absentHooks": [
+          "pretest:focused",
+          "posttest:focused"
+        ],
+        "order": [
+          "pretest:focused",
+          "test:focused",
+          "posttest:focused"
+        ]
+      }
     },
     {
       "id": "npm run test:live --prefix skills/nova/plugins/lint",
       "procedure": "docs/site/extend/lint.md#proof-ladder",
       "purpose": "Check actual local lint pre-check/full stages, granted executor capability, persisted artifact results and candidate-revision behavior through Core.",
-      "scope": "Runs only live-function.test.ts, not the preceding focused/remediation suite. Uses temporary shell fixtures with actual shellcheck/shfmt, local registry trust, pipeline stages, artifact-store crash cases and actual Git revisions. No deployed Nova pod, image contents or chart/runtime-config delivery is exercised. Exact declared standalone npm lifecycle: {\"cwd\": \"Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.\", \"script\": \"node tests/live-function.test.ts\", \"preHook\": null, \"postHook\": null}. Null means no declared hook, not a generic no-effect guarantee.",
+      "scope": "Runs only live-function.test.ts, not the preceding focused/remediation suite. Uses temporary shell fixtures with actual shellcheck/shfmt, local registry trust, pipeline stages, artifact-store crash cases and actual Git revisions. No deployed Nova pod, image contents or chart/runtime-config delivery is exercised. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not a generic no-effect guarantee. Execution place: Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.",
       "environment": "Use installed locked workspace dependencies and Node24/npm, shellcheck, shfmt and Git. Require actual GNU util-linux /usr/bin/flock supporting timeout/conflict flags for FileJournal and /bin/sh plus /bin/cat for the selected durable-store lock protocol, writable temporary durable storage and filesystem lock/fsync support. BusyBox flock is insufficient. The canonical target-image procedure must run this same command in the intended image; a host run does not establish that image result.",
       "effects": "Creates a temporary repository, shell/policy/baseline files, artifact metadata/blobs, event/effect/lock journals and actual local Git commits. Starts/shuts down Core adapters and native lint/lock subprocesses. Candidate checks read broken/fixed committed revisions while asserting the checkout and dirty working text remain unchanged. Finally removes the owned temporary root after adapter shutdown; setup or cleanup failure can leave partial files/processes.",
       "expected": "Exit zero and final JSON ok:true, suite:live-function with pass/fail/crash coverage for both stages/executor. Clean/fixed candidates must succeed, deliberate shell defects must block, and artifact-root crashes must report core.plugin_runtime_failed. Missing tools, startup/assertion errors or unexpected status are failed observations, not lint findings or successful skips. Zero is local Core integration, not deployed extension activation.",
@@ -18123,13 +18807,29 @@
           "path": "skills/nova/plugins/lint/tests/live-function.test.ts",
           "sha256": "69b9dee5f3ec9a007056b4316b2dc7549dc3b737a1941406d866156487efcc6c"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/nova/plugins/lint/package.json",
+        "selectedScript": "test:live",
+        "scriptNames": [
+          "test:live"
+        ],
+        "absentHooks": [
+          "pretest:live",
+          "posttest:live"
+        ],
+        "order": [
+          "pretest:live",
+          "test:live",
+          "posttest:live"
+        ]
+      }
     },
     {
       "id": "npm run test:domain --prefix skills/prism",
       "procedure": "docs/site/extend/platform/README.md#prism-command-routes",
       "purpose": "Check immutable Prism document operations, revision/descendant/duplicate/viewport rules and revision-storage round trips.",
-      "scope": "Runs only domain.test.mts and domain-storage.test.mts. The first reads a canonical document fixture and performs in-memory operations; the second migrates a fresh embedded PGlite database with pgvector and exercises real RevisionRepository transactions/restore. It is not native PostgreSQL, every domain algorithm, the full Prism suite or a deployed service. Exact declared standalone npm lifecycle: {\"cwd\": \"Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.\", \"script\": \"node --test tests/domain.test.mts tests/domain-storage.test.mts\", \"preHook\": null, \"postHook\": null}. Null means no declared hook, not a generic no-effect guarantee.",
+      "scope": "Runs only domain.test.mts and domain-storage.test.mts. The first reads a canonical document fixture and performs in-memory operations; the second migrates a fresh embedded PGlite database with pgvector and exercises real RevisionRepository transactions/restore. It is not native PostgreSQL, every domain algorithm, the full Prism suite or a deployed service. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not a generic no-effect guarantee. Execution place: Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.",
       "environment": "Use Node24/npm and installed locked Prism/contract dependencies, including @electric-sql/pglite and @electric-sql/pglite-pgvector. Both selected tests read the canonical minimal-web fixture. No DATABASE_URL, external PostgreSQL server, browser, model, cluster or production credential is supplied by these tests.",
       "effects": "Reads source/fixture files, creates and mutates a fresh embedded in-memory PGlite database, then closes it in the domain-storage finally block. Domain operations assert the input object is unchanged. No application artifact directory or production database is selected. A setup failure is not a skipped test.",
       "expected": "Node TAP must report all selected tests passing and exit zero, including expected stale/descendant/duplicate rejection and revision history/restore assertions. Zero qualifies these document/embedded-storage fixtures only; do not count it as production database/restore or design approval.",
@@ -18160,13 +18860,29 @@
           "path": "skills/prism/tests/domain.test.mts",
           "sha256": "908b10cb397e3646c5f8d9a594d38e8dfa97e3bd9345628a42569b7736149b33"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/prism/package.json",
+        "selectedScript": "test:domain",
+        "scriptNames": [
+          "test:domain"
+        ],
+        "absentHooks": [
+          "pretest:domain",
+          "posttest:domain"
+        ],
+        "order": [
+          "pretest:domain",
+          "test:domain",
+          "posttest:domain"
+        ]
+      }
     },
     {
       "id": "npm run test:storage --prefix skills/prism",
       "procedure": "docs/site/extend/platform/README.md#prism-command-routes",
       "purpose": "Check Prism migration ordering/admission, revision persistence/restore, artifact byte round trips and Control session trust/signature/expiry contracts.",
-      "scope": "Runs storage.test.mts and control.test.mts only. Storage uses fresh embedded PGlite+pgvector plus explicit query-recording migration callbacks; the Control child checks local session functions, not a listening Control server. These do not exercise native PostgreSQL or every storage/backup quota. Exact declared standalone npm lifecycle: {\"cwd\": \"Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.\", \"script\": \"node --test tests/storage.test.mts tests/control.test.mts\", \"preHook\": null, \"postHook\": null}. Null means no declared hook, not a generic no-effect guarantee.",
+      "scope": "Runs storage.test.mts and control.test.mts only. Storage uses fresh embedded PGlite+pgvector plus explicit query-recording migration callbacks; the Control child checks local session functions, not a listening Control server. These do not exercise native PostgreSQL or every storage/backup quota. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not a generic no-effect guarantee. Execution place: Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.",
       "environment": "Use Node24/npm, locked Prism/contract/PGlite/pgvector dependencies, readable migration/document fixtures and writable OS temporary storage with supported artifact link/fsync semantics. No external DATABASE_URL or service/browser/cluster credential is selected.",
       "effects": "Executes SQL and schema migration on fresh embedded databases; alters local test schema/index/migration metadata to exercise duplicate archival and creates repository revision data. Writes a content-addressed baseline blob under a newly allocated prism-artifacts-* temporary root. That test has no rm of this root, so the artifact fixture remains after normal completion. Databases close at normal tails, not all inside finally; early failure can retain resources. Control session tests create only in-memory signed tokens.",
       "expected": "All selected Node TAP tests must pass and exit zero. Expected duplicate/stale revision, untrusted ingress, invalid signature and expiry errors must reject. Zero is selected embedded-storage/session-contract evidence, not native PostgreSQL, backup recovery, production authentication or an approved baseline update.",
@@ -18201,13 +18917,29 @@
           "path": "skills/prism/tests/storage.test.mts",
           "sha256": "e0c946d29a52a75c8488582659582600ce7da317910a8811576897d0fd84cca0"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/prism/package.json",
+        "selectedScript": "test:storage",
+        "scriptNames": [
+          "test:storage"
+        ],
+        "absentHooks": [
+          "pretest:storage",
+          "posttest:storage"
+        ],
+        "order": [
+          "pretest:storage",
+          "test:storage",
+          "posttest:storage"
+        ]
+      }
     },
     {
       "id": "npm run build:studio --prefix skills/prism",
       "procedure": "docs/site/extend/platform/README.md#prism-command-routes",
       "purpose": "Generate the current Prism contract validators and compile the Studio web bundle.",
-      "scope": "Ordinary npm lifecycle runs prebuild:studio before Vite build. It is a writing build, not test:studio, not a server, not browser acceptance and not a release/deployment. Exact declared standalone npm lifecycle: {\"cwd\": \"Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.\", \"script\": \"vite build --config studio/vite.config.ts\", \"preHook\": \"node ../../contracts/prism/v1/scripts/generate-validators.mjs\", \"postHook\": null}. Null means no declared hook, not a generic no-effect guarantee.",
+      "scope": "Ordinary npm lifecycle runs prebuild:studio before Vite build. It is a writing build, not test:studio, not a server, not browser acceptance and not a release/deployment. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not a generic no-effect guarantee. Execution place: Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.",
       "environment": "Use Node24/npm and locked workspace dependencies including Ajv2020/ajv-formats, Vite7.3.6, its React plugin and Studio imports. Require readable canonical schemas and write access to contracts/prism/v1/src and skills/prism/dist-studio. Standard npm lifecycle must remain enabled to include the declared prebuild; disabling scripts changes this command boundary.",
       "effects": "Prebuild reads four canonical schemas and overwrites contracts/prism/v1/src/validators.generated.mjs after standalone-code/CSP checks. Vite builds from studio and empties/replaces ../dist-studio. These are real persistent checkout writes with no rollback or cleanup on later build failure. This form runs no Playwright/browser and starts no service.",
       "expected": "Prebuild and Vite must both exit zero and Vite must produce the selected Studio distribution. A generator/import/compiler failure is nonzero; partial validator/build writes may remain. Successful compilation does not establish page behavior, authentication, deployment or a real design flow.",
@@ -18250,13 +18982,29 @@
           "path": "skills/prism/studio/vite.config.ts",
           "sha256": "523f55894f9562a6c0f3bb2816ad9ab6e5a0538e7fbd7cf8d535f876a42d2ee5"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/prism/package.json",
+        "selectedScript": "build:studio",
+        "scriptNames": [
+          "prebuild:studio",
+          "build:studio"
+        ],
+        "absentHooks": [
+          "postbuild:studio"
+        ],
+        "order": [
+          "prebuild:studio",
+          "build:studio",
+          "postbuild:studio"
+        ]
+      }
     },
     {
       "id": "npm run test:studio --prefix skills/prism",
       "procedure": "docs/site/extend/platform/README.md#prism-command-routes",
       "purpose": "Check Studio adapter/preview contract assertions and the selected actual Chromium UI and asset/error interactions.",
-      "scope": "Runs studio-adapter Node tests, then Playwright with studio/playwright.config.mjs. The config selects every test under studio/tests, including studio.spec.mjs and remediation.spec.mjs, across desktop/phone/tablet projects. Desktop/mobile cases have explicit project-dependent skips. This standalone test does NOT run build:studio or prebuild, unlike the root verify:prism:studio compound. Exact declared standalone npm lifecycle: {\"cwd\": \"Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.\", \"script\": \"node --test tests/studio-adapter.test.mts && playwright test --config studio/playwright.config.mjs\", \"preHook\": null, \"postHook\": null}. Null means no declared hook, not a generic no-effect guarantee.",
+      "scope": "Runs studio-adapter Node tests, then Playwright with studio/playwright.config.mjs. The config selects every test under studio/tests, including studio.spec.mjs and remediation.spec.mjs, across desktop/phone/tablet projects. Desktop/mobile cases have explicit project-dependent skips. This standalone test does NOT run build:studio or prebuild, unlike the root verify:prism:studio compound. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not a generic no-effect guarantee. Execution place: Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.",
       "environment": "Use locked Node24/npm, @playwright/test and Chromium/native browser libraries. Main config uses its fixed /ms-playwright Chromium headless-shell path if present, otherwise the installed Playwright browser. Identify the server on 127.0.0.1:4190: Playwright may reuse it or launch npm run dev:studio. Prepare the actual current dist-studio separately because selected remediation tests serve that bundle. Require writable Playwright output/temp directories, loopback ports and artifact link/fsync support. No live Control/PostgreSQL/OpenClaw/model or cluster is supplied by the local fixtures.",
       "effects": "Reads Studio source/CSS/fixtures for Node assertions, launches browser processes/contexts and possibly a Vite development server, or reuses an existing server it does not own. Writes test-runner outputs and may write Vite cache state. Included remediation beforeAll creates temporary artifact storage and an ephemeral local HTTP server serving actual dist-studio and synthetic session/document endpoints; afterAll closes that server and removes its owned storage. Runner-managed browser/server cleanup is not an aggregate rollback; reused servers and build artifacts remain.",
       "expected": "Both Node and Playwright phases must exit zero. Retain the real pass/fail/declared project-skip summary; declared desktop/mobile skips are not missing-tool skips. UI changes, stale/missing dist, wrong/reused server content, unavailable browser or fixture errors are failed observations. Zero proves only the selected local assertions, not production Control authentication or deployed Studio acceptance.",
@@ -18307,13 +19055,29 @@
           "path": "skills/prism/tests/studio-adapter.test.mts",
           "sha256": "66516bd0b2eb7ce460ab29c3f54edd59746e499f15a6d0891a8850476f3220e3"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/prism/package.json",
+        "selectedScript": "test:studio",
+        "scriptNames": [
+          "test:studio"
+        ],
+        "absentHooks": [
+          "pretest:studio",
+          "posttest:studio"
+        ],
+        "order": [
+          "pretest:studio",
+          "test:studio",
+          "posttest:studio"
+        ]
+      }
     },
     {
       "id": "npm run typecheck --prefix skills/prism",
       "procedure": "docs/site/extend/platform/README.md#prism-command-routes",
       "purpose": "Check TypeScript types for the files selected by Prism tsconfig.",
-      "scope": "Runs only tsc --noEmit using skills/prism/tsconfig.json, extending the root base config and including **/*.ts and **/*.mts. It does not execute those runtime/test files, generate validators, build Studio or launch native Worker/services. Exact declared standalone npm lifecycle: {\"cwd\": \"Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.\", \"script\": \"tsc --noEmit\", \"preHook\": null, \"postHook\": null}. Null means no declared hook, not a generic no-effect guarantee.",
+      "scope": "Runs only tsc --noEmit using skills/prism/tsconfig.json, extending the root base config and including **/*.ts and **/*.mts. It does not execute those runtime/test files, generate validators, build Studio or launch native Worker/services. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not a generic no-effect guarantee. Execution place: Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.",
       "environment": "Use the root-lockfile selected TypeScript5.9.3 and installed workspace/type dependencies in the prepared Node24/npm checkout. npm supplies its executable path. Source, generated imports and inherited base tsconfig must be available; no production env secret or service is needed merely for type checking.",
       "effects": "Reads selected TypeScript/config/type/dependency files and prints diagnostics. Current selected configuration has noEmit:true and no incremental/build mode; this form does not write JavaScript/declarations, regenerate validator source, start processes beyond the compiler or run tests. No package pretypecheck/posttypecheck hook is declared.",
       "expected": "tsc must exit zero with no type errors. Nonzero or a missing compiler/import is a failed static check. Zero is not runtime behavior, browser or service readiness and does not imply the package test suite passed.",
@@ -18340,13 +19104,29 @@
           "path": "tsconfig.base.json",
           "sha256": "edf7efcc1466d14a9f436dffe1134ca81561333d91f4660b08e5ec33e92b148d"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/prism/package.json",
+        "selectedScript": "typecheck",
+        "scriptNames": [
+          "typecheck"
+        ],
+        "absentHooks": [
+          "pretypecheck",
+          "posttypecheck"
+        ],
+        "order": [
+          "pretypecheck",
+          "typecheck",
+          "posttypecheck"
+        ]
+      }
     },
     {
       "id": "npm run test:studio-remediation --prefix skills/prism",
       "procedure": "docs/site/extend/platform/README.md#prism-command-routes",
       "purpose": "Check canonical Studio node round trips, real preview asset integrity/cancellation, and production-bundle iframe navigation/error remediation in Chromium.",
-      "scope": "Runs studio-roundtrip and preview-assets Node files, then nested npm run build:studio (including prebuild:studio), then Playwright selecting only remediation.spec.mjs. It is distinct from the main desktop/phone/tablet suite and does not invoke a production Control or authentication service. Exact declared standalone npm lifecycle: {\"cwd\": \"Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.\", \"script\": \"node --test tests/studio-roundtrip.test.mts tests/preview-assets.test.mts && npm run build:studio && playwright test --config studio/playwright-remediation.mjs\", \"preHook\": null, \"postHook\": null}. Null means no declared hook, not a generic no-effect guarantee.",
+      "scope": "Runs studio-roundtrip and preview-assets Node files, then nested npm run build:studio (including prebuild:studio), then Playwright selecting only remediation.spec.mjs. It is distinct from the main desktop/phone/tablet suite and does not invoke a production Control or authentication service. The complete selected npm script declarations appear in the read-only definition below. Null means no declared hook, not a generic no-effect guarantee. Execution place: Invoke from repository root; npm --prefix selects the named package as script cwd. Relative selected paths are package-relative.",
       "environment": "Use Node24/npm and locked Prism/contracts/Ajv/Vite/React/Playwright dependencies, installed Chromium/native libraries, writable contract validator/dist-studio/test-output/temp paths and loopback ports. The remediation config uses Playwright default Chromium; it does not inherit the main config managedChrome override or its 4190 webServer. Its spec starts its own ephemeral HTTP fixture. Preserve ordinary npm lifecycle hooks for the nested validator build.",
       "effects": "Node round trips use in-memory fixture transformations. Preview-assets writes an owned temporary content-addressed PNG, starts real local HTTP, sets/deletes child-global location, requests real bytes and exercises abort/oversize/corruption; finally closes connections and removes storage. Nested build persistently overwrites generated validators and replaces dist-studio without rollback. Playwright starts browsers and its own artifact-backed local server, serves actual compiled bundle with fixture session/document replies, and removes owned temp storage/server in afterAll. Test-runner outputs and build artifacts remain; early failure can leave partial state.",
       "expected": "All ordered phases must exit zero; first Node/build failure stops later phases. Preserve TAP and actual Playwright results for iframe image load/pagination and denied/corrupt/oversize asset alerts. There is no successful skip for missing browser/build inputs. Zero qualifies these local production-bundle interactions, not real Control auth, deployed service security, all UI behavior or an approved design.",
@@ -18425,13 +19205,29 @@
           "path": "skills/prism/tests/studio-roundtrip.test.mts",
           "sha256": "b0b51706623cd9427514e485f0173b9ef3bd4c130fd4b71828dde5612467409c"
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "skills/prism/package.json",
+        "selectedScript": "test:studio-remediation",
+        "scriptNames": [
+          "test:studio-remediation"
+        ],
+        "absentHooks": [
+          "pretest:studio-remediation",
+          "posttest:studio-remediation"
+        ],
+        "order": [
+          "pretest:studio-remediation",
+          "test:studio-remediation",
+          "posttest:studio-remediation"
+        ]
+      }
     },
     {
       "id": "npm test --prefix tools/ops-mcp",
       "procedure": "docs/site/extend/developer-handbook.md#change-ops-mcp",
       "purpose": "Check Ops MCP authentication, local HTTP/TLS transport, Kubernetes read limits, Hubble diagnostic handling and bootstrap command routing without contacting a real cluster.",
-      "scope": "The package selects seven test/*.test.mjs files: authentication, bootstrap, diagnostics, http, hubble, kubernetes and local. Tests use actual spawned local MCP servers and HTTP/TLS sockets, injected executable Hubble output programs, and a migration script whose kubectl and python3 commands are replaced by owned call-logging fixtures. The separate policy_contract_test.py is not selected. These tests do not establish real cluster/RBAC, Hubble relay, external MCP connection or production readiness. Exact declared npm lifecycle in tools/ops-mcp cwd: {\"pretest\": null, \"test\": \"node --test test/*.test.mjs\", \"posttest\": null}. No declared pretest/posttest hook.",
+      "scope": "The package selects seven test/*.test.mjs files: authentication, bootstrap, diagnostics, http, hubble, kubernetes and local. Tests use actual spawned local MCP servers and HTTP/TLS sockets, injected executable Hubble output programs, and a migration script whose kubectl and python3 commands are replaced by owned call-logging fixtures. The separate policy_contract_test.py is not selected. These tests do not establish real cluster/RBAC, Hubble relay, external MCP connection or production readiness. The complete selected npm script declarations appear in the read-only definition below. No declared pretest/posttest hook.",
       "environment": "Run from the prepared repository root as npm test --prefix tools/ops-mcp; npm selects tools/ops-mcp cwd and the independent package dependencies/lockfile. Use the documented Node24/npm host (package minimum Node22), installed @modelcontextprotocol/node and server, Hono and Zod dependencies, writable executable temporary storage and loopback HTTP/TLS ports. Require real OpenSSL req supporting -x509 -newkey rsa:2048 -nodes -days -keyout -out -subj and -addext, plus Bash, /usr/bin/env and Node on PATH for generated fixtures. No real kubectl, python3, Hubble binary, cluster token or production certificate is needed by the selected replacement/absent-token fixtures. Child servers inherit caller environment except explicit overrides/deletions; conflicting inherited Ops authentication, namespace, origin or TLS settings can fail setup and are not a supported skip.",
       "effects": "Creates temporary bearer/token rotation files, self-signed private keys/certificates, fake executable Hubble/kubectl/python3 programs and migration call logs. Spawns native Node MCP server children on 127.0.0.1 with port0, actual OpenSSL children, actual Bash migration and owned Node Hubble fixture children; sends real local HTTP/TLS/MCP traffic. Credential-unavailable get_pod stops at its explicitly absent token file. Hubble tests force their own binary, including output-limit/nonzero/timeout children. Migration apply/cleanup goes only to the fake PATH-selected loggers; it does not invoke the real kubectl API. t.after/finally remove owned roots and stop children/servers; some child cleanup signals SIGTERM without awaiting exit. Setup/cleanup failure or interruption can leave processes/files, and no aggregate rollback is promised.",
       "expected": "Node --test must exit zero with all seven files completing their selected assertions; preserve the actual TAP failures, setup errors and child diagnostics. Absent/weak bearer must refuse listening, rotation and namespace rejection must remain explicit, the unavailable Kubernetes read must report an error while tools/list and health remain usable, local TLS must reject wrong host/CA/redirect/oversize/timeout, and Hubble lost/partial/nonzero/byte-limit/timeout observations must not become complete success. Bootstrap logs must show the custom namespace route. Zero is this package-local contract result, not real cluster or external tool readiness.",
@@ -18540,7 +19336,23 @@
           "bytes": 186431,
           "lines": 2379
         }
-      ]
+      ],
+      "scriptDefinitions": {
+        "manifest": "tools/ops-mcp/package.json",
+        "selectedScript": "test",
+        "scriptNames": [
+          "test"
+        ],
+        "absentHooks": [
+          "pretest",
+          "posttest"
+        ],
+        "order": [
+          "pretest",
+          "test",
+          "posttest"
+        ]
+      }
     }
   ]
 }

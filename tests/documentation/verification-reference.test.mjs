@@ -5,6 +5,8 @@ import path from 'node:path';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import test from 'node:test';
+import { parseFragment } from 'parse5';
+import { renderReaderMarkdown } from '../../scripts/docs-reader/renderer.mjs';
 import {
   loadVerificationGuidance, renderVerificationResponsibilities, verificationGuidancePath,
 } from '../../scripts/lib/docs-verification-reference.mjs';
@@ -152,4 +154,51 @@ test('opted-in detached meaning roots use the invoking checkout Git bytes withou
   fs.writeFileSync(path.join(detached, verificationGuidancePath), JSON.stringify(guidance));
   assert.throws(() => loadVerificationGuidance(detached, f.deploy, revision, f.root),
     /does not match committed revision/u);
+});
+
+
+test('native HTML preserves paired command globs and Markdown delimiters as executable text', t => {
+  const f = fixture(t);
+  const command = String.raw`node --test fixtures/*.test.mjs fixtures/*.test.mts --label '[a]_b~c' --value '\*'` + ' --literal "```"';
+  f.guidance.npm[0].command = command;
+  f.write('package.json', JSON.stringify({scripts: {'probe:check': command}}));
+  f.save();
+  const page = renderVerificationResponsibilities(loadVerificationGuidance(f.root, f.deploy), 'a'.repeat(40));
+  const targets = ['reference/cli.md', 'reference/workflows.md', 'use/operate.md', 'use/recovery.md', 'use/example.md', 'extend/testing.md'];
+  const routes = new Map(targets.map(target => [target, '/' + target.replace(/\.md$/u, '.html')]));
+  const {html} = renderReaderMarkdown(page, 'reference/verification-commands.md', routes, new Set());
+  const text = node => node.nodeName === '#text' ? node.value : (node.childNodes ?? []).map(text).join('');
+  const commands = [];
+  function visit(node) {
+    if (node.nodeName === 'pre') commands.push(text(node).replace(/\n$/u, ''));
+    for (const child of node.childNodes ?? []) visit(child);
+  }
+  visit(parseFragment(html));
+  assert.deepEqual(commands, [command]);
+});
+
+
+test('selected script definitions bind actual manifest values, order and explicit absent hooks', t => {
+  const f = fixture(t);
+  f.guidance.routes[0].sources.push({path: 'package.json', sha256: createHash('sha256')
+    .update(fs.readFileSync(path.join(f.root, 'package.json'))).digest('hex')});
+  const definition = {manifest: 'package.json', selectedScript: 'probe:check',
+    scriptNames: ['probe:check'], absentHooks: ['preprobe:check', 'postprobe:check'],
+    order: ['preprobe:check', 'probe:check', 'postprobe:check']};
+  f.guidance.routes[0].scriptDefinitions = definition; f.save();
+  const loaded = loadVerificationGuidance(f.root, f.deploy);
+  assert.equal(loaded.routes[0].resolvedScriptDefinitions, JSON.stringify({
+    'preprobe:check': null, 'probe:check': 'node receiver.mjs', 'postprobe:check': null}, null, 2));
+  assert.match(renderVerificationResponsibilities(loaded, 'a'.repeat(40)), /```text\n\{\n/u);
+  for (const changed of [
+    {...definition, manifest: 'receiver.mjs'},
+    {...definition, manifest: 'missing/package.json'},
+    {...definition, selectedScript: 'missing', scriptNames: ['missing']},
+    {...definition, scriptNames: ['probe:check', 'probe:check']},
+    {...definition, order: ['probe:check', 'extra']},
+    {...definition, absentHooks: ['probe:check']},
+  ]) {
+    f.guidance.routes[0].scriptDefinitions = changed; f.save();
+    assert.throws(() => loadVerificationGuidance(f.root, f.deploy), /script definition/u);
+  }
 });

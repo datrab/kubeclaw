@@ -89,6 +89,31 @@ export function loadVerificationGuidance(root, deploy, revision, sourceGitRoot =
           throw new Error(`verification guidance source changed: ${source.path}; requalify its command meanings`);
         }
       }
+      if (row.scriptDefinitions !== undefined) {
+        const definition = row.scriptDefinitions;
+        if (!definition || !row.sources.some(source => source.path === definition.manifest)
+            || !/(?:^|\/)package\.json$/u.test(definition.manifest)
+            || typeof definition.selectedScript !== 'string'
+            || !Array.isArray(definition.scriptNames) || !Array.isArray(definition.absentHooks)
+            || !Array.isArray(definition.order)
+            || [...definition.scriptNames, ...definition.absentHooks, ...definition.order]
+              .some(name => typeof name !== 'string' || !name)) {
+          throw new Error(`verification script definition source is invalid: ${row.id}`);
+        }
+        const declared = JSON.parse(fs.readFileSync(path.join(root, definition.manifest), 'utf8')).scripts;
+        if (!declared || typeof declared !== 'object' || Array.isArray(declared)
+            || !definition.scriptNames.includes(definition.selectedScript)
+            || new Set(definition.scriptNames).size !== definition.scriptNames.length
+            || new Set(definition.absentHooks).size !== definition.absentHooks.length
+            || definition.scriptNames.some(name => !Object.hasOwn(declared, name) || typeof declared[name] !== 'string')
+            || definition.absentHooks.some(name => ![`pre${definition.selectedScript}`, `post${definition.selectedScript}`].includes(name)
+              || Object.hasOwn(declared, name))) {
+          throw new Error(`verification script definition selection changed: ${row.id}`);
+        }
+        sameIdentities(definition.order, [...definition.scriptNames, ...definition.absentHooks], 'script definition');
+        Object.defineProperty(row, 'resolvedScriptDefinitions', { value: JSON.stringify(Object.fromEntries(
+          definition.order.map(name => [name, Object.hasOwn(declared, name) ? declared[name] : null])), null, 2) });
+      }
     }
   }
   return guidance;
@@ -102,15 +127,32 @@ const labels = {
   owner: 'Owner', changeToCheck: 'When this changes',
 };
 
+function definitionBlock(value) {
+  let width = 3;
+  for (const match of String(value).matchAll(/`+/gu)) width = Math.max(width, match[0].length + 1);
+  const fence = '`'.repeat(width);
+  return `${fence}text\n${value}${String(value).endsWith('\n') ? '' : '\n'}${fence}`;
+}
+
 function renderEntry(row, family, index, revision) {
   const invocation = family === 'npm' ? `npm run ${row.id}` : row.id;
-  const commandRows = family === 'npm' ? [['Underlying command', `<code>${literal(row.command)}</code>`]] : [];
+  const command = family === 'npm'
+    ? `\n\nUnderlying command definition. This is source data, not an instruction to run it.\n\n${definitionBlock(row.command)}` : '';
   const sources = row.sources.map(source =>
     `[${literal(source.path)}](https://github.com/datrab/kubeclaw/blob/${revision}/${source.path})`).map(link => `- ${link}`).join('\n');
   const procedure = ['guide', 'route'].includes(family) && row.procedure
     ? `\n\nFollow the [complete guide procedure](../${row.procedure.replace(/^docs\/site\//u, '')}).` : '';
+  let declarations = '';
+  if (row.scriptDefinitions !== undefined) {
+    if (typeof row.resolvedScriptDefinitions !== 'string') throw new Error('script definitions require the authenticated loader');
+    const cwd = path.posix.dirname(row.scriptDefinitions.manifest);
+    declarations = `\n\nDeclared npm script definitions. The selected package cwd is <code>${literal(cwd)}</code>.\n`
+      + 'These are literal source declarations, not configuration examples or successful execution. Null marks an absent selected lifecycle hook.\n\n'
+      + definitionBlock(row.resolvedScriptDefinitions);
+  }
   return `### ${family}-${index + 1}: ${literal(invocation)}${procedure}\n\n`
-    + table(['Responsibility', 'Contract'], [...commandRows, ...fields.map(field => [labels[field], row[field]])])
+    + table(['Responsibility', 'Contract'], fields.map(field => [labels[field], row[field]]))
+    + command + declarations
     + `\n\nImplementation evidence:\n\n${sources}\n`;
 }
 
