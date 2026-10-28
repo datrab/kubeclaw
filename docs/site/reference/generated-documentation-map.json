@@ -48731,7 +48731,7 @@
             "source": "skills/common/plugins/artifact-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "23fcb167dd0f66d254006f3dc0a099d60bd4b752739c67426c06ab4e3d4d34ff"
+            "factsSha256": "08cabda99d3bce5c4efa3ccf1a12fadcd577d6ed2de2153bff10f1908bda26fb"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fartifact-store%2Fschemas%2Fconfig.schema.json:%24.maxArtifactBytes:%5B%5D",
@@ -48745,14 +48745,14 @@
             "source": "skills/common/plugins/artifact-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8a205f67347a686d51d0678e7a684f7e2b8c13f5127b845107d3a3ef3f8f139c"
+            "factsSha256": "cb3798dd627f14f30dc9710bf212d88690694502562b84d827a33cffca7d475e"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fartifact-store%2Fschemas%2Fconfig.schema.json:%24.maximumStoreBytes:%5B%5D",
             "source": "skills/common/plugins/artifact-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "c2ed8f2f7fe4c2ce36269a3654ded03b970e646cef8d25dc55c5a007e7197d69"
+            "factsSha256": "4fd0f91a01eb411df232f7407ee348c3a9080c1d4271be5e86d8b62669f22639"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fcommand-runner%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -49207,21 +49207,21 @@
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "bb12e826d26aab31602d280de8ece9a60262a5adb6c27336d70ebe34192a3016"
+            "factsSha256": "714041bcbe007ca3c93a5d526f7cbe9ef0cdd9b7312baace77c6bff246814f31"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.maximumDeliveryBytes:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "fbb661ed1f3e6f36c17993156e9dc7cf820bec018d3cd6e9c156821a13076f53"
+            "factsSha256": "d1297ba1709b4b4f7ccaa517a57e046827b8e2bcdea8a04364e3c2b3a32e9921"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.maximumDeliveryRecords:%5B%5D",
             "source": "skills/common/plugins/operator-messaging/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "0dab4d36475fb7b0ef7f77c6485bdd08ddedfae9ac55ded64f0821216e5c82d2"
+            "factsSha256": "525901f51c1ce8d7b0956dc094e8ff1f43e4b8b3377b04dd70ec1d900f73660d"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Foperator-messaging%2Fschemas%2Fconfig.schema.json:%24.targets:%5B%5D",
@@ -49725,28 +49725,28 @@
             "source": "skills/common/plugins/state-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "0f7be297c63ab316b82ac325534bb1e6d2ac6125b744b5386579400adf7e444c"
+            "factsSha256": "4e14e634ce50de79a7c4b1039d3c8fbe96698326fa8d7e2a03019f21a0e4fa0c"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fstate-store%2Fschemas%2Fconfig.schema.json:%24.maximumRecords:%5B%5D",
             "source": "skills/common/plugins/state-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "b1f22c2aaf5e1522f1f54ab3f5aa62586c1d4edb2bbdf98024845944f4bea8fb"
+            "factsSha256": "b3d3559c2c17c6a9752cf1b0ca0d5067ffda56dbf2e232c6ac227d48dc33f7e8"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fstate-store%2Fschemas%2Fconfig.schema.json:%24.maximumStoreBytes:%5B%5D",
             "source": "skills/common/plugins/state-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ab6adac916f7b7b8bc077a2d7a5b5e54cc77548f7cd41134aaf30dc0cb816d08"
+            "factsSha256": "00264069c381e9066732f09d9815c4ddf9b2837c96965d286d0b1a4f41dbbe98"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fstate-store%2Fschemas%2Fconfig.schema.json:%24.root:%5B%5D",
             "source": "skills/common/plugins/state-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "e832de4351b8771ec1a1d0694fe20a970e3e21faa4c5b4c854534f810098d163"
+            "factsSha256": "2cdf86eddf73b2f0a27a70690eafa6e42c94907577f2116e174bc82ca8b40e65"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftelemetry-observer%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -49767,28 +49767,28 @@
             "source": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "31d91a44a611cfa5c6464c606ce28b7b83e40239bf3874d0bd4112397b1b8588"
+            "factsSha256": "0649b124e02a53dcd8fb64dce4771da47c9f49bf85adc2f759335cee41b0432f"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftelemetry-store%2Fschemas%2Fconfig.schema.json:%24.maximumStoreBytes:%5B%5D",
             "source": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "68292825188a2f37476c292fab7a35d8b718baa1b4c79245244c8df2565fd6ac"
+            "factsSha256": "882cced65f588d6243a5de48cabe9a001c668d810f51f3d73ad9eddac568d1c3"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftelemetry-store%2Fschemas%2Fconfig.schema.json:%24.maxRecordBytes:%5B%5D",
             "source": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "a255b8a75ebc6dacc2c88386411a01d447ba8a9308ebe4d26d24f976a3e290b6"
+            "factsSha256": "7691d85bae3a4cae987ef249e9fd42317353d7d2b0e75817e0be80459d853b1c"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftelemetry-store%2Fschemas%2Fconfig.schema.json:%24.root:%5B%5D",
             "source": "skills/common/plugins/telemetry-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "2da3add71cfff706bfb04977803c6ada7df45ff0ced0288ea577724db04d05c4"
+            "factsSha256": "c63f3689cc5e4bb0eefc1ea6d83dbdcc64b3b318718e28a0f126773a4c8f36d0"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftransport-publisher%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -49802,21 +49802,21 @@
             "source": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "c4955bac3885c6a06b5b1d53ef39b0d536bbafb03e7680fda71597d99ac08890"
+            "factsSha256": "897030bfdd61d750a44b297bee359536078be3a936a929520556415f6a224307"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftransport-publisher%2Fschemas%2Fconfig.schema.json:%24.maximumDeliveryBytes:%5B%5D",
             "source": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "af7be04740998cfd5e1f42f1083129c2ad4bb3d3d3065733706bf9aecaf25d92"
+            "factsSha256": "5ba72aa224dd69840726f9ea928363589bf34e51cea38f50e61442a08ff681ee"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftransport-publisher%2Fschemas%2Fconfig.schema.json:%24.maximumDeliveryRecords:%5B%5D",
             "source": "skills/common/plugins/transport-publisher/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "18e9ca97e3b3b6615ca6aa33036b63ddeb53e61af31fa6362096e5da568b6457"
+            "factsSha256": "f8847b896def92e7b0df328eccefb7bbada9c0e6a8a128c0b0fc2878745d71de"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Ftransport-publisher%2Fschemas%2Fconfig.schema.json:%24.targets:%5B%5D",
@@ -49865,28 +49865,28 @@
             "source": "skills/common/plugins/wait-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "517c90a1a57bd569fd672cea0fd58f8da2a7d892bad2608fbc74432b12114a8b"
+            "factsSha256": "0ed59f21e5a24e26821c32fef6928ae81940f244779328bb25df3df23bdccbb0"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fwait-store%2Fschemas%2Fconfig.schema.json:%24.maximumRecords:%5B%5D",
             "source": "skills/common/plugins/wait-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "c9b9aa992eed3ff38df043e718f40c60254c42220fed151adca963497776d8a6"
+            "factsSha256": "3d70488d82bf35dd9609d8ef1a3065ca349e48dd040ffe9835439a3b8b5b8981"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fwait-store%2Fschemas%2Fconfig.schema.json:%24.maximumStoreBytes:%5B%5D",
             "source": "skills/common/plugins/wait-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "fe26673821ffdbd23e04659cae864abb2917e9739c8df872812c5fbc60cfff42"
+            "factsSha256": "1c4b26b2a6ac04345d10208d150ddd40123363e9a58ea14734b36b82661ca248"
           },
           {
             "sourceId": "configuration-schema:skills%2Fcommon%2Fplugins%2Fwait-store%2Fschemas%2Fconfig.schema.json:%24.root:%5B%5D",
             "source": "skills/common/plugins/wait-store/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ecaa5ed59378105a8fe6419a4cf6325f66ad7bc5843de35c2f54647ec125ff09"
+            "factsSha256": "d2cf5c80733fa070bf126a315886fb94add5b341cb0a6ff08918387f516774eb"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Farchitecture-validator%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -50201,21 +50201,21 @@
             "source": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "93cd75f504b849bc60cdab929606001c92650a0cefa7e0d8fd572899a640451e"
+            "factsSha256": "d1db6e4ea7b72a4e4f115b3dff5b29a9b68957f90edbaf0bf874ee4f40ee4666"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fpipeline-review%2Fschemas%2Fevidence-config.schema.json:%24.maximumBundleBytes:%5B%5D",
             "source": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "ad7ec8971214cb3641044004acee947196942ad2b5f59b8a0950f639d24519f1"
+            "factsSha256": "beb65c463446382b992bebccb28b425514e3c6d6669c4fbcf7c8c3c0f0978cbe"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fpipeline-review%2Fschemas%2Fevidence-config.schema.json:%24.maximumJournalBytes:%5B%5D",
             "source": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "8155524d86e222fcac0070697921bbf48b9fcf44b978e12cfdf53e607b9786ae"
+            "factsSha256": "a07186aa31cac8db97d392505a1add2aa52503461bb9ab1b5409ec318eea2d73"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fpipeline-review%2Fschemas%2Fevidence-config.schema.json:%24.orchestratorIssuerId:%5B%5D",
@@ -50229,7 +50229,7 @@
             "source": "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "f2163a54361d3dd9e7ad9c73034853b665b836126aafbe20787e7b7a627f58b5"
+            "factsSha256": "aa67d5453ca3ed66f7e39a65a94ac4066ca0b85ae64fa8e1b99c023600a409d5"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fpreflight-contract%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
@@ -50397,7 +50397,7 @@
             "source": "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "b289188aa615ac45d1314765089c3847f290c718aaaa1a45249a981a40a24329"
+            "factsSha256": "cb00119fd71d19669d3797d8ae83d90dd6f033b718ac229bfd2d8de8f3dabe3f"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fremote-test-gate%2Fschemas%2Fconfig.schema.json:%24.tokenSecret:%5B%22allOf%5B0%5D%22%2C%22else%22%2C%22not%22%5D",
@@ -50432,21 +50432,21 @@
             "source": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "47fded2af1fc947b9027b8d3ba3e2017b75fa9f0805af6c5d20c510c523837de"
+            "factsSha256": "519c1945261df7f7bd4e1eee3bb07bd2b7f1599ad759b2df9df42d3461e573b1"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fremote-test-gate%2Fschemas%2Fevidence-config.schema.json:%24.manifestStageId:%5B%5D",
             "source": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "9347b4635ee0b4cb3410fe272333d9ba8517fb47c0b858e8bbbd944ca5f50a7d"
+            "factsSha256": "c3b49f0c819ea7b1221d6a1732734d206d8c5b59a7ec65c0a10092f5c128d599"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Fremote-test-gate%2Fschemas%2Fevidence-config.schema.json:%24.stateRoot:%5B%5D",
             "source": "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "f4e06739c510d71fb7af9a03b8cfa35846ac350c65de93368b7ad96f8f6afe70"
+            "factsSha256": "118f138541f1ee3d7d2b249c2ad5103d5893f6b4f3d412416a09c12b200f272c"
           },
           {
             "sourceId": "configuration-schema:skills%2Fnova%2Fplugins%2Frepository-adapter%2Fschemas%2Fconfig.schema.json:%24:%5B%5D",
