@@ -3541,6 +3541,307 @@ function webProviderTargetRules(authorityPath, fieldPath) {
 }
 
 function schemaRuntimeValidationRules(authorityPath, field) {
+  const durableConfigurationRule = {
+  "skills/common/plugins/state-store/schemas/config.schema.json::$.root": {
+    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with state root is required. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "evidence": [
+      "skills/common/plugins/state-store/src/adapter.ts:27",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
+    ]
+  },
+  "skills/common/plugins/wait-store/schemas/config.schema.json::$.root": {
+    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with root is required. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "evidence": [
+      "skills/common/plugins/wait-store/src/adapter.ts:189",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
+    ]
+  },
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.root": {
+    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with root is required. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "evidence": [
+      "skills/common/plugins/telemetry-store/src/adapter.ts:6",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
+    ]
+  },
+  "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.deliveryRoot": {
+    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with OPERATOR_CONFIG_INVALID:deliveryRoot. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "evidence": [
+      "skills/common/plugins/operator-messaging/src/adapter.ts:69",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
+    ]
+  },
+  "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.deliveryRoot": {
+    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with TRANSPORT_CONFIG_INVALID:deliveryRoot. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "evidence": [
+      "skills/common/plugins/transport-publisher/src/adapter.ts:197",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
+    ]
+  },
+  "skills/nova/plugins/remote-test-gate/schemas/config.schema.json::$.stateRoot": {
+    "accepted": "Native configuration resolves a nonempty supplied string with path.resolve. allowedRepositoryRoots applies to separate repository inputs, not to confinement of this state root. Access remains subject to process identity and filesystem permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
+    "failure": "Non-string or empty root rejects native configuration with REMOTE_TEST_GATE_CONFIG_INVALID. Native path.resolve accepts relative root against processcwd; allowedRepositoryRoots constrain different repository inputs, not this state root.",
+    "evidence": [
+      "skills/nova/plugins/remote-test-gate/src/adapter.ts:45"
+    ]
+  },
+  "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json::$.stateRoot": {
+    "accepted": "Activation requires a nonempty string of at most 2048 characters, an absolute path, and path.normalize(root) equal to the supplied root. Invocation requires fs.realpathSync(root) to equal the supplied root. Imported records and blobs use its imports child. The schema nonempty-string rule alone does not express these native conditions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
+    "failure": "text(value) rejects non-string/empty/length>2048 with DEMO_EVIDENCE_INVALID. An absolute normalized root is required at activation or DEMO_EVIDENCE_STORE_INVALID; invocation compares actual fs.realpathSync(root) to root. Native filesystem lookup can fail; no successful evidence import/read inferred.",
+    "evidence": [
+      "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:53",
+      "skills/nova/core/test-gates/remote-result-import.ts:96"
+    ]
+  },
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.storageRoot": {
+    "accepted": "Activation checks the string type; the required nonempty schema rule still applies. Snapshot selection additionally requires an absolute root. Its existing path components must be directories and not symbolic links. This is selection-time source admission, not an extra activation-time absolute-path check.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
+    "failure": "Activation validates type alongside issuer/budgets with REPORT_READER_CONFIG_INVALID; it does not itself reject all relative strings. Snapshot invocation calls readRunEvidence, whose selection rejects nonabsolute root with RUN_EVIDENCE_SELECTION_INVALID and root traversal rejects symlink/non-directory with RUN_EVIDENCE_ROOT_INVALID. Preserve exact timing of rejection.",
+    "evidence": [
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:16",
+      "skills/nova/core/state/read-run-evidence.ts:50",
+      "skills/nova/core/state/read-run-evidence.ts:158",
+      "skills/nova/core/state/read-run-evidence.ts:198",
+      "skills/nova/core/execution/run-root.ts:62"
+    ]
+  },
+  "skills/common/plugins/state-store/schemas/config.schema.json::$.maxEntryBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maxEntryBytes is invalid. A stored record payload above the limit fails with STATE_ENTRY_SIZE_EXCEEDED. Separate record-count and serialized-store limits still apply.",
+    "evidence": [
+      "skills/common/plugins/state-store/src/adapter.ts:29",
+      "skills/common/plugins/state-store/src/adapter.ts:32",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/state-store/schemas/config.schema.json::$.maximumRecords": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. A matching idempotent existing record is handled before the new-record count check; existing byte and per-record bounds remain.",
+    "evidence": [
+      "skills/common/plugins/state-store/src/adapter.ts:30",
+      "skills/common/plugins/state-store/src/adapter.ts:33",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/state-store/schemas/config.schema.json::$.maximumStoreBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL; reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
+    "evidence": [
+      "skills/common/plugins/state-store/src/adapter.ts:31",
+      "skills/common/plugins/state-store/src/adapter.ts:34",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/wait-store/schemas/config.schema.json::$.maxEntryBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maxEntryBytes is invalid. A stored record payload above the limit fails with WAIT_ENTRY_SIZE_EXCEEDED. Separate record-count and serialized-store limits still apply.",
+    "evidence": [
+      "skills/common/plugins/wait-store/src/adapter.ts:191",
+      "skills/common/plugins/wait-store/src/adapter.ts:194",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/wait-store/schemas/config.schema.json::$.maximumRecords": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. A matching idempotent existing record is handled before the new-record count check; existing byte and per-record bounds remain.",
+    "evidence": [
+      "skills/common/plugins/wait-store/src/adapter.ts:192",
+      "skills/common/plugins/wait-store/src/adapter.ts:195",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/wait-store/schemas/config.schema.json::$.maximumStoreBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL; reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
+    "evidence": [
+      "skills/common/plugins/wait-store/src/adapter.ts:193",
+      "skills/common/plugins/wait-store/src/adapter.ts:196",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maxRecordBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maxRecordBytes is invalid. A stored record payload above the limit fails with TELEMETRY_RECORD_SIZE_EXCEEDED. Separate record-count and serialized-store limits still apply.",
+    "evidence": [
+      "skills/common/plugins/telemetry-store/src/adapter.ts:8",
+      "skills/common/plugins/telemetry-store/src/adapter.ts:11",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106",
+      "skills/common/plugins/telemetry-store/src/projection.ts:19",
+      "skills/common/plugins/telemetry-store/src/projection.ts:90"
+    ]
+  },
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maximumRecords": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. A matching idempotent existing record is handled before the new-record count check; existing byte and per-record bounds remain.",
+    "evidence": [
+      "skills/common/plugins/telemetry-store/src/adapter.ts:9",
+      "skills/common/plugins/telemetry-store/src/adapter.ts:12",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maximumStoreBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL; reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
+    "evidence": [
+      "skills/common/plugins/telemetry-store/src/adapter.ts:10",
+      "skills/common/plugins/telemetry-store/src/adapter.ts:13",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:85",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:90",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryRecords": {
+    "accepted": "The schema requires an integer with minimum 1. Native configuration additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Native configuration rejects an invalid positive-safe-integer limit with OPERATOR_CONFIG_INVALID:maximumDeliveryRecords. A new append exceeding the configured count or serialized-store byte allowance fails with DURABLE_RECORD_STORE_FULL. Existing bounded reads and fixed per-record limits remain separate.",
+    "evidence": [
+      "skills/common/plugins/operator-messaging/src/config.ts:91",
+      "skills/common/plugins/operator-messaging/src/config.ts:92",
+      "skills/common/plugins/operator-messaging/src/config.ts:93",
+      "skills/common/plugins/operator-messaging/src/config.ts:96",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:88",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:92",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Native configuration additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Native configuration rejects an invalid positive-safe-integer limit with OPERATOR_CONFIG_INVALID:maximumDeliveryBytes. A new append exceeding the configured count or serialized-store byte allowance fails with DURABLE_RECORD_STORE_FULL. Existing bounded reads and fixed per-record limits remain separate.",
+    "evidence": [
+      "skills/common/plugins/operator-messaging/src/config.ts:91",
+      "skills/common/plugins/operator-messaging/src/config.ts:92",
+      "skills/common/plugins/operator-messaging/src/config.ts:93",
+      "skills/common/plugins/operator-messaging/src/config.ts:96",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:88",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:92",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryRecords": {
+    "accepted": "The schema requires an integer with minimum 1. Native configuration additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Native configuration rejects an invalid positive-safe-integer limit with TRANSPORT_CONFIG_INVALID:maximumDeliveryRecords. A new append exceeding the configured count or serialized-store byte allowance fails with DURABLE_RECORD_STORE_FULL. Existing bounded reads and fixed per-record limits remain separate.",
+    "evidence": [
+      "skills/common/plugins/transport-publisher/src/adapter.ts:92",
+      "skills/common/plugins/transport-publisher/src/adapter.ts:93",
+      "skills/common/plugins/transport-publisher/src/adapter.ts:43",
+      "skills/common/plugins/transport-publisher/src/adapter.ts:45",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:88",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:92",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Native configuration additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
+    "failure": "Native configuration rejects an invalid positive-safe-integer limit with TRANSPORT_CONFIG_INVALID:maximumDeliveryBytes. A new append exceeding the configured count or serialized-store byte allowance fails with DURABLE_RECORD_STORE_FULL. Existing bounded reads and fixed per-record limits remain separate.",
+    "evidence": [
+      "skills/common/plugins/transport-publisher/src/adapter.ts:92",
+      "skills/common/plugins/transport-publisher/src/adapter.ts:93",
+      "skills/common/plugins/transport-publisher/src/adapter.ts:43",
+      "skills/common/plugins/transport-publisher/src/adapter.ts:45",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:88",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:92",
+      "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106"
+    ]
+  },
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumJournalBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Activation additionally requires a positive safe integer, at most 9007199254740991. The schema minimum alone does not establish that native upper bound.",
+    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are required; no omission fallback is selected.",
+    "failure": "Native activation rejects a non-positive or unsafe budget with REPORT_READER_CONFIG_INVALID. The selected events file uses this allowance; the snapshot and effects readers use the remaining allowance. Legacy run discovery has its own bounded selection logic; do not infer one overall I/O execution limit.",
+    "evidence": [
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:22",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:33",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:37",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:44",
+      "skills/nova/core/state/read-run-evidence.ts:198",
+      "skills/nova/core/state/read-run-evidence.ts:207",
+      "skills/nova/core/state/read-run-evidence.ts:223"
+    ]
+  },
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumArtifactBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Activation additionally requires a positive safe integer, at most 9007199254740991. The schema minimum alone does not establish that native upper bound.",
+    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are required; no omission fallback is selected.",
+    "failure": "Native activation rejects a non-positive or unsafe budget with REPORT_READER_CONFIG_INVALID. The adapter sums selected artifact sizes and rejects an invalid or over-budget aggregate with REPORT_ARTIFACT_BUDGET_EXCEEDED. Exact source and artifact identity checks remain independent.",
+    "evidence": [
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:22",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:33",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:37",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:44",
+      "skills/nova/core/state/read-run-evidence.ts:198",
+      "skills/nova/core/state/read-run-evidence.ts:207",
+      "skills/nova/core/state/read-run-evidence.ts:223"
+    ]
+  },
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumBundleBytes": {
+    "accepted": "The schema requires an integer with minimum 1. Activation additionally requires a positive safe integer, at most 9007199254740991. The schema minimum alone does not establish that native upper bound.",
+    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are required; no omission fallback is selected.",
+    "failure": "Native activation rejects a non-positive or unsafe budget with REPORT_READER_CONFIG_INVALID. The final canonical serialized bundle above this limit fails with REPORT_BUNDLE_BUDGET_EXCEEDED. The reader does not itself establish successful report persistence.",
+    "evidence": [
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:22",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:33",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:37",
+      "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:44",
+      "skills/nova/core/state/read-run-evidence.ts:198",
+      "skills/nova/core/state/read-run-evidence.ts:207",
+      "skills/nova/core/state/read-run-evidence.ts:223"
+    ]
+  },
+  "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json::$.gateStageId": {
+    "accepted": "In addition to the schema nonempty-string rule, the evidence adapter requires a string of at most 2048 JavaScript string-length units. It does not trim the supplied stage identifier.",
+    "failure": "A non-string, empty or overlength stage identifier fails with DEMO_EVIDENCE_INVALID. Exact manifest, producer and gate-stage bindings still apply; a valid identifier does not prove evidence acceptance.",
+    "evidence": [
+      "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:15",
+      "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:55"
+    ]
+  },
+  "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json::$.manifestStageId": {
+    "accepted": "In addition to the schema nonempty-string rule, the evidence adapter requires a string of at most 2048 JavaScript string-length units. It does not trim the supplied stage identifier.",
+    "failure": "A non-string, empty or overlength stage identifier fails with DEMO_EVIDENCE_INVALID. Exact manifest, producer and gate-stage bindings still apply; a valid identifier does not prove evidence acceptance.",
+    "evidence": [
+      "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:15",
+      "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:55"
+    ]
+  }
+}[`${authorityPath}::${field.path}`];
+  if (durableConfigurationRule) return durableConfigurationRule;
   if (authorityPath === "skills/common/plugins/artifact-store/schemas/config.schema.json") {
     const rules = {
       "$.artifactRoot": {
@@ -3830,6 +4131,33 @@ function schemaRuntimeValidationRules(authorityPath, field) {
 }
 
 function schemaSpecificPurpose(authorityPath, fieldPath, context) {
+  const durableConfigurationPurpose = {
+  "skills/common/plugins/state-store/schemas/config.schema.json::$.root": "Selects the filesystem root used by the append-only pipeline state store for durable records. Relative values resolve against the Node process working directory, not a repository or project directory.",
+  "skills/common/plugins/wait-store/schemas/config.schema.json::$.root": "Selects the filesystem root used by the durable wait store for durable records. Relative values resolve against the Node process working directory, not a repository or project directory.",
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.root": "Selects the filesystem root used by the bounded telemetry store for durable records. Relative values resolve against the Node process working directory, not a repository or project directory.",
+  "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.deliveryRoot": "Selects the durable-record root used to reconcile sends after restart in the durable operator-message sender. Relative values resolve against the Node process working directory, not a repository or project directory.",
+  "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.deliveryRoot": "Selects the durable-record root used to reconcile sends after restart in the durable signed transport publisher. Relative values resolve against the Node process working directory, not a repository or project directory.",
+  "skills/nova/plugins/remote-test-gate/schemas/config.schema.json::$.stateRoot": "Selects the durable state root used by the authenticated Nova-to-Buster test gate. Relative values resolve against the Node process working directory, not the repository or project directory.",
+  "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json::$.stateRoot": "Selects an absolute, normalized durable state root for the imported Buster evidence store. Relative values are not accepted by this evidence adapter.",
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.storageRoot": "Selects the absolute Pipeline Core storage root used by the pipeline-review evidence reader. Relative values are rejected when a snapshot selection is read.",
+  "skills/common/plugins/state-store/schemas/config.schema.json::$.maxEntryBytes": "Limits the serialized payload of one durable metadata record. This includes the adapter-specific state or wait wrapper where present, not the complete store file or its record headers.",
+  "skills/common/plugins/state-store/schemas/config.schema.json::$.maximumRecords": "Caps the total metadata record count in this store, across its streams. It is not a separate allowance per namespace or a filesystem-file count.",
+  "skills/common/plugins/state-store/schemas/config.schema.json::$.maximumStoreBytes": "Caps the serialized durable metadata store state, including its record metadata. It is not a bound on all files or filesystem space under the root.",
+  "skills/common/plugins/wait-store/schemas/config.schema.json::$.maxEntryBytes": "Limits the serialized payload of one durable metadata record. This includes the adapter-specific state or wait wrapper where present, not the complete store file or its record headers.",
+  "skills/common/plugins/wait-store/schemas/config.schema.json::$.maximumRecords": "Caps the total metadata record count in this store, across its streams. It is not a separate allowance per namespace or a filesystem-file count.",
+  "skills/common/plugins/wait-store/schemas/config.schema.json::$.maximumStoreBytes": "Caps the serialized durable metadata store state, including its record metadata. It is not a bound on all files or filesystem space under the root.",
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maxRecordBytes": "Bounds the incoming telemetry snapshot and the redacted payload stored in one durable metadata record. Redaction can change size; this is not the complete store-file byte limit.",
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maximumRecords": "Caps the total metadata record count in this store, across its streams. It is not a separate allowance per namespace or a filesystem-file count.",
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maximumStoreBytes": "Caps the serialized durable metadata store state, including its record metadata. It is not a bound on all files or filesystem space under the root.",
+  "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryRecords": "Caps the total delivery metadata record count across targets. One logical send can retain multiple intent, attempt or receipt records; this is not a one-record-per-send allowance.",
+  "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryBytes": "Caps the serialized delivery metadata store state across its targets. This includes record metadata, not every file or filesystem-space use under deliveryRoot.",
+  "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryRecords": "Caps the total delivery metadata record count across targets. One logical send can retain multiple intent, attempt or receipt records; this is not a one-record-per-send allowance.",
+  "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryBytes": "Caps the serialized delivery metadata store state across its targets. This includes record metadata, not every file or filesystem-space use under deliveryRoot.",
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumJournalBytes": "Sets the shared byte allowance for selected run events, snapshot and effects evidence files. This is not the returned report-bundle byte limit.",
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumArtifactBytes": "Caps the aggregate selected artifact bytes read for the pipeline-review evidence bundle. It is not a separate allowance for each artifact.",
+  "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumBundleBytes": "Caps the serialized evidence bundle returned by the pipeline-review evidence reader."
+}[`${authorityPath}::${fieldPath}`];
+  if (durableConfigurationPurpose) return durableConfigurationPurpose;
   if (authorityPath === "skills/common/plugins/artifact-store/schemas/config.schema.json") {
     const purpose = {
       "$.artifactRoot": "Selects the artifact filesystem root for metadata and content-addressed blobs. Relative values resolve against the Node process working directory, not a repository or project directory.",
