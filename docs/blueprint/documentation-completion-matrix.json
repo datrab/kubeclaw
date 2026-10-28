@@ -19926,7 +19926,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -22110,6 +22110,23 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/site/reference/configuration-precedence.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "c0fcb6935723d211d0b3614d907f745c623bf03db966820a45274e602d074d89",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "WholePUB002 positive canonical allowlist and searchablecontent duty: same page/route retained; sole46line ordinaryprose/links add correct duplicate/STOP topic, no newpage/asset/internalrouting. Search/index/content integrity must be checked by actual finalowners; do not claim oldbrowser rerun or rankedtop3 newquestion.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
       ],
       "scopePreservation3408": {
@@ -36522,7 +36539,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -37921,6 +37938,23 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/site/reference/configuration-precedence.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "9a5a6c47b9ef21f73db4d2d2f82f42b6bb9453d7cc58072095968376da115565",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "WholeA91201 positive publicationboundary: soleexistingcanonical page remains allowed, registry is private source not publicoutput; no newrawHTML/scripts/asset/route. Newprimary/repocitations use existing sourcecomponent; no internal evidence path introduced in publishedprose. Actual currentbuild/Reader validates delivery, not newdeterminism/hosting.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
       ],
       "scopePreservation3408": {
@@ -37997,7 +38031,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -38656,6 +38690,23 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/site/reference/configuration-precedence.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "c999eb4d2783459fa08b159aa801bfcaac9b9a30184cb49732b5e746ffe6a438",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "Originalsix-field sourcebox body and historicalteststatus remain byteexact; newordinarysource links qualify preciseupstreamreceivers not falsely introduced as newbox/nativeproof. Existing sourceexcerpt machinery and annotations unchanged. Current source-links/previews integrity must confirm actualnewlinked ranges; no newfullbrowser/historicalexecution.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
       ],
       "scopePreservation3408": {
@@ -47149,7 +47200,7 @@
       ]
     },
     {
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -47714,11 +47765,29 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/configuration-precedence.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "fe9a3929cf6e4a0e4f4cf940d91d504aebb6ebd05d858488309a7efd3b043874",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "Fulloriginal177/28/205 completeclaimscope retained: no newcommand/fence/nativeinput, original6blocks same; genuine newprose duty now governed by exactprocedurecontract error/expected/safereferenceanchors and source-only/live limits. Nativecoverage actual0 and13ops fullreverse proof; normal28/build finalpending, no source-onlyexemption/globalpurposegrant.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
       ]
     },
     {
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -48283,6 +48352,24 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/configuration-precedence.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "ae138d2125d0390b5e7aa5bf4a9669b47f4ff0e3e41e40629c9c074c40d0781e",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "Separatelyoriginaldiscoverable/correctlychecked examples/failpredicates retained: no hidden newoperationalinput,6blocks same, realnewsourceconflict explicitly not tested by distinctHelmexample; conditionalrequiredsourceerror and owningvalue/STOP/privateinspection preserved in actualcontract. Actualnativecoverage is supporting structural check, not automaticsemanticPASS or liveexecution.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
       ]
     },
@@ -48408,7 +48495,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent /root/fresh_technical_reader original whole QUA005 Source/semanticReader/Quality adjudicator, qualified complete cross-author content assessors",
       "gateIds": [],
@@ -48952,12 +49039,30 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/configuration-precedence.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "e113b7b59561a2c70ea8f3f96d512d1dcdb88d0cffbfe0dff89fad8b66f9591c",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "Fullclaimhonesty obligation: repeatedenv text is explicitly pinned/sourcequalified and says nolivePod/Secretavailability/admission/ready proof; newactualsyntheticrender is not relabeled historical3.22/24checks. No allcurrentinventory/API/purpose/deploymentclaims introduced; allold508lines retain historical/unexecutedlimits.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
       ]
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality assessor; fresh /root/a91310_clean_operator_restore_reader original Operator02 participant; qualified cross-author topic peers",
       "gateIds": [
@@ -49731,12 +49836,30 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/configuration-precedence.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "2a7156415060c075c18032f11814f87968c45ff29aeab88a6c5cdca38e0c0310",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "All294/ninefamily/25ownerboundary duties remain substantive: missingrequiredSecret is an actualenvironmentconstructionfailure not exemptedN/A; exact owningauth/gatewayvalues and unintentionalduplicateSTOP now explicit. No liveproof granted/oldproductlimitsclosed; newprose does not alter registereddecision scopes, raw inventories or prior openCFG007historical limit.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
       ]
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection original Source/semanticReader/Quality adjudicator, with independent /root/language_projection_architecture authored-family Source/codeQuality and actual delivery/preservation peers",
       "gateIds": [],
@@ -50159,6 +50282,23 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "2827adf985aa5ccceff61a895c7dbac48f05118e3e9fdcd9e0748b1acbea1c1d",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "Actual857recursive/15Swarm/selectedoperatorfullsemantic duties unchanged byteforbyte; registrychanged only a different authoredprecedencecontract, allother204completeobjects exactlypreserved, all73authorities/28checks exact. No defaults/normalization/runtime/schema or own plugincontract reinterpretation; earlierartifact/root/budgetfailures/history retained.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
       ]
     },
@@ -50616,7 +50756,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation",
       "gateIds": [],
@@ -50752,11 +50892,30 @@
         "Pinned reviews cover actual three-file owner/doc/test and two-file syntax/test changes with complete bounded context. Maintained two-scope/two-authority successor was separately independently qualified; no blanket purpose/SourceLock/profile/custody/API/currentrole exemption or wholePRcode review implied."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "f509c6230d88f01fbb75d6f081c8502a79241b5fcff8888f4abde35064150e1a",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "Sevenfamily/fiveduty ownership/review route unchanged: maintenance/contracts/governance/syntax/library and exactMNTcontract remain byteexact; newprecedenceprose actually source-reviewed and bound through existingowner/no newblock. No missingreviewer-column/per-symbol/MNT009/A91107grant; futureowner still must review/check actualaffected duties.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        }
+      ]
     },
     {
       "id": "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
-      "revision": "57ae0d9dfe109f298034949d0451017e0c622714",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
       "author": "Nova /root sole integration writer; registration only, no product or documentation changes",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
       "gateIds": [],
@@ -50900,6 +51059,230 @@
         "Four independent inert static reader tasks cover timeout-only same-ID recovery, ConfigMap env/subPath, uncertain SMB cleanup and Service exposure/rollback; no blind participant, browser, accessibility, live cluster/pod refresh/CSI/SMB erasure, host inspection, restore or changed-timeout recovery execution claim.",
         "Dated reported18 tests/11 synthetic checks remain historical declarations, not reconstructed or current execution. Earlier NOT_READY closure, all reviews/manual/mapping constraints, two original finding IDs and global finding objects are preserved. Timeout overflow is an operator STOP, not an implemented guard; abort-only cleanup is not a deadline guarantee. Official host-plugin reseeding is not Nova registry pinning; unsupported image/data rollback and unknown host state remain owner STOP.",
         "All116 prior completion records remain entirely unchanged, including historical NOT_READY, failures, checks, limits and impact histories. No revision repin or blanket exemption is required for a ledger-only addition outside every declared delivery-source scope."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "campaign": "CFG013-source-qualified-environment-conflict-original117-preservation-20261028",
+          "previousRevision": "57ae0d9dfe109f298034949d0451017e0c622714",
+          "reviewedRevision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "changedDeclaredPaths": [
+            "docs/site/reference/configuration-precedence.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "independentReviewSha256": "218de99ba196bddaec3f969b9534bd17fc2af58fb9ff2c4b39a964229dd1b113",
+          "originalRecordCanonicalSha256": "1851cef84496dd6e8a14805b16923069943c06bb58a848bbc3a9d57f09e001a6",
+          "sourceAccuracy": "PASS within actualoriginal scope and independentlyqualified authoredsource/conflict/maintainedcontract delta",
+          "readerUsability": "PASS actualcurrent originalReadercontrols and preserved semanticduties",
+          "quality": "PASS actualnormalbuild/fiveReader/reporefs allterminal0; fullrawlogs/current177sources254outputs independentlyverified",
+          "actualOriginalSemanticResponsibility": "Whole791line/sevenfamily actualchangeimpact/safe recovery duties untouched; supportingprecedence page adds precise beforecontainer construction conflict/failure/STOP and rolloutobservation, not hotreload/noSecretneeded/guaranteedrestore. Original requiredsource/unknownstate/dataowner limits retained; externalprimaries exact unchangedreceiver.",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
+          "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
+        }
+      ]
+    },
+    {
+      "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
+      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-013"
+      ],
+      "pages": [
+        "docs/site/reference/configuration-precedence.md"
+      ],
+      "sources": [
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/nova/core/test-gates/pipeline.ts",
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "tests/verification/e2e/support/platform-config.ts",
+        "tests/verification/e2e/support/optional-absence.ts",
+        "tests/verification/e2e/support/config-profiles/standard.json",
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/config.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/graph.ts",
+        "skills/nova/core/execution/graph-build.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/coverage.ts",
+        "skills/nova/project/source.ts",
+        "skills/nova/project/demo.ts",
+        "skills/nova/project/review-semantics.ts",
+        "skills/nova/project/delivery-manifest.ts",
+        "skills/nova/project/cli.ts",
+        "skills/nova/core/execution/engine.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/buster/plugins/direct-command/src/provider.js",
+        "skills/common/plugins/command-runner/src/adapter.ts",
+        "skills/nova/plugins/human-approval/schemas/config.schema.json",
+        "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+        "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+        "skills/nova/core/cli.ts",
+        "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "contracts/agent-observability/v1/src/routing.ts",
+        "contracts/agent-observability/v1/src/constants.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/plugins/human-approval/src/approval.ts",
+        "docker/buster-runtime-entrypoint.sh",
+        "tests/verification/e2e/real-run-workspace.mjs",
+        "skills/nova/project_setup/tools/progress-scaffold-discovery.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "docs/blueprint/AP09-completeness-audit.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/site/reference/host-and-prism-configuration.md",
+        "charts/prism/values.schema.json",
+        "charts/prism/values.yaml",
+        "charts/prism/ci-values.yaml",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/prism/templates/_helpers.tpl",
+        "charts/prism/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/_worker-trust-readiness.tpl",
+        "charts/kubeclaw/values.yaml",
+        "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "charts/kubeclaw/templates/secret.yaml",
+        "charts/gitops/templates/applications.yaml",
+        "charts/gitops/values.yaml",
+        "skills/prism/server/control-config.ts",
+        "skills/prism/server/worker-config.ts",
+        "skills/prism/server/studio-config.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/control/product-decisions.ts",
+        "skills/prism/server/worker.ts",
+        "skills/prism/server/worker-service.ts",
+        "skills/prism/server/worker-readiness.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/server/control.ts",
+        "skills/worker/core/worker/native-pool-policy.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/worker/core/worker/resource-reservations.ts",
+        "skills/worker/core/worker/native-resource-scope.ts",
+        "skills/worker/core/worker/native-resource-observation.ts",
+        "skills/worker/core/worker/native-node-identity.ts",
+        "skills/worker/core/worker/native-runtime-identity.ts",
+        "scripts/prepare-native-worker-pools.mjs",
+        "docker/Dockerfile.prism-worker",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/templates/_helpers.tpl",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "skills/prism/server/control-server.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "scripts/gitops.mjs",
+        "scripts/docs-publication-example-native.mjs",
+        "docs/config/publication-example-claims.json"
+      ],
+      "checks": [
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual committedda01 original control0, 197.178s, rawlogSHA326458050724522a1ea22e3e2e822b0f92d8bfcc1f2dc2e7c6d33421b54769ac; actual scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Actual committedda01 original control0, 27.855s, rawlogSHAeea96af4da867f8fb3fa25a2d5260b5b0bb5bf27f60fd0bd69bf05411d911573; actual scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Actual committedda01 original control0, 15.603s, rawlogSHAb647afdfb3094db600e80b6c4d4d3b700b9060c56418258cb818e31e1feff98b; actual scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "Actual committedda01 original control0, 115.272s, rawlogSHA2f71ede7a4098a38e3bb888dc0fa406fbec3b939cf22d04ffbe443280621a5be; actual scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "Actual committedda01 original control0, 32.531s, rawlogSHA534a49fd859d7717239a8a8cde153fc3f058339da3ae843c3d2128d6bdc571ef; actual scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual committedda01 original control0, 18.88s, rawlogSHA306c2a7279307e42effa2d099b2ccf07db7669d840054fbd649f045949259e6e; actual scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "Actual committedda01 original control0, 54.644s, rawlogSHAdacccea8a25fc3c647ddf95b0eef90fd4a69b78668c54b0805f1847a09363bf0; actual scoped automated publication/Reader/reference, no semantic/live grant by checker."
+        },
+        {
+          "command": "node tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+          "exitCode": 0,
+          "observation": "Actual existing platform contract0, canonical-relative paths, frozen authority and invalid TTL/escalation rejection."
+        },
+        {
+          "command": "node tests/config.test.mjs (openclaw-agent-observer workspace)",
+          "exitCode": 0,
+          "observation": "Actual existing observer resolver configuration contract0; no Redis connection."
+        },
+        {
+          "command": "Actual exported validateHelmOverlayExamples + validateCompactExamples on exact parsed canonical blocks",
+          "exitCode": 0,
+          "observation": "Actual4 ordered Helm renders, Prism baseline+specific empty-policy failure1 and compact source binding passed; actualHelm3.18.4, not historical3.22."
+        },
+        {
+          "command": "Actual exported compact/observer conflict controls-v2",
+          "exitCode": 0,
+          "observation": "Actual24 positive/negative boundaries passed, original attempted fixturefailure retained; no downstream-validity/live claim."
+        },
+        {
+          "command": "Actual synthetic current-chart same-name environment render",
+          "exitCode": 0,
+          "observation": "Actual fixed SecretRef index19 then literal duplicate38 and fixedURL18 then duplicate37; required source notgenerated. Render structure only, no kubelet or required-source lookup execution."
+        },
+        {
+          "command": "Actual original bindPublicationExampleCoverage + validatePublicationClaimContracts on semantic maintained candidate",
+          "exitCode": 0,
+          "observation": "Actual177pages28assets28checks205contracts1055anchors0; V2 parsedJSON equals independently reviewed/checker-testedV1, finalnormalbuild validates actualcurrent binding."
+        },
+        {
+          "command": "Independent whole original CFG013 Source/Reader/Quality and five inert semantic reader tasks",
+          "exitCode": 0,
+          "observation": "Allten complete actual family responsibilities PASS with materialenvconflict corrected; sourcefull/range/delegated scopes retained, each23finding facet independently qualified."
+        },
+        {
+          "command": "Independent complete original117 source/Reader/quality preservation",
+          "exitCode": 0,
+          "observation": "Actual1810 declared paths and all117 original scopes independently qualified,10minimal107entire proposed transitions, full254outputs177Source physical/Git bindings and seven raw controls independently verified; no new117awards."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole original CFG-013 independently passed across all ten actual configuration families: producer-to-consumer merge/default/capture, absence/empty/null/false, conflict/error and safe effective-value inspection duties. Newly found genuine fixed-env/extraEnv duplicate and required-Secret failure gap repaired through the canonical authored owner and a semantic maintained one-page contract successor. Complete core and host/Helm/Kubernetes/Secret responsibilities and individual23 historical finding facets qualified; original global failures remain unawarded. Actual committed publication controls and original117 semantic preservation complete; no table/count/hash-only closure.",
+      "limits": [
+        "CFG-013 only; no A98-10/11 or other gate, CFG010/011/global environment census, global ToolSource parser/custody/source-role/API, purpose/profile/SourceLock, MNT009/A91107, fullQUA004, controlled-language or other requirement grant.",
+        "Whole554line canonical responsibility composes complete508line baseline review plus entire46line correction and integration context, not a fictitious repeat whole-body read. One canonical page plus95 regular tracked sources retain precise full/range/delegated/analytical qualifications. Pinned external primary sources and completionledger control snapshot are qualified non-delivery inputs, not invented tracked source paths.",
+        "Ten-family Source and five inert source/page Reader tasks establish the complete original topic. No fresh persona/human/browser teaching/accessibility/live cluster/native-worker/Redis/Secret availability/authentication/readiness/recovery/apply-patch operation is claimed. Static compile means no pipeline stage/adapter execution, not absence of installed-role validation, import/audit subprocess or new output-file I/O.",
+        "Actual native platform and observer contracts, unchanged Helm/Compact owner inputs and24 current conflict controls use Node24.21; actual Helm3.18.4 renders are not the dated3.22/24 assertions or historical17 expander checks. The new synthetic duplicate render proves fixed-before-extra structure/reference only; kubelet winner/earlier-required-source-failure/optional-skip remains independently primary-source qualified, not locally executed kubelet.",
+        "Actual committedda01 normalbuild/five automatedReader controls/repositoryrefs all0. Unchanged checkSite validates28native IDs/results but suppresses child detailJSON; no separately parsed current28input/result log or every model/SDK/runtime behavior is asserted. All254output and177Source bindings independently verified, not source-truth proof by hashes alone.",
+        "Maintained205scope contract source is a finite13semantic-operation successor for this onepage/prose7 and three new anchors; other204scope records,73authorities,28nativecheck declarations, allsix codeblocks, oldanchors/obligations/execution flags preserved. V2 restores raw bytes outside actualtwo affected top-level records; V1 Unicode serialization normalization and first source commit retained, no history rewrite or global qualification refresh.",
+        "All117 prior scopes independently preserved:10 exact revision-plus-appended-impact transitions and107 entirely unchanged records, including historicalNOT_READY. Earlier reviews, summaries, checks, limits, histories, failedreceipts and all oldimpactprefixes unchanged. Original23findingIDs preserved and individually dispositioned only at CFG013 relevance; every globalfinding object and other requirement/gate unchanged.",
+        "Original wholeNOT_READY and new materialP2 negative remain historical evidence; correction resolves only its concrete documentation duty. Initial missing-root fixture assertion failure remains exit1, corrected fixture reaches intended guard without product/assertion waiver. No prior historical report is recast as a fresh execution or automatic whole-documentation approval."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -62086,16 +62469,32 @@
       "pageOwner": "platform operations",
       "readerTask": "Precedence und Effective Values",
       "sourceDependencies": [
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/config.ts",
         "skills/common/plugin-runtime/foundation/config/platform.ts",
         "skills/nova/core/execution/engine-runtime.ts",
         "skills/nova/core/test-gates/resolver.ts",
         "tests/verification/e2e/support/platform-config.ts",
-        "charts/prism/templates/workloads.yaml"
+        "tests/verification/e2e/support/config-profiles/standard.json",
+        "tests/verification/e2e/real-run-workspace.mjs",
+        "charts/kubeclaw/values.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "charts/kubeclaw/templates/_helpers.tpl",
+        "charts/prism/values.schema.json",
+        "charts/prism/ci-values.yaml",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/prism/templates/workloads.yaml",
+        "charts/gitops/templates/applications.yaml"
       ],
-      "sourceVerification": "passed-current-authored-page-partition-only",
+      "sourceVerification": "independent-whole-original-source-semanticReader-quality-PASS-at-committedda01fe52",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -62127,8 +62526,20 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
-      "evidence": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "completionRecord": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+          "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "verdict": "PASS",
+          "scope": "Whole originalCFG013 only; no gate/globalfinding/other requirement award",
+          "independentWholeContent": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/corrected-whole-original/verdict.json",
+          "finalSourceUnion": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/final-tracked-source-qualification-union.json",
+          "actualFinalChecks": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-final-publication-20261028/actual-seven-results.json",
+          "original117Preservation": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/original117-preservation/final-verdict.json",
+          "correctedCurrentFindingFacets": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/corrected-current-finding-facets.json"
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/a98_source_review_round2",
@@ -62208,45 +62619,385 @@
           "report": "/home/node/Documents/Codex/a98-evidence/wrapper-named-write-integrated-complete-tool-source-fresh/report.md",
           "reportSha256": "027d7f610353d6a0a0e4628c889fdb191999ea2e7446a5ba7b991dfab42df080",
           "scopeLimit": "Whole current F1-F10 Tool Source, three material findings/six actualfalsegreens; no package/globalapproval."
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer",
+          "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "verdict": "PASS",
+          "role": "source",
+          "scope": "WholeCFG013 coherent topic under AP09sections1-3; oldmanual/mapping/review/failure histories preserved, no globalgrant.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/corrected-whole-original/verdict.json"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer",
+          "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "verdict": "PASS",
+          "role": "reader",
+          "scope": "WholeCFG013 coherent topic under AP09sections1-3; oldmanual/mapping/review/failure histories preserved, no globalgrant.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/corrected-whole-original/verdict.json"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer",
+          "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "verdict": "PASS",
+          "role": "quality",
+          "scope": "WholeCFG013 coherent topic under AP09sections1-3; oldmanual/mapping/review/failure histories preserved, no globalgrant.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/corrected-whole-original/verdict.json"
         }
       ],
-      "openFindingIds": [
-        "A98-QUALITY-TEST-STATUS",
-        "A98-SOURCE-REGISTRY-DEFAULTS",
-        "A98-SOURCE-EMPTY-PRECEDENCE",
-        "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
-        "A98-COMPACT-OVERRIDE-AND-RAW-ROOT",
-        "A98-20261011-SOURCE-F1",
-        "A98-20261011-SOURCE-F2",
-        "A98-20261011-SOURCE-F3",
-        "A98-20261011-SOURCE-F4",
-        "A98-20261011-SOURCE-F5",
-        "A98-20261011-SOURCE-F6",
-        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
-        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
-        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
-        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
-        "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5",
-        "A98-20261012-CANONICAL-REFLECTION-S1",
-        "A98-20261012-CANONICAL-REFLECTION-S2",
-        "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
-        "A98-20261012-KNOWN-BINDING-R1",
-        "A98-20261012-KNOWN-BINDING-R2",
-        "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
-        "A98-20261012-YAML-FILE-STDIN-R2"
-      ],
+      "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L288",
       "acceptanceMappingBasis": {
         "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
         "reason": "Complete effective-value precedence, empty/conflicting/invalid inputs and tests.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **CFG-013 — `reference/configuration-precedence.md`.** Inspected core family separation, suite/matrix/default behavior, compact overrides, observer merge, absence/empty/null/false and captured values. The full Helm/Kubernetes/Secret/host receiving paths and every conflict/invalid case were not independently completed. Source/reader NOT_READY for complete scope; quality PASS in inspected sections.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- **CFG-013 — `reference/configuration-precedence.md`.** Inspected core family separation, suite/matrix/default behavior, compact overrides, observer merge, absence/empty/null/false and captured values. The full Helm/Kubernetes/Secret/host receiving paths and every conflict/invalid case were not independently completed. Source/reader NOT_READY for complete scope; quality PASS in inspected sections.",
+          "campaign": "independent-ready-topics-20261020"
+        },
+        {
+          "verdict": "NOT_READY",
+          "revision": "21dd99f4dd7fdcf55bf67e51df4070156f17294a",
+          "reason": "Fresh wholeCFG013 review found genuine fixed-env/extraEnv same-name winner and earlier requiredSecret failure semantics missing; corrected only by independently reviewed finite source successor.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg013-whole-original-20261028/verdict.json"
+        }
+      ],
+      "legacyFindingHistory": [
+        {
+          "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+          "originalOpenFindingIds": [
+            "A98-QUALITY-TEST-STATUS",
+            "A98-SOURCE-REGISTRY-DEFAULTS",
+            "A98-SOURCE-EMPTY-PRECEDENCE",
+            "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
+            "A98-COMPACT-OVERRIDE-AND-RAW-ROOT",
+            "A98-20261011-SOURCE-F1",
+            "A98-20261011-SOURCE-F2",
+            "A98-20261011-SOURCE-F3",
+            "A98-20261011-SOURCE-F4",
+            "A98-20261011-SOURCE-F5",
+            "A98-20261011-SOURCE-F6",
+            "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+            "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+            "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+            "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+            "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5",
+            "A98-20261012-CANONICAL-REFLECTION-S1",
+            "A98-20261012-CANONICAL-REFLECTION-S2",
+            "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+            "A98-20261012-KNOWN-BINDING-R1",
+            "A98-20261012-KNOWN-BINDING-R2",
+            "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+            "A98-20261012-YAML-FILE-STDIN-R2"
+          ],
+          "scope": "Original23 IDs retained; only CFG013 facet relevance dispositioned, globalfindingobjects unchanged."
+        }
+      ],
+      "findingDispositions": [
+        {
+          "id": "A98-QUALITY-TEST-STATUS",
+          "originalDescription": "Linked tests do not report actual status and environment.",
+          "decision": "SATISFIED_IN_CFG013_FACET_NOT_GLOBAL_CLOSURE",
+          "currentCFG013Basis": "Canonical dated expander17 and Helm24 assertions give observed status/version/revision, observer checks state no live Redis, platform checks state Node24.21 and no deployed plugin; limits separate actual local render from admission/Secret availability/readiness. Fresh current native receipts additionally qualify new bounded runs, not historical reproduction.",
+          "actualQualifiedSourceBasis": [
+            "configuration-precedence.md:173-179,348-352,416-422,482-488",
+            "actual native platform/observer/example/conflict receipts"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-SOURCE-REGISTRY-DEFAULTS",
+          "originalDescription": "Universal registry default insertion is false for stages/adapters/observers.",
+          "decision": "SATISFIED_IN_CFG013_FACET_NOT_GLOBAL_CLOSURE",
+          "currentCFG013Basis": "Canonical explicitly distinguishes unchanged stage/adapter/observer validation, provider cloned useDefaults=true, and approval own??60. Complete registry configuration/schema plus actual stage handoff/adapterconfig and approval parser inspected.",
+          "actualQualifiedSourceBasis": [
+            "registry/configuration.ts complete",
+            "registry/schema.ts complete",
+            "stage-executor.ts:1-110",
+            "adapter-startup.ts:1-115",
+            "approval.ts:1-120"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-SOURCE-EMPTY-PRECEDENCE",
+          "originalDescription": "Absent-only process fallback omits actual empty-string fallback.",
+          "decision": "SATISFIED_IN_CFG013_FACET",
+          "currentCFG013Basis": "Canonical explicitly states BUSTER_V2_MAX_ACTIVE_JOBS absent/empty selects2 via || while nonempty string0 becomes zero. Actual current entrypoint170-193 and complete historicaldiff show this receiver unchanged.",
+          "actualQualifiedSourceBasis": [
+            "docker/buster-runtime-entrypoint.sh:170-193",
+            "canonical:389-393"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-R2-RUNTIME-CONSUMER-CONTRACTS",
+          "originalDescription": "123actual-reader variables lack consumer contracts;100injected/runtime names require full qualification audit. Classification must not exempt discovered reader pairs.",
+          "decision": "GLOBAL_CONSUMER_INVENTORY_DUTY_RETAINED_NOT_A_CURRENT_CFG013_PROOF_GAP",
+          "currentCFG013Basis": "Original123actual-reader/100runtime-name inventory qualification is not asserted complete by this authored cross-consumer model. Current CFG013 named runtime operators/normalizers and actual receiving paths are directly source reviewed (platform/observer/Buster/plugin/host helper), not accepted from discovered-variable count or blanket runtime category. No global CFG010/011/all-variable inventory completeness or current purpose grant is used; same-name Kubernetes conflict was an independently identified CFG013 gap, now resolved by exact current source-qualified canonical addition and maintained contract; original negative retained.",
+          "actualQualifiedSourceBasis": [
+            "canonical tenfamily rules and Where defaults are applied",
+            "actual direct source receiving manifests",
+            "helper initial same-name negative retained plus exact corrected-source and binding PASS"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-COMPACT-OVERRIDE-AND-RAW-ROOT",
+          "originalDescription": "The compact expander inserts raw runtime-derived context BEFORE validated overrides; supported overrides win existing context keys. Placeholder substitution independently uses original raw repo_root, which can differ from effective overridden repo_root.",
+          "decision": "SATISFIED_IN_CFG013_FACET",
+          "currentCFG013Basis": "Complete current expander inserts context before validating known override targets and merges them before originalrawroot substitution; actual caller resetsrunid/normalizes/scenarios afterwards. Canonical synthetic complete example distinguishes both roots and rejects invalidtargets, not downstreamvalidity. New actual24controls include raw/effective roots and firstfixturefailure preserved.",
+          "actualQualifiedSourceBasis": [
+            "platform-config.ts complete",
+            "real-run-workspace.mjs:1490-1560",
+            "actual-conflict-boundary-controls-v2"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-SOURCE-F1",
+          "originalDescription": "Lazy annotation evaluated before a later global rebinding loses a literal reader.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Lazy annotation/global rebinding reader acquisition cannot qualify a global environment census. This model obtains its actual JSON/TS platform, compact, observer and runtime receiving bodies directly; no lazy Python annotation-derived reader list supports its precedence claim.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-SOURCE-F2",
+          "originalDescription": "Explicit string annotation evaluated through eval_str=True loses a literal reader; future-string/local passive cases remain distinct.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "eval_str string annotation acquisition remains an unclosed scanner facet. No eval_str or annotation-discovered effective value is used by the actual directly read ten-family consumers; historical report absence is not reused as proof of repair.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-SOURCE-F3",
+          "originalDescription": "Direct staticmethod invocation before global rebinding loses a literal reader.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Staticmethod-before-rebinding reader discovery remains global ToolSource duty. This current direct-source precedence proof does not infer absence of a consumer from missing Python literal discovery or use that false-green receiver as semantic evidence.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-SOURCE-F4",
+          "originalDescription": "Augmented environment subscript assignment loses its read component.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Augmented env-subscript read custody remains global inventory duty. Current named ||/??/defined-key behaviors are read from actual receiving implementations, not inferred from an empty scanner result or suppressed augmented Python read.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-SOURCE-F5",
+          "originalDescription": "Executable here-string, backtick substitution and env wrapper acquisition remain silently green.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Here-string/backtick/env-wrapper acquisition remains global ToolSource duty. Canonical actual Helm instructions are native local renders and compact example is parsed JSON with direct expander; no shell-wrapped Python scanner completeness supports these claims.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-SOURCE-F6",
+          "originalDescription": "Heredoc acquisition falsely promotes script data, nonstdin descriptors and superseded stdin bodies to interpreter code.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Data/nonstdin/superseded-heredoc promotion remains global acquisition duty. Current canonical does not use inferred executable Python heredocs to establish merge/default precedence; actual direct consumer bodies and parsed native inputs control.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-1",
+          "originalDescription": "Unknown branch key alternatives are dropped and leave actual receiving gate GREEN.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Dropped unknown-branch key alternatives cannot justify complete environment-reader inventory. Current authoring does not claim that gate green establishes all consumer options; exact named receiving source branches are independently inspected.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-2",
+          "originalDescription": "Selected function alias invocation before global os rebinding loses direct literal reader GREEN.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Selected function alias before os rebinding remains Python acquisition duty. No inferred alias/literal Python output is a source authority for this manual consumer precedence matrix.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-3",
+          "originalDescription": "Python3.14 lazy class annotation access after later import loses actual literal reader GREEN.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Python3.14 lazy class annotation after import remains global acquisition duty. No lazy annotation result is required by current selected JSON/TS/chart/loader input sources or native compact/observer assertions.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-4",
+          "originalDescription": "Shell stdout/stderr redirect paths become Python argv and hide actual stdin heredoc readers GREEN.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Shell redirect paths misacquired as argv remain ToolSource duty. Actual rendered examples specify native Helm argv/redirection directly and no scanner-produced Python input is used as precedence/effective proof.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261011-NEXT-PYTHON-CUSTODY-F1-F6-QUALIFIED-COMPLETE-SOURCE-FRESH-5",
+          "originalDescription": "Selected unquoted heredoc shell expansion lacks acquisition custody; not claimed as a native-proved actual receiving-gate GREEN.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Selected unquoted heredoc expansion custody remains unclosed global Source concern (including its original non-native-proved limit). No unquoted-heredoc acquisition is used to qualify this authored input/receiver model.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261012-CANONICAL-REFLECTION-S1",
+          "originalDescription": "Known Python reader/mapping protocol and namespace acquisition is lost.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Known Python reader/mapping protocol namespace acquisition remains global ToolSource duty. The current model does not claim comprehensive inferredPython reader inventory; actual model source objects and selected producer/receiver bodies are reviewed directly.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261012-CANONICAL-REFLECTION-S2",
+          "originalDescription": "Known annotation getter loses custody under protocol/reflection/helper transfers.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Annotation getter transfer custody remains global ToolSource duty. Current original proof does not promote a reflection/annotation scanner summary into precedence semantics; actual source/caller/default paths are independently inspected.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+          "originalDescription": "Known getenv.__call__(**literal-map) executes native read but no explicit positional/key keyword causes scanner empty output on fdbcb4. Bounded missing acquired key failclosed correction now2cfe; not a universal kwargs evaluator.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Original object already records assigned knownprotocol/kwargs facet independently resolved with global gates pending. That history is preserved, not upgraded; no kwargs evaluator or universal dictionary-reader coverage is needed or asserted by the current manual ten-family model.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261012-KNOWN-BINDING-R1",
+          "originalDescription": "Recognizable absolute env/sudo and nestedliteral shell wrappers lose Python acquisition;3native/actualfalseGREEN436.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Absolute env/sudo/nested shell wrappers acquisition remains global ToolSource failure. Current direct-source source-specific precedence proof does not depend on those scannerfalsegreens, nor assert no wrapped process readers exist.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261012-KNOWN-BINDING-R2",
+          "originalDescription": "Global/nonlocalNamedExpr skips genericexternal capability-write guard;6native/actualfalseGREEN436.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Global/nonlocal NamedExpr externalwrite guard remains global custody duty. No capabilitywrite scanner completeness or globalgreen is used to establish actual authored family merge/validation receivers.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+          "originalDescription": "Supported simple alias/conditional/keyword/protocol environment keys escape containing-scope NamedExpr sensitivity: eight native actual whole-receiver false GREEN436 cases.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Finite alias/conditional/keyword/protocol key dependency sensitivity remains global acquisition duty. Each actual field/operator family here is source-qualified directly; no inferred missingkey scanner output is used as a semantic negative.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        },
+        {
+          "id": "A98-20261012-YAML-FILE-STDIN-R2",
+          "originalDescription": "Explicit fileInput program has no decoded positions; YAML forwarding calls positions.map and crashes before file custody.",
+          "decision": "GLOBAL_TOOLSOURCE_FAILURE_RETAINED_NO_CURRENT_CFG013_CLAIM_DEPENDENCY",
+          "currentCFG013Basis": "Explicit fileInput missing decodedpositions YAML forwarding crash remains global scanner duty. Actual Helm YAML is consumed by genuine Helm and compact values by the native JSONexpander; no Python/YAML forwarding scanner execution supplies this authored precedence proof.",
+          "actualQualifiedSourceBasis": [
+            "original finding object preserved verbatim in original-requirement-and-finding-inputs.json",
+            "complete canonical508-line actual claims",
+            "performedLocalInputs and independent helper qualifications; no generic ToolSource/global gate grant"
+          ],
+          "globalDisposition": "UNCHANGED; no claim historical witness reproduced, scanner repaired or global finding resolved.",
+          "originalGlobalFindingObjectChanged": false
+        }
+      ]
     },
     {
       "id": "CFG-014",
