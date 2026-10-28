@@ -387,7 +387,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -1042,6 +1042,24 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "ecaee20ff84de6bcd6960dd0ee9a418f915e3e6147860aee42a564995fe3b416",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "revisionHistory": [
@@ -1144,7 +1162,7 @@
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -1479,6 +1497,22 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "bcdb9a9fad61bf72d0bc3744585e133c3530fedfa76db01a50693f6986888f09",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
@@ -2456,7 +2490,7 @@
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -2875,6 +2909,22 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "fb2e19cf070679b4b35fe5f3a2d148ad624413f69393c650554f18d28f359dee",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "6abafbbc81a728f3ea7f12e83426c9565a72c473",
@@ -2902,7 +2952,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -3707,6 +3757,24 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "e8a09d70ffc193760bbb73fea4e249f1e46f2e2f9693e181550dd966281b4f20",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
@@ -4636,7 +4704,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -5406,6 +5474,24 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "776b560888aa268cba2cb45cc7f7f8da2ed7138814cc6d72549e0ec8d41f2ccb",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
@@ -6729,7 +6815,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -7443,6 +7529,23 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "00319b46e4dbce8cc3c4c296c7104d267a7909f6aac79bff1c01528551279ccf",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -8736,7 +8839,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -9316,6 +9419,23 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "ae3cd170e9fca08c590fb9a50a95cd23e88480918b0a32717ff62a3e449bd74b",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "b4f3d630d6a6d15ab84036ec62bdab2d8a4949d3",
@@ -9390,7 +9510,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -10216,6 +10336,24 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "6b8edf2977b17fe1abda0ae8ffdd3c4fc74cdd6147e83eb725daca648be12b17",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
@@ -10686,7 +10824,7 @@
     },
     {
       "id": "AP09-buster-lease-reference-20261020",
-      "revision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -10875,6 +11013,23 @@
           "report": "docs/review/mnt015-sdk-support-family-20261027.json",
           "reportSha256": "5b33b550168d5dce9848745d409135915273b98e0bd94a3ea11f5c8804fc24af",
           "inspectionLimit": "Complete17material contracts/670vectors/fullchangedcode/governance and actual6Reader/4offline proof supplied. Eight original content bodies unchanged; final current native/reference/risk bindings separate. No global/human/runtime/deletion grant."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "535d73dbb872e2dbea8950c6584e1302a079613d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "45f924fadb8de0dabb3428202214511edced496fdad9cd380888fbb9ff67f7d5",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ]
     },
@@ -11310,7 +11465,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -11575,6 +11730,22 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "b195bfd9b8fb91d5fb8a893216ecdf8f8789441288efd3da9c89f143b0ba1b7f",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
@@ -11614,7 +11785,7 @@
     },
     {
       "id": "AP09-confidential-adapter-lifecycle-20261021",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -11846,6 +12017,22 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "002ce1d6df45a18df587b88b6f803bd7c3e556c7f11c724176e7f64473e09267",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
@@ -13837,7 +14024,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -14974,6 +15161,23 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "1c4602c14d858cb57017f9d4e54a77846cb5a64f595b73e3d4cd8d2d1e36a505",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
@@ -15513,7 +15717,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -16176,6 +16380,23 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "f4bd7f34139b8e9200fd6696f7314a427389a4b5673f408710f7a39961dd2fe3",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
@@ -18048,7 +18269,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -18813,6 +19034,23 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "f64c53835359627fc6b9e4cf29c19368a7360fbeb42f767f6e040df95c76d619",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "scopePreservation3408": {
@@ -18830,7 +19068,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -19665,13 +19903,30 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "405537db0b40045394050b057602778f04d0035a95741435d9a93eed74c1d75f",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f"
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -21839,6 +22094,22 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "c729026645d407b5315939b4bdbbc8581cda55a70b9bb2a36a539af8620bfc5e",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "scopePreservation3408": {
@@ -29038,7 +29309,7 @@
     },
     {
       "id": "A99-03-whole-content-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -29189,6 +29460,22 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "ef783929e8eaa8f9254b56d4052caa4ee384c7d752f6005abe758383fa7a55e2",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ]
     },
@@ -30593,7 +30880,7 @@
     },
     {
       "id": "AP09-whole-current-telemetry-union-20261021-d477",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -30874,6 +31161,22 @@
           "reportAvailability": "Later evidence adoption, not a Source file at reviewed487; not added to record.sources.",
           "limit": "Original named scope/limits preserved only; no new gate/requirement counts, consumer/graph/role/native/product/runtime/deployment/release approval. Knip/parser/output weaknesses and unexecuted product paths remain visible.",
           "wholeRenderedOutputChangedCanonicalPages": []
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "51dab3b5a9361e4a530baa27ea2ad1d476575e63b52b1ded4e4333edded7073e",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "scopePreservation3408": {
@@ -34854,7 +35157,7 @@
     },
     {
       "id": "A99-08-complete-supported-failure-journey-union-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Documentation topic authors and integration coordinator",
       "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
       "gateIds": [
@@ -35224,6 +35527,22 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "e5f13b035945678ab97845200360d13a886f9cb5c20aa9ba72db88ab9ed25876",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "scopePreservation3408": {
@@ -35641,7 +35960,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -36150,6 +36469,23 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "bbe84b82925db6ad5dcf4349812d30418293fb3bdc4ee414bf322b93925a68e2",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "scopePreservation3408": {
@@ -36186,7 +36522,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -37567,6 +37903,24 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "719f9ea6dbdf25b6fea1d3c9358c5b2272841332e179a2acbfd4202d45cda18f",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "scopePreservation3408": {
@@ -38352,7 +38706,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -39435,6 +39789,24 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "d7c6dbab05cfca88b3e145fadb0377d4e03ad23228604b677003007a40590dec",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "scopePreservation3408": {
@@ -39539,7 +39911,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -40437,6 +40809,24 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "ee530172b94fc879b26a00b55f1a835eab1f0e16918ca817af0352e8eb43a49c",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "scopePreservation3408": {
@@ -43424,7 +43814,7 @@
     },
     {
       "id": "AP09-whole-extension-guides-A91013-20261023",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 whole-extension source/content/closure reviewer",
       "gateIds": [
@@ -43785,6 +44175,22 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "c3eb948f772618117b29ec12bfa2cc329964ef7ee25f4cfc98e8edcf684d4d0f",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ],
       "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -45236,7 +45642,7 @@
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent lint/common and whole original A910-10 adjudication",
       "gateIds": [
@@ -45849,6 +46255,25 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs",
+            "scripts/tests/docs-source-surface-map.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "6e64b68c81b08a5bb97f5d9d376f99c0b7e21ddd5e81a8326765aa36f15d8383",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ]
     },
@@ -46724,7 +47149,7 @@
       ]
     },
     {
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -47268,11 +47693,32 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs",
+            "scripts/tests/docs-publication-examples.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "216dfe929caa2e72441d2082ce5515d945867937e33e4130cee0b57631dfb884",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ]
     },
     {
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -47816,6 +48262,27 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs",
+            "scripts/tests/docs-publication-examples.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "b3795b23df081768b9fd2907fa40d9e30a16ea24e83b0db9d2c235a78b76a37f",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ]
     },
@@ -47941,7 +48408,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent /root/fresh_technical_reader original whole QUA005 Source/semanticReader/Quality adjudicator, qualified complete cross-author content assessors",
       "gateIds": [],
@@ -48464,12 +48931,33 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs",
+            "scripts/tests/docs-publication-examples.test.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "343c08064bf68d4d56530fe608b73081e265e38d25961f8d8bb93f90f0186044",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ]
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality assessor; fresh /root/a91310_clean_operator_restore_reader original Operator02 participant; qualified cross-author topic peers",
       "gateIds": [
@@ -49224,12 +49712,31 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/site/extend/contracts.md",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-governance.mjs"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "d9338253cc31b87972336415b9bd1115671107d9410248fd89b1956287cba441",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
         }
       ]
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection original Source/semanticReader/Quality adjudicator, with independent /root/language_projection_architecture authored-family Source/codeQuality and actual delivery/preservation peers",
       "gateIds": [],
@@ -49635,7 +50142,25 @@
         "Stage/adapter/observer validation, schema default annotation, provider resolver insertion and actual consumer fallback remain distinct. Absolute/normalized/realpath selection and process-working-directory roots retain their exact owned timing; no repository confinement, automatic private permissions or combined artifact-root disk cap is inferred."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "impactReviews": [
+        {
+          "campaign": "MNT015-source-owner-review-responsibility-original115-preservation-20261028",
+          "previousRevision": "326186076f208ef285ab4bbc28e9a578d399344d",
+          "reviewedRevision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "changedDeclaredPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "independentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "independentReviewSha256": "b6d7cfadd3d472b31aa17d1c698a9435d3199a0840cf55787fb10c7586538224",
+          "originalRecordCanonicalSha256": "d380d2d937f70803558b7ba1b1c4729c315fe89bf9ec08d22e16a46b46577ac1",
+          "sourceAccuracy": "PASS within original actualscope and independentlyqualified finite maintenance/syntax/map/claimdelta",
+          "readerUsability": "PASS preserved originalsemantic duties and actualcurrent committed artifact/search/Source/previews/diagrams",
+          "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
+          "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
+          "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        }
+      ]
     },
     {
       "id": "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
@@ -50085,6 +50610,146 @@
         "Original113 scopes are separately preserved by exact24minimal qualified revision/impact transitions and89entire unchanged records. Existing checks/history/limits, including A91310 then-openCFG007 wording, are not rewritten as fresh exercises or retroactive acceptance.",
         "Supporting extend/testing host sections and other source context qualify only their explicit inspected ranges/receiving roles, not entire unrelated pages/modules. Source union never upgrades acquired-only input to reviewed implementation.",
         "Artifact metadata readiness is not blob write/read success; metadata precedes blob, missing content may leave retained intent, same-identity completion is bounded by actual protocol. Shutdown does not erase data or create retention/removal facilities. Observer upstream queues/replay and real SDK integration retain actual documented limits."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
+      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-015"
+      ],
+      "pages": [
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/extend/contracts.md"
+      ],
+      "sources": [
+        "scripts/docs-governance.mjs",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/docs-parity-review-assignments.mjs",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/extend/developer-handbook.md",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/tests/docs-source-surface-map.test.mjs",
+        "skills/common/plugins/prompt-contract/src/index.ts",
+        "skills/common/plugins/prompt-contract/package.json",
+        "skills/common/plugins/prompt-contract/README.md",
+        "docs/blueprint/AP09-completeness-audit.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "package.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "skills/common/plugins/prompt-contract/tests/live-function.test.ts",
+        "scripts/lib/docs-route-continuity.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs",
+        "scripts/tests/docs-publication-examples.test.mjs",
+        "scripts/docs-publication-examples.mjs",
+        "scripts/lib/docs-publication-example-coverage.mjs",
+        "scripts/lib/docs-publication-instruction-bindings.mjs",
+        "docs/config/publication-example-claims.json",
+        "docs/generated/inventory/plugin-system.json",
+        "docs/generated/inventory/configuration-schemas.json"
+      ],
+      "checks": [
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual committed96f7 original control terminal0 (193.936s), rawlogSHA c842c89bd3e38c1530c3ef37ebeacc51c1e6a533078213b3d62a88d5069c97e6. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed96f7 original control terminal0 (27.303s), rawlogSHA eea96af4da867f8fb3fa25a2d5260b5b0bb5bf27f60fd0bd69bf05411d911573. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed96f7 original control terminal0 (15.156s), rawlogSHA b647afdfb3094db600e80b6c4d4d3b700b9060c56418258cb818e31e1feff98b. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed96f7 original control terminal0 (111.914s), rawlogSHA d98cca063d5778c5212485306e3e2ca009ba0ab62b32d002e7832f0b134262f0. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed96f7 original control terminal0 (33.178s), rawlogSHA 534a49fd859d7717239a8a8cde153fc3f058339da3ae843c3d2128d6bdc571ef. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed96f7 original control terminal0 (19.672s), rawlogSHA 306c2a7279307e42effa2d099b2ccf07db7669d840054fbd649f045949259e6e. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "Actual committed96f7 original control terminal0 (66.445s), rawlogSHA 31b5e8bedb95a434b6a22d4afb6d1bf4efcc91d336e8eddc5e3b1c69a97ee36a. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution."
+        },
+        {
+          "command": "npm run build --workspace @kubeclaw/prompt-contract",
+          "exitCode": 0,
+          "observation": "Actual existing workspace library build/type or behavior check0 at9b612, complete four-file source vector stable and unchanged at final96f7; no registration, production consumer or live task implied."
+        },
+        {
+          "command": "npm run test --workspace @kubeclaw/prompt-contract",
+          "exitCode": 0,
+          "observation": "Actual existing workspace library build/type or behavior check0 at9b612, complete four-file source vector stable and unchanged at final96f7; no registration, production consumer or live task implied."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs; node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "Both actual original native owner commands0; independently complete map comparison changes only contracts parent dependency and two real package checks, other176page records/full sourceSurfaceMap/top fields exact."
+        },
+        {
+          "command": "node --test scripts/tests/docs-source-surface-map.test.mjs",
+          "exitCode": 0,
+          "observation": "Actual16/16 passed, including real copied governance owner positive/negative source,parent,owner,export,script,check controls and restoration; isolated owned fixture removed."
+        },
+        {
+          "command": "node --test scripts/tests/docs-publication-examples.test.mjs",
+          "exitCode": 0,
+          "observation": "Actual15/15 passed; genuine syntax owner448/both refs/no document execution, samecount wrongworkspace/removedtest/oldverification-body negatives and restore; original447 failure preserved."
+        },
+        {
+          "command": "Pinned autoreview commit42275379927cdffb930cb09d828ff43105191ecf, Codex gpt-5.6-terra/high/P2; exact argv/full14input vectors in mnt015-pinned-code-review-20261028/supported-inline-prompt-route",
+          "exitCode": 0,
+          "observation": "Actual clean no findings/confidence0.97; complete three-file original change and supplied adjacent sources only, not wholePR/globaltechnical or reviewer-executed test proof. Unsupported outside prompt-file attempt retained; supported inline route used identical instructions."
+        },
+        {
+          "command": "Pinned autoreview actual two-file local syntax diff at7e6a08f3, Codex gpt-5.6-terra/high/P2; exact argv/full18input vectors in mnt015-syntax-code-review-20261028",
+          "exitCode": 0,
+          "observation": "Actual clean no findings/confidence0.98; exact current syntax owner/test bytes later committed27f462 and unchanged96f7; complete semantic context, not wholePR or all14MB classifier review."
+        },
+        {
+          "command": "Independent complete MNT015 Source/semanticReader/Quality and inert serializer/PromptLimits source-change reader task",
+          "exitCode": 0,
+          "observation": "Actual whole original five-obligation/seven-family contentPASS; independent inert Find/Understand/Act/STOP4/4 and source roles qualified by final tracked sourceunionV2. No new live/persona/browser or MNT009/A91107 grant."
+        },
+        {
+          "command": "Independent original115 actual semantic preservation plus exact30minimal/85entire unchanged record proposal",
+          "exitCode": 0,
+          "observation": "All8630declared vectors/1794paths and original115summary/checks/limits/history responsibilities qualified;177sourcebytes/Gitobjects and254builtoutputs verified at96f7; one historicalNOT_READY remainsNOT_READY, no new115awards."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole original MNT015 source-to-canonical-page/owner/applicable-check and mandatory independent-topic review responsibility independently passed across seven composed source families and five duties. Existing exported prompt-library missing route genuinely repaired through native metadata/real workspace checks; all affected generation/failure/addition/removal/STOP and historical/source/local/live boundaries retained. Exact current source/code/bindings, meaningful native controls, committed Reader and original115 preservation qualified; not automatic closure from one witness or counts.",
+      "limits": [
+        "MNT015 whole original owner/review maintenance duty only; no associated gate, MNT009/A91107/global API/every-field technical coverage or hosted approval enforcement award.",
+        "Maintenance routes compose native inventory identities, metadata parents, actual package/schema consumers and shared mandatory independent Source/Reader/Quality procedure. No fabricated per-symbol reviewer column, new framework, sixth registration or runtime lookup API.",
+        "Prompt-contract remains dependency-only, unregistered and without production consumer/capability/effect/lifecycle authority. Old five-registration bcf evidence/verification frame is retained; current library is separately source-qualified, not newly deployed.",
+        "Exact final26delivery files retain manifest-qualified complete versus range/analytical/reused semantic responsibility. Handbook owner table only, legacy parity boundary only; full map/14MB classifier analytically bound with substantive finite-delta review and203/71unchanged qualified reuse, not claimed full model text read. Historical/control ledger snapshot is observed non-delivery input, avoiding circular self-registration without validator waiver.",
+        "Actual normalbuild and five automated Reader/reference controls all0 on96f7. Unchanged checkSite validates all28native IDs/results but child details are suppressed: no individually parsed current28input/result log, blind participant/browser/screenreader/accessibility or live/runtime/production claim.",
+        "All115prior completion scopes preserved by30exact revision-plus-appended-impact transitions and85entire unchanged records, including historicalNOT_READY. Old summaries/checks/review/history/limits and every prior impact prefix remain exact; no old practical observations recast as fresh exercises.",
+        "Original MNT015 historical FAIL/prospective-only mapping failure remains preserved as closure history; actual448!=447 syntax failure, unsupported outside prompt-file launch and wrongpublication check-artifact invocation remain unrewritten. Corrected real Reader owners reuse the valid unchanged build, not relabel failed invocation success.",
+        "Pinned reviews cover actual three-file owner/doc/test and two-file syntax/test changes with complete bounded context. Maintained two-scope/two-authority successor was separately independently qualified; no blanket purpose/SourceLock/profile/custody/API/currentrole exemption or wholePRcode review implied."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -67302,13 +67967,39 @@
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
       "catalogueOwner": "documentation automation",
-      "pageOwner": null,
+      "pageOwner": "documentation",
       "readerTask": "Owner und Reviewpflicht bei Codeänderungen",
-      "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
-      "contentKind": "not-in-current-map",
+      "sourceDependencies": [
+        "scripts/docs-governance.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/check-configuration-cli-drift.mjs",
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-tree-boundary.mjs",
+        "scripts/docs-parity-transition.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/documentation-tree-baseline.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/vendor-external-helm-authorities.mjs",
+        "scripts/external-helm-archives.json",
+        "scripts/docs-external-helm-authority-lock.json",
+        "scripts/tests/vendor-external-helm-authorities.test.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-argocd-checked-artifact-authority.json"
+      ],
+      "sourceVerification": "independent-whole-original-source-semanticReader-quality-PASS-at-committed96f7b009",
+      "contentKind": "authored",
       "generator": null,
-      "automatedChecks": [],
+      "automatedChecks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ],
       "acceptanceIds": [],
       "packageGateCandidates": [
         "A911-01",
@@ -67331,17 +68022,55 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
-      "evidence": [],
-      "reviews": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "completionRecord": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+          "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "verdict": "PASS",
+          "scope": "Whole original MNT015 only; no gate/other requirement/global coverage award",
+          "independentOriginalReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-whole-original-20261028/final-whole-original-verdict.json",
+          "finalChecks": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-final-publication-20261028/final-actual-seven-original-controls.json",
+          "original115Preservation": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-original115-preservation-independent-20261028/verdict.json",
+          "qualifiedSourceUnion": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-whole-original-20261028/final-tracked-source-qualification-union-v2.json"
+        }
+      ],
+      "reviews": [
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation",
+          "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "verdict": "PASS",
+          "role": "source",
+          "scope": "Whole original MNT015 coherent-topic duty under AP09sections1-3; old reviews and manual/mapping boundaries preserved",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-whole-original-20261028/final-whole-original-verdict.json"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation",
+          "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "verdict": "PASS",
+          "role": "reader",
+          "scope": "Whole original MNT015 coherent-topic duty under AP09sections1-3; old reviews and manual/mapping boundaries preserved",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-whole-original-20261028/final-whole-original-verdict.json"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation",
+          "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+          "verdict": "PASS",
+          "role": "quality",
+          "scope": "Whole original MNT015 coherent-topic duty under AP09sections1-3; old reviews and manual/mapping boundaries preserved",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt015-whole-original-20261028/final-whole-original-verdict.json"
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L412",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- MNT-015 — Owner und Reviewpflicht bei Codeänderungen — FAIL. Canonical: docs/site/extend/documentation-maintenance.md. FAIL F1/F6: owner/review rules exist prospectively, but required complete machine mapping of public source to page/owner/check/review duty is absent; known generated platform target is already misrouted.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "closureHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- MNT-015 — Owner und Reviewpflicht bei Codeänderungen — FAIL. Canonical: docs/site/extend/documentation-maintenance.md. FAIL F1/F6: owner/review rules exist prospectively, but required complete machine mapping of public source to page/owner/check/review duty is absent; known generated platform target is already misrouted.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ]
     },
     {
       "id": "MNT-016",
