@@ -114,6 +114,7 @@ an environment whose source/tool prerequisites have not been qualified.
 | --- | --- | --- |
 | Page metadata or evidence dependencies | `npm run docs:governance:generate` writes `docs/site/reference/generated-documentation-map.json` | `docs:governance:check` compares expected bytes and validates route metadata. Missing owner/evidence needs source metadata repair, not a map patch. |
 | Deployment/secret setup/Helm/workflow source facts | `npm run docs:inventory` writes its four inventories under `docs/generated/inventory` | `docs:inventory:check` compares those expected JSON bytes. This does not cover every runtime input. |
+| Platform ports, endpoints, stores and policy authorities | After committing the source change, `npm run docs:ap09:platform-inventory -- --revision <full-committed-revision>` writes the platform inventory and its generated reference | `npm run docs:ap09:platform-inventory:check` derives the facts again from the inventory's selected source revision. New store identities require an explicit qualified policy binding. |
 | Declared configuration source families | `npm run docs:inventory:config` writes values, schema, and runtime-input JSON inventories; then selected reference generation | `docs:inventory:config:check` rejects stale bytes and verifies external Helm authorities on its successful-current path. Full discovery may acquire tools/children; it is not just a JSON comparison. |
 | Source-derived reference sections | `npm run docs:generate` updates its owned reference outputs | `docs:generate:check` detects mismatch. Prepare the actual source revision and selected discovery route; do not suppress unsupported inputs. |
 | Plugin catalogue/capability/operator matrix | `npm run docs:publication:generate` writes catalogue/capability pages and the marked operator matrix | `docs:publication:check` first runs helper tests and then compares/checks publication inputs. It does not validate every product example or live effect. |
@@ -144,6 +145,27 @@ an environment whose source/tool prerequisites have not been qualified.
 >
 > These digests identify only that committed snapshot. Recheck current bytes before reusing the procedure.
 > Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. No effect admission or current-output approval follows from these locators.
+
+For store-policy changes, commit the actual parser, selector meanings and product
+inputs before generation. The explicit revision must equal the checked-out
+source commit. The generator does not update the shared documentation revision
+lock. Its existing inventory supplies only the original source-revision identity
+for later checks; generated store facts never become product input. A malformed
+revision, changed source or missing authority is a stop, not permission to select
+the current checkout automatically.
+
+The maintained `store-policy-guidance.json` selects actual configuration,
+constructor, caller and cleanup authorities and explains their meaning. Numeric
+defaults and declarations come from those sources, not copied numbers in the
+guidance. Input-dependent expressions remain unevaluated. A source reference to
+a complete owner is not a claim that every internal algorithm is documented.
+Keep explicit limits for external receivers and for qualified caller contexts.
+Use [Stores, paths, and retention](../reference/stores-and-retention.md) to
+distinguish capacity admission, expiry, compaction and authorized retirement.
+Changes to a selector or derivation require its native source-value and refusal
+controls, the relevant isolated store/endpoint mutation cases, and independent
+source, reader and quality review. Do not refresh a failed baseline merely to
+make the comparison pass.
 
 When the source component owner intentionally retires a package from source
 discovery, reconcile its catalogue page in the same reviewed source change.

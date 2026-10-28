@@ -6,6 +6,7 @@ import { createHash } from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import YAML from 'yaml';
+import { loadStorePolicyGuidance, storePolicyGuidancePath } from './lib/docs-store-policy-guidance.mjs';
 import {
   discoverGoKubernetesConnections,
   discoverGoServerRoutes,
@@ -23,13 +24,75 @@ assert(!isolatedMutation || (sourceRootOverride && root !== scriptRoot),
 const check = process.argv.includes('--check');
 const sourceRevisionLockPath = path.join(root, 'docs/generated/inventory/documentation-source-revision.json');
 assert(fs.existsSync(sourceRevisionLockPath), 'documentation source revision lock is missing');
-const sourceRevision = JSON.parse(fs.readFileSync(sourceRevisionLockPath, 'utf8')).revision;
+const revisionArguments = process.argv.slice(2).filter((value) => value === '--revision');
+assert(revisionArguments.length <= 1, 'platform inventory accepts one --revision');
+const revisionIndex = process.argv.indexOf('--revision');
+const explicitRevision = revisionIndex < 0 ? undefined : process.argv[revisionIndex + 1];
+assert(revisionIndex < 0 || explicitRevision, '--revision requires a full committed revision');
+const jsonTarget = path.join(root, 'docs/generated/inventory/platform-surfaces.json');
+// The existing inventory supplies only its provenance selector, never facts.
+// A generated-output commit can therefore check the original source commit
+// without advancing the shared lock or treating output facts as source input.
+const previousRevision = explicitRevision === undefined && fs.existsSync(jsonTarget)
+  ? JSON.parse(fs.readFileSync(jsonTarget, 'utf8')).sourceRevision : undefined;
+assert(explicitRevision !== undefined || !fs.existsSync(jsonTarget) || typeof previousRevision === 'string',
+  'existing platform inventory must declare its source revision');
+const sourceRevision = explicitRevision
+  ?? previousRevision
+  ?? JSON.parse(fs.readFileSync(sourceRevisionLockPath, 'utf8')).revision;
 assert.match(sourceRevision, /^[0-9a-f]{40}$/u, 'documentation source revision lock is invalid');
+assert.equal(execFileSync('git', ['cat-file', '-t', sourceRevision], {
+  cwd: scriptRoot, encoding: 'utf8',
+}).trim(), 'commit', 'platform inventory source revision must itself identify a commit');
+execFileSync('git', ['merge-base', '--is-ancestor', sourceRevision, 'HEAD'], { cwd: scriptRoot, stdio: 'pipe' });
+// A current source-first build can cite a committed revision without changing
+// the shared lock used by unrelated generators. The legacy locked route and
+// explicitly isolated mutation fixtures retain their existing contract.
+if (explicitRevision !== undefined) {
+  assert(!isolatedMutation && !sourceRootOverride,
+    '--revision requires the checked source worktree, not a detached mutation fixture');
+  const git = (...args) => execFileSync('git', args, { cwd: scriptRoot, encoding: 'utf8' }).trim();
+  assert.equal(fs.realpathSync(root), fs.realpathSync(git('rev-parse', '--show-toplevel')),
+    '--revision requires the checked source worktree');
+  assert.equal(git('rev-parse', 'HEAD'), sourceRevision,
+    '--revision must identify the current committed source');
+  const isSource = (file) => file && !file.startsWith('docs/generated/')
+    && !file.startsWith('docs/site/')
+    && file !== 'docs/blueprint/documentation-completion-matrix.json'
+    && !file.startsWith('docs/blueprint/acceptance-evidence/');
+  const changed = git('diff', '--name-only', sourceRevision, '--', '.').split('\n').filter(isSource);
+  const untracked = git('ls-files', '--others', '--exclude-standard').split('\n').filter(isSource);
+  assert.equal([...new Set([...changed, ...untracked])].sort().join('\n'), '',
+    'platform source revision does not match the current source tree; commit source before generation');
+}
 const busterReadyActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true; selected my-values/buster-values.yaml inherits the chart default false';
 const busterProductActivation = 'requires busterNamespaceBroker.controller.readiness.enabled=true and busterNamespaceBroker.controller.productDecisions.enabled=true (BUSTER_PRODUCT_ENABLED=true); selected my-values/buster-values.yaml inherits the chart default false for both';
-const jsonTarget = path.join(root, 'docs/generated/inventory/platform-surfaces.json');
 const pageTarget = path.join(root, 'docs/site/reference/platform-surfaces-generated.md');
 const mappingTarget = path.join(root, 'docs/config/platform-surface-map.json');
+const storePolicyProducerSources = [
+  'scripts/docs-platform-surface-inventory.mjs',
+  'scripts/platform-surface-source-discovery.mjs',
+  'scripts/lib/docs-store-policy-guidance.mjs',
+  'scripts/lib/docs-store-policy-source.mjs',
+  'package.json', 'package-lock.json', storePolicyGuidancePath,
+];
+if (!isolatedMutation) {
+  for (const source of storePolicyProducerSources) {
+    assert(fs.realpathSync(path.join(root, source)).startsWith(`${fs.realpathSync(root)}${path.sep}`),
+      `DOC_DRIFT_STORE_POLICY: producer escapes physical source root: ${source}`);
+    const entry = execFileSync('git', ['ls-tree', sourceRevision, '--', source], {
+      cwd: scriptRoot, encoding: 'utf8',
+    }).trim();
+    assert(/^(?:100644|100755) blob [a-f0-9]{40}\t/u.test(entry)
+      && entry.split('\t')[1] === source && fs.lstatSync(path.join(root, source)).isFile(),
+    `DOC_DRIFT_STORE_POLICY: producer must be committed at the selected source revision: ${source}`);
+    const bytes = fs.readFileSync(path.join(root, source));
+    const pinned = execFileSync('git', ['cat-file', 'blob', `${sourceRevision}:${source}`], {
+      cwd: scriptRoot, maxBuffer: Math.max(1024 * 1024, bytes.length + 1),
+    });
+    assert(bytes.equals(pinned), `DOC_DRIFT_STORE_POLICY: producer changed after ${sourceRevision}: ${source}`);
+  }
+}
 const acceptanceContractSource = 'docs/blueprint/AP09-acceptance-contract.md';
 const mutationGroups = {
   dependency: ['dependencySignals', 'DOC_DRIFT_DEPENDENCY'],
@@ -63,8 +126,8 @@ const routeSources = [
   'skills/prism/server/worker-service.ts',
   'tools/ops-mcp/src/server.mjs',
 ];
-const goControllerSources = walk(path.join(root, 'cmd/buster-namespace-controller')).map(relative)
-  .filter((file) => file.endsWith('.go') && !file.endsWith('_test.go')).sort();
+const goControllerSources = selectedSourceFiles(['cmd/buster-namespace-controller'],
+  file => file.endsWith('.go') && !file.endsWith('_test.go'));
 const storeSources = [
   'skills/nova/core/effects/locks.ts',
   'skills/nova/core/execution/engine-run.ts',
@@ -140,33 +203,78 @@ const dependencyEvidenceIdentities = new Map([
   ['docker-hub-image-registry', ['docker.io']],
 ]);
 
-function read(relative) { return fs.readFileSync(path.join(root, relative), 'utf8'); }
+// Authenticate every consumed source, including selectors that emit no row and
+// authored explanation pages read after inventory construction. Output JSON is
+// deliberately not read through this function: it selects provenance only.
+const pinnedSourceBytes = new Map();
+function sourceBytes(relative) {
+  assert(typeof relative === 'string' && relative && !path.isAbsolute(relative)
+    && !relative.includes('\\') && !relative.split('/').some(part => !part || part === '.' || part === '..'),
+  'DOC_DRIFT_SOURCE_REVISION: invalid consumed source path');
+  const target = path.join(root, relative), physical = fs.realpathSync(target);
+  assert(physical.startsWith(`${fs.realpathSync(root)}${path.sep}`) && fs.lstatSync(target).isFile(),
+    `DOC_DRIFT_SOURCE_REVISION: consumed source is not a contained regular file: ${relative}`);
+  const bytes = fs.readFileSync(target);
+  if (!isolatedMutation) {
+    let pinned = pinnedSourceBytes.get(relative);
+    if (!pinned) {
+      const entry = execFileSync('git', ['ls-tree', sourceRevision, '--', relative], {
+        cwd: scriptRoot, encoding: 'utf8',
+      }).trim();
+      assert(/^(?:100644|100755) blob [a-f0-9]{40}\t/u.test(entry)
+        && entry.split('\t')[1] === relative,
+      `DOC_DRIFT_SOURCE_REVISION: consumed source is not committed: ${relative}`);
+      pinned = execFileSync('git', ['cat-file', 'blob', `${sourceRevision}:${relative}`], {
+        cwd: scriptRoot, maxBuffer: Math.max(1024 * 1024, bytes.length + 1),
+      });
+      pinnedSourceBytes.set(relative, pinned);
+    }
+    assert(bytes.equals(pinned),
+      `DOC_DRIFT_SOURCE_REVISION: consumed source changed after ${sourceRevision}: ${relative}`);
+  }
+  return bytes;
+}
+function read(relative) { return sourceBytes(relative).toString('utf8'); }
 function walk(directory) {
   if (!fs.existsSync(directory)) return [];
   return fs.readdirSync(directory, { withFileTypes: true }).flatMap((entry) => {
     const target = path.join(directory, entry.name);
-    return entry.isDirectory() ? walk(target) : entry.isFile() ? [target] : [];
+    return entry.isDirectory() ? walk(target) : [target];
   });
 }
 function relative(target) { return path.relative(root, target).split(path.sep).join('/'); }
+// Compare discovery membership before content predicates: deleting a source
+// with no emitted record must not silently preserve an old provenance claim.
+function selectedSourceFiles(directories, predicate = () => true) {
+  const actual = [...new Set(directories.flatMap(directory => walk(path.join(root, directory)))
+    .map(relative).filter(predicate))].sort();
+  if (!isolatedMutation) {
+    const tree = execFileSync('git', ['ls-tree', '-r', '-z', sourceRevision, '--', ...directories], {
+      cwd: scriptRoot, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
+    });
+    const pinned = tree.split('\0').filter(Boolean).map(entry => entry.slice(entry.indexOf('\t') + 1))
+      .filter(predicate).sort();
+    assert.deepEqual(actual, [...new Set(pinned)],
+      `DOC_DRIFT_SOURCE_REVISION: consumed source membership changed: ${directories.join(', ')}`);
+  }
+  return actual;
+}
 function productionSourceFiles(directories) {
-  return directories.flatMap((directory) => walk(path.join(root, directory)))
-    .map(relative)
-    .filter((file) => /\.(?:ts|mjs|js)$/u.test(file)
-      && !/(?:^|\/)(?:tests?|fixtures)\//u.test(file)
-      && !/\.(?:test|spec)\.[^.]+$/u.test(file));
+  return selectedSourceFiles(directories, file => /\.(?:ts|mjs|js)$/u.test(file)
+    && !/(?:^|\/)(?:tests?|fixtures)\//u.test(file)
+    && !/\.(?:test|spec)\.[^.]+$/u.test(file));
 }
 function shippedRuntimeEntrypoints() {
-  const manifests = walk(path.join(root, 'skills')).filter((file) => /(?:^|\/)(?:plugin|openclaw\.plugin)\.json$/u.test(file));
+  const manifests = selectedSourceFiles(['skills'], file => /(?:^|\/)(?:plugin|openclaw\.plugin)\.json$/u.test(file));
   const sources = [];
   for (const manifest of manifests) {
-    const value = JSON.parse(fs.readFileSync(manifest, 'utf8'));
+    const value = JSON.parse(read(manifest));
     const visitModules = (item) => {
       if (Array.isArray(item)) return item.forEach(visitModules);
       if (!item || typeof item !== 'object') return;
       for (const [key, child] of Object.entries(item)) {
         if (key === 'module' && typeof child === 'string') {
-          const target = path.resolve(path.dirname(manifest), child);
+          const target = path.resolve(path.dirname(path.join(root, manifest)), child);
           assert(fs.existsSync(target), `shipped plugin entrypoint is absent: ${relative(target)}`);
           if (/\.(?:ts|mts|mjs|js)$/u.test(target)) sources.push(relative(target));
         } else visitModules(child);
@@ -224,6 +332,10 @@ function redactPublishedIdentity(value) {
 }
 
 function render(name, chart, namespace, values = [], sets = []) {
+  // Helm consumes helpers, schemas, defaults and packaged subcharts as well as
+  // templates that happen to emit a resource. Bind that complete local input.
+  for (const file of selectedSourceFiles([chart])) sourceBytes(file);
+  for (const file of values) sourceBytes(file);
   const args = ['template', name, chart, '--namespace', namespace];
   for (const value of values) args.push('-f', value);
   for (const setting of sets) args.push('--set-string', setting);
@@ -421,6 +533,18 @@ function visit(value, visitor, pathParts = []) {
 }
 
 function deployedStaticObjects(namespace) {
+  // This is the local imported/post-renderer closure of the two selected child
+  // renderers, not a claim to execute deployment or validate a live database.
+  for (const source of [
+    'scripts/render-litellm-deployment.mjs', 'scripts/render-postgresql-recovery.mjs',
+    'scripts/stateful-database-service.mjs', 'scripts/infrastructure-release.mjs',
+    'scripts/infrastructure-image-renderer.mjs', 'scripts/infrastructure-chart.mjs',
+    'scripts/infrastructure-oci-chart.mjs', 'scripts/infrastructure-chart-lock.mjs',
+    'scripts/postgresql-recovery-preflight.mjs', 'scripts/postgresql-recovery.sh',
+    'versions.json', 'my-values/infra/litellm-config.yaml',
+    'my-values/infra/litellm-deployment.yaml', 'my-values/infra/postgresql-recovery.yaml',
+    'my-values/infra/postgresql-values.yaml',
+  ]) sourceBytes(source);
   const litellmSource = 'my-values/infra/litellm-deployment.yaml';
   const litellmRendered = execFileSync(process.execPath, [
     'scripts/render-litellm-deployment.mjs',
@@ -478,8 +602,8 @@ function renderedObjects() {
     }],
   ];
   const staticFiles = [
-    ...walk(path.join(root, 'my-values/infra')).filter((file) => /\.ya?ml$/u.test(file)),
-    ...walk(path.join(root, 'gitops/platform')).filter((file) => /\.ya?ml$/u.test(file)),
+    ...selectedSourceFiles(['my-values/infra', 'gitops/platform'], file => /\.ya?ml$/u.test(file))
+      .map(file => path.join(root, file)),
   ];
   const staticNamespaces = staticNamespaceAuthorities();
   return [
@@ -488,7 +612,7 @@ function renderedObjects() {
     ...staticFiles.flatMap((file) => {
       const origin = relative(file);
       if (origin === 'my-values/infra/litellm-deployment.yaml') return [];
-      return objects(fs.readFileSync(file, 'utf8'), origin, staticNamespaces.get(origin));
+      return objects(read(relative(file)), origin, staticNamespaces.get(origin));
     }),
   ];
 }
@@ -640,9 +764,8 @@ function build() {
     'the canonical AP09.7 acceptance contract must define A97-01 through A97-12 exactly once and in order');
   const shippedEntrypointSources = shippedRuntimeEntrypoints();
   const secretLiteralSources = [
-    ...walk(path.join(root, 'my-values')),
-    ...walk(path.join(root, 'gitops/platform')),
-    ...walk(path.join(root, 'charts')).filter((file) => /values\.ya?ml$/u.test(file)),
+    ...selectedSourceFiles(['my-values', 'gitops/platform'], file => /\.ya?ml$/u.test(file)).map(file => path.join(root, file)),
+    ...selectedSourceFiles(['charts'], file => /values\.ya?ml$/u.test(file)).map(file => path.join(root, file)),
   ].filter((file) => /\.ya?ml$/u.test(file)).map(relative).sort();
   const discoveredRouteSources = [...new Set([
     ...routeSources,
@@ -915,6 +1038,16 @@ function build() {
   const opsSource = read('tools/ops-mcp/src/server.mjs');
   const opsTools = [...opsSource.matchAll(/server\.registerTool\(\s*['"]([^'"]+)['"]/gu)]
     .map((match) => ({ value: match[1], source: 'tools/ops-mcp/src/server.mjs', line: lineOf(opsSource, match.index) }));
+  const stores = distinct([
+    ...storeRecords,
+    ...resources.filter((item) => item.kind === 'PersistentVolumeClaim')
+      .map((item) => ({ value: `pvc:${item.namespace}/${item.name}`, source: item.source, line: item.line })),
+    ...statefulSetClaimStores(rendered),
+    ...externalStoreDefinitions.map((item) => storeFromNeedle(...item)),
+  ]);
+  const storePolicyFacts = loadStorePolicyGuidance(root, stores, sourceRevision, {
+    gitRoot: scriptRoot, isolatedMutation,
+  });
 
   const inventory = {
     schemaVersion: 'kubeclaw-platform-surfaces.v1',
@@ -960,6 +1093,13 @@ function build() {
           entrypoints: ['build', 'recordsFromRegex', 'renderedObjects', 'statefulSetClaimStores', 'storeFromNeedle'],
           mode: 'Selected source literal .json/.jsonl paths and selected same-line path.join suffixes; rendered PersistentVolumeClaim identities; StatefulSet volumeClaimTemplates expanded across selected replicas; maintained external store needles.',
         },
+        policyAuthority: {
+          registry: storePolicyGuidancePath,
+          implementation: ['scripts/lib/docs-store-policy-guidance.mjs', 'scripts/lib/docs-store-policy-source.mjs'],
+          mode: 'Reviewed family meanings bind every discovered identity and explicitly selected dynamic store instances to actual constructor, caller, configuration and cleanup authorities. TypeScript AST declarations and YAML values are read without executing runtime owners; shell and SQL authorities remain complete literal sources. Qualified caller contexts are separately labelled, not evaluated policy values.',
+          selectedSources: 'sourceScopes.storePolicySources',
+          unknowns: 'Input-dependent expressions are not evaluated. Selected external declarations do not prove effective upstream retention. Absence of a general cleanup API is bounded to the inspected owner, not inferred from failed path discovery.',
+        },
         exclusions: [
           'Production-root walk uses the same .ts/.mjs/.js and test/tests/fixtures plus *.test.* / *.spec.* exclusions as Endpoint. Maintained seeds are included independently.',
           'Persistence APIs not matched by the candidate filter and path-literal parsers, other roots, dynamic paths and unselected render profiles are not claimed complete.',
@@ -985,6 +1125,7 @@ function build() {
       },
     },
     sourceScopes: { shippedEntrypointSources, routeSources: discoveredRouteSources, goControllerSources, storeSources: discoveredStoreSources,
+      storePolicySources: storePolicyFacts.policySourcePaths,
       renderedProfiles: ['helm:nova', 'helm:buster', 'helm:prism-agent', 'helm:prism', 'helm:ops-default', 'helm:ops-tailscale'],
       renderProfileStates: [
         ...['helm:nova', 'helm:buster', 'helm:prism-agent', 'helm:prism', 'helm:ops-default'].map((profile) => ({
@@ -1008,13 +1149,9 @@ function build() {
     secretReferences: distinct(secretReferences),
     endpoints: distinct(routeRecords),
     outboundConnections: distinct(outboundConnections),
-    stores: distinct([
-      ...storeRecords,
-      ...resources.filter((item) => item.kind === 'PersistentVolumeClaim')
-        .map((item) => ({ value: `pvc:${item.namespace}/${item.name}`, source: item.source, line: item.line })),
-      ...statefulSetClaimStores(rendered),
-      ...externalStoreDefinitions.map((item) => storeFromNeedle(...item)),
-    ]),
+    stores: storePolicyFacts.stores,
+    storePolicies: storePolicyFacts.storePolicies,
+    additionalStoreInstances: storePolicyFacts.additionalStoreInstances,
     events: distinct([...lifecycleEvents, ...domainEvents, ...ingressEvents]),
     opsTools: distinct(opsTools),
   };
@@ -1032,7 +1169,7 @@ function build() {
     .filter((source) => typeof source === 'string' && !source.startsWith('helm:')));
   for (const source of maintainedSources) {
     assert(fs.existsSync(path.join(root, source)), `discovered source is absent: ${source}`);
-    if (!isolatedMutation && !source.startsWith('docs/site/')) {
+    if (!isolatedMutation) {
       const pinned = execFileSync('git', ['show', `${sourceRevision}:${source}`], {
         cwd: root, encoding: 'utf8', maxBuffer: 32 * 1024 * 1024,
       });
@@ -1043,8 +1180,9 @@ function build() {
 }
 
 function mappingFor(inventory) {
+  selectedSourceFiles(['docs/config'], file => file === 'docs/config/platform-surface-map.json');
   if (!fs.existsSync(mappingTarget)) return undefined;
-  const mapping = JSON.parse(fs.readFileSync(mappingTarget, 'utf8'));
+  const mapping = JSON.parse(read(relative(mappingTarget)));
   assert.equal(mapping.schemaVersion, 'kubeclaw-ap09-platform-surface-map.v1');
   for (const group of ['dependencies', 'dependencySignals', 'resources', 'secretReferences', 'endpoints', 'outboundConnections', 'stores', 'events', 'opsTools']) {
     const values = [...new Set(inventory[group].map((item) => item.value))].sort();
@@ -1066,6 +1204,7 @@ function mappingFor(inventory) {
     assert.equal(mapping[group]?.reviewedIdentitiesSha256, mappingReviewDigest(group, mapping[group]),
       `DOC_DRIFT_MAP_REVIEW: ${group} identities or explanation target changed without an independent map review`);
   }
+  for (const policy of inventory.storePolicies) assertExplanationTarget(policy.explanation, `store policy ${policy.id}`);
   return mapping;
 }
 
@@ -1077,6 +1216,8 @@ function headingAnchor(heading) {
 const explanationAnchorCache = new Map();
 function assertExplanationTarget(target, group) {
   const [file, anchor] = target.split('#');
+  assert(path.join(root, file) !== pageTarget,
+    'DOC_DRIFT_MAP_REVIEW: generated platform output cannot be its own source explanation');
   assert(fs.existsSync(path.join(root, file)), `DOC_DRIFT_MAP_REVIEW: ${group} explanation page is absent: ${file}`);
   const anchors = explanationAnchorCache.get(file)
     ?? [...read(file).matchAll(/^#{1,6}\s+(.+)$/gmu)].map((match) => headingAnchor(match[1]));
@@ -1103,6 +1244,8 @@ function sourceLink(item) {
 }
 function pageLink(target) {
   const [file, anchor] = target.split('#');
+  assert(path.join(root, file) !== pageTarget,
+    'DOC_DRIFT_MAP_REVIEW: generated platform output cannot be its own source explanation');
   const relativeTarget = path.posix.relative('docs/site/reference', file);
   return `[explanation](${relativeTarget}#${anchor})`;
 }
@@ -1153,6 +1296,54 @@ function markdown(inventory, mapping) {
     '| --- | --- | --- | --- | --- | --- |',
     ...inventory.resources.map((item) => `| \`${item.value.replaceAll('|', '\\|')}\` | \`${item.lifecycle}\` | \`${item.activationState}\` | ${item.activationCondition ?? 'selected manifest or profile renders this resource'} | ${sourceLink(item)} | ${pageLink(mapping.resources.identityTargets[item.value])} |`), '',
   ];
+  const cell = value => String(value).replaceAll('|', '\\|').replaceAll('\n', ' ');
+  const literal = value => {
+    const text = typeof value === 'string' && !/[\r\n]/u.test(value) ? value : JSON.stringify(value);
+    const width = Math.max(1, ...[...text.matchAll(/`+/gu)].map(match => match[0].length + 1));
+    const ticks = '`'.repeat(width);
+    return `${ticks} ${cell(text)} ${ticks}`;
+  };
+  const leaves = (value, prefix = '') => {
+    if (value === null || typeof value !== 'object') return [[prefix || '(value)', value]];
+    return Object.entries(value).flatMap(([key, child]) => leaves(child, prefix ? `${prefix}.${key}` : key));
+  };
+  const policySection = [
+    '## Store Policies', '',
+    'Choose the actual store instance and its caller before interpreting a limit. A fallback applies only when the input is absent; a configured expression is not an observed effective value. Capacity admission, lease expiry, pending-evidence reclamation, domain retirement, backup freshness and physical-media deletion are different operations.', '',
+    'The source tables identify actual declarations and rules without running them. A selected chart value does not prove upstream enforcement or a live mount. An owner with no general deletion method does not establish that no external cleanup tool exists. Follow the linked operating explanation and stop when ownership or quiescence is uncertain.', '',
+    '| Discovered identity | Source | Policy families | Interpretation limit |',
+    '| --- | --- | --- | --- |',
+    ...inventory.stores.map(item => `| ${literal(item.value)} | ${sourceLink(item)} | ${item.policyFamilies.map(id => `[${id}](#${id})`).join(', ')} | ${cell(item.interpretationLimits.join(' ') || 'Use the selected policy and caller; this literal alone is not deletion permission.')} |`), '',
+    '### Additional Store Instances', '',
+    'These configured or dynamic path families do not become one shared store merely because their implementation uses the same filename.', '',
+    '| Instance | Path selection | Actual policy | Boundary |', '| --- | --- | --- | --- |',
+    ...inventory.additionalStoreInstances.map(item => `| ${literal(item.id)} | ${cell(item.pathIdentity)} | ${item.policyFamilies.map(id => `[${id}](#${id})`).join(', ')} | ${cell(item.publicBoundary)} |`), '',
+    ...inventory.storePolicies.flatMap(policy => {
+      const values = policy.authorities.flatMap(authority => {
+        const value = Object.hasOwn(authority, 'value') ? authority.value : authority.fallbackValue;
+        if (value === undefined) return [];
+        const meaning = Object.hasOwn(authority, 'value') ? 'Literal declaration; not a live observation' : 'Nullish fallback only; not the selected effective value';
+        return leaves(value).map(([key, scalar]) => `| ${literal(authority.id)} | ${literal(key)} | ${literal(scalar)} | ${cell(authority.unit ?? 'See the selected field and receiver')} | ${meaning} |`);
+      });
+      return [
+        `### ${policy.id}`, '',
+        `Owner: ${policy.owner}`, '',
+        '| Policy duty | Meaning |', '| --- | --- |',
+        ...[['Kind', policy.category], ['Path and instance', policy.pathMeaning], ['Retention and capacity boundary', policy.retentionMeaning],
+          ['Cleanup trigger', policy.cleanupTrigger], ['Failure and stop condition', policy.failureBoundary], ['Retained authority', policy.retainedAuthority]]
+          .map(([key, value]) => `| ${key} | ${cell(value)} |`), '',
+        `Operating procedure: ${pageLink(policy.explanation)}.`, '',
+        '| Selected authority | Role | Source |', '| --- | --- | --- |',
+        ...policy.authorities.map(authority => `| ${literal(authority.id)} | ${cell(authority.role)} | ${sourceLink({ source: authority.source, line: authority.startLine })} |`), '',
+        ...(values.length ? ['| Authority | Field | Declared value | Unit or scope | Limit |', '| --- | --- | --- | --- | --- |', ...values, ''] : [
+          'No independent numeric default is inferred from this selected rule. Read the caller-selected expression and receiver at the source above.', '',
+        ]),
+        ...(policy.qualifiedContexts ?? []).flatMap(context => [
+          `Qualified caller context: ${sourceLink({ source: context.source, line: context.startLine })}. ${cell(context.role)}`, '',
+        ]),
+      ];
+    }),
+  ];
   return `${[
     '# Platform Surface Inventory', '',
     'Status: current',
@@ -1187,6 +1378,7 @@ function markdown(inventory, mapping) {
     ...activationSection('HTTP Endpoints', 'endpoints', '`active` routes are admitted by the selected runtime. `conditional` routes also require the stated listener or feature switch. `ANY` means the handler does not restrict the method at this routing boundary.'),
     ...activationSection('Outbound HTTP Connections', 'outboundConnections', '`active` calls can be made by the selected runtime. `conditional` calls also require the stated feature or operation.'),
     ...section('State And Cache Names', 'stores', 'These identities include persistent stores and explicitly named ephemeral caches from declared state-owning runtime sources. Kubernetes claims appear in Runtime Resources.'),
+    ...policySection,
     ...section('Runtime Events', 'events', 'This list joins the closed lifecycle-event type, the shipped Nova OpenClaw domain-event adapter, and the active Buster agent-observability ingress contract.'),
     ...section('Ops MCP Tools', 'opsTools', 'These tool names are available when the Ops service is active.'),
   ].join('\n')}\n`;
@@ -1215,6 +1407,12 @@ if (!mapping) {
   assertReaderPage(page);
   const outputs = new Map([[jsonTarget, `${JSON.stringify(inventory, null, 2)}\n`], [pageTarget, page]]);
   if (check) {
+    if (fs.existsSync(jsonTarget)) {
+      const previous = JSON.parse(fs.readFileSync(jsonTarget, 'utf8'));
+      assert(JSON.stringify(previous.storePolicies) === JSON.stringify(inventory.storePolicies)
+        && JSON.stringify(previous.additionalStoreInstances) === JSON.stringify(inventory.additionalStoreInstances),
+      'DOC_DRIFT_STORE_POLICY: source-derived store policy declarations or qualified authority bindings are stale');
+    }
     for (const [target, content] of outputs) assert(fs.existsSync(target) && fs.readFileSync(target, 'utf8') === content,
       `${relative(target)} is stale; run npm run docs:ap09:platform-inventory`);
     process.stdout.write(`${JSON.stringify({ ok: true, dependencySignals: inventory.dependencySignals.length, resources: inventory.resources.length, secrets: inventory.secretReferences.length, endpoints: inventory.endpoints.length, outboundConnections: inventory.outboundConnections.length, stores: inventory.stores.length, events: inventory.events.length, opsTools: inventory.opsTools.length })}\n`);

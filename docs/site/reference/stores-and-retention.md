@@ -46,7 +46,7 @@ first two hexadecimal characters, and `rest` is the remaining hash.
 | Buster configured `stateRoot` records and `stateRoot/results/blobs/...`; separate `runtimeRoot` | Remote-plan service, runner, result/evidence and retained-source readers | Accepted jobs, source archives/bindings, result blobs, runtime evidence and receipts | Back up the matched group. A completed status alone does not prove every attempt/cleanup/evidence source is disposable |
 | Worker `<ownershipRoot>/owners.json`, `supervisor/lifetime`; caller-selected spool `<root>/{stdout,stderr}` | Bound native supervisor/host owner and original result readers | Host/boot/claim identity and process output/receipts | No generic delete-on-restart or tmp cleanup. Preserve host binding, active ownership and validated output |
 | Prism selected PostgreSQL `prism` schema plus `ARTIFACT_ROOT/HH/<fullhash>` | Prism SQL/application and immutable artifact store | Database rows reference immutable artifacts; one matched group with role/key authority | DB-only restoration can lose referenced objects; artifact-only integrity is not application recovery |
-| `prism.worker_request_nonce`; separate RAM engine cache | Nonce replay protection vs `EngineExecutionCache` optimization | Nonce table is persistent security state; RAM cache is not durable Control request/result authority | Expiry index alone does not prove a cleanup job. Cache restart loses entries, not permission to replay an uncertain durable operation |
+| `prism.worker_request_nonce`; separate RAM engine cache | Nonce replay protection vs `EngineExecutionCache` optimization | Nonce table is persistent security state; RAM cache is not durable Control request/result authority | The authenticated-request receiver removes a bounded batch of expired nonces before insertion; an expiry index alone does not prove a periodic cleanup job. Cache restart loses entries, not permission to replay an uncertain durable operation |
 | Redis stream/dedup keys and receiver-selected persistence | Selected transport and downstream receiver | Stream data, dedup window, RDB/AOF files and physical volume are separate dimensions | RDB is a snapshot format; AOF is an append-only persistence file. Migration preparation is not client cutover or complete recovery |
 | Backup root `backup-*` and `.incomplete-*` groups | Named backup owner and original restore/application consumers | DB dump, artifact set/index, metadata and checksums, plus external credentials/keys | Keep incomplete failures and previous completed media; no automatic age-prune policy inferred |
 
@@ -74,6 +74,25 @@ first two hexadecimal characters, and `rest` is the remaining hash.
 
 **Source — RAM optimization versus nonce persistence and Redis policy:**
 [engine RAM cache default limits and purpose](../../../skills/prism/engine/execution-cache.ts#L1-L24) (`skills/prism/engine/execution-cache.ts:1–24`, current-checkout SHA-256 `13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a`). [bounded completed-entry eviction](../../../skills/prism/engine/execution-cache.ts#L69-L82) (`skills/prism/engine/execution-cache.ts:69–82`, current-checkout SHA-256 `13c9664a99457aadcb2de822dc82a63764d3afe799fd37a2ab1bedb097ccf90a`). [nonce expiry column/index declaration only](../../../skills/prism/storage/migrations/003_worker_nonce.sql#L1-L9) (`skills/prism/storage/migrations/003_worker_nonce.sql:1–9`, current-checkout SHA-256 `55af2848fecbd3d99fbe819a2eb2d0f3bc155efbb5b1b483765121a4c1c40768`). [Redis stream trimming and separate dedup expiry](../../../skills/common/plugins/redis-transport/src/adapter.ts#L14-L46) (`skills/common/plugins/redis-transport/src/adapter.ts:14–46`, current-checkout SHA-256 `15c91e7eed9a98784d6fbdcb931160202295ea6ef20b1c18367bcd9eaab4cc01`).
+
+### Nonce expiry is request-triggered cleanup
+
+Prism validates the internal request timestamp, nonce format and HMAC before
+calling `PostgresNonceStore.consume`. That receiver deletes a bounded batch of
+rows whose expiry is at or before the database clock, then inserts the new
+audience/digest identity. A conflicting identity rejects replay. Database or
+cleanup failure prevents successful authentication.
+
+This is opportunistic cleanup during authenticated requests, not a timer or a
+guaranteed complete sweep. Do not delete unexpired replay authority or infer a
+general PostgreSQL retention rule. The separate engine cache evicts only RAM
+optimization entries; its eviction cannot retire a durable operation.
+
+**Source — actual nonce receiver and authentication order:**
+[bounded expired-row removal before insertion](https://github.com/datrab/kubeclaw/blob/30478e1098332aff4422f0e1e18d48c105a52a8f/skills/prism/server/internal-auth.ts#L36-L49)
+and [validated request before nonce consumption](https://github.com/datrab/kubeclaw/blob/30478e1098332aff4422f0e1e18d48c105a52a8f/skills/prism/server/internal-auth.ts#L51-L87).
+These declarations establish the cleanup boundary, not an executed database
+cleanup or recovery result.
 
 ## Distinguish retirement from arbitrary cleanup
 
@@ -147,7 +166,7 @@ rejected by that ledger. Retain the exact migration/application versions and
 use the original consumer's supported direction; do not invent rollback.
 
 **Source — matched backup, limited smoke test and native restore boundaries:**
-[database-first immutable artifact backup and completed group](../../../charts/prism/files/prism-backup.sh#L67-L115) (`charts/prism/files/prism-backup.sh:67–115`, current-checkout SHA-256 `4164f2d8237a83359a797fc397f49c3405380792cdfc6e8d061ec49efcec8135`). [same-server temporary SQL smoke check](../../../charts/prism/files/prism-backup.sh#L127-L153) (`charts/prism/files/prism-backup.sh:127–153`, current-checkout SHA-256 `4164f2d8237a83359a797fc397f49c3405380792cdfc6e8d061ec49efcec8135`). [different-server empty-target native restore boundary](../../../scripts/postgresql-recovery.sh#L141-L156) (`scripts/postgresql-recovery.sh:141–156`, current-checkout SHA-256 `86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b`). [AOF restart proof with no client cutover](../../../scripts/redis-prepare-migration.sh#L79-L107) (`scripts/redis-prepare-migration.sh:79–107`, current-checkout SHA-256 `baaa7e6c33e72ec2ca0133ca44fdbf6335bd6394d9d81259e073e62ada360e4b`). [ordered SQL-name ledger under migration transaction lock](../../../skills/prism/storage/index.ts#L21-L72) (`skills/prism/storage/index.ts:21–72`, current-checkout SHA-256 `e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199`).
+[database-first immutable artifact backup and completed group](../../../charts/prism/files/prism-backup.sh#L86-L138) (`charts/prism/files/prism-backup.sh:86–138`, current-checkout SHA-256 `6823dff4e65d056a82676d7970474921d55cd9573960a82344f15dd0eeaffece`). [same-server temporary SQL smoke check](../../../charts/prism/files/prism-backup.sh#L147-L176) (`charts/prism/files/prism-backup.sh:147–176`, current-checkout SHA-256 `6823dff4e65d056a82676d7970474921d55cd9573960a82344f15dd0eeaffece`). [different-server empty-target native restore boundary](../../../scripts/postgresql-recovery.sh#L141-L156) (`scripts/postgresql-recovery.sh:141–156`, current-checkout SHA-256 `86601e569d0de0c138a59632d0c70f601f47f7a1e82e0ed8b5bb18d7cd310f0b`). [AOF restart proof with no client cutover](../../../scripts/redis-prepare-migration.sh#L79-L107) (`scripts/redis-prepare-migration.sh:79–107`, current-checkout SHA-256 `baaa7e6c33e72ec2ca0133ca44fdbf6335bd6394d9d81259e073e62ada360e4b`). [ordered SQL-name ledger under migration transaction lock](../../../skills/prism/storage/index.ts#L21-L72) (`skills/prism/storage/index.ts:21–72`, current-checkout SHA-256 `e5105909e5f1abf1eb2178270dd63d1b8e2aa337177dcb620b6ae43199a3a199`).
 
 ## Audit and inspection are not universally write-free
 

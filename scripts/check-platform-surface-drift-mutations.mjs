@@ -5,6 +5,7 @@ import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import YAML from 'yaml';
 
 const root = path.resolve(import.meta.dirname, '..');
 const inventoryScript = path.join(root, 'scripts/docs-platform-surface-inventory.mjs');
@@ -13,6 +14,117 @@ const isolatedSourceRoot = path.join(temporaryParent, 'source');
 const operations = ['add', 'change', 'remove'];
 
 const mutations = {
+  'store-policy-asserted-object': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY',
+    source: 'skills/nova/core/observability/reconciler.ts',
+    apply(operation, source) {
+      const original = '  maximumPendingEvidenceAgeMs: 60 * 60 * 1000,\n';
+      if (operation === 'add') return replaceOnce(source, original, `${original}  sourceMutationMaximumBytes: 1024,\n`);
+      if (operation === 'change') return replaceOnce(source, original, '  maximumPendingEvidenceAgeMs: 2 * 60 * 1000,\n');
+      return replaceOnce(source, original, '');
+    },
+    verify(operation, inventory) {
+      const value = policyAuthority(inventory, 'nova-reconciliation-observability-defaults',
+        item => item.selector.variable === 'EMBEDDED_ATTEMPT_LIMITS').value;
+      if (operation === 'add') assert.equal(value.sourceMutationMaximumBytes, 1024);
+      else if (operation === 'change') assert.equal(value.maximumPendingEvidenceAgeMs, 120000);
+      else assert(!Object.hasOwn(value, 'maximumPendingEvidenceAgeMs'));
+    },
+  },
+  'store-policy-constructor-object': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY',
+    source: 'skills/buster/engine/test-gates/runner.ts',
+    apply(operation, source) {
+      const original = '        maximumMetadataBytes: 256 * 1024 * 1024,\n';
+      if (operation === 'add') return replaceOnce(source, original, `${original}        sourceMutationMaximumBytes: 1024,\n`);
+      if (operation === 'change') return replaceOnce(source, original, '        maximumMetadataBytes: 128 * 1024 * 1024,\n');
+      return replaceOnce(source, original, '');
+    },
+    verify(operation, inventory) {
+      const value = policyAuthority(inventory, 'buster-runner-observability-defaults',
+        item => item.selector.construct === 'FileDurableAttemptStore').value;
+      if (operation === 'add') assert.equal(value.sourceMutationMaximumBytes, 1024);
+      else if (operation === 'change') assert.equal(value.maximumMetadataBytes, 134217728);
+      else assert(!Object.hasOwn(value, 'maximumMetadataBytes'));
+    },
+  },
+  'store-policy-yaml-resource-declaration': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY',
+    source: 'charts/prism/values.yaml',
+    apply(operation, source) {
+      const value = YAML.parse(source), requests = value.backup.resources.requests;
+      if (operation === 'add') requests['ephemeral-storage'] = '1Gi';
+      else if (operation === 'change') requests.memory = '512Mi';
+      else delete requests.memory;
+      return YAML.stringify(value);
+    },
+    verify(operation, inventory) {
+      const requests = policyAuthority(inventory, 'prism-backups', item => item.id === 'policy').value.resources.requests;
+      if (operation === 'add') assert.equal(requests['ephemeral-storage'], '1Gi');
+      else if (operation === 'change') assert.equal(requests.memory, '512Mi');
+      else assert(!Object.hasOwn(requests, 'memory'));
+    },
+  },
+  'store-policy-nullish-fallback': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY',
+    source: 'skills/common/plugins/telemetry-store/src/adapter.ts',
+    projectionRefusal: operation => operation !== 'change',
+    apply(operation, source) {
+      const original = '  const maxRecordBytes = Number(context.config.maxRecordBytes ?? 1_048_576);\n';
+      if (operation === 'add') return `${source}\nfunction sourceMutation(){ const maxRecordBytes = 1; }\n`;
+      if (operation === 'change') return replaceOnce(source, original,
+        '  const maxRecordBytes = Number(context.config.maxRecordBytes ?? 2_097_152);\n');
+      return replaceOnce(source, original, '');
+    },
+    verify(_operation, inventory) {
+      const fact = policyAuthority(inventory, 'common-telemetry-store-instance',
+        item => item.selector.variable === 'maxRecordBytes');
+      assert.equal(fact.fallbackValue, 2097152);
+      assert(!Object.hasOwn(fact, 'value'));
+    },
+  },
+  'store-policy-named-caller-fallback': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY',
+    source: 'skills/prism/config/native-worker.ts',
+    projectionRefusal: operation => operation !== 'change',
+    apply(operation, source) {
+      const original = "    maximumRecords: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS', 65536),\n";
+      if (operation === 'add') return replaceOnce(source, original,
+        `${original}    sourceMutationMaximumRecords: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS', 1),\n`);
+      if (operation === 'change') return replaceOnce(source, original,
+        "    maximumRecords: read('PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS', 65537),\n");
+      return replaceOnce(source, original, '');
+    },
+    verify(_operation, inventory) {
+      const fact = policyAuthority(inventory, 'worker-native-ownership',
+        item => item.selector.firstArgument === 'PRISM_NATIVE_MAXIMUM_OWNERSHIP_RECORDS');
+      assert.equal(fact.value, 65537);
+      assert.equal(fact.representation, 'literal-call-argument');
+    },
+  },
+  'store-policy-container-identity': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY', operations: ['add'],
+    source: 'my-values/buster-values.yaml', projectionRefusal: () => true,
+    apply(_operation, source) {
+      const value = YAML.parse(source);
+      // Keep the actual required Buster container present so Helm admits this
+      // valid positional mutation; a rename is already rejected by Helm itself.
+      value.extraContainers.unshift({ name: 'unrelated-source-mutation',
+        resources: {}, volumeMounts: [], env: [] });
+      return YAML.stringify(value);
+    },
+  },
+  'store-policy-environment-identity': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY', operations: ['change'],
+    source: 'my-values/buster-values.yaml', projectionRefusal: () => true,
+    apply(_operation, source) {
+      const value = YAML.parse(source), env = value.extraContainers[0].env;
+      const index = env.findIndex(item => item.name === 'CONTAINER_BUILD_BUILDKIT_HOST');
+      assert(index > 0, 'actual named BuildKit socket environment is missing');
+      [env[index - 1], env[index]] = [env[index], env[index - 1]];
+      return YAML.stringify(value);
+    },
+  },
   dependency: {
     diagnostic: 'DOC_DRIFT_DEPENDENCY',
     source: 'my-values/buster-values.yaml',
@@ -207,6 +319,14 @@ const mutations = {
   },
 };
 
+function policyAuthority(inventory, family, predicate) {
+  const policy = inventory.storePolicies.find(item => item.id === family);
+  assert(policy, `missing policy family ${family}`);
+  const authorities = policy.authorities.filter(predicate);
+  assert.equal(authorities.length, 1, `expected one actual policy declaration in ${family}`);
+  return authorities[0];
+}
+
 function replaceOnce(source, needle, replacement) {
   const first = source.indexOf(needle);
   assert(first >= 0, `mutation anchor is absent: ${JSON.stringify(needle)}`);
@@ -294,6 +414,11 @@ for (const signal of ['SIGINT', 'SIGTERM']) process.once(signal, () => {
 const results = [];
 const mapReviewResults = [];
 try {
+  const policyTests = spawnSync(process.execPath, ['--test',
+    'tests/documentation/store-policy-source.test.mjs', 'tests/documentation/store-policy-guidance.test.mjs'], {
+    cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
+  });
+  assert.equal(policyTests.status, 0, `native store policy source/custody tests failed:\n${policyTests.stdout}\n${policyTests.stderr}`);
   const baseline = runInventory(root);
   assert.equal(baseline.status, 0,
     `platform inventory baseline failed:\n${baseline.stderr || baseline.stdout}`);
@@ -358,15 +483,33 @@ try {
       assert.notEqual(after, before, `${kind}:${operation} did not change ${relative}`);
       fs.writeFileSync(target, after);
 
+      const expectedDiagnostic = typeof mutation.diagnostic === 'function'
+        ? mutation.diagnostic(operation) : mutation.diagnostic;
+      if (mutation.verify || mutation.projectionRefusal) {
+        const projected = runInventory(isolatedSourceRoot, true, ['--print-inventory']);
+        if (mutation.projectionRefusal?.(operation)) {
+          assert.notEqual(projected.status, 0, `${kind}:${operation} accepted an ambiguous/missing authority`);
+          assert.match(`${projected.stdout}\n${projected.stderr}`, new RegExp(expectedDiagnostic, 'u'));
+        } else {
+          assert.equal(projected.status, 0, `${kind}:${operation} could not derive changed source facts:\n${projected.stderr}`);
+          mutation.verify(operation, JSON.parse(projected.stdout));
+        }
+      }
+
       const result = runInventory(isolatedSourceRoot, true);
       const output = `${result.stdout ?? ''}\n${result.stderr ?? ''}`;
       const diagnostics = [...new Set(output.match(/\bDOC_DRIFT_[A-Z_]+\b/gu) ?? [])];
       assert.notEqual(result.status, 0, `${kind}:${operation} unexpectedly passed the drift check`);
-      assert.deepEqual(diagnostics, [mutation.diagnostic],
+      assert.deepEqual(diagnostics, [expectedDiagnostic],
         `${kind}:${operation} produced the wrong drift diagnostic:\n${output}`);
-      results.push({ kind, operation, diagnostic: mutation.diagnostic, source: relative });
+      results.push({ kind, operation, diagnostic: expectedDiagnostic, source: relative,
+        ...(mutation.verify || mutation.projectionRefusal ? { actualPolicyProjectionChecked: true } : {}) });
 
       fs.writeFileSync(target, before);
+      if (mutation.verify || mutation.projectionRefusal) {
+        const restored = runInventory(isolatedSourceRoot, true);
+        assert.equal(restored.status, 0, `${kind}:${operation} did not restore the original green source fixture:\n${restored.stderr}`);
+      }
     }
   }
 

@@ -35889,6 +35889,14 @@
       "originalPath": "docs/blueprint/verification-command-guidance.json",
       "expectedPath": "docs/blueprint/verification-command-guidance.json",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/store-policy-guidance.json",
+      "class": "internal-documentation-input",
+      "purpose": "Authored store-policy meanings and exact native source selectors consumed by scripts/lib/docs-store-policy-guidance.mjs for scripts/docs-platform-surface-inventory.mjs. Mechanical values come from product sources; this is not runtime configuration, an execution receipt or acceptance state.",
+      "originalPath": "docs/blueprint/store-policy-guidance.json",
+      "expectedPath": "docs/blueprint/store-policy-guidance.json",
+      "introducedAfterBaseline": true
     }
   ]
 }
