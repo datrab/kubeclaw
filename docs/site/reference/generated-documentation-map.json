@@ -2241,13 +2241,22 @@
       "appliesTo": "current shipped chart configuration and Prism service loaders",
       "lastVerified": "2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`",
       "sourceDependencies": [
+        "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
         "charts/kubeclaw/files/config/swarm.config.json",
         "tests/verification/e2e/support/platform-config.ts",
         "charts/prism/values.yaml",
         "charts/prism/values.schema.json",
         "skills/prism/server/control-config.ts",
         "skills/prism/server/worker-config.ts",
-        "skills/prism/config/native-worker.ts"
+        "skills/prism/config/native-worker.ts",
+        "ops/pod/config.toml",
+        "ops/pod/supervisor.py",
+        "ops/pod/Dockerfile",
+        "ops/pod/verify.py",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/values.yaml"
       ],
       "checks": [
         "npm run docs:inventory:config:check",
@@ -2739,7 +2748,7 @@
       "audience": "reference reader, operator",
       "owner": "platform-security",
       "appliesTo": "Kubernetes secret setup and checked-in Secret references",
-      "lastVerified": "generated from current inventory",
+      "lastVerified": "retained artifact 145da1d0b30fb3b636c4b03fb3d3252819ee2bf5; original sources 6fa4830a48244d29655104a5be58957d5fa87d2f; semantic owner 1940aeee40379e8d466b94d540d17818386a584a",
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
         "docs/generated/inventory/secret-setup.json",
