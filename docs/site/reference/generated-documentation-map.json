@@ -239,9 +239,12 @@
         "skills/nova/core/execution/stage-executor.ts",
         "skills/nova/core/telemetry/observers.ts",
         "skills/buster/engine/test-gates/provider-loader.ts",
-        "skills/buster/engine/test-gates/report-adapter-runtime.ts"
+        "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+        "skills/common/plugins/prompt-contract"
       ],
       "checks": [
+        "npm run build --workspace @kubeclaw/prompt-contract",
+        "npm test --workspace @kubeclaw/prompt-contract",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
