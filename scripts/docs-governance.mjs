@@ -21,6 +21,10 @@ const generatedReferencePages = new Set(['cli', 'secrets', 'helm-values', 'envir
   .map((name) => `docs/site/reference/${name}.md`));
 const platformInventoryPage = 'docs/site/reference/platform-surfaces-generated.md';
 const platformInventoryGenerator = 'scripts/docs-platform-surface-inventory.mjs';
+const promptContractPage = 'docs/site/extend/contracts.md';
+const promptContractDirectory = 'skills/common/plugins/prompt-contract';
+const promptContractSource = `${promptContractDirectory}/src/index.ts`;
+const promptContractChecks = ['npm run build --workspace @kubeclaw/prompt-contract', 'npm test --workspace @kubeclaw/prompt-contract'];
 const prismGuidePages = new Set(['docs/site/understand/prism.md', 'docs/site/understand/prism-runtime.md', 'docs/site/understand/prism-data.md',
   'docs/site/use/prism-studio.md', 'docs/site/extend/platform/prism.md']);
 
@@ -50,6 +54,7 @@ function checksFor(page) {
   const checks = ['npm run docs:governance:check', 'npm run docs:publication:check', 'npm run docs:check:refs'];
   if (page.startsWith('docs/site/extend/deep-guides/')) checks.unshift('npm run docs:plugin-complexity:check');
   if (page === 'docs/site/status/open-issues.md') checks.unshift('npm run docs:status:check');
+  if (page === promptContractPage) checks.unshift(...promptContractChecks);
   if (configurationPages.has(page) || generatedReferencePages.has(page)) {
     checks.unshift('npm run docs:inventory:config:check', 'npm run docs:generate:check', 'npm run docs:drift:config:mutations');
   }
@@ -119,6 +124,19 @@ const pages = walk(siteRoot)
       checks: checksFor(page),
     };
   });
+
+// Existing dependency-only workspace export: require a retrievable source,
+// canonical owner and real package-check route, not a fabricated registration.
+const promptContract = pages.find(page => page.page === promptContractPage);
+const promptPackage = JSON.parse(fs.readFileSync(path.join(root, 'skills/common/plugins/prompt-contract/package.json'), 'utf8'));
+if (!promptContract || promptContract.owner !== 'plugin-foundation'
+  || !promptContract.sourceDependencies.includes(promptContractDirectory)
+  || !fs.existsSync(path.join(root, promptContractSource)) || !fs.statSync(path.join(root, promptContractSource)).isFile()
+  || !promptContractChecks.every(command => promptContract.checks.includes(command))
+  || promptPackage.name !== '@kubeclaw/prompt-contract' || promptPackage.exports?.['.'] !== './src/index.ts'
+  || !['build', 'test'].every(script => typeof promptPackage.scripts?.[script] === 'string' && promptPackage.scripts[script].trim())) {
+  throw new Error('Prompt-contract source/owner/package-check route is incomplete; review the existing contracts guide and actual package scripts.');
+}
 
 const routeRegistry = JSON.parse(fs.readFileSync(routeRegistryPath, 'utf8'));
 const activeRoutes = new Set(pages.map((page) => page.route));

@@ -3,7 +3,7 @@
 Status: implemented with stated local verification limits
 Audience: plugin author, runtime maintainer, reviewer
 Owner: plugin-foundation
-Evidence: skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/common/plugin-runtime/foundation/registry/build.ts; skills/nova/core/execution/stage-executor.ts; skills/nova/core/telemetry/observers.ts; skills/buster/engine/test-gates/provider-loader.ts; skills/buster/engine/test-gates/report-adapter-runtime.ts
+Evidence: skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/common/plugin-runtime/foundation/registry/build.ts; skills/nova/core/execution/stage-executor.ts; skills/nova/core/telemetry/observers.ts; skills/buster/engine/test-gates/provider-loader.ts; skills/buster/engine/test-gates/report-adapter-runtime.ts; skills/common/plugins/prompt-contract
 Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
 Applies to: `pipeline-plugin-v2`
 Last verified: source and contract checks on 2026-09-16
@@ -350,6 +350,64 @@ Retain the original configuration and exact packages for old pinned runs.
 - A report adapter cannot execute a test or manufacture missing execution evidence.
 - A manifest does not load a Worker Core engine.
 - Project input cannot install package code or create a runtime role.
+
+## Dependency-Only Prompt Library
+
+The five registrations above are runtime contracts. `@kubeclaw/prompt-contract`
+is a separate workspace library, not a sixth registration. It has no runtime plugin manifest,
+capability, activation, effect or lifecycle authority. At the source revision
+listed below, it has no production consumer. Its package tests call the library;
+they do not prove a plugin invocation or a deployed agent task.
+
+The `Owner`, `Evidence` and required checks in the generated documentation map
+route changes below `skills/common/plugins/prompt-contract` to this page and
+`plugin-foundation`. This includes the exported `src/index.ts`, its tests,
+`README.md`, `package.json` and `tsconfig.json`. The parent dependency binds
+committed source, not installed dependencies or an inferred runtime consumer.
+
+| Export | Responsibility |
+| --- | --- |
+| `stablePromptJson` | Validates supported JSON values, sorts object keys and returns deterministic JSON text within the selected limits |
+| `createPromptEnvelope` | Validates task, evidence, response contract and optional guidance, then returns the versioned envelope value |
+| `serializePromptEnvelope` | Returns the serialized envelope text |
+| `PromptLimits` | Declares optional byte, depth and entry limits |
+| `PromptEnvelopeInput`, `PromptEnvelope`, `PROMPT_CONTRACT_VERSION` | Declare the input, output and version identities |
+
+The library rejects unsupported values instead of silently discarding them.
+This includes cycles, non-finite numbers, sparse arrays, class instances,
+prototype-sensitive keys, accessors, proxies, symbol or hidden properties, and
+extra array properties. It checks the byte limit after serialization. That limit
+is not a peak-memory bound for an already allocated oversized string.
+Domain instructions, response meaning and any future caller authority remain
+with the consuming package; the envelope grants no authority.
+
+For a change to serialization, acceptance or `PromptLimits.maxBytes`, the
+plugin-foundation owner must compare the complete changed source and its tests,
+update this section, and run both package checks from the repository root:
+
+```bash
+npm run build --workspace @kubeclaw/prompt-contract
+npm test --workspace @kubeclaw/prompt-contract
+```
+
+`build` runs `tsc --noEmit -p tsconfig.json`; `test` runs
+`node tests/live-function.test.ts`. These are library type and behavior checks,
+not registration, runtime, effect or production-consumer tests. After a change to
+this page or its route, generate the existing governance map and run its check,
+the publication check and the reference check. Use the existing
+[independent topic review procedure](documentation-maintenance.md) for Source,
+Reader and Quality review. Stop if the owner, source route or required package
+check cannot be established; do not substitute a successful unrelated check.
+
+**Source scope:** This library section is based on the
+[export and script declarations](https://github.com/datrab/kubeclaw/blob/9b612b15c3605bef6b0afb3f9427cccf6e00cc31/skills/common/plugins/prompt-contract/package.json#L1-L12),
+[input and limit type declarations](https://github.com/datrab/kubeclaw/blob/9b612b15c3605bef6b0afb3f9427cccf6e00cc31/skills/common/plugins/prompt-contract/src/index.ts#L1-L25),
+[limit resolution and exported operations](https://github.com/datrab/kubeclaw/blob/9b612b15c3605bef6b0afb3f9427cccf6e00cc31/skills/common/plugins/prompt-contract/src/index.ts#L117-L153)
+and [the package boundary and size-limit note](https://github.com/datrab/kubeclaw/blob/9b612b15c3605bef6b0afb3f9427cccf6e00cc31/skills/common/plugins/prompt-contract/README.md#L1-L21).
+The page's recorded `Evidence revision`, `Applies to` and `Last verified` fields
+retain their historical five-registration scope. They do not record a new run of
+the library checks or a new review of every registration. The added parent in
+`Evidence` supplies the current source-change route for this library only.
 
 ## Verification
 

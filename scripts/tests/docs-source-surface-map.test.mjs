@@ -1,5 +1,7 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import os from 'node:os';
+import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
@@ -16,6 +18,76 @@ const build = (file, mutate, pages = committed.pages) => buildSourceSurfaceMap(r
 });
 const baseline = buildSourceSurfaceMap(root, committed.pages);
 const stale = changed => assert.throws(() => assertSourceSurfaceMap(changed, baseline), /source-map stale\/orphan/u);
+
+test('prompt library routes through the actual governance owner and rejects missing source, owner or package check', (t) => {
+  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'prompt-owner-route-'));
+  t.after(() => fs.rmSync(temporary, { recursive: true, force: true }));
+  // Execute the genuine owner in a disposable repository-shaped fixture. Only
+  // this fixture's guide, copied owner and generated map may be written.
+  for (const entry of fs.readdirSync(root, { withFileTypes: true })) {
+    if (['docs', 'scripts', 'skills', '.git'].includes(entry.name)) continue;
+    fs.symlinkSync(path.join(root, entry.name), path.join(temporary, entry.name));
+  }
+  fs.mkdirSync(path.join(temporary, 'skills/common/plugins'), { recursive: true });
+  fs.cpSync(path.join(root, 'skills/common/plugins/prompt-contract'), path.join(temporary, 'skills/common/plugins/prompt-contract'), { recursive: true });
+  fs.mkdirSync(path.join(temporary, 'docs'));
+  for (const entry of fs.readdirSync(path.join(root, 'docs'), { withFileTypes: true })) {
+    const source = path.join(root, 'docs', entry.name), target = path.join(temporary, 'docs', entry.name);
+    if (entry.name === 'site') fs.cpSync(source, target, { recursive: true });
+    else fs.symlinkSync(source, target);
+  }
+  fs.mkdirSync(path.join(temporary, 'scripts'));
+  for (const name of ['lib', 'docs-published-route-baseline.json']) fs.symlinkSync(path.join(root, 'scripts', name), path.join(temporary, 'scripts', name));
+  const ownerPath = path.join(temporary, 'scripts/docs-governance.mjs');
+  const guidePath = path.join(temporary, 'docs/site/extend/contracts.md');
+  const owner = fs.readFileSync(path.join(root, 'scripts/docs-governance.mjs'), 'utf8');
+  const guide = fs.readFileSync(guidePath, 'utf8');
+  fs.writeFileSync(ownerPath, owner);
+  const run = (...args) => spawnSync(process.execPath, [ownerPath, ...args], { cwd: temporary, encoding: 'utf8' });
+  let result = run();
+  assert.equal(result.status, 0, result.stderr);
+  result = run('--check');
+  assert.equal(result.status, 0, result.stderr);
+  const actual = JSON.parse(fs.readFileSync(path.join(temporary, 'docs/site/reference/generated-documentation-map.json'), 'utf8'));
+  const page = actual.pages.find(item => item.page === 'docs/site/extend/contracts.md');
+  assert.equal(page.owner, 'plugin-foundation');
+  assert.ok(page.sourceDependencies.includes('skills/common/plugins/prompt-contract'));
+  for (const command of ['npm run build --workspace @kubeclaw/prompt-contract', 'npm test --workspace @kubeclaw/prompt-contract']) assert.ok(page.checks.includes(command));
+  for (const changed of [guide.replace('; skills/common/plugins/prompt-contract\n', '\n'), guide.replace('Owner: plugin-foundation', 'Owner: unrelated-component')]) {
+    assert.notEqual(changed, guide);
+    fs.writeFileSync(guidePath, changed);
+    result = run('--check');
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Prompt-contract source\/owner\/package-check route is incomplete/u);
+  }
+  fs.writeFileSync(guidePath, guide);
+  const exportedSource = path.join(temporary, 'skills/common/plugins/prompt-contract/src/index.ts');
+  const sourceBytes = fs.readFileSync(exportedSource);
+  fs.rmSync(exportedSource);
+  result = run('--check');
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Prompt-contract source\/owner\/package-check route is incomplete/u);
+  fs.writeFileSync(exportedSource, sourceBytes);
+  const packagePath = path.join(temporary, 'skills/common/plugins/prompt-contract/package.json');
+  const packageBytes = fs.readFileSync(packagePath);
+  const declaration = JSON.parse(packageBytes);
+  for (const changed of [{ ...declaration, exports: { '.': './src/unrelated.ts' } },
+    { ...declaration, scripts: { ...declaration.scripts, test: '' } }]) {
+    fs.writeFileSync(packagePath, JSON.stringify(changed));
+    result = run('--check');
+    assert.notEqual(result.status, 0);
+    assert.match(result.stderr, /Prompt-contract source\/owner\/package-check route is incomplete/u);
+  }
+  fs.writeFileSync(packagePath, packageBytes);
+  const wrongCheck = owner.replace('checks.unshift(...promptContractChecks);', 'checks.unshift(promptContractChecks[0]);');
+  assert.notEqual(wrongCheck, owner);
+  fs.writeFileSync(ownerPath, wrongCheck);
+  result = run('--check');
+  assert.notEqual(result.status, 0);
+  assert.match(result.stderr, /Prompt-contract source\/owner\/package-check route is incomplete/u);
+  fs.writeFileSync(ownerPath, owner);
+  assert.equal(run('--check').status, 0);
+});
 
 test('current inventory join and inverse bindings match the generated map', () => {
   assertSourceSurfaceMap(committed.sourceSurfaceMap, baseline);
