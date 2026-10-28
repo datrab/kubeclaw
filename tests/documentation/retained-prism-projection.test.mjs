@@ -1,4 +1,6 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import { loadRetainedConfigurationSnapshot } from '../../scripts/lib/docs-retained-source.mjs';
@@ -36,6 +38,15 @@ test('finite semantic changes reverse to every complete v1 fact; only15 Secret c
   assert.equal(next.meaningEvidence.helm.length, 16);
   assert.equal(next.meaningEvidence.secrets.length, 15);
   assert.equal(next.preservation.notCurrentAcquisition, true);
+  // Every delivered current-meaning range must fit its complete actual receiver.
+  for (const bindings of Object.values(next.meaningEvidence)) for (const binding of bindings) {
+    for (const source of binding.sources) {
+      const text = fs.readFileSync(path.join(root, source.path), 'utf8');
+      const lines = text.split('\n').length - Number(text.endsWith('\n'));
+      assert(source.line >= 1 && source.endLine >= source.line && source.endLine <= lines,
+        `${source.path}:${source.line}-${source.endLine} exceeds actual ${lines} lines`);
+    }
+  }
 });
 
 test('missing, ambiguous, retyped and caller-added facts or changed historical readers are rejected', () => {
