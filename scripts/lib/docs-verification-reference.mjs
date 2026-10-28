@@ -104,14 +104,14 @@ const labels = {
 
 function renderEntry(row, family, index, revision) {
   const invocation = family === 'npm' ? `npm run ${row.id}` : row.id;
-  const command = family === 'npm' ? `\n\nUnderlying command: <code>${literal(row.command)}</code>` : '';
+  const commandRows = family === 'npm' ? [['Underlying command', `<code>${literal(row.command)}</code>`]] : [];
   const sources = row.sources.map(source =>
-    `[${literal(source.path)}](https://github.com/datrab/kubeclaw/blob/${revision}/${source.path})`).join('; ');
+    `[${literal(source.path)}](https://github.com/datrab/kubeclaw/blob/${revision}/${source.path})`).map(link => `- ${link}`).join('\n');
   const procedure = ['guide', 'route'].includes(family) && row.procedure
     ? `\n\nFollow the [complete guide procedure](../${row.procedure.replace(/^docs\/site\//u, '')}).` : '';
-  return `### ${family}-${index + 1}: ${literal(invocation)}${command}${procedure}\n\n`
-    + table(['Responsibility', 'Contract'], fields.map(field => [labels[field], row[field]]))
-    + `\n\nImplementation evidence: ${sources}\n`;
+  return `### ${family}-${index + 1}: ${literal(invocation)}${procedure}\n\n`
+    + table(['Responsibility', 'Contract'], [...commandRows, ...fields.map(field => [labels[field], row[field]])])
+    + `\n\nImplementation evidence:\n\n${sources}\n`;
 }
 
 export function renderVerificationResponsibilities(guidance, revision) {

@@ -921,8 +921,7 @@ and [operator procedure](../use/operate.md) for prerequisites and recovery.
 
 These effects follow the dispatch and \`cmd_image\`, \`cmd_smoke_agent\`, \`cmd_smoke\`,
 \`cmd_status\` and \`cmd_nova_production_preflights\` implementations in
-[scripts/deploy.sh](../../../scripts/deploy.sh). No command here has been executed
-against a live deployment as part of this documentation correction.
+[scripts/deploy.sh](../../../scripts/deploy.sh). This documentation correction did not run commands against a live deployment.
 
 ## Local Documentation And Deployment Checks
 
