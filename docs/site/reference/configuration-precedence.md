@@ -317,6 +317,52 @@ The checked `auth.existingSecret=precedence-synthetic` and
 `OPENCLAW_GATEWAY_TOKEN` and rendered no generated Secret. Helm did not check
 whether that Secret or key exists. Keep the pair in evidence and redact data.
 
+### Repeated environment names
+
+KubeClaw renders its fixed environment entries before it appends `extraEnv`.
+For example, the fixed `OPENCLAW_GATEWAY_TOKEN` entry refers to the selected
+Secret, and `OPENCLAW_GATEWAY_URL` contains the selected gateway URL.
+An `extraEnv` entry can repeat either name. Replacing the `extraEnv` array
+through Helm does not remove those earlier fixed entries.
+
+The pinned kubelet processes explicit `env` entries in their rendered order.
+Each successfully resolved entry replaces the earlier value with the same
+name. This also applies to an explicit empty string; the process loader can
+then apply its own empty-value rule. However, kubelet must resolve each earlier
+required source first. If the fixed token's Secret or key is missing, environment
+construction fails before kubelet reaches a later entry with that name.
+A later duplicate does not bypass the required Secret. An unresolved optional
+entry is skipped and does not replace an earlier value.
+
+For a workload that declares `envFrom`, kubelet reads those sources first.
+A later resolved `envFrom` source replaces an earlier value with the same name;
+resolved explicit `env` entries take precedence over them. Service environment
+values fill only names that are still absent. This chart path does not declare
+`envFrom`; this rule describes that separate Kubernetes workload form. These
+receiver rules do not promise acceptance by admission policies or every
+apply/patch route.
+
+Keep `extraEnv` names distinct from the chart's fixed names. Change the gateway
+URL through `gateway.url`, and change its token reference through
+`auth.existingSecret` and `auth.existingSecretKey`. Inspect the rendered entry
+names, order and Secret name/key references in a private workspace. Do not
+publish rendered literal credentials or decoded Secret values. Stop if a name
+is repeated unintentionally or a required source is unavailable. Correct the
+owning values and prove the new consumer value after its rollout; do not treat
+a duplicate entry or a successful render as authentication or readiness proof.
+
+Source: [fixed gateway entries](https://github.com/datrab/kubeclaw/blob/21dd99f4dd7fdcf55bf67e51df4070156f17294a/charts/kubeclaw/templates/deployment.yaml#L1368-L1371)
+and [appended extra entries](https://github.com/datrab/kubeclaw/blob/21dd99f4dd7fdcf55bf67e51df4070156f17294a/charts/kubeclaw/templates/deployment.yaml#L1465-L1467);
+Kubernetes [ordered explicit entries](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L845-L858),
+[Secret resolution and optional skip](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L894-L921),
+[assignment and service fallback](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L960-L981),
+and [earlier `envFrom` processing](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet_pods.go#L772-L831).
+This is source-qualified processing behavior, not a live Pod or Secret-availability
+check. The local overlay example above uses a distinct name; its successful
+render does not test this collision or a missing required Secret.
+
+### Continue from the rendered value
+
 A schema `default` annotation does not establish insertion into rendered or
 runtime values. Check the chart's actual values, template fallback, rendered
 field, and process loader separately. The complete boundary is authored values
