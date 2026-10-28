@@ -1,6 +1,6 @@
 {
   "schemaVersion": "kubeclaw-platform-surfaces.v1",
-  "sourceRevision": "0a716c55977a3fba651a728371720641f80f95b4",
+  "sourceRevision": "ea887c6daacde7f94ed61ee89837bf393e7436df",
   "acceptanceContract": {
     "source": "docs/blueprint/AP09-acceptance-contract.md",
     "acceptanceIds": [
@@ -888,6 +888,11 @@
       "skills/worker/core/worker/native-output-spool.ts",
       "skills/worker/core/worker/ownership-store.ts"
     ],
+    "storePolicyComparison": {
+      "origin": "helm:prism-ingestion-policy",
+      "selected": false,
+      "purpose": "Conditional ingestion policy declarations only; explicit sizing/worker render fixtures are not product defaults"
+    },
     "renderedProfiles": [
       "helm:nova",
       "helm:buster",
@@ -14079,6 +14084,26 @@
           "startLine": 1,
           "endLine": 230,
           "representation": "source-reference"
+        },
+        {
+          "id": "typed-artifactStorage",
+          "role": "Chart default storage declarations; actual selected values, rendered claims, bound volume and usable capacity remain distinct.",
+          "source": "charts/prism/values.yaml",
+          "sourceSha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "artifactStorage"
+            ]
+          },
+          "startLine": 63,
+          "endLine": 63,
+          "representation": "declared-yaml-value",
+          "value": {
+            "storage": "100Gi",
+            "storageClass": ""
+          },
+          "expression": "{ storage: 100Gi, storageClass: \"\" }"
         }
       ]
     },
@@ -14130,6 +14155,39 @@
           "startLine": 2,
           "endLine": 11,
           "representation": "source-reference"
+        },
+        {
+          "id": "typed-postgresql",
+          "role": "Chart default storage declarations; actual selected values, rendered claims, bound volume and usable capacity remain distinct.",
+          "source": "charts/prism/values.yaml",
+          "sourceSha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "postgresql"
+            ]
+          },
+          "startLine": 54,
+          "endLine": 59,
+          "representation": "declared-yaml-value",
+          "value": {
+            "enabled": true,
+            "image": "pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
+            "storage": "100Gi",
+            "storageClass": "",
+            "existingSecret": "",
+            "resources": {
+              "requests": {
+                "cpu": "500m",
+                "memory": "1Gi"
+              },
+              "limits": {
+                "cpu": "4",
+                "memory": "8Gi"
+              }
+            }
+          },
+          "expression": "enabled: true\n  image: pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f\n  storage: 100Gi\n  storageClass: \"\"\n  existingSecret: \"\"\n  resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: \"4\", memory: 8Gi } }\n"
         }
       ]
     },
@@ -14319,6 +14377,113 @@
           "startLine": 1,
           "endLine": 40,
           "representation": "source-reference"
+        },
+        {
+          "id": "typed-ingestion-policy",
+          "role": "Chart default quarantine TTL and required operator resource declarations; empty resource fields are not effective capacity.",
+          "source": "charts/prism/values.yaml",
+          "sourceSha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "ingestion"
+            ]
+          },
+          "startLine": 45,
+          "endLine": 52,
+          "representation": "declared-yaml-value",
+          "value": {
+            "enabled": false,
+            "replicas": 1,
+            "resources": {
+              "requests": {
+                "cpu": "",
+                "memory": ""
+              },
+              "limits": {
+                "cpu": "",
+                "memory": ""
+              }
+            },
+            "quarantineTtlMs": 3600000
+          },
+          "expression": "enabled: false\n  replicas: 1\n  # Required operator sizing when enabled; no host capacity is assumed.\n  resources:\n    requests: { cpu: \"\", memory: \"\" }\n    limits: { cpu: \"\", memory: \"\" }\n  # Acquired quarantine content only; this does not expire logs or reports.\n  quarantineTtlMs: 3600000\n"
+        },
+        {
+          "id": "native-conditional-quarantine-size",
+          "role": "Conditional policy-only ingestion comparison: quarantine emptyDir capacity; maintained ingestion is disabled and sizing overrides are render fixtures, not product defaults",
+          "unit": "Kubernetes ephemeral-volume quantity; not TTL, durable capacity or live mount",
+          "source": "charts/prism/templates/ingestion.yaml",
+          "sourceSha256": "73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism-ingestion-policy",
+            "resource": {
+              "kind": "Deployment",
+              "name": "prism-ingestion",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "template",
+              "spec",
+              "volumes",
+              0,
+              "emptyDir",
+              "sizeLimit"
+            ],
+            "identityExpectations": [
+              {
+                "path": [
+                  "spec",
+                  "template",
+                  "spec",
+                  "volumes",
+                  0,
+                  "name"
+                ],
+                "equals": "quarantine"
+              }
+            ]
+          },
+          "startLine": 5,
+          "endLine": 5,
+          "representation": "selected-native-resource-value",
+          "value": "4Gi",
+          "resourceProvenance": {
+            "origin": "helm:prism-ingestion-policy",
+            "source": "charts/prism/templates/ingestion.yaml",
+            "identity": {
+              "kind": "Deployment",
+              "name": "prism-ingestion",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "conditional",
+            "activationCondition": "ingestion.enabled=true; maintained selected profile is false",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "07e616d15647166d6d548ea57f23c601c865db2fd47d2a398318e875c81a0647",
+            "policyComparisonFixture": {
+              "chart": "charts/prism",
+              "values": [
+                "my-values/prism-values.yaml"
+              ],
+              "namespace": "kubeclaw",
+              "sets": [
+                "worker.native.namespace=kubeclaw",
+                "worker.native.nodeName=inventory-node",
+                "worker.native.policyDigest=aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                "ingestion.resources.requests.cpu=100m",
+                "ingestion.resources.requests.memory=128Mi",
+                "ingestion.resources.limits.cpu=500m",
+                "ingestion.resources.limits.memory=256Mi"
+              ],
+              "setJson": [
+                "ingestion.enabled=true"
+              ],
+              "limit": "Policy-only enabled-ingestion comparison with explicit sizing/worker fixtures; not selected defaults or a deployed observation"
+            }
+          }
         }
       ],
       "qualifiedContexts": [
@@ -14521,6 +14686,540 @@
           "startLine": 1,
           "endLine": 75,
           "representation": "source-reference"
+        },
+        {
+          "id": "native-prism-backup-spec-successfuljobshistorylimit",
+          "role": "Exact selected native CronJob prism-backup field spec.successfulJobsHistoryLimit; preserve conditional/template and receiver limits",
+          "unit": "retained Kubernetes Job count; not completed backup-group count",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-backup",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "successfulJobsHistoryLimit"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 1,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-backup",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "893dff6509e26f9673edf6362b4c9efeaa9a0334464bfc6f30d1bc37ae1b05ea"
+          }
+        },
+        {
+          "id": "native-prism-backup-spec-failedjobshistorylimit",
+          "role": "Exact selected native CronJob prism-backup field spec.failedJobsHistoryLimit; preserve conditional/template and receiver limits",
+          "unit": "retained Kubernetes Job count; not completed backup-group count",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-backup",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "failedJobsHistoryLimit"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 1,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-backup",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "893dff6509e26f9673edf6362b4c9efeaa9a0334464bfc6f30d1bc37ae1b05ea"
+          }
+        },
+        {
+          "id": "native-prism-backup-spec-jobtemplate-spec-ttlsecondsafterfinished",
+          "role": "Exact selected native CronJob prism-backup field spec.jobTemplate.spec.ttlSecondsAfterFinished; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-backup",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "jobTemplate",
+              "spec",
+              "ttlSecondsAfterFinished"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 3600,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-backup",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "893dff6509e26f9673edf6362b4c9efeaa9a0334464bfc6f30d1bc37ae1b05ea"
+          }
+        },
+        {
+          "id": "native-prism-backup-spec-jobtemplate-spec-activedeadlineseconds",
+          "role": "Exact selected native CronJob prism-backup field spec.jobTemplate.spec.activeDeadlineSeconds; preserve conditional/template and receiver limits",
+          "unit": "seconds of the named Kubernetes Job lifecycle; not backup-media retention",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-backup",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "jobTemplate",
+              "spec",
+              "activeDeadlineSeconds"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 3630,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-backup",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "893dff6509e26f9673edf6362b4c9efeaa9a0334464bfc6f30d1bc37ae1b05ea"
+          }
+        },
+        {
+          "id": "native-prism-backup-verification-spec-successfuljobshistorylimit",
+          "role": "Exact selected native CronJob prism-backup-verification field spec.successfulJobsHistoryLimit; preserve conditional/template and receiver limits",
+          "unit": "retained Kubernetes Job count; not completed backup-group count",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-backup-verification",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "successfulJobsHistoryLimit"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 1,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-backup-verification",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "d3842aa511af615be44aefc055504f83ac07e62128f190fa2a683e7d44a07d00"
+          }
+        },
+        {
+          "id": "native-prism-backup-verification-spec-failedjobshistorylimit",
+          "role": "Exact selected native CronJob prism-backup-verification field spec.failedJobsHistoryLimit; preserve conditional/template and receiver limits",
+          "unit": "retained Kubernetes Job count; not completed backup-group count",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-backup-verification",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "failedJobsHistoryLimit"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 1,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-backup-verification",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "d3842aa511af615be44aefc055504f83ac07e62128f190fa2a683e7d44a07d00"
+          }
+        },
+        {
+          "id": "native-prism-backup-verification-spec-jobtemplate-spec-ttlsecondsafterfinished",
+          "role": "Exact selected native CronJob prism-backup-verification field spec.jobTemplate.spec.ttlSecondsAfterFinished; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-backup-verification",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "jobTemplate",
+              "spec",
+              "ttlSecondsAfterFinished"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 3600,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-backup-verification",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "d3842aa511af615be44aefc055504f83ac07e62128f190fa2a683e7d44a07d00"
+          }
+        },
+        {
+          "id": "native-prism-backup-verification-spec-jobtemplate-spec-activedeadlineseconds",
+          "role": "Exact selected native CronJob prism-backup-verification field spec.jobTemplate.spec.activeDeadlineSeconds; preserve conditional/template and receiver limits",
+          "unit": "seconds of the named Kubernetes Job lifecycle; not backup-media retention",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-backup-verification",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "jobTemplate",
+              "spec",
+              "activeDeadlineSeconds"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 3630,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-backup-verification",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "d3842aa511af615be44aefc055504f83ac07e62128f190fa2a683e7d44a07d00"
+          }
+        },
+        {
+          "id": "native-prism-restore-proof-spec-successfuljobshistorylimit",
+          "role": "Exact selected native CronJob prism-restore-proof field spec.successfulJobsHistoryLimit; preserve conditional/template and receiver limits",
+          "unit": "retained Kubernetes Job count; not completed backup-group count",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-restore-proof",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "successfulJobsHistoryLimit"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 1,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-restore-proof",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "09eaf923725c2f1b251231ec3cf33530124ccfe14c318988a63397b715738b07"
+          }
+        },
+        {
+          "id": "native-prism-restore-proof-spec-failedjobshistorylimit",
+          "role": "Exact selected native CronJob prism-restore-proof field spec.failedJobsHistoryLimit; preserve conditional/template and receiver limits",
+          "unit": "retained Kubernetes Job count; not completed backup-group count",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-restore-proof",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "failedJobsHistoryLimit"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 1,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-restore-proof",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "09eaf923725c2f1b251231ec3cf33530124ccfe14c318988a63397b715738b07"
+          }
+        },
+        {
+          "id": "native-prism-restore-proof-spec-jobtemplate-spec-ttlsecondsafterfinished",
+          "role": "Exact selected native CronJob prism-restore-proof field spec.jobTemplate.spec.ttlSecondsAfterFinished; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-restore-proof",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "jobTemplate",
+              "spec",
+              "ttlSecondsAfterFinished"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 3600,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-restore-proof",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "09eaf923725c2f1b251231ec3cf33530124ccfe14c318988a63397b715738b07"
+          }
+        },
+        {
+          "id": "native-prism-restore-proof-spec-jobtemplate-spec-activedeadlineseconds",
+          "role": "Exact selected native CronJob prism-restore-proof field spec.jobTemplate.spec.activeDeadlineSeconds; preserve conditional/template and receiver limits",
+          "unit": "seconds of the named Kubernetes Job lifecycle; not backup-media retention",
+          "source": "charts/prism/templates/backup.yaml",
+          "sourceSha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "CronJob",
+              "name": "prism-restore-proof",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "jobTemplate",
+              "spec",
+              "activeDeadlineSeconds"
+            ]
+          },
+          "startLine": 16,
+          "endLine": 16,
+          "representation": "selected-native-resource-value",
+          "value": 3630,
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/backup.yaml",
+            "identity": {
+              "kind": "CronJob",
+              "name": "prism-restore-proof",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "09eaf923725c2f1b251231ec3cf33530124ccfe14c318988a63397b715738b07"
+          }
+        },
+        {
+          "id": "native-prism-backups-spec-resources-requests-storage",
+          "role": "Exact selected native PersistentVolumeClaim prism-backups field spec.resources.requests.storage; preserve conditional/template and receiver limits",
+          "unit": "Kubernetes requested storage quantity; unresolved REQUIRED_CAPACITY stays a placeholder, not available bytes",
+          "source": "charts/prism/templates/jobs.yaml",
+          "sourceSha256": "ed074c7d460591a458e2bfe3967e93ea4632588f460500d2e7965d68324140da",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "prism-backups",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "resources",
+              "requests",
+              "storage"
+            ]
+          },
+          "startLine": 64,
+          "endLine": 64,
+          "representation": "selected-native-resource-value",
+          "value": "100Gi",
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/jobs.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "prism-backups",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "32323a5148dc16fa1c2dade532fb46527fe8150992aa891e4c6cb687a9c28dba"
+          }
+        },
+        {
+          "id": "native-prism-backups-spec-accessmodes",
+          "role": "Exact selected native PersistentVolumeClaim prism-backups field spec.accessModes; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "charts/prism/templates/jobs.yaml",
+          "sourceSha256": "ed074c7d460591a458e2bfe3967e93ea4632588f460500d2e7965d68324140da",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:prism",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "prism-backups",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "accessModes"
+            ]
+          },
+          "startLine": 64,
+          "endLine": 64,
+          "representation": "selected-native-resource-value",
+          "value": [
+            "ReadWriteOnce"
+          ],
+          "resourceProvenance": {
+            "origin": "helm:prism",
+            "source": "charts/prism/templates/jobs.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "prism-backups",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "32323a5148dc16fa1c2dade532fb46527fe8150992aa891e4c6cb687a9c28dba"
+          }
         }
       ]
     },
@@ -14597,6 +15296,178 @@
           "startLine": 1,
           "endLine": 196,
           "representation": "source-reference"
+        },
+        {
+          "id": "typed-backupIntervalMinutes",
+          "role": "Selected reuse-versus-backup scheduling interval, not media expiry.",
+          "unit": "minutes",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "backupIntervalMinutes"
+            ]
+          },
+          "startLine": 3,
+          "endLine": 3,
+          "representation": "declared-yaml-value",
+          "value": 15,
+          "expression": "15"
+        },
+        {
+          "id": "typed-verificationIntervalMinutes",
+          "role": "Selected verification scheduling interval, subject to native cross-field freshness validation.",
+          "unit": "minutes",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "verificationIntervalMinutes"
+            ]
+          },
+          "startLine": 4,
+          "endLine": 4,
+          "representation": "declared-yaml-value",
+          "value": 5,
+          "expression": "5"
+        },
+        {
+          "id": "typed-maximumAgeSeconds",
+          "role": "Selected maximum accepted backup freshness from start time, not automatic deletion age.",
+          "unit": "seconds",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "maximumAgeSeconds"
+            ]
+          },
+          "startLine": 5,
+          "endLine": 5,
+          "representation": "declared-yaml-value",
+          "value": 7200,
+          "expression": "7200"
+        },
+        {
+          "id": "typed-maximumDurationSeconds",
+          "role": "Selected backup and restore operation duration ceiling, distinct from media retention.",
+          "unit": "seconds",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "maximumDurationSeconds"
+            ]
+          },
+          "startLine": 6,
+          "endLine": 6,
+          "representation": "declared-yaml-value",
+          "value": 1800,
+          "expression": "1800"
+        },
+        {
+          "id": "typed-verificationDeadlineSeconds",
+          "role": "Selected scheduler starting deadline, distinct from backup-media expiry.",
+          "unit": "seconds",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "verificationDeadlineSeconds"
+            ]
+          },
+          "startLine": 7,
+          "endLine": 7,
+          "representation": "declared-yaml-value",
+          "value": 900,
+          "expression": "900"
+        },
+        {
+          "id": "typed-maximumBackupBytes",
+          "role": "Selected per-backup archive admission ceiling.",
+          "unit": "bytes",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "maximumBackupBytes"
+            ]
+          },
+          "startLine": 8,
+          "endLine": 8,
+          "representation": "declared-yaml-value",
+          "value": 68719476736,
+          "expression": "68719476736"
+        },
+        {
+          "id": "typed-maximumRetainedBytes",
+          "role": "Selected retained-root capacity admission ceiling; completed and incomplete media remain, without automatic pruning.",
+          "unit": "bytes",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "maximumRetainedBytes"
+            ]
+          },
+          "startLine": 9,
+          "endLine": 9,
+          "representation": "declared-yaml-value",
+          "value": 96636764160,
+          "expression": "96636764160"
+        },
+        {
+          "id": "typed-persistence",
+          "role": "Selected backup PVC size and storage-class declarations, not usable free bytes.",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "persistence"
+            ]
+          },
+          "startLine": 11,
+          "endLine": 12,
+          "representation": "declared-yaml-value",
+          "value": {
+            "size": "100Gi",
+            "storageClass": null
+          },
+          "expression": "size: 100Gi\n  storageClass: null\n"
+        },
+        {
+          "id": "typed-resources",
+          "role": "Selected backup Pod resource requests and limits, not media retention or observed effective resources.",
+          "source": "my-values/infra/postgresql-recovery.yaml",
+          "sourceSha256": "5f0ffb0cdf5acdbd814da726060d5125c5cae912554f27de57251ea90ae8d438",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "resources"
+            ]
+          },
+          "startLine": 14,
+          "endLine": 15,
+          "representation": "declared-yaml-value",
+          "value": {
+            "requests": {
+              "cpu": "250m",
+              "memory": "256Mi"
+            },
+            "limits": {
+              "cpu": "1",
+              "memory": "1Gi"
+            }
+          },
+          "expression": "requests: { cpu: 250m, memory: 256Mi }\n  limits: { cpu: \"1\", memory: 1Gi }\n"
         }
       ]
     },
@@ -15003,6 +15874,59 @@
           "startLine": 1,
           "endLine": 3,
           "representation": "source-reference"
+        },
+        {
+          "id": "typed-artifactStorage",
+          "role": "Chart default storage declarations; actual selected values, rendered claims, bound volume and usable capacity remain distinct.",
+          "source": "charts/prism/values.yaml",
+          "sourceSha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "artifactStorage"
+            ]
+          },
+          "startLine": 63,
+          "endLine": 63,
+          "representation": "declared-yaml-value",
+          "value": {
+            "storage": "100Gi",
+            "storageClass": ""
+          },
+          "expression": "{ storage: 100Gi, storageClass: \"\" }"
+        },
+        {
+          "id": "typed-postgresql",
+          "role": "Chart default storage declarations; actual selected values, rendered claims, bound volume and usable capacity remain distinct.",
+          "source": "charts/prism/values.yaml",
+          "sourceSha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298",
+          "selector": {
+            "kind": "yaml",
+            "path": [
+              "postgresql"
+            ]
+          },
+          "startLine": 54,
+          "endLine": 59,
+          "representation": "declared-yaml-value",
+          "value": {
+            "enabled": true,
+            "image": "pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f",
+            "storage": "100Gi",
+            "storageClass": "",
+            "existingSecret": "",
+            "resources": {
+              "requests": {
+                "cpu": "500m",
+                "memory": "1Gi"
+              },
+              "limits": {
+                "cpu": "4",
+                "memory": "8Gi"
+              }
+            }
+          },
+          "expression": "enabled: true\n  image: pgvector/pgvector:pg17@sha256:cf134a767f474095eeba57e0117be8e568e011a63f33fbf252f14c9b760f8e6f\n  storage: 100Gi\n  storageClass: \"\"\n  existingSecret: \"\"\n  resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: \"4\", memory: 8Gi } }\n"
         }
       ]
     },
@@ -15188,6 +16112,61 @@
             "storageClass": ""
           },
           "expression": "size: 20Gi\n  storageClass: \"\" # existing cluster default\n"
+        },
+        {
+          "id": "native-codex-ops-spec-volumeclaimtemplates-0-spec-resources-requests-storage",
+          "role": "Exact selected native StatefulSet codex-ops field spec.volumeClaimTemplates.0.spec.resources.requests.storage; preserve conditional/template and receiver limits",
+          "unit": "Kubernetes requested storage quantity; unresolved REQUIRED_CAPACITY stays a placeholder, not available bytes",
+          "source": "charts/ops-pod/templates/workload.yaml",
+          "sourceSha256": "3471a815948e99e52b03b7952f1076c9d21afddbd24b62c37e1c848b7a129d58",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:ops-default",
+            "resource": {
+              "kind": "StatefulSet",
+              "name": "codex-ops",
+              "namespace": "kubeclaw-ops"
+            },
+            "identityExpectations": [
+              {
+                "path": [
+                  "spec",
+                  "volumeClaimTemplates",
+                  0,
+                  "metadata",
+                  "name"
+                ],
+                "equals": "home"
+              }
+            ],
+            "path": [
+              "spec",
+              "volumeClaimTemplates",
+              0,
+              "spec",
+              "resources",
+              "requests",
+              "storage"
+            ]
+          },
+          "startLine": 23,
+          "endLine": 23,
+          "representation": "selected-native-resource-value",
+          "value": "2Gi",
+          "resourceProvenance": {
+            "origin": "helm:ops-default",
+            "source": "charts/ops-pod/templates/workload.yaml",
+            "identity": {
+              "kind": "StatefulSet",
+              "name": "codex-ops",
+              "namespace": "kubeclaw-ops"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "activationCondition": "the selected Ops profile uses the chart default tailscale.enabled=false",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "fb5369d139923b45842d3d147fd6ba8a6632e3929c79e7eacc988ffe6b524e8a"
+          }
         }
       ]
     },
@@ -15258,6 +16237,125 @@
             }
           },
           "expression": "enabled: false\n  image: ghcr.io/tailscale/tailscale:v1.102.3\n  authSecret: codex-ops-tailscale # key: authkey\n  hostname: kubeclaw-ops\n  extraArgs: \"--accept-dns=false\"\n  # Userspace SOCKS on localhost:1055; no NET_ADMIN, host networking or operator.\n  resources:\n    requests: {cpu: 25m, memory: 64Mi}\n    limits: {cpu: 500m, memory: 256Mi}\n"
+        },
+        {
+          "id": "native-codex-ops-tailscale-spec-resources-requests-storage",
+          "role": "Exact selected native PersistentVolumeClaim codex-ops-tailscale field spec.resources.requests.storage; preserve conditional/template and receiver limits",
+          "unit": "Kubernetes requested storage quantity; unresolved REQUIRED_CAPACITY stays a placeholder, not available bytes",
+          "source": "charts/ops-pod/templates/tailscale-storage.yaml",
+          "sourceSha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:ops-tailscale",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "codex-ops-tailscale",
+              "namespace": "kubeclaw-ops"
+            },
+            "path": [
+              "spec",
+              "resources",
+              "requests",
+              "storage"
+            ]
+          },
+          "startLine": 5,
+          "endLine": 5,
+          "representation": "selected-native-resource-value",
+          "value": "1Gi",
+          "resourceProvenance": {
+            "origin": "helm:ops-tailscale",
+            "source": "charts/ops-pod/templates/tailscale-storage.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "codex-ops-tailscale",
+              "namespace": "kubeclaw-ops"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "conditional",
+            "activationCondition": "tailscale.enabled=true is an explicit Ops deployment opt-in; the selected default is false",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "9894a37a8a3295a2e53347f084be1bf2dd89528538dc162ca7a8d763afec115c"
+          }
+        },
+        {
+          "id": "native-codex-ops-tailscale-spec-accessmodes",
+          "role": "Exact selected native PersistentVolumeClaim codex-ops-tailscale field spec.accessModes; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "charts/ops-pod/templates/tailscale-storage.yaml",
+          "sourceSha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:ops-tailscale",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "codex-ops-tailscale",
+              "namespace": "kubeclaw-ops"
+            },
+            "path": [
+              "spec",
+              "accessModes"
+            ]
+          },
+          "startLine": 5,
+          "endLine": 5,
+          "representation": "selected-native-resource-value",
+          "value": [
+            "ReadWriteOnce"
+          ],
+          "resourceProvenance": {
+            "origin": "helm:ops-tailscale",
+            "source": "charts/ops-pod/templates/tailscale-storage.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "codex-ops-tailscale",
+              "namespace": "kubeclaw-ops"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "conditional",
+            "activationCondition": "tailscale.enabled=true is an explicit Ops deployment opt-in; the selected default is false",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "9894a37a8a3295a2e53347f084be1bf2dd89528538dc162ca7a8d763afec115c"
+          }
+        },
+        {
+          "id": "native-codex-ops-tailscale-metadata-annotations-helm-sh-resource-policy",
+          "role": "Exact selected native PersistentVolumeClaim codex-ops-tailscale field metadata.annotations.helm.sh/resource-policy; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "charts/ops-pod/templates/tailscale-storage.yaml",
+          "sourceSha256": "1c040641f21fb057f454ad602bb7019802f31d06455d46850a84af5cdc669d2f",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "helm:ops-tailscale",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "codex-ops-tailscale",
+              "namespace": "kubeclaw-ops"
+            },
+            "path": [
+              "metadata",
+              "annotations",
+              "helm.sh/resource-policy"
+            ]
+          },
+          "startLine": 5,
+          "endLine": 5,
+          "representation": "selected-native-resource-value",
+          "value": "keep",
+          "resourceProvenance": {
+            "origin": "helm:ops-tailscale",
+            "source": "charts/ops-pod/templates/tailscale-storage.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "codex-ops-tailscale",
+              "namespace": "kubeclaw-ops"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "conditional",
+            "activationCondition": "tailscale.enabled=true is an explicit Ops deployment opt-in; the selected default is false",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "9894a37a8a3295a2e53347f084be1bf2dd89528538dc162ca7a8d763afec115c"
+          }
         }
       ]
     },
@@ -15283,6 +16381,235 @@
           "startLine": 1,
           "endLine": 106,
           "representation": "source-reference"
+        },
+        {
+          "id": "native-registry-local-data-spec-resources-requests-storage",
+          "role": "Exact selected native PersistentVolumeClaim registry-local-data field spec.resources.requests.storage; preserve conditional/template and receiver limits",
+          "unit": "Kubernetes requested storage quantity; unresolved REQUIRED_CAPACITY stays a placeholder, not available bytes",
+          "source": "my-values/infra/registry-local.yaml",
+          "sourceSha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "my-values/infra/registry-local.yaml",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-local-data",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "resources",
+              "requests",
+              "storage"
+            ]
+          },
+          "startLine": 8,
+          "endLine": 8,
+          "representation": "selected-native-resource-value",
+          "value": "REQUIRED_CAPACITY",
+          "resourceProvenance": {
+            "origin": "my-values/infra/registry-local.yaml",
+            "source": "my-values/infra/registry-local.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-local-data",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "c82412bc6bbfaacf0d4e7ab8a56ed762b8cea17ada45be720b38cff8d7094d5e"
+          }
+        },
+        {
+          "id": "native-registry-local-data-spec-storageclassname",
+          "role": "Exact selected native PersistentVolumeClaim registry-local-data field spec.storageClassName; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "my-values/infra/registry-local.yaml",
+          "sourceSha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "my-values/infra/registry-local.yaml",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-local-data",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "storageClassName"
+            ]
+          },
+          "startLine": 8,
+          "endLine": 8,
+          "representation": "selected-native-resource-value",
+          "value": "REQUIRED_STORAGE_CLASS",
+          "resourceProvenance": {
+            "origin": "my-values/infra/registry-local.yaml",
+            "source": "my-values/infra/registry-local.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-local-data",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "c82412bc6bbfaacf0d4e7ab8a56ed762b8cea17ada45be720b38cff8d7094d5e"
+          }
+        },
+        {
+          "id": "native-registry-local-data-spec-accessmodes",
+          "role": "Exact selected native PersistentVolumeClaim registry-local-data field spec.accessModes; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "my-values/infra/registry-local.yaml",
+          "sourceSha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "my-values/infra/registry-local.yaml",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-local-data",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "accessModes"
+            ]
+          },
+          "startLine": 8,
+          "endLine": 8,
+          "representation": "selected-native-resource-value",
+          "value": [
+            "ReadWriteOncePod"
+          ],
+          "resourceProvenance": {
+            "origin": "my-values/infra/registry-local.yaml",
+            "source": "my-values/infra/registry-local.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-local-data",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "c82412bc6bbfaacf0d4e7ab8a56ed762b8cea17ada45be720b38cff8d7094d5e"
+          }
+        },
+        {
+          "id": "native-registry-local-config-storage-delete-enabled",
+          "role": "Exact selected native ConfigMap registry-local-config field storage.delete.enabled; preserve conditional/template and receiver limits",
+          "unit": "boolean registry policy declaration; not a GC schedule or authorized deletion",
+          "source": "my-values/infra/registry-local.yaml",
+          "sourceSha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "my-values/infra/registry-local.yaml",
+            "resource": {
+              "kind": "ConfigMap",
+              "name": "registry-local-config",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "data",
+              "config.yml"
+            ],
+            "embeddedYaml": {
+              "path": [
+                "storage",
+                "delete",
+                "enabled"
+              ]
+            }
+          },
+          "startLine": 19,
+          "endLine": 19,
+          "representation": "selected-native-resource-value",
+          "value": false,
+          "resourceProvenance": {
+            "origin": "my-values/infra/registry-local.yaml",
+            "source": "my-values/infra/registry-local.yaml",
+            "identity": {
+              "kind": "ConfigMap",
+              "name": "registry-local-config",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "b93cf5cda565e4f9f87db542157c0dcda3761456b704b1e2f97e6629dd84a459",
+            "embeddedYaml": {
+              "fieldPath": [
+                "data",
+                "config.yml"
+              ],
+              "sourceTextSha256": "20a213e7976d24f33581aad8d916dd44b5dc4416016777d65a93c8ec2f96cde7",
+              "selectedPath": [
+                "storage",
+                "delete",
+                "enabled"
+              ]
+            }
+          }
+        },
+        {
+          "id": "native-registry-local-config-storage-maintenance-uploadpurging-enabled",
+          "role": "Exact selected native ConfigMap registry-local-config field storage.maintenance.uploadpurging.enabled; preserve conditional/template and receiver limits",
+          "unit": "boolean registry policy declaration; not a GC schedule or authorized deletion",
+          "source": "my-values/infra/registry-local.yaml",
+          "sourceSha256": "966ab5af3851d5a6f9305d8819574301ca78d6c20f6d19074d078bf3b8e28d53",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "my-values/infra/registry-local.yaml",
+            "resource": {
+              "kind": "ConfigMap",
+              "name": "registry-local-config",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "data",
+              "config.yml"
+            ],
+            "embeddedYaml": {
+              "path": [
+                "storage",
+                "maintenance",
+                "uploadpurging",
+                "enabled"
+              ]
+            }
+          },
+          "startLine": 19,
+          "endLine": 19,
+          "representation": "selected-native-resource-value",
+          "value": false,
+          "resourceProvenance": {
+            "origin": "my-values/infra/registry-local.yaml",
+            "source": "my-values/infra/registry-local.yaml",
+            "identity": {
+              "kind": "ConfigMap",
+              "name": "registry-local-config",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "b93cf5cda565e4f9f87db542157c0dcda3761456b704b1e2f97e6629dd84a459",
+            "embeddedYaml": {
+              "fieldPath": [
+                "data",
+                "config.yml"
+              ],
+              "sourceTextSha256": "20a213e7976d24f33581aad8d916dd44b5dc4416016777d65a93c8ec2f96cde7",
+              "selectedPath": [
+                "storage",
+                "maintenance",
+                "uploadpurging",
+                "enabled"
+              ]
+            }
+          }
         }
       ]
     },
@@ -15308,6 +16635,153 @@
           "startLine": 1,
           "endLine": 94,
           "representation": "source-reference"
+        },
+        {
+          "id": "native-registry-mirror-cache-spec-resources-requests-storage",
+          "role": "Exact selected native PersistentVolumeClaim registry-mirror-cache field spec.resources.requests.storage; preserve conditional/template and receiver limits",
+          "unit": "Kubernetes requested storage quantity; unresolved REQUIRED_CAPACITY stays a placeholder, not available bytes",
+          "source": "my-values/infra/registry-mirror.yaml",
+          "sourceSha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "my-values/infra/registry-mirror.yaml",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-mirror-cache",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "resources",
+              "requests",
+              "storage"
+            ]
+          },
+          "startLine": 17,
+          "endLine": 17,
+          "representation": "selected-native-resource-value",
+          "value": "5Gi",
+          "resourceProvenance": {
+            "origin": "my-values/infra/registry-mirror.yaml",
+            "source": "my-values/infra/registry-mirror.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-mirror-cache",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "852d64db61dbd236954f75401b5885b72aed9aee28d24b8303f88c6b2bab76b1"
+          }
+        },
+        {
+          "id": "native-registry-mirror-cache-spec-accessmodes",
+          "role": "Exact selected native PersistentVolumeClaim registry-mirror-cache field spec.accessModes; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "my-values/infra/registry-mirror.yaml",
+          "sourceSha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "my-values/infra/registry-mirror.yaml",
+            "resource": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-mirror-cache",
+              "namespace": "kubeclaw"
+            },
+            "path": [
+              "spec",
+              "accessModes"
+            ]
+          },
+          "startLine": 17,
+          "endLine": 17,
+          "representation": "selected-native-resource-value",
+          "value": [
+            "ReadWriteOnce"
+          ],
+          "resourceProvenance": {
+            "origin": "my-values/infra/registry-mirror.yaml",
+            "source": "my-values/infra/registry-mirror.yaml",
+            "identity": {
+              "kind": "PersistentVolumeClaim",
+              "name": "registry-mirror-cache",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "852d64db61dbd236954f75401b5885b72aed9aee28d24b8303f88c6b2bab76b1"
+          }
+        },
+        {
+          "id": "native-registry-mirror-spec-template-spec-containers-0-env-1-value",
+          "role": "Exact selected native Deployment registry-mirror field spec.template.spec.containers.0.env.1.value; preserve conditional/template and receiver limits",
+          "unit": "Declared native resource field; not a live observation or media-delete permission",
+          "source": "my-values/infra/registry-mirror.yaml",
+          "sourceSha256": "383c470fb991a43aa9dfc1634d2399c53a1e77c19f37d5bb4b8bc0d26ef207f5",
+          "selector": {
+            "kind": "rendered-resource",
+            "origin": "my-values/infra/registry-mirror.yaml",
+            "resource": {
+              "kind": "Deployment",
+              "name": "registry-mirror",
+              "namespace": "kubeclaw"
+            },
+            "identityExpectations": [
+              {
+                "path": [
+                  "spec",
+                  "template",
+                  "spec",
+                  "containers",
+                  0,
+                  "name"
+                ],
+                "equals": "registry"
+              },
+              {
+                "path": [
+                  "spec",
+                  "template",
+                  "spec",
+                  "containers",
+                  0,
+                  "env",
+                  1,
+                  "name"
+                ],
+                "equals": "REGISTRY_STORAGE_DELETE_ENABLED"
+              }
+            ],
+            "path": [
+              "spec",
+              "template",
+              "spec",
+              "containers",
+              0,
+              "env",
+              1,
+              "value"
+            ]
+          },
+          "startLine": 30,
+          "endLine": 30,
+          "representation": "selected-native-resource-value",
+          "value": "true",
+          "resourceProvenance": {
+            "origin": "my-values/infra/registry-mirror.yaml",
+            "source": "my-values/infra/registry-mirror.yaml",
+            "identity": {
+              "kind": "Deployment",
+              "name": "registry-mirror",
+              "namespace": "kubeclaw"
+            },
+            "namespaceAuthority": "deployment",
+            "activationState": "active",
+            "sourceLocationMeaning": "Native resource declaration; not the selected field offset",
+            "resourceJsonSha256": "35d4e222c3d5a4e6e8ccbd81d4c7aa456a788598ca05c589428f66b2cfe7dc6a"
+          }
         }
       ]
     },
