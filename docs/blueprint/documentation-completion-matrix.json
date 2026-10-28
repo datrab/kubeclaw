@@ -50753,6 +50753,156 @@
       ],
       "openIssues": [],
       "verdict": "PASS"
+    },
+    {
+      "id": "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
+      "revision": "57ae0d9dfe109f298034949d0451017e0c622714",
+      "author": "Nova /root sole integration writer; registration only, no product or documentation changes",
+      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-014"
+      ],
+      "pages": [
+        "docs/site/reference/configuration-change-impact.md"
+      ],
+      "sources": [
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/prism/server/control-config.ts",
+        "tests/verification/reliability/isolation-session.test.mjs",
+        "tests/verification/reliability/project-recovery-version.test.mjs",
+        "charts/gitops/templates/applications.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/values.yaml",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.schema.json",
+        "skills/prism/control/product-decisions.ts",
+        "charts/kubeclaw/templates/pvc.yaml",
+        "charts/prism/templates/jobs.yaml",
+        "charts/prism/templates/postgresql.yaml",
+        "charts/prism/values.yaml",
+        "gitops/platform/bootstrap/csi-driver-smb.yaml",
+        "gitops/platform/values/csi-driver-smb.yaml",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/nova/core/execution/adapter-invocation-phase.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/adapter-support.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/nova/project/recovery.ts",
+        "skills/nova/core/execution/graph.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/prism/server/worker.ts",
+        "skills/worker/core/worker/native-pool-policy.ts",
+        "skills/worker/core/worker/native-runtime-identity.ts",
+        "skills/worker/core/worker/native-node-identity.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "skills/prism/server/worker-readiness.ts",
+        "docs/site/reference/service-routing.md",
+        "charts/kubeclaw/templates/service.yaml",
+        "charts/kubeclaw/templates/service-extra-nodeports.yaml",
+        "charts/kubeclaw/templates/_helpers.tpl",
+        "charts/prism/templates/services.yaml",
+        "charts/kubeclaw/templates/demo-ready-service.yaml",
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/use/maintenance.md",
+        "docs/site/use/recovery.md",
+        "docs/blueprint/AP09-completeness-audit.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "charts/ops-pod/templates/workload.yaml",
+        "scripts/deploy.sh",
+        "scripts/docs-kubernetes-core-receiver-contracts.mjs",
+        "scripts/docs-reader/source-links.mjs"
+      ],
+      "checks": [
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "VALID UNCHANGED-INPUT REUSE for CFG014 at57ae, not a fresh run. Actual committed96f7 original control terminal0 (193.936s), rawlogSHA c842c89bd3e38c1530c3ef37ebeacc51c1e6a533078213b3d62a88d5069c97e6. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution. Complete273input continuity and all7 rawlog hashes verified in cfg014-current-valid-reuse-20261028/complete-unchanged-input-and-control-reuse.json; historical built-output proof retained, compiled files since removed."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "VALID UNCHANGED-INPUT REUSE for CFG014 at57ae, not a fresh run. Actual committed96f7 original control terminal0 (27.303s), rawlogSHA eea96af4da867f8fb3fa25a2d5260b5b0bb5bf27f60fd0bd69bf05411d911573. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution. Complete273input continuity and all7 rawlog hashes verified in cfg014-current-valid-reuse-20261028/complete-unchanged-input-and-control-reuse.json; historical built-output proof retained, compiled files since removed."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "VALID UNCHANGED-INPUT REUSE for CFG014 at57ae, not a fresh run. Actual committed96f7 original control terminal0 (15.156s), rawlogSHA b647afdfb3094db600e80b6c4d4d3b700b9060c56418258cb818e31e1feff98b. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution. Complete273input continuity and all7 rawlog hashes verified in cfg014-current-valid-reuse-20261028/complete-unchanged-input-and-control-reuse.json; historical built-output proof retained, compiled files since removed."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "VALID UNCHANGED-INPUT REUSE for CFG014 at57ae, not a fresh run. Actual committed96f7 original control terminal0 (111.914s), rawlogSHA d98cca063d5778c5212485306e3e2ca009ba0ab62b32d002e7832f0b134262f0. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution. Complete273input continuity and all7 rawlog hashes verified in cfg014-current-valid-reuse-20261028/complete-unchanged-input-and-control-reuse.json; historical built-output proof retained, compiled files since removed."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "VALID UNCHANGED-INPUT REUSE for CFG014 at57ae, not a fresh run. Actual committed96f7 original control terminal0 (33.178s), rawlogSHA 534a49fd859d7717239a8a8cde153fc3f058339da3ae843c3d2128d6bdc571ef. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution. Complete273input continuity and all7 rawlog hashes verified in cfg014-current-valid-reuse-20261028/complete-unchanged-input-and-control-reuse.json; historical built-output proof retained, compiled files since removed."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "VALID UNCHANGED-INPUT REUSE for CFG014 at57ae, not a fresh run. Actual committed96f7 original control terminal0 (19.672s), rawlogSHA 306c2a7279307e42effa2d099b2ccf07db7669d840054fbd649f045949259e6e. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution. Complete273input continuity and all7 rawlog hashes verified in cfg014-current-valid-reuse-20261028/complete-unchanged-input-and-control-reuse.json; historical built-output proof retained, compiled files since removed."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "VALID UNCHANGED-INPUT REUSE for CFG014 at57ae, not a fresh run. Actual committed96f7 original control terminal0 (66.445s), rawlogSHA 31b5e8bedb95a434b6a22d4afb6d1bf4efcc91d336e8eddc5e3b1c69a97ee36a. Normal build validates native28 IDs/results but suppressed child details are not individually parsed; automated Reader/reference, not live/human execution. Complete273input continuity and all7 rawlog hashes verified in cfg014-current-valid-reuse-20261028/complete-unchanged-input-and-control-reuse.json; historical built-output proof retained, compiled files since removed."
+        },
+        {
+          "command": "Independent whole-original CFG014 Source/Reader/Quality semantic review",
+          "exitCode": 0,
+          "observation": "Actual complete791line canonical page and seven composed source responsibilities PASS; final qualified1page/62supporting regular files, bounded full/range scopes, all expanded upstream receiving duties completed. Immutable verdict and performed-local-responsibility addendum retained."
+        },
+        {
+          "command": "Independent four inert static CFG014 reader tasks",
+          "exitCode": 0,
+          "observation": "Actual4/4 tasks PASS, appropriate safe action/verification/rollback/STOP; no live or participant exercise."
+        },
+        {
+          "command": "Actual pinned upstream acquisition and independent semantic review",
+          "exitCode": 0,
+          "observation": "Actual24 original pinned-primary first-attempt fetches0;17fullfiles and7complete relevant contexts; three additional helper contexts and nine independent Service/DNS receiving authorities qualified. No historical execution receipt reconstructed."
+        },
+        {
+          "command": "Complete unchanged-input and original116 control-scope continuity verification",
+          "exitCode": 0,
+          "observation": "Actual273 unique delivery input Gitobjects/physicalSHA and seven originalrawlog hashes current at57ae verified. All116 record canonical hashes captured; no old/new record delivery source is completionledger. Independent whole reviewer approved unchanged-control reuse, not counts-only semantic proof."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole original CFG-014 change-impact and safe operating/recovery criterion independently passed across all seven source responsibility families. Actual consumers distinguish hot, restarted/recreated consumer, new run, coupled publication and data migration; prerequisites, failure, verification, rollback and unknown-state owner STOP are source-qualified. All expanded Kubernetes ConfigMap/env/subPath, Service and PVC/CSI/SMB duties now independently completed. Two historical finding facets satisfied for CFG-014 only, without global finding or A98 gate awards. No product remedy required.",
+      "limits": [
+        "CFG-014 only; no A98 gate, other requirement, global finding, MNT009/A91107/API, SourceLock, profile, purpose, controlled-language or QUA004 acceptance inferred.",
+        "One canonical page and 62 supporting tracked regular files retain performed full versus relevant-range and analytical/reused qualifications in final-tracked-source-qualification-union.json and its unchanged original verdict plus local-responsibility addendum. External 24 pinned primary sources, three helper sources, nine Service/DNS sources and official versioned Node timer authority are separate qualified non-delivery inputs, not fictitious repository paths.",
+        "Seven actual original controls executed on96f7 are valid unchanged-input reuse at57ae, not newly executed57ae tests. Complete273 delivery-input Git/physical vectors and all seven rawlog hashes independently reverified. Deleted compiled Reader files are not claimed to exist; historical actual254 output/177 Source binding evidence remains retained. No duplicate build or new28 individually parsed execution claimed.",
+        "Four independent inert static reader tasks cover timeout-only same-ID recovery, ConfigMap env/subPath, uncertain SMB cleanup and Service exposure/rollback; no blind participant, browser, accessibility, live cluster/pod refresh/CSI/SMB erasure, host inspection, restore or changed-timeout recovery execution claim.",
+        "Dated reported18 tests/11 synthetic checks remain historical declarations, not reconstructed or current execution. Earlier NOT_READY closure, all reviews/manual/mapping constraints, two original finding IDs and global finding objects are preserved. Timeout overflow is an operator STOP, not an implemented guard; abort-only cleanup is not a deadline guarantee. Official host-plugin reseeding is not Nova registry pinning; unsupported image/data rollback and unknown host state remain owner STOP.",
+        "All116 prior completion records remain entirely unchanged, including historical NOT_READY, failures, checks, limits and impact histories. No revision repin or blanket exemption is required for a ledger-only addition outside every declared delivery-source scope."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -62108,15 +62258,33 @@
       "readerTask": "Änderungsauswirkung: Hot, Restart, New Run oder Migration",
       "sourceDependencies": [
         "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
         "skills/nova/project/recovery.ts",
         "skills/common/plugin-runtime/foundation/config/published-pair.ts",
         "skills/prism/server/control-config.ts",
-        "skills/prism/config/native-worker.ts"
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/control/product-decisions.ts",
+        "charts/kubeclaw/values.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/prism/values.schema.json",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/gitops/templates/applications.yaml"
       ],
-      "sourceVerification": "passed-current-authored-page-partition-only",
+      "sourceVerification": "independent-whole-original-source-semanticReader-quality-PASS-at-committed57ae0d9d",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
+        "npm run docs:inventory:config:check",
+        "npm run docs:generate:check",
+        "npm run docs:drift:config:mutations",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -62151,8 +62319,19 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
-      "evidence": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "completionRecord": "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
+          "revision": "57ae0d9dfe109f298034949d0451017e0c622714",
+          "verdict": "PASS",
+          "scope": "Whole original CFG014 only; no A98 gate/global finding or other requirement award",
+          "independentOriginalReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg014-whole-original-20261028/verdict.json",
+          "performedResponsibilityAddendum": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg014-whole-original-20261028/performed-local-responsibility-addendum.json",
+          "qualifiedSourceUnion": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg014-whole-original-20261028/final-tracked-source-qualification-union.json",
+          "validUnchangedControlReuse": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg014-current-valid-reuse-20261028/complete-unchanged-input-and-control-reuse.json"
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/a98_source_review_round2",
@@ -62188,24 +62367,75 @@
           "report": "/home/node/Documents/Codex/a98-evidence/precedence-timer-source-fresh/report.md",
           "reportSha256": "1c0b1e98f2183a3e396ec8867ad2885e6b4dd4e1fa9fbd913a730ec2787c9890",
           "scope": "Complete authored two-page source correspondence only; whole inventories/gates/Reader/Quality/finalAstra remain unproven"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
+          "revision": "57ae0d9dfe109f298034949d0451017e0c622714",
+          "verdict": "PASS",
+          "role": "source",
+          "scope": "Whole original CFG014 coherent-topic duty under AP09sections1-3; earlier reviews/manual/mapping boundaries preserved",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg014-whole-original-20261028/verdict.json"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
+          "revision": "57ae0d9dfe109f298034949d0451017e0c622714",
+          "verdict": "PASS",
+          "role": "reader",
+          "scope": "Whole original CFG014 coherent-topic duty under AP09sections1-3; earlier reviews/manual/mapping boundaries preserved",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg014-whole-original-20261028/verdict.json"
+        },
+        {
+          "agent": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
+          "revision": "57ae0d9dfe109f298034949d0451017e0c622714",
+          "verdict": "PASS",
+          "role": "quality",
+          "scope": "Whole original CFG014 coherent-topic duty under AP09sections1-3; earlier reviews/manual/mapping boundaries preserved",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg014-whole-original-20261028/verdict.json"
         }
       ],
-      "openFindingIds": [
-        "A98-QUALITY-TEST-STATUS",
-        "A98-PLATFORM-TIMEOUT-PINNING-CLASS"
-      ],
+      "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L289",
       "acceptanceMappingBasis": {
         "authority": "docs/blueprint/AP09-acceptance-contract.md#L272",
         "reason": "Configuration change procedure, activation/restart/new-run/data boundary and operator safe action.",
         "scope": "Maps applicable facets only. Each complete gate and all requirement criteria still need separate proof; no acceptance inferred."
       },
-      "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- **CFG-014 — `reference/configuration-change-impact.md`.** Inspected consumer-based change classes, timer overflow, captured versus persisted recovery fields, adapter abort-only cleanup, rollback and immutable identity stops. Full expanded Kubernetes ConfigMap/env/subPath, Service, PVC/SMB, retention and upstream receiver paths were not independently completed. Source/reader NOT_READY for complete scope; quality PASS in inspected sections. No missing live run alone is used as a blocker.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "closureHistory": [
+        {
+          "verdict": "NOT_READY",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- **CFG-014 — `reference/configuration-change-impact.md`.** Inspected consumer-based change classes, timer overflow, captured versus persisted recovery fields, adapter abort-only cleanup, rollback and immutable identity stops. Full expanded Kubernetes ConfigMap/env/subPath, Service, PVC/SMB, retention and upstream receiver paths were not independently completed. Source/reader NOT_READY for complete scope; quality PASS in inspected sections. No missing live run alone is used as a blocker.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "legacyFindingHistory": [
+        {
+          "revision": "57ae0d9dfe109f298034949d0451017e0c622714",
+          "originalOpenFindingIds": [
+            "A98-QUALITY-TEST-STATUS",
+            "A98-PLATFORM-TIMEOUT-PINNING-CLASS"
+          ],
+          "scope": "Historical CFG014-only facets retained; original global findings unchanged"
+        }
+      ],
+      "findingDispositions": [
+        {
+          "id": "A98-QUALITY-TEST-STATUS",
+          "scope": "CFG-014 only",
+          "currentRelevance": "Historical concrete omission is corrected for thispage.",
+          "decision": "SATISFIED_IN_CFG014_FACET_NOT_GLOBAL_FINDING_CLOSURE",
+          "basis": "Page now names datedNode24.21.0/Helm3.22.0/source revisions, actualreported18test/11syntheticchecks andexit/status, sandbox/flock/prerequisites andexplicitnotexecutedcluster/refresh/migration/readiness/drain/lock/liveeffect limits. Completecorrespondinglocaltest declarations inspected. No missinghistoricalreport is reusedasexecution proof ornewtestrun; freshsemanticreview plusvalidunchangedcurrentnormalcontrols support thiscriterion.",
+          "limits": "Othersevenfindingpages/A98gates remainunawarded. Datedreportedruns are not reconstructed or assertedfreshcurrent."
+        },
+        {
+          "id": "A98-PLATFORM-TIMEOUT-PINNING-CLASS",
+          "scope": "CFG-014 only",
+          "currentRelevance": "Originalincorrecttimeout-onlyNewrun requirement is absent; currentexceptionmatchescompleteconsumer/recoverysource.",
+          "decision": "SATISFIED_IN_CFG014_FACET",
+          "basis": "Matrix explicitlyRecreateconsumer; runtime subset excludesboth timeoutfields; recoveryusescurrentplatformandoriginalID, whileotherstops remain. Nodeoverflowguard isoperatorSTOP notinventedruntimecheck. Deadline-race versusabort-only cleanup properlydistinguished.",
+          "limits": "No actual recoveryunderchangedtimeouts, pipeline/effect/host/live run orwholeA98-11award inferred; originalfailure/history retained."
+        }
+      ]
     },
     {
       "id": "CFG-015",
