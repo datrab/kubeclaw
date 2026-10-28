@@ -2819,7 +2819,9 @@
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
-        "docs/generated/inventory/deploy-script.json"
+        "docs/generated/inventory/deploy-script.json",
+        "scripts/lib/docs-verification-reference.mjs",
+        "docs/blueprint/verification-command-guidance.json"
       ],
       "checks": [
         "npm run docs:inventory:config:check",
