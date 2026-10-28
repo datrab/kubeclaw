@@ -10254,7 +10254,7 @@
             "source": "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "019d76f905f6764fa7ddb352d60cea3444bba4c80a45442d757beb56848278d8"
+            "factsSha256": "59292c3fcb62320746a3ef663548cedf2d3a16da5438d9007939aec36750ff3e"
           },
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Fconfigmap-gateway.yaml:dependencySignals:ConfigMap%2Fkubeclaw%2Fagent-buster-config%20-%3E%20channel%3Adiscord%20%5Bopenclaw.json.bindings%5B0%5D.match.channel%3Ddiscord%5D:helm%3Abuster:ConfigMap%2Fkubeclaw%2Fagent-buster-config:exact-value:",
@@ -11724,7 +11724,7 @@
             "source": "charts/kubeclaw/templates/deployment.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "7064cf13246d96590c815b4ec06c945d87aa52f9bd07f185ca52e3aef3a7dfbc"
+            "factsSha256": "6d18692d35cedf76ec8c9b28c2883c3c6008d935e1344c3e176f3b830590dd76"
           },
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Fpvc.yaml:dependencies:persistent-storage::::",
@@ -11780,42 +11780,42 @@
             "source": "charts/kubeclaw/templates/pvc.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "0c4ce3068a8f409fd7c7a200da5d361f04e7a3e8de61ceb58e8c70f08319ce9f"
+            "factsSha256": "21c63fbf9638074208abaf86fb48a0555e4442de9f62d55ca1f3784beb678420"
           },
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Fpvc.yaml:stores:pvc%3Akubeclaw%2Fagent-buster-workspace::::",
             "source": "charts/kubeclaw/templates/pvc.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "724b5625262e8fbb5a9ce1760dec3634e664567a90d7aab5c5bd1002e2f94f9a"
+            "factsSha256": "c537e4db43c32fccf323e42d745f6c84bad78b12cef41b4d26d50d2fa1689df4"
           },
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Fpvc.yaml:stores:pvc%3Akubeclaw%2Fagent-nova-config::::",
             "source": "charts/kubeclaw/templates/pvc.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "967aa0c2df4340976492e70a7a3f30f316935de1c168ccfe1e2b31ce60758181"
+            "factsSha256": "9ffa4a1a0c6c00df88329bc7327304a68dddeddb5af74334993b5f7a7cc55487"
           },
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Fpvc.yaml:stores:pvc%3Akubeclaw%2Fagent-nova-workspace::::",
             "source": "charts/kubeclaw/templates/pvc.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "aa7a7ef95dffc92925ef69acafdd887f447a307819b52407b6484e96541c45f9"
+            "factsSha256": "3d6e1cfb89b0a2c6384c95839ae08bfbb18309c878fdfedd30c92ef4102a058c"
           },
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Fpvc.yaml:stores:pvc%3Akubeclaw%2Fagent-prism-config::::",
             "source": "charts/kubeclaw/templates/pvc.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "cce1e0f0fda3f0f4be1bcd11a66e8a8ef2cb54719eb1155ab99ba52ab07d21a2"
+            "factsSha256": "3dbf42b464b2aa9e80cbee826f1741fef619c4492b4651de6a661679713fa5da"
           },
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Fpvc.yaml:stores:pvc%3Akubeclaw%2Fagent-prism-workspace::::",
             "source": "charts/kubeclaw/templates/pvc.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "931a4458afe87d48e20921f63cf4143a04d6c4bcd5b8e93aebc96eda0ca9cf7a"
+            "factsSha256": "574378bcf0fc27a0d68431b5e4cd526fd35a3b28b067056b854e7af3ade941da"
           },
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Frbac.yaml:resources:ClusterRole%2Fcluster%2Fagent-nova-verification-read::::",
@@ -12144,7 +12144,7 @@
             "source": "charts/ops-pod/templates/tailscale-storage.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "ed1463a3f2eae536ea39d52179a44e5cbdb5fc5f0d8f637d37908f5f818b5e98"
+            "factsSha256": "05f466fef9d8302a5f0a342fedaa3b75793844ecd9de797aa148baa1fb236dc5"
           },
           {
             "sourceId": "platform:charts%2Fops-pod%2Ftemplates%2Fworkload.yaml:dependencySignals:StatefulSet%2Fkubeclaw-ops%2Fcodex-ops%20-%3E%20kubernetes-api-token%20%5BautomountServiceAccountToken%3Dfalse%5D:helm%3Aops-default:StatefulSet%2Fkubeclaw-ops%2Fcodex-ops:exact-field:",
@@ -12228,14 +12228,14 @@
             "source": "charts/ops-pod/templates/workload.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "cf16401bef67a77217b5389da14e3f5142b1c7224fe4a541e5d41b776a65ffca"
+            "factsSha256": "659d399dafdfefb78fd39ddcbc6a08d21b3ba3812bffed3ce80fc2d31dabfc12"
           },
           {
             "sourceId": "platform:charts%2Fops-pod%2Ftemplates%2Fworkload.yaml:stores:pvc%3Akubeclaw-ops%2Fworkspace-codex-ops-0::::",
             "source": "charts/ops-pod/templates/workload.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "87085ce62ee116eb63231ee9dfb43605365ba58b6c4c4d220e0d91abbc13fec0"
+            "factsSha256": "a16b34cd6b66744b8c0f49fb8f304469e1eab22f78a7314d14b0cbaddd77ea96"
           },
           {
             "sourceId": "platform:charts%2Fops-pod%2Fvalues.yaml:dependencySignals:StatefulSet%2Fkubeclaw-ops%2Fcodex-ops%23tailscale%20-%3E%20ghcr.io%20%5Bimage%20registry%20for%20ghcr.io%2Ftailscale%2Ftailscale%3Av1.102.3%5D:helm%3Aops-tailscale:StatefulSet%2Fkubeclaw-ops%2Fcodex-ops%23tailscale:exact-value:",
@@ -12585,7 +12585,7 @@
             "source": "charts/prism/templates/jobs.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "9d7cbcbdc2e2c83ae2de268260c093988b91b9aec123d512e96f81566f5d7bd4"
+            "factsSha256": "9df54177385794603f2b99c7226894d3119e9adc03a8a6714d4e17dc2af58561"
           },
           {
             "sourceId": "platform:charts%2Fprism%2Ftemplates%2Fnetworkpolicy.yaml:dependencies:cluster-cni::::",
@@ -12760,7 +12760,7 @@
             "source": "charts/prism/templates/postgresql.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "2d84881584d6e11f158267a3388a1b179dc6d70009e258a6d99c1d8fe00ac4ac"
+            "factsSha256": "3d7dd007bdc5082b140f3de23b09259ea71628bdfc8f80ecf232ffc8e9980e21"
           },
           {
             "sourceId": "platform:charts%2Fprism%2Ftemplates%2Fserviceaccounts.yaml:resources:ServiceAccount%2Fkubeclaw%2Fprism-backup::::",
@@ -13152,7 +13152,7 @@
             "source": "charts/prism/templates/workloads.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "a47508c5031ce7f5151fbe79b5a716fc916f3c3dbfdc97ef9939739f55aeee4e"
+            "factsSha256": "25b0b1ce2cebb3849e0ac1ee259a5035ed1cad1a8fec1c76ba035c1241363551"
           },
           {
             "sourceId": "platform:charts%2Fprism%2Fvalues.yaml:dependencies:docker-hub-image-registry::::",
@@ -14321,14 +14321,14 @@
             "source": "gitops/platform/values/alloy.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "5180bf847a758982cdd291bce825d0b67f40e99d3d2206413660117a19dafd60"
+            "factsSha256": "13938abbe7556dac7470c5ee5688586c790d4ff242d56bbd1d5e81ad8ca10abb"
           },
           {
             "sourceId": "platform:gitops%2Fplatform%2Fvalues%2Floki.yaml:stores:helm%3Aloki%2Fdata::::",
             "source": "gitops/platform/values/loki.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "f2b0f5637305feacea023fb20930d0aacd4956de9243222ab6ab66ee51870588"
+            "factsSha256": "5df34b47f772af5a430d6711e31fee29ec6f12f86199a31d6da4b9fc07c9ab4e"
           },
           {
             "sourceId": "platform:gitops%2Fplatform%2Fvalues%2Fpostgresql.yaml:secretReferences:postgresql-secrets%23*::::auth.existingSecret",
@@ -14349,7 +14349,7 @@
             "source": "gitops/platform/values/postgresql.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "27510a72eb137a777a92075da0bfbe8a0913ed168098bbcdf35bc121e23debaf"
+            "factsSha256": "e8a183c1e46de3543dfcee8f932555512f61ad0816ae59ff93dc5655f7d5937f"
           },
           {
             "sourceId": "platform:gitops%2Fplatform%2Fvalues%2Fprometheus.yaml:secretReferences:prometheus-grafana%23*::::grafana.admin.existingSecret",
@@ -14363,14 +14363,14 @@
             "source": "gitops/platform/values/prometheus.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "dadde27af95b53d3c113e3c3412259c8c66030d62e99b581d011374225eb8606"
+            "factsSha256": "018c3cd488686a9e820bdbf34635c90004cef3f652371abad3fe464dd77539d9"
           },
           {
             "sourceId": "platform:gitops%2Fplatform%2Fvalues%2Fprometheus.yaml:stores:helm%3Aprometheus%2Fdata::::",
             "source": "gitops/platform/values/prometheus.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "eed99e90b3d1c598da54c6cef8c73e9552c94a93e53b985370293842ea796a37"
+            "factsSha256": "a2273884e5da0c95d4275e72d21259e4bdc7009a339105443b193e176bc7aac8"
           },
           {
             "sourceId": "platform:gitops%2Fplatform%2Fvalues%2Fredis.yaml:secretReferences:redis-secrets%23*::::auth.existingSecret",
@@ -14384,7 +14384,7 @@
             "source": "gitops/platform/values/redis.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "a67c81694fa66e1be24d4dfce8def3e49109ce01c373e4a0f8c56a0844ac0b67"
+            "factsSha256": "b37fcfb653f5916e1d0bb8d78793a86c1338e2f7913da0085e330a411fc3fa01"
           },
           {
             "sourceId": "platform:helm%3Abuster%3Arendered-output:dependencySignals:ConfigMap%2Fkubeclaw%2Fagent-buster-swarm-config%20-%3E%20provider%3A%2Fopt%2Fterraform-provider-mirror%20%5Blint-policy.json.projects%5B0%5D.terraform.provider_mirror%3D%2Fopt%2Fterraform-provider-mirror%5D:helm%3Abuster:ConfigMap%2Fkubeclaw%2Fagent-buster-swarm-config:rendered-output:",
@@ -14832,7 +14832,7 @@
             "source": "my-values/buster-values.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "e948e2280234356d306c708532275dae54d0147deb7d22e6150b002c0e2ba8cb"
+            "factsSha256": "4349eedea09f5574c6a84eec5d1ae72f3a286b6f4650dd404995e703d1f5bfbe"
           },
           {
             "sourceId": "platform:my-values%2Finfra%2Fargocd-tailscale-ingress.yaml:dependencySignals:Ingress%2Fargocd%2Fargocd%20-%3E%20ingress-class%3Atailscale%20%5BingressClassName%3Dtailscale%5D:my-values%2Finfra%2Fargocd-tailscale-ingress.yaml:Ingress%2Fargocd%2Fargocd:exact-value:",
@@ -15203,7 +15203,7 @@
             "source": "my-values/infra/registry-local.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "1dda5f05ae2e4475e6f6bbf2de5fe55fba7a1d2e919e53d7b5d4b53b3bb00fd0"
+            "factsSha256": "4596126b23f9e19c30e2fd0e4112cc37790c56496c77364ef8376bf1821f06c7"
           },
           {
             "sourceId": "platform:my-values%2Finfra%2Fregistry-mirror.yaml:dependencies:docker-hub-pull-through-mirror::::",
@@ -15287,7 +15287,7 @@
             "source": "my-values/infra/registry-mirror.yaml",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "47c168eae5c198d0a55c9b2f84a572872a0c5b837427236cf3c974ddfb9e4533"
+            "factsSha256": "03a1eea74c035e21c44d4009ba625355ec976210e92915dfc30ad38a27b35b34"
           },
           {
             "sourceId": "platform:my-values%2Finfra%2Fspire-network-policies.yaml:dependencies:cilium-secured-deployment-profile::::",
@@ -15833,14 +15833,14 @@
             "source": "scripts/render-postgresql-recovery.mjs",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "44faee4577434f2614dc07c11d134c42fb217417564ad0e5db4355078da7c1bc"
+            "factsSha256": "e4ab9e891abd792d8cf6263ceb3cf0a4bf739c2abceed2fd95da8ffe337d17f8"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fbrowser-playwright-runtime.ts:stores:.kubeclaw-playwright-%24%7BexecutionId%7D.json::::",
             "source": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "71c1dc3c72b820b1a1f538a46d77c7a6b98f1e1c8ec81bc72537d3b66d38b3b6"
+            "factsSha256": "4924aac84cd3b79632e27b958c9f68a216f3ce8e0dc84d55a0e10fd358d4eb81"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fcontainer-build-runtime.ts:outboundConnections:GET%20%2Fv2%2F%7Brepository.split('%2F').map(encodeURIComponent).join('%2F')%7D%2Fmanifests%2F%7Bdigest%7D::::",
@@ -15861,28 +15861,28 @@
             "source": "skills/buster/engine/test-gates/container-build-runtime.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "0bcf022fd57f335c3b9678e4c75061f409bb5eda104b8c1450ca5644d07645d7"
+            "factsSha256": "165ab323ace3ce9241d5f7017b2482ece981bc7de2a0cf05699547adaccdfffb"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fcontainer-build-runtime.ts:stores:metadata.json::::",
             "source": "skills/buster/engine/test-gates/container-build-runtime.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "cbf1a9b5c50e43d6bd097223b8bb5037fc1ff15deb14aaa0919751952b10d287"
+            "factsSha256": "5a9c65563862d27a59486e348c34c17f74d781f4ca85edfb8e8eda233a312e8c"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fnative-fixture-journal.ts:stores:data::::",
             "source": "skills/buster/engine/test-gates/native-fixture-journal.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "2fe42703a39ab9253c373dc5dc3a937bd15fab2cb2d40ffa2f408fe41ea014d3"
+            "factsSha256": "3939b51c3adaf67d1f06cef8d39a3be92643784712c11c42a8c618ebcf07ba1a"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fnative-fixture-journal.ts:stores:metadata::::",
             "source": "skills/buster/engine/test-gates/native-fixture-journal.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "3deaa7944d5e86846ed23bb3131c1f5f62c405105b1d8bed113a698426820da4"
+            "factsSha256": "b01c093c67fed92b87d66523a28cbd04bbad4994440d0255b1123f338f574ca7"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fnetwork-http-runtime.ts:outboundConnections:DYNAMIC%20%7BconfiguredUrl%7D::::",
@@ -15952,105 +15952,105 @@
             "source": "skills/buster/engine/test-gates/remote-plan-service.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "a88105063ffbd373f911ed5b5ccde420267fd49571846ecba88a1983a6cf5578"
+            "factsSha256": "cd2e551ae8f28e65307aec29321ff5da0d64cfd29565ee8205e93dbe296ad576"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Frunner.ts:stores:attempt-store.json::::",
             "source": "skills/buster/engine/test-gates/runner.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "6058e4ea75c06d8456c38a9490330f658f8e89c22601577445bb36af9c069631"
+            "factsSha256": "3d733fe8f2f8513e0c141157264bdeb3e48e2403b937ab220497dbd9b1fadc85"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Frunner.ts:stores:attempts::::",
             "source": "skills/buster/engine/test-gates/runner.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "199fc9bcbf831114b3a28a610757f4a5e0c89fe9580c63b7b81cf050a214d11f"
+            "factsSha256": "3cba0a362ba2f59d7a62271f3340c0627870dc3c070348be6adb4a40c0e093c9"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Frunner.ts:stores:test-attempts::::",
             "source": "skills/buster/engine/test-gates/runner.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "538e7dc1693da5804b0a63d4e418028c3dabff61f8d7d8b6b4049111f4d6110d"
+            "factsSha256": "47c74713a8284f852edf51f844348f34909af779d084ee6c2da594a8ddd6d78e"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fsecurity-scan-runtime.ts:stores:config.json::::",
             "source": "skills/buster/engine/test-gates/security-scan-runtime.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "f8af2a2626fcd177cb789c46be9e361b5d0625174a88f0cea398aeb2546eaabc"
+            "factsSha256": "8f77af96fccf99a90e13579d5bddf0ab444c46a2c742338de6622073961d8f50"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fattempt-projection.ts:stores:observability%2Fattempts::::",
             "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "6777416e30bbac0b2255a4a2aae5af0be5d1de4574c6952102902c34dc1a8dbe"
+            "factsSha256": "0de214f511159d695fd61f9ae7ffa240c89a0d68707d84fb18d600aca1db8b53"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fattempt-projection.ts:stores:reconciliation.jsonl::::",
             "source": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "d96b5f494eada7cb635c6ab47461448dfdc97d8d53ce1d6a77a1b6521cfb0048"
+            "factsSha256": "deccf7862bcec540635bd3e672046ec84ae5023c98bebb09df8f8dc33d8db487"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fdurable-attempts.ts:stores:attempt-store.json::::",
             "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "2f52e7bda7b6b9e84cf0535feadeb346afd481b9ca25a695e8c6336951e367bc"
+            "factsSha256": "0688cf435992b48dc89dc4680c7f07806b2461b3d923342e86eb0ebf89f790b0"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fdurable-attempts.ts:stores:blobs::::",
             "source": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "c5471bccfbca83c65cf33e61fccb183855ba3ee68f8bbd67c509174148312191"
+            "factsSha256": "6102c1b09a9127549dd456bae1c88464ad02cc5ada85891781e3e0f67a713fe1"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fdurable-delivery.ts:stores:admission.json::::",
             "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "e314d7bffde169f036bd0db9562e5c8ae4d68f04cbd643e33fe7a1f9f68293bd"
+            "factsSha256": "633441d0caa832735b8d9fde4d793d37e49ba44f744051cf9c62de61b2f77882"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fdurable-delivery.ts:stores:outbox.json::::",
             "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "32e3044324a1c84c595198c6397cce5f6e2bcead4fe05c857df5ffc42692bad6"
+            "factsSha256": "68dd218fe550ea6c8c5d827bac4c892864dea950fd4b894dfb2cb9f8ac29b79d"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fdurable-records.ts:stores:blob-budget::::",
             "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "81c7f13c7cb73b7814659622669c2484f97d359dae72b96f4eeb97f0631cff83"
+            "factsSha256": "3faeaf4a30f8e5871716f1745cc884500f105f2f026bb51c197aa1222482c1b1"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fdurable-records.ts:stores:blobs::::",
             "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "e0a64455c848afffc0be5ce18ecf39f38bf8dedc2b8e08f50fb25a1de6913d13"
+            "factsSha256": "54b4f2069f3b2a6284d91b95d3d3dbfa1cead45369d3152a778fb3a8892a9886"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fdurable-records.ts:stores:records::::",
             "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "6918c60258e20620b08b00fe032f427532088e398b504358fc718bbd30da7212"
+            "factsSha256": "30d7b507d1e9920a835cb031605adf4b11a687c501043b2e5a01eb588fde2b94"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Ffoundation%2Fobservability%2Fdurable-records.ts:stores:store.json::::",
             "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "7bdba63c1c9c6b2bb5ee3aa69b2bf192a908b46b2b5db0a49ce62af99e8ed402"
+            "factsSha256": "e6a30387ce00fe899727bfc83d66ebd5ac8c84f7993c9765bf2a6fc4590292ac"
           },
           {
             "sourceId": "platform:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:events:artifact.created::::",
@@ -16365,189 +16365,189 @@
             "source": "skills/nova/core/effects/journal.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "6b6a796196834197182379f617aa4208f09930a64d073bdb778d3798ed0870dd"
+            "factsSha256": "7c72d080d413e1bea4bb82cb09d1533a83146974bce793a0218fe1011ddbdc80"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Feffects%2Fjournal.ts:stores:effect-results::::",
             "source": "skills/nova/core/effects/journal.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "d9629149b6c600425f8c577a1779dd010ca0fca1826023030d522de44541651e"
+            "factsSha256": "09690885283ccc36064b2acf8817907f22d3f4125435667c428906e46b47ebb4"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Feffects%2Flocks.ts:stores:claim.json::::",
             "source": "skills/nova/core/effects/locks.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "2d89e19a3b8dcef544603beb64c9ebfdb7c7ee0a166b47a9e061a3eddeb6ad59"
+            "factsSha256": "6e22a407c589f95b059f3c0625dda92a5377326897d2aa6a4d059ab8c4d92619"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Feffects%2Flocks.ts:stores:locks.jsonl::::",
             "source": "skills/nova/core/effects/locks.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "42f8fe0bffd50ea42426a576999b7ef1751dbab16779ba953476a7a09b12df9a"
+            "factsSha256": "d3c32deb4c40e6c0b22aac598790777611f92e64b90505bce15c29bd0ecf66cd"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Feffects%2Flocks.ts:stores:owner.json::::",
             "source": "skills/nova/core/effects/locks.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "f83141e9b6a40b36f636ed7a7554438e4d065dc22123c082ac2b2ae94db322d9"
+            "factsSha256": "e6d3cb8104bf383f3a82595ee7d4a97f60584048446bb79f8099c6b79cacf72a"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Feffect-recovery.ts:stores:effects.jsonl::::",
             "source": "skills/nova/core/execution/effect-recovery.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "61a9b94d093046d7b7d7af20452a2be4d389ca5b24ab947abc7a0a6dccaeb6b4"
+            "factsSha256": "819b42612cb58a85291b701818dcbac4f614fb62b337ecb7c564b447688d21e6"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-admin.ts:stores:administrative-decisions.jsonl::::",
             "source": "skills/nova/core/execution/engine-admin.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "f7af9081bda22e7cdf4ad120b8e744678db7b6bbe456e01ac36cf07da6183968"
+            "factsSha256": "49102e50fb9dc583f91e272f803818e5dc225aa386d9a7a4128445465d0a8cd9"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-admin.ts:stores:events.jsonl::::",
             "source": "skills/nova/core/execution/engine-admin.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "af5a1bccd7f6bbdc0187e48b1e2dd2d8431f5b21285f0892032b91d9e5b20f92"
+            "factsSha256": "d825514926f09a7b0e6122d61e139d5f8329b749d89b415fa467d07ac1cf2071"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-run.ts:stores:administrative-decisions.jsonl::::",
             "source": "skills/nova/core/execution/engine-run.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "2e48956ef17fda5a41b83db92331c5dada2e4e111187b9cba0e115e17f616e62"
+            "factsSha256": "f25db3414f941f747d01e5ac49baad1b0968b94e9452e46c56b1b87382e71d42"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-run.ts:stores:events.jsonl::::",
             "source": "skills/nova/core/execution/engine-run.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "ae4b5a3cd66035f49ac9511d3c8647226e75bcbea8b259240c5fa9eaf40a400e"
+            "factsSha256": "4fb2257096ff8826375312e1f5136af06f84daa008197c823a85b95c84747d08"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-run.ts:stores:signals.jsonl::::",
             "source": "skills/nova/core/execution/engine-run.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "0e37a8ba22db977279ba8ef94e690ef52242bdcef6ec27200b79ef3e409b8a9c"
+            "factsSha256": "04541a5a0f9db129def4e88601f037f8a998b7d30f3cc2e387c91ec6e7b98996"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-runtime.ts:stores:effects.jsonl::::",
             "source": "skills/nova/core/execution/engine-runtime.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "35479b6639a1bda5db7221c0d097bde49d9ccccbb4c539ed49593d1fd2b79c90"
+            "factsSha256": "98ca78e720ad6b171af3175333dd2f5b52204f6b90952ab5a03c7919d7c80cfa"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-runtime.ts:stores:observer-checkpoints.jsonl::::",
             "source": "skills/nova/core/execution/engine-runtime.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "3c823e7ea38c17cb8f7b5af1294c447d0a3517bce7d528b908f8da57f3b03c49"
+            "factsSha256": "6c927beab8a993116c492a669b9a35d480a1c33dbe83f18ad25cf97c038afd31"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-runtime.ts:stores:observer-deliveries.jsonl::::",
             "source": "skills/nova/core/execution/engine-runtime.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "eac8183868c9bd265001550f97b6d7912ebc8329a4c9cb24730e90995e51951e"
+            "factsSha256": "13c92c948e11e3bd6b953418123c97e843be614bce6281901ff6e9ed25216bf2"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-runtime.ts:stores:resource-locks::::",
             "source": "skills/nova/core/execution/engine-runtime.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "e994ff5ec1d04743c6ca284a054e42b404caa294997e09427d5814e65b21cdbb"
+            "factsSha256": "3d260895cb72526a6059c1fc8793db542ba3b60c777860f874b48ba8cb037e31"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-snapshots.ts:stores:graph-snapshot.json::::",
             "source": "skills/nova/core/execution/engine-snapshots.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "214263590ccdf334cc797f2d47174875245760703f737adae28b57af41ff12a3"
+            "factsSha256": "61f6b73699bdd97e598b3757c19a1a4b97425730513546d72c03adb359a4d31e"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-snapshots.ts:stores:registry-snapshot.json::::",
             "source": "skills/nova/core/execution/engine-snapshots.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "2fbefe69a6ae921f29faf62e21533c0d4ae79c08d1fa69f099516bf755b41595"
+            "factsSha256": "3236c09a1b8727b4aa4550440ab233dca28544a3e07c942d428bab3e1380e0a0"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fexecution%2Fengine-snapshots.ts:stores:run-snapshot.json::::",
             "source": "skills/nova/core/execution/engine-snapshots.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "5b1d9be2738c3c4b00a2dd0f6122a249911b30acee68b126b44b8225cabf9ccb"
+            "factsSha256": "276805b1b62780cd87f53e9bb6de0c67846ae975eba08bb697fdbcd14ea1b74a"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fobservability%2Freconciler.ts:stores:attempts::::",
             "source": "skills/nova/core/observability/reconciler.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "bfd6b4ebbbdce59bf80550d7449cdc91586c72db18f313664c279f71bedd98b8"
+            "factsSha256": "2519bd126d5e838e68a11d97225daf9d591f9f84acbf2244ad729416eaf1821f"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fobservability%2Freconciler.ts:stores:reconciliation-plan.json::::",
             "source": "skills/nova/core/observability/reconciler.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "55c164836f6ba0cac3c42edbd51842baed18d95ac9bb7372ddee2db507ac50d1"
+            "factsSha256": "6caa8898ee8ef5d1e8b79463e22a3c9671ba2560fd039b67f2af0c65686a149f"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fobservability%2Freconciler.ts:stores:reconciliation.jsonl::::",
             "source": "skills/nova/core/observability/reconciler.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "734ea1f3d0590e521f456373f9f50c3fbd0159a1b8b0daeff35e0bc6e7dd37c4"
+            "factsSha256": "eb129274c7adccbcfbff17c91326b5cbe7e3b499fe7f3b79f5c3027c2c5dcd20"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fstate%2Fread-run-evidence.ts:stores:effects.jsonl::::",
             "source": "skills/nova/core/state/read-run-evidence.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "b300d5e333c93289a25fa0e841dc7ce0af6d3feb9e1cf5cf68bd8ead843d6615"
+            "factsSha256": "ab05c4cf375e2244ae07b01bb189420b1c98d176abb1e6e8e1032475b6b419f9"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fstate%2Fread-run-evidence.ts:stores:events.jsonl::::",
             "source": "skills/nova/core/state/read-run-evidence.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "93d74fbaae9646c45b90615e1c899e5fa7da8fdae71a5010466c3a283fb98903"
+            "factsSha256": "b44998fa1c661d2dfd6544ec924a564c5e604f474f670ad3a6cb6b489571e47c"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Fstate%2Fread-run-evidence.ts:stores:run-snapshot.json::::",
             "source": "skills/nova/core/state/read-run-evidence.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "6fdff3c95abc457964d9c8bf7f9b501ad496bbaae0075c262cfe9ceb1619bdf9"
+            "factsSha256": "829ec7e262f571fe3557dd3c1f713c035bcc1051874f0c4269a8c327e8327d34"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Ftelemetry%2Faudit.ts:stores:events.jsonl::::",
             "source": "skills/nova/core/telemetry/audit.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "1925f05cf1fa38945e14c2de86f18c8892c1fc8c0639102f242a5c5a43b36147"
+            "factsSha256": "74ecfa0c0ff06a38ab4829a5bb345523e302329e52ff7877c23b41d6f0e9d1d4"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Ftest-gates%2Fproduction.ts:stores:dispatch::::",
             "source": "skills/nova/core/test-gates/production.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "c42a3fb02dbea388bec5fb6108a0914a4d39a1f9d8ac07cca36c02051e965d84"
+            "factsSha256": "1df929c7e533f290c7a6e0af4f875e5d3a9b6a9abf1be2cd8a33dfd17839f3f0"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Ftest-gates%2Fproduction.ts:stores:imports::::",
             "source": "skills/nova/core/test-gates/production.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "3edef86b6ef26c8b0f69404cfcbb0fc2cef12529b8dfb99ab0012b11cfd3962a"
+            "factsSha256": "76f73d9e1e1c6429e15d90bcc6208aa6ca6da18c84710ddd657ed109097725c3"
           },
           {
             "sourceId": "platform:skills%2Fnova%2Fcore%2Ftest-gates%2Fremote-dispatch.ts:outboundConnections:DELETE%20%2Fv1%2Fplan-jobs%2F%7BjobId%7D::::",
@@ -17114,28 +17114,28 @@
             "source": "skills/worker/core/worker/native-attempt-journal.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "3dac0a7f8ef1eb4f2e4b9097d695fec88fa64513eb53de725432ad3f60692331"
+            "factsSha256": "6bfe98628fd0c74a16aaed62ed4755d9d57e742b64b74530e56682d7092669ed"
           },
           {
             "sourceId": "platform:skills%2Fworker%2Fcore%2Fworker%2Fnative-attempt-journal.ts:stores:metadata::::",
             "source": "skills/worker/core/worker/native-attempt-journal.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "37cf6390fc67991cef0efe853e11c997c6b989d98ec885943257d3d302d32e55"
+            "factsSha256": "58a651a04a2c9f9cde16f508f59eb8ec1123a9ef0777bcd27c88da421bfe02c7"
           },
           {
             "sourceId": "platform:skills%2Fworker%2Fcore%2Fworker%2Fnative-attempt-journal.ts:stores:outputs::::",
             "source": "skills/worker/core/worker/native-attempt-journal.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "cb589bca6719a017ac93ff223666e1b4509423f7755b71d5a2bf4ad5fa4ba609"
+            "factsSha256": "7b45eb524da81becfb1a2565ab649a635fc239767b18af3a84dce45390fb92ed"
           },
           {
             "sourceId": "platform:skills%2Fworker%2Fcore%2Fworker%2Fownership-store.ts:stores:owners.json::::",
             "source": "skills/worker/core/worker/ownership-store.ts",
             "target": "docs/site/understand/data-and-state.md#complete-store-matrix",
             "owner": "state-owning component maintainers",
-            "factsSha256": "23447f5b4a5bfe2a7361d5840492a902bdccca1fdbec96260c11d74e77be7515"
+            "factsSha256": "cf4b6453a2a788b5ac538d8e9fc97c2938fcde6d2dc8b6fd40d2735c880624b9"
           },
           {
             "sourceId": "platform:tools%2Fops-mcp%2Fsrc%2Fkubernetes.mjs:outboundConnections:GET%20%7BkubernetesApiPath%7D::::",
