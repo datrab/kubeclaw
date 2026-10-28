@@ -16,6 +16,7 @@ import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamAp
 import { generateSdkReference } from './docs-sdk-reference.mjs';
 import { readVerifiedRetainedLanguageBundle } from './lib/docs-retained-language-bundle.mjs';
 import { loadRetainedConfigurationSnapshot, assertRetainedPageDestinations, writeRetainedPage } from './lib/docs-retained-source.mjs';
+import { semanticEvidenceLinks, retainedSemanticNotice } from './lib/docs-retained-semantic-evidence.mjs';
 import { renderRetainedConfigurationReferences } from './lib/docs-retained-configuration-renderer.mjs';
 import { helmSnapshotSummary, environmentConsumerGuidance } from './lib/docs-configuration-reference-guidance.mjs';
 import { editorialOwners } from './lib/docs-configuration-editorial-language.mjs';
@@ -37,6 +38,7 @@ if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
 }
 const retainedLanguageBundlePath = option('--retained-language-bundle', null);
+let retainedSemanticMode = false;
 if ((only === 'retained-configuration-language') !== Boolean(retainedLanguageBundlePath)) {
   throw new Error('--retained-language-bundle is required only for --only retained-configuration-language');
 }
@@ -168,11 +170,33 @@ function stableWriteMap() {
     }
     const snapshot = loadRetainedConfigurationSnapshot({ root,
       artifactRevision: bundle.artifactRevision, sourceRevision: bundle.sourceRevision });
-    return renderRetainedConfigurationReferences({ ...bundle.inventories,
+    retainedSemanticMode = Boolean(bundle.semanticOwnerRevision);
+    const semanticContext = retainedSemanticMode ? { revision: bundle.semanticOwnerRevision,
+      inputs: bundle.semanticInputs, evidence: bundle.meaningEvidence } : null;
+    const outputs = renderRetainedConfigurationReferences({ ...bundle.inventories,
       secrets: bundle.inventories.secretSetup,
       readSourceText: snapshot.readSourceText, sourceRevision: bundle.sourceRevision,
       artifactRevision: bundle.artifactRevision, editorialRevision: bundle.editorialRevision,
-      banner: true, editorialSourcePath: 'scripts/lib/docs-configuration-editorial-language.mjs' });
+      banner: true, editorialSourcePath: 'scripts/lib/docs-configuration-editorial-language.mjs',
+      semanticContext });
+    if (semanticContext) {
+      const historicalLink = (sourcePath, line) => '[`' + sourcePath + (line ? ':' + line : '')
+        + '`](https://github.com/datrab/kubeclaw/blob/' + bundle.sourceRevision + '/' + sourcePath
+        + '#L' + (line ?? 1) + '-L' + (line ?? 1) + ')';
+      const meaningEvidence = secret => {
+        const bindings = bundle.meaningEvidence.secrets.filter(binding => Object.entries(binding.identity)
+          .every(([key, value]) => JSON.stringify(secret[key] ?? null) === JSON.stringify(value)));
+        if (!bindings.length) return '';
+        if (bindings.length !== 1) throw new Error('RETAINED_SECRET_MEANING_EVIDENCE_AMBIGUOUS');
+        return '<br>Current meaning evidence: ' + semanticEvidenceLinks(semanticContext, bindings[0].sources);
+      };
+      outputs.set('docs/site/reference/secrets.md', renderSecrets(bundle.inventories.secretSetup,
+        bundle.inventories.runtimeInputs, historicalLink, { artifactRevision: bundle.artifactRevision,
+          sourceRevision: bundle.sourceRevision, semanticOwnerRevision: bundle.semanticOwnerRevision,
+          notice: '> Retained historical view. This page does not acquire current Secret data.\n\n'
+            + retainedSemanticNotice(semanticContext), meaningEvidence }));
+    }
+    return outputs;
   }
 
   // A schema-only correction has its own complete publication boundary. Keep
@@ -956,7 +980,7 @@ ${generatedEnd()}
 
 const outputs = stableWriteMap();
 const stale = [];
-if (only === 'retained-configuration-language') assertRetainedPageDestinations(root, [...outputs.keys()]);
+if (only === 'retained-configuration-language') assertRetainedPageDestinations(root, [...outputs.keys()], { semantic: retainedSemanticMode });
 
 for (const [relPath, expected] of outputs) {
   const absPath = path.join(root, relPath);

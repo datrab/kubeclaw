@@ -130,3 +130,47 @@ test('the executing editorial owner cannot attest another checkout source tree',
     editorialRevision: 'ae67b6204435bb104e00d85091969da53ede415c' }),
     /RETAINED_EDITORIAL_EXECUTING_ROOT_MISMATCH/);
 });
+
+test('semantic mode preflights exactly all three destinations; v1 cannot select Secrets', t => {
+  const f = fixture(t);
+  const paths = ['docs/site/reference/helm-values.md', 'docs/site/reference/environment-variables.md',
+    'docs/site/reference/secrets.md'];
+  const parent = path.join(f.root, 'docs/site/reference');
+  fs.mkdirSync(parent, { recursive: true });
+  assert.throws(() => assertRetainedPageDestinations(f.root, paths), /OUTPUT_SET_INVALID/);
+  assert.throws(() => assertRetainedPageDestinations(f.root, paths.slice(0, 2), { semantic: true }), /OUTPUT_SET_INVALID/);
+  assertRetainedPageDestinations(f.root, paths, { semantic: true });
+  const inventory = path.join(f.root, retainedConfigurationInputs.runtimeInputs);
+  const before = fs.readFileSync(inventory);
+  fs.symlinkSync(inventory, path.join(f.root, paths[2]));
+  assert.throws(() => assertRetainedPageDestinations(f.root, paths, { semantic: true }), /UNALIASED_REGULAR/);
+  assert(!fs.existsSync(path.join(f.root, paths[0])));
+  assert(!fs.existsSync(path.join(f.root, paths[1])));
+  assert.deepEqual(fs.readFileSync(inventory), before);
+});
+
+test('semantic meaning receivers require actual committed regular bytes and pinned bodies', async t => {
+  const { createHash } = await import('node:crypto');
+  const { retainedSemanticSourceManifest } = await import('../../scripts/lib/docs-retained-source.mjs');
+  const f = fixture(t);
+  const relative = 'scripts/owner.mjs';
+  const sha256 = createHash('sha256').update(fs.readFileSync(path.join(f.root, relative))).digest('hex');
+  const receivers = [{ path: relative, sha256 }];
+  const manifest = retainedSemanticSourceManifest(f.root, f.artifactRevision, receivers, []);
+  assert.equal(manifest.length, 1);
+  assert.equal(manifest[0].sha256, sha256);
+  assert.equal(manifest[0].lines, 1);
+  assert.match(manifest[0].gitObject, /^[a-f0-9]{40}$/);
+  assert.throws(() => retainedSemanticSourceManifest(f.root, f.artifactRevision,
+    [{ path: relative, sha256: '0'.repeat(64) }], []), /RECEIVER_BODY_DRIFT/);
+  assert.throws(() => retainedSemanticSourceManifest(f.root, f.artifactRevision, receivers,
+    ['scripts/absent.mjs']), /NOT_REGULAR_TRACKED/);
+  f.write(relative, 'export const selected = "new receiver body";\n');
+  assert.throws(() => retainedSemanticSourceManifest(f.root, f.artifactRevision, receivers, []), /EDITORIAL_SOURCE_DRIFT/);
+  const current = f.commit();
+  assert.throws(() => retainedSemanticSourceManifest(f.root, current, receivers, []), /RECEIVER_BODY_DRIFT/);
+  fs.unlinkSync(path.join(f.root, relative));
+  fs.symlinkSync('../docs/generated/inventory/configuration-values.json', path.join(f.root, relative));
+  const linked = f.commit();
+  assert.throws(() => retainedSemanticSourceManifest(f.root, linked, receivers, []), /NOT_REGULAR_TRACKED/);
+});

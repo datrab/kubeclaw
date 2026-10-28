@@ -115,6 +115,32 @@ export function assertEditorialSourceRevision(directory, revision) {
   return root;
 }
 
+// Current explanations have their own provenance. Never relabel retained fact links.
+export function retainedSemanticSourceManifest(directory, revision, receivers, ownerPaths) {
+  const root = assertEditorialSourceRevision(directory, revision);
+  const records = new Map(tree(root, revision).map(entry => [entry.path, entry]));
+  const expected = new Map(receivers.map(entry => [entry.path, entry.sha256]));
+  const selected = [...new Set([...expected.keys(), ...ownerPaths])].sort();
+  return selected.map(relative => {
+    checkedPath(relative);
+    const entry = records.get(relative);
+    assert(entry?.type === 'blob' && ['100644', '100755'].includes(entry.mode),
+      `RETAINED_SEMANTIC_SOURCE_NOT_REGULAR_TRACKED: ${relative}`);
+    const filename = path.join(root, relative);
+    const stat = fs.lstatSync(filename);
+    assert(stat.isFile() && fs.realpathSync(filename) === filename,
+      `RETAINED_SEMANTIC_SOURCE_NOT_PHYSICAL: ${relative}`);
+    const bytes = fs.readFileSync(filename);
+    const committed = git(root, ['cat-file', 'blob', entry.object], { maxBuffer: bytes.length + 1024 });
+    assert(bytes.equals(committed), `RETAINED_SEMANTIC_SOURCE_DRIFT: ${relative}`);
+    if (expected.has(relative)) assert.equal(digest(bytes), expected.get(relative),
+      `RETAINED_SEMANTIC_RECEIVER_BODY_DRIFT: ${relative}`);
+    const text = bytes.toString('utf8');
+    return { path: relative, revision, gitObject: entry.object, bytes: bytes.length,
+      sha256: digest(bytes), lines: text.split('\n').length - Number(text.endsWith('\n')) };
+  });
+}
+
 export function stableBundleText(bundle) {
   return `${JSON.stringify(bundle, null, 2)}\n`;
 }
@@ -147,9 +173,10 @@ export function storeRetainedLanguageBundle({ root: directory, output, bundle, c
 
 // Validate the complete selected output set before any page is read or written.
 // No retained publication may alias a canonical inventory through a symlink.
-export function assertRetainedPageDestinations(directory, paths) {
+export function assertRetainedPageDestinations(directory, paths, { semantic = false } = {}) {
   const root = physicalGitRoot(directory);
   const allowed = new Set(['docs/site/reference/helm-values.md', 'docs/site/reference/environment-variables.md']);
+  if (semantic) allowed.add('docs/site/reference/secrets.md');
   assert.deepEqual(new Set(paths), allowed, 'RETAINED_PAGE_OUTPUT_SET_INVALID');
   for (const relative of paths) {
     const filename = path.join(root, relative);

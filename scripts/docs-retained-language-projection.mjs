@@ -8,7 +8,7 @@ import { storeRetainedLanguageBundle } from './lib/docs-retained-source.mjs';
 function argumentsFor(args) {
   const options = {};
   const names = new Map([['--root', 'root'], ['--artifact-revision', 'artifactRevision'],
-    ['--source-revision', 'sourceRevision'], ['--editorial-revision', 'editorialRevision'], ['--output', 'output']]);
+    ['--source-revision', 'sourceRevision'], ['--semantic-owner-revision', 'semanticOwnerRevision'], ['--editorial-revision', 'editorialRevision'], ['--output', 'output']]);
   for (let i = 0; i < args.length; i++) {
     const option = args[i];
     if (option === '--check') {

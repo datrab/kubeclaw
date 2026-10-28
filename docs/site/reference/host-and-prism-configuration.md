@@ -3,7 +3,7 @@
 Status: current configuration map with explicit consumer boundaries
 Audience: platform operator, Prism operator, host administrator
 Owner: platform operations and Prism
-Evidence: charts/kubeclaw/files/config/swarm.config.json; tests/verification/e2e/support/platform-config.ts; charts/prism/values.yaml; charts/prism/values.schema.json; skills/prism/server/control-config.ts; skills/prism/server/worker-config.ts; skills/prism/config/native-worker.ts
+Evidence: skills/nova/plugins/implementation-agent/src/stage.ts; skills/nova/plugins/buster-quality-gate/src/stage.ts; skills/common/plugins/runtime-dispatch/src/openclaw.ts; charts/kubeclaw/files/config/swarm.config.json; tests/verification/e2e/support/platform-config.ts; charts/prism/values.yaml; charts/prism/values.schema.json; skills/prism/server/control-config.ts; skills/prism/server/worker-config.ts; skills/prism/config/native-worker.ts; ops/pod/config.toml; ops/pod/supervisor.py; ops/pod/Dockerfile; ops/pod/verify.py; charts/ops-pod/templates/workload.yaml; charts/ops-pod/values.yaml
 Applies to: current shipped chart configuration and Prism service loaders
 Last verified: 2026-10-09 at source revision `c8987b18b450bc27571d5037cb6ce3fb26e0cbd0`
 
@@ -55,7 +55,7 @@ accepts the following compact fields:
 
 | Field | Rule |
 | --- | --- |
-| `_doc` | Optional documentation string; it has no runtime authority. |
+| `_doc` | Ignored input metadata; the expander neither copies the supplied value nor validates its type. The standard profile's own documentation remains. It has no runtime authority. |
 | `profile` | Must be `standard`; no other profile is registered. |
 | `features` | Required exact object: all three keys `observability`, `buster`, and `discord_alerts` must be `true`; no extra keys. These are profile assertions, not independent switches. |
 | `tuning` | Required exact object: `safety_margins`, `retention`, `alerts`, `logs`, `checks`, and `determinism` must have the shipped values shown above. |
@@ -85,15 +85,87 @@ for polling, cancellation, and uncertain session recovery.
 
 Helm renders OpenClaw gateway configuration and managed agent entries. The
 gateway configuration controls the host process, authentication, model route,
-ACP backend, channel, and plugin allowlist. Pipeline stage fields such as
-`agent` and `agentRole` select a target already configured by the runtime
-dispatch adapter; they do not edit OpenClaw configuration or grant host plugin
-permissions.
+ACP backend, channel, and plugin allowlist. The implementation and quality-gate
+stages use stage configuration `agent` to select an already configured
+`runtime.dispatch` target. Their stage `agentRole` field is not used for that
+selection. The OpenClaw target's separate `agentRole` supplies a session-label
+prefix, not the host-agent identity. The configured target's `agentId`, `runtime`,
+and `model` select the actual spawn. Stage metadata does not override those
+settings, edit OpenClaw configuration, or grant host-plugin permissions.
+
+Source: [implementation dispatch and selected agent](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/skills/nova/plugins/implementation-agent/src/stage.ts#L32-L40),
+[implementation configuration reader](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/skills/nova/plugins/implementation-agent/src/stage.ts#L82-L86),
+[quality-gate agent reader](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/skills/nova/plugins/buster-quality-gate/src/stage.ts#L15-L20),
+and [target label and spawn fields](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/skills/common/plugins/runtime-dispatch/src/openclaw.ts#L210-L239).
 
 Codex/ACP and subagent selection can appear in an expanded swarm profile or a
 runtime-dispatch target. The effective transport still comes from the consumer
 that loads that configuration. A model name is routing data, not proof that
 credentials, network access, or provider capacity exist.
+
+### Native Codex Ops configuration
+
+The separate `charts/ops-pod` workload runs a Codex container and an Ops MCP
+sidecar. It is not an OpenClaw ACP session and does not inherit a dispatch
+target's model or permissions. Both images require explicit immutable digests.
+The home and workspace have separate persistent volume claims (PVCs); replacing
+the image does not replace the saved home configuration or account identity.
+
+The image carries `ops/pod/config.toml` at `/opt/codex/config.toml`. At startup,
+the supervisor copies it to `$HOME/.codex/config.toml` only when that destination
+does not exist, then sets the copied file's mode to `0600`. An existing file is
+retained. The seed specifies `sandbox_mode = "danger-full-access"`,
+`approval_policy = "on-request"`, and file-based CLI authentication storage.
+These are seed settings, not a promise that an existing home file has those
+values. The container, workload permissions and credential mounts are distinct
+security boundaries; do not infer missing Kubernetes access from the sandbox
+setting.
+
+The supervisor always adds two `codex -c` settings when starting the app server:
+`mcp_servers.kubeclaw_ops.url="http://127.0.0.1:8080/mcp"` and
+`mcp_servers.kubeclaw_ops.bearer_token_env_var="KUBECLAW_MCP_TOKEN"`.
+Those explicit startup arguments fix this MCP connection independently of
+conflicting entries in the home file. Other Codex configuration sources and
+settings remain Codex's own contract, not a new KubeClaw merge or capability
+grant.
+
+The `bearerSecret` value selects a Secret whose `token` key is mounted read-only
+in both containers. The supervisor reads and trims that file into
+`KUBECLAW_MCP_TOKEN`; fewer than 32 characters stop startup. It does not store the
+token in the MCP URL. `githubSecret`, when selected, supplies a different
+`GH_TOKEN` only to the Codex container. `rbac.execNamespaces` controls whether
+that container receives the Kubernetes credential and kubeconfig mounts; an
+empty list disables those mounts. The MCP sidecar has its own Kubernetes
+credential mount. Inspect the rendered container and its specific mounts,
+rather than treating the shared Pod as one credential scope.
+
+The supervisor waits for successful `codex login status` before launching
+`codex app-server --remote-control --listen unix://`. Its status distinguishes
+waiting for login, starting, running and stopping. A running status records a
+reachable local control socket, but still records `pairingVerified: false`.
+It is a process observation, not a permanent liveness guarantee.
+Neither that status nor the MCP health probe proves account pairing, relay
+connectivity, pipeline health, or successful authenticated tool use.
+
+For safe verification, record image digests and inspect the intended home-file
+settings and forced startup arguments privately. Never publish the account
+credential file, bearer file, raw environment or rendered literal credentials.
+Stop if the retained home configuration is unexpected, a required credential
+is unavailable, or the control socket is not reachable. The live helper
+`ops/pod/verify.py` separately checks authenticated MCP calls and configured
+Kubernetes read/exec authorization; it does not execute commands in target Pods
+or verify pairing. Its source is not evidence that this live check has run.
+The local supervisor tests cover sockets, bounded waits, process exit and
+cleanup only; they do not log in or launch a Codex app server.
+
+Source: [image assembly](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/ops/pod/Dockerfile#L73-L89),
+[seed configuration](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/ops/pod/config.toml#L1-L10),
+[home-file selection, credential and forced arguments](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/ops/pod/supervisor.py#L62-L100),
+[status fields](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/ops/pod/supervisor.py#L21-L27),
+[local status and shutdown](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/ops/pod/supervisor.py#L98-L125),
+[container credential boundaries](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/charts/ops-pod/templates/workload.yaml#L49-L102),
+[persistent volumes](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/charts/ops-pod/templates/workload.yaml#L134-L176),
+and [live verification boundary](https://github.com/datrab/kubeclaw/blob/e9d79ec18e3df661a5e65d3a14b1ef500c3d3a76/ops/pod/verify.py#L1-L36).
 
 ## Prism Helm roots
 

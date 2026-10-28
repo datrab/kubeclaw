@@ -1,5 +1,6 @@
 // Versioned retained 6fa renderer: static pure copy, not the current inventory schema.
 import assert from 'node:assert/strict';
+import {semanticEvidenceLinks,retainedSemanticNotice} from './docs-retained-semantic-evidence.mjs';
 import {createHash} from 'node:crypto';
 import {retainedHelmIntroduction,environmentConsumerGuidance} from './docs-configuration-reference-guidance.mjs';
 import { editorialOwners } from './docs-configuration-editorial-language.mjs';
@@ -27,7 +28,7 @@ export function generatedEnd() {
 }
 
 
-export function renderRetainedConfigurationReferences({runtimeInputs,configurationValues,configurationSchemas,deploy,secrets,readSourceText,sourceRevision,editorialRevision=null,artifactRevision,banner=false,editorialSourcePath=null}) {
+export function renderRetainedConfigurationReferences({runtimeInputs,configurationValues,configurationSchemas,deploy,secrets,readSourceText,sourceRevision,editorialRevision=null,artifactRevision,banner=false,editorialSourcePath=null,semanticContext=null}) {
  assert.equal(typeof readSourceText,'function');
  assert.match(sourceRevision,/^[0-9a-f]{40}$/u);
  assert.equal(sourceRevision,'6fa4830a48244d29655104a5be58957d5fa87d2f','UNSUPPORTED_RETAINED_RENDERER_SOURCE_VERSION');
@@ -84,6 +85,11 @@ function literalCode(value) {
 
 function selectedValue(value) {
   return value === '' ? `${literalCode('""')} (empty string)` : literalCode(String(value));
+}
+
+function currentHelmEvidence(sourcePath, fieldPath) {
+  const binding = semanticContext?.evidence.helm.find(binding => binding.sourcePath === sourcePath && binding.path === fieldPath);
+  return binding ? '<br>Current meaning evidence: ' + semanticEvidenceLinks(semanticContext, binding.sources) : '';
 }
 
 function renderHelmValues(configurationValues, configurationSchemas) {
@@ -206,7 +212,7 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     const links = sourceRangeLinks(file.path);
     return `<details>\n<summary><code>${file.path}</code> — ${fields.length} discovered fields, including lists and maps</summary>\n\nSource evidence:\n\n${links}\n\n${table(['Field', 'Behavior', 'Type and selected value', 'Required state and limits', 'Source and runtime owner', 'Receiving source', 'Precedence and effective value', 'Change impact and failure'], fields.map((field) => [
       `\`${field.path}\``,
-      `${readerMeaning(field, file.sourceClass)}${literalKeyOverride(field, file.sourceClass)}`,
+      `${readerMeaning(field, file.sourceClass)}${literalKeyOverride(field, file.sourceClass)}${currentHelmEvidence(file.path,field.path)}`,
       `\`${field.type}\`<br>${selectedValue(field.value)}<br>${selectedValueType(field)}`,
       `${requiredState(field)}: ${field.requiredReason}<br>${field.constraints.length ? field.constraints.map(literalText).join('<br>') : 'No additional repository constraint.'}`,
       `Source: ${field.ownerComponent} (\`${field.ownerEvidence}\`)<br>Runtime: ${field.runtimeOwner}`,
@@ -387,7 +393,9 @@ function renderEnvironment(deploy, secrets, runtimeInputs) {
           && candidate.line === authority.line && candidate.endLine === authority.endLine) === index)
         .map((authority) => `[\`${authority.path}:${authority.line}${authority.endLine === authority.line ? '' : `-${authority.endLine}`}\`](${pinnedSourceUrl(authority.path, authority.line, authority.endLine)})`)
         .join('<br>');
-      return `${authorities}<br>Purpose: ${contract.purpose}<br>Accepted: ${contract.acceptedForm}<br>Default: ${contract.defaultBehavior}<br>Empty: ${contract.emptyBehavior}<br>Invalid: ${contract.invalidBehavior}<br>Required: ${contract.required}<br>Precedence: ${contract.precedence}<br>Impact: ${contract.impact}<br>Failure: ${contract.failure}`;
+      const binding = semanticContext?.evidence.environment.find(binding => binding.name === item.name && binding.path === contract.path);
+      const current = binding ? '<br>Current meaning evidence: ' + semanticEvidenceLinks(semanticContext, binding.sources) : '';
+      return `${authorities}${current}<br>Purpose: ${contract.purpose}<br>Accepted: ${contract.acceptedForm}<br>Default: ${contract.defaultBehavior}<br>Empty: ${contract.emptyBehavior}<br>Invalid: ${contract.invalidBehavior}<br>Required: ${contract.required}<br>Precedence: ${contract.precedence}<br>Impact: ${contract.impact}<br>Failure: ${contract.failure}`;
     }).join('<br><br>')
     : 'One name-level contract applies to all listed consumers, or the variable is a classified transport boundary.';
   const directSettingGuidance = (item) => item.surface === 'maintainer-verification-input'
@@ -486,6 +494,9 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
   const editorialOwner=editorialSourcePath===null?'`'+editorialRevision+'`':'[`'+editorialSourcePath+'` at `'+editorialRevision+'`](https://github.com/datrab/kubeclaw/blob/'+editorialRevision+'/'+editorialSourcePath+')';
   const provenance=`> Retained historical view. Artifact: \`${artifactRevision}\`; source facts and original evidence: \`${sourceRevision}\`. Editorial language owner: ${editorialOwner}. This view does not perform current discovery, runtime validation, or API-role qualification. Inherited metadata and current-inventory statements below describe only the retained snapshot.\n\n`;
   for(const [key,value] of outputs){const headingEnd=value.indexOf('\n\n')+2;outputs.set(key,value.slice(0,headingEnd)+provenance+value.slice(headingEnd));}
+ }
+ if(semanticContext){
+  for(const [key,value] of outputs){const headingEnd=value.indexOf('\n\n')+2;outputs.set(key,value.slice(0,headingEnd)+retainedSemanticNotice(semanticContext)+value.slice(headingEnd));}
  }
  return outputs;
 }

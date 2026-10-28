@@ -125,7 +125,7 @@ This generated page proves command inventory and documented command groups. It d
 `;
 }
 
-export function renderSecrets(secrets, runtimeInputs = { secrets: [] }, sourceLink = (sourcePath, line) => `\`${sourcePath}${line ? `:${line}` : ''}\``) {
+export function renderSecrets(secrets, runtimeInputs = { secrets: [] }, sourceLink = (sourcePath, line) => `\`${sourcePath}${line ? `:${line}` : ''}\``, retained = null) {
   // A configured Helm expression can produce a non-literal Secret name while
   // still having a complete, source-backed authority and consumer contract.
   // Keep those facts in the normal reference. Only semantic blockers belong in
@@ -150,9 +150,9 @@ Audience: reference reader, operator
 Owner: platform-security
 Evidence: docs/generated/inventory/secret-setup.json; docs/generated/inventory/configuration-runtime-inputs.json; scripts/docs-generate.mjs
 Applies to: Kubernetes secret setup and checked-in Secret references
-Last verified: generated from current inventory
+Last verified: ${retained ? `retained artifact ${retained.artifactRevision}; original sources ${retained.sourceRevision}; semantic owner ${retained.semanticOwnerRevision}` : 'generated from current inventory'}
 
-## Summary
+${retained ? retained.notice : ''}## Summary
 
 This page lists Kubernetes Secrets created, reused, copied, checked, or referenced by checked-in KubeClaw sources.
 
@@ -177,14 +177,14 @@ ${table(['Secret', 'Namespace', 'Required when', 'Keys', 'Setup source'], secret
 
 ## Discovered Declarations And References
 
-The following facts come from recursive YAML inspection, exact Helm-template SecretKeyRef and volume sites, and Secret-key arguments in deployment scripts. A resource or key name is not a credential, so it remains visible. The generator redacts Secret values, identities, access lists, and credential-bearing URLs before it writes this page.
+${retained ? 'The following facts are retained observations from the pinned historical inventories, not a new recursive inspection or a current redaction run. Names, keys, source coordinates, producer evidence and historical qualification states remain unchanged. Only the explicitly source-bound PostgreSQL consumer explanations are corrected; their current meaning evidence is separate from original fact links. No Secret values are acquired or rediscovered by this projection.' : 'The following facts come from recursive YAML inspection, exact Helm-template SecretKeyRef and volume sites, and Secret-key arguments in deployment scripts. A resource or key name is not a credential, so it remains visible. The generator redacts Secret values, identities, access lists, and credential-bearing URLs before it writes this page.'}
 
 ${table(['Kind and Secret', 'Namespace and condition', 'Keys', 'Purpose', 'Producer and consumers', 'Rotation', 'Failure', 'Source'], resolvedFacts.map((secret) => [
   secretIdentity(secret),
   `\`${secret.namespace ?? '<runtime namespace>'}\`<br>${secret.namespaceMeaning}<br>${secret.requiredWhen}`,
   renderedKeys(secret),
   secret.purpose,
-  `Producer: ${secret.producer}<br>${secret.producers?.length ? `Producer evidence: ${secret.producers.map((producer) => sourceLink(producer.path, producer.line)).join(', ')}<br>` : ''}Consumer contract: ${secret.consumerAuthority}<br>${secret.consumers?.length ? `Consumer evidence: ${secret.consumers.map((consumer) => `${sourceLink(consumer.path, consumer.line)}${consumer.key ? ` key \`${consumer.key}\`` : ''}`).join('<br>')}` : 'No direct checked-in reference is available; use the consumer contract and command evidence.'}`,
+  `Producer: ${secret.producer}<br>${secret.producers?.length ? `Producer evidence: ${secret.producers.map((producer) => sourceLink(producer.path, producer.line)).join(', ')}<br>` : ''}Consumer contract: ${secret.consumerAuthority}${retained?.meaningEvidence(secret) ?? ''}<br>${secret.consumers?.length ? `Consumer evidence: ${secret.consumers.map((consumer) => `${sourceLink(consumer.path, consumer.line)}${consumer.key ? ` key \`${consumer.key}\`` : ''}`).join('<br>')}` : 'No direct checked-in reference is available; use the consumer contract and command evidence.'}`,
   `Owner: ${secret.rotationOwner}<br>${secret.rotation}`,
   secret.failure,
   `${secret.nameSource ? `Name authority: ${secret.nameSource}<br>` : ''}${sourceLink(secret.path, secret.line)}${secret.fieldPath ? `<br>\`${secret.fieldPath}\`` : ''}`,

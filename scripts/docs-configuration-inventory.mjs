@@ -32,7 +32,7 @@ import { receiverContracts as argoReceiverContracts } from './docs-argo-receiver
 import { receiverContracts as ciliumReceiverContracts } from './docs-cilium-receiver-contracts.mjs';
 import { receiverContracts as envelopeReceiverContracts } from './docs-kubernetes-envelope-receiver-contracts.mjs';
 import { receiverContracts as metadataReceiverContracts, implicitKubernetesObjectMetaReferences } from './docs-kubernetes-metadata-receiver-contracts.mjs';
-import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
+import { prismPostgresqlSecretConsumerAuthority, runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings, externalProducerContract, assertRuntimeConsumerContract, observerInlineFieldContract } from './docs-runtime-consumer-contracts.mjs';
 import {
   yamlFieldChildPath, yamlFieldMatcherPath, yamlFieldPath, yamlFieldPathTokens, yamlFieldPathWithoutRoot,
 } from './yaml-field-path.mjs';
@@ -619,7 +619,6 @@ for (const [sourcePath, line, endLine] of kubernetesSubprocessEnvironmentSources
 for (const [sourcePath, purpose, failure] of [
   ['skills/prism/server/control-config.ts', 'Authenticates Control dispatch to the Prism worker when SPIFFE workload identity is disabled.', 'Control startup stops with `PRISM_WORKER_SECRET is required`.'],
   ['skills/prism/server/worker-config.ts', 'Authenticates requests received by the Prism worker when SPIFFE workload identity is disabled.', 'Worker startup stops with `PRISM_WORKER_SECRET is required`.'],
-  ['skills/prism/config/native-worker.ts', 'Authenticates native-worker artifact and dispatch traffic when SPIFFE workload identity is disabled.', 'Native-worker configuration stops with `PRISM_NATIVE_ARTIFACT_AUTH_REQUIRED`.'],
 ]) addEnvironmentConsumerContract('PRISM_WORKER_SECRET', sourcePath, environmentContract({
   purpose,
   acceptedForm: 'A non-empty shared secret when `WORKER_TRUST_SPIFFE_ENABLED` is not exactly `true`.',
@@ -705,8 +704,8 @@ for (const [name, [fallback, maximum]] of Object.entries(prismNativeNumericDefau
   failure: 'Native-worker configuration stops before it accepts or launches work.',
 }));
 
-for (const name of ['PRISM_NATIVE_POOL_POLICY_FILE', 'PRISM_NATIVE_LAUNCHER']) addEnvironmentConsumerContract(name, 'skills/prism/config/native-worker.ts', environmentContract({
-  purpose: name.endsWith('POLICY_FILE') ? 'Selects the signed/owned native-worker pool policy read by the Prism supervisor.' : 'Selects the privileged native-worker launcher executable used by the Prism supervisor.',
+for (const name of ['PRISM_NATIVE_LAUNCHER']) addEnvironmentConsumerContract(name, 'skills/prism/config/native-worker.ts', environmentContract({
+  purpose: 'Selects the privileged native-worker launcher executable used by the Prism supervisor.',
   acceptedForm: 'A non-empty canonical absolute path other than filesystem root.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value is rejected.',
   invalidBehavior: `A relative, non-canonical, empty, or root path returns \`PRISM_NATIVE_PATH_REQUIRED:${name}\`; the selected file then has its own identity and ownership checks.`,
   precedence: 'The process value is the only path source.', impact: 'Changing the path changes the native isolation authority or executable and requires a new host acceptance proof.',
@@ -717,21 +716,17 @@ addEnvironmentConsumerContract('PRISM_ENGINE_CONTENT_DIGEST', 'skills/prism/conf
 addEnvironmentConsumerContract('KUBECLAW_NATIVE_SCOPE', 'skills/prism/config/native-worker.ts', environmentContract({ purpose: 'Selects the already-created native worker cgroup scope whose membership the host process must enter.', acceptedForm: 'A non-empty scope path supplied by the native supervisor.', defaultBehavior: 'No default.', emptyBehavior: 'An absent or empty value is rejected.', invalidBehavior: 'An empty value returns `PRISM_NATIVE_PREEXEC_MEMBERSHIP_REQUIRED`; the launcher performs the canonical path and cgroup-v2 ownership checks.', precedence: 'The injected process value is the only scope source.', impact: 'Changing it changes the kernel resource-control boundary for this worker process.', failure: 'Native host startup stops before work is admitted.', required: 'required' }));
 addEnvironmentConsumerContract('PLAYWRIGHT_BROWSERS_PATH', 'skills/prism/config/native-worker.ts', environmentContract({ purpose: 'Selects the browser binary directory exposed to native Prism work.', acceptedForm: 'A filesystem path available to the worker process.', defaultBehavior: 'Uses `/ms-playwright` when absent.', emptyBehavior: 'An explicitly empty string is retained because the loader uses nullish fallback.', invalidBehavior: 'The loader does not validate the path; browser startup reports a missing or unusable installation.', precedence: 'A present process value wins; otherwise `/ms-playwright` applies.', impact: 'Changing it changes which installed browser runtime native tests execute.', failure: 'Browser-backed work fails when the selected installation is absent or incompatible.' }));
 
-for (const name of ['PRISM_PRODUCT_ORIGIN', 'PRISM_PRODUCT_CONTROLLER_URL', 'PRISM_PRODUCT_OPERATORS', 'PRISM_PRODUCT_PRIVATE_KEY_FILE', 'PRISM_PRODUCT_ISSUER', 'PRISM_PRODUCT_CONTROLLER_CA_FILE', 'PRISM_PRODUCT_CONTROLLER_TOKEN_FILE']) {
-  const url = name === 'PRISM_PRODUCT_ORIGIN' || name === 'PRISM_PRODUCT_CONTROLLER_URL';
-  const operators = name === 'PRISM_PRODUCT_OPERATORS';
-  const privateKey = name === 'PRISM_PRODUCT_PRIVATE_KEY_FILE';
-  addEnvironmentConsumerContract(name, 'skills/prism/control/product-decisions.ts', environmentContract({
-    purpose: `${name} supplies ${url ? 'one HTTPS product-decision authority endpoint' : operators ? 'the explicit product-operator allow-list' : privateKey ? 'the dedicated product-decision signing key file' : 'one required product-decision authority value'}.`,
-    acceptedForm: url ? 'An HTTPS origin with no credentials, query, fragment, or path other than `/`.' : operators ? 'A JSON array of unique, non-empty, already-trimmed strings.' : privateKey ? 'A readable file containing a dedicated Ed25519 private key.' : 'A non-empty string after trimming.',
-    defaultBehavior: 'No value is read while product decisions are disabled; no default exists when enabled.',
-    emptyBehavior: `When product decisions are enabled, an absent, empty, or whitespace-only value returns \`${name} is required\`.`,
-    invalidBehavior: url ? 'A non-HTTPS or non-origin URL returns `product authority requires HTTPS origins`.' : operators ? 'Malformed JSON or an empty, duplicated, or untrimmed list returns `explicit product operator allowlist is required`.' : privateKey ? 'Read failure or a non-Ed25519 key stops composition.' : 'The reader requires non-empty trimmed text; the downstream controller connection validates the selected file or identity.',
-    precedence: 'Exact `PRISM_PRODUCT_DECISIONS_ENABLED=true` activates the captured startup environment; no other source overrides it.',
-    impact: 'Changing this authority input changes who can issue, receive, or approve signed product decisions.',
-    failure: 'Control composition stops before the product-decision endpoint becomes available.', required: 'required only when product decisions are exactly enabled',
-  }));
-}
+addEnvironmentConsumerContract('PRISM_PRODUCT_PRIVATE_KEY_FILE', 'skills/prism/control/product-decisions.ts', environmentContract({
+  purpose: 'PRISM_PRODUCT_PRIVATE_KEY_FILE supplies the dedicated product-decision signing key file.',
+  acceptedForm: 'A readable file containing a dedicated Ed25519 private key.',
+  defaultBehavior: 'No value is read while product decisions are disabled; no default exists when enabled.',
+  emptyBehavior: 'When product decisions are enabled, an absent, empty, or whitespace-only value returns `PRISM_PRODUCT_PRIVATE_KEY_FILE is required`.',
+  invalidBehavior: 'Read failure or a non-Ed25519 key stops composition.',
+  precedence: 'Exact `PRISM_PRODUCT_DECISIONS_ENABLED=true` activates the captured startup environment; no other source overrides it.',
+  impact: 'Changing this authority input changes who can issue, receive, or approve signed product decisions.',
+  failure: 'Control composition stops before the product-decision endpoint becomes available.', required: 'required only when product decisions are exactly enabled',
+}));
+
 addEnvironmentConsumerContract('PRISM_PRODUCT_DECISIONS_ENABLED', 'skills/prism/control/product-decisions.ts', environmentContract({ purpose: 'Enables the external signed product-decision authority.', acceptedForm: 'Only exact `true` enables the feature.', defaultBehavior: 'Disabled when absent.', emptyBehavior: 'An empty value keeps the feature disabled.', invalidBehavior: 'Every value other than exact `true` keeps the feature disabled.', precedence: 'The captured process value is the sole enablement switch.', impact: 'Enabling it makes every product authority input mandatory and exposes the signed decision composition path.', failure: 'Enabled startup fails closed when any authority input is missing or invalid.' }));
 
 for (const [name, fallback] of Object.entries({
@@ -9074,7 +9069,7 @@ const SECRET_CONSUMER_AUTHORITIES = new Map(Object.entries({
   'pipeline-test-gate-source-attestation': 'Nova reads `privateKey` to sign source attestations; Buster reads `publicKey` to verify them.',
   'kubeclaw-fixture-preflight': 'The Kubernetes and combined production preflight fixture pod mounts the `proof` key.',
   'operator-oauth': 'The Tailscale Kubernetes Operator reads `client_id` and `client_secret` to authenticate to the tailnet.',
-  'prism-postgresql-auth': 'Prism migration, control, studio, ingestion, and read-only paths read the role-specific passwords or URLs selected by their workload bindings.',
+  'prism-postgresql-auth': prismPostgresqlSecretConsumerAuthority(),
   'prism-runtime': 'Prism control, studio, worker, and ingestion workloads read their corresponding session, ingress, dispatch, worker, or ingestion key.',
   'prism-test-postgresql-auth': 'The leased Prism end-to-end migration and service pods read the isolated role-specific passwords and URLs.',
   'prism-test-runtime': 'The leased Prism end-to-end control, studio, worker, and ingestion pods read the isolated runtime keys.',

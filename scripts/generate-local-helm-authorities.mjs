@@ -2,6 +2,7 @@
 // Maintenance command for the exact local Helm authority registry. The normal
 // documentation build reads the generated JSON and never uses a prior inventory.
 import crypto from 'node:crypto';
+import { prismHelmScalarCorrection } from './lib/docs-prism-helm-semantic-corrections.mjs';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -785,6 +786,8 @@ function collectionContract(field) {
 // These exact contracts correct the selected receiving boundary. Upstream
 // Kubernetes permissiveness cannot override a stricter chart schema or guard.
 function exactScalarCorrection(field) {
+  const prismCorrection = prismHelmScalarCorrection(field);
+  if (prismCorrection) return prismCorrection;
   const chartRoot = chartRootFor(field.sourcePath);
   const p = cleanPath(field.path);
   if (chartRoot === 'charts/gitops' && p === 'revision') return {
