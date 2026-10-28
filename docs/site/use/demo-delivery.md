@@ -1,11 +1,11 @@
 # Deliver a Demo
 
-Status: reproducible local contract rehearsal; no complete live demo-delivery journey is supplied
+Status: reproducible local contract rehearsal. No complete live demo-delivery journey is supplied
 Audience: product operator, acceptance participant, incident responder
 Owner: product operations
 Evidence: skills/nova/plugins/demo-handoff/tests; skills/nova/project/demo.ts
-Applies to: the selected KubeClaw source checkout; record its full commit SHA for each rehearsal
-Last verified: 2026-10-10 at source revision `96929f456d81cefa56a30ac50a2ba5aa27718ac9`; compiler contract passed locally, full package test failed because OpenSSL was absent; no live demo or human decision is claimed
+Applies to: the selected KubeClaw source checkout. Record its full commit SHA for each rehearsal
+Last verified: 2026-10-10 at source revision `96929f456d81cefa56a30ac50a2ba5aa27718ac9`. Compiler contract passed locally, full package test failed because OpenSSL was absent. No live demo or human decision is claimed
 
 ## Purpose
 
@@ -31,9 +31,9 @@ The checked-in test fixes these values:
 
 | Subject | Rehearsal value | Meaning |
 | --- | --- | --- |
-| Project and graph | project `demo`; pipeline `demo-contract`; `demo-candidate`, `demo-delivery`, `demo-ready` | Local contract only |
-| Demo policy | auth node `auth`; protocol `json-session.v1`; target `operators`; retention `1209600` seconds | Concrete test value |
-| Platform | `pipeline-platform.v2`; local temporary storage and built-in plugin roots | Created by the test, then removed |
+| Project and graph | project `demo`. Pipeline `demo-contract`. `demo-candidate`, `demo-delivery`, `demo-ready` | Local contract only |
+| Demo policy | auth node `auth`. Protocol `json-session.v1`. Target `operators`. Retention `1209600` seconds | Concrete test value |
+| Platform | `pipeline-platform.v2`. Local temporary storage and built-in plugin roots | Created by the test, then removed |
 | Providers | artifact store, remote evidence, demo handoff, operator messaging, HTTP, and secret resolver | Local adapters and fixtures |
 | Delivery | loopback HTTP receiver at a dynamically assigned port | Discord-format contract, not Discord service |
 | Exposure | checked-in source envelope/contract vector | Not a deployed Tailscale endpoint |
@@ -41,13 +41,13 @@ The checked-in test fixes these values:
 
 The checked-in handoff test creates these concrete graph, policy, provider,
 grant, local receiver, and adapter values
-([local controller and receiver](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/tests/handoff.test.mts#L21-L50);
+([local controller and receiver](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/tests/handoff.test.mts#L21-L50),
 [graph and platform](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/tests/handoff.test.mts#L58-L80)).
 
 The project compiler requires a blocking `kubeclaw.demo-auth-smoke`,
 `kubeclaw.container-build`, `kubeclaw.kubernetes-fixture`, and
 `kubeclaw.tailscale-exposure` chain with `retentionMode: await-readiness`
-([compiler contract](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/demo.ts#L17-L39);
+([compiler contract](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/demo.ts#L17-L39),
 [provider binding](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/project/demo.ts#L42-L54)).
 
 ### Preconditions
@@ -58,7 +58,7 @@ in the disposable checkout, using a separate new access-restricted directory
 for its sanitized output. Replace `<source-commit>` with the full commit SHA
 selected for this rehearsal, before running the commands. It must identify the
 checkout you intend to test. The source links below identify the implementation
-used by the examples; they do not require checking out that historical commit.
+used by the examples. They do not require checking out that historical commit.
 Then verify the selected revision, clean checkout, and required tools:
 
 ```bash
@@ -81,10 +81,11 @@ git rev-parse HEAD > "<evidence-dir>/source-commit.txt"
 
 Expected observation: every tool lookup exits zero, the command records the
 exact source revision and the worktree is clean. The linked dependency procedure
-proves the lockfile installation separately. The repository declares no accepted Go or OpenSSL version range;
-record the observed versions. Stop on a revision mismatch, dirty checkout,
+proves the lockfile installation separately. The repository declares no accepted Go or OpenSSL version range.
+
+Record the observed versions. Stop on a revision mismatch, dirty checkout,
 missing tool, dependency-install failure, or existing evidence directory.
-Correct that prerequisite in a fresh checkout; do not change the test or
+Correct that prerequisite in a fresh checkout. Do not change the test or
 substitute a locally authored platform/project fixture.
 
 ### 1. Compile and reject invalid demo graphs
@@ -111,11 +112,11 @@ npm test --prefix skills/nova/plugins/demo-handoff \
 Expected observation: TAP reports three tests, three passes, zero failures, and
 exit status zero. The test suite covers:
 
-- the compiler rejection cases from step 1;
-- bounded TLS request input, credential-file, timeout, and response handling;
-- one local delivery receipt and a `demo-ready` terminal stage;
-- refusal to recover a terminal run or redeliver its credentials;
-- reconciliation of a lost response without a second delivery;
+- the compiler rejection cases from step 1.
+- bounded TLS request input, credential-file, timeout, and response handling.
+- one local delivery receipt and a `demo-ready` terminal stage.
+- refusal to recover a terminal run or redeliver its credentials.
+- reconciliation of a lost response without a second delivery.
 - rejection of a foreign candidate, changed delivery, changed source artifact,
   or receipt lookup with another run, stage, or payload.
 
@@ -124,12 +125,12 @@ credential-file admission, and oversized-response rejection
 ([TLS client cases](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/tests/controller-client.test.mts#L11-L34)).
 
 The checked-in handoff test implements the terminal and reconciliation checks
-([delivery and terminal recovery](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/tests/handoff.test.mts#L80-L95);
+([delivery and terminal recovery](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/tests/handoff.test.mts#L80-L95),
 [receipt and source rejection](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/tests/handoff.test.mts#L96-L108)).
 These are protocol rejection and effect-reconciliation checks. They are not a
 human rejection, a pipeline wait/resume exercise, or deployed access proof.
 
-The 2026-10-10 verification environment lacked `openssl`; the full
+The 2026-10-10 verification environment lacked `openssl`. The full
 command therefore reported one pass and two `spawnSync openssl ENOENT`
 failures. That result is retained as a prerequisite failure, not reported as a
 successful rehearsal. With OpenSSL available, any nonzero exit, skipped test,
@@ -137,11 +138,16 @@ or count other than three passes is a stop.
 
 ### 3. Record a separate human decision
 
-The local rehearsal has no human acceptance surface and must stop here. For a
-live result, a distinct authorized participant must inspect the exact immutable
-result through the intended identity and record accepted or rejected, time,
-identity, source commit, run ID, result digest, endpoint identity, reason, and
-cleanup decision in the product-owned decision system. There is no generic CLI
+The local rehearsal has no human acceptance surface. Stop here. For a
+live result, have a distinct authorized participant inspect the exact immutable
+result through the intended identity. Require that participant to record each item below in the product-owned decision system:
+
+- Accepted or rejected.
+- Time and identity.
+- Source commit, run ID, result digest and endpoint identity.
+- Reason and cleanup decision.
+
+There is no generic CLI
 command that records this decision. Never edit a Nova journal to create one.
 
 A rejection preserves the delivered bytes and identity. A terminal run cannot
@@ -154,7 +160,7 @@ no supported operator cancellation command.
 ### 4. Cleanup
 
 The tests create their own operating-system temporary directories and remove
-them in `finally` blocks; they do not create a cluster, Tailnet, DNS, registry,
+them in `finally` blocks. They do not create a cluster, Tailnet, DNS, registry,
 or cloud resource. Preserve both TAP files and the source/tool record. If a test
 process is killed, do not glob-delete temporary storage: first prove the process
 has ended and identify the exact test-owned directory before asking the host
@@ -173,11 +179,11 @@ result, delivery receipt, human decision, and cleanup evidence.
 | Observation | Cause class | Stop and recovery |
 | --- | --- | --- |
 | Revision or clean-check fails | Wrong source | Use a clean checkout at the recorded revision |
-| Tool lookup fails | Host prerequisite | Install through the host authority; rerun all preconditions |
-| Compiler test fails | Project/compiler contract | Preserve TAP; do not run delivery tests |
-| TLS client test fails | OpenSSL, credential file, TLS, timeout, or bounds | Correct the named local prerequisite; never relax the bound |
-| Handoff test reports changed/foreign evidence | Identity or integrity | Reject it; do not redeliver or rewrite evidence |
-| Receipt outcome is unknown | Uncertain external effect | Reconcile the original request and identity; do not repeat it |
+| Tool lookup fails | Host prerequisite | Install through the host authority. Rerun all preconditions |
+| Compiler test fails | Project/compiler contract | Preserve TAP. Do not run delivery tests |
+| TLS client test fails | OpenSSL, credential file, TLS, timeout, or bounds | Correct the named local prerequisite. Never relax the bound |
+| Handoff test reports changed/foreign evidence | Identity or integrity | Reject it. Do not redeliver or rewrite evidence |
+| Receipt outcome is unknown | Uncertain external effect | Reconcile the original request and identity. Do not repeat it |
 | Technical result exists but no human decision | Product acceptance | Keep status unaccepted and obtain a separate decision |
 | Cleanup is unknown | Exposure lifecycle | Treat exposure as live and contact its owner |
 
@@ -201,7 +207,7 @@ owned secrets, a deployed exposure, a separate human decision system, and a
 provider-specific cleanup command. The handoff adapter itself additionally
 requires exact stage IDs, controller endpoint, token and CA paths, state root,
 operator target, and timeout
-([stage, endpoint, and file fields](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/schemas/adapter.schema.json#L5-L38);
+([stage, endpoint, and file fields](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/schemas/adapter.schema.json#L5-L38),
 [state, target, timeout, and required fields](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/schemas/adapter.schema.json#L40-L65)).
 
 The closure owners and required proof are:
@@ -226,7 +232,7 @@ journey, rejection and interruption are exercised, and cleanup is observed.
 The implementation authority is the project compiler, CLI, plugin manifest,
 and package test. The plugin registers candidate, delivery, and ready stages
 plus the handoff adapter
-([stages](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/plugin.json#L5-L44);
+([stages](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/plugin.json#L5-L44),
 [adapter](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/skills/nova/plugins/demo-handoff/plugin.json#L47-L63)).
 The project CLI validates the runtime before it writes a graph or starts work,
 checks the project revision and cleanliness, and reports readiness separately

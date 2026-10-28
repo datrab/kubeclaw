@@ -4,32 +4,43 @@ Status: source-backed command paths with explicit unauthenticated issuer and mis
 Audience: product operator, pipeline operator, Prism operator
 Owner: Nova Core and platform operations
 Evidence: skills/nova/project/cli.ts; skills/nova/core/cli.ts; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; skills/nova/core/execution/engine-snapshots.ts; skills/nova/core/execution/engine-run.ts
-Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`; no runtime source adoption or live verification is established by this update
+Upstream source scope: central Ops contract at `34cf38ef53ee41381543785d0ffae90a37fac9ca`. No runtime source adoption or live verification is established by this update
 Applies to: pipeline-platform.v2 and current Prism deployment
-Last verified: 2026-09-21 schema validation; canonical journal preservation, resume, recovery, and retention boundaries rechecked on 2026-10-12 at `2025f36306636b2e0c2c426447bf137d0574e11f`; no live cluster result
+Last verified: 2026-09-21 schema validation. Canonical journal preservation, resume, recovery, and retention boundaries rechecked on 2026-10-12 at `2025f36306636b2e0c2c426447bf137d0574e11f`. No live cluster result
 
 ## Objective
 
-Configure one governed runtime, start work, inspect durable results, and continue supported waits.
+Configure one governed runtime. Start work. Inspect durable results. Continue supported waits.
 This page also identifies controls that the current CLI does not provide.
 
 ## Canonical Start, Readiness, and Observation Procedure
 <!-- operator-task: start-readiness-observe -->
 
-This section is the sole authority for `start-readiness-observe`. Start with an
-installed source-bound release, explicit `<context>` and `<namespace>`, selected
-component list, independent administration, and no active change. Run cluster
-commands from the administration machine. Kubernetes owns process and Service
-state; `scripts/deploy.sh` and the health program embedded by the chart own
-component checks; a completed application transaction owns functional proof.
+This section is the sole authority for `start-readiness-observe`.
+Start only with all these prerequisites:
+
+- An installed source-bound release.
+- Explicit `<context>` and `<namespace>`.
+- A selected component list.
+- Independent administration.
+- No active change.
+
+Run cluster commands from the administration machine. Kubernetes owns process
+and Service state. `scripts/deploy.sh` and the health program embedded by the
+chart own component checks. A completed application transaction owns functional
+proof.
 
 Before any cluster command on this page, complete
 [Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
-shell for the whole task. Every raw `kubectl`, Helm, or `scripts/deploy.sh`
-command below must inherit its exported read-only `KUBECONFIG`; every shown
-`<context>` must equal `EXPECTED_CONTEXT`. Run `assert_cluster_binding`
+shell for the whole task. 
+
+Every raw `kubectl`, Helm, or `scripts/deploy.sh`
+command below must inherit its exported read-only `KUBECONFIG`. Every shown
+`<context>` must equal `EXPECTED_CONTEXT`. 
+
+Run `assert_cluster_binding`
 immediately before each command block. Stop on any mismatch and follow the
-binding section's recovery; never fall back to the default kubeconfig.
+binding section's recovery. Never fall back to the default kubeconfig.
 
 Record source and release identities, context, namespace, time, and evidence
 directory. Stop if the current context, selected images, or ownership differs
@@ -80,12 +91,12 @@ Observe the four levels in order:
    [deployment success exercise](workflows/buster-suite.md#deployment-success-exercise)
    with its exact project, provider, receipt, and cleanup checks. Expected
    observation: the project returns terminal `succeeded`, the audit agrees, and
-   all external effects have terminal receipts. This is technical proof; use
+   all external effects have terminal receipts. This is technical proof. Use
    [Deliver a Demo](demo-delivery.md#canonical-demo-delivery-procedure) for a
    separate human decision.
 
 At any failure, stop at the first failed level. Use
-[symptom diagnosis](diagnose.md#canonical-symptom-diagnosis-procedure); do not
+[symptom diagnosis](diagnose.md#canonical-symptom-diagnosis-procedure). Do not
 restart all roles to hide a dependency or functional failure. Recovery is the
 narrow owning-layer repair followed by all four levels again. Cleanup belongs
 to the functional exercise. Retain every command, output, exit status, selected
@@ -98,7 +109,7 @@ This page is the sole authority for `run-control`. The supported start state is
 a `pipeline-platform.v2` and project or explicit graph at the original source
 and package snapshot, with writable durable storage and a reconciled prior
 effect state. Run from `<repository-root>` on the administration machine. Nova's
-CLI and durable journal are authoritative; process state and plugin logs are
+CLI and durable journal are authoritative. Process state and plugin logs are
 diagnostic only.
 
 Complete [Validate Before Starting](#validate-before-starting),
@@ -110,7 +121,7 @@ unknown run, changed graph/package digest, unresolved effect, stale or expired
 wait, issuer mismatch, or terminal run. Retain input digests, output, audit,
 wait and signal bytes, effects and receipts, failure, retry decision, and final
 state. Follow [Evidence to Retain](#evidence-to-retain) for protected raw copies
-and signal bytes; a digest alone does not authorize deletion.
+and signal bytes. A digest alone does not authorize deletion.
 
 ## Before Each Operation
 
@@ -121,7 +132,7 @@ The machine that runs Nova's CLI needs Linux file locking and `/usr/bin/flock`
 with `--exclusive`, `--timeout`, and `--conflict-exit-code` support. Nova uses
 that fixed executable to protect durable state updates. A BusyBox `flock` that
 lacks these options is insufficient. Stop before a run or resume if this
-interface is unavailable; a lock error does not prove that a signal was
+interface is unavailable. A lock error does not prove that a signal was
 accepted. Preserve the journal and diagnose the executable before retrying.
 [Lock acquisition and release](https://github.com/datrab/kubeclaw/blob/425be378fa25d26835a5418d65bfd457e151cc16/skills/nova/core/state/file-mutex.ts#L4-L22).
 
@@ -168,7 +179,7 @@ The runnable forms in this page are the interface reference.
 >
 > **Test evidence:** [The project compiler test starts the real dispatcher and checks its compiled output](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/contracts/check-project-compiler.mts#L171-L185). The test passed on 2026-09-16.
 >
-> **Revision:** Command sources were checked at `430633accc4a374a740b5f12f384eeeb9dce228d`; the older CLI and test links contain identical complete files. The test execution above remains a historical result at `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`.
+> **Revision:** Command sources were checked at `430633accc4a374a740b5f12f384eeeb9dce228d`. The older CLI and test links contain identical complete files. The test execution above remains a historical result at `1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de`.
 >
 > **Limit:** Neither CLI defines a `--help` option or a separate cancel command.
 
@@ -262,8 +273,8 @@ npm run pipeline -- \
   --project "<project.json>"
 ```
 
-The CLI result is one JSON object. Npm can print lifecycle banners before it;
-do not parse the entire npm output as one JSON document.
+The CLI result is one JSON object. Npm can print lifecycle banners before it.
+Do not parse the entire npm output as one JSON document.
 It includes `runId`, `status`, `completionScope`, `acceptanceReadiness`, and stage states.
 
 Exit code zero means the returned run status is `succeeded`.
@@ -298,8 +309,10 @@ an append-lock file, and acquires its lock. If `events.jsonl` ends without a
 newline, the constructor removes all bytes after the last newline and
 synchronizes the shorter file **before** it parses the retained records. It can
 therefore change evidence even when audit later fails. A complete hash chain
-needs no tail repair. Recovery and resume also open journals through this
-constructor; they can create locks and repair tails before rejecting a run or
+needs no tail repair. 
+
+Recovery and resume also open journals through this
+constructor. They can create locks and repair tails before rejecting a run or
 signal.
 [Constructor and tail recovery](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/state/journal.ts#L30-L77)
 and [append-lock creation](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/state/file-mutex.ts#L8-L21)
@@ -317,12 +330,16 @@ command record. Set `RUN_CONTROL_EVIDENCE_ROOT` to an existing private durable
 directory selected by the incident audit owner, outside the run and adapter
 stores. The owner must confirm its capacity, access restrictions, retention
 period, and protection from automatic temporary-file removal before capture.
-Stop if that location or its retention authority is absent. Define
+Stop if that location or its retention authority is absent. 
+
+Define
 `preserve_run_state` in the same terminal. It uses the platform
 loader and the actual run-root resolver without opening `FileJournal`. [The resolver](https://github.com/datrab/kubeclaw/blob/929aadbad08b41e7a8504950f05dc0f526b706d6/skills/nova/core/execution/run-root.ts#L62-L75)
-selects the hashed or verified legacy directory. Each call makes a new restricted copy outside the run root and verifies all file
-bytes. Symlinks and special files require the owning store's backup procedure;
-this command stops on them.
+selects the hashed or verified legacy directory. 
+
+Each call makes a new restricted copy outside the run root and verifies all file
+bytes. Symlinks and special files require the owning store's backup procedure.
+This command stops on them.
 
 ```bash
 export RUN_CONTROL_PLATFORM="<original-platform.json>"
@@ -378,7 +395,7 @@ The helper verifies the raw copy before it parses the copied journals. Even
 when a partial record causes parsing to fail, keep that directory and manifest.
 Require exit zero before ordinary audit, recovery, or resume. Comparison failure means the copy is
 not a verified consistency point. Stop and establish the stopped writer state before making a new copy. Hash equality
-checks the copied bytes; it does not prove that every external effect completed.
+checks the copied bytes. It does not prove that every external effect completed.
 
 For non-mutating journal inspection, use the existing strict parser on the
 preserved bytes. It rejects an incomplete final record, empty records, wrong
@@ -433,7 +450,7 @@ test "$audit_status" -eq 0 || exit 1
 ```
 
 The command rebuilds its audit view from durable run state. Retain the whole
-output; npm can print a script banner before the CLI JSON. Compare it with the
+output. npm can print a script banner before the CLI JSON. Compare it with the
 preserved journal and any previously trusted journal head. A new internally
 valid chain alone cannot prove that no old records were lost.
 
@@ -445,15 +462,23 @@ Do not infer a terminal state from one plugin log.
 The CLI uses a typed resume-signal file.
 It does not provide a separate `approve` verb.
 
-Before creating a signal, complete [Inspect a Run](#inspect-a-run). Use the
-original platform, run ID, project or graph, package snapshot, storage root,
-and runtime configuration from the retained start record. Confirm stopped run
-and owning-adapter writers, preserve new verified raw run and adapter copies,
-and require strict parsing of the copied journals. Read the active wait from
-that preserved evidence. Stop on unknown ownership, changed identity, failed
-copy verification, incomplete records, or a journal chain error. Copy no
-identity from an earlier wait. There is no non-mutating live audit command
-that can replace these prerequisites.
+Before creating a signal, complete [Inspect a Run](#inspect-a-run).
+Use the exact original inputs from the retained start record:
+
+- Platform.
+- Run ID.
+- Project or graph.
+- Package snapshot.
+- Storage root.
+- Runtime configuration.
+
+Confirm that run and owning-adapter writers are stopped. Preserve new verified
+raw run and adapter copies. Require strict parsing of the copied journals.
+Read the active wait from that preserved evidence.
+
+Stop on unknown ownership, changed identity, failed copy verification,
+incomplete records, or a journal chain error. Copy no identity from an earlier
+wait. No non-mutating live audit command replaces these prerequisites.
 
 Read `waitId`, `signalType`,
 `authorizedIssuer`, `expiresAt`, and the payload requirements from the active
@@ -502,8 +527,8 @@ Apply these matching rules:
   a no-op and rejects the same key with different content. A retry after wait
   resolution is stale and stops before this storage check.
 - Copy `waitId` and `signalType` from the active wait.
-- Copy the authorized issuer type and ID. This satisfies runtime matching only;
-  it does not authenticate who created the file.
+- Copy the authorized issuer type and ID. This satisfies runtime matching only.
+  It does not authenticate who created the file.
 - Set `issuedAt` to a valid date-time at or after creation of the active wait.
 - Build `payload` from that wait's request and plugin contract. Include the
   current source, decision, or repair digest when that contract requires it.
@@ -531,7 +556,7 @@ check:
    start record. `<original-project.json>` and `<original-pipeline.json>` mean
    those exact original inputs, not a new candidate.
 2. Confirm the prior run owner has exited. Stop new writes to the run and its
-   owning adapter stores. Unknown ownership stops the command; containment
+   owning adapter stores. Unknown ownership stops the command. Containment
    alone does not prove that an external effect completed.
 3. Reconcile accepted external effects through their owning contracts. Stop
    while any outcome is unknown or no supported continuation exists.
@@ -577,16 +602,18 @@ printf '%s\n' "$resume_status" > "$RUN_CONTROL_OBSERVATION_ROOT/resume.exit" || 
 
 Expected observation: an accepted signal records one matching resolution, and
 continued execution gives the resumed stage a new attempt identity. Exit zero
-requires `succeeded`; a nonzero exit can contain a waiting, failed, blocked, or
-rejected result. Retain stdout, stderr, and the actual exit status before any
+requires `succeeded`. A nonzero exit can contain a waiting, failed, blocked, or
+rejected result. 
+
+Retain stdout, stderr, and the actual exit status before any
 follow-up. The command response alone does not prove adapter or external
 process quiescence. If the response or exit status was lost, retain partial
-output and record that result as `not observed`; do not invent an exit status.
+output and record that result as `not observed`. Do not invent an exit status.
 
 After **every** submission, including rejection or a lost response, confirm
 that the owner has exited and re-establish stopped run and adapter writers.
 If ownership is unknown, retain the previous capture and command output and
-stop; do not audit or submit again. Otherwise make new verified run and adapter
+stop. Do not audit or submit again. Otherwise make new verified run and adapter
 copies through [Inspect a Run](#inspect-a-run), require strict copied-journal
 inspection, then capture its audit outputs and exit status. Keep the previous
 captures and compare the new journal head, original identities, actual wait
@@ -630,18 +657,33 @@ verified original raw bytes and record the command and its actual changes.
 Recovery reopens durable state after a process interruption.
 It does not approve a wait or resolve an uncertain external result.
 
-Before every audit or recovery attempt after interruption, including a retry,
-stop new admission, confirm that the prior owner has exited, and verify stopped
-owning-adapter writers. Follow [Inspect a Run](#inspect-a-run) to preserve and
-verify new raw run and adapter copies through their declared backup procedures.
-Define its `preserve_run_state` helper and evidence-root inputs in this Bash
-shell; require strict copied-journal parsing before the command. Stop
-on an incomplete or corrupt journal. Audit can truncate an incomplete tail;
-retain the original bytes before any permitted canonical repair. Confirm the
-original platform, graph or project, package snapshot, run ID, storage root,
-and configuration. Retain the audit output only after this preservation step. Reconcile every accepted
-external effect that lacks a terminal receipt. Stop while any outcome remains
-unknown.
+Before every audit or recovery attempt after interruption, including a retry:
+
+1. Stop new admission.
+2. Confirm that the prior owner has exited.
+3. Verify that owning-adapter writers are stopped.
+
+Follow [Inspect a Run](#inspect-a-run) to preserve and verify new raw run and
+adapter copies through their declared backup procedures. Define its
+`preserve_run_state` helper and evidence-root inputs in this Bash shell.
+Require strict copied-journal parsing before the command. Stop on an incomplete
+or corrupt journal.
+
+Audit can truncate an incomplete tail. Retain the original bytes before any
+permitted canonical repair.
+
+Confirm the original identities and configuration:
+
+- Platform.
+- Graph or project.
+- Package snapshot.
+- Run ID.
+- Storage root.
+- Configuration.
+
+Retain the audit output only after this preservation step. Reconcile every
+accepted external effect that lacks a terminal receipt. Stop while any outcome
+remains unknown.
 
 Project form, with the original project bytes:
 
@@ -675,7 +717,7 @@ Recovery must use the original graph and package snapshot.
 Start a new run when governed configuration must change.
 
 Expected observation: a permitted recovery writes one JSON result for the same
-run ID. Exit code zero requires terminal status `succeeded`; retain a nonzero
+run ID. Exit code zero requires terminal status `succeeded`. Retain a nonzero
 result as a failed or blocked recovery, not as proof that restart completed.
 [Recovery opens journals and can reconcile observer state before returning](https://github.com/datrab/kubeclaw/blob/2025f36306636b2e0c2c426447bf137d0574e11f/skills/nova/core/execution/engine-run.ts#L56-L68).
 It can change journals, effects, observer state, and adapter stores, including
@@ -706,20 +748,20 @@ response:
 Before any further recovery retry, repeat the original-identity, stopped-writer,
 new raw run/adapter copy, and strict-inspection prerequisites. Later authorized
 canonical tail repair retains the original bytes first and records its actual
-changes; it does not turn an uncertain external outcome into success.
+changes. It does not turn an uncertain external outcome into success.
 
 Use the exact failure before choosing the next action:
 
 | Observation | Meaning | Safe action |
 | --- | --- | --- |
-| `RECOVERY_SIGNAL_REQUIRED:<wait-id>` | The run has an active wait; restart cannot invent its decision | Read the active wait and use [Approve or Resume a Wait](#approve-or-resume-a-wait) with one matching signal |
-| `RECOVERY_RUN_TERMINAL` | The durable run already ended as succeeded, failed, blocked, or cancelled | Do not recover it; retain the audit and start a new governed run only for new work |
-| `RECOVERY_COOLDOWN_NOT_DUE:<stage-id>:<time>` | A persisted retry time has not arrived | Do not bypass the clock; wait until the recorded time, then repeat the same recovery command with new stopped-writer raw run/adapter copies and strict inspection |
-| `RECOVERY_GRAPH_*`, `RECOVERY_PIPELINE_ID_MISMATCH`, or `PROJECT_RECOVERY_RUN_MISMATCH` | The supplied graph, project, or run does not match durable state | Restore the original input bytes; never edit the snapshot or reuse the run ID for a changed graph |
-| `RECOVERY_PINNED_PACKAGE_*`, `RECOVERY_PACKAGE_UPGRADE_*`, or `RECOVERY_REGISTRY_SNAPSHOT_INVALID` | Installed package identity differs from the recorded snapshot | Restore the recorded package set; use only the separate authorized package-upgrade procedure when its exact contract applies |
+| `RECOVERY_SIGNAL_REQUIRED:<wait-id>` | The run has an active wait. Restart cannot invent its decision | Read the active wait and use [Approve or Resume a Wait](#approve-or-resume-a-wait) with one matching signal |
+| `RECOVERY_RUN_TERMINAL` | The durable run already ended as succeeded, failed, blocked, or cancelled | Do not recover it. Retain the audit. Start a new governed run only for new work |
+| `RECOVERY_COOLDOWN_NOT_DUE:<stage-id>:<time>` | A persisted retry time has not arrived | Do not bypass the clock. Wait until the recorded time. Make new stopped-writer raw run/adapter copies and complete strict inspection. Then repeat the same recovery command |
+| `RECOVERY_GRAPH_*`, `RECOVERY_PIPELINE_ID_MISMATCH`, or `PROJECT_RECOVERY_RUN_MISMATCH` | The supplied graph, project, or run does not match durable state | Restore the original input bytes. Never edit the snapshot. Never reuse the run ID for a changed graph |
+| `RECOVERY_PINNED_PACKAGE_*`, `RECOVERY_PACKAGE_UPGRADE_*`, or `RECOVERY_REGISTRY_SNAPSHOT_INVALID` | Installed package identity differs from the recorded snapshot | Restore the recorded package set. Use only the separate authorized package-upgrade procedure when its exact contract applies |
 | `RECOVERY_RUNTIME_CONFIGURATION_MISMATCH` or `RECOVERY_DEPENDENCY_IDENTITY_MISMATCH` | Runtime configuration or dependency identity changed | Restore the recorded runtime configuration and dependency set, or start a new governed run |
 | `RECOVERY_EFFECT_OUTCOME_UNRESOLVED:<effect-id>` | An accepted external request has no known receipt outcome | Query the external authority with the original identity and reconcile it before any recovery retry |
-| `RECOVERY_EXTERNAL_CONTINUATION_REQUIRED:<effect-id>` | An external effect has a receipt, but its interrupted attempt needs explicit continuation | Follow the owning plugin or provider continuation contract; do not replay the effect through generic recovery |
+| `RECOVERY_EXTERNAL_CONTINUATION_REQUIRED:<effect-id>` | An external effect has a receipt, but its interrupted attempt needs explicit continuation | Follow the owning plugin or provider continuation contract. Do not replay the effect through generic recovery |
 
 Project recovery also validates the stored generated nodes and their encoding
 selectors before it verifies the whole pinned graph. The implementation
@@ -732,16 +774,16 @@ stored graph:
 
 | Exact outcome | Failed stored authority | Safe action |
 | --- | --- | --- |
-| `PROJECT_RECOVERY_SOURCE_INVALID` | Exactly one generated `source-preflight` node is absent or has the wrong type | Stop; restore the original durable run bytes from the owning store or retain the run as unrecoverable |
-| `PROJECT_RECOVERY_REVIEW_NODES_MISMATCH` | Generated Review node identities differ from the project compiler | Stop; use the original project/compiler/package snapshot |
-| `PROJECT_RECOVERY_REVIEW_SEMANTICS_INVALID` | A stored Review semantic or report encoding is unsupported | Stop; restore the exact compatible package snapshot; never rewrite the node |
-| `PROJECT_RECOVERY_REVIEW_SEMANTICS_MIXED` | Review nodes contain mixed semantic generations | Stop; treat the durable graph as inconsistent and preserve it for diagnosis |
-| `PROJECT_RECOVERY_REPORT_ENCODING_INVALID` | A Review report encoding is unsupported | Stop; restore the compatible package snapshot |
-| `PROJECT_RECOVERY_REPORT_ENCODING_MIXED` | Review nodes contain mixed report encodings | Stop; preserve the inconsistent graph; do not select a mode by majority |
-| `PROJECT_RECOVERY_SUMMARY_NODE_INVALID` | The one required `project-summary` identity/type pairing is missing, duplicated, or inconsistent | Stop; restore the original durable graph bytes or retain the run as unrecoverable |
-| `PROJECT_RECOVERY_DELIVERY_SELECTOR_FOREIGN` | A non-summary node owns `deliveryManifestEncoding` | Stop; do not move or delete the foreign selector in durable state |
-| `PROJECT_RECOVERY_DELIVERY_MANIFEST_ENCODING_INVALID` | The stored summary selector shape or value is unsupported | Stop; restore the compatible project/package snapshot |
-| `PROJECT_DELIVERY_MANIFEST_ENCODING_INVALID` | A caller supplied a delivery-manifest mode outside the supported legacy/current pair | Correct the caller configuration before compilation; do not mutate an existing run |
+| `PROJECT_RECOVERY_SOURCE_INVALID` | Exactly one generated `source-preflight` node is absent or has the wrong type | Stop. Restore the original durable run bytes from the owning store or retain the run as unrecoverable |
+| `PROJECT_RECOVERY_REVIEW_NODES_MISMATCH` | Generated Review node identities differ from the project compiler | Stop. Use the original project/compiler/package snapshot |
+| `PROJECT_RECOVERY_REVIEW_SEMANTICS_INVALID` | A stored Review semantic or report encoding is unsupported | Stop. Restore the exact compatible package snapshot. Never rewrite the node |
+| `PROJECT_RECOVERY_REVIEW_SEMANTICS_MIXED` | Review nodes contain mixed semantic generations | Stop. Treat the durable graph as inconsistent and preserve it for diagnosis |
+| `PROJECT_RECOVERY_REPORT_ENCODING_INVALID` | A Review report encoding is unsupported | Stop. Restore the compatible package snapshot |
+| `PROJECT_RECOVERY_REPORT_ENCODING_MIXED` | Review nodes contain mixed report encodings | Stop. Preserve the inconsistent graph. Do not select a mode by majority |
+| `PROJECT_RECOVERY_SUMMARY_NODE_INVALID` | The one required `project-summary` identity/type pairing is missing, duplicated, or inconsistent | Stop. Restore the original durable graph bytes or retain the run as unrecoverable |
+| `PROJECT_RECOVERY_DELIVERY_SELECTOR_FOREIGN` | A non-summary node owns `deliveryManifestEncoding` | Stop. Do not move or delete the foreign selector in durable state |
+| `PROJECT_RECOVERY_DELIVERY_MANIFEST_ENCODING_INVALID` | The stored summary selector shape or value is unsupported | Stop. Restore the compatible project/package snapshot |
+| `PROJECT_DELIVERY_MANIFEST_ENCODING_INVALID` | A caller supplied a delivery-manifest mode outside the supported legacy/current pair | Correct the caller configuration before compilation. Do not mutate an existing run |
 
 Recovery has no separate temporary runtime object to clean up. Preserve all
 before/after raw run and adapter captures, manifests, partial or rejected tails,
@@ -750,7 +792,7 @@ changes, and the final decision under [Evidence to Retain](#evidence-to-retain).
 Do not delete a `nova-raw-state.*` observation directory because its digest was
 recorded or a later command passed. Only a successful recovery result plus the
 matching final audit and reconciled external receipts proves the intended
-recovery; containment or a completed audit alone does not prove success.
+recovery. Containment or a completed audit alone does not prove success.
 
 ## Cancellation Boundary
 
@@ -827,10 +869,10 @@ Stop if a required check or owning-store backup procedure is unavailable.
 | --- | --- |
 | Command failed before durable request acceptance, with a verified complete journal and unchanged active authority | Correct the rejected input and review one submission |
 | Durable request exists with a terminal failure | Follow its declared retry or repair decision |
-| Request exists and provider outcome is absent | Inspect through a documented provider status operation; if the outcome remains uncertain, preserve evidence, stop, and escalate |
-| Provider completed but local response was lost | Use an exact provider-specific idempotent import operation only when its contract documents one; otherwise preserve evidence, stop, and escalate |
-| Wait remains active, unexpired, with complete history and no prior resolution | Follow [Approve or Resume a Wait](#approve-or-resume-a-wait), including new stopped-writer raw run/adapter copies and strict inspection before each submission; retain exact signal bytes and identities |
-| Wait expired or resolved, or signal identity conflicts | Stop; preserve raw state before audit. Do not issue a new signal identity to force acceptance |
+| Request exists and provider outcome is absent | Inspect through a documented provider status operation. If the outcome remains uncertain, preserve evidence, stop, and escalate |
+| Provider completed but local response was lost | Use an exact provider-specific idempotent import operation only when its contract documents one. Otherwise preserve evidence, stop, and escalate |
+| Wait remains active, unexpired, with complete history and no prior resolution | Follow [Approve or Resume a Wait](#approve-or-resume-a-wait), including new stopped-writer raw run/adapter copies and strict inspection before each submission. Retain exact signal bytes and identities |
+| Wait expired or resolved, or signal identity conflicts | Stop. Preserve raw state before audit. Do not issue a new signal identity to force acceptance |
 | Graph, package, or policy digest changed | Start a new governed run |
 | Terminal run | Do not recover or resume it |
 
@@ -860,9 +902,11 @@ The incident audit owner must record each capture's durable location, access
 identity, retention period, and final-disposition authority. Retain complete
 raw run and adapter bytes, manifests, rejected tails, exact signal bytes,
 command records, and actual repair-change evidence for that period. A digest
-records integrity; it cannot replace the bytes. Keep these captures separate
-from disposable working copies. If evidence must move, use the audit owner's
-verified complete-copy procedure and retain its receipt; stop if byte
+records integrity. It cannot replace the bytes. Keep these captures separate
+from disposable working copies. 
+
+If evidence must move, use the audit owner's
+verified complete-copy procedure and retain its receipt. Stop if byte
 preservation or retention cannot be proved.
 
 Only named disposable candidate files or redundant working signal copies may
@@ -870,7 +914,7 @@ be removed after their prescribed retention and the owner's recorded
 final-disposition decision. First prove that the original signal bytes and
 all required evidence remain in the protected retained capture. Original raw
 observation directories and their contents require the audit owner's explicit
-final disposition after the retention period; ordinary run cleanup does not
+final disposition after the retention period. Ordinary run cleanup does not
 authorize their removal.
 
 ## Read Next
@@ -882,15 +926,19 @@ Use [Back Up and Recover](recovery.md) for data or access loss.
 
 Nova and Buster expose central MCP functions as native agent tools after the
 selected chart is deployed. Ask for a namespace overview, Pod state, recent
-logs or metrics in an authorized namespace; the agent chooses the typed tool.
-No shell command or manual plugin installation is required. `exec_pod` is a
-separate effectful request. Reconcile effects after a lost response; do not
+logs or metrics in an authorized namespace. The agent chooses the typed tool.
+No shell command or manual plugin installation is required. 
+
+`exec_pod` is a
+separate effectful request. Reconcile effects after a lost response. Do not
 automatically repeat it.
 
 Buster reads and executes only in existing/future `test*` namespaces. Nova has
 `test*` plus its existing explicit scope. Ops reads every namespace, with
 separate restricted exec grants. See the [grant matrix](../understand/ops-mcp.md#authorization-and-data-exposure)
 and [connection diagnosis](../understand/ops-mcp.md#failure-and-recovery).
+
+
 The raw Kubernetes commands elsewhere in this guide require an independently
-authorized administrator; agent gateways use MCP and receive no kubeconfig. Buster workers retain their
+authorized administrator. Agent gateways use MCP and receive no kubeconfig. Buster workers retain their
 separate direct lease-scoped workload/test Kubernetes authority.

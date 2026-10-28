@@ -1,11 +1,11 @@
 # Separate Redis Restoration, Original-Event Replay, and Deduplication
 
-Status: supported recovery boundaries and native dedup contract exercise; no observed deployed outage/replay claim
+Status: supported recovery boundaries and native dedup contract exercise. No observed deployed outage/replay claim
 Audience: Nova, Redis and observer operators
 Owner: telemetry, Redis and Nova runtime maintainers
 Evidence: skills/common/plugins/redis-transport/src/adapter.ts; skills/common/plugins/redis-transport/src/stream-identity.ts; skills/nova/core/telemetry/observer-delivery.ts; skills/nova/core/telemetry/observer-recovery.ts; skills/nova/core/telemetry/observers.ts; tests/verification/reliability/redis-transport.test.mts; tests/verification/reliability/observer-recovery.test.mts
-Applies to: Nova v2 observer delivery through kubeclaw.redis-transport; not OpenClaw direct ingress replay
-Last verified: 2026-10-21; source review only for native Redis outage/replay; no native redis-server available in this author environment
+Applies to: Nova v2 observer delivery through kubeclaw.redis-transport, not OpenClaw direct ingress replay
+Last verified: 2026-10-21. Source review only for native Redis outage/replay. No native redis-server available in this author environment
 
 ## Select the correct authority
 
@@ -18,20 +18,20 @@ authenticated health checks, unchanged PVC identities and stopped-run audit
 comparison. Do not repeat its cluster mutations from an unbound context.
 
 This guide adds the distinct delivery/replay decision. The canonical event
-journal is authoritative; Redis contains a projection. Never manufacture a new
+journal is authoritative. Redis contains a projection. Never manufacture a new
 lifecycle event, copy a health-stream entry into a product stream or change an
 original event ID to make the stream look complete.
 
 The direct OpenClaw agent-observability ingress has a bounded memory queue and
 no repository consumer for its dead-letter stream. Events lost before durable
 Redis acceptance have no replay source in that path. The Nova v2 observer
-journal/checkpoint procedure below cannot recover those missing host events;
-retain that loss and the host/Redis owners' follow-up instead.
+journal/checkpoint procedure below cannot recover those missing host events.
+Retain that loss and the host/Redis owners' follow-up instead.
 
 ## Before an owned outage exercise
 
-Use one explicitly selected Nova run/event and the exact activated observer,
-package snapshot, provider, target, Redis database/endpoint and stream prefix.
+Select one Nova run/event. Use its exact activated observer, package snapshot,
+provider, target, Redis database/endpoint and stream prefix.
 Record these separately from the role-health stream. Capture the original event
 ID, sequence, run identity, observer delivery ID, last valid checkpoint,
 started/completed/failed delivery attempts and corresponding effect request and
@@ -50,7 +50,7 @@ string. Use the returned receipt's exact `stream` and `entryId`, not a hand
 sanitization of the target or the latest entry in a similarly named stream.
 
 The operator must establish its authorized read path to that exact Redis
-stream and, when applicable, consumer group. This package writes streams; it
+stream and, when applicable, consumer group. This package writes streams. It
 does not create/own a consumer group or acknowledge an external consumer's work.
 A deployment-specific consumer's `XACK` is not Core delivery completion. If no
 consumer exists, record “no configured consumer”, not an invented consumer
@@ -64,8 +64,8 @@ could collapse into the same target name. Upgrade actual writers and consumers
 together. Pause legacy writers, reconcile pending deliveries under their
 original event/receipt identities and inspect retained legacy records before
 switching consumers to the exact v2 names. If the external consumer inventory
-or pending-delivery reconciliation is unavailable, retain that migration stop;
-a healthy new stream does not establish completion.
+or pending-delivery reconciliation is unavailable, retain that migration stop.
+A healthy new stream does not establish completion.
 
 The package does not rename, copy, republish, trim or delete old streams, migrate
 external consumers, or change the configured `MAXLEN` and dedup TTL policy.
@@ -82,13 +82,13 @@ is Source guidance, not evidence that a deployed migration has run.
 After the approved fault, restore the exact recorded Redis configuration,
 replica/PVC identity and credentials using the owning procedure. A healthy role
 only permits the delivery investigation to continue. Compare original Nova raw
-event bytes and journal head before/during/after; retain any difference rather
+event bytes and journal head before/during/after. Retain any difference rather
 than attributing it to Redis automatically.
 
 Then classify the selected event from its original observer history:
 
-- **Checkpoint already covers the event:** runtime skips it. No new observer
-  callback or stream append should follow from a normal repeated drain.
+- **Checkpoint already covers the event:** runtime skips it. Correct result after a normal repeated drain: no new observer
+  callback or stream append.
 - **Delivery completed but checkpoint was not retained:** runtime rebuilds its
   completed-delivery set, commits the derived checkpoint without invoking the
   callback again, and preserves the existing delivery records. Do not delete a
@@ -97,26 +97,26 @@ Then classify the selected event from its original observer history:
 - **Delivery still has retry allowance:** an owning runtime's drain applies the
   persisted attempt count and declared policy, not a new counter after restart.
   Normal observer effect keys remain stable across delivery retries. Inspect
-  original effect receipts and the sink acknowledgement; an already-recorded
+  original effect receipts and the sink acknowledgement. An already-recorded
   failure or uncertain external outcome does not automatically become another
   successful network attempt because Redis is healthy.
 - **Attempts exhausted:** `OBSERVER_DELIVERY_ATTEMPTS_EXHAUSTED` remains exhausted
   after reconstruction. Redis restoration does not reset the budget. The
   canonical event and failed delivery history remain. With `best_effort`, later
-  events for that observer/run stop during that drain; other observers/runs can
+  events for that observer/run stop during that drain. Other observers/runs can
   continue. With `required`, runtime throws
   `REQUIRED_OBSERVER_DELIVERY_FAILED` and aborts the drain instead.
 - **Checkpoint provenance/sequence/event or delivery transition conflicts:**
-  stop. Restore/investigate the original compatible bytes and package snapshot;
-  do not choose a checkpoint by timestamp or delete failed attempts.
+  stop. Restore/investigate the original compatible bytes and package snapshot.
+  Do not choose a checkpoint by timestamp or delete failed attempts.
 
 The repository exposes no generic operator CLI to rewind an observer checkpoint,
 reset exhausted delivery attempts or clear an effect receipt and replay a
-terminal run. Core `--recover` rejects terminal runs; starting a new run is not
+terminal run. Core `--recover` rejects terminal runs. Starting a new run is not
 replay. If normal owned delivery cannot continue under its original contract,
 retain the exact event/delivery/receipt and safe stop. The Nova observer owner
 and selected adapter/Redis owner must define an authorized original-identity
-continuation; absence of that supported operation is not permission to edit
+continuation. Absence of that supported operation is not permission to edit
 journals or send a raw Redis `XADD`.
 
 ## Verify deduplication without claiming exactly-once delivery
@@ -124,7 +124,7 @@ journals or send a raw Redis `XADD`.
 Redis's adapter atomically checks its dedup key, appends with `XADD MAXLEN ~`
 only when absent, then stores the resulting entry ID with its configured TTL.
 An identical repeated key returns that original entry ID while the dedup key
-survives. The script does not compare repeated payload bytes; Core's effect
+survives. The script does not compare repeated payload bytes. Core's effect
 identity/payload checks are a separate protection. Do not deliberately change
 payload under an old key.
 
@@ -133,12 +133,12 @@ a new entry. Approximate stream trimming can also remove an old entry while a
 dedup key still returns its ID. Therefore a matching receipt is not proof that
 the entry remains readable, and a restarted stream is not an exactly-once
 consumer guarantee. Verify the exact original payload/identity through the
-sink and consumer authority; retain uncertainty when retention prevents it.
+sink and consumer authority. Retain uncertainty when retention prevents it.
 
 For an isolated local **native Redis** contract check, use a selected checkout,
 Node.js 24, GNU `flock`, locked dependencies and a real `redis-server` with its
 sibling `redis-cli`. The fixture owns its loopback port, temporary server/data,
-password and finalizer; do not supply a deployed Redis endpoint or credential.
+password and finalizer. Do not supply a deployed Redis endpoint or credential.
 
 ```bash
 export REDIS_SERVER="<absolute-path-to-real-redis-server>"
@@ -151,16 +151,17 @@ Require all three tests to pass without skipping the native case. The native
 case sends the same delivery key through the actual adapter/real Redis for
 publisher and telemetry kinds with two distinct targets. It verifies four
 separate exact streams and one original entry in each. Same-journal replay
-reuses the effect receipt; a fresh **test-only** effect journal forces a second
+reuses the effect receipt. A fresh **test-only** effect journal forces a second
 physical send so actual Lua dedup must return the same original entry ID.
+
 Creating fresh production journals to force retransmission is not a supported
 operator procedure. This check demonstrates bounded per-stream dedup, not a
 controlled observer outage or external consumer recovery.
 
 The accompanying original socket tests check bounded RESP framing, fragmented
 UTF-8 and prompt rejection/closure of malformed responses. The package's
-`live-function` test uses a local RESP-speaking TCP fixture, not native Redis;
-do not substitute its green result for this command's native-server proof.
+`live-function` test uses a local RESP-speaking TCP fixture, not native Redis.
+Do not substitute its green result for this command's native-server proof.
 
 ## Reproduce observer-history controls separately
 
@@ -182,7 +183,7 @@ operator checkpoint. Keep those proof scopes separate.
 For the deployed fault, retain original consumer/target/PVC identities, restored
 replica count, exact stream/entry observations, event/checkpoint/delivery/effect
 history, failed attempts and the final continuation or stop decision. Remove
-only owned fault controls after restoration checks; do not purge streams,
+only owned fault controls after restoration checks. Do not purge streams,
 failed journals, credentials or canonical event state to hide a gap. Redis and
 consumer retention belong to their separate owners.
 

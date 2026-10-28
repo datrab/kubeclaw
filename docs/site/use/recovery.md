@@ -1,15 +1,15 @@
 # Back Up and Recover
 
-Status: executable component backups and native restore primitives; no self-contained isolated LiteLLM, external Prism, or full-platform operator restore
+Status: executable component backups and native restore primitives. No self-contained isolated LiteLLM, external Prism, or full-platform operator restore
 Audience: platform operator, database operator, incident responder
 Owner: platform operations and data owners
 Evidence: charts/prism/files/prism-backup.sh; scripts/postgresql-recovery.sh; docs/status/open-issues.json
 Applies to: current selected runtime and state formats
-Last verified: 2026-10-12; local identity, selection, and snippet guards only; no live restore result is available
+Last verified: 2026-10-12. Local identity, selection, and snippet guards only. No live restore result is available
 
 ## Objective
 
-Protect every authoritative state before loss and restore it without broken references.
+Protect every authoritative state before loss. Restore it without broken references.
 Finish only after application readers verify the restored data.
 
 The [recovery point objective (RPO)](../reference/glossary.md#rpo) is the maximum
@@ -17,8 +17,8 @@ data-loss time window that the data owner approves. The
 [recovery time objective (RTO)](../reference/glossary.md#rto) is the maximum
 recovery duration that the service owner approves. These are targets. Actual
 data loss and elapsed recovery time are separate measurements from a recovery
-exercise or incident. Compare those measurements with the approved targets;
-a target alone does not prove recovery performance.
+exercise or incident. Compare those measurements with the approved targets.
+A target alone does not prove recovery performance.
 
 This page supplies no environment-wide target values or measured proof that
 those targets can be met. Record owner decisions and execution results separately.
@@ -26,26 +26,37 @@ those targets can be met. Record owner decisions and execution results separatel
 ## Canonical Backup and Restore Procedure
 <!-- operator-task: backup-restore -->
 
-This page is the sole authority for `backup-restore`. Start with an owned
-component, compatible source and target versions, complete independently held
-credentials and keys, checksum-valid media, an empty isolated target, enough
-capacity, and an unchanged source. Run cluster inspection from the independent
-administration machine and restore tooling from the isolated recovery
-environment named by the component procedure. Backup scripts, database-native
-tools, immutable group metadata, and the original application reader are the
-authorities.
+This page is the sole authority for `backup-restore`.
+Start only with all these prerequisites:
+
+- An owned component.
+- Compatible source and target versions.
+- Complete independently held credentials and keys.
+- Checksum-valid media.
+- An empty isolated target.
+- Enough capacity.
+- An unchanged source.
+
+Run cluster inspection from the independent administration machine. Run restore
+tooling from the isolated recovery environment named by the component
+procedure. Backup scripts, database-native tools, immutable group metadata,
+and the original application reader are the authorities.
 
 Before any cluster command on this page, complete
 [Bind Cluster Authority](install.md#bind-cluster-authority). Keep the same bound
-shell for the whole recovery task. Every raw `kubectl`, Helm, or
+shell for the whole recovery task. 
+
+Every raw `kubectl`, Helm, or
 `scripts/deploy.sh` command below must inherit its exported read-only
 `KUBECONFIG`, `NAMESPACE`, and `PRISM_NAMESPACE`. The binding section
-validates and freezes both namespace names before any command here; every shown
-`<context>` must equal `EXPECTED_CONTEXT`. Run
+validates and freezes both namespace names before any command here. Every shown
+`<context>` must equal `EXPECTED_CONTEXT`. 
+
+Run
 `recovery_assert_namespace` from [Bind Recovery Objects](#bind-recovery-objects)
 immediately before each cluster command block. Stop on any
 mismatch, leave media and targets unchanged, and follow the binding section's
-recovery; never fall back to the default kubeconfig.
+recovery. Never fall back to the default kubeconfig.
 
 Complete [State Inventory](#state-inventory), [Define a Backup Set](#define-a-backup-set),
 the six-step [Procedure](#procedure), [Choose Restore Scope](#choose-restore-scope),
@@ -83,7 +94,7 @@ and cleanup. No component backup Pod supplies this administration identity.
 
 Define these helpers in the same shell. Their evidence directory is the new
 private directory created by the component procedure. A successful CREATE
-response establishes the Job UID; a later same-name lookup does not.
+response establishes the Job UID. A later same-name lookup does not.
 
 ```bash
 if [[ -n ${EXPECTED_APPLICATION_NAMESPACE_UID:-} ]]; then
@@ -193,23 +204,27 @@ PYTHON
 }
 ```
 
-Expected result: namespace checks pass; each successful CREATE returns the exact
+Expected result: namespace checks pass. Each successful CREATE returns the exact
 Job kind, name, namespace and nonempty UID. Failed or unreadable CREATE output
 means uncertain ownership. Retain the response and stop. Ask the platform owner
-to reconcile the API request and its audit record; do not adopt a UID from a
+to reconcile the API request and its audit record. Do not adopt a UID from a
 later lookup, retry the same name, or delete the object.
 
 Cleanup sends the original Job UID as a server-side deletion precondition. It
 then waits at most 120 seconds and records a successful empty named read. A
-UID conflict, denied read, timeout, or present Job is a cleanup failure; retain
+UID conflict, denied read, timeout, or present Job is a cleanup failure. Retain
 the operation for owner reconciliation. This deletion removes the owned Job
 and its dependent Pods, so capture all required Pod evidence first. The
 [UID precondition protects object identity](https://kubernetes.io/docs/reference/kubernetes-api/definitions/delete-options-v1-meta/),
 but the owner exclusion still protects namespace identity and the evidence
-window. Never infer absence from a failed read. Log capture requires one
+window. Never infer absence from a failed read. 
+
+Log capture requires one
 succeeded Pod owned by the creating Job UID, checks both current UIDs, and
 reads that exact Pod and container. Its wait uses the returned Job deadline
-plus 30 seconds; it does not assume a default duration. A wait or capture
+plus 30 seconds. It does not assume a default duration. 
+
+A wait or capture
 failure stops acceptance. Retain the CREATE response, collect available
 status/events/logs read-only from those same identities, and let the owners
 diagnose before retry or cleanup.
@@ -260,7 +275,7 @@ Assign one owner and one protection method to every applicable row.
 | Nova run storage | Nova operator | Journals, effects, waits, snapshots, and observer checkpoints | Quiesced filesystem backup of the configured `storageRoot` | No repository-wide backup scheduler exists |
 | Buster job storage | Buster operator | Jobs, source archives, results, receipts, and evidence | Quiesced storage backup with ownership evidence | Orphan quiescence remains incomplete |
 | Redis | Platform owner | Selected transport and service data | AOF-aware migration or storage backup | Role and authority depend on actual configuration |
-| LiteLLM PostgreSQL | Database owner | LiteLLM relational state | Completed logical backup group plus credential authority | Backup and native test exist; isolated operator restore, application verification, and cutover are not supplied |
+| LiteLLM PostgreSQL | Database owner | LiteLLM relational state | Completed logical backup group plus credential authority | Backup and native test exist. Isolated operator restore, application verification, and cutover are not supplied |
 | Prism PostgreSQL and artifacts | Prism owner | Projects, designs, baselines, and referenced immutable objects | One matched database-and-artifact group | External failure-domain restore remains unproved |
 | Prism derived data | Prism owner | Embeddings, indexes, thumbnails, projections | Rebuild from restored authority | Rebuild time has no accepted RTO |
 | OpenClaw and role PVCs | Role owner | Gateway state, role configuration, and workspaces | Storage backup under a quiesced workload | Content and rebuildability differ by mount |
@@ -381,8 +396,8 @@ The chart creates these scheduled resources:
 Each verification and database-proof invocation selects latest independently.
 Use [Prism Restore](#prism-restore) to compare observable group identities and
 recognize the unbound database-smoke limit. Inspect the three CronJob resources
-and retained labelled Pods. The chart puts `app=prism-backup` on Pod templates;
-it does not put that label on Jobs. This Pod observation can include both
+and retained labeled Pods. The chart puts `app=prism-backup` on Pod templates.
+It does not put that label on Jobs. This Pod observation can include both
 scheduled and manual attempts and does not establish the last completed Job:
 
 ```bash
@@ -416,7 +431,7 @@ They remain in the same cluster failure domain until an operator copies them ext
 > It also defines [Secret inputs and volume mounts](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/charts/prism/templates/backup.yaml#L52-L79).
 > All three modes mount the backup PVC writable for the shared lock and
 > verification scratch files. Only `backup` mounts the artifact source, and
-> that source mount is read-only. `verify` receives no database credentials;
+> that source mount is read-only. `verify` receives no database credentials.
 > `backup` and `database-proof` receive the selected database Secret.
 >
 > **Test evidence:** [Capacity failures do not publish partial groups](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/prism-backup.test.mts#L73-L84).
@@ -510,9 +525,11 @@ Use Bash and Python 3 on the independent administration machine. Set
 shell. Set `LITELLM_BACKUP_JOB` to `litellm-backup-manual-<unique-id>`, where
 `<unique-id>` is a new lowercase DNS-label suffix. Set
 `LITELLM_BACKUP_EVIDENCE` to a new private directory outside the backup PVC.
+
+
 The cluster identity needs permission to create/read/delete this exact Job,
-read its Pod identity/status and read its logs. Stop on any command failure;
-keep the fence and all previous media while the owners diagnose the failure.
+read its Pod identity/status and read its logs. Stop on any command failure.
+Keep the fence and all previous media while the owners diagnose the failure.
 
 ```bash
 recovery_assert_namespace "$NAMESPACE" || exit 126
@@ -542,8 +559,8 @@ Expected observation: one succeeded Pod owned by the recorded Job UID, and one
 exact completed `/backups/litellm/backup-*` path in that Pod's log. The rendered
 Job runs `scheduled`: it can reuse a previously valid group younger than the
 backup interval. Its completion does not necessarily mean a fresh dump or a
-new consistency point. Preserve the recorded group name and metadata times;
-stop if they cannot meet the owner's required backup point. Failed Jobs,
+new consistency point. Preserve the recorded group name and metadata times.
+Stop if they cannot meet the owner's required backup point. Failed Jobs,
 multiple Pods, missing paths, UID changes, capacity errors, or unavailable PVC
 access do not authorize deletion or an automatic retry.
 
@@ -557,12 +574,16 @@ and transfer finish. Do not point this procedure at the live backup PVC.
 Set and export `BACKUP_ROOT` as the absolute path of that private export root. Set
 `LITELLM_LOCAL_GROUP` to `"$BACKUP_ROOT/${LITELLM_BACKUP_GROUP##*/}"`.
 Set `LITELLM_RECOVERY_SCRIPT` to the absolute path of
-`scripts/postgresql-recovery.sh` from the recorded, approved repository revision;
-verify its SHA-256 against the owner's independent release record before use.
+`scripts/postgresql-recovery.sh` from the recorded, approved repository revision.
+Verify its SHA-256 against the owner's independent release record before use.
+
+
 The shell must receive these actual script inputs from the database and secret
 owners' private environment setup. Export every required input in the table
 below before invoking the child verifier. Export `LITELLM_SALT_KEY` only when
-the original key authority supplies it; leave it unset when originally absent.
+the original key authority supplies it. Leave it unset when originally absent.
+
+
 Normal shell assignment alone does not pass a value to child Bash. Never source the copied `metadata.env` or
 print environment contents, credentials, master keys or salt keys.
 
@@ -570,7 +591,7 @@ print environment contents, credentials, master keys or salt keys.
 | --- | --- |
 | `PGHOST`, `PGDATABASE`, `PGUSER`, `BACKUP_EXPECTED_SERVER_VERSION` | Recorded actual source profile/database and exact selected server version |
 | `BACKUP_APPLICATION_IMAGE`, `BACKUP_CREDENTIAL_AUTHORITY_REF` | Deployed immutable LiteLLM image and original external key-authority reference |
-| `LITELLM_MASTER_KEY`, optional `LITELLM_SALT_KEY` | Original independently recovered inputs; preserve absence versus presence of the salt key |
+| `LITELLM_MASTER_KEY`, optional `LITELLM_SALT_KEY` | Original independently recovered inputs. Preserve absence versus presence of the salt key |
 | `BACKUP_MAXIMUM_BYTES`, `BACKUP_MAXIMUM_RETAINED_BYTES`, `BACKUP_MAXIMUM_AGE_SECONDS`, `BACKUP_MAXIMUM_DURATION_SECONDS` | Selected recovery policy, in bytes and seconds |
 
 The verifier requires `psql`, `pg_dump`, `pg_restore`, `flock`, `sha256sum`,
@@ -646,8 +667,10 @@ required regular, non-symlink, singly linked files: `database.dump`,
 exactly three lines, each with one SHA-256 and exactly one of `database.dump`,
 `archive-toc.txt`, or `metadata.env`. It checks their bytes before accepting the
 format, database, selected application image, original key binding, selected
-server version, size and age. It also reads the archive catalogue.
-Any failed command rejects this copy; preserve it and the previous media for
+server version, size and age. It also reads the archive catalog.
+
+
+Any failed command rejects this copy. Preserve it and the previous media for
 investigation. Do not retry with relaxed limits or different keys to obtain a
 successful result.
 
@@ -660,14 +683,14 @@ acceptance, fence release or deletion.
 
 Review the full archive listing with the database owner for the expected
 schema, applied migration history, ownership and access-control evidence.
-A readable catalogue and correct checksums do not prove that every SQL object
+A readable catalog and correct checksums do not prove that every SQL object
 or ciphertext will restore. Application recovery still requires the separate
 restore and application checks below. These offline steps have not been run
 against deployed backup media.
 
 > **Source evidence — copied group verification**
 >
-> **Claim:** the existing script verifies a dynamically selected group; the private
+> **Claim:** the existing script verifies a dynamically selected group. The private
 > single-group export and returned-path comparison bind this invocation.
 > **Implementation:** [configuration/tools](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L11-L35),
 > [publication](https://github.com/datrab/kubeclaw/blob/ebcc04066d42c94b4a4e0fc85e3393dae3d61f78/scripts/postgresql-recovery.sh#L56-L95),
@@ -679,7 +702,7 @@ against deployed backup media.
 > Status: **SOURCE ONLY; NOT EXECUTED**. These assertions are not an observed
 > native test result. The page's private-root copy-selection guards have no
 > maintained repository test. Local syntax and synthetic subprocess
-> inheritance checks passed; they do not verify PostgreSQL archives.
+> inheritance checks passed. They do not verify PostgreSQL archives.
 > The full offline check **FAILED** on BusyBox `realpath` options and musl
 > regular-expression support. Native media verification, live Job execution
 > and transfer remain **NOT EXECUTED**.
@@ -692,10 +715,14 @@ the storage owner's mechanism. Verify the same three hashes at the destination,
 using this exact group identity. If the destination can be read as a frozen
 private root with only that one group, repeat the offline check with its
 `BACKUP_ROOT` and `LITELLM_LOCAL_GROUP`, retaining the same owner inputs.
+
+
 Set and export the destination `BACKUP_ROOT` before every repeated child
-invocation; recompute `LITELLM_LOCAL_GROUP` under that root. Repeat the complete
+invocation. Recompute `LITELLM_LOCAL_GROUP` under that root. Repeat the complete
 block above, including its explicit exports. Otherwise require the storage owner's versioned verification
-procedure and receipt for all four objects. Record encryption/key authority,
+procedure and receipt for all four objects. 
+
+Record encryption/key authority,
 independent failure domain, exact destination object identities and retention.
 Stop before fence release or deletion if destination proof is missing.
 
@@ -714,10 +741,10 @@ recovery_delete_job "$NAMESPACE" "$LITELLM_BACKUP_JOB" "$LITELLM_BACKUP_EVIDENCE
 ```
 
 Confirm that this Job is absent after deletion. A cleanup failure remains an
-open operation; do not remove backup groups, scheduled Jobs, the PVC, or the
+open operation. Do not remove backup groups, scheduled Jobs, the PVC, or the
 namespace. Until fence release, a failed backup does not change the unchanged
 source database. The owners decide whether to release a fence after an aborted
-attempt; this page does not authorize bypassing its media checks.
+attempt. This page does not authorize bypassing its media checks.
 
 The repository script is a restore primitive, not target provisioning. It
 requires an already provisioned empty database, every dumped owner role,
@@ -734,15 +761,19 @@ servers. The caller supplies their private administrator connection URLs in
 `POSTGRES_NATIVE_SOURCE_URL` and `POSTGRES_NATIVE_DESTINATION_URL`, the exact
 selected PostgreSQL client directory in `POSTGRES_NATIVE_CLIENT_BIN`, and the
 pinned LiteLLM Python source runtime in `LITELLM_NATIVE_PYTHON`. Keep the URLs and
-credentials private. The harness creates roles and databases on those servers;
-it does not provision or start the servers
+credentials private. The harness creates roles and databases on those servers.
+It does not provision or start the servers
 ([external prerequisites](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L12-L19);
 [role and database creation](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L32-L41)).
+
+
 The harness checks schema, model/key rows, ownership, transactional failure,
 SQL authentication, and legacy/AES credential decryption
 ([restore and data checks](https://github.com/datrab/kubeclaw/blob/1c30980c132e3ff0b45dc8eeaf4b46a37d6d77de/tests/verification/deployment/postgresql-recovery-native.mts#L111-L137)).
+
+
 Native test status: **SOURCE ONLY; NOT EXECUTED**. The linked assertions describe
-what the harness attempts; no native execution result is available for this
+what the harness attempts. No native execution result is available for this
 check. Execution requires the two externally supplied disposable servers,
 the selected PostgreSQL client directory and the pinned LiteLLM crypto runtime
 listed above. Until those prerequisites are supplied, stop before running the
@@ -754,14 +785,21 @@ APIs, test valid and invalid API keys through LiteLLM, prove budgets, make a
 real model request, perform client cutover, or roll that cutover back.
 
 Therefore a self-contained isolated LiteLLM operator restore is not currently
-supported. Stop before `restore`, application start, or cutover unless the
-database and LiteLLM owners provide a versioned procedure that provisions the
-compatible target and all roles, wires secrets without exposing them, starts
-the recorded immutable image, performs the application checks listed above,
-defines one cutover and rollback boundary, and removes only the isolated target
-after retained proof. Until that product gap is closed, preserve the source,
-independent backup, keys, and native-test result; do not report application
-recovery from `POSTGRES_RECOVERY_RESTORED_APPLICATION_ACCEPTANCE_REQUIRED`.
+supported. Stop before `restore`, application start, or cutover.
+
+Continue only when the database and LiteLLM owners supply a versioned procedure
+with all these operations:
+
+- Provision the compatible target and all roles.
+- Wire secrets without exposing them.
+- Start the recorded immutable image.
+- Perform the application checks listed above.
+- Define one cutover and rollback boundary.
+- Remove only the isolated target after retained proof.
+
+Until that product gap is closed, preserve the source, independent backup,
+keys, and native-test result. Do not report application recovery from
+`POSTGRES_RECOVERY_RESTORED_APPLICATION_ACCEPTANCE_REQUIRED`.
 
 Redis provides an [offline fenced-RDB-to-AOF preparation primitive](../understand/data-and-state.md#prepare-a-redis-rdb-as-a-fresh-aof-dataset),
 with selected native tools, checksum/restart receipts and explicit failure boundaries.
@@ -774,7 +812,7 @@ live Redis restore.
 
 A Prism recovery point is one database dump and artifact set from the same
 immutable group. Never combine members from different groups. The current
-commands accept only `backup`, `verify`, or `database-proof`; they have no
+commands accept only `backup`, `verify`, or `database-proof`. They have no
 argument for a requested `<backup-group>`. Both checks independently select the
 lexically last `backup-*` directory when they run. The database proof prints
 its temporary database name, not the group it selected.
@@ -795,20 +833,26 @@ administration shell. `<unique-id>` is a new lowercase DNS-label suffix for
 all three manual Job names. Each complete name must have at most 63 characters.
 Do not reuse an existing Job. Use the namespace, CREATE identity, Pod ownership,
 permissions and cleanup helpers in [Bind Recovery Objects](#bind-recovery-objects).
+
+
 The Prism owner must record the deployed immutable Control image, PostgreSQL
 server/client versions, backup-script revision, source database, PVC UIDs, and
 external credential authority before the first Job. Stop if that record or the
-verified administrative fence is missing. The storage owner must supply a
+verified administrative fence is missing. 
+
+The storage owner must supply a
 versioned read-only access/export method for the exact logged group on the
 recorded backup PVC and an encrypted independent-copy method. These must
 preserve the database dump, metadata, both checksum manifests, and artifact
 bytes without symlinks or concurrent change. A completed Pod is not an access
 method for its PVC. This page creates no media-access Pod and supplies no
 generic storage transfer command. Stop before Job creation if either owned
-method is missing. Use Node.js for the log comparison below. Normal immutable
-artifact publication can continue; fence administrative deletion, restoration,
+method is missing. 
+
+Use Node.js for the log comparison below. Normal immutable
+artifact publication can continue. Fence administrative deletion, restoration,
 migration, and key rotation for the window. A new concurrent backup can make
-verification select a different group; treat that mismatch as a stop. Record
+verification select a different group. Treat that mismatch as a stop. Record
 the fence start time and keep it until media checks and owner-approved release.
 
 ```bash
@@ -842,9 +886,11 @@ NODE
 Expected observation: both Jobs complete and their logs name the same exact
 `/backups/backup-*` path. Retain the comparison output with the two logs. A
 failed Job, missing path, or mismatch forbids acceptance of the created group's
-verification. Keep all media and failed evidence. Diagnose capacity, mounts,
+verification. Keep all media and failed evidence. 
+
+Diagnose capacity, mounts,
 checksums, database access, or concurrent publication from the specific Job
-log; do not retry until that cause is understood. A later check still selects
+log. Do not retry until that cause is understood. A later check still selects
 latest and can therefore check a different group.
 
 The available same-server database smoke test is a separate observation:
@@ -869,11 +915,13 @@ Stop before external restore or cutover.
 
 The [selected capacity and schedule settings](https://github.com/datrab/kubeclaw/blob/8f10f6c8d1ae274efc1493cba739bec95fe833a1/charts/prism/values.yaml#L64-L73)
 limit a group, total retained bytes, and operation duration. Inspect the deployed
-values; these defaults do not establish an owner-approved RPO or retention
+values. These defaults do not establish an owner-approved RPO or retention
 period. The [publication path](https://github.com/datrab/kubeclaw/blob/8f10f6c8d1ae274efc1493cba739bec95fe833a1/charts/prism/files/prism-backup.sh#L74-L117)
 retains incomplete attempts and never expires completed groups automatically.
-A new group includes a UTC timestamp and random suffix; latest is lexical name
-order, not a requested consistency point. The lock is nonblocking: another
+A new group includes a UTC timestamp and random suffix. Latest is lexical name
+order, not a requested consistency point. 
+
+The lock is nonblocking: another
 active invocation can make a Job fail instead of wait. Do not remove old or
 incomplete media to make capacity pass without the storage owner's retained
 evidence and expiry procedure. The chart's successful/failed Job history limits
@@ -892,10 +940,12 @@ and verification logs. Recheck the three `SHA256SUMS` members and the complete
 destination. Retain the exact source PVC UID, group path, destination object
 identities, manifests, encryption/key authority and copy receipt. Stop on any
 missing member, changed bytes, identity mismatch or absent destination proof.
-Do not select latest again as a substitute for that group's transfer. Release
+Do not select latest again as a substitute for that group's transfer. 
+
+Release
 the administrative fence only through the owner's verified procedure after
 these checks pass. After an aborted attempt, the owner must decide whether
-release is safe; retain previous media and failed evidence.
+release is safe. Retain previous media and failed evidence.
 
 Retain all attempted Job logs, CREATE responses, Job and Pod UIDs,
 source/image versions, the observed
@@ -913,7 +963,7 @@ done
 ```
 
 Scheduled Job history, backups, and PVCs are retained state. A failed cleanup
-is an open incident; it does not authorize namespace deletion or backup removal.
+is an open incident. It does not authorize namespace deletion or backup removal.
 
 The following sequence is the required design for external Prism recovery, but
 it is **not currently an executable supported restore** because no owned command
@@ -933,7 +983,7 @@ restores the matched database-and-artifact group into an external target:
 12. Enable writes only after every check passes.
 
 The current same-server database proof is not a disaster-recovery proof. Stop
-after it; do not claim Prism recovery or application-reader acceptance.
+after it. Do not claim Prism recovery or application-reader acceptance.
 [Complete independent application recovery](../status/open-issues.md#complete-independent-application-recovery-is-not-yet-demonstrated) remains open.
 
 ## Pipeline State Recovery
@@ -967,13 +1017,13 @@ After filesystem restoration:
    and manifest and stop. Do not run audit to make the journal pass.
 4. Only after those checks, capture the canonical audit and its exit status
    through [Inspect a Run](operate.md#inspect-a-run). Stop on audit failure or
-   changed graph identity; retain both raw bytes and command output.
+   changed graph identity. Retain both raw bytes and command output.
 5. Reconcile every accepted external effect without a terminal receipt through
    its owning contract. Stop while an outcome is unknown or no supported
    reconciliation method exists.
 6. Use [Recover After Interruption](operate.md#recover-after-interruption)
    only when its original-identity and reconciliation checks pass. That
-   command reopens the original run; starting a new run is not recovery.
+   command reopens the original run. Starting a new run is not recovery.
 7. After the command exits and writers are stopped, repeat raw preservation
    and strict inspection before the final audit. Compare the original and
    final state and retain recovery output, external receipts, and cleanup.
@@ -984,8 +1034,8 @@ record the authorized command and its actual file changes. The automatic
 truncation is not proof that recovery succeeded.
 
 Do not recover a terminal run. Do not resume a wait with a signal from before
-the restored point. Retain the writer-fence record and all failed attempts;
-release writers only through the owners' verified recovery procedure.
+the restored point. Retain the writer-fence record and all failed attempts.
+Release writers only through the owners' verified recovery procedure.
 
 ## Node or Cluster Loss
 
@@ -1041,13 +1091,13 @@ Verify each restored layer through its original consumer. A
 [SPIFFE Verifiable Identity Document (SVID)](../reference/glossary.md#svid) is a
 workload credential. These deployed identity paths use a short-lived X.509
 certificate that contains the workload's SPIFFE identity. Verify that identity,
-then check application permission separately; a valid credential alone does
+then check application permission separately. A valid credential alone does
 not authorize the request.
 
 | Layer | Required check |
 | --- | --- |
 | Cluster | API, DNS, CNI, scheduling, and PVC mount |
-| Identity | Expected SVID passes identity verification and the intended application request succeeds; a wrong identity is denied |
+| Identity | Expected SVID passes identity verification and the intended application request succeeds. A wrong identity is denied |
 | Database | Native integrity plus application query |
 | Artifacts | Digest verification plus application reader |
 | Nova | [Pipeline State Recovery](#pipeline-state-recovery): stopped writers, verified raw run and adapter copies, strict copied-journal inspection, then audit projection and legal recovery decision |
@@ -1066,7 +1116,7 @@ A ready Pod is not restored product behavior.
 | Missing group member | The backup is incomplete | Reject the group and keep prior completed media |
 | Checksum or digest mismatch | Stored bytes changed or the group is mixed | Stop and investigate storage integrity |
 | Wrong database client | Tool and server formats can be incompatible | Use the selected supported client image |
-| Missing key or credential | Data exists but its authority is unavailable | Recover authority independently; do not replace the key |
+| Missing key or credential | Data exists but its authority is unavailable | Recover authority independently. Do not replace the key |
 | Restore succeeds but references fail | Related stores came from different points | Restore one matched consistency group |
 | Pod is ready but application reads fail | Infrastructure health is not application recovery | Keep writers fenced and inspect the original reader |
 | Old image fails on restored schema | Application and data versions differ | Deploy the compatible release or use the reviewed migration |

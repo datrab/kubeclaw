@@ -1,11 +1,11 @@
 # Follow a BuildKit Image From Source to Its Consuming Node
 
-Status: supported build/publication path with explicit original-request and consuming-node stops; no live build or pull claim
+Status: supported build/publication path with explicit original-request and consuming-node stops. No live build or pull claim
 Audience: pipeline, Buster, registry and node operators
 Owner: Buster build provider, registry and platform maintainers
 Evidence: scripts/registry-client-config.mjs; scripts/inspect-node-registry.mjs; skills/buster/plugins/container-build/src/provider.js; skills/buster/engine/test-gates/container-build-runtime.ts; tests/verification/e2e/nova-buildkit-production-preflight.mts; scripts/deploy.sh
 Applies to: kubeclaw.container-build@1, container-image.v1 and the selected registry-clients.v1 installation
-Last verified: 2026-10-21; source and bounded local contract checks only; no build, push, node pull or application execution
+Last verified: 2026-10-21. Source and bounded local contract checks only. No build, push, node pull or application execution
 
 ## Start with one image task
 
@@ -27,8 +27,8 @@ resolved plan, actual provider/grants and expected platform. The registry owner
 supplies its writable endpoint, protected credentials/CA authority, retention
 and backup. The platform owner supplies the exact consuming node/runtime and
 its versioned client installation, cold-pull, application-reader and rollback
-procedure. If that last procedure is absent, record the node step as unavailable;
-do not invent a universal `crictl`, config-copy or service-restart command.
+procedure. If that last procedure is absent, record the node step as unavailable.
+Do not invent a universal `crictl`, config-copy or service-restart command.
 
 ## 1. Bind client configuration and authority
 
@@ -51,7 +51,7 @@ before new runtime deployment or a node change.
 For a controlled build, use a new approved attempt-owned output name/tag in the
 resolved plan. The build context and Dockerfile must remain inside the admitted
 provider repository/scratch boundaries. Protected credential arguments do not
-belong in Docker build args; use the selected credential authority. The
+belong in Docker build args. Use the selected credential authority. The
 provider's default platform is not evidence of the consuming node's platform.
 Select and retain the actual allowed platform explicitly when that distinction
 matters.
@@ -73,7 +73,7 @@ assert_cluster_binding || exit 126
 ```
 
 Use the selected checkout and bound shell from the linked install procedure.
-This command starts real remote work and can publish an image; it is not an
+This command starts real remote work and can publish an image. It is not an
 offline validation command. The deployed Nova/Buster token/source key and
 external production receipt signing/trust keys must already belong to their
 proper authorities. Missing credentials, selected release, worker readiness or
@@ -81,7 +81,7 @@ signing authority are stops, not permission to synthesize them.
 
 The preflight owns a new temporary Git fixture, new run and idempotency identity.
 It builds an nginx-based page carrying that run ID. Its Dockerfile uses a tagged
-upstream base; its successful output digest is exact, but this is not proof of
+upstream base. Its successful output digest is exact, but this is not proof of
 reproducibility from only the source commit or an unchanged upstream tag.
 
 Require the actual remote status `completed`, gate decision `passed`, one
@@ -92,14 +92,14 @@ evidence digests and the digest-qualified image. The wrapper then checks the
 observed Buster revision and signs/verifies its production receipt before
 storing `dist/verification/container-build-production-receipt.json`.
 Retain full terminal output and status plus the accepted receipt through the
-existing evidence owner; a wrapper failure can occur after the build succeeded.
+existing evidence owner. A wrapper failure can occur after the build succeeded.
 
 ## 3. Distinguish the attempt tag, manifest and running image
 
 The capability derives an attempt tag `run-<hash>` from the exact resource
 identity and pushes to its selected repository. This tag is a diagnostic
 reference, not immutable image authority. BuildKit's metadata supplies
-`containerimage.digest`; Buster then GETs that exact manifest by digest through
+`containerimage.digest`. Buster then GETs that exact manifest by digest through
 the configured registry and protected authentication. It bounds the received
 bytes, hashes them and requires equality with the expected digest. A present
 `Docker-Content-Digest` header must agree too.
@@ -107,7 +107,7 @@ bytes, hashes them and requires equality with the expected digest. A present
 Only after that check does the provider return `container-image.v1` with
 `reference: registry/repository@sha256:…`, digest and its build identity/platform
 facts. Nova's complete result/evidence import binds the remote result to its
-original request. Compare all of those original identities; a success string
+original request. Compare all of those original identities. A success string
 or a mutable tag copied into a new manifest is insufficient.
 
 Keep the immutable reference, original attempt tag, source revision, platform,
@@ -115,7 +115,7 @@ job/request/plan/result/decision and imported evidence identities together.
 A root OCI index digest, selected platform manifest, image config identity and
 runtime `imageID` are not universal interchangeable strings. Use the
 [descriptor and workload identity distinctions](../../reference/images-and-digests.md#descriptor-inspection-useful-bounded-not-a-running-container-verdict)
-for their actual mappings; do not normalize away a mismatch by removing a
+for their actual mappings. Do not normalize away a mismatch by removing a
 prefix or selecting the first child.
 
 ## 4. Require the consuming-node observation or stop
@@ -130,15 +130,15 @@ Use that procedure's actual cold-pull control. Evidence must distinguish an
 uncached manifest resolution/fetch from a ready Pod that reused local content.
 Do not evict shared production images, clear all runtime caches or set a pull
 policy and call it proof that every layer was uncached. An `IfNotPresent` start
-can use a cache; even a successful digest resolution is not a universal claim
+can use a cache. Even a successful digest resolution is not a universal claim
 that every layer transferred again.
 
 Observe the exact consuming Pod UID, node, selected container name,
 `containerID`, requested immutable image, runtime-reported `imageID` and any
-restart. Bind those observations to the retained manifest/platform identity,
-then run the owning application's bounded reader for its expected content and
+restart. Bind those observations to the retained manifest/platform identity.
+Then run the owning application's bounded reader for its expected content and
 authorized access. The preflight page's expected run text is useful only if the
-actual original image and retained run ID are still known; a different image
+actual original image and retained run ID are still known. A different image
 or generic HTTP 200 cannot close this observation.
 
 The repository's client generator and build preflight supply no complete node
@@ -157,9 +157,17 @@ selector restoration and independent mirror observations remain authoritative.
 Do not repeat those destructive settings on another registry or translate a
 reachability fault into a TLS/credential bypass.
 
-Read the first failed boundary: source/registry admission; BuildKit launch or
-build; push; bounded manifest read/hash; evidence import; runner cleanup; or
-wrapper signing. The capability distinguishes completed nonzero build output
+Identify the first failed boundary:
+
+- Source/registry admission.
+- BuildKit launch or build.
+- Push.
+- Bounded manifest read/hash.
+- Evidence import.
+- Runner cleanup.
+- Wrapper signing.
+
+The capability distinguishes completed nonzero build output
 from launch, deadline, cancellation and verification errors. Do not call an
 arbitrary nonzero wrapper status a proved push denial.
 
@@ -170,7 +178,7 @@ not a retry or reconciliation of a possibly accepted push. Preserve original
 stdout/stderr/status, interval, any request/job/image identities and signed or
 unsigned receipt. Mark missing original identities unavailable.
 
-Stop new build admission and have the Nova/Buster/registry owners inspect the
+Stop new build admission. Have the Nova/Buster/registry owners inspect the
 original job and intended attempt tag/digest through an authorized read path.
 If that supported read/custody path is unavailable, retain the uncertainty and
 follow [uncertain external effects](../diagnose.md#lost-responses-and-uncertain-effects).
@@ -182,11 +190,11 @@ old identity or delete a possibly published image to make the uncertainty vanish
 Restore the exact fault controls before ending its approved window. Remove only
 owned disposable consumer resources through the node/application procedure,
 and verify their absence or bounded retained ownership. Dispose of generated
-credential-bearing client files through their credential owner; retain sanitized
+credential-bearing client files through their credential owner. Retain sanitized
 projection digests and prior configuration for rollback.
 
 The build capability removes its own temporary Docker authentication/metadata
-directory; that does not delete a pushed registry image or prove remote layer
+directory. That does not delete a pushed registry image or prove remote layer
 cleanup. Registry image/tag retirement and garbage collection require the
 registry owner's retention, referenced-manifest inventory and backup contract.
 Do not delete shared blobs or active release digests as test cleanup.

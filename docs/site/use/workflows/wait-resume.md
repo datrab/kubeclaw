@@ -1,12 +1,12 @@
 # Rehearse Human Approval and Resume
 
-Status: source and bounded local checks available; full local lifecycle and deployment execution open
+Status: source and bounded local checks available. Full local lifecycle and deployment execution open
 Audience: pipeline authors and operators
-Owner: product integration maintainers; platform operations owns execution access
+Owner: product integration maintainers. Platform operations owns execution access
 Evidence: skills/nova/plugins/human-approval; skills/nova/core/execution; skills/common/plugins/wait-store; skills/common/plugins/operator-messaging
 Applies to: `pipeline-definition.v2`, `pipeline-platform.v2`, `resume-signal.v2`
-Last verified: 2026-10-11; bounded source and contract evidence only; no successful full local lifecycle or deployment evidence Operator transport/recovery sections source-reviewed 2026-10-22; original local lifecycle/deployment execution remains unproved.
-Source revision: `ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a`; wait/journal corrections checked at `929aadbad08b41e7a8504950f05dc0f526b706d6`
+Last verified: 2026-10-11, bounded source and contract evidence only. No successful full local lifecycle or deployment evidence. Operator transport/recovery sections were source-reviewed on 2026-10-22. Original local lifecycle/deployment execution remains unproved.
+Source revision: `ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a`. Wait/journal corrections checked at `929aadbad08b41e7a8504950f05dc0f526b706d6`
 
 This guide supplies a complete disposable approval input set. Nova executes
 the installed human-approval stage, persists a wait, and sends its request to a
@@ -23,7 +23,7 @@ product acceptance.
 **Execution status:** input schemas, focused plugin boundary/guidance checks,
 receiver contract checks, and runtime registration validation passed within
 their local scope. Runtime validation selected the installed stage and four
-adapters; it did not start an approval run. These checks do not establish a
+adapters. It did not start an approval run. These checks do not establish a
 completed local wait/resume lifecycle. The full local rehearsal has no successful
 execution evidence.
 The mandatory deployment wait/resume run remains open and unexecuted.
@@ -34,7 +34,7 @@ Use these three files from the same checkout:
 
 | Input | Exact file | Meaning |
 | --- | --- | --- |
-| Pipeline | [approval.pipeline.json](wait-resume/approval.pipeline.json) | One `approval` stage of type `kubeclaw.decision.human-approval`; no dependent stage or external product change. |
+| Pipeline | [approval.pipeline.json](wait-resume/approval.pipeline.json) | One `approval` stage of type `kubeclaw.decision.human-approval`. No dependent stage or external product change. |
 | Platform template | [platform.template.json](wait-resume/platform.template.json) | Exact registrations, grants, loopback receiver, secret selector, and storage placeholders. Materialize a private copy before use. |
 | Signal template | [signal.template.json](wait-resume/signal.template.json) | All eight required envelope fields and the approval payload. Replace its identities and deliberately stale time from the new durable wait. Never submit the unchanged template. |
 
@@ -42,7 +42,7 @@ The wait-stage package is `skills/nova/plugins/human-approval/plugin.json`,
 registration `kubeclaw.human-approval:approval`, module `src/stage.ts`, export
 `execute`. This exercise uses the generic approval registration, not the
 separate architecture approval registration. Generic approval accepts a summary
-and an operator decision; it does not bind a source/report digest. Use a
+and an operator decision. It does not bind a source/report digest. Use a
 separate contract when that binding is required.
 
 The pipeline sets `maxAttempts: 2`, `maxRemediationCycles: 0`,
@@ -58,14 +58,14 @@ The platform selects these providers and grants:
 | --- | --- | --- |
 | `kubeclaw.human-approval:approval` | `signal.wait` → `kubeclaw.wait-store:waits` | `approval.resolved`, issuer ID `operator:local` |
 | Same stage | `operator.request` → `kubeclaw.operator-messaging:operator` | Target `operators` |
-| Operator adapter | `network.http` → `kubeclaw.network-http:http` | Loopback origin `http://127.0.0.1:18765`; POST, listed headers, and byte/time limits also enforced by adapter configuration |
+| Operator adapter | `network.http` → `kubeclaw.network-http:http` | Loopback origin `http://127.0.0.1:18765`. POST, listed headers, and byte/time limits also enforced by adapter configuration |
 | Operator adapter | `secrets.read` → `kubeclaw.secret-resolver:secrets` | Secret name `operator.webhook`, selected from environment variable `WAIT_REHEARSAL_WEBHOOK_KEY` |
 
 The notification adapter signs its HTTP body with an HMAC key. That transport
 signature authenticates the notification to this local receiver. The later
 resume envelope is **unsigned**. Its issuer is self-asserted by the file's
 creator. Restricted signal creation and CLI access are the effective operator
-authority; issuer matching does not authenticate a person.
+authority. Issuer matching does not authenticate a person.
 
 > **Source evidence — installed stage and budgets**
 >
@@ -86,12 +86,14 @@ authority; issuer matching does not authenticate a person.
 Use an isolated Linux operator host with Node.js 24 and the paired npm version.
 Complete [the canonical checkout and dependency setup](../quickstart.md#locked-dependency-installation).
 Run all commands from that checkout, in Bash, as the same restricted operator.
+
 Define `preserve_run_state` from [Inspect a Run](../operate.md#inspect-a-run) in
 that terminal before starting. Its platform and run variables are bound below.
 Keep this function available until the final audit.
+
 The repository and installed packages must stay unchanged during the run.
 Record the full commit and require a clean checkout before the measured run.
-These instructions apply to the source revision above; a changed package or
+These instructions apply to the source revision above. A changed package or
 graph requires a new governed run.
 
 The host must have `/usr/bin/flock` with `--exclusive`, `--timeout`, and
@@ -116,14 +118,14 @@ host that passes this exact prerequisite before continuing.
 The local exercise needs an unused loopback port 18765, a new private directory
 outside the checkout, capacity for Core/delivery/wait records, and permission to
 start and stop the disposable receiver. It requires no cluster or live provider.
-Stop on a bind error; do not use an unrelated service already on that port.
+Stop on a bind error. Do not use an unrelated service already on that port.
 
 ## Prepare the Private Inputs and Receiver
 
 These setup steps are for the local rehearsal only. For a deployment, first
 complete [Deployment Registration](#deployment-registration).
 
-Create a new private directory and materialize the platform. The loader resolves
+Create a new private directory. Then materialize the platform. The loader resolves
 installation and Core paths from the platform file's directory. Adapter roots
 are set explicitly to absolute paths by this step.
 
@@ -164,7 +166,7 @@ The setup copies all three original inputs and records their exact byte counts
 and SHA-256 digests in `input-manifest.json`. Materialization and signal creation
 use those private copies. Keep the originals unchanged.
 
-The setup command generates the key for this disposable receiver; it is not a
+The setup command generates the key for this disposable receiver. It is not a
 deployment credential. Do not print it, write it to evidence, or reuse it for deployment.
 
 Start this receiver as a child of the same Bash terminal. Leave that terminal
@@ -233,8 +235,8 @@ console.log(JSON.stringify(await validatePipelineRuntimeV2(platform, pipeline)))
 NODE
 ```
 
-Stop if validation fails. Keep its diagnostic and correct the private input
-before starting a run. An explicit graph uses this validation path; the
+If validation fails, stop. Keep its diagnostic. Correct the private input
+before starting a run. An explicit graph uses this validation path. The
 project-only `--compile` action does not compile this graph.
 
 Start with the canonical explicit-graph command, and retain both outputs and
@@ -255,9 +257,10 @@ Require start exit 1 and JSON `status: waiting` before continuing. Stop on a
 start error or any other state. Confirm the command exited and no writer owns
 this run. The receiver has finished its one request. Preserve the private
 Core run and the three known adapter/receiver files before the first audit.
+
 Define this helper in the same terminal. It uses the canonical run copy, then
 copies each store without parsing or removing partial bytes. It retains adapter
-bytes even if the Core copy has an incomplete journal; its nonzero result stops
+bytes even if the Core copy has an incomplete journal. Its nonzero result stops
 before audit:
 
 ```bash
@@ -302,13 +305,15 @@ printf '%s\n' "$?" > "$WAIT_REHEARSAL_ROOT/wait.audit.exit"
 
 Require start exit 1 with JSON `status: waiting`, stage `approval` waiting,
 `attemptsUsed: 1`, and audit exit 0. A start error, `failed`, or `blocked` is a
-stop. npm writes its script banner before the CLI JSON; retain the whole output.
+stop. npm writes its script banner before the CLI JSON. Retain the whole output.
 
 Read the durable wait with the strict non-mutating parser. It rejects
-incomplete records and sequence or hash errors; it does not create locks or
+incomplete records and sequence or hash errors. It does not create locks or
 repair the journal. Stop on failure and preserve raw bytes before any audit or
 recovery. Read from the hash-verified journal, not from a copied example
-or the notification alone. This script also creates the valid signal and the
+or the notification alone.
+
+This script also creates the valid signal and the
 two declared negative inputs. It records the creation time and budget summary.
 
 ```bash
@@ -340,12 +345,16 @@ fs.writeFileSync(path.join(root, 'run-root.txt'), run + '\n', { flag: 'wx' });
 NODE
 ```
 
-Read `active-wait.json` and compare its summary, issuer, wait identity, signal
-type, and expiry with the receiver body. Generic waits can have explicit null
-expiry; this human-approval input always sets a date-time. The signal must be
+Read `active-wait.json`. Compare its summary, issuer, wait identity, signal
+type, and expiry with the receiver body.
+
+Generic waits can have explicit null
+expiry. This human-approval input always sets a date-time. The signal must be
 issued at or after the recorded creation time, and Core's current clock must
 remain before expiry. Core does not check an upper bound on `issuedAt` against
-its current time or expiry. Set the accurate operator time; do not treat this
+its current time or expiry.
+
+Set the accurate operator time. Do not treat this
 minimum-time check as rejection of a future timestamp. Review the decision
 before submission.
 
@@ -361,12 +370,12 @@ receipt and returned `wait-request.v2`. Match the `operator.request` publish
 request to its accepted and completed records. The notification receipt has
 `accepted: true`, target `operators`, HTTP status 202, and the local message ID.
 Its request idempotency key matches `receiver.jsonl`. The HMAC is a transport
-check; this receipt cannot resolve the wait.
+check. This receipt cannot resolve the wait.
 
 In the delivery store, retain the `notification-delivery-request.v1` and
 `notification-delivery-receipt.v1` records, bound to the original attempt and
 request. In the wait store, retain the `wait-value.v1` record with the same
-wait. The wait store keeps creation evidence after resolution; Core's journal
+wait. The wait store keeps creation evidence after resolution. Core's journal
 determines whether the wait remains active.
 
 > **Source evidence — input validation, notification, and durable records**
@@ -381,7 +390,7 @@ determines whether the wait remains active.
 >
 > **Revision:** `ffb0b7a6393f7db44eb948f3ff8346b4b4b50f1a`.
 >
-> **Limit:** Validation does not execute the receiver or the stage. The local receiver has no reconciliation lookup endpoint; uncertain delivery requires a safe stop.
+> **Limit:** Validation does not execute the receiver or the stage. The local receiver has no reconciliation lookup endpoint. Uncertain delivery requires a safe stop.
 
 Before testing signals, define this read-only observation helper. It records
 SHA-256 and byte count, including the absence of `signals.jsonl`, plus attempt
@@ -450,7 +459,7 @@ authority_snapshot after-wrong-wait before
 ```
 
 Require exit 1 and `WAIT_UNKNOWN_OR_STALE:wait:wrong-rehearsal`. Compare the
-five retained authority files with the before checksums; require unchanged
+five retained authority files with the before checksums. Require unchanged
 bytes and absent signal journal. Stop on any changed authority or other error.
 
 Then test the wrong envelope issuer:
@@ -502,7 +511,7 @@ Require valid exit 0, `status: succeeded`, stage `approval` succeeded,
 
 Record the event, effect, and signal journal checksums at this point. The valid
 decision has advanced durable state. There is no rollback operation that
-restores the earlier wait. Preserve the completed run; use a new run for new work.
+restores the earlier wait. Preserve the completed run. Use a new run for new work.
 
 Replay the same file without changing a byte, time, ID, or key:
 
@@ -513,9 +522,11 @@ authority_snapshot after-replay after-valid
 
 Require exit 1 with `WAIT_RUN_TERMINAL` for this successful run. Other supported
 stale-resolution paths can return `WAIT_ALREADY_RESOLVED` or
-`WAIT_UNKNOWN_OR_STALE`; they are not a saved successful CLI response. Require
+`WAIT_UNKNOWN_OR_STALE`. They are not a saved successful CLI response.
+
+Require
 unchanged event, effect, signal, wait, delivery, and receiver files. Attempt
-count stays two; resolution count stays one. An identical stored signal is
+count stays two. Resolution count stays one. An identical stored signal is
 idempotent, but terminal/stale checks run before signal storage on this replay.
 
 Check the retained causal chain with this read-only command:
@@ -574,7 +585,7 @@ NODE
 
 This section describes the installed `kubeclaw.operator-messaging:operator`
 adapter beyond the disposable JSON receiver above. That receiver has no receipt
-lookup endpoint; these contracts do not upgrade it or prove a deployed receiver.
+lookup endpoint. These contracts do not upgrade it or prove a deployed receiver.
 For State/Wait API selection and responses, use
 [State and Wait adapter operations](../../understand/data-and-state.md#state-and-wait-adapter-operations).
 
@@ -585,31 +596,34 @@ canonical ID exactly names a configured target. It does not accept a caller's
 arbitrary URL, method or headers. The target selects `format: json` (default) or
 `discord_webhook`, one endpoint mode, and a payload byte limit (64 KiB default,
 1 MiB maximum). The input is a closed, recursively bounded JSON envelope with
-required `type`; only the admitted message/identity/presentation fields belong
+required `type`. Only the admitted message/identity/presentation fields belong
 in it. A schema field is not permission to send arbitrary JSON.
 
 | Transport | Actual request body and success receipt | Boundary |
 | --- | --- | --- |
 | `json` | The validated envelope, serialized with `JSON.stringify`. A successful 2xx response yields `{ accepted: true, target, status }` with optional `messageId` from response body `messageId` or `id`. | A 2xx is transport acceptance, not human approval, remote business success, or proof of durable receiver deduplication. |
-| `discord_webhook` | A projected embed with `allowed_mentions.parse: []`; title/description/footer and field count have fixed display bounds. The endpoint gets exactly one `wait=true` parameter. | Success also requires the response body's actual `id` to be a positive decimal-string uint64, without leading zero. A generic `messageId` or empty 204 does not substitute. The returned `discord-delivery-receipt.v1` binds target, status, message ID, delivery ID and SHA-256 of the exact serialized projected body. |
+| `discord_webhook` | A projected embed with `allowed_mentions.parse: []`. Title/description/footer and field count have fixed display bounds. The endpoint gets exactly one `wait=true` parameter. | Success also requires the response body's actual `id` to be a positive decimal-string uint64, without leading zero. A generic `messageId` or empty 204 does not substitute. The returned `discord-delivery-receipt.v1` binds target, status, message ID, delivery ID and SHA-256 of the exact serialized projected body. |
 
 Literal `endpoint` mode requires `tokenSecret`. The adapter resolves that secret
 through `secrets.read` and signs the exact POST body with
 `HMAC-SHA256(secret, deliveryId + "." + body)`. The fixed headers are
 `content-type: application/json`, `idempotency-key: deliveryId`, and
-`x-kubeclaw-signature: v1=<hex>`; it does not add Bearer authorization.
+`x-kubeclaw-signature: v1=<hex>`. It does not add Bearer authorization.
 
 Alternatively, `endpointOrigin` plus `endpointSecret` selects a secret-held full
-URL. Both fields must be present, without literal `endpoint`; the resolved URL
+URL. Both fields must be present, without literal `endpoint`. The resolved URL
 must match that configured origin and contain no URL userinfo or fragment.
+
 The adapter sends this URL through confidential `network.http`, so a secret
 webhook path **does cross the network boundary**. Do not apply a blanket
 "no resolved secret ever enters a network request" rule to this mode. The
-resolved secret also supplies the HMAC key; the ordinary effect journal is not
-an approved place for it. Neither mode admits an arbitrary origin. Grant the
+resolved secret also supplies the HMAC key. The ordinary effect journal is not
+an approved place for it.
+
+Neither mode admits an arbitrary origin. Grant the
 adapter's `secrets.read` names and `network.http` origin, methods, headers,
 request/response bounds and timeout separately. JSON receiver recovery also
-needs GET and `x-kubeclaw-signature`; configuring a receipt URL alone is not a
+needs GET and `x-kubeclaw-signature`. Configuring a receipt URL alone is not a
 network grant.
 
 > **Source evidence — operator transport and confidentiality**
@@ -622,7 +636,7 @@ network grant.
 >
 > **Test evidence:** [Wire/HMAC/presentation and confidential endpoint assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/tests/live-function.test.ts#L212-L270) [Journal exclusion assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/skills/common/plugins/operator-messaging/tests/live-function.test.ts#L276-L297) Assertions cover exact HMAC/wire body. They cover Discord presentation, confidential endpoints and journal exclusion. They were inspected, not newly executed receiver or Discord service tests.
 >
-> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`. The linked whole Source objects match this checkout.
 >
 > **Limit:** Transport receipt acceptance cannot supply Core signal authority or human/product acceptance. Secret-held endpoints still require authorized real network transmission.
 
@@ -634,7 +648,7 @@ idempotency key for legacy callers. The adapter first appends the request under
 an attempt-specific terminal slot before resolving the secret or invoking the
 receiver. New explicit delivery IDs produce owner-bound
 `notification-delivery-request.v2` records with run, original stage and exact
-transport-body string; legacy keys use v1 records. Do not rewrite one format
+transport-body string. Legacy keys use v1 records. Do not rewrite one format
 into the other to manufacture ownership.
 
 The adapter transitions the reservation by expected payload digest into a
@@ -642,7 +656,7 @@ receipt or failure. It marks `sent=true` immediately **before** invoking the
 POST, so a failure marked `possible` is conservative: it does not prove a
 remote effect happened, and a local error/HTTP 5xx does not prove one did not.
 An existing completed receipt can reconcile a concurrent failure. A local
-reservation alone is not external exactly-once delivery; the compatible receiver
+reservation alone is not external exactly-once delivery. The compatible receiver
 must deduplicate concurrent POSTs as well as retries.
 
 For JSON only, optional `receiptEndpoint` must share the delivery endpoint's
@@ -665,24 +679,30 @@ The receiver must respond HTTP 200 with a decoded JSON object:
 
 Matching `accepted` completes the local receipt without another POST (its
 recovered transport status is 200). Matching `absent` omits the need for
-`messageId` and permits POST **only under the real receiver contract**. The
-receiver must verify the corresponding signature and atomically retain delivery
-ID, exact payload digest and accepted
-result before ACK; return the same result without repeating an equal delivery;
-reject changed content; retain deduplication until coordinated delivery
-retirement; and make concurrent GET/POST observe that atomic state. A configured
+`messageId` and permits POST **only under the real receiver contract**. The receiver must meet all these requirements:
+
+- Verify the corresponding signature.
+- Atomically retain delivery ID, exact payload digest and accepted result before ACK.
+- Return the same result without repeating an equal delivery.
+- Reject changed content.
+- Retain deduplication until coordinated delivery retirement.
+- Make concurrent GET/POST observe that atomic state.
+
+A configured
 URL or an arbitrary HTTP 200 does not implement any of those guarantees.
 
 Without a compatible JSON receipt protocol, a retained reservation or
 possible-send failure rejects another attempt with
 `OPERATOR_DELIVERY_UNRESOLVED:receiver_receipt_required`. A missing, invalid or
 unavailable receipt response does not authorize another POST. The adapter can record a failure known
-before the send call as `not_sent`; the existing attempt's
-terminal failure still fails, rather than silently retrying itself. Preserve
+before the send call as `not_sent`. The existing attempt's
+terminal failure still fails, rather than silently retrying itself.
+
+Preserve
 Core effect state, request body, delivery identity, attempt and adapter store.
 Do not create a new run/key, erase the reservation, enlarge store limits, or
 retarget the endpoint to escape uncertainty. Use the owning receiver's actual
-reconciliation and the canonical recovery procedure; this guide adds no generic
+reconciliation and the canonical recovery procedure. This guide adds no generic
 receipt-import or endpoint-migration command. Discord mode does not consume the
 JSON `receiptEndpoint` protocol to resend a lost response.
 
@@ -696,29 +716,30 @@ JSON `receiptEndpoint` protocol to resend a lost response.
 >
 > **Test evidence:** [Receiver scenario/protocol](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/tests/verification/reliability/operator-delivery.test.mts#L15-L45) [Reconstruction/delivery assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/tests/verification/reliability/operator-delivery.test.mts#L83-L121) The scenarios assert lost-ACK recovery and bounded permanent failure. They reject an absent/invalid protocol and retain stable delivery identity across reconstructed attempts. Read as Source, not executed for this addition.
 >
-> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`. The linked whole Source objects match this checkout.
 >
 > **Limit:** The repository's test receiver is not evidence that an external endpoint implements atomic durable deduplication or that an uncertain delivery may be replayed.
 
 ### Look up a bound Discord receipt without publishing
 
 `operator.receipt` / `lookup` is a separate, allowed-target capability on
-`operator.target`. It reads the local delivery store; it does **not** query
+`operator.target`. It reads the local delivery store. It does **not** query
 Discord, resolve secrets, reserve a delivery, or send POST. Its payload has only
 `deliveryId`, `stageId` (the original publishing stage), and `payload` (the
 original message envelope). The adapter validates/projects that envelope again.
-The caller's run must match the v2 request owner; the supplied original stage,
+
+The caller's run must match the v2 request owner. The supplied original stage,
 target, delivery ID and exact projected body must match too. Exactly one terminal
 receipt must have that run/original stage, and the bound Discord receipt must
 still match its delivery identity/body digest and valid message ID. A later
-stage in the same run may request the lookup under its grant; the supplied
+stage in the same run may request the lookup under its grant. The supplied
 publishing stage is not replaced by the later stage's own identity.
 
 Wrong operation/query/target, missing or multiple terminals, changed transport
 body, foreign run/stage, legacy v1 requests without explicit owner, or an
 unbound Discord acknowledgement fail. A generic JSON receipt does not become a
 Discord handoff receipt. Preserve the original store and inspect the matching
-request/terminal proof; lookup failure is not permission to send again. The
+request/terminal proof. Lookup failure is not permission to send again. The
 existing guarded JSON projection path is not an arbitrary ownership upgrade or
 a replacement for this Discord lookup. Use the existing retention procedure
 rather than editing/compacting raw records by hand.
@@ -733,7 +754,7 @@ rather than editing/compacting raw records by hand.
 >
 > **Test evidence:** [Reconstructed receipt assertions](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/tests/verification/reliability/discord-delivery-receipt.test.mts#L65-L112) [Explicit invalid receipt vectors](https://github.com/datrab/kubeclaw/blob/38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb/tests/verification/reliability/discord-delivery-receipt.test.mts#L120-L132) The assertions check reconstructed lookup success. They reject foreign run/stage or changed-body bindings. They also reject invalid or legacy acknowledgements. No test or live handoff ran for this addition.
 >
-> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`; the linked whole Source objects match this checkout.
+> **Revision:** `38d5c8f22d9cc3a923a7fdd421a1c02e4d176fdb`. The linked whole Source objects match this checkout.
 >
 > **Limit:** A lookup cannot recover a missing remote response by inference, approve a wait, or grant a new sender identity.
 
@@ -741,12 +762,12 @@ rather than editing/compacting raw records by hand.
 
 | Observation | Cause to distinguish | Safe next action |
 | --- | --- | --- |
-| `FILE_MUTEX_ACQUIRE_FAILED` | Required fixed host lock interface unavailable | Stop before state claims. Use a supported host; preserve the failed attempt. |
+| `FILE_MUTEX_ACQUIRE_FAILED` | Required fixed host lock interface unavailable | Stop before state claims. Use a supported host. Preserve the failed attempt. |
 | Registry, provider, grant, or config validation error | Wrong package/configuration selection | Correct before a new run. Do not change a running graph or package snapshot. |
 | Receiver 403 or delivery error | Missing/wrong secret, HMAC, origin/header permission, or receiver response | Preserve request and receipt evidence. If delivery outcome is uncertain, stop and reconcile through the owning receiver. Do not replay publication by starting another run. |
 | `WAIT_UNKNOWN_OR_STALE` | Wrong identity or resolved wait | Preserve raw state before reading the same run's durable audit. Do not guess a replacement wait. |
-| `WAIT_ISSUER_DENIED` or `WAIT_SIGNAL_TYPE_MISMATCH` | Envelope differs from the active wait | Stop this submission; compare the reviewed signal with the durable request. |
-| `WAIT_SIGNAL_STALE` or `WAIT_EXPIRED` | Issue time predates creation or current clock reached expiry | Preserve the rejection. Do not change the clock or journal; expired approval needs a new governed run. |
+| `WAIT_ISSUER_DENIED` or `WAIT_SIGNAL_TYPE_MISMATCH` | Envelope differs from the active wait | Stop this submission. Compare the reviewed signal with the durable request. |
+| `WAIT_SIGNAL_STALE` or `WAIT_EXPIRED` | Issue time predates creation or current clock reached expiry | Preserve the rejection. Do not change the clock or journal. Expired approval needs a new governed run. |
 | Valid command response lost | Acceptance may already be durable | Stop writers and preserve raw run and adapter state before audit. Inspect complete hash-verified journals, then audit under the canonical procedure. Keep the original signal bytes, ID, time, and key. Do not invent a successor signal or repeat an uncertain effect. |
 | `RECOVERY_SIGNAL_REQUIRED` | Recovery found an active wait | Follow the canonical signal procedure. Recovery cannot create approval. |
 | Terminal run error | Run already succeeded, failed, blocked, or cancelled | Preserve the terminal audit. Use a new governed run for new work. |
@@ -754,17 +775,20 @@ rather than editing/compacting raw records by hand.
 For process interruption, use [Recover After Interruption](../operate.md#recover-after-interruption)
 with the original graph, platform, package identities, run ID, and storage.
 Preserve raw partial bytes and checksums before the first audit or recovery.
-Stop on incomplete or corrupt journal records; do not trim them for inspection.
+Stop on incomplete or corrupt journal records. Do not trim them for inspection.
+
 Reconcile unresolved external effects before any permitted canonical repair or
-recovery. Audit can create lock files and truncate an unterminated journal tail;
-its success alone does not prove that an external operation completed. For this
-local input set, use `preserve_rehearsal_state` after writers stop; it binds the
+recovery. Audit can create lock files and truncate an unterminated journal tail.
+Its success alone does not prove that an external operation completed. For this
+local input set, use `preserve_rehearsal_state` after writers stop. It binds the
 known Core and adapter paths. A missing file is a stop, not permission to create
-replacement authority. This guide supplies no
+replacement authority.
+
+This guide supplies no
 generic receipt import or cancellation command. Stopping the local receiver
 does not cancel a durable Nova run. A signal payload with `decision: rejected`
-is a separate decision that yields `blocked` with reason `approval.rejected`;
-do not mutate the approved signal or replay it as a rejection.
+is a separate decision that yields `blocked` with reason `approval.rejected`.
+Do not mutate the approved signal or replay it as a rejection.
 
 ## Final Check and Cleanup
 
@@ -782,7 +806,7 @@ NODE
 ```
 
 Require receiver exit and refused connection. If a listener remains, inspect
-its ownership before termination; do not kill an unrelated listener.
+its ownership before termination. Do not kill an unrelated listener.
 
 Retain a restricted evidence copy outside the disposable directory. Include
 the source commit, package and graph snapshots, materialized platform and
@@ -859,7 +883,7 @@ deployment journals, waits, delivery records, lock files, or secret bindings.
 
 **Status: mandatory, open, and unexecuted.** The input set gives exact
 pipeline, platform-template, signal-template, and wait-stage package paths. The
-platform template is a loopback fixture; it is not a registered deployment
+platform template is a loopback fixture. It is not a registered deployment
 platform. The local receiver and `operator:local` label are not a deployment
 authority or credential. This guide supplies no deployment registration.
 
@@ -876,11 +900,11 @@ maintainers must jointly record:
 - Registered notification target, endpoint/origin, receiver authority, permitted
   network route, named secret binding and environment selector, rotation owner,
   receipt query/reconciliation procedure, and cleanup authority. Record secret
-  names and owners; never their values.
+  names and owners. Never their values.
 - The deployment operator issuer ID in stage config and the matching wait grant,
   target grant, provider selections, adapter origin/method/header permissions,
   byte/time limits, and active-adapter list. Review the effective configuration
-  before the run; do not edit it after wait creation.
+  before the run. Do not edit it after wait creation.
 
 Stop before deployment execution while any registration is missing. This is
 the current blocked step, owned by platform operations for host/access/storage

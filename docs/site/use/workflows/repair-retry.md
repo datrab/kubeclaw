@@ -1,17 +1,17 @@
 # Inspect Technical Retry, Repair Orders, and Mandatory Rechecks
 
-Status: maintained local Core contract rehearsal with trusted test stages; no application-delivery claim
+Status: maintained local Core contract rehearsal with trusted test stages. No application-delivery claim
 Audience: pipeline operators and runtime developers
 Owner: Nova Core lifecycle maintainers
 Evidence: docs/site/use/workflows/examples/repair-retry.mjs; tests/verification/reliability/repair-budget-fixture.mjs; tests/fixtures/repair-budget/plugin; skills/nova/core/lifecycle; skills/common/plugins/artifact-store
 Applies to: pipeline-definition.v2, pipeline-platform.v2, category-based repair and resume-signal.v2
-Last verified: 2026-10-21; author executed the three local fixture scenarios, replay checks and rejection controls
+Last verified: 2026-10-21. Author executed the three local fixture scenarios, replay checks and rejection controls
 
 ## What this rehearsal changes
 
-Run an intentionally failing **test checker** through the actual Core CLI,
-retain its original event/effect journals and artifact store, then distinguish
-technical retry from a source repair and the check that follows it. This is not
+Run an intentionally failing **test checker** through the actual Core CLI.
+Retain its original event/effect journals and artifact store. Then distinguish
+technical retry from a source repair. Distinguish both from the check after a repair. This is not
 a full Nova implementation project or a live Forge, review-agent or Buster
 provider verdict. No mocked Core runner or prewritten lifecycle record supplies
 the result.
@@ -52,10 +52,12 @@ selected Source revision. `run` must return
 unexpected harness failure: the helper expects it for the deliberately blocked
 and waiting Core outcomes and separately validates their JSON status. Missing
 imports, an unexpected process exit, invalid journals or failed assertions are
-errors; preserve the entire fixture and stop. An exclusive `run-started.json` intent precedes every Core child and remains
+errors. Preserve the entire fixture and stop.
+
+An exclusive `run-started.json` intent precedes every Core child and remains
 after error or interruption. Even an intent with no command result blocks
-another `run`; do not delete it to retry. A partial run is not resumable by
-rerunning `run`; use `verify` only for completed observations or prepare a new
+another `run`. Do not delete it to retry. A partial run is not resumable by
+rerunning `run`. Use `verify` only for completed observations or prepare a new
 fixture after diagnosing the failure.
 
 ### The frozen graph and budgets
@@ -79,7 +81,7 @@ A retry repeats the same stage without spending a repair order. A trusted
 `request_fix` result spends the requesting category's allowance and follows the
 frozen repair edge. Core retains that finding, invalidates affected downstream
 results and schedules the source stage. The successful source attempt produces
-a new revision; checks must evaluate that revision rather than reuse old facts.
+a new revision. Checks must evaluate that revision rather than reuse old facts.
 
 ## Read the three outcomes
 
@@ -89,21 +91,21 @@ a new revision; checks must evaluate that revision rather than reuse old facts.
 change the repository. The next source attempt commits version 1. The lint
 checker requests a repair at version 1, review at version 2 and test at version
 3. Source repairs create versions 2, 3 and 4 respectively. Every invalidated
-check runs again; its attempt count is not another category debit.
+check runs again. Its attempt count is not another category debit.
 
 Expected final status is `succeeded`. Source has five attempts, one technical
 retry and exactly three ledger orders, in category order `lint`, `review`,
 `test`. Lint has four attempts, review three and test two. The initial source
 attempt and technical retry are not repair orders. The final original journal
-contains 132 events for this selected fixture and implementation; use identities,
+contains 132 events for this selected fixture and implementation. Use identities,
 results and the ledger, not event count alone, to decide what occurred.
 
 ### 2. Technical allowance ends without a repair order
 
 `technical-exhausted` returns `retry` for both source attempts. Core spends its
-one technical retry, then blocks. Expected source attempts: two; technical
-retries: one; repair ledger: empty; final status: `blocked` (21 events in the
-verified fixture). Increasing a category allowance would not restore technical
+one technical retry, then blocks. Expected source attempts: two. Technical
+retries: one. Repair ledger: empty. Final status: `blocked` (21 events in the
+verified fixture). A larger category allowance does not restore technical
 retry authority. Do not edit an existing graph or start a new run to disguise
 the exhausted original attempt.
 
@@ -112,16 +114,16 @@ the exhausted original attempt.
 `extra-order` requests lint repairs at source versions 1, 2 and 3. Two automatic
 lint orders produce versions 2 and 3. The next request exhausts that category
 and creates an orchestrator wait. Read the preserved original wait in
-`run.stdout`; it binds the exact request/history digest, wait and issuer.
+`run.stdout`. It binds the exact request/history digest, wait and issuer.
 
 The helper first submits the same signal envelope with a wrong pending digest.
-Expect `REPAIR_AUTHORIZATION_INVALID`; original lifecycle event bytes must remain
+Expect `REPAIR_AUTHORIZATION_INVALID`. Original lifecycle event bytes must remain
 identical. It then submits one valid `resume-signal.v2` with the actual wait,
 signal type and issuer, the current pending digest and an explicit reason.
-This local fixture acts as its configured test orchestrator; copying its issuer
-text is not production identity authentication.
+This local fixture acts as its configured test orchestrator. A copy of its issuer
+text does not authenticate a production identity.
 
-The accepted signal authorizes one source repair directly; it does not rerun the
+The accepted signal authorizes one source repair directly. It does not rerun the
 known-failing lint check before repair. Source reaches version 4, and lint's
 recheck passes. The test checker then requests another repair. Core blocks even
 though that category had unused automatic allowance: after an extra order,
@@ -131,7 +133,7 @@ Expected final status is `blocked`, source attempts four, ledger categories
 `lint, lint, lint`, exactly one authorized ledger entry, lint attempts four, and
 the test's pending repair category `test` (98 final events in the verified
 fixture). A real administrator must use the supported separate authority path
-or retain the stop; the helper neither fabricates another signal nor modifies
+or retain the stop. The helper neither fabricates another signal nor modifies
 the journal.
 
 ## Audit original findings and replay
@@ -142,7 +144,7 @@ parses every copied run journal before invoking the real audit CLI. Thus an
 audit's journal-open behavior cannot replace the pre-audit raw bytes.
 `extra-order` also retains a fresh capture immediately before the rejected
 signal, before valid resume and before the final audit. `verify` checks the
-manifest and strictly parses every copied run journal in each capture. All writers belong to those completed child processes; this
+manifest and strictly parses every copied run journal in each capture. All writers belong to those completed child processes. This
 private-fixture fact does not establish a writer fence for a deployed system.
 
 Inspect the retained command status and original audit rather than inferring
@@ -169,7 +171,7 @@ not permission to rewrite the fixture to match its expected result.
 For a real interrupted or uncertain run, follow
 [stopped-writer inspection and run control](../operate.md#inspect-a-run) and
 [pipeline state recovery](../recovery.md#pipeline-state-recovery). This helper
-uses whole completed child outcomes; it does not demonstrate a crash between
+uses whole completed child outcomes. It does not demonstrate a crash between
 acceptance and receipt or an external provider's reconciliation.
 
 ## Cleanup and change boundaries

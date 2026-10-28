@@ -1,31 +1,37 @@
 # Run and Audit a Local Core Pipeline
 
-Status: maintained local product journey; separate project and deployment limits
+Status: maintained local product journey. Separate project and deployment limits
 Audience: first-time pipeline author and operator
 Owner: Nova Core and Delivery Lint maintainers
 Evidence: docs/site/use/workflows/examples/local-core.mjs; skills/nova/core/cli.ts; skills/nova/plugins/delivery-lint; skills/nova/plugins/repository-adapter; skills/common/plugins/artifact-store; skills/common/plugins/telemetry-observer; skills/common/plugins/telemetry-store; skills/nova/core/telemetry
 Applies to: pipeline-platform.v2 and pipeline-definition.v2 on a supported local Linux host
-Last verified: 2026-10-21; actual local CLI success, blocked path, missing-grant admission and same-run durable observer/telemetry checks
+Last verified: 2026-10-21. Actual local CLI success, blocked path, missing-grant admission and same-run durable observer/telemetry checks
 
 ## Goal and boundary
 
-Start in a selected checkout, materialize real platform and graph inputs, validate
-the installed registry and grants, run a shipped stage through the real Core CLI,
-preserve durable state, audit both outcomes, verify an original artifact's bytes
-and producing attempt, correlate same-run observer deliveries and durable local
-telemetry, and clean up only the owned fixture.
+Use this sequence in a selected checkout:
+
+1. Materialize real platform and graph inputs.
+2. Validate the installed registry and grants.
+3. Run a shipped stage through the real Core CLI.
+4. Preserve durable state.
+5. Audit both outcomes.
+6. Verify an original artifact's bytes and producing attempt.
+7. Correlate same-run observer deliveries and durable local telemetry.
+8. Clean up only the owned fixture.
 
 The stage is `kubeclaw.lint.delivery`. It reads a real disposable repository
 Dockerfile through `kubeclaw.repository-adapter:repository` and writes its report
 through `kubeclaw.artifact-store:artifact-store`. Core owns the actual snapshots,
-event/effect journals, attempts, terminal states and adapter shutdown. No fake
-runner, hand-built lifecycle event, memory journal, model or provider result is
-used.
+event/effect journals, attempts, terminal states and adapter shutdown. This workflow does not use a fake
+runner, hand-built lifecycle event, memory journal, model or provider result.
 
 This is **one local explicit-graph workflow**, not the eight-stage
 `nova-project.v2` implementation project. It validates and normalizes the graph
-through the actual Core preparation path; it does not run the Nova project
-compiler. The [first-project exercise](README.md#materialize-and-compile-a-first-project)
+through the actual Core preparation path. It does not run the Nova project
+compiler.
+
+The [first-project exercise](README.md#materialize-and-compile-a-first-project)
 owns that separate compile-only task. This journey does not execute Forge,
 remote Buster, an image build, a test provider, a cluster, Redis, a deployed
 telemetry collector, demo delivery or human acceptance. It uses one shipped
@@ -39,7 +45,7 @@ selected revision. Never install dependencies into another active shared
 checkout. Clone and prepare through the
 [developer handbook](../../extend/developer-handbook.md#prepare-a-clean-checkout),
 using its locked Node.js 24 development-dependency installation and owned writable
-npm cache. Keep its selected full source revision; do not substitute a random
+npm cache. Keep its selected full source revision. Do not substitute a random
 current branch while comparing results.
 
 From that repository root, check:
@@ -55,24 +61,29 @@ git --version
 node -e 'for (const name of ["typescript", "ajv", "ajv-formats"]) console.log(require.resolve(name))'
 ```
 
-Node must be major 24. `/usr/bin/flock` must be GNU util-linux with `--timeout`;
-a BusyBox command or a different executable on PATH does not satisfy the
+Node must be major 24. `/usr/bin/flock` must be GNU util-linux with `--timeout`.
+A BusyBox command or a different executable on PATH does not satisfy the
 absolute-path lock contract. Use a local filesystem qualified for the required
 locks, append writes and fsync. A generic network mount is not qualified by
 this exercise.
 
-The caller needs permission to create a private disposable directory, initialize
-and commit a local Git repository with an example-only identity, read the shipped
-package roots, start Node child processes and write private fixture stores. No
-network or production credential, cluster context, Docker, browser, external
+The caller needs permission for each operation:
+
+- Create a private disposable directory.
+- Initialize a local Git repository and commit with an example-only identity.
+- Read the shipped package roots.
+- Start Node child processes.
+- Write private fixture stores.
+
+No network or production credential, cluster context, Docker, browser, external
 model, Go compiler or service is needed by this selected graph. Its builtin
-packages run through the existing trusted in-process path; this is not a native
+packages run through the existing trusted in-process path. This is not a native
 sandbox/cgroup isolation test.
 
 Stop on a missing dependency/tool, wrong source revision or dirty selected
 checkout. Correct preparation rather than removing a grant or weakening schema
-validation. The source revision recorded in the fixture identifies the checkout;
-actual registry content digests separately identify the installed package bytes.
+validation. The source revision recorded in the fixture identifies the checkout.
+Actual registry content digests separately identify the installed package bytes.
 
 ## 1. Materialize the complete inputs
 
@@ -87,7 +98,7 @@ node docs/site/use/workflows/examples/local-core.mjs prepare "$LOCAL_CORE"
 
 Expected JSON: `status: "prepared"`, `execution: false`, the selected source
 revision, and your exact destination. Keep both paths. A failed preparation can
-leave a partial private tree; do not run into it again or erase an unknown path.
+leave a partial private tree. Do not run into it again or erase an unknown path.
 Retain its first error, correct the prerequisite and select a different new
 parent/destination.
 
@@ -108,7 +119,7 @@ The helper creates:
 - A complete `pipeline-platform.v2`: the shipped Nova/common package installation
   roots and builtin trust roots, one fixed repository adapter, an artifact store,
   exact provider selections and narrow stage grants. The registry discovers all
-  current packages in those roots; it activates only the selected one stage and
+  current packages in those roots. It activates only the selected one stage and
   three adapters and one telemetry observer. Registry package count is not a
   supported fixed constant.
 - A complete one-stage `pipeline-definition.v2` with concurrency one, one attempt,
@@ -117,10 +128,10 @@ The helper creates:
 - A separately granted `kubeclaw.telemetry-observer:telemetry`, with empty
   config and event-prefix grants derived from its actual registered subscriptions,
   bound to `kubeclaw.telemetry-store:telemetry`. Its private `telemetry/` store
-  allows 64 KiB records, 256 records and 4 MiB total; it has no network or Secret.
-- A second graph whose Dockerfile path contains `../`; the stage must block it
+  allows 64 KiB records, 256 records and 4 MiB total. It has no network or Secret.
+- A second graph whose Dockerfile path contains `../`. The stage must block it
   before repository read, while persisting a diagnostic report.
-- A second platform with the stage's artifact-write grant missing; registry/grant
+- A second platform with the stage's artifact-write grant missing. Registry/grant
   validation must reject it before execution.
 - A private ownership marker used for safe fixture cleanup. It is not a product
   authorization token.
@@ -153,17 +164,17 @@ Read [its complete source](examples/local-core.mjs). In order it:
    records their exact byte digests, and strictly parses copied event/effect,
    observer-delivery and checkpoint journals before invoking audit on canonical
    state. It also validates the copied telemetry record store with the original
-   pure replay validator; it does not open the copy as a writable store. Audit can open/repair a journal;
-   retained raw bytes come first. A parse failure stops before audit.
+   pure replay validator. It does not open the copy as a writable store. Audit can open/repair a journal.
+   Retained raw bytes come first. A parse failure stops before audit.
 7. Uses the same original CLI platform and run IDs to audit each run, verifies
    audit/head/terminal correlation, reconstructs successful state through the
    original read-only evidence reader, verifies its artifact blob, and checks
    every selected canonical event against its observer delivery, checkpoint,
    telemetry effect and durable sink record.
 
-Every CLI invocation, actual exit status, stdout and stderr is retained in
-`*.command.json`, `*.stdout` and `*.stderr`. No failed command is changed to a
-passing receipt. The two audit invocations are actual `--audit` operations, not
+The helper retains every CLI invocation, actual exit status, stdout and stderr in
+`*.command.json`, `*.stdout` and `*.stderr`. It does not change a failed command
+result to a passing receipt. The two audit invocations are actual `--audit` operations, not
 synthetic event summaries. Do not remove the helper's fixed assertions to force
 an unrelated installation through this fixture.
 
@@ -171,16 +182,16 @@ an unrelated installation through this fixture.
 
 Expected final JSON includes:
 
-- `status: "verified-local-core-journey"`;
-- success run `succeeded` and negative run `blocked`;
-- `blockedReason: "delivery_lint.path_invalid"`;
-- `missingGrant: "rejected-before-execution"`;
+- `status: "verified-local-core-journey"`.
+- success run `succeeded` and negative run `blocked`.
+- `blockedReason: "delivery_lint.path_invalid"`.
+- `missingGrant: "rejected-before-execution"`.
 - an exact `delivery-lint:site` artifact reference in namespace
-  `kubeclaw.delivery-lint`, digest, byte size and producing run/stage/attempt;
-- the actual journal head, event count and effect head;
+  `kubeclaw.delivery-lint`, digest, byte size and producing run/stage/attempt.
+- the actual journal head, event count and effect head.
 - `telemetry` identifying the shipped observer/provider, stream
   `telemetry/plugin-events`, actual record count, both run IDs, each terminal
-  checkpoint and zero delivery failures; and
+  checkpoint and zero delivery failures.
 - `rawBytesPreserved: true` plus the explicit local-only execution scope.
 
 Do not hardcode attempt UUIDs or journal/effect digests. They identify this run's
@@ -197,7 +208,7 @@ cat "$LOCAL_CORE/verification.json"
 node docs/site/use/workflows/examples/local-core.mjs verify "$LOCAL_CORE"
 ```
 
-The verification command rereads retained bytes; it does not rerun a stage or
+The verification command rereads retained bytes. It does not rerun a stage or
 repair a journal. It requires exact raw-tree equality, strict hash-linked journal
 parsing, actual audit digest/head/event agreement and the same producing attempt.
 It reads the original durable artifact blob by its recorded digest, checks byte
@@ -226,18 +237,18 @@ extra/unowned records, and this complete correlation:
    observer provenance, including the terminal run event.
 3. The same run's effect journal must contain its telemetry request, acceptance
    and completed receipt under stable `delivery:<observer>:<event>:1` identity.
-   The request must carry the original observer envelope; the receipt must
+   The request must carry the original observer envelope. The receipt must
    identify the actual persisted sink sequence and accepted append.
 4. The copied store must pass the product's pure durable-record replay/digest/
    sequence checks. Every record belongs to that run and stream. Its content
    must equal the original product telemetry envelope after the original sink
    projection/redaction, not a hand-built success observation.
 
-The observer subscribes to its manifest's event set; this graph does not emit
+The observer subscribes to its manifest's event set. This graph does not emit
 all supported lifecycle types. The engine serializes drain callbacks and awaits
 one final drain before adapter shutdown. The sink awaits its durable append
 before acknowledging it. Waiting for the real child to exit gives this private
-fixture its stopped-writer preservation boundary; it is not proof that every
+fixture its stopped-writer preservation boundary. It is not proof that every
 third-party observer honors shutdown.
 
 The shipped observer uses best-effort policy. A successful stage/CLI status
@@ -246,27 +257,27 @@ missing, duplicate, failed or incomplete deliveries, absent terminal checkpoint,
 missing effect receipt, wrong owner/provenance, or changed telemetry bytes. It
 never turns a best-effort failure into a stronger pipeline lifecycle state.
 Read `verification.json` for this execution's actual record/event counts and
-identities; do not copy attempt UUIDs or digest values into another run.
+identities. Do not copy attempt UUIDs or digest values into another run.
 
 This local check establishes same-run stored telemetry alongside audit and
 artifact evidence. It does not establish Redis delivery, a remote dashboard,
 all observer failure/replay scenarios, production redaction of arbitrary text,
 or deployed collection. Keep lifecycle authority, observer acknowledgement and
-sink retention separate; see [Telemetry](../../understand/telemetry.md).
+sink retention separate. See [Telemetry](../../understand/telemetry.md).
 
 ## Failure, recovery and stop decisions
 
 | Observation | Meaning and safe action |
 | --- | --- |
-| Destination already exists or ownership/revision differs | Stop. Keep the partial fixture and error; choose a new private destination after correcting preparation. |
-| Tool/import/lock error | Host prerequisite failure, not a pipeline verdict. Prepare the same supported toolchain; never replace durable journals with memory journals. |
+| Destination already exists or ownership/revision differs | Stop. Keep the partial fixture and error. Choose a new private destination after correcting preparation. |
+| Tool/import/lock error | Host prerequisite failure, not a pipeline verdict. Prepare the same supported toolchain. Never replace durable journals with memory journals. |
 | Stage owner/config/grant validation fails unexpectedly | Inspect the selected installed roots, package versions and exact grants. Do not broaden authority or call a missing stage successful. |
-| Expected-success CLI exits nonzero | Retain actual stdout/stderr and original run bytes. Stop; do not change the graph and recover the same run ID. |
+| Expected-success CLI exits nonzero | Retain actual stdout/stderr and original run bytes. Stop. Do not change the graph and recover the same run ID. |
 | Negative path succeeds, reads the repository, or lacks its blocked reason | Failed safety expectation. Preserve evidence and investigate the owning stage/runtime before any claim of completion. |
 | Child response is lost, timeout occurs or writers might remain active | Stop. Establish actual owner exit and stopped adapter writers through the normal [run-control procedure](../operate.md#inspect-a-run) before preservation/audit. A helper timeout is not durable cancellation. |
 | Raw copy, strict parse, audit, artifact hash or telemetry correlation check fails | Preserve the original files and first error. Do not repair/rewrite/remove them to make a comparison pass. Follow [recovery](../recovery.md) under the owning store authority. |
-| CLI succeeded but observer delivery/checkpoint/effect/sink evidence is missing or failed | Local telemetry task has not completed. Preserve both stores and journals; inspect the selected observer/provider/grants and store limits. Do not rerun a terminal run to manufacture evidence or claim that best-effort delivery changed lifecycle. |
-| Run is already terminal | Inspect retained evidence. Do not recover or repeat the same run ID; prepare a new disposable journey if new execution is intended. |
+| CLI succeeded but observer delivery/checkpoint/effect/sink evidence is missing or failed | Local telemetry task has not completed. Preserve both stores and journals. Inspect the selected observer/provider/grants and store limits. Do not rerun a terminal run to manufacture evidence or claim that best-effort delivery changed lifecycle. |
+| Run is already terminal | Inspect retained evidence. Do not recover or repeat the same run ID. Prepare a new disposable journey if new execution is intended. |
 
 The helper has no retry/resume/repair implementation. That is deliberate:
 this graph has no wait or repair edge. Use the separately maintained
@@ -280,7 +291,7 @@ revision, input JSON, command/exit output, final verification and actual audit,
 raw run/artifact/telemetry copies and their manifest, observer delivery and
 checkpoint histories, and the matching telemetry effect receipts. These local example records contain
 no production credential, but remain under your normal retention decisions.
-No running process or external resource should remain after successful verify.
+Correct result after successful verification: no running process or external resource remains.
 
 Then remove only the marker-bound, fully verified fixture and its now-empty
 new parent:

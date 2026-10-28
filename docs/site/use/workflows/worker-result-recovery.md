@@ -1,11 +1,11 @@
 # Recover an Accepted Native Worker Attempt or Retain the Stop
 
-Status: source-backed native recovery procedure; local journal/lock crash controls are separate from delegated-host execution
+Status: source-backed native recovery procedure. Local journal/lock crash controls are separate from delegated-host execution
 Audience: worker, Prism service and storage operators
 Owner: Worker Core and native worker host maintainers
 Evidence: skills/worker/core/worker/native-attempt-executor.ts; skills/worker/core/worker/native-attempt-recovery.ts; skills/worker/core/worker/native-attempt-journal.ts; skills/worker/core/worker/native-worker-ownership.ts; skills/prism/server/worker.ts; skills/prism/server/native-worker-execution.ts; tests/verification/reliability/worker-native-journal.test.mts
-Applies to: native Worker v3 attempt/result path; not Buster Worker v1 or the portable executor
-Last verified: 2026-10-21; source and actual local journal/ownership crash tests; no delegated-cgroup live recovery execution
+Applies to: native Worker v3 attempt/result path, not Buster Worker v1 or the portable executor
+Last verified: 2026-10-21. Source and actual local journal/ownership crash tests. No delegated-cgroup live recovery execution
 
 ## Bind the attempt before interruption
 
@@ -17,26 +17,29 @@ before using this procedure. A portable executor result or Buster v1 attempt is
 not interchangeable with Prism's native v3 path.
 
 For an actual controlled native-host exercise, first register one disposable
-non-production attempt and its original worker ID, attempt ID, claim ID,
-generation, profile digest, attempt-spec digest and complete input envelope.
+non-production attempt. The registration must include its original worker ID,
+attempt ID, claim ID, generation, profile digest, attempt-spec digest and complete input envelope.
 The owning service must submit through its supported authenticated dispatch
 path. There is no generic `worker recover` or arbitrary raw-result import CLI
 in this procedure. Do not handcraft an HTTP request or copy a fixture envelope
 to bypass that service's source, claim or authorization checks.
 
-Require the host operator to identify the real cgroup-v2 root, private ownership
-root, attempt-journal root, trusted node-identity file, pool policy, launcher
-and UID/GID, engine content identity, storage quotas and exclusive supervisor.
+Require the host operator to identify each of these actual prerequisites:
+
+- The cgroup-v2 root, private ownership root and attempt-journal root.
+- The trusted node-identity file and pool policy.
+- The launcher and UID/GID.
+- The engine content identity, storage quotas and exclusive supervisor.
 Use the current [native configuration and version contracts](../../understand/worker-core.md#host-and-runtime-identity)
-and the owning deployment configuration reference; retain paths and logical
+and the owning deployment configuration reference. Retain paths and logical
 secret references, not credential values. An ordinary writable directory is
 not a cgroup. A persistent volume mounted on another node does not prove that
 processes on the old node stopped.
 
-Stop if any authority or required host resource is unavailable. This is a
+If any authority or required host resource is unavailable, stop. This is a
 specific safe stop: host/node owner must establish delegated kernel scope and
-stable identity; worker/storage owner must establish exclusive original stores;
-calling-service owner must bind the submitted envelope and its accepted state.
+stable identity. Worker/storage owner must establish exclusive original stores.
+Calling-service owner must bind the submitted envelope and its accepted state.
 Do not call a storage-only test native workload execution.
 
 ## Follow the durable boundaries
@@ -51,7 +54,7 @@ Do not call a storage-only test native workload execution.
    name. Unknown or conflicting ownership stops admission.
 3. **In-flight output:** the supervisor spools original binary stdout/stderr
    under the journal output root. Output can contain confidential original
-   diagnostics; preserve its permissions and full byte identity. Rendered logs
+   diagnostics. Preserve its permissions and full byte identity. Rendered logs
    are not a replacement. A provisional specialist result is not sealed.
 4. **Controlled interruption:** only the registered host owner may stop the
    selected supervisor/workload in its approved window. Use that deployment's
@@ -72,7 +75,7 @@ Do not call a storage-only test native workload execution.
 7. **Evaluate recovery:** compare the exact cases below. A service that remains
    fenced has not recovered admission merely because its process is running.
    Observe its retained diagnosis and original-attempt result through the
-   owning caller; do not synthesize or submit a replacement result.
+   owning caller. Do not synthesize or submit a replacement result.
 
 ## Interpret the original-attempt result
 
@@ -127,17 +130,19 @@ env -u NODE_ENV node --test \
 This command explicitly selects the development fixture environment. It is not
 a way to weaken a running production worker's identity checks. In production,
 missing `PRISM_ENGINE_CONTENT_DIGEST` correctly rejects before Prism profile
-imports; use the real installed engine image identity, not an invented digest.
+imports. Use the real installed engine image identity, not an invented digest.
 
 The local journal tests start real writer children, wait for durable accepted
 or sealed state, contend on the production `flock`, then send `SIGKILL` to those
 owned writers. Original identity and binary diagnostic output survive. Exact
-sealed replay returns the original result; changing an already sealed receipt
+sealed replay returns the original result. Changing an already sealed receipt
 rejects. A separate accepted-without-result case remains accepted with no
-invented result. The tests also reject changed envelope identity, retained disk
+invented result.
+
+The tests also reject changed envelope identity, retained disk
 overflow, changed spool bytes and live contention. Ownership tests verify
 convergence, durable phases, conflicts, unresolved stops and a real supervisor
-lock; their ordinary-directory bindings test storage only, not kernel scope.
+lock. Their ordinary-directory bindings test storage only, not kernel scope.
 
 Expected actual local result is 15 passing tests, zero failed or skipped cases
 for this source revision. The fixtures own and remove their temporary trees.
@@ -166,25 +171,27 @@ This is the expected result, not a report that this guide's author ran it.
 
 A compiler error, missing host input, unexpected child exit, assertion failure,
 drain timeout or `Native scope test cleanup failed` is a failed check. Preserve
-the first error and the original host/ownership evidence; have the registered
+the first error and the original host/ownership evidence. Have the registered
 host owner inspect the exact test scopes and remaining children before retrying.
 Do not replace a delegated cgroup with an ordinary directory, relax launcher or
 pool restrictions, or count only the tests that reached their assertions.
 
 The scope test's finalizer attempts to kill its own remaining children, drain
-its created scopes with a five-second bound, and dispose them; cleanup failure
+its created scopes with a five-second bound, and dispose them. Cleanup failure
 is reported, not a successful result. The launcher/ownership test removes its
 private `worker-native-live-*` state tree in its finalizer, but an early host-input
-error can occur before that finalizer is installed. On failure, confirm actual
+error can occur before that finalizer is installed.
+
+On failure, confirm actual
 quiescence and identify any retained owned scope or temporary tree with the host
-owner; do not assume that a process exit proves cleanup. Retain necessary failure
+owner. Do not assume that a process exit proves cleanup. Retain necessary failure
 evidence before retiring only those confirmed private leftovers. Never remove
 the delegated cgroup root, trusted node identity, pool policy, production launcher
 or unrelated supervisor stores. The suite does not retire a real service's
 specialist effects or incident evidence.
 
 Do not treat even a successful suite as a complete live
-supervisor-abort→specialist-result recovery exercise; record the original-attempt
+supervisor-abort→specialist-result recovery exercise. Record the original-attempt
 chronology above for the actual service.
 
 ## Cleanup and change
@@ -196,7 +203,7 @@ The supervisor owns scope disposal only after quiescence. A disposed scope does
 not authorize deleting original specialist evidence or external resources.
 
 For a change, update producer envelope/profile/resource policy and consumer
-result binding together, keep old pinned accepted work readable and run the
+result binding together. Keep old pinned accepted work readable. Run the
 storage/crash and actual delegated-host checks matched to the changed boundary.
 Never reuse a changed generation or edited store to make an old interrupted
 attempt appear successful. Where the owning deployment offers no supported

@@ -1,6 +1,6 @@
 # Run and Diagnose a Buster Suite
 
-Status: implemented; live dependencies vary by suite
+Status: implemented. Live dependencies vary by suite
 Audience: pipeline author and operator
 Owner: buster
 Evidence: contracts/pipeline-test-gate/v1/examples; skills/nova/core/test-gates/resolver.ts; skills/buster/engine/test-gates; skills/buster/plugins
@@ -10,9 +10,13 @@ Last verified: source and contract inspection on 2026-09-19
 
 ## Goal
 
-Select a shipped suite, make its project-specific work explicit, resolve one
-immutable plan, run it remotely in Buster, and diagnose the result without
-confusing a transport status with a quality decision.
+Use this sequence:
+
+1. Select a shipped suite.
+2. Make its project-specific work explicit.
+3. Resolve one immutable plan.
+4. Run it remotely in Buster.
+5. Diagnose the result without confusing a transport status with a quality decision.
 
 This workflow uses the unit suite because it runs without Kubernetes,
 Tailscale, a browser, or a scanner. The same lifecycle applies to all twelve
@@ -49,7 +53,7 @@ capability policy, tools, network, and target system.
 Run repository proofs from the KubeClaw repository root. Run production
 compile, start, audit, and recovery commands from the original KubeClaw checkout
 in the Nova installation that owns the pipeline state. Its `package.json`
-defines `npm run pipeline`; the project descriptor's `repositoryRoot` separately
+defines `npm run pipeline`. The project descriptor's `repositoryRoot` separately
 selects the source repository. That repository can be elsewhere and does not
 need a Nova npm script. Keep the command shell in the original KubeClaw checkout
 and use absolute platform, project, graph, and evidence paths.
@@ -62,16 +66,16 @@ starting a new run. Compilation does not perform those two source checks.
 
 For a production run, the operator needs permission to start and inspect that
 Nova pipeline. The Buster service account, token, source key, and capability credentials remain
-service-owned; a project author does not need direct access to them.
+service-owned. A project author does not need direct access to them.
 
 Confirm these facts before either path:
 
-- the project is in Git and the revision to test is committed;
-- Nova and Buster use compatible pipeline-test-gate contracts;
-- the Buster role contains the selected provider and report adapter packages;
-- the operator catalogue maps `npm` to an approved executable;
-- the project command creates the declared JUnit file inside its workspace;
-- Nova can authenticate to the Buster endpoint; and
+- the project is in Git and the revision to test is committed.
+- Nova and Buster use compatible pipeline-test-gate contracts.
+- the Buster role contains the selected provider and report adapter packages.
+- the operator catalog maps `npm` to an approved executable.
+- the project command creates the declared JUnit file inside its workspace.
+- Nova can authenticate to the Buster endpoint.
 - Buster has enough state, result, archive, and evidence capacity.
 
 For a repository proof, first complete the canonical
@@ -122,8 +126,8 @@ the installed JUnit adapter.
 The example uses placeholder image digest `sha256:aaaa…`. Replace the complete
 reference and digest with a real immutable image. `manifest-check` is also an
 operator-catalog name, not an assumed host executable. Map it to the project's
-checked-manifest producer before execution. Keep these substitutions explicit;
-otherwise admission must fail.
+checked-manifest producer before execution. Keep these substitutions explicit.
+Otherwise admission must fail.
 
 ## 2. Make The Decision Explicit
 
@@ -161,14 +165,14 @@ npm run verify:test-gate:suite-resolver
 
 Resolution must reject, before remote execution:
 
-- unknown suite or provider identities;
-- unknown configuration fields or invalid values;
-- excluded or overridden node names that do not exist;
+- unknown suite or provider identities.
+- unknown configuration fields or invalid values.
+- excluded or overridden node names that do not exist.
 - a positive retry count on a provider that is not retry-safe without explicit
-  `acceptUnsafeRetry: true`;
-- missing, incompatible, or cyclic links;
-- an unsupported matrix field or oversized expansion;
-- a missing required coverage target; and
+  `acceptUnsafeRetry: true`.
+- missing, incompatible, or cyclic links.
+- an unsupported matrix field or oversized expansion.
+- a missing required coverage target.
 - a concurrency value above policy.
 
 A successful resolution freezes suite-template digest, provider package
@@ -208,7 +212,7 @@ npm run pipeline -- \
 
 Expected output is one JSON object with `runId`, `status`, `completionScope`,
 `acceptanceReadiness`, and stage states. Preserve that object. Exit zero means
-the returned pipeline status is `succeeded`; it does not by itself prove human
+the returned pipeline status is `succeeded`. It does not by itself prove human
 acceptance or every external live prerequisite.
 
 Nova records dispatch intent before it contacts Buster. Buster verifies source
@@ -223,13 +227,15 @@ and then calculate the gate decision.
 
 Before audit, complete [Inspect a Run](../operate.md#inspect-a-run) at the
 original Nova repository in Bash. Use the original platform path and the run
-ID from the retained start command. Confirm that the run owner has exited,
-stop new writes to that run and the owning adapter stores, and preserve
-verified raw run and adapter copies. Audit can create append locks and truncate
+ID from the retained start command. Confirm that the run owner exited.
+Stop new writes to that run and the owning adapter stores. Preserve
+verified raw run and adapter copies.
+
+Audit can create append locks and truncate
 an incomplete journal tail before parsing. Require successful strict parsing
 of every copied run journal. Keep rejected raw bytes and stop on copy,
 identity, or parse failure. Define the canonical `preserve_run_state` helper
-in this shell; do not duplicate or replace it with a storage-opening reader.
+in this shell. Do not duplicate or replace it with a storage-opening reader.
 
 If a run is still active, retain its command output and use supported component
 or provider observations. Stop before audit when stopped-writer ownership and
@@ -337,13 +343,13 @@ evidence digest mismatch.
 
 | Observation | Boundary | Action |
 | --- | --- | --- |
-| Plan never resolves | Project declaration, suite, provider schema, graph, or policy | Read the exact resolver error. Correct the declaration; do not retry transport. |
+| Plan never resolves | Project declaration, suite, provider schema, graph, or policy | Read the exact resolver error. Correct the declaration. Do not retry transport. |
 | Submission is rejected | Source/request identity, authentication, capacity, or installed registry | Compare the stored Nova job with Buster admission. Reuse the same idempotency key only for identical bytes. |
 | Job remains accepted | Buster scheduler or recovery | Check readiness, durable record, concurrency, and recovered-job state. |
-| Provider errors before process start | Package snapshot, grant, executable catalogue, or Worker admission | Check exact package digest, role closure, capability grant, and worker profile. |
+| Provider errors before process start | Package snapshot, grant, executable catalog, or Worker admission | Check exact package digest, role closure, capability grant, and worker profile. |
 | Process exits but node errors | Required report/evidence missing or invalid | Inspect attempt log and declared path. Do not change to exit-code mode merely to hide the report error. |
 | Node is skipped | Condition or upstream outcome | Read the skip cause and coverage rule. A skip is not a pass. |
-| Job completed but Nova does not decide | Result/evidence fetch, digest, receipt, or import | Preserve both stores. Repair transport or missing blob; do not rerun under the same identity with different content. |
+| Job completed but Nova does not decide | Result/evidence fetch, digest, receipt, or import | Preserve both stores. Repair transport or missing blob. Do not rerun under the same identity with different content. |
 | Cancellation appears late | Cooperative stop crossed a terminal transition | Trust the guarded terminal record. Inspect descendant cleanup before another run. |
 
 ## 9. Recover and Clean Up
@@ -356,13 +362,19 @@ storage for a directory with the proof prefix. Do not remove project files.
 
 For production, complete [Inspect a Run](../operate.md#inspect-a-run) before
 any audit or interrupted-run recovery. Preserve verified raw run and adapter
-copies with writers stopped; strict copied-journal failure preserves raw bytes
+copies with writers stopped. Strict copied-journal failure preserves raw bytes
 and stops the task. Do not resubmit different content with an existing job ID.
-Reconnect through Nova when Buster has accepted the job. The current pipeline
+Reconnect through Nova when Buster has accepted the job.
+
+The current pipeline
 CLI has no supported operator cancellation command. Process termination is not
-durable cancellation. For urgent containment, preserve evidence, stop new
-admission at the owning service, follow the approved incident process, and
-reconcile each accepted external effect. Do not claim `cancelled` unless the
+durable cancellation.
+
+For urgent containment, preserve evidence. Stop new
+admission at the owning service. Use the approved incident process.
+Reconcile each accepted external effect.
+
+Do not claim `cancelled` unless the
 durable lifecycle record says so. See the [cancellation
 boundary](../operate.md#cancellation-boundary).
 
@@ -395,8 +407,10 @@ Run only in a registered non-production acceptance environment during an
 approved window. The descriptor must already contain independently resolved
 plans and grants for this installation. Run every npm and deployment-script
 command below from the original KubeClaw checkout, with its installed locked
-dependencies. Keep this location through compile, start, preservation, and
-audit. The descriptor's source repository can be a separate checkout; its HEAD
+dependencies.
+
+Keep this location through compile, start, preservation, and
+audit. The descriptor's source repository can be a separate checkout. Its HEAD
 must equal `baseRevision` and its working tree must be clean. External credentials
 and signing keys remain in their owning stores.
 
@@ -465,7 +479,7 @@ without the required links.
 
 The Kubernetes fixture output is named `demo-credentials`. The demo
 authentication input is named `credentials`. Use these different port names
-when checking the link; the shared schema ID does not replace either name.
+when checking the link. The shared schema ID does not replace either name.
 [The fixture emits the named output](https://github.com/datrab/kubeclaw/blob/d271cf712e1f882c0c64e0c6d9e8a5cd36f18508/skills/buster/plugins/kubernetes-fixture/src/provider.js#L123-L126),
 and [the authentication package declares its input](https://github.com/datrab/kubeclaw/blob/d271cf712e1f882c0c64e0c6d9e8a5cd36f18508/skills/buster/plugins/demo-auth-smoke/plugin.json#L22-L28).
 
@@ -540,7 +554,7 @@ NODE
 Run deployment and dependency preflights before the project. They prove only
 their named boundaries. In particular, `prism-smoke` is not a stage in this
 project run. Use the bound administration shell from
-[Bind Cluster Authority](../install.md#bind-cluster-authority); keep its
+[Bind Cluster Authority](../install.md#bind-cluster-authority). Keep its
 read-only `KUBECONFIG`, expected context, API server, and kube-system UID in the
 same shell. Stop on a binding mismatch and never fall back to the default
 kubeconfig.
@@ -579,7 +593,7 @@ test -z "$(git -C "$PROJECT_REPOSITORY" status --porcelain)"
 ```
 
 Execute the same project descriptor exactly once. This no-human-wait exercise
-must return terminal success directly; a `waiting` result is a failure of the
+must return terminal success directly. A `waiting` result is a failure of the
 declared scope, not an invitation to synthesize a signal.
 
 ```bash
@@ -602,8 +616,10 @@ The returned terminal result is required before preservation. Do not stop an
 active pipeline and call that a successful exercise. Before the final audit,
 complete [Inspect a Run](../operate.md#inspect-a-run) in the same shell, using
 this original `PLATFORM_FILE` and `RUN_ID`. Verify that all run and owning-adapter
-writers stopped, retain verified adapter copies through their declared backup
-procedures, and define the canonical `preserve_run_state` helper. Audit can
+writers stopped. Retain verified adapter copies through their declared backup
+procedures. Define the canonical `preserve_run_state` helper.
+
+Audit can
 change locks and truncate an incomplete tail before parsing. Keep rejected raw
 bytes and stop on failed preservation or strict copied-journal inspection.
 Unknown ownership or an unavailable adapter backup stops the audit and leaves
@@ -623,7 +639,7 @@ npm --silent run pipeline -- \
 Require the audit to contain the exact final-plan effect and decision. A passed
 container-build decision means the provider completed BuildKit push and an OCI
 manifest digest read. A passed fixture or exposure node also means Buster did
-not reduce a cleanup error for that node; any cleanup error becomes
+not reduce a cleanup error for that node. Any cleanup error becomes
 `execution_error`. This is the cleanup meaning supported by the decision. It
 does not expose a separate registry transaction log or Tailscale controller
 release object, so retain those external receipts when the installation makes
@@ -691,11 +707,18 @@ console.log(JSON.stringify({ runId: expected.runId, stageId: expected.stageId,
 NODE
 ```
 
-Pass only when the exact plan and node identities, source coverage, passed
-effects, Buster result digest, and terminal event correlate to `RUN_ID`. The
+Require every item below to correlate to `RUN_ID`:
+
+- The exact plan and node identities.
+- Source coverage and passed effects.
+- The Buster result digest and terminal event.
+
+Only then report a pass. The
 Nova terminal journal is pipeline authority. On an uncertain external outcome,
 do not start a replacement run. Reconcile the original effect, Buster job,
-registry digest, and lease identities. Keep the descriptor, compiled graph,
+registry digest, and lease identities.
+
+Keep the descriptor, compiled graph,
 verified raw run and adapter copies, manifests, strict inspection results,
 audit, decision, and external receipts under their retention policies. Any
 later authorized canonical repair must keep the original bytes and record the

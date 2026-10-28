@@ -1,24 +1,24 @@
 # Observe a Tailnet Exposure, Transfer Its Ownership, and Release It
 
-Status: supported exposure lifecycle and explicit external-client/policy boundaries; no live Tailnet claim
+Status: supported exposure lifecycle and explicit external-client/policy boundaries. No live Tailnet claim
 Audience: pipeline, namespace-controller, Tailnet and application operators
 Owner: Buster exposure, namespace-controller and Tailnet maintainers
 Evidence: skills/buster/plugins/tailscale-exposure/src/provider.js; skills/buster/engine/test-gates/tailscale-exposure-runtime.ts; skills/buster/engine/test-gates/exposure-generation.ts; skills/buster/engine/test-gates/exposure-handoff.ts; tests/verification/e2e/nova-tailscale-production-preflight.mts; scripts/deploy.sh; my-values/infra/tailscale-operator-values.yaml
-Applies to: Buster public-endpoint-fixture.v1 via tailscale-ingress; platform Studio routes remain separate
-Last verified: 2026-10-21; source and bounded local contract checks only; no OAuth, ACL, DNS, HTTPS or route cleanup execution
+Applies to: Buster public-endpoint-fixture.v1 via tailscale-ingress. Platform Studio routes remain separate
+Last verified: 2026-10-21. Source and bounded local contract checks only. No OAuth, ACL, DNS, HTTPS or route cleanup execution
 
 ## Select the route and owner
 
 A platform Ingress for Studio, Argo CD or another service is not a Buster
 attempt-owned exposure. Use the platform installation and
 [Prism/Studio procedure](../prism-studio.md#canonical-prism-and-studio-procedure)
-for that route; a Studio preview is design markup, not an application release.
+for that route. A Studio preview is design markup, not an application release.
 Do not release a platform route through a fixture lease.
 
 This task concerns one resolved `kubeclaw.tailscale-exposure@1` fixture linked to
 one typed Kubernetes deployment fixture. The provider selects an exact Service
-endpoint from that deployment; it does not accept an arbitrary internal URL.
-The controller and Tailscale operator create the route; an allowed client and
+endpoint from that deployment. It does not accept an arbitrary internal URL.
+The controller and Tailscale operator create the route. An allowed client and
 an application reader prove access separately.
 
 Choose one lifecycle before execution:
@@ -45,20 +45,20 @@ The platform owner must provide the official operator, `IngressClass/tailscale`,
 the actual controller/fixture namespaces, a pullable digest-pinned application
 image and selected Service/port/path. Its client needs the runtime's permitted
 namespace prefix, allowed public host suffixes and scoped lease get/patch
-permissions; the namespace fixture separately needs its own create/read/delete
+permissions. The namespace fixture separately needs its own create/read/delete
 authority. A grant in one namespace or capability does not grant the other.
 
 The Tailnet owner must provide OAuth authority, approved operator/proxy tags,
 MagicDNS/HTTPS readiness and the exact ACL/grant policy for this route. The
 checked-in values leave OAuth credentials outside Git and select default tags
-`tag:k8s-operator` and `tag:k8s`; private overlays can change that selection.
+`tag:k8s-operator` and `tag:k8s`. Private overlays can change that selection.
 Record the selected policy and allowed client identities, not assumed defaults
 or Secret values. A ready operator is not proof that the intended client may
 reach the target.
 
 Before a retained-route exercise, register one permitted and one deliberately
-unpermitted client/device identity, the same target hostname/path/port, bounded
-observation window, application authentication policy, and cleanup owner. The
+unpermitted client/device identity. Bind both to the same target hostname/path/port and bounded
+observation window. Include the application authentication policy and cleanup owner. The
 Tailnet/policy owner must provide the actual client and policy-observation
 controls. This repository supplies no universal Tailnet ACL edit, device-login
 or policy-verdict CLI. Missing client or policy authority is a safe stop, not a
@@ -83,9 +83,11 @@ export TAILSCALE_PROBE_IMAGE="<registry/repository>@sha256:<64-hex-digest>"
 ```
 
 The linked install procedure defines the bound shell and selected checkout.
-This command allocates real remote work and a route; it is not a dry run. Its
-probe image must serve HTTP on container port 8080. The service maps port 80;
-the plan uses a checked-manifest producer, deployment fixture, exposure fixture
+This command allocates real remote work and a route. It is not a dry run.
+
+Its
+probe image must serve HTTP on container port 8080. The service maps port 80.
+The plan uses a checked-manifest producer, deployment fixture, exposure fixture
 and a blocking HTTP request. The optional expected-text setting belongs to that
 preflight's existing configuration, not a new ad hoc URL substitution.
 
@@ -107,13 +109,13 @@ Read the typed result and original imported evidence. Keep lease name/namespace,
 current lease UID/resource version/generation, owner/request identity, image and
 manifest digest, selected Service/path, HTTPS URL/hostname, expiry and plan/job/
 result/decision identities together. The ordinary deployment provider has a
-weaker Ready/Rejected wait; use the exposure's stronger generation/owner
+weaker Ready/Rejected wait. Use the exposure's stronger generation/owner
 observation for this route, not the basic lease phase alone.
 
 The returned URL must be HTTPS, have the selected path and a permitted host
 suffix, with no userinfo or fragment. Its host must match controller status and
 any requested hostname constraint. This validates the result shape and route
-identity; DNS, TLS, ACL and the application response still require the actual
+identity. DNS, TLS, ACL and the application response still require the actual
 client path. Do not use an external public URL or a direct Service response to
 replace that check.
 
@@ -123,16 +125,16 @@ runner cleanup errors. The initial `nova-tailscale-production-preflight.v1`
 receipt reports runner cleanup separately from cluster cleanup. The wrapper
 waits for observed namespace and lease deletion, confirms absence, updates the
 cleanup fields and signs/verifies the production receipt. Preserve its actual
-terminal status and `dist/verification/tailscale-exposure-production-receipt.json`;
-a signing or wrapper failure does not prove that no route existed.
+terminal status and `dist/verification/tailscale-exposure-production-receipt.json`.
+A signing or wrapper failure does not prove that no route existed.
 
 ## 4. Observe allowed access and a meaningful negative
 
-For a still-owned retained route, have each registered client owner independently
-verify its current device/user identity and use the **same retained HTTPS URL**
+For a still-owned retained route, require each registered client owner to independently
+verify its current device/user identity. Then require each owner to use the **same retained HTTPS URL**
 inside the approved window. Record client identity, route/lease generation,
 policy version, UTC interval, DNS result, certificate/host validation and bounded
-request outcome. Use its actual authorized application reader; a network
+request outcome. Use its actual authorized application reader. A network
 connection or generic HTTP 200 is not application correctness.
 
 The unpermitted-client result must distinguish policy denial from DNS failure,
@@ -145,7 +147,7 @@ client path, not every permitted user or rejection of an unpermitted device.
 If the application has authentication, test the declared missing/wrong credential
 behavior separately through its protected client mechanism. Do not call an
 application 401/403 a Tailnet ACL result. The simple preflight image is not a
-demo-auth proof; use the owning application's actual security contract. Never
+demo-auth proof. Use the owning application's actual security contract. Never
 print session tokens or credentials to supply evidence.
 
 If a required client/policy probe is unavailable, retain the exact missing
@@ -162,15 +164,15 @@ resource-version protection, then requires the controller to observe the new
 owner and current exposure generation before returning it.
 
 Retain that exact `demo-exposure-handoff.v1` and its observed generation. The
-old provider's cleanup is now superseded; it must not switch the successor's
-route Off. A repeated original request can observe its existing exact handoff;
-a changed source request, handoff record or generation is a conflict, not a
+old provider's cleanup is now superseded. It must not switch the successor's
+route Off. A repeated original request can observe its existing exact handoff.
+A changed source request, handoff record or generation is a conflict, not a
 reason to overwrite annotations.
 
 This is not committed demo readiness. The separate trusted producer verifies
 live lease/Ingress, image/manifest, generated credentials and delivery evidence
-before committing readiness. Follow the canonical demo procedure rather than
-patching status or treating a notification receipt as approval. After commit,
+before it commits readiness. Use the canonical demo procedure. Do not replace
+it with a status patch or treat a notification receipt as approval. After commit,
 its retained exposure snapshot/owner and deadline govern subsequent decisions.
 
 ## 6. Failure, release and cleanup
@@ -180,29 +182,33 @@ For an approved OAuth-rejection exercise, use
 with its bound namespace/Secret/deployment identities and secure restore source.
 It allocates a new route because an old device can remain usable despite a bad
 OAuth credential. Restore the original Secret/operator path and confirm cleanup
-through that owning procedure; do not rotate a real credential casually or
+through that owning procedure. Do not rotate a real credential casually or
 leave its failure trap disarmed.
 
 An RBAC denial, expired/mismatched lease, denied host, timeout, controller
 failure or unresolved mutation is its actual failed boundary. Failed prepare
-attempts a bounded owned rollback to Off; rollback can fail too. Preserve both
+attempts a bounded owned rollback to Off. Rollback can fail too. Preserve both
 errors and current owner/generation. A stale attempt must neither report
 success nor disable a newer exposure. Do not start a replacement route to hide
 uncertain prior ownership.
 
-Under `release`, provider cleanup invokes the actual exposure release; the
+Under `release`, provider cleanup invokes the actual exposure release. The
 runtime sets purpose `gate`/provider `off` only while ownership still matches and
 waits for current owner/generation Off. Superseded cleanup returns without
-removing the successor's route. The returned `releaseAction` is an owner-tested
+removing the successor's route.
+
+The returned `releaseAction` is an owner-tested
 lease patch generated by this runtime, not an unconditional namespace delete.
 Validate the original trusted result and current lease before an authorized
-operator uses that action; do not blindly evaluate text from an unverified
-receipt. Its JSON test checks the owner annotation, not an atomic lease-UID
-precondition; never describe it as a universal UID-fenced delete command.
+operator uses that action. Do not blindly evaluate text from an unverified
+receipt.
+
+Its JSON test checks the owner annotation, not an atomic lease-UID
+precondition. Never describe it as a universal UID-fenced delete command.
 
 For a handed-off or committed route, use its **current** demo lifecycle owner,
 release/decision/expiry procedure and retention policy. An old release action
-can reject its changed owner; that rejection protects the successor and is not
+can reject its changed owner. That rejection protects the successor and is not
 permission to strip the owner test. Do not edit readiness/product status or
 delete retained namespace/storage to force cleanup.
 

@@ -1,34 +1,34 @@
 # Pipeline Workflow Guides
 
-Status: workflow task index; full wait/resume lifecycle and deployment execution open
+Status: workflow task index. Full wait/resume lifecycle and deployment execution open
 Audience: pipeline authors and operators
 Owner: product integration maintainers
 Evidence: docs/site/use/workflows/examples/compiled-project.mjs; docs/site/use/workflows/examples/compiled-project-input.mjs; docs/site/use/workflows/examples/compiled-project-verification.mjs; docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md; docs/site/use/workflows/repair-retry.md; docs/site/use/workflows/interruption-recovery.md; docs/site/use/workflows/redis-replay-recovery.md; docs/site/use/workflows/worker-result-recovery.md; docs/site/use/workflows/build-image.md; docs/site/use/workflows/tailnet-exposure.md
-Applies to: pipeline workflow selection; each guide states its contracts and execution prerequisites
-Last verified: 2026-10-26; one actual eight-stage compiled minimal-project run, original audit and artifact verification; compile-only task remains separate; no deployment or human acceptance claim
+Applies to: pipeline workflow selection. Each guide states its contracts and execution prerequisites
+Last verified: 2026-10-26. One actual eight-stage compiled minimal-project run, original audit and artifact verification. Compile-only task remains separate. No deployment or human acceptance claim
 
 Use these guides to [bind](../../reference/glossary.md#technical-verb-bind) a pipeline task to its inputs, durable state, result
 authority, and cleanup. A **wait** is a persisted request for a later decision.
 A **resume signal** supplies that decision to the same run. Resuming creates a
-new stage attempt; it does not change the result of the earlier attempt.
+new stage attempt. It does not change the result of the earlier attempt.
 
 | Task | Reader path | Evidence boundary |
 | --- | --- | --- |
-| Run and audit a local Core graph | [Local durable Core pipeline](local-core.md) | Actual shipped stage, adapters, filesystem journals/artifact, same-run local telemetry and negative checks; no project compiler, Forge, remote Buster or deployment. |
-| Compile a complete first project | [Materialize and compile a first project](#materialize-and-compile-a-first-project) | Real local compiler and resolver; no platform admission, adapter activation, agent execution, or delivery. |
-| Compile, run, audit and clean up one minimal project | [Run one compiled minimal project](#run-one-compiled-minimal-project) | One actual compiler-produced graph, implementation, two lint/test gates, audit, original artifacts and owned cleanup; no deployment or human acceptance. |
-| Wait, approval, and resume | [Rehearse Human Approval and Resume](wait-resume.md) | Complete inputs, host prerequisites, and ordered local rehearsal; no successful full local lifecycle evidence. The required deployment run remains open. |
+| Run and audit a local Core graph | [Local durable Core pipeline](local-core.md) | Actual shipped stage, adapters, filesystem journals/artifact, same-run local telemetry and negative checks. No project compiler, Forge, remote Buster or deployment. |
+| Compile a complete first project | [Materialize and compile a first project](#materialize-and-compile-a-first-project) | Real local compiler and resolver. No platform admission, adapter activation, agent execution, or delivery. |
+| Compile, run, audit and clean up one minimal project | [Run one compiled minimal project](#run-one-compiled-minimal-project) | One actual compiler-produced graph, implementation, two lint/test gates, audit, original artifacts and owned cleanup. No deployment or human acceptance. |
+| Wait, approval, and resume | [Rehearse Human Approval and Resume](wait-resume.md) | Complete inputs, host prerequisites, and ordered local rehearsal. No successful full local lifecycle evidence. The required deployment run remains open. |
 | Run a Buster suite with a fixture, matrix, and report | [Run a Buster Suite](buster-suite.md) | Use that guide's declared local and deployment checks. |
 | Prepare and release a Kubernetes fixture | [Prepare and Release a Kubernetes Fixture](kubernetes-fixture.md) | Separates local plan validation from deployed fixture lifecycle. |
 | Deliver a demo and request human acceptance | [Deliver a Demo](../demo-delivery.md#canonical-demo-delivery-procedure) | Local contract rehearsal and explicit live-delivery prerequisites. |
-| Diagnose an uncertain external effect | [Lost Responses and Uncertain Effects](../diagnose.md#lost-responses-and-uncertain-effects), then [Pipeline State Recovery](../recovery.md#pipeline-state-recovery) | Preserve stopped-writer raw state before audit; match the original request, resource and receipt through an authorized owner read. Stop while the outcome or supported reconciliation path remains unknown. |
-| Activate, replace, or remove a plugin | [Canonical Plugin Lifecycle Procedure](../plugins.md#canonical-plugin-lifecycle-procedure) | Separate package discovery, configuration/grant admission, actual activation/result, drain and retained state. The procedure routes OpenClaw and Codex hosts to their own controls; no generic install/remove CLI or deployed proof is implied. |
-| Inspect technical retry, repair and mandatory rechecks | [Retry and repair rehearsal](repair-retry.md) | Actual Core/file journals/native Git/artifact-store rehearsal with explicitly trusted test checkers; not application quality or a compiled implementation project. |
-| Recover an interrupted Core attempt | [Interruption and original checkpoint recovery](interruption-recovery.md) | Actual owned child interruption/recovery and external-effect stop controls; preserve original run and raw state before recovery. |
+| Diagnose an uncertain external effect | [Lost Responses and Uncertain Effects](../diagnose.md#lost-responses-and-uncertain-effects), then [Pipeline State Recovery](../recovery.md#pipeline-state-recovery) | Preserve stopped-writer raw state before audit. Match the original request, resource and receipt through an authorized owner read. Stop while the outcome or supported reconciliation path remains unknown. |
+| Activate, replace, or remove a plugin | [Canonical Plugin Lifecycle Procedure](../plugins.md#canonical-plugin-lifecycle-procedure) | Separate package discovery, configuration/grant admission, actual activation/result, drain and retained state. The procedure routes OpenClaw and Codex hosts to their own controls. No generic install/remove CLI or deployed proof is implied. |
+| Inspect technical retry, repair and mandatory rechecks | [Retry and repair rehearsal](repair-retry.md) | Actual Core/file journals/native Git/artifact-store rehearsal with explicitly trusted test checkers. Not application quality or a compiled implementation project. |
+| Recover an interrupted Core attempt | [Interruption and original checkpoint recovery](interruption-recovery.md) | Actual owned child interruption/recovery and external-effect stop controls. Preserve original run and raw state before recovery. |
 | Reconcile Redis delivery after an outage | [Redis replay and deduplication](redis-replay-recovery.md) | Separate readiness, canonical event, observer attempt/checkpoint, exact Redis stream and receiver acknowledgement. Native outage remains an owner-executed procedure, not a claimed result. |
-| Recover an accepted Worker attempt result | [Worker interruption and result recovery](worker-result-recovery.md) | Same-host ownership/spool/journal/result reconciliation; do not invent a generic kill/recover CLI or a fresh claim to bypass fencing. |
-| Build, publish and inspect the original image on its node | [BuildKit image-to-node workflow](build-image.md) | Separates client preparation, actual remote build/manifest/import and the owner-provided uncached node/application procedure; no live build/pull or missing original-state reconciliation is implied. |
-| Expose, hand off and release one Tailnet fixture | [Tailnet exposure lifecycle](tailnet-exposure.md) | Distinguishes ephemeral release from retained readiness handoff, allowed/denied client proof and successor-safe cleanup; no live OAuth/ACL/Tailnet result is implied. |
+| Recover an accepted Worker attempt result | [Worker interruption and result recovery](worker-result-recovery.md) | Same-host ownership/spool/journal/result reconciliation. Do not invent a generic kill/recover CLI or a fresh claim to bypass fencing. |
+| Build, publish and inspect the original image on its node | [BuildKit image-to-node workflow](build-image.md) | Separates client preparation, actual remote build/manifest/import and the owner-provided uncached node/application procedure. No live build/pull or missing original-state reconciliation is implied. |
+| Expose, hand off and release one Tailnet fixture | [Tailnet exposure lifecycle](tailnet-exposure.md) | Distinguishes ephemeral release from retained readiness handoff, allowed/denied client proof and successor-safe cleanup. No live OAuth/ACL/Tailnet result is implied. |
 
 ## Materialize and compile a first project
 
@@ -42,7 +42,7 @@ collect run artifacts or establish human acceptance.
 Use a repository checkout with Node.js 24, Git, and the locked workspace
 runtime dependencies prepared by the [developer handbook](../../extend/developer-handbook.md).
 Run from its repository root. The source selection is this checkout's actual
-compiler and installed Buster provider packages; the helper discovers their
+compiler and installed Buster provider packages. The helper discovers their
 current manifests and computes real coverage and plan digests. Do not copy
 resolved plans between releases or edit their digests.
 
@@ -63,7 +63,9 @@ The JSON status must have `status: "compiled-example"`, `stageCount: 8`,
 `execution: false`, and `platformAdmission: false`. It also prints the actual
 baseline commit and compiled-definition digest. Paths and the new baseline
 commit are local to this materialization, so their digests are not universal
-constants. If the command fails, stop and inspect its first error; it does not
+constants.
+
+If the command fails, stop and inspect its first error. It does not
 resume a partial directory. Use a different new directory after correcting the
 prerequisite. Do not erase an unknown directory to retry.
 
@@ -89,7 +91,7 @@ node --test "$FIRST_PROJECT/repository/app/greeting.test.mjs"
 The second command runs only the already-written greeting assertion. It does
 not execute the provider plan, the compiled graph or any implementation agent.
 The helper selects an explicit blocking direct-command node with zero retries
-for both module and cumulative checks; it does not manufacture passing results.
+for both module and cumulative checks. It does not manufacture passing results.
 `testAgentEnabled: false` disables an additional test agent, not those mandatory
 provider checks. No optional review or demo stages are selected.
 
@@ -104,13 +106,15 @@ provider checks. No optional review or demo stages are selected.
 | `final-test` | `final-lint` | Run the cumulative coverage-bound provider plan. |
 | `project-summary` | `final-test` | Construct the technical project summary after gates pass. |
 
-`lint-app` and `test-app` additionally route `request_fix` to `implement-app`;
-those repair edges are not ordinary dependency edges. The module implementation
+`lint-app` and `test-app` additionally route `request_fix` to `implement-app`.
+Those repair edges are not ordinary dependency edges. The module implementation
 has lint/test repair categories with two orders each, one orchestrator order,
 and one technical retry. Its attempt ceiling is seven. Compiling those bounds
-is not evidence that a retry, repair or stage execution happened. The actual
+is not evidence that a retry, repair or stage execution happened.
+
+The actual
 full stage configs, source bindings, budgets, inputs and digests are in
-`compiled.json`; the table does not replace that artifact.
+`compiled.json`. The table does not replace that artifact.
 
 ### Stop before runtime admission
 
@@ -121,7 +125,7 @@ Before a runtime CLI compilation, the operator must provide that actual policy,
 select the same discovered provider/package identities, and prepare a matching
 [platform configuration](../../reference/pipeline-platform.md).
 The Nova role needs the implementation, source-preflight, blueprint-sync,
-lint, quality-evaluation and project-summary registrations; Forge dispatch,
+lint, quality-evaluation and project-summary registrations. Forge dispatch,
 remote test execution, repository/workspace, state, artifact and lint adapters
 must have their separately validated paths, grants, identities and secrets.
 A role manifest alone supplies none of that authority.
@@ -139,7 +143,7 @@ Do not run that command with an invented platform or overwrite `compiled.json`:
 the CLI validates installed stage configurations and grants before writing a new
 graph with exclusive creation. A rejected platform is not a compiler-example
 failure or a reason to broaden grants. Follow [run control](../operate.md#canonical-run-control-procedure)
-for any separately authorized execution; do not remove `--compile` casually.
+for any separately authorized execution. Do not remove `--compile` casually.
 No runtime success, audit journal, external effect or artifact receipt exists
 from this exercise.
 
@@ -161,7 +165,7 @@ It uses the installed human-approval stage, durable wait store, and operator
 notification adapter. Follow the guide through the first wait, wrong wait and
 wrong issuer, one valid decision, exact replay, audit comparison, and cleanup.
 Retain the original request, notification receipt, signal bytes, and attempt
-counts. A notification receipt proves delivery; the signal and journal prove
+counts. A notification receipt proves delivery. The signal and journal prove
 the later Core transition.
 
 [Configure and Operate](../operate.md#canonical-run-control-procedure) owns run
@@ -214,7 +218,7 @@ for helper in compiled-project.mjs compiled-project-input.mjs compiled-project-v
 done
 ```
 
-All commands must exit zero; the checkout is clean at the requested full commit
+All commands must exit zero. The checkout is clean at the requested full commit
 and contains all three helpers. Then follow the
 [handbook's host-tool and locked development-dependency steps](../../extend/developer-handbook.md#prepare-a-clean-checkout)
 in this same checkout, keeping this revision. Use its explicit `--include=dev`
@@ -222,7 +226,7 @@ installation and module-resolution checks, not a production-only dependency tree
 
 Install Semgrep separately from the npm tools. The npm lockfile does not include
 this Python tool. Use the repository's complete hash-locked Nova requirements
-in an owned environment; Python 3 with `venv` support must be available. Stop
+in an owned environment. Python 3 with `venv` support must be available. Stop
 on a venv, wheel, hash or dependency failure rather than changing the lockfile.
 
 ```bash
@@ -248,8 +252,10 @@ semgrep --version
 ```
 
 Node must be major 24. `/usr/bin/flock` and `/usr/bin/script` must be GNU
-util-linux, and `/usr/bin/tar` must be GNU tar. Git must exist at `/usr/bin/git`;
-a different executable found only through `PATH` is not sufficient. Use the
+util-linux, and `/usr/bin/tar` must be GNU tar. Git must exist at `/usr/bin/git`.
+A different executable found only through `PATH` is not sufficient.
+
+Use the
 Semgrep executable from the hash-locked environment installed above. Stop on a missing or wrong
 host dependency. These steps do not provision a Gateway or grant a model account.
 
@@ -282,17 +288,18 @@ Expected: `status: "prepared-compiled-project"`, `execution: false` and
 `compiled-platform.local-providers.json` under the new destination.
 The owner marker records the exact prepared project and compiler-output digests.
 Run, verification and cleanup reject either file if it changes after preparation.
+
 The source includes `package.json` and reserves only `.kubeclaw-results/` for
-generated runtime receipts; actual application changes remain tracked and
+generated runtime receipts. Actual application changes remain tracked and
 subject to the source guard. The architecture ref is the exact baseline commit.
 
 The policy retains the shipped tools and an empty suppression baseline. For this
 JavaScript-only fixture, full lint selects ESLint, Knip, Dependency Cruiser,
 JSCPD, Semgrep and OpenAPI contract validation. An unavailable or failing required
-tool blocks the workflow; it is not converted to a successful check.
+tool blocks the workflow. It is not converted to a successful check.
 
 Select the actual authorized endpoint and runtime identities. For a local
-Gateway the endpoint commonly ends in `/tools/invoke`; a Gateway root URL is
+Gateway the endpoint commonly ends in `/tools/invoke`. A Gateway root URL is
 not a tools endpoint. Remote endpoints require HTTPS. The helper accepts HTTP only for the literal
 loopback addresses `127.0.0.1` and `[::1]`. Do not put credentials in the URL:
 the helper rejects userinfo, query parameters and fragments. Supply the
@@ -316,13 +323,16 @@ loopback listener, with a generated fixture-only authentication value and
 source-attestation key. These values remain in memory, not in JSON configuration or command output.
 The trusted Core child receives only its required credential references and
 runtime variables. The Buster loader receives only its own authentication and
-public verification key; the provider and command runtime use their original
-sanitized child environments. The credential prompt is scoped to a subshell with
+public verification key. The provider and command runtime use their original
+sanitized child environments.
+
+The credential prompt is scoped to a subshell with
 an EXIT cleanup trap, including failed runs. Core uses the
 original compiled graph, narrow provider selections and explicit grants. Buster
 executes the declared `node --test app/greeting.test.mjs` provider checks on
 signed committed-source snapshots for both test stages. The additional test
-agent is disabled; the mandatory provider checks are not disabled.
+agent is disabled. The mandatory provider checks are not disabled.
+
 The selected direct-command policy uses the supported sampled process limit,
 not a claim of cgroup-qualified isolation. No cluster, image delivery, deployment,
 screenreader exercise, human acceptance or release gate is proved.
@@ -345,7 +355,7 @@ A failed attempt keeps its first errors, owned workspace and durable state.
 Do not overwrite its graph, delete its journal or rerun `run` into that same
 root. Diagnose the exact missing prerequisite and prepare a fresh complete
 journey. A failed session cleanup needs actual reconciliation before its owned
-workspace can be removed; a timeout is not evidence of successful cleanup.
+workspace can be removed. A timeout is not evidence of successful cleanup.
 
 After successful verification, retain the proof outside the deletion target:
 
@@ -367,5 +377,5 @@ Source, verification, clean fixture repository and absence of retained Git
 worktrees before removing the exact owned journey root. It does not remove an
 OpenClaw installation, another checkout or an operator's credentials. Keep the
 small `proof` directory while the result is needed. The sandbox build remains
-a generated dependency in the isolated checkout; retain it while another check
+a generated dependency in the isolated checkout. Retain it while another check
 uses it and remove only a build owned by this exercise when no process uses it.
