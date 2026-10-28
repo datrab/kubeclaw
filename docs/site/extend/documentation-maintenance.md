@@ -154,6 +154,17 @@ for later checks; generated store facts never become product input. A malformed
 revision, changed source or missing authority is a stop, not permission to select
 the current checkout automatically.
 
+Run this source-closed phase before preparing package-generated dependencies.
+The observer package's ignored contract copies are additional physical source
+candidates, so a prepared package tree is not the same input state as a clean
+platform check. For the later publication phase, use the package's native
+`npm run sync-contract --prefix skills/common/plugins/openclaw-agent-observer`
+preparation. Its copied contract bytes must match the canonical committed
+contract source; then run the normal publication build and Reader checks. Keep
+both phase results and their prerequisites. A successful publication does not
+mean the platform check passed with those generated copies present, and the
+source-first check alone does not prove publication dependencies were prepared.
+
 The maintained `store-policy-guidance.json` selects actual configuration,
 constructor, caller and cleanup authorities and explains their meaning. Numeric
 defaults and declarations come from those sources, not copied numbers in the

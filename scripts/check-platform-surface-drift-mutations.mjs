@@ -14,6 +14,48 @@ const isolatedSourceRoot = path.join(temporaryParent, 'source');
 const operations = ['add', 'change', 'remove'];
 
 const mutations = {
+  'store-policy-native-job-lifecycle': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY', operations: ['change'],
+    source: 'charts/prism/templates/backup.yaml',
+    apply(_operation, source) {
+      return replaceOnce(source, 'ttlSecondsAfterFinished: 3600', 'ttlSecondsAfterFinished: 3601');
+    },
+    verify(_operation, inventory) {
+      const fact = policyAuthority(inventory, 'prism-backups', item =>
+        item.selector.kind === 'rendered-resource' && item.selector.resource.name === 'prism-backup'
+        && item.selector.path.at(-1) === 'ttlSecondsAfterFinished');
+      assert.equal(fact.value, 3601);
+      assert.equal(fact.representation, 'selected-native-resource-value');
+    },
+  },
+  'store-policy-native-embedded-registry': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY', operations: ['change'],
+    source: 'my-values/infra/registry-local.yaml',
+    apply(_operation, source) {
+      return replaceOnce(source, '      delete:\n        enabled: false', '      delete:\n        enabled: true');
+    },
+    verify(_operation, inventory) {
+      const fact = policyAuthority(inventory, 'registry-local-alternate-pvc', item =>
+        item.selector.embeddedYaml?.path.join('.') === 'storage.delete.enabled');
+      assert.equal(fact.value, true);
+      assert(fact.resourceProvenance.embeddedYaml.sourceTextSha256);
+    },
+  },
+  'store-policy-native-conditional-quarantine': {
+    diagnostic: 'DOC_DRIFT_STORE_POLICY', operations: ['change'],
+    source: 'charts/prism/templates/ingestion.yaml',
+    apply(_operation, source) {
+      return replaceOnce(source, 'emptyDir: { sizeLimit: 4Gi }', 'emptyDir: { sizeLimit: 5Gi }');
+    },
+    verify(_operation, inventory) {
+      const fact = policyAuthority(inventory, 'prism-quarantine', item =>
+        item.selector.kind === 'rendered-resource');
+      assert.equal(fact.value, '5Gi');
+      assert.equal(fact.resourceProvenance.activationState, 'conditional');
+      assert(fact.resourceProvenance.policyComparisonFixture);
+      assert(!inventory.resources.some(item => item.value === 'Deployment/kubeclaw/prism-ingestion'));
+    },
+  },
   'store-policy-asserted-object': {
     diagnostic: 'DOC_DRIFT_STORE_POLICY',
     source: 'skills/nova/core/observability/reconciler.ts',
@@ -415,7 +457,8 @@ const results = [];
 const mapReviewResults = [];
 try {
   const policyTests = spawnSync(process.execPath, ['--test',
-    'tests/documentation/store-policy-source.test.mjs', 'tests/documentation/store-policy-guidance.test.mjs'], {
+    'tests/documentation/store-policy-source.test.mjs', 'tests/documentation/store-policy-guidance.test.mjs',
+    'tests/documentation/store-policy-rendered.test.mjs'], {
     cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024,
   });
   assert.equal(policyTests.status, 0, `native store policy source/custody tests failed:\n${policyTests.stdout}\n${policyTests.stderr}`);

@@ -74,6 +74,7 @@ const storePolicyProducerSources = [
   'scripts/platform-surface-source-discovery.mjs',
   'scripts/lib/docs-store-policy-guidance.mjs',
   'scripts/lib/docs-store-policy-source.mjs',
+  'scripts/lib/docs-store-policy-rendered.mjs',
   'package.json', 'package-lock.json', storePolicyGuidancePath,
 ];
 if (!isolatedMutation) {
@@ -331,7 +332,7 @@ function redactPublishedIdentity(value) {
     .replace(/([a-z][a-z0-9+.-]*:\/\/)[^/\s:@]+:[^/\s@]+@/giu, '$1<redacted-credentials>@');
 }
 
-function render(name, chart, namespace, values = [], sets = []) {
+function render(name, chart, namespace, values = [], sets = [], jsonSets = []) {
   // Helm consumes helpers, schemas, defaults and packaged subcharts as well as
   // templates that happen to emit a resource. Bind that complete local input.
   for (const file of selectedSourceFiles([chart])) sourceBytes(file);
@@ -339,6 +340,7 @@ function render(name, chart, namespace, values = [], sets = []) {
   const args = ['template', name, chart, '--namespace', namespace];
   for (const value of values) args.push('-f', value);
   for (const setting of sets) args.push('--set-string', setting);
+  for (const setting of jsonSets) args.push('--set-json', setting);
   return execFileSync('helm', args, { cwd: root, encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
 }
 const namespacedKinds = new Set([
@@ -508,6 +510,7 @@ function objects(source, origin, deploymentNamespace, renderContext = {}) {
     const chartRoot = {
       'helm:nova': 'charts/kubeclaw', 'helm:buster': 'charts/kubeclaw',
       'helm:prism-agent': 'charts/kubeclaw', 'helm:prism': 'charts/prism',
+      'helm:prism-ingestion-policy': 'charts/prism',
       'helm:ops-default': 'charts/ops-pod', 'helm:ops-tailscale': 'charts/ops-pod',
     }[origin];
     const sourcePath = renderedSource && chartRoot
@@ -615,6 +618,26 @@ function renderedObjects() {
       return objects(read(relative(file)), origin, staticNamespaces.get(origin));
     }),
   ];
+}
+
+function conditionalPolicyObjects() {
+  // The maintained Prism profile disables ingestion. This separate comparison
+  // supplies sizing solely to satisfy its native template prerequisites; none
+  // of these fixture resources become selected runtime or capacity defaults.
+  const overrides = [
+    'worker.native.namespace=kubeclaw', 'worker.native.nodeName=inventory-node',
+    `worker.native.policyDigest=${'a'.repeat(64)}`,
+    'ingestion.resources.requests.cpu=100m', 'ingestion.resources.requests.memory=128Mi',
+    'ingestion.resources.limits.cpu=500m', 'ingestion.resources.limits.memory=256Mi',
+  ];
+  const fixture = { chart: 'charts/prism', values: ['my-values/prism-values.yaml'],
+    namespace: 'kubeclaw', sets: overrides, setJson: ['ingestion.enabled=true'],
+    limit: 'Policy-only enabled-ingestion comparison with explicit sizing/worker fixtures; not selected defaults or a deployed observation' };
+  return objects(render('prism', fixture.chart, fixture.namespace, fixture.values, overrides, fixture.setJson),
+    'helm:prism-ingestion-policy', fixture.namespace, {
+      activationState: 'conditional', activationCondition: 'ingestion.enabled=true; maintained selected profile is false',
+      policyComparisonFixture: fixture,
+    });
 }
 
 function normalizedDependencySignal(item) {
@@ -1047,6 +1070,7 @@ function build() {
   ]);
   const storePolicyFacts = loadStorePolicyGuidance(root, stores, sourceRevision, {
     gitRoot: scriptRoot, isolatedMutation,
+    renderedResources: [...rendered, ...conditionalPolicyObjects()],
   });
 
   const inventory = {
@@ -1126,6 +1150,8 @@ function build() {
     },
     sourceScopes: { shippedEntrypointSources, routeSources: discoveredRouteSources, goControllerSources, storeSources: discoveredStoreSources,
       storePolicySources: storePolicyFacts.policySourcePaths,
+      storePolicyComparison: { origin: 'helm:prism-ingestion-policy', selected: false,
+        purpose: 'Conditional ingestion policy declarations only; explicit sizing/worker render fixtures are not product defaults' },
       renderedProfiles: ['helm:nova', 'helm:buster', 'helm:prism-agent', 'helm:prism', 'helm:ops-default', 'helm:ops-tailscale'],
       renderProfileStates: [
         ...['helm:nova', 'helm:buster', 'helm:prism-agent', 'helm:prism', 'helm:ops-default'].map((profile) => ({
@@ -1322,8 +1348,11 @@ function markdown(inventory, mapping) {
       const values = policy.authorities.flatMap(authority => {
         const value = Object.hasOwn(authority, 'value') ? authority.value : authority.fallbackValue;
         if (value === undefined) return [];
-        const meaning = Object.hasOwn(authority, 'value') ? 'Literal declaration; not a live observation' : 'Nullish fallback only; not the selected effective value';
-        return leaves(value).map(([key, scalar]) => `| ${literal(authority.id)} | ${literal(key)} | ${literal(scalar)} | ${cell(authority.unit ?? 'See the selected field and receiver')} | ${meaning} |`);
+        const provenance = authority.resourceProvenance;
+        const meaning = authority.representation === 'selected-native-resource-value'
+          ? `Native origin ${provenance.origin}; ${provenance.activationState}${provenance.activationCondition ? `: ${provenance.activationCondition}` : ''}. ${provenance.policyComparisonFixture?.limit ?? 'Selected render or parsed manifest, not a live observation or inferred default'}`
+          : Object.hasOwn(authority, 'value') ? 'Literal declaration; not a live observation' : 'Nullish fallback only; not the selected effective value';
+        return leaves(value).map(([key, scalar]) => `| ${literal(authority.id)} | ${literal(key)} | ${literal(scalar)} | ${cell(authority.unit ?? 'See the selected field and receiver')} | ${cell(meaning)} |`);
       });
       return [
         `### ${policy.id}`, '',

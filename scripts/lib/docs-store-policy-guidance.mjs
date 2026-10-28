@@ -3,6 +3,7 @@ import fs from 'node:fs';
 import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { extractStorePolicySource } from './docs-store-policy-source.mjs';
+import { extractRenderedStorePolicy } from './docs-store-policy-rendered.mjs';
 
 export const storePolicyGuidancePath = 'docs/blueprint/store-policy-guidance.json';
 const forbiddenAuthority = file => file === 'docs/blueprint/documentation-completion-matrix.json'
@@ -16,7 +17,7 @@ const identity = row => JSON.stringify([row.source, row.value]);
 // Mechanical declarations/values come only from the selected product source.
 // This loader neither executes a store nor grants cleanup/retirement authority.
 export function loadStorePolicyGuidance(root, stores, revision, {
-  gitRoot = root, isolatedMutation = false,
+  gitRoot = root, isolatedMutation = false, renderedResources,
 } = {}) {
   const physicalRoot = fs.realpathSync(root);
   const cache = new Map();
@@ -63,7 +64,10 @@ export function loadStorePolicyGuidance(root, stores, revision, {
     const authorities = row.authorities.map(authority => {
       assert(requireText(authority.id) && requireText(authority.role),
         'DOC_DRIFT_STORE_POLICY: authority identity and role required');
-      const acquired = extractStorePolicySource(authority.source, readAuthority(authority.source), authority.selector);
+      const text = readAuthority(authority.source);
+      const acquired = authority.selector.kind === 'rendered-resource'
+        ? extractRenderedStorePolicy(authority.source, text, authority.selector, renderedResources)
+        : extractStorePolicySource(authority.source, text, authority.selector);
       // Publish actual selected values/initializers, not duplicate complete
       // implementation/configuration bodies with unrelated data. Full sources
       // remain authenticated and identified by exact ranges, hashes/selectors.
@@ -74,7 +78,8 @@ export function loadStorePolicyGuidance(root, stores, revision, {
       return { id: authority.id, role: authority.role,
         ...(authority.unit !== undefined ? { unit: authority.unit } : {}),
         ...reference,
-        ...(declaresValue ? { expression } : { representation: 'source-reference' }) };
+        ...(declaresValue ? { expression } : authority.selector.kind === 'rendered-resource'
+          ? {} : { representation: 'source-reference' }) };
     });
     const identityExpectations = row.identityExpectations ?? [];
     assert(Array.isArray(identityExpectations), 'DOC_DRIFT_STORE_POLICY: identity expectations must be explicit');
