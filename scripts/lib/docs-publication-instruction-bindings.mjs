@@ -966,7 +966,7 @@ export const embeddedProgramBindings = [
     "mode": "module"
   },
   {
-    "ref": "docs/site/use/workflows/wait-resume.md#block-6",
+    "ref": "docs/site/use/workflows/wait-resume.md#block-7",
     "start": 252,
     "length": 1088,
     "sha256": "6cf0c9ace013b98e530e94e6b0a5a7b9127b465217bd7093c2c6d9476e614ef2",
@@ -974,7 +974,7 @@ export const embeddedProgramBindings = [
     "mode": "module"
   },
   {
-    "ref": "docs/site/use/workflows/wait-resume.md#block-7",
+    "ref": "docs/site/use/workflows/wait-resume.md#block-8",
     "start": 34,
     "length": 1923,
     "sha256": "a0fb26fd9b06589907f84103e34999357e4e5115df067fc379b13a2c0327ce4f",
@@ -982,7 +982,7 @@ export const embeddedProgramBindings = [
     "mode": "module"
   },
   {
-    "ref": "docs/site/use/workflows/wait-resume.md#block-8",
+    "ref": "docs/site/use/workflows/wait-resume.md#block-9",
     "start": 75,
     "length": 1871,
     "sha256": "b46704653317483090098fc8f7ad09c728467d52d7669e2ea9886a93dd0d43a4",
@@ -990,7 +990,7 @@ export const embeddedProgramBindings = [
     "mode": "module"
   },
   {
-    "ref": "docs/site/use/workflows/wait-resume.md#block-14",
+    "ref": "docs/site/use/workflows/wait-resume.md#block-18",
     "start": 34,
     "length": 2002,
     "sha256": "0baa76539a5b82c141d661635f86560c792391e945f6a09cc3a382e52f55d2a0",
@@ -998,15 +998,15 @@ export const embeddedProgramBindings = [
     "mode": "module"
   },
   {
-    "ref": "docs/site/use/workflows/wait-resume.md#block-16",
-    "start": 111,
+    "ref": "docs/site/use/workflows/wait-resume.md#block-6",
+    "start": 468,
     "length": 349,
     "sha256": "915ada21923977160a090a9dd55d1166ffeaef5d6c38dc63cad67985d4677be1",
     "language": "javascript",
     "mode": "module"
   },
   {
-    "ref": "docs/site/use/workflows/wait-resume.md#block-17",
+    "ref": "docs/site/use/workflows/wait-resume.md#block-20",
     "start": 130,
     "length": 1490,
     "sha256": "2ef30059f4981882d9f859b87b357f3433c8426709e8413ca3e3d819a0bbb508",

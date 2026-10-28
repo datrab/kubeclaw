@@ -32,7 +32,7 @@ const mandatoryInputs = {
   'helm-overlays': ['docs/site/reference/configuration-precedence.md#block-2', 'docs/site/reference/configuration-precedence.md#block-3', 'docs/site/reference/configuration-precedence.md#block-4'],
   'test-scope': ['docs/site/reference/pipeline-json.md#block-1'],
   'pair-template': ['docs/site/reference/project-pipeline-publication.md#block-6'],
-  'receiver-template': ['docs/site/use/workflows/wait-resume.md#block-15'],
+  'receiver-template': ['docs/site/use/workflows/wait-resume.md#block-19'],
   'approval-signal': ['docs/site/use/operate.md#block-10'],
   deliverables: ['docs/site/reference/nova-project.md#block-3'],
   'prism-payload': ['docs/site/use/prism-studio.md#block-10'],

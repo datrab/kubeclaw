@@ -255,8 +255,40 @@ printf '%s\n' "$start_status" > "$WAIT_REHEARSAL_ROOT/start.exit"
 
 Require start exit 1 and JSON `status: waiting` before continuing. Stop on a
 start error or any other state. Confirm the command exited and no writer owns
-this run. The receiver has finished its one request. Preserve the private
+this run. Stop the owned receiver as directed below. Preserve the private
 Core run and the three known adapter/receiver files before the first audit.
+
+After the start command returns its required waiting result, stop the exact
+owned receiver before the first raw capture. Confirm the original request and
+completed notification receipt first. No accepted external outcome may remain
+unknown. The receiver is a persistent HTTP server, not a one-shot process.
+
+```bash
+kill -INT "$WAIT_REHEARSAL_RECEIVER_PID" || exit 1
+receiver_wait_status=0
+wait "$WAIT_REHEARSAL_RECEIVER_PID" || receiver_wait_status=$?
+printf '%s\n' "$receiver_wait_status" > "$WAIT_REHEARSAL_ROOT/receiver.exit" || exit 1
+test "$receiver_wait_status" -eq 0 || exit 1
+receiver_probe_status=0
+node --input-type=module \
+  > "$WAIT_REHEARSAL_ROOT/receiver-stop-probe.stdout" \
+  2> "$WAIT_REHEARSAL_ROOT/receiver-stop-probe.stderr" <<'NODE' || receiver_probe_status=$?
+import net from 'node:net';
+const connection = net.connect({ host: '127.0.0.1', port: 18765 });
+connection.on('connect', () => { connection.destroy(); console.error('Stop: a listener remains'); process.exitCode = 1; });
+connection.on('error', error => { if (error.code !== 'ECONNREFUSED') { console.error(error.message); process.exitCode = 1; } });
+NODE
+printf '%s\n' "$receiver_probe_status" \
+  > "$WAIT_REHEARSAL_ROOT/receiver-stop-probe.exit" || exit 1
+test "$receiver_probe_status" -eq 0 || exit 1
+```
+
+Require the owned child to exit and the loopback connection to be refused.
+Retain the actual exit and ownership observations. Stop on unknown ownership
+or an unexpected listener. Do not kill an unrelated process. Keep this receiver
+stopped through all signal tests. The resumed human-approval stage returns its
+reviewed decision before publishing another notification. Another HTTP request
+is an unexpected effect, not permission to restart the receiver.
 
 Define this helper in the same terminal. It uses the canonical run copy, then
 copies each store without parsing or removing partial bytes. It retains adapter
@@ -438,96 +470,182 @@ authority_snapshot before
 
 ## Reject the Wrong Inputs, Then Resume Once
 
-This helper invokes only the canonical explicit-graph resume command. It
-retains each response and status. Run it in the original operator terminal.
+These are distinct, predefined admission tests in this private disposable
+fixture. They are not retries of a rejected production decision. Preserve the
+three signal files created above without editing their bytes, identities or
+keys. The valid decision exists before either negative test.
+
+For a real run, stop after an issuer mismatch, stale signal or terminal result.
+Use [the canonical signal procedure](../operate.md#approve-or-resume-a-wait).
+Do not apply this local fault-injection sequence to an operator platform.
+
+Before **each** `resume_case` call below:
+
+1. Reconfirm the original source, installed package bytes, platform, graph,
+   run ID, storage roots and retained start record.
+2. Confirm the prior CLI owner exited and all run and adapter writers stopped.
+   Keep the owned receiver stopped as required above. Unknown ownership stops
+   the exercise. A command response is not a writer fence.
+3. Reconcile the original notification with the receiver record and completed
+   effect receipt. Stop on an uncertain effect or missing owning continuation.
+4. Review the exact submitted signal against the preserved wait and the named
+   test. Both negative tests require the original active, unexpired wait.
+   Wrong-wait changes only its declared wait identity. Wrong-issuer changes
+   only its declared envelope issuer. The valid signal must match every rule.
+   Replay requires the already proved terminal result and exact valid bytes.
+   It deliberately tests terminal rejection, not permission to continue work.
+5. Record that review in the restricted nonsecret transcript. Do not record the
+   HMAC key. The helpers do not establish identity, authority or quiescence.
+
+The pre-submission capture below makes a new verified raw run and adapter copy.
+A copy or strict-inspection failure stops before the resume command. Each case
+uses new output names. Never overwrite an earlier case to repeat it.
 
 ```bash
+capture_rehearsal_case() {
+  local capture_name=$1
+  test ! -e "$WAIT_REHEARSAL_ROOT/$capture_name.raw-state.txt" || return 1
+  test ! -e "$WAIT_REHEARSAL_ROOT/$capture_name.raw-state" || return 1
+  preserve_rehearsal_state || return 1
+  printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" \
+    > "$WAIT_REHEARSAL_ROOT/$capture_name.raw-state.txt" || return 1
+  cp -R -- "$RUN_CONTROL_OBSERVATION_ROOT" \
+    "$WAIT_REHEARSAL_ROOT/$capture_name.raw-state" || return 1
+}
 resume_case() {
-  case_name=$1
-  signal_file=$2
-  resume_status=0
+  local case_name=$1 signal_file=$2 resume_status=0
+  test ! -e "$WAIT_REHEARSAL_ROOT/$case_name.stdout" || return 1
+  test ! -e "$WAIT_REHEARSAL_ROOT/$case_name.stderr" || return 1
+  test ! -e "$WAIT_REHEARSAL_ROOT/$case_name.exit" || return 1
+  capture_rehearsal_case "$case_name.before" || return 1
   npm run pipeline -- \
     --platform "$WAIT_REHEARSAL_ROOT/platform.json" \
     --pipeline "$WAIT_REHEARSAL_ROOT/pipeline.json" \
     --run-id "$WAIT_REHEARSAL_RUN_ID" \
     --signal "$signal_file" \
-    > "$WAIT_REHEARSAL_ROOT/$case_name.stdout" 2> "$WAIT_REHEARSAL_ROOT/$case_name.stderr" || resume_status=$?
-  printf '%s\n' "$resume_status" > "$WAIT_REHEARSAL_ROOT/$case_name.exit"
+    > "$WAIT_REHEARSAL_ROOT/$case_name.stdout" \
+    2> "$WAIT_REHEARSAL_ROOT/$case_name.stderr" || resume_status=$?
+  printf '%s\n' "$resume_status" \
+    > "$WAIT_REHEARSAL_ROOT/$case_name.exit" || return 1
 }
-resume_case wrong-wait "$WAIT_REHEARSAL_ROOT/wrong-wait.signal.json"
-authority_snapshot after-wrong-wait before
+audit_case() {
+  local case_name=$1 audit_status=0
+  test ! -e "$WAIT_REHEARSAL_ROOT/$case_name.audit.stdout" || return 1
+  test ! -e "$WAIT_REHEARSAL_ROOT/$case_name.audit.stderr" || return 1
+  test ! -e "$WAIT_REHEARSAL_ROOT/$case_name.audit.exit" || return 1
+  capture_rehearsal_case "$case_name.after" || return 1
+  npm run pipeline -- \
+    --platform "$WAIT_REHEARSAL_ROOT/platform.json" \
+    --audit "$WAIT_REHEARSAL_RUN_ID" \
+    > "$WAIT_REHEARSAL_ROOT/$case_name.audit.stdout" \
+    2> "$WAIT_REHEARSAL_ROOT/$case_name.audit.stderr" || audit_status=$?
+  printf '%s\n' "$audit_status" \
+    > "$WAIT_REHEARSAL_ROOT/$case_name.audit.exit" || return 1
+  test "$audit_status" -eq 0
+}
+resume_case wrong-wait "$WAIT_REHEARSAL_ROOT/wrong-wait.signal.json" || exit 1
 ```
 
-Require exit 1 and `WAIT_UNKNOWN_OR_STALE:wait:wrong-rehearsal`. Compare the
-five retained authority files with the before checksums. Require unchanged
-bytes and absent signal journal. Stop on any changed authority or other error.
+After **every** `resume_case`, including rejection or a lost response, stop.
+Confirm the CLI owner exited and re-establish stopped run and adapter writers.
+Reconcile the original effects. If ownership or the outcome is unknown, retain
+partial output and previous captures. Do not audit or submit another signal.
+Use [Failure and Interruption](#failure-and-interruption).
 
-Then test the wrong envelope issuer:
+Only after that checkpoint, run the matching `audit_case` below. It preserves
+new raw bytes and strictly inspects the copied journals before audit. A failed
+copy, parse or audit stops the exercise. Keep its raw bytes and actual outputs.
+Do not repair a tail, edit an issuer or change a signal identity to proceed.
+Compare the new capture, audit, original wait, attempts and receipts with the
+submitted signal. Repeat this checkpoint before each later `audit_case`.
 
 ```bash
-resume_case wrong-issuer "$WAIT_REHEARSAL_ROOT/wrong-issuer.signal.json"
-authority_snapshot after-wrong-issuer before
+audit_case wrong-wait || exit 1
+authority_snapshot after-wrong-wait before || exit 1
 ```
 
-Require exit 1 and `WAIT_ISSUER_DENIED:operator:operator:wrong`. Require the same
-unchanged authority files and absent signal journal. The payload issuer stays
-unchanged in this negative case, so it tests Core's envelope issuer matching.
-Do not correct a rejected signal by editing durable state.
+Require resume exit 1 and `WAIT_UNKNOWN_OR_STALE:wait:wrong-rehearsal`.
+Require audit exit 0, unchanged six named authority-file observations and an
+absent signal journal. The snapshots compare bytes and causal counts. They do
+not replace either raw capture or prove that lock files stayed unchanged.
+Stop on any unexpected result. The expected rejection completes this one
+predefined negative test. It does not authorize a corrected retry.
 
-Submit the reviewed valid bytes only after both negative checks pass:
+Complete the pre-submission checkpoint again for the separately predefined
+wrong-issuer test:
 
 ```bash
-resume_case valid "$WAIT_REHEARSAL_ROOT/valid.signal.json"
+resume_case wrong-issuer "$WAIT_REHEARSAL_ROOT/wrong-issuer.signal.json" || exit 1
 ```
 
-Require valid exit 0 and `status: succeeded` before the final audit. If the
-response is lost, nonzero, or uncertain, stop and use the preservation and
-reconciliation steps in [Failure and Interruption](#failure-and-interruption).
-After the command exits and all writers are stopped, preserve raw state again:
+Complete the post-submission checkpoint before audit:
 
 ```bash
-preserve_rehearsal_state || exit 1
-printf '%s\n' "$RUN_CONTROL_OBSERVATION_ROOT" > "$WAIT_REHEARSAL_ROOT/final.raw-state.txt"
-cp -R -- "$RUN_CONTROL_OBSERVATION_ROOT" "$WAIT_REHEARSAL_ROOT/final.raw-state" || exit 1
-npm run pipeline -- \
-  --platform "$WAIT_REHEARSAL_ROOT/platform.json" \
-  --audit "$WAIT_REHEARSAL_RUN_ID" \
-  > "$WAIT_REHEARSAL_ROOT/final.audit.stdout" 2> "$WAIT_REHEARSAL_ROOT/final.audit.stderr"
-printf '%s\n' "$?" > "$WAIT_REHEARSAL_ROOT/final.audit.exit"
-authority_snapshot after-valid
+audit_case wrong-issuer || exit 1
+authority_snapshot after-wrong-issuer before || exit 1
 ```
 
-Require valid exit 0, `status: succeeded`, stage `approval` succeeded,
+Require resume exit 1 and `WAIT_ISSUER_DENIED:operator:operator:wrong`.
+Require audit exit 0 and the same unchanged authority observations with no
+signal journal. The payload issuer stays unchanged. This test checks Core's
+envelope issuer matching, not human authentication. An unexpected rejection,
+expired wait, changed authority or uncertain effect stops the whole exercise.
+
+The deliberate wrong-issuer test is now complete. Review the already-created
+valid decision as a separate test input. Do not edit either rejected signal.
+Complete the pre-submission checkpoint again before submitting valid bytes:
+
+```bash
+resume_case valid "$WAIT_REHEARSAL_ROOT/valid.signal.json" || exit 1
+```
+
+Complete the post-submission checkpoint even if valid status was nonzero or
+its response was lost. Once writers and effects are known, retain a fresh copy
+and audit before deciding whether this test passed:
+
+```bash
+audit_case valid || exit 1
+authority_snapshot after-valid || exit 1
+```
+
+Require resume exit 0, `status: succeeded`, stage `approval` succeeded,
 `attemptsUsed: 2`, and audit exit 0. Require these causal observations:
 
 1. The first `attempt.completed` result is `wait`.
 2. Exactly one `wait.resolved` names this wait. Its `causationId` equals the
-   signal's `signalId`, and its payload contains the exact submitted signal.
+   signal's `signalId`. Its payload contains the exact submitted signal.
 3. A second, different attempt ID completes with `passed`, after the resolution.
 4. `signals.jsonl` contains one signal. The final journal records `run.succeeded`.
-5. The wait store, delivery store, and receiver file are unchanged. There is
+5. The wait store, delivery store and receiver file are unchanged. There is
    still one HTTP notification and no second publish effect. No remediation
    cycle has been used.
 
-Record the event, effect, and signal journal checksums at this point. The valid
-decision has advanced durable state. There is no rollback operation that
-restores the earlier wait. Preserve the completed run. Use a new run for new work.
+Retain the event, effect and signal journal checksums. The valid decision has
+advanced durable state. There is no rollback that restores the earlier wait.
+Preserve the completed run. Use a new run for new work.
 
-Replay the same file without changing a byte, time, ID, or key:
+The final local test deliberately submits the same file to the known terminal
+run. This is a rejection test, not a supported way to continue a terminal run.
+Complete the pre-submission checkpoint again. Keep every byte, time, ID and key:
 
 ```bash
-resume_case replay "$WAIT_REHEARSAL_ROOT/valid.signal.json"
-authority_snapshot after-replay after-valid
+resume_case replay "$WAIT_REHEARSAL_ROOT/valid.signal.json" || exit 1
 ```
 
-Require exit 1 with `WAIT_RUN_TERMINAL` for this successful run. Other supported
-stale-resolution paths can return `WAIT_ALREADY_RESOLVED` or
-`WAIT_UNKNOWN_OR_STALE`. They are not a saved successful CLI response.
+Complete the post-submission checkpoint before the final rejection audit:
 
-Require
-unchanged event, effect, signal, wait, delivery, and receiver files. Attempt
-count stays two. Resolution count stays one. An identical stored signal is
-idempotent, but terminal/stale checks run before signal storage on this replay.
+```bash
+audit_case replay || exit 1
+authority_snapshot after-replay after-valid || exit 1
+```
+
+Require resume exit 1 with `WAIT_RUN_TERMINAL` and audit exit 0. Other supported
+stale-resolution paths can return `WAIT_ALREADY_RESOLVED` or
+`WAIT_UNKNOWN_OR_STALE`. They do not substitute for this test's terminal result.
+Require unchanged event, effect, signal, wait, delivery and receiver files.
+Attempt count stays two. Resolution count stays one. Terminal/stale checks run
+before signal storage. This does not prove that lock files stayed unchanged.
+Stop after this test. Do not submit another decision or recover this terminal run.
 
 Check the retained causal chain with this read-only command:
 
@@ -792,18 +910,11 @@ Do not mutate the approved signal or replay it as a rejection.
 
 ## Final Check and Cleanup
 
-Stop the owned receiver child after retaining the last request evidence:
+Retain the last request evidence and the earlier receiver-stop observations.
 
-```bash
-kill -INT "$WAIT_REHEARSAL_RECEIVER_PID"
-wait "$WAIT_REHEARSAL_RECEIVER_PID"
-node --input-type=module <<'NODE'
-import net from 'node:net';
-const connection = net.connect({ host: '127.0.0.1', port: 18765 });
-connection.on('connect', () => { connection.destroy(); console.error('Stop: a listener remains'); process.exitCode = 1; });
-connection.on('error', error => { if (error.code !== 'ECONNREFUSED') { console.error(error.message); process.exitCode = 1; } });
-NODE
-```
+The owned receiver was already stopped before the first raw capture. Confirm
+that its retained exit and refused-connection observations remain valid. Do not
+signal a historical PID again or stop an unrelated listener.
 
 Require receiver exit and refused connection. If a listener remains, inspect
 its ownership before termination. Do not kill an unrelated listener.
@@ -812,7 +923,8 @@ Retain a restricted evidence copy outside the disposable directory. Include
 the source commit, package and graph snapshots, materialized platform and
 pipeline, all three original inputs, `input-manifest.json`, and actual signal
 bytes, run ID, commands, timestamps,
-exit statuses, wait/final audits, replay output, all journals, wait/delivery stores,
+exit statuses, wait audit, all four case audits, replay output, every before/after
+raw run and adapter capture with its manifest, all journals, wait/delivery stores,
 receiver body, checksum/byte-count comparisons, and final operator decision.
 Do not retain the HMAC key. Check the copy's file digests before removing any
 source copy. A stopped or uncertain run requires preservation, not successful

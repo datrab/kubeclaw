@@ -46,7 +46,7 @@ export function validateInstructionSyntax(pages, sources) {
     }
   }
   assert.equal(textCommands.size, 0, 'declared text command disappeared');
-  assert.equal(selected.size, 448, 'instruction host responsibility changed');
+  assert.equal(selected.size, 451, 'instruction host responsibility changed');
   const embedded = [];
   for (const binding of embeddedProgramBindings) {
     assert(selected.has(binding.ref), `unbound embedded host input: ${binding.ref}`);
