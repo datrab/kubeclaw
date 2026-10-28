@@ -21,6 +21,7 @@ import { renderRetainedConfigurationReferences } from './lib/docs-retained-confi
 import { helmSnapshotSummary, environmentConsumerGuidance } from './lib/docs-configuration-reference-guidance.mjs';
 import { editorialOwners } from './lib/docs-configuration-editorial-language.mjs';
 import { renderProductPipeline } from './docs-product-pipeline-reference.mjs';
+import { loadVerificationGuidance, renderVerificationResponsibilities } from './lib/docs-verification-reference.mjs';
 
 const argv = process.argv.slice(2);
 const option = (name, fallback) => {
@@ -31,8 +32,8 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints'].includes(only)) {
-  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language or endpoints');
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration'].includes(only)) {
+  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification or configuration');
 }
 if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
@@ -214,6 +215,15 @@ function stableWriteMap() {
   if (only === 'endpoints') return new Map([
     ['docs/site/reference/endpoints.md', renderEndpoints(readJson('docs/generated/inventory/platform-surfaces.json'))],
   ]);
+  if (only === 'verification') return new Map([
+    ['docs/site/reference/verification-commands.md', renderVerification(readJson('docs/generated/inventory/deploy-script.json'))],
+  ]);
+  if (only === 'configuration') return configurationWriteMap(
+    readJson('docs/generated/inventory/deploy-script.json'),
+    readJson('docs/generated/inventory/secret-setup.json'),
+    readJson('docs/generated/inventory/configuration-values.json'),
+    readJson('docs/generated/inventory/configuration-runtime-inputs.json'),
+    readJson('docs/generated/inventory/configuration-schemas.json'));
   const deploy = readJson('docs/generated/inventory/deploy-script.json');
   const secrets = readJson('docs/generated/inventory/secret-setup.json');
   const configurationValues = readJson('docs/generated/inventory/configuration-values.json');
@@ -226,14 +236,21 @@ function stableWriteMap() {
   return new Map([
     ['docs/generated/inventory/sdk-reference.json', `${JSON.stringify(sdkReference.inventory, null, 2)}\n`],
     ['docs/site/reference/sdk-exports.md', sdkReference.generatedMarkdown],
+    ...configurationWriteMap(deploy, secrets, configurationValues, runtimeInputs, configurationSchemas),
+    ['docs/site/reference/endpoints.md', renderEndpoints(platformSurfaces)],
+    ['docs/site/reference/verification-commands.md', renderVerification(deploy)],
+    ['docs/site/reference/workflows.md', renderWorkflows(workflows)],
+  ]);
+}
+
+// Shared native five-page configuration boundary, including isolated mutations.
+function configurationWriteMap(deploy, secrets, configurationValues, runtimeInputs, configurationSchemas) {
+  return new Map([
     ['docs/site/reference/cli.md', renderCli(deploy, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`)],
     ['docs/site/reference/secrets.md', renderSecrets(secrets, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}${line ? `:${line}` : ''}\`](${pinnedSourceUrl(sourcePath, line ?? 1, line ?? 1)})`)],
     ['docs/site/reference/helm-values.md', renderHelmValues(configurationValues, configurationSchemas)],
     ['docs/site/reference/environment-variables.md', renderEnvironment(deploy, secrets, runtimeInputs)],
     ['docs/site/reference/plugin-configuration.md', renderPluginConfiguration(configurationSchemas, runtimeInputs)],
-    ['docs/site/reference/endpoints.md', renderEndpoints(platformSurfaces)],
-    ['docs/site/reference/verification-commands.md', renderVerification(deploy)],
-    ['docs/site/reference/workflows.md', renderWorkflows(workflows)],
   ]);
 }
 
@@ -864,18 +881,21 @@ node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PW
 
 function renderVerification(deploy) {
   const commands = deploy.commands.filter((command) => /smoke|status|image|code/.test(command.invocation));
+  const responsibilities = renderVerificationResponsibilities(loadVerificationGuidance(root, deploy, sourceRevision, gitRoot), sourceRevision);
   return `# Verification Commands
 
 Status: generated reference
 Audience: operator, developer
 Owner: platform-maintainers
-Evidence: docs/generated/inventory/deploy-script.json; scripts/docs-generate.mjs
+Evidence: docs/generated/inventory/deploy-script.json; scripts/docs-generate.mjs; scripts/lib/docs-verification-reference.mjs; docs/blueprint/verification-command-guidance.json
 Applies to: local and deployment verification
 Last verified: generated from current inventory
 
 ## Summary
 
-This page lists deployment verification commands plus source-backed local checks.
+This page lists root npm commands, guide-owned verification routes, public deployment forms and CI workflow responsibilities. Each entry states its purpose, scope, execution environment, effects, expected result, owner and change-to-check route.
+
+Command meaning evidence is bound to revision \`${sourceRevision}\`; it is not a record that the commands ran successfully.
 
 ${generatedNotice(deploy.generatedFrom)}
 ## Deployment Verification Commands
@@ -924,13 +944,16 @@ git diff --check
 | Deployment manifests, NetworkPolicies, service exposure, PVCs, config mounts, and sandbox surfaces match source | \`node tests/verification/deployment/check-deployment-truth.mjs --source-root "$PWD"\` |
 | Documentation surface links and generated docs expectations stay valid | \`npm run docs:check\` |
 | Restart, recovery, retry, crash, and resume behavior remain source-backed | \`node tests/verification/contracts/check-plugin-system-v2-phase7.mjs\`; \`node tests/verification/contracts/check-plugin-system-v2-resume.mjs\` |
-| The complete real model-backed workflow works | \`node tests/verification/e2e/run-real-pipeline-e2e.mjs --mode full\` |
+| A selected real model-backed scenario and its cleanup satisfy their contracts | \`npm run e2e:real:full\`; read the exact command contract and its current STOP boundary below before execution |
 | Proposed doc edits have no whitespace errors | \`git diff --check\` |
 | Referenced source paths/config keys exist | Use a targeted \`test -e\`/ \`rg -q\` sanity check for newly cited paths and keys before closing the docs pass. |
+
+${responsibilities}
 
 ## Generated from
 
 - \`../generated/inventory/deploy-script.json\`
+- \`docs/blueprint/verification-command-guidance.json\`
 - \`../../scripts/docs-generate.mjs\`
 `;
 }

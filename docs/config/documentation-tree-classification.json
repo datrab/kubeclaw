@@ -35881,6 +35881,14 @@
       "originalPath": "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-result.json",
       "expectedPath": "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-result.json",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/blueprint/verification-command-guidance.json",
+      "class": "internal-documentation-input",
+      "purpose": "Authored source-qualified verification-command responsibilities consumed by scripts/lib/docs-verification-reference.mjs for scripts/docs-generate.mjs; a maintained documentation-generator input, not product runtime configuration, an execution receipt or acceptance state.",
+      "originalPath": "docs/blueprint/verification-command-guidance.json",
+      "expectedPath": "docs/blueprint/verification-command-guidance.json",
+      "introducedAfterBaseline": true
     }
   ]
 }

@@ -32,7 +32,7 @@ function runGenerator(...args) {
 }
 
 function runPublisher(...args) {
-  return spawnSync(process.execPath, [publisher, '--root', temporaryRoot, '--revision', sourceRevision, '--allow-detached-source-root', ...args], {
+  return spawnSync(process.execPath, [publisher, '--root', temporaryRoot, '--revision', sourceRevision, '--allow-detached-source-root', '--only', 'configuration', ...args], {
     cwd: repositoryRoot,
     encoding: 'utf8',
     env: { ...process.env, KUBECLAW_DOCS_ISOLATED_MUTATION: '1' },
