@@ -9,6 +9,29 @@ import { bindPublicationExampleCoverage, publicationExampleProse } from '../lib/
 import { validateSdkLiteralExamples, validateCanonicalSdkProgram } from '../docs-publication-sdk-examples.mjs';
 import { validateWaitTemplate, validateProjectFactories } from '../docs-publication-example-native.mjs';
 
+test('prompt library workspace commands retain real receiver and old verification bytes through the native syntax owner', async () => {
+  const root = path.resolve(import.meta.dirname, '../..');
+  const { validateInstructionSyntax } = await import('../docs-publication-instruction-syntax.mjs');
+  const declaration = JSON.parse(fs.readFileSync(path.join(root, 'docs/config/publication-example-claims.json'), 'utf8'));
+  const pages = declaration.pages.map(item => item.path);
+  const sources = new Map(pages.map(page => [page, fs.readFileSync(path.join(root, page), 'utf8')]));
+  const result = validateInstructionSyntax(pages, sources);
+  assert.equal(result.documentCommandsExecuted, false);
+  assert.equal(result.checkedCommandReferences.length, 448);
+  for (const ordinal of [1, 2]) assert.ok(result.checkedCommandReferences.includes(`docs/site/extend/contracts.md#block-${ordinal}`));
+  const page = 'docs/site/extend/contracts.md', text = sources.get(page);
+  // Syntactically valid mutations keep both fences and the total count. The
+  // actual native receiver, not a test-local field assertion, must reject them.
+  for (const changed of [text.replace('npm test --workspace @kubeclaw/prompt-contract', 'npm test --workspace @kubeclaw/unrelated-contract'),
+    text.replace('npm test --workspace @kubeclaw/prompt-contract\n', ''),
+    text.replace('check-plugin-system-v2-contracts.mjs', 'check-unrelated-contract.mjs')]) {
+    assert.notEqual(changed, text);
+    const bad = new Map(sources); bad.set(page, changed);
+    assert.throws(() => validateInstructionSyntax(pages, bad), /prompt library workspace commands changed|existing five-registration verification body changed/u);
+  }
+  assert.equal(validateInstructionSyntax(pages, sources).checkedCommandReferences.length, 448);
+});
+
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
 function fixture(t) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'publication-example-claims-'));

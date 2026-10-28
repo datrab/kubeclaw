@@ -12,6 +12,17 @@ function parseOnly(command, argv, source) {
 }
 
 export function validateInstructionSyntax(pages, sources) {
+  // This newly documented library check is not a runtime registration. Keep
+  // its real workspace commands distinct from the existing verification block.
+  const promptPage = 'docs/site/extend/contracts.md';
+  const promptBlocks = publicationExampleBlocks(sources.get(promptPage) ?? '');
+  assert.equal(promptBlocks.length, 2, 'prompt contract instruction responsibilities changed');
+  assert.equal(promptBlocks[0].info, 'bash', 'prompt library commands must retain their shell syntax owner');
+  assert.equal(promptBlocks[0].content,
+    'npm run build --workspace @kubeclaw/prompt-contract\nnpm test --workspace @kubeclaw/prompt-contract\n',
+    'prompt library workspace commands changed; review the actual package receiver');
+  assert.equal(hash(promptBlocks[1].content), '9705523f44ad3b7e115ea9071851d0d7e29d3298edd4f444df77d687ed27c01b',
+    'existing five-registration verification body changed, not merely its block ordinal');
   const textCommands = new Set(textCommandReferences);
   const selected = new Map();
   const materializations = [];
@@ -35,7 +46,7 @@ export function validateInstructionSyntax(pages, sources) {
     }
   }
   assert.equal(textCommands.size, 0, 'declared text command disappeared');
-  assert.equal(selected.size, 447, 'instruction host responsibility changed');
+  assert.equal(selected.size, 448, 'instruction host responsibility changed');
   const embedded = [];
   for (const binding of embeddedProgramBindings) {
     assert(selected.has(binding.ref), `unbound embedded host input: ${binding.ref}`);
