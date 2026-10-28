@@ -2086,7 +2086,7 @@
       "audience": "operator, security operator, developer",
       "owner": "the source component listed for each route or connection",
       "appliesTo": "discovered inbound routes and outbound network calls in shipped runtime sources",
-      "lastVerified": "generated from revision `6fa4830a48244d29655104a5be58957d5fa87d2f`",
+      "lastVerified": "generated from revision `1901a76135957a92d916ef33a877917c87925945`",
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
         "docs/generated/inventory/platform-surfaces.json",
@@ -13276,28 +13276,28 @@
             "source": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
             "target": "docs/site/understand/communication.md#complete-connection-matrix",
             "owner": "runtime and platform maintainers",
-            "factsSha256": "0c29f316784c3a3856d1500cfdc2315f73a613d8714ef6cb2980de1a1d41fe21"
+            "factsSha256": "191d6fb3eaaa35a5105390f393af599a397fefc79307c79b83761143afe1d296"
           },
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-readiness-lifecycle.go:outboundConnections:GET%20%2Fapis%2F%7BleaseApiGroup%7D%2F%7BleaseApiVersion%7D%2Fnamespaces%2F%7BcontrollerNamespace%7D%2Fbusternamespaceleases%2F%7BleaseName%7D::::",
             "source": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
             "target": "docs/site/understand/communication.md#complete-connection-matrix",
             "owner": "runtime and platform maintainers",
-            "factsSha256": "912d7f98c83a79f9eca47283240c196bf83bf95df455fde6a54fd8f73867a7f0"
+            "factsSha256": "7e362a7bcea96e6317b5ecd247e42ba2e505bbbf7acb8a8927df30874b9452e1"
           },
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-readiness-lifecycle.go:outboundConnections:PATCH%20%2Fapis%2F%7BleaseApiGroup%7D%2F%7BleaseApiVersion%7D%2Fnamespaces%2F%7BcontrollerNamespace%7D%2Fbusternamespaceleases%2F%7BleaseName%7D::::",
             "source": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
             "target": "docs/site/understand/communication.md#complete-connection-matrix",
             "owner": "runtime and platform maintainers",
-            "factsSha256": "00a7a5b68b3699a638b2a8e62687edbe05a4eee3e379cb05e5cd45944eb5fa83"
+            "factsSha256": "31a6235f80651cc80052cede1f90da93d844fd4635b123c00ecbb57560eef428"
           },
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-readiness-lifecycle.go:outboundConnections:PATCH%20%2Fapis%2F%7BleaseApiGroup%7D%2F%7BleaseApiVersion%7D%2Fnamespaces%2F%7BcontrollerNamespace%7D%2Fbusternamespaceleases%2F%7BleaseName%7D%2Fstatus::::",
             "source": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
             "target": "docs/site/understand/communication.md#complete-connection-matrix",
             "owner": "runtime and platform maintainers",
-            "factsSha256": "714e7f94698469b56c1cb87e104ff436304f189914e08eb40115fe095d0c5278"
+            "factsSha256": "31f0298259f851d5addc5deda02978616db256c6ddb912bbed51cc6808d6ec89"
           },
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-readiness-sources.go:outboundConnections:GET%20%2Fapi%2Fv1%2Fnamespaces%2F%7Bnamespace%7D::::",

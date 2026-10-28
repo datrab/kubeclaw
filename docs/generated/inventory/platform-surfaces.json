@@ -10141,8 +10141,8 @@
       "source": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
       "line": 194,
       "classification": "kubernetes-api",
-      "activationState": "conditional",
-      "activationCondition": "the Buster demo-readiness listener is enabled; the selected profile leaves it disabled",
+      "activationState": "active",
+      "activationCondition": "the deployed namespace controller executes this Kubernetes API client path",
       "providerFamily": "buster-namespace-controller",
       "providerClassification": "kubernetes-api",
       "base": "{in-cluster Kubernetes API}"
@@ -10369,8 +10369,8 @@
       "source": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
       "line": 84,
       "classification": "kubernetes-api",
-      "activationState": "conditional",
-      "activationCondition": "the Buster demo-readiness listener is enabled; the selected profile leaves it disabled",
+      "activationState": "active",
+      "activationCondition": "the deployed namespace controller executes this Kubernetes API client path",
       "providerFamily": "buster-namespace-controller",
       "providerClassification": "kubernetes-api",
       "base": "{in-cluster Kubernetes API}"
@@ -10547,8 +10547,8 @@
       "source": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
       "line": 161,
       "classification": "kubernetes-api",
-      "activationState": "conditional",
-      "activationCondition": "the Buster demo-readiness listener is enabled; the selected profile leaves it disabled",
+      "activationState": "active",
+      "activationCondition": "the deployed namespace controller executes this Kubernetes API client path",
       "providerFamily": "buster-namespace-controller",
       "providerClassification": "kubernetes-api",
       "base": "{in-cluster Kubernetes API}"
@@ -10595,8 +10595,8 @@
       "source": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
       "line": 113,
       "classification": "kubernetes-api",
-      "activationState": "conditional",
-      "activationCondition": "the Buster demo-readiness listener is enabled; the selected profile leaves it disabled",
+      "activationState": "active",
+      "activationCondition": "the deployed namespace controller executes this Kubernetes API client path",
       "providerFamily": "buster-namespace-controller",
       "providerClassification": "kubernetes-api",
       "base": "{in-cluster Kubernetes API}"
