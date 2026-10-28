@@ -387,7 +387,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -3016,7 +3016,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -3994,7 +3994,7 @@
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -4495,7 +4495,7 @@
     },
     {
       "id": "AP09-reader-workflows-20261020",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -7980,7 +7980,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -11038,7 +11038,7 @@
     },
     {
       "id": "AP09-first-project-example-20261020",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -12046,7 +12046,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -12971,7 +12971,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -13848,7 +13848,7 @@
     },
     {
       "id": "AP09-complete-state-content-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 state-final-review",
       "gateIds": [],
@@ -18603,7 +18603,7 @@
     },
     {
       "id": "AP09-litellm-complete-data-contract-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -18961,7 +18961,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -19825,7 +19825,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "9a2aaf2b3f2785c402e80aef9a220e005abf10be",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -20724,7 +20724,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -25386,7 +25386,7 @@
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
       "verdict": "PASS",
@@ -28926,7 +28926,7 @@
     },
     {
       "id": "AP09-whole-store-contract-20261021",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -29494,7 +29494,7 @@
     },
     {
       "id": "AP09-whole-install-and-readiness-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -29644,7 +29644,7 @@
     },
     {
       "id": "AP09-whole-upgrade-and-retirement-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -29780,7 +29780,7 @@
     },
     {
       "id": "AP09-whole-studio-demo-journey-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -30495,7 +30495,7 @@
     },
     {
       "id": "A99-04-whole-content-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -32241,7 +32241,7 @@
     },
     {
       "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -33722,7 +33722,7 @@
     },
     {
       "id": "AP09-reference-stores-retention-80178-20261021",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation authors; /root/operator_acceptance for separately independently reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance (whole remaining reference topic); /root (independent399d and d477 authored corrections), /root/custody_review (unchanged Worker/package constituent scope)",
       "gateIds": [],
@@ -33990,7 +33990,7 @@
       ]
     },
     {
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -34157,7 +34157,7 @@
       }
     },
     {
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -34451,7 +34451,7 @@
       ]
     },
     {
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -34579,7 +34579,7 @@
       ]
     },
     {
-      "revision": "75d04e70bff205127af9549b5b56a8ce426bc3a8",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -35037,7 +35037,7 @@
       }
     },
     {
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root",
       "pages": [
@@ -35177,7 +35177,7 @@
       ]
     },
     {
-      "revision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root",
       "pages": [
@@ -35266,7 +35266,7 @@
     },
     {
       "id": "A99-07-representative-buster-workflow-content-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "existing Buster workflow authors; package citation repair independently reviewed by root",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -35675,7 +35675,7 @@
     },
     {
       "id": "FLW007-supported-failure-task-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -35772,7 +35772,7 @@
     },
     {
       "id": "FLW009-supported-failure-task-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -35861,7 +35861,7 @@
     },
     {
       "id": "FLW015-supported-failure-task-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -36068,7 +36068,7 @@
     },
     {
       "id": "FLW016-supported-failure-task-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -36185,7 +36185,7 @@
     },
     {
       "id": "FLW012-supported-failure-task-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
       "gateIds": [],
@@ -36278,7 +36278,7 @@
     },
     {
       "id": "FLW013-supported-failure-task-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
       "gateIds": [],
@@ -36370,7 +36370,7 @@
     },
     {
       "id": "A99-08-complete-supported-failure-journey-union-20261021",
-      "revision": "96f7b009620fe4d179087226ff5462ab59fc00eb",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Documentation topic authors and integration coordinator",
       "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
       "gateIds": [
@@ -37173,7 +37173,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -37799,7 +37799,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -39368,7 +39368,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -40149,7 +40149,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -41426,7 +41426,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -42651,7 +42651,7 @@
     },
     {
       "id": "A910-06-whole-justified-classification-20261022",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Original classifier maintainer; inclusive policy correction by /root/custody_review; original index output by maintained owner",
       "reviewer": "/root/operator_acceptance; corrected153judgments supplied by exact separate workflow nonauthor Source review",
       "gateIds": [
@@ -43856,7 +43856,7 @@
     },
     {
       "id": "A910-07-08-09-12-OPL001-whole-487f4e00-20261022",
-      "revision": "326186076f208ef285ab4bbc28e9a578d399344d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Original canonical-guide authors and named eleven-guide correction authors; exact provenance in frozen proof union",
       "reviewer": "/root/source_closeout (Source); /root/reader_closeout (Reader); /root/quality_closeout (Quality); /root combines independent decisions",
       "gateIds": [
@@ -46163,7 +46163,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 A911-06 gate-decision reviewer",
       "gateIds": [
@@ -47127,7 +47127,7 @@
     },
     {
       "id": "A99-06-actual-compiled-minimal-project-20261026",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "PR13 documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 SourceQuality and fresh semantic Reader reviewers; final original-scope adoption reviewer",
       "gateIds": [
@@ -47449,7 +47449,7 @@
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent lint/common and whole original A910-10 adjudication",
       "gateIds": [
@@ -48155,7 +48155,7 @@
     },
     {
       "id": "QUA-006-fresh-independent-technical-reader-20261027",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 original criterion adjudicator; fresh native model Reader /root/fresh_technical_reader",
       "gateIds": [],
@@ -49083,7 +49083,7 @@
       ]
     },
     {
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -49755,7 +49755,7 @@
       ]
     },
     {
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -50548,7 +50548,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent /root/fresh_technical_reader original whole QUA005 Source/semanticReader/Quality adjudicator, qualified complete cross-author content assessors",
       "gateIds": [],
@@ -51200,7 +51200,7 @@
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality assessor; fresh /root/a91310_clean_operator_restore_reader original Operator02 participant; qualified cross-author topic peers",
       "gateIds": [
@@ -52085,7 +52085,7 @@
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection original Source/semanticReader/Quality adjudicator, with independent /root/language_projection_architecture authored-family Source/codeQuality and actual delivery/preservation peers",
       "gateIds": [],
@@ -53074,7 +53074,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation",
       "gateIds": [],
@@ -53302,7 +53302,7 @@
     },
     {
       "id": "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
-      "revision": "da01fe526e7511e2b34647db9f4d55c065b66c48",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root sole integration writer; registration only, no product or documentation changes",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
       "gateIds": [],
@@ -53471,7 +53471,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer",
       "gateIds": [],
@@ -53743,7 +53743,7 @@
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
       "reviewer": "Independent /root/whole_criterion_selection whole original Source/semanticReader/Quality, finite current native/projection/delivered/governance/maintained-source qualification and complete original118 preservation; pinned Terra/high P2 independently clean",
       "gateIds": [],
@@ -54018,7 +54018,7 @@
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent /root/language_projection_architecture whole original Source/semanticReader/Quality and actual native delivery; /root/whole_criterion_selection complete Go/Ops, code/default/map/maintained-source and original119 final preservation; pinned Terra/high P2 clean",
       "gateIds": [],
@@ -54238,7 +54238,7 @@
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent native /root/ref016_canonical_owner_review whole original Source/Reader/Quality; /root/language_projection_architecture bounded independent source/package/claim scopes and original120 preservation; pinned Terra/high/P2 code reviews clean",
       "gateIds": [],
@@ -55375,7 +55375,7 @@
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent native original_closeout whole original Source/Reader/Quality and121preservation; platform_transfer current two-page Reader/Quality and complete Platform/native governance transfers; route_partition complete Verification transfer; prior other-author complete native29/external23 Source qualifications and clean pinned Terra code reviews reused exactly",
       "gateIds": [],
