@@ -1,5 +1,7 @@
 #!/usr/bin/env node
-// One actual compiled graph through real Core, configured OpenClaw and shipped Buster.
+// This helper executes one compiled graph through shipped Core, configured OpenClaw, and shipped Buster.
+// The workflow guide uses one specified source revision for its recorded execution.
+// That record is not an execution result for inputs from this source.
 import fs from 'node:fs';import path from 'node:path';import crypto from 'node:crypto';import assert from 'node:assert/strict';
 import {fileURLToPath,pathToFileURL} from 'node:url';import {spawn,execFileSync,spawnSync} from 'node:child_process';
 const sourceRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../../../..');
@@ -7,14 +9,14 @@ const operation=process.argv[2],root=process.argv[3];
 assert(process.argv.length===4&&['prepare','run','verify','cleanup'].includes(operation),'Usage: node compiled-project.mjs prepare|run|verify|cleanup NEW_ABSOLUTE_DIRECTORY');
 assert(root&&path.isAbsolute(root)&&path.normalize(root)===root&&root!=='/'&&root!==sourceRoot&&!sourceRoot.startsWith(root+path.sep)&&!root.startsWith(sourceRoot+path.sep),'Unsafe fixture path');
 for(let x=path.dirname(root);;x=path.dirname(x)){assert(!fs.lstatSync(x).isSymbolicLink(),'Symlinked ancestor');if(x===path.dirname(x))break;}
-assert.equal(Number(process.versions.node.split('.')[0]),24,'Node24 required');
+assert.equal(Number(process.versions.node.split('.')[0]),24,'Use Node24.');
 for(const executable of ['/usr/bin/git','/usr/bin/tar','/usr/bin/script','/usr/bin/flock'])fs.accessSync(executable,fs.constants.X_OK);
 const load=x=>JSON.parse(fs.readFileSync(x,'utf8')),read=n=>load(path.join(root,n));
 const write=(n,x)=>fs.writeFileSync(path.join(root,n),JSON.stringify(x,null,2)+'\n');
 const show=r=>({status:r.status,runId:r.runId,stageCount:r.stageCount,artifactCount:r.artifactCount,eventCount:r.eventCount,journalHead:r.journalHead,cleanup:r.cleanup});
 function cleanSource(){
  const status=execFileSync('/usr/bin/git',['status','--porcelain','--untracked-files=all'],{cwd:sourceRoot,encoding:'utf8'}).trim();
- assert.equal(status,'','Selected Source checkout is dirty; preserve it and stop');
+ assert.equal(status,'','The selected Source checkout is dirty. Keep it. Stop.');
  return execFileSync('/usr/bin/git',['rev-parse','HEAD'],{cwd:sourceRoot,encoding:'utf8'}).trim();
 }
 const gitSource=()=>cleanSource();
@@ -23,14 +25,14 @@ cleanSource();
 const {verifyCompiledProject}=await import('./compiled-project-verification.mjs');
 const fileDigest=p=>crypto.createHash('sha256').update(fs.readFileSync(p)).digest('hex');
 function owned(){assert(!fs.lstatSync(root).isSymbolicLink());const m=read('owned-compiled-project.json');assert.equal(m.schemaVersion,'compiled-project-journey.v1');assert.equal(m.root,root);assert.equal(m.sourceRoot,sourceRoot);assert.equal(m.sourceRevision,gitSource(),'Selected Source changed');assert.equal(m.uid,process.getuid?.()??null);for(const name of ['project.json','compiled.json'])assert.equal(fileDigest(path.join(root,'project',name)),m.preparedInputDigests[name],'Prepared compiler input/output changed: '+name);return m;}
-function requiredEnv(name){assert(process.env[name],name+' required');return process.env[name];}
-function command(name,args){const out=spawnSync(process.execPath,args,{cwd:sourceRoot,env:process.env,encoding:'utf8',maxBuffer:16777216});write(name+'.command.json',{executable:process.execPath,args,exitCode:out.status});fs.writeFileSync(path.join(root,name+'.stdout'),out.stdout??'');fs.writeFileSync(path.join(root,name+'.stderr'),out.stderr??'');assert.equal(out.status,0,name+' failed; original logs retained');}
+function requiredEnv(name){assert(process.env[name],name+' is necessary');return process.env[name];}
+function command(name,args){const out=spawnSync(process.execPath,args,{cwd:sourceRoot,env:process.env,encoding:'utf8',maxBuffer:16777216});write(name+'.command.json',{executable:process.execPath,args,exitCode:out.status});fs.writeFileSync(path.join(root,name+'.stdout'),out.stdout??'');fs.writeFileSync(path.join(root,name+'.stderr'),out.stderr??'');assert.equal(out.status,0,name+' failed. This helper keeps the original logs.');}
 const imp=x=>import(pathToFileURL(path.join(sourceRoot,x)).href);
 const {loadProductionBusterRemotePlanRuntime}=await imp('skills/buster/engine/test-gates/production.ts');
 const {loadPlatformConfig}=await imp('skills/common/plugin-runtime/foundation/config/platform.ts');
 const {loadPipelineDefinition,validatePipelineRuntimeV2}=await imp('skills/nova/core/execution/engine.ts');
 function prepare(){
- assert(!fs.existsSync(root),'Destination must not exist');fs.mkdirSync(root,{mode:0o700});
+ assert(!fs.existsSync(root),'There must be no destination at this path.');fs.mkdirSync(root,{mode:0o700});
  write('owned-compiled-project.json',{schemaVersion:'compiled-project-journey.v1',root,sourceRoot,sourceRevision:gitSource(),uid:process.getuid?.()??null});
  command('prepare-project',[path.join(sourceRoot,'docs/site/use/workflows/examples/compiled-project-input.mjs'),path.join(root,'project')]);
  const marker=read('owned-compiled-project.json');marker.preparedInputDigests=Object.fromEntries(['project.json','compiled.json'].map(name=>[name,fileDigest(path.join(root,'project',name))]));write('owned-compiled-project.json',marker);
@@ -56,10 +58,10 @@ function prepare(){
 }
 
 async function run(){
-owned();assert(!fs.existsSync(path.join(root,'compiled-run-result.json')),'Already attempted; preserve failure and select a fresh owned destination');
+owned();assert(!fs.existsSync(path.join(root,'compiled-run-result.json')),'There is a previous attempt. Keep the failure. Select a new owned destination.');
 const project=load(path.join(root,'project/project.json'));
 const p=load(path.join(root,'compiled-platform.local-providers.json'));
-// These are symbolic configuration names, never authentication values.
+// These are symbolic configuration names. They are not authentication values.
 const config={secretNames:{gateway:'a9906-gateway',buster:'a9906-buster',source:'a9906-source'}};
 const key=crypto.generateKeyPairSync('ed25519');
 const sourcePrivateKey=key.privateKey.export({type:'pkcs8',format:'pem'});
@@ -67,7 +69,7 @@ const sourcePublicKey=key.publicKey.export({type:'spki',format:'pem'});
 const busterAuth=crypto.randomBytes(32).toString('hex');
 const gatewayUrl=new URL(requiredEnv('COMPILED_GATEWAY_ENDPOINT'));
 assert(['http:','https:'].includes(gatewayUrl.protocol)&&!gatewayUrl.username&&!gatewayUrl.password&&!gatewayUrl.hash&&!gatewayUrl.search,'Invalid gateway URL');
-assert(gatewayUrl.protocol==='https:'||['127.0.0.1','[::1]'].includes(gatewayUrl.hostname),'Remote Gateway requires HTTPS; HTTP is limited to literal loopback');
+assert(gatewayUrl.protocol==='https:'||['127.0.0.1','[::1]'].includes(gatewayUrl.hostname),'For a remote Gateway, HTTPS is necessary. Use HTTP only for literal loopback.');
 const gatewayAuth=requiredEnv('COMPILED_GATEWAY_TOKEN');delete process.env.COMPILED_GATEWAY_TOKEN;
 const agentId=requiredEnv('COMPILED_AGENT_ID'),model=requiredEnv('COMPILED_MODEL');
 const sourceRevision=load(path.join(root,'local/source.json')).sourceRevision;
@@ -91,14 +93,14 @@ try {
  write('compiled-platform.complete.json',p);
  const compiledPath=path.join(root,'project/compiled.json');const before=fs.readFileSync(compiledPath);const admitted=await validatePipelineRuntimeV2(loadPlatformConfig(path.join(root,'compiled-platform.complete.json')),loadPipelineDefinition(compiledPath));
  if(!before.equals(fs.readFileSync(compiledPath)))throw Error('COMPILED_INPUT_CHANGED');
- write('complete-platform-admission.json',{status:'admitted',...admitted,compiledBytesUnchanged:true,execution:false,busterService:'real shipped production runtime, ephemeral loopback listener',isolationScope:'Supported direct-command allowSampledProcessLimit:true; not cgroup isolation acceptance',productSessionsSpawned:'not yet executed at admission'});console.log(JSON.stringify(admitted));
+ write('complete-platform-admission.json',{status:'admitted',...admitted,compiledBytesUnchanged:true,execution:false,busterService:'The shipped production runtime has an ephemeral loopback listener.',isolationScope:'The direct-command mode uses allowSampledProcessLimit:true. It is not cgroup isolation acceptance.',productSessionsSpawned:'No product session starts during admission.'});console.log(JSON.stringify(admitted));
  {
   const args=[path.join(sourceRoot,'skills/nova/core/cli.ts'),'--platform',path.join(root,'compiled-platform.complete.json'),'--pipeline',compiledPath,'--run-id',project.runId];
   write('compiled-run-command.json',{executable:process.execPath,args,compiledSha256:crypto.createHash('sha256').update(before).digest('hex')});
   const out=fs.openSync(path.join(root,'compiled-run.stdout'),'w');const err=fs.openSync(path.join(root,'compiled-run.stderr'),'w');
   const child=spawn(process.execPath,args,{cwd:sourceRoot,env:coreEnvironment,stdio:['ignore',out,err]});
   const exitCode=await new Promise((resolve,reject)=>{child.on('error',reject);child.on('exit',resolve);});fs.closeSync(out);fs.closeSync(err);
-  write('compiled-run-result.json',{exitCode,compiledBytesUnchanged:before.equals(fs.readFileSync(compiledPath)),runId:project.runId});console.log(JSON.stringify({runExitCode:exitCode}));assert.equal(exitCode,0,'Actual compiled workflow did not succeed; preserve original failure');
+  write('compiled-run-result.json',{exitCode,compiledBytesUnchanged:before.equals(fs.readFileSync(compiledPath)),runId:project.runId});console.log(JSON.stringify({runExitCode:exitCode}));assert.equal(exitCode,0,'The compiled workflow has no result with exit code zero. Keep the original failure.');
  }
 
 } finally {if(service)await service.stop();delete coreEnvironment.A9906_SOURCE_PRIVATE;delete coreEnvironment.A9906_BUSTER_AUTH;delete coreEnvironment.A9906_GATEWAY_AUTH;delete busterEnvironment.A9906_BUSTER_AUTH;delete busterEnvironment.A9906_SOURCE_PUBLIC;}
@@ -122,7 +124,7 @@ if(operation==='run'){
 if(operation==='verify'){owned();console.log(JSON.stringify(show(await verifyCompiledProject(root,sourceRoot))));}
 if(operation==='cleanup'){
  owned();const result=await verifyCompiledProject(root,sourceRoot);assert.equal(result.status,'verified-actual-compiled-workflow');
- const repo=path.join(root,'project/repository');const worktrees=execFileSync('/usr/bin/git',['worktree','list','--porcelain'],{cwd:repo,encoding:'utf8'});assert.equal(worktrees.split('\n').filter(x=>x.startsWith('worktree ')).length,1,'Retained active worktree; preserve fixture');
- assert.equal(execFileSync('/usr/bin/git',['status','--porcelain'],{cwd:repo,encoding:'utf8'}).trim(),'','Source fixture dirty; preserve it');
+ const repo=path.join(root,'project/repository');const worktrees=execFileSync('/usr/bin/git',['worktree','list','--porcelain'],{cwd:repo,encoding:'utf8'});assert.equal(worktrees.split('\n').filter(x=>x.startsWith('worktree ')).length,1,'The worktree count is not one. Keep the fixture.');
+ assert.equal(execFileSync('/usr/bin/git',['status','--porcelain'],{cwd:repo,encoding:'utf8'}).trim(),'','The source fixture is dirty. Keep it.');
  fs.rmSync(root,{recursive:true});assert(!fs.existsSync(root));console.log(JSON.stringify({status:'verified-owned-cleanup',root,runId:result.runId,artifacts:result.artifactCount}));
 }

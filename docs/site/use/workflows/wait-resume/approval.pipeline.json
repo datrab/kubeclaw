@@ -12,7 +12,7 @@
         "issuerId": "operator:local",
         "timeoutMinutes": 60
       },
-      "input": { "summary": "Approve this disposable wait/resume rehearsal only." },
+      "input": { "summary": "Give approval for this temporary wait/resume rehearsal only." },
       "execution": { "maxAttempts": 2, "maxRemediationCycles": 0, "timeoutMs": 10000 }
     }
   ]

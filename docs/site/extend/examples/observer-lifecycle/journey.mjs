@@ -75,7 +75,7 @@ async function run(name, p, { expectFailure = false } = {}) {
       assert.equal(disk.checkpoints.records().length, 1);
       assert.deepEqual(disk.deliveries.records().map(({ entry }) => entry.status), ['started', 'completed']);
     }
-    assert.equal(lifecycle(), canonicalBefore, 'observer may append domain facts, never rewrite lifecycle facts');
+    assert.equal(lifecycle(), canonicalBefore, 'The observer can append domain facts. It must not rewrite lifecycle facts.');
     const reopened = journals(runRoot);
     const replay = await observerRuntime(p, runtime, adapters, reopened).drain();
     assert.equal(replay.delivered, 0);
@@ -98,7 +98,7 @@ try {
   assert(missingRole.stderr.includes(`nova omits its plugin: ${fixtureManifest.id}`), missingRole.stderr);
   const includedRole = spawnSync(process.execPath, [...roleCommand, '--role-addition', `nova=${fixtureManifest.id}`], { cwd: sourceRoot, encoding: 'utf8' });
   assert.equal(includedRole.status, 0, includedRole.stderr || includedRole.stdout);
-  report.roleOmission = 'rejected'; report.roleInclusion = 'validated addition only; no deployed role changed';
+  report.roleOmission = 'rejected'; report.roleInclusion = 'The role check validated only the addition. No deployed role changed.';
   report.success = await run('success', platform());
   await assert.rejects(prepareRuntime(platform({ config: { fail: 'not-a-boolean' } }), definition), error => error.code === 'REGISTRY_RESULT_INVALID');
   report.invalidConfiguration = 'REGISTRY_RESULT_INVALID';
@@ -123,7 +123,7 @@ try {
   await assert.rejects(prepareRuntime(platform(), definition), error => error.code === 'REGISTRY_REGISTRATION_MISSING');
   assert(retained.every(({ name, sha256 }) => crypto.createHash('sha256').update(fs.readFileSync(path.join(temporary, 'runs/success', name))).digest('hex') === sha256));
   report.removal = 'REGISTRY_REGISTRATION_MISSING'; report.retainedSuccessJournals = retained;
-  report.scope = 'Real local trusted-first-party activation, persistent observer audit/checkpoint and reconstructed runtime replay. Not a process-restart, external isolation, production deployment or complete platform extension qualification.';
+  report.scope = 'This journey uses local trusted-first-party activation, persistent observer audit/checkpoint, and reconstructed runtime replay. It is not process-restart recovery, external isolation, production deployment, or full platform extension qualification.';
 } finally {
   fs.rmSync(temporary, { recursive: true, force: true });
   report.temporaryRootRemoved = !fs.existsSync(temporary);

@@ -18,7 +18,7 @@ if (process.argv.length !== 3 || !destination || !path.isAbsolute(destination)
     || path.normalize(destination) !== destination || destination === '/') {
   throw new Error('Usage: node docs/site/use/workflows/examples/first-project.mjs NEW_ABSOLUTE_DIRECTORY');
 }
-if (fs.existsSync(destination)) throw new Error('Example directory must not already exist');
+if (fs.existsSync(destination)) throw new Error('An item is at the example path. Do not use it again.');
 fs.mkdirSync(destination, { mode: 0o700 });
 const repositoryRoot = path.join(destination, 'repository');
 const workspaceRoot = path.join(destination, 'workspaces');
@@ -26,7 +26,7 @@ fs.mkdirSync(repositoryRoot); fs.mkdirSync(workspaceRoot);
 fs.mkdirSync(path.join(repositoryRoot, 'modules/app'), { recursive: true });
 fs.mkdirSync(path.join(repositoryRoot, 'app'));
 fs.writeFileSync(path.join(repositoryRoot, 'README.md'), '# First project\n\nA compile-only example, not an executed implementation.\n');
-fs.writeFileSync(path.join(repositoryRoot, 'modules/app/FORGE.md'), '# Application blueprint\n\nKeep the greeting function returning hello.\n\n```kubeclaw-deliverables\n'+JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId:'app',substep:null,deliverables:[]})+'\n```\n');
+fs.writeFileSync(path.join(repositoryRoot, 'modules/app/FORGE.md'), '# Application blueprint\n\nThe greeting function must return hello.\n\n```kubeclaw-deliverables\n'+JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId:'app',substep:null,deliverables:[]})+'\n```\n');
 fs.writeFileSync(path.join(repositoryRoot, 'app/greeting.mjs'), "export const greeting = () => 'hello';\n");
 fs.writeFileSync(path.join(repositoryRoot, 'app/greeting.test.mjs'), "import assert from 'node:assert/strict';\nimport {greeting} from './greeting.mjs';\nassert.equal(greeting(), 'hello');\n");
 const git = (...args) => execFileSync('git', ['-C', repositoryRoot, ...args], { encoding: 'utf8' }).trim();
@@ -67,7 +67,7 @@ function testConfiguration(kind) {
     providerPlan: { repositoryId: id, plan, grants: { [nodeId]: ['command.execute'] },
       maximumConcurrency: 1, submittedAt: createdAt, timeoutMs: 60000 } };
 }
-// This is a future lint-policy selection, not a fabricated valid policy or a live input.
+// This is a future lint-policy selection. It is not a full policy or a live input.
 const lint = { policyPath: path.join(destination, 'operator-selected-lint-policy.json'), policyProject: id };
 const project = { schemaVersion: 'nova-project.v2', id, runId, repositoryRoot,
   workspaceRoot, baseRevision, architecture: { ref: 'HEAD', requiredFiles: ['README.md'] },

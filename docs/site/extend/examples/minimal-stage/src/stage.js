@@ -5,7 +5,7 @@ export async function execute(input, context) {
       outcome: 'failed',
       reason: {
         code: 'tutorial.requested_failure',
-        message: `The tutorial requested failure for ${input.name}.`,
+        message: `The input selects failure for ${input.name}.`,
       },
       artifacts: [],
     };

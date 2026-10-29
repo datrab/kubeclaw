@@ -2,14 +2,14 @@
   "schemaVersion": "kubeclaw.documented-request-trace.v1",
   "scenarioId": "complete-showcase-success",
   "status": "conceptual-reference-only-not-live-proof",
-  "scopeBoundary": "This document joins desired platform interactions into a conceptual 20-step reference. No maintained harness currently binds Prism Studio approval, a Nova project run, Discord, Redis, Cilium or Hubble, and Buster BuildKit/Tailscale work into one evidence chain. The deployment success exercise proves only its compiled Nova project and final Buster demo chain. Prism, human channels, Redis, Cilium, and Hubble require their separate maintained checks until a joined harness exists.",
-  "purpose": "Describe the intended complete-showcase sequence and the evidence a future joined acceptance harness must bind. It is not a record of an execution.",
+  "scopeBoundary": "This document is a conceptual reference for 20 platform interaction steps. No maintained harness binds all these interactions into one evidence chain. They include Prism Studio approval, a Nova project run, Discord, Redis, Cilium, Hubble, and Buster BuildKit/Tailscale work. The deployment success exercise gives evidence only for its compiled Nova project and final Buster demo chain. Until a joined harness exists, Prism, human channels, Redis, Cilium, and Hubble must have their separate maintained checks.",
+  "purpose": "This reference gives the intended complete-showcase sequence and the evidence that a future joined acceptance harness must bind. It is not an execution record.",
   "startingConditions": [
-    "The operator has selected one deployment profile and exact Git revision.",
-    "K3s, Cilium, SPIRE, Envoy, Redis, both PostgreSQL domains, LiteLLM, Vertex credentials, Discord, Tailscale, BuildKit, the writable registry, and the Docker Hub mirror are configured for this exercise.",
+    "The operator must select one deployment profile and one specified Git revision.",
+    "For this exercise, the selected deployment must have the configuration for all these components: K3s, Cilium, SPIRE, Envoy, Redis, and both PostgreSQL domains. It must also have the configuration for LiteLLM, Vertex credentials, Discord, Tailscale, BuildKit, the writable registry, and Docker Hub mirror.",
     "The deployment supplies Buster with an explicit writable-registry and Docker Hub mirror client contract.",
     "A future joined harness supplies the missing same-run Prism, Nova, Buster, channel, and network bindings described by this reference.",
-    "Standalone BuildKit, registry, Tailscale, Prism, role, channel, and network checks remain separate evidence and never become a joined result by documentation alone."
+    "Each standalone BuildKit, registry, Tailscale, Prism, role, channel, or network check gives evidence only for its scope. Documentation alone cannot join them into one result."
   ],
   "liveEvidenceRequiredForAcceptance": [
     "selected values and immutable workload revisions",
@@ -17,7 +17,7 @@
     "Git commit and verified source-tree digest",
     "Nova run, stage, attempt, effect, wait, signal, import, and terminal records",
     "Prism Agent dispatch, Control request and job, Worker receipt, PostgreSQL transaction, artifact, selection, and approval identities",
-    "LiteLLM database health and a valid Vertex embedding result",
+    "LiteLLM database health and a Vertex embedding result that agrees with its contract",
     "Buster job, plan, node, result, cleanup, and evidence records",
     "Redis stream entry and deduplication identities",
     "BuildKit worker result and immutable OCI manifest digest",
@@ -27,10 +27,10 @@
   "steps": [
     {
       "order": 1,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Deployment configuration owner",
       "inputIdentity": "selected profile, immutable release receipts, and target namespace",
-      "action": "Select the CNI, storage classes, registry endpoints, mirror endpoint, secrets, and exactly one deployment owner before reconciliation.",
+      "action": "Before reconciliation, select the CNI, storage classes, and registry endpoints. Also select the mirror endpoint, secrets, and one deployment owner. Do not select a second deployment owner.",
       "outputIdentity": "selected values digest and deployment revision",
       "decisionOwner": "Platform configuration owner",
       "reportersOnly": ["Helm release", "Argo Application"],
@@ -38,7 +38,7 @@
     },
     {
       "order": 2,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "K3s and Cilium",
       "inputIdentity": "selected cluster and secured network profile",
       "action": "Provide API, scheduling, DNS, storage, Pod networking, and the checked-in allowed and denied routes.",
@@ -49,10 +49,10 @@
     },
     {
       "order": 3,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "SPIRE and Envoy",
       "inputIdentity": "namespace and ServiceAccount selectors for Nova, Buster, Prism Agent, Control, and Worker",
-      "action": "Issue rotating SVIDs and authenticate each protected hop while applications accept forwarded identity only from loopback.",
+      "action": "Issue SVIDs with rotation. Authenticate each protected hop. Applications must accept forwarded identity only from loopback.",
       "outputIdentity": "SPIFFE IDs, SVID generations, and authenticated peer records",
       "decisionOwner": "SPIRE and each receiving application allowlist",
       "reportersOnly": ["Envoy health", "certificate diagnostics"],
@@ -60,54 +60,54 @@
     },
     {
       "order": 4,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Writable OCI registry and Docker Hub mirror",
       "inputIdentity": "selected registry-client contract and digest-pinned upstream reference",
-      "action": "Prove the selected endpoints, a cold mirror-routed pull, and push, digest read, and pull for the writable registry.",
+      "action": "Do a check of the selected endpoints. Do a cold pull through the mirror. For the writable registry, do push, digest read, and pull checks.",
       "outputIdentity": "registry-client contract digest, upstream digest, and produced manifest digest",
-      "decisionOwner": "Registry owns stored blobs; the consuming check owns acceptance",
+      "decisionOwner": "The registry has authority for stored blobs. The consuming check has authority for acceptance.",
       "reportersOnly": ["/v2/ health", "mirror cache status"],
       "safeStop": "Do not substitute a tag, an insecure endpoint, or endpoint health for digest verification."
     },
     {
       "order": 5,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Redis transport",
       "inputIdentity": "redis-secrets/redis-password and bounded stream probe identity",
-      "action": "Authenticate. Send the PING response. Append one bounded observation with its deduplication identity.",
+      "action": "Authenticate. Send the PING command. Make sure that the response is PONG. Append one bounded observation with its deduplication identity.",
       "outputIdentity": "stream key, entry ID, and deduplication key",
-      "decisionOwner": "Redis owns the transport entry; Nova and Buster retain lifecycle authority",
+      "decisionOwner": "Redis has authority for the transport entry. Nova and Buster retain lifecycle authority.",
       "reportersOnly": ["readiness", "observer counters"],
       "safeStop": "Do not reconstruct pipeline state from Redis or erase canonical state when a projection is missing."
     },
     {
       "order": 6,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "LiteLLM PostgreSQL and Prism PostgreSQL",
       "inputIdentity": "separate database releases, credentials, volumes, and owner-specific probes",
-      "action": "Prove each database readiness, persistent volume, and distinct runtime identity without crossing restore domains.",
+      "action": "Do a check of each database for readiness, persistent volume, and distinct runtime identity. Do not use one database's restore domain for the other database.",
       "outputIdentity": "LiteLLM database check and Prism database check with separate volume identities",
       "decisionOwner": "Each database owner",
       "reportersOnly": ["Pod readiness", "storage metrics"],
-      "safeStop": "Stop the affected domain; never use one database backup or credential set for the other."
+      "safeStop": "Stop the affected domain. Do not use one database backup or credential set for the other."
     },
     {
       "order": 7,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "LiteLLM and Vertex AI",
       "inputIdentity": "consumer key, master key, database, Google service-account identity, and model gemini-embedding-001",
       "action": "Route one authenticated embedding request. Validate that the response contains a bounded numeric vector.",
       "outputIdentity": "model identity and validated vector result bound to the requesting session",
-      "decisionOwner": "LiteLLM owns gateway state; Vertex owns the provider result",
+      "decisionOwner": "LiteLLM has authority for gateway state. Vertex has authority for the provider result.",
       "reportersOnly": ["LiteLLM health", "provider diagnostics"],
       "safeStop": "Keep the consumer operation incomplete after authentication, quota, timeout, model, or vector failure."
     },
     {
       "order": 8,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Nova and Buster Discord channels",
       "inputIdentity": "distinct bot tokens, channel IDs, allowed user, and denied user",
-      "action": "Prove one allowed message and one denied-user attempt for each enabled channel.",
+      "action": "For each enabled channel, do a check of one allowed message. Also do a check of one attempt from a denied user.",
       "outputIdentity": "Discord message IDs and receiving OpenClaw session identities",
       "decisionOwner": "Channel allowlist and receiving application",
       "reportersOnly": ["Discord delivery state"],
@@ -115,7 +115,7 @@
     },
     {
       "order": 9,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Nova OpenClaw and Nova Core",
       "inputIdentity": "allowed Discord message and configured managed reasoning session",
       "action": "Prepare the requested workflow input. Admit it through Nova Core. Create the canonical run journal.",
@@ -126,7 +126,7 @@
     },
     {
       "order": 10,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Git origin",
       "inputIdentity": "repository URL, mounted deploy-key identity, and requested immutable revision",
       "action": "Fetch the selected objects. Verify the commit and source tree. Before execution, store source identity.",
@@ -137,7 +137,7 @@
     },
     {
       "order": 11,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Nova Prism stage",
       "inputIdentity": "runId, stageId, attemptId, architecture artifact digest, and phase",
       "action": "Record the attempt. Reserve a runtime-dispatch effect. The stage makes its idempotency key from the run, architecture digest, and phase.",
@@ -148,18 +148,18 @@
     },
     {
       "order": 12,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Nova Envoy and Prism Agent Envoy/bridge",
       "inputIdentity": "Nova SPIFFE ID, Prism Agent SPIFFE ID, and the reserved dispatch request",
       "action": "Carry the request through Nova loopback Envoy, the agent-prism mTLS listener, its loopback bridge, and the second Envoy hop to Control.",
       "outputIdentity": "authenticated Nova-to-Agent and Agent-to-Control peer evidence",
       "decisionOwner": "Prism Agent and Control peer allowlists",
       "reportersOnly": ["Envoy access logs", "bridge HTTP response"],
-      "safeStop": "Reconcile the same dispatch identity after an uncertain response; do not create another design round."
+      "safeStop": "Reconcile the same dispatch identity after an uncertain response. Do not create another design round."
     },
     {
       "order": 13,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Prism Control and Prism PostgreSQL",
       "inputIdentity": "authenticated agent peer, body digest, idempotency key, preference subject, schema, and architecture revision",
       "action": "Validate the request. Before you return waiting state, commit the project, design request, preference generation, and agent job.",
@@ -170,18 +170,18 @@
     },
     {
       "order": 14,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Prism Agent bridge and OpenClaw",
       "inputIdentity": "durable job ID, stable project session, claim expiry, and fence",
       "action": "Claim the job once. Start one bounded OpenClaw attempt. Return three designs bound to job, generation, and fence. Do not return other designs.",
       "outputIdentity": "claim, runner, attempt envelope, fence, session, and three design digests",
       "decisionOwner": "Prism Control job store",
       "reportersOnly": ["OpenClaw process exit", "model response"],
-      "safeStop": "An uncertain launch becomes needs_nova; never spawn a replacement agent for the same claim."
+      "safeStop": "An uncertain launch becomes needs_nova. Do not spawn a replacement agent for the same claim."
     },
     {
       "order": 15,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Prism Control and Prism Worker",
       "inputIdentity": "fenced design result and accepted Worker attempt envelope",
       "action": "Lock the result. Validate the result. Execute any bounded native work through the protected Worker route. Then commit the digest, Worker receipt, and terminal job state.",
@@ -192,7 +192,7 @@
     },
     {
       "order": 16,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Tailscale, Prism Studio, and Prism Control",
       "inputIdentity": "private hostname, Tailnet identity, signed application session, project, and selected design digest",
       "action": "Open Studio through its private access route. Create the application session. Select one direction. Give approval for its digest.",
@@ -203,40 +203,40 @@
     },
     {
       "order": 17,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Nova resume and Prism Control",
       "inputIdentity": "active wait ID, authorized resume signal, approved revision, and deterministic next-phase key",
       "action": "Resume the original run. Fetch the approved content-addressed archive. Before import, verify its manifest and object digests.",
       "outputIdentity": "signal ID, baseline archive digest, imported artifact ID, and resumed attempt",
       "decisionOwner": "Nova Core",
       "reportersOnly": ["signal transport", "download response"],
-      "safeStop": "Reject stale signals and digest mismatches; do not manufacture a replacement baseline."
+      "safeStop": "Reject stale signals and digest mismatches. Do not manufacture a replacement baseline."
     },
     {
       "order": 18,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Nova to Buster and Tailscale fixture",
       "inputIdentity": "runId, stageId, attemptId, signed source snapshot, plan digest, job idempotency key, and private fixture request",
-      "action": "Send one immutable Buster job. Admit it once. When the plan requires it, allocate one generation-bound private fixture lease.",
+      "action": "Send one immutable Buster job. Admit it once. Only when a fixture lease is necessary in the plan, allocate one generation-bound private fixture lease.",
       "outputIdentity": "Buster jobId, accepted request digest, lease ID, generation, and fixture endpoint",
-      "decisionOwner": "Buster owns job admission and fixture lease; Nova owns the pipeline attempt",
+      "decisionOwner": "Buster has authority for job admission and the fixture lease. Nova has authority for the pipeline attempt.",
       "reportersOnly": ["transport response", "Ingress readiness"],
-      "safeStop": "Reconcile the same job and lease after an uncertain response; do not allocate replacements."
+      "safeStop": "Reconcile the same job and lease after an uncertain response. Do not allocate replacements."
     },
     {
       "order": 19,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Worker Core, rootless BuildKit, mirror, and writable OCI registry",
       "inputIdentity": "accepted attempt envelope, capability grant, registry-client contract, local BuildKit socket, and digest-pinned source",
       "action": "Build through Worker Core. Use the selected mirror for eligible upstream content. Push to the selected registry. Verify the immutable manifest digest.",
       "outputIdentity": "attempt receipt, BuildKit result, upstream digest, and produced OCI manifest digest",
-      "decisionOwner": "Worker Core accepts the attempt; Buster reduces node state",
+      "decisionOwner": "Worker Core accepts the attempt. Buster reduces node state.",
       "reportersOnly": ["BuildKit log", "registry health", "cache status"],
-      "safeStop": "After an uncertain push, inspect the intended digest before any rebuild; never substitute a tag."
+      "safeStop": "After an uncertain push, inspect the intended digest before any rebuild. Do not substitute a tag."
     },
     {
       "order": 20,
-      "evidenceStatus": "reference-only; no live evidence is attached",
+      "evidenceStatus": "This step is a reference. It has no live evidence attached.",
       "component": "Buster result import, Nova journal, Redis observers, and Discord",
       "inputIdentity": "jobId, result digest, evidence digests, cleanup receipts, and original lifecycle identities",
       "action": "Release the fixture lease. Return the bounded result. Verify all imported bytes. Before observers publish derived events and messages, commit Nova terminal state.",
@@ -246,7 +246,7 @@
       "safeStop": "Keep the attempt incomplete on digest or cleanup uncertainty. Derived delivery cannot create or change terminal state."
     }
   ],
-  "completionCondition": "Reference target only: a future joined harness completes this trace when all 20 steps have live evidence bound to one deployment revision, source revision, Nova run, Prism request and approval, Buster job, channel identities, network-flow evidence, artifact digests, and cleanup identities. No current command in this document satisfies that condition.",
+  "completionCondition": "This reference gives a target for a future joined harness. That harness must bind live evidence for all 20 steps to the same identities. These identities include one deployment revision, source revision, Nova run, Prism request and approval, and Buster job. They also include channel identities, network-flow evidence, artifact digests, and cleanup identities. No current command in this document satisfies that condition.",
   "documentation": [
     "../../../understand/communication.md#complete-showcase-success-trace",
     "../buster-suite.md#deployment-success-exercise",

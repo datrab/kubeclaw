@@ -1,13 +1,13 @@
 {
   "schemaVersion": "kubeclaw-documentation-routes.v1",
-  "authority": "This registry owns declared public redirects, deprecated terms, and superseded reader routes.",
+  "authority": "This registry is the authority for declared public redirects, deprecated terms, and superseded reader routes.",
   "redirects": [],
   "deprecatedTerms": [
     {
       "term": "action_required",
       "successor": "blocked or the applicable typed wait state",
-      "reason": "Current contracts use explicit lifecycle and wait states instead of this ambiguous label."
+      "reason": "The contracts at this source revision use lifecycle states and typed wait states instead of this label. The label can give more than one state."
     }
   ],
-  "historicalRouteBoundary": "No authoritative list of public routes predates this registry. Do not invent redirects for unknown URLs."
+  "historicalRouteBoundary": "No public-route list from before this registry has authority. Do not make redirects for unknown URLs."
 }

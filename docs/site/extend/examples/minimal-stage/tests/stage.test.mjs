@@ -6,7 +6,7 @@ const context = Object.freeze({
   contract: Object.freeze({ config: Object.freeze({ prefix: 'Hello' }) }),
 });
 
-test('returns a visible decision fact', async () => {
+test('returns a decision fact to the caller', async () => {
   assert.deepEqual(await execute({ name: 'KubeClaw' }, context), {
     schemaVersion: 'stage-result.v2',
     outcome: 'passed',
@@ -21,7 +21,7 @@ test('returns an intentional terminal failure', async () => {
     outcome: 'failed',
     reason: {
       code: 'tutorial.requested_failure',
-      message: 'The tutorial requested failure for KubeClaw.',
+      message: 'The input selects failure for KubeClaw.',
     },
     artifacts: [],
   });

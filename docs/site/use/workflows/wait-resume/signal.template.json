@@ -9,6 +9,6 @@
   "payload": {
     "decision": "approved",
     "issuer": { "type": "operator", "id": "operator:local" },
-    "reason": "Approved the exact disposable rehearsal request."
+    "reason": "This decision gives approval only for the specified temporary rehearsal request."
   }
 }

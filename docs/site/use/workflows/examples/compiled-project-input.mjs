@@ -1,6 +1,8 @@
 #!/usr/bin/env node
-// Prepare the real unmet implementation task and compile its complete eight-stage graph.
-// The companion compiled-project.mjs owns runtime execution, audit and cleanup.
+// Prepare the unmet implementation task. Compile its full eight-stage graph.
+// The workflow guide uses one specified source revision for its recorded execution.
+// That record is not an execution result for inputs from this source.
+// The companion compiled-project.mjs does runtime execution, audit, and cleanup.
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -17,17 +19,17 @@ const sourceRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '.
 const destination = process.argv[2];
 if (process.argv.length !== 3 || !destination || !path.isAbsolute(destination)
     || path.normalize(destination) !== destination || destination === '/') {
-  throw new Error('Usage: node docs/site/use/workflows/examples/first-project.mjs NEW_ABSOLUTE_DIRECTORY');
+  throw new Error('Usage: node docs/site/use/workflows/examples/compiled-project-input.mjs NEW_ABSOLUTE_DIRECTORY');
 }
-if (fs.existsSync(destination)) throw new Error('Example directory must not already exist');
+if (fs.existsSync(destination)) throw new Error('An item is at the example path. Do not use it again.');
 fs.mkdirSync(destination, { mode: 0o700 });
 const repositoryRoot = path.join(destination, 'repository');
 const workspaceRoot = path.join(destination, 'workspaces');
 fs.mkdirSync(repositoryRoot); fs.mkdirSync(workspaceRoot);
 fs.mkdirSync(path.join(repositoryRoot, 'modules/app'), { recursive: true });
 fs.mkdirSync(path.join(repositoryRoot, 'app'));
-fs.writeFileSync(path.join(repositoryRoot, 'README.md'), '# First project\n\nA disposable task for the compiled workflow; execution is recorded separately.\n');
-fs.writeFileSync(path.join(repositoryRoot, 'modules/app/FORGE.md'), '# Application blueprint\n\nKeep the greeting function returning hello.\n\n```kubeclaw-deliverables\n'+JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId:'app',substep:null,deliverables:[]})+'\n```\n');
+fs.writeFileSync(path.join(repositoryRoot, 'README.md'), '# First project\n\nThis is a temporary task for the compiled workflow. This file is not an execution record.\n');
+fs.writeFileSync(path.join(repositoryRoot, 'modules/app/FORGE.md'), '# Application blueprint\n\nThe greeting function must return hello.\n\n```kubeclaw-deliverables\n'+JSON.stringify({schemaVersion:'forge-deliverables.v1',moduleId:'app',substep:null,deliverables:[]})+'\n```\n');
 fs.writeFileSync(path.join(repositoryRoot, 'app/greeting.mjs'), "export const greeting = () => 'goodbye';\n");
 fs.writeFileSync(path.join(repositoryRoot, 'app/greeting.test.mjs'), "import assert from 'node:assert/strict';\nimport {greeting} from './greeting.mjs';\nassert.equal(greeting(), 'hello');\n");
 // The reserved runtime receipt directory is generated evidence, not project source.
@@ -71,11 +73,11 @@ function testConfiguration(kind) {
     providerPlan: { repositoryId: id, plan, grants: { [nodeId]: ['command.execute'] },
       maximumConcurrency: 1, submittedAt: createdAt, timeoutMs: 60000 } };
 }
-// This is a future lint-policy selection, not a fabricated valid policy or a live input.
+// This is a future lint-policy selection. It is not a full policy or a live input.
 const lint = { policyPath: path.join(destination, 'operator-selected-lint-policy.json'), policyProject: id };
 const project = { schemaVersion: 'nova-project.v2', id, runId, repositoryRoot,
   workspaceRoot, baseRevision, architecture: { ref: baseRevision, requiredFiles: ['README.md'] },
-  modules: [{ id: 'app', dependsOn: [], task: 'Correct app/greeting.mjs so greeting returns hello, not goodbye. Run node --test app/greeting.test.mjs and report its successful check and actual changed path.',
+  modules: [{ id: 'app', dependsOn: [], task: 'Correct app/greeting.mjs so greeting returns hello, not goodbye. Execute node --test app/greeting.test.mjs. The test must exit with code zero. Give the exit code and actual changed path.',
     ownedPaths: ['app'], requirements, implementation: { agent: 'forge' }, lint,
     blueprint: { modulePath: 'modules/app', serveDockerfile: null, apiSpecFile: null },
     test: testConfiguration('module') }],

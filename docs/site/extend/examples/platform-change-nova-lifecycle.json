@@ -2,19 +2,19 @@
   "schemaVersion": "kubeclaw-platform-change-exercise.v1",
   "id": "nova-administrative-retry-diagnostic",
   "persona": "platform-developer",
-  "purpose": "Desired behavior and bounded fault input for a temporary Nova lifecycle exercise. This file records no execution result.",
+  "purpose": "This file gives the necessary behavior and bounded fault input for a temporary Nova lifecycle exercise. It records no execution result.",
   "startingState": {
     "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
-    "checkout": "Clean isolated scratch checkout with no prepared implementation or test change.",
-    "baseline": "Record the existing lifecycle result, durable reason, state counters, generated outputs, and selected check results before editing.",
+    "checkout": "The checkout at the start must be clean and isolated. It must have no prepared implementation or test change.",
+    "baseline": "Before you change the source, record the baseline lifecycle result, durable reason, and state counters. Record generated outputs and selected check results.",
     "revisionPurpose": "This immutable source revision identifies the unchanged product baseline for this scratch exercise. It records no execution result."
   },
   "desiredBehavior": {
     "reason": "administrative_retry_suppressed",
-    "condition": "An administrative attempt has a valid retry result and would request another nonterminal action. The attempt is already running and its normal reducer decision remains retryable within the configured budget.",
-    "result": "The administrative attempt still stops with stage status blocked, but its committed lifecycle event uses the new reason administrative_retry_suppressed. The original attempt result and its reason remain unchanged.",
+    "condition": "An administrative attempt has a retry result that agrees with its contract. The attempt is running. Its normal reducer decision is for another nonterminal action and lets it retry in the configured budget.",
+    "result": "The administrative attempt stops with stage status blocked. Its committed lifecycle event uses the new reason administrative_retry_suppressed. The original attempt result and its reason stay the same.",
     "boundedScope": "Add this diagnostic only for the administrative retry case. Preserve administrative_attempt_consumed for every other administrative nonterminal action. Preserve ordinary retry, wait, repair, success, failure, timeout, cancellation, and all attempt and repair budgets.",
-    "externalCompatibility": "Do not change any schema version, event type, exported type, package identity, graph identity, digest encoding, CLI option, or generated contract output. Use the existing lifecycle reason representation."
+    "externalCompatibility": "Do not change any schema version, event type, exported type, or package identity. Do not change any graph identity, digest encoding, CLI option, or generated contract output. Use the baseline lifecycle reason representation."
   },
   "cases": [
     {
@@ -33,7 +33,7 @@
           "artifacts": []
         }
       },
-      "expected": "Exactly one attempt is consumed. The stage becomes blocked and no further attempt is scheduled. The committed stage event reason is administrative_retry_suppressed. The original result reason stays exercise.transient_dependency."
+      "expected": "The engine consumes one attempt. The stage becomes blocked. The engine schedules no other attempt. The committed stage event reason is administrative_retry_suppressed. The original result reason stays exercise.transient_dependency."
     },
     {
       "id": "ordinary-retry-unaffected",
@@ -44,7 +44,7 @@
         "maxAttempts": 3,
         "resultOutcome": "retry"
       },
-      "expected": "The existing bounded retry behavior remains unchanged; the new administrative diagnostic is absent."
+      "expected": "The baseline bounded retry behavior stays the same. The new administrative diagnostic is absent."
     },
     {
       "id": "other-administrative-action-unaffected",
@@ -54,9 +54,9 @@
         "attemptsUsedBeforeResult": 0,
         "maxAttempts": 3,
         "resultOutcome": "wait",
-        "wait": "A valid signal wait with explicit authorized issuer and expiry, constructed under the existing contract."
+        "wait": "When you make the signal wait, obey the baseline contract. Give the authorized issuer and expiry values in its input."
       },
-      "expected": "The stage remains administratively blocked with its existing administrative_attempt_consumed reason."
+      "expected": "The stage stays blocked for the administrative attempt with its baseline administrative_attempt_consumed reason."
     },
     {
       "id": "invalid-transition",
@@ -65,24 +65,24 @@
         "administrativeOverride": true,
         "resultOutcome": "retry"
       },
-      "expected": "Reject the result because the stage is not running. Preserve state, attempt counters, and journal bytes; append no successful or blocked transition."
+      "expected": "Reject the result because the stage is not running. Preserve state, attempt counters, and journal bytes. Do not append a success or blocked transition."
     },
     {
       "id": "crash-after-durable-block",
       "fault": "After the engine durably commits the administrative blocked event, terminate the isolated process before local terminal projection or normal completion. Restart from the same retained records.",
-      "expected": "The journal retains administrative_retry_suppressed and the original attempt result reason. Recovery preserves blocked status and the consumed attempt count, does not schedule duplicate work, and leaves schema, graph, and digest identities unchanged. Do not require the diagnostic to become a new field in a state projection that has no reason field."
+      "expected": "The journal retains administrative_retry_suppressed and the original attempt result reason. Recovery preserves blocked status and the consumed attempt count. It schedules no duplicate work. It leaves schema, graph, and digest identities unchanged. If a state projection has no reason field, the diagnostic is not necessary as a new field."
     }
   ],
   "requiredProof": [
-    "Find the canonical behavior owner, affected invariants, compatibility boundary, generated surfaces, and documentation owner before editing.",
-    "Select and execute the smallest complete unit, contract, replay, recovery, compatibility, and documentation chain from the published change guide.",
-    "Add direct assertions for the new condition and its neighboring unchanged cases; do not infer coverage from an existing test name.",
-    "Retain exact revision, environment, commands, exit codes, journal identities, observations, failures, and skips outside the scratch checkout. A missing prerequisite or a read-only description does not prove execution."
+    "Before you change the source, find the canonical behavior owner and affected invariants. Also find the compatibility boundary, generated surfaces, and documentation owner.",
+    "From the published change guide, select the smallest chain with all necessary checks. Execute its unit, contract, replay, recovery, compatibility, and documentation checks.",
+    "Add direct assertions for the new condition and its neighboring unchanged cases. Do not infer coverage from a test name.",
+    "Keep the revision, environment, commands, exit codes, and journal identities without change outside the scratch checkout. Keep observations, failures, and skips without change there. A missing prerequisite or a read-only description is not execution evidence."
   ],
   "removal": {
     "action": "Remove the temporary implementation and test changes in the isolated scratch checkout.",
-    "expected": "Restore the original lifecycle behavior and administrative_attempt_consumed reason. Tracked source, generated outputs, external contract and identities match the recorded baseline. All selected checks pass again. No exercise process, temporary store, or generated test state remains.",
-    "retainedEvidence": "Keep baseline, changed, interruption, and removal reports outside the disposable checkout. Never remove deployed records or product state to complete this exercise."
+    "expected": "Restore the original lifecycle behavior and administrative_attempt_consumed reason. Tracked source, generated outputs, external contract, and identities must match the recorded baseline. All selected checks must exit with code zero again. No exercise process, temporary store, or generated test state can remain.",
+    "retainedEvidence": "Keep baseline, changed, interruption, and removal reports outside the temporary checkout. Do not remove deployed records or product state to complete this exercise."
   },
   "executionStatus": "not-executed"
 }

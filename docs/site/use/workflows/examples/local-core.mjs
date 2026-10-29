@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-/** Maintained local Core CLI journey. Uses shipped packages and durable stores, never a mock runner. */
+/** This maintained local Core CLI journey uses shipped packages and durable stores. It does not use a mock runner. */
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -18,13 +18,13 @@ import {canonicalJson,sha256Text,sha256Bytes} from '../../../../../skills/common
 const sourceRoot=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../../../..');
 const [operation,destination]=process.argv.slice(2);
 assert.equal(process.argv.length,4,'Usage: node docs/site/use/workflows/examples/local-core.mjs prepare|run|verify|cleanup NEW_ABSOLUTE_DIRECTORY');
-assert(destination&&path.isAbsolute(destination)&&path.normalize(destination)===destination&&destination!=='/','Select one normalized absolute disposable directory');
+assert(destination&&path.isAbsolute(destination)&&path.normalize(destination)===destination&&destination!=='/','Select one temporary directory with an absolute path. Its path must agree with the output of path.normalize for that path.');
 const root=destination;
 const markerFile=path.join(root,'owned-journey.json');
 const json=file=>JSON.parse(fs.readFileSync(file,'utf8'));
 const write=(file,value)=>fs.writeFileSync(path.join(root,file),`${JSON.stringify(value,null,2)}\n`,{flag:'wx',mode:0o600});
 function pins(directory){let cursor=path.parse(directory).root;for(const part of directory.slice(cursor.length).split(path.sep).filter(Boolean)){cursor=path.join(cursor,part);const s=fs.lstatSync(cursor);assert(s.isDirectory()&&!s.isSymbolicLink(),`Unsafe directory: ${cursor}`);}}
-function owned(){pins(root);const marker=json(markerFile);assert.equal(marker.schemaVersion,'local-core-journey.v1');assert.equal(marker.root,root);assert.equal(marker.sourceRoot,sourceRoot);assert.equal(marker.uid,process.getuid?.()??null);const selected=json(path.join(root,'source.json')).sourceRevision;const current=execFileSync('git',['rev-parse','HEAD'],{cwd:sourceRoot,encoding:'utf8'}).trim();assert.equal(current,selected,'Source revision changed; preserve fixture and stop');return marker;}
+function owned(){pins(root);const marker=json(markerFile);assert.equal(marker.schemaVersion,'local-core-journey.v1');assert.equal(marker.root,root);assert.equal(marker.sourceRoot,sourceRoot);assert.equal(marker.uid,process.getuid?.()??null);const selected=json(path.join(root,'source.json')).sourceRevision;const current=execFileSync('git',['rev-parse','HEAD'],{cwd:sourceRoot,encoding:'utf8'}).trim();assert.equal(current,selected,'The Source revision changed. Keep the fixture. Stop.');return marker;}
 function records(file){const result=[];parseJournalRecords(fs.readFileSync(file),result,file);assert(result.length>0,'Empty journal');return result;}
 function files(directory,prefix=''){return fs.readdirSync(directory,{withFileTypes:true}).sort((a,b)=>a.name.localeCompare(b.name)).flatMap(entry=>{const relative=path.join(prefix,entry.name),file=path.join(directory,entry.name);assert(!entry.isSymbolicLink(),`Unexpected symlink: ${file}`);return entry.isDirectory()?files(file,relative).map(x=>({...x,file:path.join(entry.name,x.file)})):[{file:entry.name,bytes:fs.statSync(file).size,digest:sha256Bytes(fs.readFileSync(file))}];});}
 function digestTree(directory){return files(directory);}
@@ -33,7 +33,7 @@ function command(args,name,expected){
  fs.writeFileSync(path.join(root,`${name}.stdout`),result.stdout??'',{flag:'wx'});
  fs.writeFileSync(path.join(root,`${name}.stderr`),result.stderr??'',{flag:'wx'});
  write(`${name}.command.json`,{command:[process.execPath,...args],exitCode:result.status,signal:result.signal,error:result.error?.message??null});
- assert(!result.error&&!result.signal,`${name}: process failure; inspect retained output`);assert.equal(result.status,expected,`${name}: unexpected exit; inspect retained stdout/stderr`);return result;
+ assert(!result.error&&!result.signal,`${name}: process failure. Inspect the retained output.`);assert.equal(result.status,expected,`${name}: unexpected exit. Inspect the retained stdout/stderr.`);return result;
 }
 const platformFile=path.join(root,'platform.json');
 const cli=path.join(sourceRoot,'skills/nova/core/cli.ts');
@@ -45,9 +45,9 @@ const telemetryObserver='kubeclaw.telemetry-observer:telemetry';
 const telemetryProvider='kubeclaw.telemetry-store:telemetry';
 function graph(id,input){return {schemaVersion:'pipeline-definition.v2',id,maxConcurrency:1,stages:[{id:stageId,type:'kubeclaw.lint.delivery',dependsOn:[],config:{},input,execution:{maxAttempts:1,maxRemediationCycles:0,maxTechnicalRetries:0,timeoutMs:10000}}]};}
 if(operation==='prepare'){
- assert(!fs.existsSync(root),'Destination exists; never reuse a partial/unknown directory');pins(path.dirname(root));
+ assert(!fs.existsSync(root),'An item is at the destination. Do not use it again.');pins(path.dirname(root));
  assert.equal(process.versions.node.split('.')[0],'24','Use Node24');
- const flock=spawnSync('/usr/bin/flock',['--help'],{encoding:'utf8'});assert.equal(flock.status,0);assert((flock.stdout+flock.stderr).includes('--timeout'),'Absolute GNU flock with --timeout required');
+ const flock=spawnSync('/usr/bin/flock',['--help'],{encoding:'utf8'});assert.equal(flock.status,0);assert((flock.stdout+flock.stderr).includes('--timeout'),'Absolute GNU flock with --timeout is necessary.');
  fs.mkdirSync(root,{mode:0o700});write('owned-journey.json',{schemaVersion:'local-core-journey.v1',root,sourceRoot,uid:process.getuid?.()??null,createdAt:new Date().toISOString()});
  const repositoryRoot=path.join(root,'repository');fs.mkdirSync(repositoryRoot);fs.writeFileSync(path.join(repositoryRoot,'Dockerfile'),'FROM scratch\nCOPY site/ /srv/site/\n');fs.mkdirSync(path.join(repositoryRoot,'site'));fs.writeFileSync(path.join(repositoryRoot,'site/index.html'),'<h1>Local delivery declaration</h1>\n');
  const git=(...args)=>execFileSync('git',['-C',repositoryRoot,...args],{encoding:'utf8'}).trim();git('init','-q');git('add','.');git('-c','user.name=Documentation Journey','-c','user.email=journey@example.invalid','commit','-qm','Local delivery fixture');
@@ -65,16 +65,18 @@ if(operation==='prepare'){
  write('source.json',{sourceRevision:execFileSync('git',['rev-parse','HEAD'],{cwd:sourceRoot,encoding:'utf8'}).trim(),fixtureRevision:git('rev-parse','HEAD'),packageRoots:roots});
  console.log(JSON.stringify({status:'prepared',execution:false,root,sourceRevision:json(path.join(root,'source.json')).sourceRevision,next:'run'}));
 }else if(operation==='run'){
- owned();assert(!fs.existsSync(path.join(root,'verification.json')),'Already executed; use verify or a new destination');
+ owned();assert(!fs.existsSync(path.join(root,'verification.json')),'Execution already occurred. Use verify or a new destination.');
  const platform=loadPlatformConfig(platformFile),definition=loadPipelineDefinition(path.join(root,'success.pipeline.json'));
  const validated=await validatePipelineRuntimeV2(platform,definition);write('validation.json',validated);
  let rejected;try{await validatePipelineRuntimeV2(loadPlatformConfig(path.join(root,'denied-platform.json')),definition);}catch(error){rejected=error.message;}
- assert(rejected&&/GRANT|CAPABILITY/i.test(rejected),`Missing grant did not produce a relevant admission rejection: ${rejected}`);assert(!fs.existsSync(platform.storageRoot)&&!fs.existsSync(artifactRoot)&&!fs.existsSync(telemetryRoot),'Admission must not have created run/artifact state');write('denied-admission.json',{rejected:true,error:rejected,execution:false});
+ assert(rejected&&/GRANT|CAPABILITY/i.test(rejected),`Missing grant did not produce a related admission rejection: ${rejected}`);assert(!fs.existsSync(platform.storageRoot)&&!fs.existsSync(artifactRoot)&&!fs.existsSync(telemetryRoot),'Admission must not create run, artifact, or telemetry state.');write('denied-admission.json',{rejected:true,error:rejected,execution:false});
  command([cli,'--platform',platformFile,'--pipeline',path.join(root,'success.pipeline.json'),'--run-id',successRun],'success-run',0);
  command([cli,'--platform',platformFile,'--pipeline',path.join(root,'blocked.pipeline.json'),'--run-id',blockedRun],'blocked-run',1);
- // Each synchronous CLI child has exited; adapter shutdown is awaited by the real engine.
- // No other writer is authorized for this private fixture. Preserve the complete run and
- // artifact trees before calling audit, whose FileJournal open can repair an incomplete tail.
+ // Each synchronous CLI child exits before the next step.
+ // The engine waits for adapter shutdown.
+ // No other writer has authority for this private fixture.
+ // Before audit, keep the full run and artifact trees.
+ // FileJournal can repair an incomplete tail when it opens a journal.
  const raw=path.join(root,'raw-before-audit');fs.mkdirSync(raw);fs.cpSync(platform.storageRoot,path.join(raw,'state'),{recursive:true});fs.cpSync(artifactRoot,path.join(raw,'artifacts'),{recursive:true});fs.cpSync(telemetryRoot,path.join(raw,'telemetry'),{recursive:true});
  write('raw-tree.json',digestTree(raw));
  for(const [id,name]of [[successRun,'success'],[blockedRun,'blocked']]){
@@ -87,9 +89,9 @@ if(operation==='prepare'){
  owned();const expected=json(path.join(root,'verification.json')),actual=await verify();assert.deepEqual(actual,expected);console.log(JSON.stringify(actual));
 }else if(operation==='cleanup'){
  owned();const expected=json(path.join(root,'verification.json'));assert.deepEqual(await verify(),expected);
- // Only a successfully verified, explicitly prepared private root can be removed.
+ // Remove only a private root with its owned-journey.json marker after verification stops without an error.
  fs.rmSync(root,{recursive:true});assert(!fs.existsSync(root));console.log(JSON.stringify({status:'owned-fixture-removed',root,removedRuns:[successRun,blockedRun],externalResources:false}));
-}else throw Error('Unknown operation: prepare, run, verify or cleanup required');
+}else throw Error('The operation is unknown. Use prepare, run, verify, or cleanup.');
 
 async function verify(){
  owned();const platform=loadPlatformConfig(platformFile),raw=path.join(root,'raw-before-audit');assert.deepEqual(digestTree(raw),json(path.join(root,'raw-tree.json')),'Preserved raw bytes changed');
@@ -109,7 +111,7 @@ async function verify(){
  const telemetry=verifyTelemetry(raw);
  const effects=records(path.join(runRoot(path.join(raw,'state'),blockedRun),'effects.jsonl'));assert(!effects.some(r=>r.entry.request?.capability==='git.repository.read'),'Blocked invalid path must not reach repository read');
  assert.equal(json(path.join(root,'denied-admission.json')).rejected,true);
- return {status:'verified-local-core-journey',successRun,successState:'succeeded',blockedRun,blockedState:'blocked',blockedReason:'delivery_lint.path_invalid',missingGrant:'rejected-before-execution',artifact:{namespace:ref.namespace,id:ref.artifactId,digest:ref.digest,sizeBytes:ref.sizeBytes,producer:ref.producer},journalHead:projection.journalHead,eventCount:projection.eventCount,effectsHead:projection.effectsHead,telemetry,persistence:'real filesystem run snapshots,event/effect/observer journals,artifact blob/metadata and telemetry stores',executionScope:'one local shipped Delivery Lint stage; no project compiler,Forge,remote Buster,provider,build,cluster or human acceptance',rawBytesPreserved:true};
+ return {status:'verified-local-core-journey',successRun,successState:'succeeded',blockedRun,blockedState:'blocked',blockedReason:'delivery_lint.path_invalid',missingGrant:'rejected-before-execution',artifact:{namespace:ref.namespace,id:ref.artifactId,digest:ref.digest,sizeBytes:ref.sizeBytes,producer:ref.producer},journalHead:projection.journalHead,eventCount:projection.eventCount,effectsHead:projection.effectsHead,telemetry,persistence:'This journey uses filesystem run snapshots, event/effect/observer journals, artifact blob/metadata, and telemetry stores.',executionScope:'This journey executes one local shipped Delivery Lint stage. No project compiler, Forge, remote Buster, provider, build, cluster, or human acceptance is part of this journey.',rawBytesPreserved:true};
 }
 
 function verifyTelemetry(raw){
@@ -145,5 +147,5 @@ function verifyTelemetry(raw){
   runs.push({runId:id,observedEvents:events.length,terminal:terminal.type,checkpointEventId:terminal.eventId,deliveryFailures:0,telemetryEffects:events.length});
  }
  assert.equal(sink.records.length,expectedAll.length);assert.equal(new Set(expectedAll).size,expectedAll.length);
- return {provider:telemetryProvider,observer:telemetryObserver,stream:'telemetry/plugin-events',records:sink.records.length,runs,scope:'same-run local projection only;not Redis,deployed collector or canonical lifecycle authority'};
+ return {provider:telemetryProvider,observer:telemetryObserver,stream:'telemetry/plugin-events',records:sink.records.length,runs,scope:'This is only a same-run local projection. It is not Redis, a deployed collector, or canonical lifecycle authority.'};
 }
