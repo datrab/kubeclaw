@@ -5067,7 +5067,7 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
   const emptyBehavior = runtimeRules?.empty ?? collection?.empty ?? schemaEmptyBehavior(field);
   if (describedPurpose && implementation) {
     const changeImpact = `When ${context} next loads the configuration, a change to ${field.path} has the effect given above.`;
-    const failureMeaning = runtimeRules?.failure ?? `Schema validation rejects ${field.path} when it violates ${acceptedValues}. If operational processing rejects this field subsequently, use the linked consumer at ${implementation.path}:${implementation.line} to find the conditions. This row gives no failure contract for other targets, paths, secrets or resources.`;
+    const failureMeaning = runtimeRules?.failure ?? `Schema validation rejects input that the full schema does not accept. Read the constraints and branches for ${field.path}. If operational processing rejects this field subsequently, use the linked consumer at ${implementation.path}:${implementation.line} to find the conditions. This row gives no failure contract for other targets, paths, secrets or resources.`;
     return {
       authorityKey,
       status: field.description?.trim() ? 'schema-and-runtime-authority' : 'qualified-runtime-authority',
