@@ -261,7 +261,7 @@ Python transitive locks, Go modules, binary checksums and apt snapshots have par
 
 - RUNTIME_LOCK_PYTHON="$PYTHON_311" node --test tests/verification/deployment/runtime-tool-locks-native.mjs
 - RUNTIME_LOCK_GO="$SELECTED_GO" node --test tests/verification/deployment/go-tool-locks-native.mjs
-- Build complete images twice with independent empty caches and identical source, architecture, browser/database bytes and builder settings. Compare package inventory, SBOM and output digests.
+- Build complete images twice with independent empty caches and identical source, architecture, browser/database bytes and builder settings. Compare package inventory, the software bill of materials (SBOM) and output digests.
 
 ### Completion criteria
 
@@ -572,7 +572,7 @@ Status: open. Severity: medium.
 
 The effective CA/server persistence and TTL contract and rotation/restore evidence across certificate expiry are incomplete.
 
-Server, agent or CA loss may interrupt mutual authentication and active jobs. SDS rotation does not establish immediate revocation of already issued SVIDs.
+Server, agent or CA loss may interrupt mutual authentication and active jobs. SDS rotation does not establish immediate revocation of already issued [SPIFFE Verifiable Identity Documents (SVIDs)](../reference/glossary.md#svid).
 
 ### Components and current state
 
@@ -707,7 +707,7 @@ The job now captures a database dump followed by immutable artifacts into a veri
 ### Completion criteria
 
 - All required data and external recovery identities are bound and usable on a fresh independent target.
-- Real PostgreSQL/artifact references and the complete application path work after restore; declared RPO/RTO are demonstrated.
+- Real PostgreSQL/artifact references and the complete application path work after restore. The measured data-loss interval is not more than the approved [recovery point objective (RPO)](../reference/glossary.md#rpo). The measured recovery time is not more than the approved [recovery time objective (RTO)](../reference/glossary.md#rto).
 
 ### Separate environment acceptance
 
@@ -903,7 +903,7 @@ Status: open. Severity: unassessed.
 
 The accepted prism-preference-learning-v1 document explicitly excludes automatic time decay, while projectPreferences computes score * 0.5^(ageDays/180) and createPreferenceGeneration persists policyVersion=prism.preferences.v1.decay180-project-override.
 
-Readers cannot determine whether preferences should remain stable with age or weaken automatically. Different contract interpretations can produce different effective preferences for the same event history.
+The accepted contract does not include automatic time decay. The implementation uses automatic time decay. Approval for that change is unknown in this register. Different contract interpretations can produce different effective preferences for the same event history.
 
 ### Components and current state
 
@@ -958,7 +958,7 @@ Status: open. Severity: medium.
 
 The Buster quality-gate stage imports assertion functions from the root of @kubeclaw/pipeline-test-gate-contract. The plugin boundary check deliberately permits only audited exact exports for stage dependency graphs and includes a negative test that rejects this package-root import.
 
-The complete plugin boundary verification stops before it can certify the current extension boundary. Documentation can describe the intended exact-export rule, but it cannot claim that every installed stage currently complies with that rule.
+The complete plugin boundary verification stops at a package-root import that is not approved. Documentation can describe the intended exact-export rule, but it cannot claim that every installed stage currently complies with that rule.
 
 ### Components and current state
 
@@ -1034,7 +1034,7 @@ Source tracing followed the recovery guard through normal execution and administ
 
 ### Reproduction and verification procedure
 
-- Run the persistent external-effect recovery tests in the verification record.
+- In [Prepare a clean checkout](../extend/developer-handbook.md#prepare-a-clean-checkout), use source revision `fbb85fd6e1678bbe86dc1019ce5a422a1f24e23b` in step 2. From the repository root, use `node --test tests/verification/reliability/external-effect-recovery.test.mts tests/verification/reliability/observer-recovery.test.mts`. The tests write files and start processes and a local HTTP server. [Original record C020](https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md#L243) gives this command's result at source `8b1ce24b38b5e628dc03a88c6af0b8124848c5de`. These tests do not add a reconciliation operation.
 - Create an accepted external effect without a receipt, then attempt normal resume and administrative retry. Observe that both paths return the unresolved-outcome guard.
 - Inspect skills/nova/core/execution/effect-recovery.ts, engine-run.ts and engine-admin.ts. Confirm that no supported reconciliation import operation follows the stop.
 

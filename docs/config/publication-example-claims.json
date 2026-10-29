@@ -27342,7 +27342,7 @@
     },
     {
       "path": "docs/site/status/open-issues.md",
-      "sha256": "b6375f2e99d2fdd02d5c0a3e633bc88080a5e6a1e1ee068c6edd19dc6faf7c0d",
+      "sha256": "368b06999df04be91bfe1f5a81f1b1dc04e7e41c6e197d16a2612ff3cb334bb3",
       "owner": "scripts/docs-status.mjs; docs/status/open-issues.json; docs/status/finding-identities.json",
       "claim": "25 canonical issue reproduction/verification specifications, completion requirements and live limits",
       "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -27355,7 +27355,7 @@
       "prose": [
         {
           "ordinal": 1,
-          "sha256": "b6375f2e99d2fdd02d5c0a3e633bc88080a5e6a1e1ee068c6edd19dc6faf7c0d",
+          "sha256": "368b06999df04be91bfe1f5a81f1b1dc04e7e41c6e197d16a2612ff3cb334bb3",
           "owner": "scripts/docs-status.mjs; docs/status/open-issues.json; docs/status/finding-identities.json",
           "claim": "25 canonical issue reproduction/verification specifications, completion requirements and live limits",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
