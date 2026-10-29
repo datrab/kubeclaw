@@ -2640,7 +2640,7 @@
       "audience": "plugin author, runtime maintainer",
       "owner": "documentation automation",
       "appliesTo": "current private workspace SDK entrypoints and plugin-system v2 schema",
-      "lastVerified": "generated from source revision 949a217e6530f929d9e43e5398712fa49db91ef4",
+      "lastVerified": "generated from source revision 7994a51e16bc752357c3a801190b12b7d6a191a4",
       "sourceDependencies": [
         "scripts/docs-sdk-reference.mjs",
         "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
