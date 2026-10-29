@@ -102,21 +102,21 @@ both paths after a shared policy, discovery, normalization, or reporting change.
 | Need | Correct change | Reason |
 | --- | --- | --- |
 | Change timeout, paths, scope, severity, arguments, or tier | Policy | The adapter already exists. |
-| Add a supported Kubernetes check | Policy-pack rule | Data is sufficient; no executable code is needed. |
+| Add a supported Kubernetes check | Policy-pack rule | Data is sufficient. No executable code is needed. |
 | Add a Kubernetes rule type | Pack validator and evaluator | The closed type vocabulary needs new meaning. |
-| Add an analyser | Tool adapter and policy entry | Execution and canonical policy stay exact. |
+| Add an analyzer | Tool adapter and policy entry | Execution and canonical policy stay exact. |
 | Add a language or target family | Policy validation, discovery, and tools | Evidence and authority vocabularies are closed. |
 | Change pipeline outcome semantics | Stage or report contract | Only this boundary owns lifecycle meaning. |
 
 Do not create another stage only to run one command. A stage is a lifecycle
-boundary. Add the analyser to the engine unless the work has distinct pipeline
+boundary. Add the analyzer to the engine unless the work has distinct pipeline
 meaning and a separate typed result.
 
 ## Start From A Known State
 
 Make a lint change in a clean checkout. The supported local check environment is
 Node.js 24 with dependencies installed from the root lockfile. The focused suite
-does not require native analysers. The live fixture also requires `shellcheck`,
+does not require native analyzers. The live fixture also requires `shellcheck`,
 `shfmt`, and GNU `flock` from `util-linux`.
 
 Provision these programs through the approved package mechanism for your host.
@@ -139,13 +139,14 @@ command -v flock
 flock --version | grep -F 'util-linux'
 ```
 
-Stop if the first command fails. `flock --version` must identify util-linux;
+If the first command fails, stop. `flock --version` must identify util-linux.
 BusyBox `flock` is not sufficient. These commands support the package fixture,
-not every configured analyser. The complete runtime authority is
+not every configured analyzer. The complete runtime authority is
 `docker/Dockerfile.nova`, generated from `versions.json`, the hashed Python and Go
-locks under `docker/`, and `docker/nova-tools/package-lock.json`. Build or run that
-image for target-runtime acceptance; do not substitute a collection of unpinned
-host binaries. Different analyser versions can emit different codes or output
+locks under `docker/`, and `docker/nova-tools/package-lock.json`.
+
+Build or run that image for target-runtime acceptance. Do not substitute a collection of unpinned
+host binaries. Different analyzer versions can emit different codes or output
 shapes.
 
 Build the complete target tool image and mount the clean checkout at a separate
@@ -325,7 +326,7 @@ an admission decision, not only a severity edit.
 
 ## Add A Tool
 
-A tool adapter converts one analyser into the common report model. It does not
+A tool adapter converts one analyzer into the common report model. It does not
 decide the stage outcome.
 
 1. Add one object with stable `id`, display `name`, executable `binary`, optional
@@ -526,7 +527,7 @@ default fingerprint includes the message. Supply a stable seed when necessary.
 Start with a validated report that discloses the active findings. The report
 must bind the current baseline digest. Produce and retain that report with the
 engine runner. Run this command in the target image when the host does not have
-the complete pinned analyser set:
+the complete pinned analyzer set:
 
 ```bash
 npm run lint:report -- \
@@ -611,7 +612,7 @@ review copy after the reviewer accepts the change.
 ## Version, Migration, And Rollback
 
 `versions.json` is the version authority for Nova image inputs.
-`docker/nova-tools/package.json` and its lockfile own the JavaScript analysers.
+`docker/nova-tools/package.json` and its lockfile own the JavaScript analyzers.
 The [generated version table](../reference/lint-policy-generated.md#runtime-analyser-version-authority)
 lists the current lint-relevant pins from those sources. Do not copy their
 values into another maintained table.
@@ -693,7 +694,7 @@ the contract version. Revert the builder, validator, stage, schema version, and
 fixtures together if the new contract cannot pass this command. The test removes
 its temporary stored-report fixture; no cleanup file may remain under `src/`.
 
-Recomputation prevents an analyser from deciding acceptance by reporting false totals.
+Recomputation prevents an analyzer from deciding acceptance by reporting false totals.
 
 > **Contract evidence:** [The validator checks findings, evidence, policy
 > identity, scope, inventory, and recomputed summary](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/report-contract.ts#L38-L231).
@@ -719,8 +720,8 @@ shared runner for `eslint` and all three type-evidence tools convert a parsed
 nonarray top-level JSON value to an empty list. The ESLint normalizer also treats
 a nonarray `messages` member as empty. These adapters do not separately reject
 an ordinary nonzero process exit when the normalized findings are empty. Invalid
-JSON syntax, timeout, failed start, output overflow and cancellation follow their
-separate failure paths; this limit does not make those failures clean.
+JSON syntax, timeout, failed start, output overflow and cancellation use their
+separate failure paths. This limit does not make those failures clean.
 
 The Source counterexample is conditional, not a native observation: with admitted
 inputs and a completed native process, stdout `{}` can normalize to zero
@@ -770,10 +771,8 @@ the closed registry and its policy entry passes validation.
 Use an absolute `policyPath` in stage configuration and select an existing
 `policyProject`. The schema accepts a nonempty relative path, but the adapter
 resolves it against the Nova process working directory before root admission.
-An absolute path avoids a deployment-dependent result; it is an operational
-requirement of this guide, not a schema constraint. Set `includeExperimental`
-only when the run must disclose experimental tools. Set `includeDebt` only when
-the reader is authorized to see waived finding bodies.
+An absolute path avoids a deployment-dependent result. It is an operational
+requirement of this guide, not a schema constraint. Only when the run must disclose experimental tools, set `includeExperimental`. Only when the reader is authorized to read waived finding bodies, set `includeDebt`.
 
 The executor configuration must admit the canonical repository and policy
 roots. The `lint.execute` grant must admit the same roots and project identity.
@@ -1030,30 +1029,43 @@ commit `artifacts/lint-*.json` unless a change record explicitly owns them.
 
 ### Tool Walkthrough
 
-Use `openapi-contract` as the internal-analyser shape, but do not treat its API
-fixture as proof for process failures. A native analyser also needs the process
+Use `openapi-contract` as the internal-analyzer shape, but do not treat its API
+fixture as proof for process failures. A native analyzer also needs the process
 cases below.
 
 1. Add `skills/nova/plugins/lint/src/engine/<tool>-tool.ts`. Define one stable
    ID, display name, binary identity, detector, and `run(ctx)` implementation.
-2. Register the object through one registry family and import that family from
+2. Register the object through one registry family. Import that family from
    `skills/nova/plugins/lint/src/engine/tool-registry.ts`. Do not mutate
    `TOOL_ADAPTERS` outside registration.
 3. Add the exact policy entry in
    `charts/kubeclaw/files/config/lint-policy.json`. Start in
    `experimental_tools` unless valid blocking admission already exists.
-4. For a native analyser, add its pinned installation to the owning Nova image
+4. For a native analyzer, add its pinned installation to the owning Nova image
    input: `versions.json`, a hashed Python or Go lock, or
    `docker/nova-tools/package.json` and its lock. Do not put a binary version in
-   lint policy. If the analyser has a native config, deliver that file through
+   lint policy. If the analyzer has a native config, deliver that file through
    every step in “Deliver New Native Configuration.”
-5. Add `skills/nova/plugins/lint/tests/<tool>.test.mjs` and include it in the
+5. Add `skills/nova/plugins/lint/tests/<tool>.test.mjs`. Include it in the
    `test:focused` script in `skills/nova/plugins/lint/package.json`. Cover
-   absent detection, clean output, a finding exit, malformed output, missing
-   binary, start failure, timeout, abort, descendant cleanup, stable
-   fingerprint, baseline application, and report normalization. An internal
-   analyser without a process marks the process-only cases not applicable with
-   that reason; it must still test thrown and malformed input.
+   these cases:
+
+   - Absent detection
+   - Clean output
+   - A finding exit
+   - Malformed output
+   - Missing binary
+   - Start failure
+   - Timeout
+   - Abort
+   - Descendant cleanup
+   - Stable fingerprint
+   - Baseline application
+   - Report normalization.
+
+   An internal
+   analyzer without a process marks the process-only cases not applicable with
+   that reason. It must still test thrown and malformed input.
 6. Run `npm run test:focused --prefix skills/nova/plugins/lint`. Its
    `lint-registry-lifecycle` case must still reject both a policy-only ID with
    `LINT_POLICY_ADAPTER_MISSING` and an adapter-only ID with
@@ -1061,16 +1073,16 @@ cases below.
 7. Run both engine report commands. Without `--include-experimental`, the new
    tool must be absent. With it, the tool must occur once, its finding objects
    must remain under `findings`, and only `experimental_findings` may increase.
-8. Build the Nova image and repeat the full report there. Confirm the pinned
-   binary version before promotion. Update the rule and tool references, then
-   regenerate and check policy facts.
+8. Build the Nova image. Repeat the full report there. Confirm the pinned
+   binary version before promotion. Update the rule and tool references. Then
+   regenerate policy facts. Check policy facts.
 
 Remove a rejected tool from the registry, policy, experimental list, admission,
 baseline, runtime lock or image, tests, and references in one rollback. Run the
 focused suite after removal; its closed-registry cases prove that a one-sided
 rollback cannot pass.
 
-> **Maintained tool examples:** [The OpenAPI analyser shows internal finding
+> **Maintained tool examples:** [The OpenAPI analyzer shows internal finding
 > construction](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/src/engine/openapi-tool.ts#L6-L77).
 > [The remediation suite shows native exit, timeout, abort, and cleanup
 > behavior](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/plugins/lint/tests/remediation.test.mjs).
@@ -1080,16 +1092,16 @@ rollback cannot pass.
 Use Go module authority as the model for a language with canonical roots.
 
 1. Add a new language to `LANGUAGES` in
-   `skills/nova/plugins/lint/src/engine/policy.ts` and add its project
+   `skills/nova/plugins/lint/src/engine/policy.ts`. Add its project
    `language_evidence` patterns. A pattern is selection evidence, not
    filesystem permission.
 2. Add a typed project authority when a generic target is insufficient. Go uses
-   `go.modules`; Terraform uses `terraform.roots` and an absolute provider mirror.
-3. Add each analyser as described in the tool walkthrough. Bind its targets,
+   `go.modules`. Terraform uses `terraform.roots` and an absolute provider mirror.
+3. Add each analyzer as described in the tool walkthrough. Bind its targets,
    include patterns, exclusions, scope, and detector to the new language.
 4. Extend `skills/nova/plugins/lint/tests/discovery.test.mjs` with missing
-   evidence, valid evidence, depth, global exclusion, and a project that detects
-   both the new and an existing language. Extend
+   evidence, valid evidence, depth, and global exclusion. Include a project that
+   detects both the new and an existing language. Extend
    `skills/nova/plugins/lint/tests/remediation.test.mjs` or a focused tool test
    with target escape, source symlink, changed-file, module, affected-project,
    and full scope.
@@ -1226,11 +1238,18 @@ new native tool also needs a run in the image built from `docker/Dockerfile.nova
 
 ## Completion Criteria
 
-The extension is complete only when ownership is clear, registry and policy stay
-exact, filesystem authority remains bounded, findings have stable identity,
-blocking behavior has admission evidence, debt has approval and expiry, failures
-cannot look successful, reports bind all policy inputs, stage outcome follows the
-validated report, and target-runtime checks pass or state an exact prerequisite.
+The extension is completed only when all these conditions are true:
+
+- Ownership is clear.
+- Registry and policy stay exact.
+- Filesystem authority remains bounded.
+- Findings have stable identity.
+- Blocking behavior has admission evidence.
+- Debt has approval and expiry.
+- Failures have failure results.
+- Reports bind all policy inputs.
+- The stage uses the validated report for its outcome.
+- Target-runtime checks have the required results or state an exact prerequisite.
 
 ## Extension Verification Record
 
@@ -1283,13 +1302,15 @@ a repository read and still requests a failure report. The maintained
 branches, registry/grants, durable journal, audit, artifacts, and owned cleanup.
 
 There is no package-local retry loop, wait, resume cursor, or mutable state. A
-new attempt rereads repository content and publishes new evidence; it does not
-certify the earlier bytes. Cancellation travels through capability calls; their
-errors can reach the same read-failure branch, and a cancelled report write may
-propagate. Never infer successful cleanup or rollback from that branch. Preserve
-run/effect/artifact evidence under the [effectful plugin rules](effectful-plugin.md);
-no stage-owned temporary files need removal. Disable only after pinned runs
-finish using the [plugin lifecycle](../use/plugins.md#canonical-plugin-lifecycle-procedure).
+new attempt rereads repository content and publishes new evidence. This evidence
+is not a result for the earlier attempt.
+
+Cancellation travels through capability calls. Their errors can reach the same
+read-failure branch, and a canceled report write may propagate. Do not use that
+branch as evidence of cleanup or rollback. Preserve run/effect/artifact evidence
+under the [effectful plugin rules](effectful-plugin.md). No stage-owned temporary
+files need removal. Disable only after pinned runs finish using the
+[plugin lifecycle](../use/plugins.md#canonical-plugin-lifecycle-procedure).
 
 To change matching, update `dockerfile.ts`, its parser tests, the stage outcome
 tests, and this chapter together. To change input/report shape, update schemas,

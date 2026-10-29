@@ -195,7 +195,7 @@ Run these steps in order. Stop at the first nonzero exit.
 | Prism Studio or Buster browser providers | Locked Playwright 1.62.1 browser and its Linux libraries | Disposable browser environment; loopback ports; no production session. |
 | Go controller | Root `go.mod` declares Go 1.22 | Run module commands at repository root. Use a compatible installed Go toolchain and the module lock. |
 | Pipeline observability cross-language check | Separate `contracts/pipeline-observability/v1/go/go.mod` declares Go 1.24 and has its own `go.sum`; genuine compatible Go at `/usr/local/go/bin/go` | Verify the absolute executable before this selected check. Telemetry wire tests/generation separately require `go` and `gofmt` on `PATH`. |
-| Native Worker NRI | `tools/native-worker-nri/go.mod` declares Go 1.26.5; C launcher; Linux cgroup v2. Native-runtime also needs actual Helm, race-supported Go platform, enabled cgo and the Go-selected C compiler. Native pool setup needs the exact central Node patch. | Disposable host with explicit root/delegated-scope authority; follow the native fixture and Helm/race procedures below. This is a separate Go module. |
+| Native Worker NRI | `tools/native-worker-nri/go.mod` declares Go 1.26.5; C launcher; Linux cgroup v2. Native-runtime also needs actual Helm, race-supported Go platform, enabled cgo and the Go-selected C compiler. Native pool setup needs the exact central Node patch. | Use a disposable host with explicit root/delegated-scope authority. Use the native fixture and Helm/race procedures below. This is a separate Go module. |
 | Documentation API discovery | Helm 3.22.0; Go 1.26.3; root dependencies | Local render/parser route. The documentation workflow fixes these versions. They differ from runtime image tools. |
 | Chart/release render tests | Helm 3.18.4 as selected by product CI; local chart inputs | No cluster credential is required for local render. A successful render does not prove storage or RBAC. |
 | Redis/service reliability | Native nginx and source Redis; selected Redis binaries; Docker for extraction | Disposable service roots. CI supplies `ARCHVIEWER_TEST_NGINX`, `REDIS_SOURCE_SERVER`, and `REDIS_SERVER`. |
@@ -298,14 +298,14 @@ These boundaries prevent a specialist policy change from changing every worker.
 
 | Source area | Responsibility and adjacent boundary | Build or generated boundary |
 | --- | --- | --- |
-| `skills/nova/core`, `skills/nova/project`, `skills/nova/pipeline.ts` | Lifecycle, scheduling, effects, run authority, project compilation, CLI | TypeScript source exports; project compilation produces run inputs, not a package build. |
+| `skills/nova/core`, `skills/nova/project`, `skills/nova/pipeline.ts` | Lifecycle, scheduling, effects, run authority, project compilation, CLI | TypeScript source exports: project compilation produces run inputs, not a package build. |
 | `skills/worker/core` | Attempt admission, cancellation, deadlines, resource and result mechanics | TypeScript source plus native launcher/runtime prerequisites. No pipeline scheduling. |
 | `skills/buster/engine`, `skills/buster/runtime.ts` | Resolved test execution, providers, artifacts, reports, remote result production | Buster role assembly and provider identity must match the plan. Nova owns final import/decision. |
 | `skills/prism` | Domain, renderer, corpus, engine, Control, Studio, Worker binding, Ingestion | Studio emits `dist-studio`; service entrypoints consume source and contract validators. |
 | `skills/common/plugin-runtime/sdk` | Public plugin API and value helpers | Schema-generated `src/generated/contracts.ts`; compiled SDK has its own build config. |
 | `skills/common/plugin-runtime/foundation` | Registry, configuration, package identity, artifact, isolation, observability mechanics | C isolation launcher and runtime contract assets. No specialist policy import. |
-| `skills/common/plugins`, `skills/nova/plugins`, `skills/buster/plugins` | Registered adapters, observers, stages, providers, report adapters | Manifest `src/*.ts` registration; each plugin needs a TypeScript config. The aggregate plugin build emits temporary JavaScript and removes it. |
-| `contracts/*` | Versioned schemas, validation, types, identity | Follow each contract's generator; never edit generated types/validators directly. |
+| `skills/common/plugins`, `skills/nova/plugins`, `skills/buster/plugins` | Registered adapters, observers, stages, providers, report adapters | Manifest `src/*.ts` registration: each plugin needs a TypeScript config. The aggregate plugin build emits temporary JavaScript and removes it. |
+| `contracts/*` | Versioned schemas, validation, types, identity | Use each contract's generator. Never edit generated types/validators directly. |
 | `packaging/runtime` | Package ownership and consuming role membership | Role bundles contain selected package bytes and immutable metadata. |
 | `charts`, `my-values`, `gitops`, `releases` | Selected workload configuration and deployment selection | Chart render, generated version values, release values and GitOps bundles have separate authorities. |
 | `cmd`, `tools/native-worker-nri` | Go controllers and node integration | Root Go module and independent NRI module. |
@@ -379,7 +379,7 @@ Thus a command called a check can change generated files. Retain the diff and
 verify that it is the expected generation; a zero exit does not prove the
 checkout remained unchanged.
 
-For telemetry, change the catalogue/schema authority, then run
+For telemetry, change the catalog/schema authority, then run
 `node scripts/generate-telemetry-contracts.mjs` followed by the same command
 with `--check`. It requires `gofmt` even in check mode. For central versions,
 use [the version procedure below](#versions-and-release-selection).
@@ -470,8 +470,8 @@ In particular, `verify:plugin-system-v2` requires
 
 A debugger lets you pause a process and inspect its values. Run it only in the
 isolated checkout with Node 24 and the selected caller's dependencies. Do not
-attach it to a deployed owner. Libraries have no independent listener; debug
-the test that imports them. The following callers are real source/test files,
+attach it to a deployed owner. Libraries have no independent listener. Debug
+the test that imports them. These callers are real source/test files,
 not new service entrypoints.
 
 | Component | Local caller and invocation from repository root | Configuration, logs and cleanup |
@@ -508,7 +508,7 @@ not new service entrypoints.
    cancellation and CPU measurements. Debug results cannot establish timing,
    successful recovery or a native cleanup budget.
 
-The following sources define caller selection: [Nova/Worker command routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L153-L166).
+These sources define caller selection: [Nova/Worker command routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L153-L166).
 [Buster plan-runner routing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L72-L88).
 [SDK values caller](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/common/plugin-runtime/sdk/package.json#L5-L12).
 [Prism/Studio commands](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/skills/prism/package.json#L12-L29). These are source-backed debug routes, not recorded debug executions.
@@ -555,7 +555,7 @@ The runner's JSON `ok` field alone does not prove a passing lint result.
 Inspect per-tool status, policy/config identity, debt, experimental findings,
 and error evidence before changing source or a baseline. Remove only the owned
 report after retaining its digest. This engine command does not prove stage
-activation, runtime grants, or deployed policy-pack delivery. Follow the Lint
+activation, runtime grants, or deployed policy-pack delivery. Use the Lint
 guide's known deployment boundary rather than inventing a Nova-pod invocation.
 
 > **Source evidence — Lint check and exit contract**
@@ -642,7 +642,7 @@ Read the Nova chain as these separate outcomes:
 
 | Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
 | --- | --- | --- |
-| Nova typecheck + lifecycle contract | Both exit zero; the contract result reports `ok`. No deployment/build artifact is implied. | Type/import errors need locked dependencies/current contract first; an assertion needs its exact trigger/expected outcome. Stop before journal checks. |
+| Nova typecheck + lifecycle contract | Both exit zero; the contract result reports `ok`. No deployment/build artifact is implied. | Type/import errors need locked dependencies/current contract first. An assertion needs its exact trigger/expected outcome. Stop before journal checks. |
 | Lifecycle/snapshot tests | Node test summary has no failed or required skipped case; durable/recovery assertions complete. Retain test names and interruption errors. | Missing GNU lock or process-death assertion is not replay success. Stop; retain the reported journal/temp path and failure before owned cleanup. |
 | Source/graph version fixtures | Both families complete with no failed or required skipped case; retain old/current identity assertions. | First distinguish Git/source setup from retained-version mismatch. Stop incompatible interpretation; do not regenerate old fixture bytes to match new behavior. |
 | SDK freshness + ownership + Core guide | Each exits zero; SDK check is read-only, owner check rejects forbidden dependencies, guide check protects its named explanation. | First stale generated output, then forbidden edge or named guide defect: fix the reported authority, not the guard. Stop; no tracked mutation is expected. |
@@ -761,11 +761,11 @@ Interpret Worker checks before using them as change evidence:
 
 | Command/group | Expected completion and retained output | Failure/skip diagnosis, stop and cleanup |
 | --- | --- | --- |
-| contracts / attempt-executor / local-runtime | Each npm group must complete its caller assertions and TypeScript checks with exit zero. Keep the individual command/error output. | An import/typing failure is distinct from an attempt assertion failure. Stop the sequence at the first error; no standalone Worker daemon or deployed output is created. |
-| role-surfaces + ownership | Exit zero checks neutral/specialist boundaries and package/import direction. No native resource claim follows. | Diagnose the named forbidden role/import or stale type first. Stop; do not copy specialist policy into Core. |
-| node-pools / native-runtime | Exit zero and no failed/required skipped case, including the real systemd parser; native-runtime also completes real Helm renders, exact-Go static build and the mandatory Go race tests. Retain tool/module/cache/compiler/test diagnostics. | Missing `systemd-analyze`, Helm, exact Go, effective cgo=1, supported race platform or Go-selected compiler blocks the selected step. A race report is a test failure. Stop; do not remove `-race`. Fixture render/build outputs are owned cleanup, not host identities or shared Go caches. |
-| native-scope | Exit zero with the two real-host cases completed; final counters/empty scopes/disposed ownership and replay/capacity assertions pass. | Missing one of the four inputs, launcher/host guard or cleanup error is failure, never a skip. Stop admission on unresolved ownership; keep records until reconciliation. See the host procedure for retirement. |
-| trust / trust:live | Source trust checks must exit zero. The live route must separately complete on the registered cluster and retain real identity/denial observations. | Unavailable cluster/credentials mean live unexecuted. Wrong identity or denied expected action is a failure to diagnose through trust policy; do not weaken authentication. Follow the registered fixture cleanup, not global resource deletion. |
+| contracts / attempt-executor / local-runtime | Each npm group must complete its caller assertions and TypeScript checks with exit zero. Keep the individual command/error output. | An import/typing failure is distinct from an attempt assertion failure. Stop the sequence at the first error. No standalone Worker daemon or deployed output is created. |
+| role-surfaces + ownership | Exit zero checks neutral/specialist boundaries and package/import direction. This is not evidence for native resource behavior. | Diagnose the named forbidden role/import or stale type first. Stop. Do not copy specialist policy into Core. |
+| node-pools / native-runtime | The checks exit zero with no failed or required skipped case, including the real systemd parser. The native-runtime checks also complete real Helm renders, exact-Go static build and the mandatory Go race tests. Retain tool/module/cache/compiler/test diagnostics. | Missing `systemd-analyze`, Helm, exact Go, effective cgo=1, supported race platform or Go-selected compiler blocks the selected step. A race report is a test failure. Stop. Do not remove `-race`. Fixture render/build outputs are owned cleanup, not host identities or shared Go caches. |
+| native-scope | Both real-host cases must complete with exit zero. All assertions for final counters, empty scopes, disposed ownership and replay/capacity must have the required results. | Missing one of the four inputs, launcher/host guard or cleanup error is failure, never a skip. Stop admission on unresolved ownership. Keep records until reconciliation. See the host procedure for retirement. |
+| trust / trust:live | Source trust checks must exit zero. The live route must separately complete on the registered cluster and retain real identity/denial observations. | Unavailable cluster/credentials mean live unexecuted. Wrong identity or denied expected action is a failure to diagnose through trust policy. Do not weaken authentication. Use the registered fixture cleanup, not global resource deletion. |
 
 > **Source evidence — Worker route**
 >
@@ -1091,12 +1091,12 @@ owns the change, `npm run typecheck --prefix skills/prism`, and
 `npm run verify:prism:contracts`. Add adjacent consumer tests when the shape or
 meaning crosses their boundary.
 
-For a storage transaction, follow
+For a storage transaction, use
 [the transaction fixture procedure](#prepare-the-prism-pooled-transaction-fixture).
 Its own database and retained-state rules differ from native dispatch.
-PGlite/in-memory success cannot prove real PostgreSQL transaction ownership. For native dispatch, follow [the ordered PostgreSQL procedure](#prepare-prism-native-dispatch-databases).
-For native Worker binding, prepare [the native fixture host](#prepare-a-native-worker-fixture-host),
-then add `npm run verify:prism:native-worker`. That route requires
+PGlite/in-memory success cannot prove real PostgreSQL transaction ownership. For native dispatch, use [the ordered PostgreSQL procedure](#prepare-prism-native-dispatch-databases).
+For native Worker binding, prepare [the native fixture host](#prepare-a-native-worker-fixture-host).
+Then add `npm run verify:prism:native-worker`. That route requires
 `PRISM_NATIVE_ISOLATED_TEST_POOL=true`; this is explicit permission to use the
 prepared disposable pool, not proof that the pool is safe. For chart or
 runtime entrypoint changes, add `verify:prism:helm`,
@@ -1319,9 +1319,9 @@ inert discovery: reading a manifest must not run untrusted plugin code. Test
 unknown registration, wrong identity, undeclared capability, changed bytes under
 an existing digest, activation denial, replacement, and removal with retained
 state. Add checkpoint/recovery fixtures when registry state can survive a
-restart. Follow the [exclusive replacement and retained-run procedure](../use/plugins.md#5-replace-or-remove)
+restart. Use the [exclusive replacement and retained-run procedure](../use/plugins.md#5-replace-or-remove)
 when testing same-ID package replacement. Use [Plugin Runtime](../understand/plugin-runtime.md) and the changed
-[package guide](plugin-catalogue/README.md); run `docs:core-guides:check` and the
+[package guide](plugin-catalogue/README.md). Run `docs:core-guides:check` and the
 [documentation-change chain](#documentation-change-chain).
 
 For local OCI Registry storage changes, use:
@@ -1358,7 +1358,7 @@ Interpret the two Registry routes independently:
 > Validation: run both the plugin registry contract checks and the native OCI checks. They protect different boundaries.
 > Test evidence: [original registry start and storage](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/tests/verification/integration/registry-local-gc.test.mjs#L14-L51). Status: source-only; no execution result is asserted.
 > Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e`.
-> Limit: the native fixture does not certify a production registry, its authentication, or its backup path.
+> Limit: the native fixture is not evidence of correct operation of a production registry, its authentication, or its backup path.
 
 ## Change SDK or shared contracts
 
@@ -1383,9 +1383,9 @@ The local SDK aggregate covers portable JSON, effect/dependency/source identity,
 historical repair producers, and delivery-manifest compiler/durability/cancel
 boundaries. It requires GNU locks and Git for its retained-state fixtures.
 Select additional changed-consumer package tests. For a generated type, change
-its canonical schema first and follow the generation order above. For an
+its canonical schema first. Then use the generation order above. For an
 external wire contract, test old producer/new consumer and new producer/old
-consumer where support is declared; do not assume optional fields are compatible
+consumer where support is declared. Do not assume optional fields are compatible
 with a closed `additionalProperties: false` schema.
 
 Preserve exact digest encoding/version for retained values. A runtime identity
@@ -1865,9 +1865,8 @@ Interpret security/performance results without changing their acceptance inputs:
 ## CI triggers, authority, and failure handling
 
 A workflow being present does not prove that repository branch protection marks
-its job required. That server setting is outside this checkout. Confirm the
-current required checks with the repository maintainer before merging. The
-following table describes the workflow's own triggers and dependencies.
+its job required. That server setting is outside this checkout. Before merging, confirm the
+current required checks with the repository maintainer. This table describes the workflow's own triggers and dependencies.
 
 | Workflow | Trigger and role | Environment, result, and release consequence |
 | --- | --- | --- |
@@ -1972,11 +1971,11 @@ For a selected tool/base change:
    diff; it does not mean the resolution branch was exercised.
 4. On failure, stop before image/build/release steps. The version writer or
    earlier Python/Go resolution can already have changed files. The updater
-   writes the receipt only after both resolutions succeed; a failed run does
-   not certify partial locks. Retain the partial diff and first error. For
+   writes the receipt only after both resolutions succeed. A failed run is
+   not evidence that partial locks are correct. Retain the partial diff and first error. For
    `RUNTIME_GO_TOOLCHAIN_NOT_SELECTED`, select the exact Go. For unavailable uv,
    downloads or architecture mismatch, correct that prerequisite or incompatible
-   selection. Retry the same synchronization after diagnosis, then inspect its
+   selection. Retry the same synchronization after diagnosis. Then inspect its
    entire diff again. To abandon the change, restore only your recorded authored
    and generated changes, never someone else's work or a whole-tree reset.
 5. Run the stable checks in order.
@@ -1998,7 +1997,7 @@ For a selected tool/base change:
    [documentation-change chain](#documentation-change-chain). Keep old identities
    available while recovery still references them.
 
-The following sources define the conditional updater and partial-write boundary:
+These sources define the conditional updater and partial-write boundary:
 [receipt fast path and update order](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/runtime-tool-locks.mjs#L72-L86).
 [uv platforms/options and exact Go](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/runtime-tool-locks.mjs#L36-L69).
 [sync command sequencing](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/package.json#L283-L284). This describes expected source behavior, not an observed updater run.
@@ -2079,24 +2078,24 @@ Interpret release-tool fixtures separately from release operations:
 Use [documentation governance](../reference/documentation-governance.md) and the
 [generated page map](../reference/generated-documentation-map.json). The map
 records page owner, evidence sources, canonical route and mapped checks. Search
-it for the changed source and its parent component; a narrow symbol can be
+it for the changed source and its parent component. A narrow symbol can be
 covered by a parent evidence path. If no correct page/owner appears, assign and
-register that dependency before considering the change documented. An exhaustive
+register that dependency before considering the change documented. A full
 source inventory and an authored explanation must each remain current.
 
 | Changed authority | Canonical reader explanation | Maintenance/check route |
 | --- | --- | --- |
-| Nova reducer, recorder, recovery, graph/compiler | [Nova Core](../understand/nova-core.md), this change guide, run/recovery task | Nova + developer experience; Core guide and source/contract checks |
-| Worker envelope, profile, native authority | [Worker Core](../understand/worker-core.md), profiles and recovery | Worker maintainer; Worker contracts/role/native checks and Core guide |
-| SDK schema/export/helper | [SDK reference](../reference/sdk.md), [export and member inventory](../reference/sdk-exports.md), [extension contracts](contracts.md) and examples | SDK maintainers own the product contract; documentation automation owns the reference and generated inventory. Run SDK generation/compatibility/consumer checks, `npm run docs:sdk:check`, and the documentation-change chain. |
-| Plugin manifest/registration/config | [package catalogue](plugin-catalogue/README.md), supported extension guide | Package + Foundation maintainer; inventory/publication and package checks |
-| Buster plan/provider/fixture/report/error | [Buster suite reference](../reference/buster-suites.md), Buster change guide | Buster maintainer; resolver/provider/import checks and Buster guide |
-| Prism schema/service/domain/data/Studio | [Prism change guide](platform/prism.md), linked mechanism and operator task | Prism maintainer; component/contract/native checks and Prism guide |
-| Event/store/telemetry/endpoint/secret | [telemetry](../understand/telemetry.md), communication/data/security references | Source owner + telemetry/platform; generated surface and platform guide checks |
-| Chart/values/environment/deploy input | [configuration precedence](../reference/configuration-precedence.md), install/maintenance | Deployment maintainer; config/Helm generation, render and mapped guide checks |
-| Version/receipt/release/GitOps | This release route and [maintenance](../use/maintenance.md) | Release/deployment maintainer; version/receipt/selection checks |
-| Ops MCP tool/auth/namespace | [Ops MCP](../understand/ops-mcp.md), trust/endpoints | Ops maintainer; tool inventory, package/image and platform guide checks |
-| UI view/operation/preview | Studio or [Archviewer](../understand/archviewer.md) | UI + source-data owner; browser/native reader and mapped guide checks |
+| Nova reducer, recorder, recovery, graph/compiler | [Nova Core](../understand/nova-core.md), this change guide, run/recovery task | Nova + developer experience: Core guide and source/contract checks |
+| Worker envelope, profile, native authority | [Worker Core](../understand/worker-core.md), profiles and recovery | Worker maintainer: Worker contracts/role/native checks and Core guide |
+| SDK schema/export/helper | [SDK reference](../reference/sdk.md), [export and member inventory](../reference/sdk-exports.md), [extension contracts](contracts.md) and examples | SDK maintainers own the product contract. Documentation automation owns the reference and generated inventory. Run SDK generation/compatibility/consumer checks, `npm run docs:sdk:check`, and the documentation-change chain. |
+| Plugin manifest/registration/config | [package catalog](plugin-catalogue/README.md), supported extension guide | Package + Foundation maintainer: inventory/publication and package checks |
+| Buster plan/provider/fixture/report/error | [Buster suite reference](../reference/buster-suites.md), Buster change guide | Buster maintainer: resolver/provider/import checks and Buster guide |
+| Prism schema/service/domain/data/Studio | [Prism change guide](platform/prism.md), linked mechanism and operator task | Prism maintainer: component/contract/native checks and Prism guide |
+| Event/store/telemetry/endpoint/secret | [telemetry](../understand/telemetry.md), communication/data/security references | Source owner + telemetry/platform: generated surface and platform guide checks |
+| Chart/values/environment/deploy input | [configuration precedence](../reference/configuration-precedence.md), install/maintenance | Deployment maintainer: config/Helm generation, render and mapped guide checks |
+| Version/receipt/release/GitOps | This release route and [maintenance](../use/maintenance.md) | Release/deployment maintainer: version/receipt/selection checks |
+| Ops MCP tool/auth/namespace | [Ops MCP](../understand/ops-mcp.md), trust/endpoints | Ops maintainer: tool inventory, package/image and platform guide checks |
+| UI view/operation/preview | Studio or [Archviewer](../understand/archviewer.md) | UI + source-data owner: browser/native reader and mapped guide checks |
 
 ### Update protected Core source revisions
 
@@ -2269,7 +2268,7 @@ navigation. Changing the constant alone cannot establish a correct explanation.
 > [required navigation and surface checks](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L142-L157).
 > The common generator independently owns `docs/generated/inventory/documentation-source-revision.json` and rejects current source/tool inputs not in its selected full commit.
 > Test evidence: [local terminal guard result fields](https://github.com/datrab/kubeclaw/blob/671234b056bf5f5f503e51e8db30f843e781ba6e/scripts/check-core-architecture-guides.mjs#L300-L306). Status: source-only; no change-repin execution is asserted.
-> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e` for the unchanged selected Core checker and the cited common source-revision/write guards. The current common generator has additional source changes; these narrow unchanged guards do not certify its full current implementation.
+> Revision: `671234b056bf5f5f503e51e8db30f843e781ba6e` for the unchanged selected Core checker and the cited common source-revision/write guards. The current common generator has additional source changes. These narrow unchanged guards are not evidence that its full current implementation is correct.
 > Limit: local equality/metadata success does not prove source URL availability, complete semantic correctness, rendered output or the changed lifecycle task.
 
 ### Documentation-change chain
@@ -2288,7 +2287,7 @@ blocked generation step, not permission to omit the source.
    explanation and metadata. If metadata or source dependencies changed, run
    `npm run docs:governance:generate`. If source-derived facts changed, run their
    registered generator, then `npm run docs:generate` for the affected reference
-   sections. Plugin catalogue/operator matrix changes use
+   sections. Plugin catalog/operator matrix changes use
    `npm run docs:publication:generate`. Do not run write commands for an
    unrelated prose-only edit. Never hand-edit a generated section.
 2. Inspect the generated diff before continuing. Each write must finish with
@@ -2365,13 +2364,13 @@ link cleanup and the declared route redirect before deleting a public page.
 
 | Observation | Safe action and owner | Condition for closure |
 | --- | --- | --- |
-| BusyBox `flock` rejects `--timeout`; journal/store tests fail before work | Stop durable-state checks. Development environment owner supplies GNU util-linux at the required absolute path. Keep failing logs. | Repeat the same journal/recovery/compatibility/scale checks to terminal status on the supported host. |
-| Missing `cc`, Bash, GNU tar, Go, Helm, browser, scanner or service binary | Stop the affected route. Toolchain/environment owner supplies its declared prerequisite. | Exact focused check executes with retained version/exit/output evidence; no skip or substitute. |
+| BusyBox `flock` rejects `--timeout`. Journal/store tests fail before work. | Stop durable-state checks. Development environment owner supplies GNU util-linux at the required absolute path. Keep failing logs. | Repeat the same journal/recovery/compatibility/scale checks to terminal status on the supported host. |
+| Missing `cc`, Bash, GNU tar, Go, Helm, browser, scanner or service binary | Stop the affected route. Toolchain/environment owner supplies its declared prerequisite. | Exact focused check executes with retained version/exit/output evidence. A skip or substitute is not a result. |
 | Ops MCP local child exits before listener readiness | Check its separate lockfile install and bounded startup stderr. Ops maintainer/environment owner diagnoses the first failure. Do not weaken bearer authentication. | Local test lists tools, rejects unauthorized access, reports failed Kubernetes reads honestly and cleans up. Image and live authorization remain separate. |
 | A new public source field/export/registration has no page/owner or drift proof | Component and documentation owners add the mapping, explanation, generator/check and negative mutation. | Addition/change/removal of the real surface fails the responsible documentation gate when stale. |
 | Incompatible retained schema/data/identity change has no supported old/new pair | Stop its release. Contract/store owner defines migration, recovery and irreversible boundary. | Historical fixtures and original consumers prove the declared supported pair; release procedure names safe failure and rollback limits. |
 | No cluster/native/provider environment for a required change check | Record the check as unexecuted and assign its environment owner. Do not promote lower-class proof. | The exact registered test deployment/live path executes with real identities, failure/recovery observations and cleanup evidence. |
-| Platform restore or a component application-restore route is not demonstrated | Follow [recovery limits](../use/recovery.md). Platform/store owners prepare isolated-target proof; stop before destructive cutover. | Original application readers and cross-service identity/data checks pass on an independent target with a declared rollback boundary. |
+| Platform restore or a component application-restore route is not demonstrated | Use [recovery limits](../use/recovery.md). Platform/store owners prepare isolated-target proof. Stop before destructive cutover. | Original application readers and cross-service identity/data checks pass on an independent target with a declared rollback boundary. |
 
 A change check is complete only after its exact command finishes in the
 supported environment and you record its required observations. Native

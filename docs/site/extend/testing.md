@@ -59,14 +59,14 @@ retained state, and repeat the same operation identity without duplicating an
 external effect.
 
 These are verification requirements, not a claim that every existing package
-already meets them. A catalogue package check with no package-local automated
+already meets them. A catalog package check with no package-local automated
 tests does not satisfy the live-function or boundary-test requirement. Keep the
 recorded gaps and use the proof levels and surface-specific procedures below to
 complete the required evidence.
 
 ## Use A Proof Ladder
 
-For a catalogue **Package Checks** command, follow the
+For a catalog **Package Checks** command, use the
 [package-check preparation, result, failure, and cleanup procedure](#run-a-catalogue-package-check)
 below before choosing a wider proof level.
 
@@ -81,8 +81,8 @@ boundary.
 | 4. Integration | Do connected components agree? | Real adapter, provider, or engine exercise | Production topology and credentials |
 | 5. Live | Does the deployed path work and recover? | Host or cluster acceptance | Behavior outside the tested configuration |
 
-KubeClaw keeps these levels separate because a green inner test cannot prove an
-outer boundary.
+KubeClaw keeps these levels separate because a correct inner test result is not
+evidence for an outer boundary.
 
 **Benefit:** A failure report identifies the first boundary that did not work.
 
@@ -114,7 +114,7 @@ For each command, record these facts:
 Do not change `unavailable` to `passed` without running the check.
 The recorded local result came from a host without timeout-capable `flock` or a C compiler.
 Check the current host before reusing that result.
-The catalogue pages state the current local result and its environment limit.
+The catalog pages state the current local result and its environment limit.
 
 ## Test A Pipeline Stage
 
@@ -261,7 +261,7 @@ A role test proves packaging around that engine:
 7. Stop and restart while recoverable work exists.
 
 > **Attempt lifecycle:** The [operation interface defines required and optional functions](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L68-L80).
-> Worker Core applies the following conditions when it calls them:
+> Worker Core applies these conditions when it calls them:
 >
 > - [Preparation must finish synchronously](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L381-L389).
 > - [Execution starts after the remaining-time and cancellation checks](https://github.com/datrab/kubeclaw/blob/f68a7294abf0928c1aabf290c6a7e486c651a808/skills/worker/core/worker/attempt-executor.ts#L405-L418).
@@ -394,17 +394,22 @@ Changing `agentRole` would change the process role and is not plugin disablement
 
 **Stop before independent disablement, replacement, or package removal.** The
 OpenClaw integration and runtime-packaging owners must provide a reviewed chart
-control or a complete replacement image, exact rollout and drain steps, host
-registration absence and no-later-event/tool proof, and a tested rollback to the
-old image and configuration. The platform operator must approve the affected
-workload scope. If urgent containment requires stopping the whole host, use the
+control or a complete replacement image. They must provide exact rollout and
+drain steps. They must provide host registration absence and no-later-event/tool
+proof. They must also provide a tested rollback to the old image and configuration.
+
+The platform operator must approve the affected workload scope. If urgent containment requires stopping the whole host, use the
 [run control boundary](../use/operate.md) and the workload owner's approved
-containment procedure; host stoppage affects other work and does not prove
-removal. Keep Redis records, Prism database documents, job identities, receipts,
+containment procedure. Host stoppage affects other work. It is not evidence of
+removal.
+
+Keep Redis records, Prism database documents, job identities, receipts,
 and old images according to their owners' retention and recovery rules. The
-extension does not delete them. No accepted old/new host-package compatibility
-pair or state migration is supplied; follow the maintenance safe stop before
-upgrade.
+extension does not delete them.
+
+No accepted old/new host-package compatibility
+pair or state migration is supplied. Before
+upgrade, use the maintenance safe stop.
 
 ## Codex Host Lifecycle Boundary
 
@@ -458,7 +463,7 @@ removing adapter selection or its package.
 
 ## Host Lifecycle Source Evidence
 
-The following links support the available controls and their limits. They do not
+These links support the available controls and their limits. They do not
 establish a live deployment result. Revision: `f68a7294abf0928c1aabf290c6a7e486c651a808`.
 
 | Claim | Implementation or contract | Check and limit |
@@ -479,7 +484,7 @@ establish a live deployment result. Revision: `f68a7294abf0928c1aabf290c6a7e486c
 Use an update when identity and compatible contracts remain stable. Use a replacement
 when identity, host contract, authority, state format, or recovery bytes change.
 
-For a same-ID replacement, follow the [exclusive package-set selection procedure](../use/plugins.md#5-replace-or-remove).
+For a same-ID replacement, use the [exclusive package-set selection procedure](../use/plugins.md#5-replace-or-remove).
 The candidate discovery roots must select only the new package, never both versions.
 Disabling a registration does not remove its package from discovery.
 Keep the old configuration and exact packages available to their pinned runs.
@@ -506,7 +511,7 @@ Disablement stops new use. It does not mean removal.
 | --- | --- | --- |
 | Stage | Remove it from new graphs | Existing recoverable runs keep resolvable bytes |
 | Observer | Remove the configured observer ID | Core continues to commit source events |
-| Adapter | Remove active selection or provider mapping | Requests fail closed with no external call |
+| Adapter | For new work, remove dependent registrations from configured selections or select replacement providers. Remove the adapter from `activeAdapters` and every required-provider selection. Remove grants for registrations you disable. | Resolve the new configuration. Before new work, verify that the adapter is absent from its enabled registrations. |
 | Provider or report adapter | Stop binding it into new plans | Existing plans keep exact implementation identity |
 | OpenClaw | No independent deployment toggle is supplied | Stop before an entry edit or byte removal; see the host stop rules below |
 | Codex | No versioned disable or removal control is supplied | Stop until the Codex environment owner supplies the host procedure and absence proof |
@@ -533,7 +538,7 @@ only through its owner's procedure.
 
 ## Diagnose A Failure
 
-Follow the first failed boundary:
+Use the first failed boundary to select a diagnostic action:
 
 1. If discovery fails, inspect the manifest, schema paths, exports, and package digest.
 2. If selection fails, inspect graph, platform mapping, plan binding, or host entry.
@@ -545,9 +550,11 @@ Follow the first failed boundary:
 Do not start by increasing authority or retry limits. First identify whether the
 failure occurred before dispatch, during work, or after an uncertain external effect.
 
-## Run A Catalogue Package Check
+<a id="run-a-catalogue-package-check"></a>
 
-This procedure applies to the command under **Package Checks** on a catalogue
+## Run A Catalog Package Check
+
+This procedure applies to the command under **Package Checks** on a catalog
 page. It does not turn a dated recorded result into a result for your checkout,
 and it does not apply when the page states that no local command exists.
 
@@ -579,21 +586,24 @@ and it does not apply when the page states that no local command exists.
 
 ### Run And Interpret The Published Command
 
-Run the catalogue page's command verbatim from the repository root. An
+Run the catalog page's command verbatim from the repository root. An
 `npm test --prefix <package-directory>` command selects that package's displayed
 script; a displayed `node --test` command is not an npm-script substitute.
 Record revision, package identity, tool versions, prerequisite disposition,
 command, exit code and bounded diagnostics outside the disposable checkout.
 Keep credentials and raw sensitive logs out of the retained record.
 
-An exit code of zero means only that this command completed successfully in this
-recorded environment. Compare its output with the displayed test script and
-record skips or unavailable subchecks separately. It is not activation, production
-readiness, or proof of an unexercised host/runtime path. A nonzero exit, signal,
-timeout or missing prerequisite is not a pass, even when the catalogue records a
-historical pass. Inspect the first failing subcommand and package diagnostics;
-correct the named dependency or defect before retrying the unchanged recipe.
-Do not increase grants or point tests at production to get a green result.
+An exit code of zero means only that this command is completed in this recorded
+environment. Compare its output with the displayed test script. Record skips or
+unavailable subchecks separately. It is not activation, production readiness, or
+proof of an unexercised host/runtime path.
+
+Do not record a nonzero exit, signal, timeout or missing prerequisite as `passed`.
+A `passed` result in the catalog is only for its recorded date, environment and
+revision. Inspect the first failing subcommand and package diagnostics.
+Before retrying the unchanged recipe, correct the named dependency or defect.
+Do not increase grants to get a zero exit code. Do not use production for tests
+to get a zero exit code.
 
 ### Clean Up On Every Terminal Path
 
@@ -627,7 +637,7 @@ npm test --prefix skills/common/plugins/openclaw-agent-observer
 node --test skills/prism/openclaw-plugin/index.test.mjs
 ```
 
-Package-specific commands appear on each catalogue page. Live checks require their
+Package-specific commands appear on each catalog page. Live checks require their
 named host, credentials, external services, or cluster. Record those prerequisites
 instead of silently skipping them.
 
@@ -648,9 +658,9 @@ instead of silently skipping them.
 ## Prepare The Plugin-System Release Checks
 
 Use the [developer handbook](developer-handbook.md#select-the-smallest-complete-check-chain)
-to prepare the isolated checkout, locked dependencies, build tools, and the
-prerequisites of each selected command. The following maintained release checks
-are not unconditional starting commands and are not a record of a green release.
+to prepare the isolated checkout, locked dependencies and build tools. Prepare
+the prerequisites of each selected command. These maintained release checks
+are not unconditional starting commands. They are not evidence of release acceptance.
 Stop the ordered chain at its first nonzero exit and retain the failure.
 
 Before running `verify:plugin-system-v2`, have the host administrator provision a

@@ -772,7 +772,7 @@
     },
     {
       "path": "docs/site/extend/developer-handbook.md",
-      "sha256": "e4be792c6e013d11b066c6cb7f76d1e7a17327276654b6630a13e8b717d0b85d",
+      "sha256": "bb2d586fc555a3230581052a91785bf22b6d7791927fb61d15cdb49966360f47",
       "owner": "extension guide/native component owners",
       "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
       "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1601,7 +1601,7 @@
         },
         {
           "ordinal": 7,
-          "sha256": "92ed273586aa70b27ffb53730cab49a06f8d4fb2923f8a97f8210df798010fb8",
+          "sha256": "d4cfcacbd47352d2a276fe111307c74a0974cc0745fc416497ca653be5e9c2a6",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1634,7 +1634,7 @@
         },
         {
           "ordinal": 10,
-          "sha256": "2cafca9f99d3f145bd151e02cb9594eac2ed09b8dcaa23cea9a6574ff7274350",
+          "sha256": "1741777e5ec390b8392d1f1e0a0d652238ff87c05375563e06085f183cb8e638",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1645,7 +1645,7 @@
         },
         {
           "ordinal": 11,
-          "sha256": "87f251e1fb3128dc49132da0c3b4d2b1c597c6daaec5bee631605a79f1fe4f8b",
+          "sha256": "300407fb12a23beb66f27892ee51b41c5fffbc98df475c5da8c8d510ea8097e9",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1667,7 +1667,7 @@
         },
         {
           "ordinal": 13,
-          "sha256": "eb473aaae8d40c1beaff17f968a2acc07c4b23e5e05ab25dcdd7ce03f7baf974",
+          "sha256": "c1321085e183f72fc855dd47a085d69a8b07d75f4e00f0e879a9971abe381752",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1678,7 +1678,7 @@
         },
         {
           "ordinal": 14,
-          "sha256": "4ee140d432566af52848667370cfe5ad12e430896983f5198b616d61221e7eb8",
+          "sha256": "c5575066fe85442270af179a3b0a20c1c46b58e52740675382c390d22d9c74af",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1700,7 +1700,7 @@
         },
         {
           "ordinal": 16,
-          "sha256": "1cb62503a1b3129b7f3dbcb3371d69f95e203a618bac77a822580bfa5069d361",
+          "sha256": "f750478c8329648add23d896931499f641286f6860a998f4f45875bc6c5117e7",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1766,7 +1766,7 @@
         },
         {
           "ordinal": 22,
-          "sha256": "0bda9c3ac75462eb189f91d4310ae6262795e86257f9bdd8d1289d26f7fd5343",
+          "sha256": "b838578c5e5ea50050acc933d1a07e94f466d26d5e153cd2589826804522e136",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1810,7 +1810,7 @@
         },
         {
           "ordinal": 26,
-          "sha256": "c99e9bb9bb2500024470ae01a1fb9e03a279cadaa3431f4643bf79b56f68d1f7",
+          "sha256": "49026c6fd7868f4dd262cb2c35fb636b7c1bfb24c7ca125c33030107d38557c5",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1821,7 +1821,7 @@
         },
         {
           "ordinal": 27,
-          "sha256": "396bbab3a79a445855bc251517d31beb5cd675c7e62887ba53a44d8c34e3e441",
+          "sha256": "6e91897fa10fa3b42fb061eb6aa55ce1123da02a06f25ff7fe1c7c3ef2520f8b",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1832,7 +1832,7 @@
         },
         {
           "ordinal": 28,
-          "sha256": "91d3670d4a0eceb92665eae23f016b86dbffde6c6905c89459115957bad743b1",
+          "sha256": "37571b82cce9728630f4bd4f3b9fb020f6101a43bd81702b97e28cc71f8fb5a3",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1986,7 +1986,7 @@
         },
         {
           "ordinal": 42,
-          "sha256": "4747ca644c3e7a4c37631e1b1cc86f6a920b73dc791a456f3a7a6b96b886fedf",
+          "sha256": "8a6f40961845cca56d1a59c262151b8745f03723eecc4ba7c0f32ac7463b2530",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -1997,7 +1997,7 @@
         },
         {
           "ordinal": 43,
-          "sha256": "2b4af27554ba5759c6e5b0b898d0b9aedc8c0d43f9c2f9879f03fbb2b51985e9",
+          "sha256": "3c198991b3591ad35ed4aef70902dfaf3a7d25149556c61b1ee8ce3a4a769778",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -2008,7 +2008,7 @@
         },
         {
           "ordinal": 44,
-          "sha256": "dbb248a92c23ba70529475865f391d78f46cbeec4cd9f4ca9df98e8a232d051c",
+          "sha256": "063a6d169b2aba1c07500049c20ea076378f5676e2a47fbcf6910a045507e7ff",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -2019,7 +2019,7 @@
         },
         {
           "ordinal": 45,
-          "sha256": "b7a76c2b29366cf787c567c64cac016f80b96a2a31cec1f9fc148461325cffd0",
+          "sha256": "14afe1e1c8f06476267d1a9b8d2ece7231fe0ac6dfd6caf979398b451ff50854",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -2063,7 +2063,7 @@
         },
         {
           "ordinal": 49,
-          "sha256": "edd717c5fed24439fa11b2b9a823a5cc890d05a8161fc5867d642dc60c376399",
+          "sha256": "e4f17071fa4403dfe19c9bc9459f722e1f673c0df28e42c92b4c7fd00f765a92",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -2085,7 +2085,7 @@
         },
         {
           "ordinal": 51,
-          "sha256": "aa1e1890d6e124a186bd99f0e7a8d07a152a545595a47570b379428c967dc32c",
+          "sha256": "dc3f8ac73efa76a29f4ed8c9daedaf859a715d8ea9369b9cb61f51a0578951ab",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -2850,7 +2850,7 @@
     },
     {
       "path": "docs/site/extend/lint.md",
-      "sha256": "8e84ad80f6b9fff4557073d77796f64e6374c170ad23d261c1a3ae6b0dac461e",
+      "sha256": "a1c0a7ba491dcb60690e38e50d813d477ce33894492a43629b10e12c60cbd53e",
       "owner": "extension guide/native component owners",
       "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
       "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -3114,7 +3114,7 @@
         },
         {
           "ordinal": 2,
-          "sha256": "825373f5837ba79ec2dbba559a975422fb2bb861d8cd6c24f8318debc58eda29",
+          "sha256": "68d149bbda9bb2fe5e4585000f4c3edba3a799f28c1751478260c2e9e979f7e1",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -3125,7 +3125,7 @@
         },
         {
           "ordinal": 3,
-          "sha256": "bba44e3bc298bbb11f407ce4bb51e79c06c760752d82424a6d960a392e437c4a",
+          "sha256": "3d93e95ac5a6c97d2fda84c9d0aec0d40c3ee51971adb31b31b26347c34d4f41",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -3136,7 +3136,7 @@
         },
         {
           "ordinal": 4,
-          "sha256": "72a926930f3462af9b83b4df5d1018c945fcf3ec14398ee13512938fc4184cce",
+          "sha256": "a834c159969a14a357242abdd03cc1f4c5cf9e4cba05505eee77862eca1fc186",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -3180,7 +3180,7 @@
         },
         {
           "ordinal": 8,
-          "sha256": "54cd5dd16cd0b6bea8999ed48bcac65d9f33a4e78269320fb849b257ff16c776",
+          "sha256": "9475e52d6fca4b7c5afa3bbcb97cc03c804f1bc98309b89c4fe30a3d2367cb54",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -3191,7 +3191,7 @@
         },
         {
           "ordinal": 9,
-          "sha256": "d758b1453761825217cc0a7a78c1d18b2c04fe9d13c043204ad7e41dfb9d8f43",
+          "sha256": "3e674891e464ae3397ba25bfa88e5971fe8768fea98bbf7abf2b84824d845f52",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -3235,7 +3235,7 @@
         },
         {
           "ordinal": 13,
-          "sha256": "abd8ea3ae03260a6d12a53fdd1fae7f357b5adfe90ba6d81ade707c160d37cb0",
+          "sha256": "e8888927d0405f94d8e803a0045663cc91308c525825a240e53769673fb36bd7",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -3279,7 +3279,7 @@
         },
         {
           "ordinal": 17,
-          "sha256": "f4ef7a7a380e9d74efb3d6280c36fe7582a233e7315727477e636bcf36939edb",
+          "sha256": "326c11f14a8769889343192c197f52af8f75fa4dcf8a7bb0a176abe8a5f8c7de",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -7600,7 +7600,7 @@
     },
     {
       "path": "docs/site/extend/testing.md",
-      "sha256": "4892ff1feaa1a5ff99f66e8581c0a376136982a3d9279c6161764e6d9f948583",
+      "sha256": "225588df122e1c8c5cf6e4ea82f9c6830f048fc9547aa79f5acd065cc7403819",
       "owner": "extension guide/native component owners",
       "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
       "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -7658,7 +7658,7 @@
       "prose": [
         {
           "ordinal": 1,
-          "sha256": "a9b58cacaf28179be0330a027c89d442569306b58a7afe1a816aab5b0e1757bc",
+          "sha256": "ebc9c579eab546cfaee031c1ba599f5749e898b348fedad5327964ed30514f17",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -7669,7 +7669,7 @@
         },
         {
           "ordinal": 2,
-          "sha256": "9730fa5cc38323cbe5261cdd76bb9ed648c36122981cc4fe0a8b1cb5f8489623",
+          "sha256": "b286508cbce284e1989aad8125cdbdfd2e42cd92722393633ea3564615433743",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -7680,7 +7680,7 @@
         },
         {
           "ordinal": 3,
-          "sha256": "7313d9faa3d9aee2f1cf260f4e8ae0730e296a73c906da4209f07c72e4fabdb4",
+          "sha256": "7237b17e4d94ce9128f7c0cfc10c1cb76c496becf9af0439bfdb035bfde41d70",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -41815,7 +41815,7 @@
       ],
       "prerequisites": [
         "Clean selected source, genuine pinned native tools/config/image, isolated worktrees and approver/source authority for debt/blocking changes.",
-        "Source boundary: Make a lint change in a clean checkout. The supported local check environment is\nNode.js 24 with dependencies installed from the root lockfile. The focused suite\ndoes not require native analysers. The live fixture also requires `shellcheck`,\n`shfmt`, and GNU `flock` from `util-linux`.",
+        "Source boundary: Make a lint change in a clean checkout. The supported local check environment is\nNode.js 24 with dependencies installed from the root lockfile. The focused suite\ndoes not require native analyzers. The live fixture also requires `shellcheck`,\n`shfmt`, and GNU `flock` from `util-linux`.",
         "Source boundary: Verify the clean checkout and exact minimum instead of relying on version output\nthat nobody checks. First complete the canonical\n[Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation)\nin a disposable checkout and retain its sanitized evidence, then run:",
         "Source boundary: Build the complete target tool image and mount the clean checkout at a separate\npath. The mount keeps the report and source changes in the checkout:"
       ],
@@ -41823,7 +41823,7 @@
         "For Extend Lint, stop on the first owning schema/authority/identity/tool/lifecycle failure; preserve original diagnostic and respect explicitly unsupported routes.",
         "Source boundary: Read the [Lint Policy Reference](../reference/lint-policy.md) for every current\ntool and repository-owned rule, plus exact configuration, scope, severity,\nbaseline, admission, policy-pack, and failure behavior.",
         "Source boundary: The tiers are cumulative because final acceptance must not omit earlier fast\nchecks. Selected tools run sequentially in registry order. This makes logs,\ncancellation, cache use, and failure attribution deterministic.",
-        "Source boundary: Stop if the first command fails. `flock --version` must identify util-linux;\nBusyBox `flock` is not sufficient. These commands support the package fixture,\nnot every configured analyser. The complete runtime authority is\n`docker/Dockerfile.nova`, generated from `versions.json`, the hashed Python and Go\nlocks under `docker/`, and `docker/nova-tools/package-lock.json`. Build or run that\nimage for target-runtime acceptance; do not substitute a collection of unpinned\nhost binaries. Different analyser versions can emit different codes or output\nshapes."
+        "Source boundary: If the first command fails, stop. `flock --version` must identify util-linux.\nBusyBox `flock` is not sufficient. These commands support the package fixture,\nnot every configured analyzer. The complete runtime authority is\n`docker/Dockerfile.nova`, generated from `versions.json`, the hashed Python and Go\nlocks under `docker/`, and `docker/nova-tools/package-lock.json`.\n\nBuild or run that image for target-runtime acceptance. Do not substitute a collection of unpinned\nhost binaries. Different analyzer versions can emit different codes or output\nshapes."
       ],
       "effects": [
         "Image builds/runs, worktree/fixture/config/baseline/report edits, native analyses and focused/live checks have different effects; policy schema validity does not restore discarded raw parser output.",
@@ -41834,13 +41834,13 @@
       "cleanup": [
         "Prune only owned outputs/temp baseline/worktrees/fixtures after retaining diagnostics; do not delete unresolved native state or silently normalize wrong-shape/nonzero-empty Ruff/ESLint results.",
         "Source boundary: Verify the clean checkout and exact minimum instead of relying on version output\nthat nobody checks. First complete the canonical\n[Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation)\nin a disposable checkout and retain its sanitized evidence, then run:",
-        "Source boundary: Stop if the first command fails. `flock --version` must identify util-linux;\nBusyBox `flock` is not sufficient. These commands support the package fixture,\nnot every configured analyser. The complete runtime authority is\n`docker/Dockerfile.nova`, generated from `versions.json`, the hashed Python and Go\nlocks under `docker/`, and `docker/nova-tools/package-lock.json`. Build or run that\nimage for target-runtime acceptance; do not substitute a collection of unpinned\nhost binaries. Different analyser versions can emit different codes or output\nshapes.",
+        "Source boundary: If the first command fails, stop. `flock --version` must identify util-linux.\nBusyBox `flock` is not sufficient. These commands support the package fixture,\nnot every configured analyzer. The complete runtime authority is\n`docker/Dockerfile.nova`, generated from `versions.json`, the hashed Python and Go\nlocks under `docker/`, and `docker/nova-tools/package-lock.json`.\n\nBuild or run that image for target-runtime acceptance. Do not substitute a collection of unpinned\nhost binaries. Different analyzer versions can emit different codes or output\nshapes.",
         "Source boundary: The explicit `--helm-chart` replaces the canonical Kubernetes input list for\nthis source-checkout run. The policy also names\n`Projects/buster-infra-smoke/src/deployment.yaml`, which the deployed workspace\ncreates but a clean source checkout does not contain. Do not remove the override\nand then interpret `does not exist` as a lint finding. A deployment acceptance\nrun uses the real generated manifest and chart list without an override."
       ],
       "expectedResults": [
         "Whole Extend Lint route must preserve its declared proof ladder/observations; native input/check results are limited to their actual owning action, not activation by association.",
         "Source boundary: The stages own pipeline meaning. They select a tier, invoke `lint.execute`, store\nthe report, and return a canonical stage result. They do not run commands or\ninspect files. The executor adapter owns filesystem and process authority. The\nengine owns policy interpretation, discovery, selection, normalization,\nfingerprints, and report construction.",
-        "Source boundary: Do not create another stage only to run one command. A stage is a lifecycle\nboundary. Add the analyser to the engine unless the work has distinct pipeline\nmeaning and a separate typed result.",
+        "Source boundary: Do not create another stage only to run one command. A stage is a lifecycle\nboundary. Add the analyzer to the engine unless the work has distinct pipeline\nmeaning and a separate typed result.",
         "Source boundary: The second action proves that generated policy facts match the current\nconfiguration. The next two actions establish a focused baseline. Record a\nmissing native prerequisite separately from a product failure."
       ],
       "limits": [
@@ -41857,7 +41857,7 @@
       "anchors": [
         {
           "ref": "docs/site/extend/lint.md",
-          "exactExcerpt": "Make a lint change in a clean checkout. The supported local check environment is\nNode.js 24 with dependencies installed from the root lockfile. The focused suite\ndoes not require native analysers. The live fixture also requires `shellcheck`,\n`shfmt`, and GNU `flock` from `util-linux`.",
+          "exactExcerpt": "Make a lint change in a clean checkout. The supported local check environment is\nNode.js 24 with dependencies installed from the root lockfile. The focused suite\ndoes not require native analyzers. The live fixture also requires `shellcheck`,\n`shfmt`, and GNU `flock` from `util-linux`.",
           "occurrences": 1
         },
         {
@@ -41877,7 +41877,7 @@
         },
         {
           "ref": "docs/site/extend/lint.md",
-          "exactExcerpt": "Do not create another stage only to run one command. A stage is a lifecycle\nboundary. Add the analyser to the engine unless the work has distinct pipeline\nmeaning and a separate typed result.",
+          "exactExcerpt": "Do not create another stage only to run one command. A stage is a lifecycle\nboundary. Add the analyzer to the engine unless the work has distinct pipeline\nmeaning and a separate typed result.",
           "occurrences": 1
         },
         {
@@ -41897,7 +41897,7 @@
         },
         {
           "ref": "docs/site/extend/lint.md",
-          "exactExcerpt": "Stop if the first command fails. `flock --version` must identify util-linux;\nBusyBox `flock` is not sufficient. These commands support the package fixture,\nnot every configured analyser. The complete runtime authority is\n`docker/Dockerfile.nova`, generated from `versions.json`, the hashed Python and Go\nlocks under `docker/`, and `docker/nova-tools/package-lock.json`. Build or run that\nimage for target-runtime acceptance; do not substitute a collection of unpinned\nhost binaries. Different analyser versions can emit different codes or output\nshapes.",
+          "exactExcerpt": "If the first command fails, stop. `flock --version` must identify util-linux.\nBusyBox `flock` is not sufficient. These commands support the package fixture,\nnot every configured analyzer. The complete runtime authority is\n`docker/Dockerfile.nova`, generated from `versions.json`, the hashed Python and Go\nlocks under `docker/`, and `docker/nova-tools/package-lock.json`.\n\nBuild or run that image for target-runtime acceptance. Do not substitute a collection of unpinned\nhost binaries. Different analyzer versions can emit different codes or output\nshapes.",
           "occurrences": 1
         },
         {
@@ -47406,13 +47406,13 @@
         "Inspect exact package script/test effects first; isolated checkout/dev dependencies/no production credentials; bound host/kubectl authority and genuine delegated cgroup-v2 controllers/population/kill/events for selected route.",
         "Source boundary: - For package behavior, add a **package-local TypeScript live-function test**\n  that invokes the real exported function. A metadata/import check alone is not\n  a live-function test.\n- For a package boundary, add a **package-local boundary test**. Verify the\n  package's input, output, and authority contract; a shared platform or registry\n  test does not replace this local test.\n- Put shared Core contract checks under `tests/verification/contracts/`.\n  The [lifecycle contract check](../../../tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs)\n  is one existing example, not a replacement for the affected package tests.\n- For a real system run, use\n  `tests/verification/e2e/run-real-pipeline-e2e.mjs`; the\n  [verification command reference](../reference/verification-commands.md#claim-to-test-map)\n  names its complete real model-backed workflow command. Prepare that caller's\n  host, model, and service prerequisites first. A unit or contract result is not\n  a successful real system run.",
         "Source boundary: Every plugin must prove success, control-result failure, denied authority,\ntimeout/cancellation, crash containment, and relevant recovery/idempotency.\nUse the owning host's boundary for authority, cancellation, or crash containment\nthat the package function does not own. Record which boundary supplied each\nproof. If a required boundary cannot be exercised, retain the missing prerequisite\nand the result as not ready; an inner passing test is not a substitute.\nFor relevant recovery/idempotency, interrupt the operation, recover from its\nretained state, and repeat the same operation identity without duplicating an\nexternal effect.",
-        "Source boundary: For a catalogue **Package Checks** command, follow the\n[package-check preparation, result, failure, and cleanup procedure](#run-a-catalogue-package-check)\nbelow before choosing a wider proof level."
+        "Source boundary: For a catalog **Package Checks** command, use the\n[package-check preparation, result, failure, and cleanup procedure](#run-a-catalogue-package-check)\nbelow before choosing a wider proof level."
       ],
       "errors": [
         "For Test And Manage An Extension, stop on the first owning schema/authority/identity/tool/lifecycle failure; preserve original diagnostic and respect explicitly unsupported routes.",
         "Source boundary: A unit test proves only one layer. A complete result connects package bytes, trust,\nselection, activation, behavior, failure, and cleanup.",
         "Source boundary: Every plugin must prove success, control-result failure, denied authority,\ntimeout/cancellation, crash containment, and relevant recovery/idempotency.\nUse the owning host's boundary for authority, cancellation, or crash containment\nthat the package function does not own. Record which boundary supplied each\nproof. If a required boundary cannot be exercised, retain the missing prerequisite\nand the result as not ready; an inner passing test is not a substitute.\nFor relevant recovery/idempotency, interrupt the operation, recover from its\nretained state, and repeat the same operation identity without duplicating an\nexternal effect.",
-        "Source boundary: For a catalogue **Package Checks** command, follow the\n[package-check preparation, result, failure, and cleanup procedure](#run-a-catalogue-package-check)\nbelow before choosing a wider proof level."
+        "Source boundary: For a catalog **Package Checks** command, use the\n[package-check preparation, result, failure, and cleanup procedure](#run-a-catalogue-package-check)\nbelow before choosing a wider proof level."
       ],
       "effects": [
         "Package syntax/unit/build/source and actual host/native/cancel/crash/recovery boundary proofs differ; no execution of all tests by this contract; model-cutover intent is historical, not current authorization.",
@@ -47456,7 +47456,7 @@
         },
         {
           "ref": "docs/site/extend/testing.md",
-          "exactExcerpt": "For a catalogue **Package Checks** command, follow the\n[package-check preparation, result, failure, and cleanup procedure](#run-a-catalogue-package-check)\nbelow before choosing a wider proof level.",
+          "exactExcerpt": "For a catalog **Package Checks** command, use the\n[package-check preparation, result, failure, and cleanup procedure](#run-a-catalogue-package-check)\nbelow before choosing a wider proof level.",
           "occurrences": 1
         },
         {
