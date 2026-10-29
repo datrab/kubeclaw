@@ -71,7 +71,7 @@ function testConfiguration(kind) {
 const lint = { policyPath: path.join(destination, 'operator-selected-lint-policy.json'), policyProject: id };
 const project = { schemaVersion: 'nova-project.v2', id, runId, repositoryRoot,
   workspaceRoot, baseRevision, architecture: { ref: 'HEAD', requiredFiles: ['README.md'] },
-  modules: [{ id: 'app', dependsOn: [], task: 'Maintain the greeting function and its assertion.',
+  modules: [{ id: 'app', dependsOn: [], task: 'Keep the greeting function and its assertion.',
     ownedPaths: ['app'], requirements, implementation: { agent: 'forge' }, lint,
     blueprint: { modulePath: 'modules/app', serveDockerfile: null, apiSpecFile: null },
     test: testConfiguration('module') }],

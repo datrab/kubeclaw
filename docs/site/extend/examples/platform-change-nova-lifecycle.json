@@ -76,7 +76,7 @@
   "requiredProof": [
     "Before you change the source, find the canonical behavior owner and affected invariants. Also find the compatibility boundary, generated surfaces, and documentation owner.",
     "From the published change guide, select the smallest chain with all necessary checks. Execute its unit, contract, replay, recovery, compatibility, and documentation checks.",
-    "Add direct assertions for the new condition and its neighboring unchanged cases. Do not infer coverage from a test name.",
+    "Add direct assertions for the new condition and for all the other cases in this file. Do not infer coverage from a test name.",
     "Keep the revision, environment, commands, exit codes, and journal identities without change outside the scratch checkout. Keep observations, failures, and skips without change there. A missing prerequisite or a read-only description is not execution evidence."
   ],
   "removal": {
