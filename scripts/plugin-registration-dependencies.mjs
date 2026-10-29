@@ -34,6 +34,13 @@ export function schemaSemanticText(field) {
   const contextStart = fallbackContext && typeof defaultBehavior === 'string' ? defaultBehavior.indexOf(fallbackContext) : -1;
   const fallbackStart = omissionStart >= 0 && contextStart >= 0
     ? omissionStart + 'Omission: '.length + contextStart + fallbackPrefix.length : -1;
+  const schemaDefaultLiteral = field.default === undefined || field.default === '<none>'
+    ? null : JSON.stringify(field.default);
+  const schemaDefaultPrefix = schemaDefaultLiteral === null ? null
+    : `The schema gives ${schemaDefaultLiteral} as a default.`;
+  const schemaDefaultStart = omissionStart >= 0 && schemaDefaultPrefix
+    && defaultBehavior.startsWith(schemaDefaultPrefix)
+    ? omissionStart + 'Omission: The schema gives '.length : -1;
   const visible = stripMarkdownCodeAndRawHtml(text);
   const links = markdownInlineLinks(text);
   const values = [...new Set([
@@ -48,7 +55,10 @@ export function schemaSemanticText(field) {
     const ownedFallback = cursor === fallbackStart && visible.startsWith(fallbackLiteral, cursor)
       && (!insideLink || (insideLink.start === cursor
         && insideLink.raw === `${fallbackLiteral} (${field.meaning.runtimeDefaultEvidence})`));
-    const value = ownedFallback ? fallbackLiteral : !insideLink && values.find((candidate) => visible.startsWith(candidate, cursor));
+    const ownedSchemaDefault = cursor === schemaDefaultStart
+      && visible.startsWith(schemaDefaultLiteral, cursor) && !insideLink;
+    const value = ownedFallback ? fallbackLiteral : ownedSchemaDefault ? schemaDefaultLiteral
+      : !insideLink && values.find((candidate) => visible.startsWith(candidate, cursor));
     if (value) { result += markdownInlineCode(value); cursor += value.length; }
     else result += text[cursor++];
   }

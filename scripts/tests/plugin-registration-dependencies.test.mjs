@@ -8,6 +8,7 @@ import { fileURLToPath } from 'node:url';
 import { createRegistrationDependencyCollector, joinNativeDependencyAuthorities, acquireNativeDependencyReport, schemaSemanticText } from '../plugin-registration-dependencies.mjs';
 import { table } from '../docs-generate-core.mjs';
 import { renderReaderMarkdown } from '../docs-reader/renderer.mjs';
+import { decodeHTML } from 'entities';
 
 // Quote source-owned structured fallback data; preserve links, Markdown code and raw HTML blocks.
 for (const fallback of [[], {}, ['accept', 'content-type']]) {
@@ -50,6 +51,30 @@ for (const fieldPath of ['$.targets.{*}.tokenSecret', '$.targets.{pattern:^[a-z0
     assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: protectedText } }), protectedText);
   }
   assert.equal(schemaSemanticText({ ...field, meaning: { text: '<targetId>', failureMeaning: 'No diagnostic placeholder.' } }), '<targetId>');
+}
+
+
+// Quote only the declared schema default in its owning omission clause.
+for (const declaredDefault of ['*/*', 'GET', 1048576, 0, false, '', [], {}, ['desktop', 'mobile']]) {
+  const literal = JSON.stringify(declaredDefault);
+  const defaultBehavior = `The schema gives ${literal} as a default. Runtime insertion is a separate condition.`;
+  const text = `Outside ${literal}.\n\nOmission: ${defaultBehavior}\n\nOutside again ${literal}.`;
+  const field = { path: '$.declaredDefault', default: declaredDefault, constraints: [], meaning: { text, defaultBehavior } };
+  const formatted = schemaSemanticText(field);
+  assert.equal(formatted, `Outside ${literal}.\n\nOmission: The schema gives \`${literal}\` as a default. Runtime insertion is a separate condition.\n\nOutside again ${literal}.`);
+  const { html } = renderReaderMarkdown(table(['Meaning'], [[formatted]]), 'fixture.md', new Map(), new Set());
+  assert.deepEqual([...html.matchAll(/<code>(.*?)<\/code>/gu)].map((match) => decodeHTML(match[1])), [literal]);
+  assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: formatted } }), formatted);
+  for (const protectedText of [`\`Omission: ${defaultBehavior}\``, `<pre>\nOmission: ${defaultBehavior}\n</pre>`, `[Omission: ${defaultBehavior}](https://example.invalid/defaults)`]) {
+    assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: protectedText } }), protectedText);
+  }
+  for (const absentDefault of [undefined, '<none>']) {
+    assert.equal(schemaSemanticText({ ...field, default: absentDefault }), text);
+  }
+  const overridden = `Omission: Runtime uses ${literal} on omission.`;
+  assert.equal(schemaSemanticText({ ...field, meaning: { text: overridden, defaultBehavior: `Runtime uses ${literal} on omission.` } }), overridden);
+  assert.equal(schemaSemanticText({ ...field, default: { other: true } }), text);
+  assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: `Unowned ${defaultBehavior}` } }), `Unowned ${defaultBehavior}`);
 }
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'registration-dependencies-'));
