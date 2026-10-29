@@ -88,7 +88,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The resolve operation maps a logical secret ID to an allowed environment variable. An unmapped ID is denied and an empty or missing variable is unavailable. Removal does not erase the external secret.
+The resolve operation maps a logical secret ID to an allowed environment variable. The adapter denies the request if the mapping result gives `false` after conversion to Boolean. An empty or missing selected environment value is unavailable. Removal does not erase the external secret.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports. Discovery does not import package code.

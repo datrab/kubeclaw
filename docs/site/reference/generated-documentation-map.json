@@ -1691,7 +1691,7 @@
       "audience": "pipeline author, operator, test maintainer",
       "owner": "buster",
       "appliesTo": "complete JSON configuration contracts for all shipped Buster test providers",
-      "lastVerified": "generated from exact committed provider inputs a51d223dca0130a889a3d63f4fb2a6db42bd8250",
+      "lastVerified": "generated from exact committed provider inputs c7adbd446dd2f1375e0fd66b61620e88d6db561a",
       "sourceDependencies": [
         "scripts/generate-buster-provider-reference.mjs",
         "scripts/buster-provider-catalogue-reference.mjs",
@@ -2086,7 +2086,7 @@
       "audience": "operator, security operator, developer",
       "owner": "the source component listed for each route or connection",
       "appliesTo": "discovered inbound routes and outbound network calls in shipped runtime sources",
-      "lastVerified": "generated from revision `1901a76135957a92d916ef33a877917c87925945`",
+      "lastVerified": "generated from revision `949a217e6530f929d9e43e5398712fa49db91ef4`",
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
         "docs/generated/inventory/platform-surfaces.json",
@@ -2640,7 +2640,7 @@
       "audience": "plugin author, runtime maintainer",
       "owner": "documentation automation",
       "appliesTo": "current private workspace SDK entrypoints and plugin-system v2 schema",
-      "lastVerified": "generated from source revision 7994a51e16bc752357c3a801190b12b7d6a191a4",
+      "lastVerified": "generated from source revision 949a217e6530f929d9e43e5398712fa49db91ef4",
       "sourceDependencies": [
         "scripts/docs-sdk-reference.mjs",
         "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
@@ -2748,7 +2748,7 @@
       "audience": "reference reader, operator",
       "owner": "platform-security",
       "appliesTo": "Kubernetes secret setup and checked-in Secret references",
-      "lastVerified": "retained artifact 145da1d0b30fb3b636c4b03fb3d3252819ee2bf5; original sources 6fa4830a48244d29655104a5be58957d5fa87d2f; semantic owner 51d4079382b639873dabba98fcb428db5727ef1b",
+      "lastVerified": "retained artifact 145da1d0b30fb3b636c4b03fb3d3252819ee2bf5; original sources 6fa4830a48244d29655104a5be58957d5fa87d2f; semantic owner 949a217e6530f929d9e43e5398712fa49db91ef4",
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
         "docs/generated/inventory/secret-setup.json",
@@ -4846,7 +4846,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#eventidentity",
             "owner": "documentation automation",
-            "factsSha256": "c1352d12230b94e8cbc706d18010cfb1899f1bcf08bff54b82a35cfd4aa4aeaa"
+            "factsSha256": "9786e01d7b36fae1421db974ab0b9b55972484ada6608a2e22635fb5ce645f3b"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:EventIdentity:member:artifactId:0",
@@ -6428,7 +6428,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
             "target": "docs/site/reference/sdk-exports.md#resourceidentity",
             "owner": "documentation automation",
-            "factsSha256": "72cac95ceb1e397e4e359fd2738f5bd08fc7c202af1792497dfc93f1a038208f"
+            "factsSha256": "3496884c900a4a9d5dedb0fa3cb3b6eec346ae5bf8264e6de311ff223601ef31"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fgenerated%2Fcontracts.ts:.:ResourceIdentity:member:canonicalId:0",
@@ -8633,7 +8633,7 @@
             "source": "skills/common/plugin-runtime/sdk/src/values.ts",
             "target": "docs/site/reference/sdk-exports.md#canonicaljson",
             "owner": "documentation automation",
-            "factsSha256": "c4f0914f5b565348522b2044a50e211cb375267d9f7164c06c8715c2531cb902"
+            "factsSha256": "f18ddee4ea2a3f6bf787581884c41c3318a9a90695ac37c13e52bcc5012a5306"
           },
           {
             "sourceId": "sdk:skills%2Fcommon%2Fplugin-runtime%2Fsdk%2Fsrc%2Fvalues.ts:.:objectRecord",
@@ -13234,21 +13234,21 @@
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-product.go:endpoints:POST%20%2Fv1%2Fdemo-product%2Fdecisions::::",
             "source": "cmd/buster-namespace-controller/demo-product.go",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "3a093af228cbc0932b58066ce517bc8d8844115f55d4a22596fa5707512426ed"
           },
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-product.go:endpoints:POST%20%2Fv1%2Fdemo-product%2Fstatus::::",
             "source": "cmd/buster-namespace-controller/demo-product.go",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "97eaf97f0c14b56c3afaa01bb17951804a0cf6af00e5f67c2f95b2de5c55ab70"
           },
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-product.go:endpoints:POST%20%2Fv1%2Fdemo-product%2Fsubjects::::",
             "source": "cmd/buster-namespace-controller/demo-product.go",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "b6de485880671d3d39419fac18287d2ece640107a13d44334e6172629b9a3fcd"
           },
@@ -13332,14 +13332,14 @@
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-readiness.go:endpoints:POST%20%2Fv1%2Fdemo-ready::::",
             "source": "cmd/buster-namespace-controller/demo-readiness.go",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "48635472d38070a828dc2ae80e0606560953320c9fd057f2371a510e258c3ccb"
           },
           {
             "sourceId": "platform:cmd%2Fbuster-namespace-controller%2Fdemo-readiness.go:endpoints:POST%20%2Fv1%2Fdemo-ready%2Fstatus::::",
             "source": "cmd/buster-namespace-controller/demo-readiness.go",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "584bb78d61860dca7cca237ad5a2756d6b3dec12a4f46b3a8cac0b0fd9345b26"
           },
@@ -15894,56 +15894,56 @@
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fremote-plan-http.ts:endpoints:DELETE%20%2Fv1%2Fplan-jobs%2F%7BjobId%3A%5B%5E%2F%3F%23%5D%2B%7D::::",
             "source": "skills/buster/engine/test-gates/remote-plan-http.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "d2cd7de82aa237edd1fbe3cb913ad52c57ce77eeabd65848efd9b9254e93a6dc"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fremote-plan-http.ts:endpoints:GET%20%2Fbootstrapz::::",
             "source": "skills/buster/engine/test-gates/remote-plan-http.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "6d18a3d94a10c45d4965aaaad79ba8dece74634b39102816396efe51f5faa2a7"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fremote-plan-http.ts:endpoints:GET%20%2Fhealthz::::",
             "source": "skills/buster/engine/test-gates/remote-plan-http.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "c4c3294b3a28492cf48e550f95bbd496fe4cb9ed96e6c7930543fb27f1dd75e4"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fremote-plan-http.ts:endpoints:GET%20%2Freadyz::::",
             "source": "skills/buster/engine/test-gates/remote-plan-http.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "952e7a07c23fa134bbcd10177d7da185d95cc6e12d0a09ec6f3532bc012b05d0"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fremote-plan-http.ts:endpoints:GET%20%2Fv1%2Fplan-jobs%2F%7BjobId%3A%5B%5E%2F%3F%23%5D%2B%7D::::",
             "source": "skills/buster/engine/test-gates/remote-plan-http.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "0500d59832951b55d0d8fabdd7ecaaa47a38cd956ba830d91aa2ff6e2b250b22"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fremote-plan-http.ts:endpoints:GET%20%2Fv1%2Fplan-jobs%2F%7BjobId%3A%5B%5E%2F%3F%23%5D%2B%7D%2Fevidence%2F%7Bdigest%3A(%3F%3Asha256%253A%7Csha256%3A)%5Ba-f0-9%5D%7B64%7D%7D::::",
             "source": "skills/buster/engine/test-gates/remote-plan-http.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "6035a1fa82ab1df0a39952a62618198d9414b8a466a0805ec91f56e6a9ab21be"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fremote-plan-http.ts:endpoints:GET%20%2Fv1%2Fplan-jobs%2F%7BjobId%3A%5B%5E%2F%3F%23%5D%2B%7D%2Fresults%2F%7Bdigest%3A(%3F%3Asha256%253A%7Csha256%3A)%5Ba-f0-9%5D%7B64%7D%7D::::",
             "source": "skills/buster/engine/test-gates/remote-plan-http.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "dd3bdeb227adf12ec55e56ce71bfc1881bfaab117656e2548509593c2d5c0433"
           },
           {
             "sourceId": "platform:skills%2Fbuster%2Fengine%2Ftest-gates%2Fremote-plan-http.ts:endpoints:POST%20%2Fv1%2Fplan-jobs::::",
             "source": "skills/buster/engine/test-gates/remote-plan-http.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "3d4382a9724b9ff5d0c29a6f1891400fe957a2248c12d42a29151aba7643a12f"
           },
@@ -16629,35 +16629,35 @@
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fagent-bridge.mjs:endpoints:ANY%20%2Fhealth::::",
             "source": "skills/prism/server/agent-bridge.mjs",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "7d68f0de2bea0abbff1c21a15d7e94060aa1263ebfa4eaf08d1ecce626a2204c"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fagent-bridge.mjs:endpoints:ANY%20%2Fready::::",
             "source": "skills/prism/server/agent-bridge.mjs",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "5141f2813776db1fa3b4b20ff15b12753910d7a4317f502f7d1b25fd589cc5c1"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fagent-bridge.mjs:endpoints:POST%20%2Fv1%2Fdesign-set::::",
             "source": "skills/prism/server/agent-bridge.mjs",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "047411e3d42cf2d7c04054187b96f0d6e1c075f8e0f10a4d53420955a6ce9a60"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fagent-bridge.mjs:endpoints:POST%20%2Fv1%2Fdispatch::::",
             "source": "skills/prism/server/agent-bridge.mjs",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "a6ade932d41caa8d7b188560945f324a9fdb9513e943d432d5a57b7ff398f996"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fagent-bridge.mjs:endpoints:POST%20%2Fv1%2Frevise::::",
             "source": "skills/prism/server/agent-bridge.mjs",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "24d90c67271a9e4f2e01cd31dba432cc8f73d11e5e6fe7dac6e5e67d06640e11"
           },
@@ -16678,21 +16678,21 @@
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fagent-job-routes.ts:endpoints:GET%20%2Fv1%2Fagent%2Fjobs%2F%7BjobId%3A%5B0-9a-f-%5D%2B%7D::::",
             "source": "skills/prism/server/agent-job-routes.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "1d584817120ec585b3e83df08712f014dc0700e95841fb4ae284915620ae1e9a"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fagent-job-routes.ts:endpoints:POST%20%2Fv1%2Fagent%2Fjobs%2F%7BjobId%3A%5B0-9a-f-%5D%2B%7D%2Ffinish::::",
             "source": "skills/prism/server/agent-job-routes.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "a79a1fc6dd9dfd6c8f327a5f8c19ded2f0e4d943a0bcca928f75b493f596338b"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fagent-job-routes.ts:endpoints:POST%20%2Fv1%2Fagent%2Fjobs%2Fclaim::::",
             "source": "skills/prism/server/agent-job-routes.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "75f6abb8caf223599fb1b2d757b23650f45f795efbbc3ba41b29155743e90e33"
           },
@@ -16713,203 +16713,203 @@
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:ANY%20%2Fhealth::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "4bdf161884fc00cc16ccf428e2ee0da34c13bdc6aafd341790ded5f723edd7f0"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:ANY%20%2Fready::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "c7a837d9e04236236e2b86b5bb631b34abf5bfb7e8412118f0308ffeff777198"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fagent-jobs%2F%7BagentJobId%3A%5B0-9a-f-%5D%2B%7D::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "7404ac492ca077b9e9dc14b0dfd0eb8e8ea80bbd9d80f54eb8e2d093a76c2fe8"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fartifacts%2F%7BartifactId%3Asha256%3A%5Ba-f0-9%5D%7B64%7D%7D::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "dd573a938cf15e9d2af1d301be31177dc05929dcf108f6f6b481d4c3bd3a8d79"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fcorpus%2Fsearch::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "5f447bb3d04ecc093105d7fd370f887b8ee331bae95e6d2df49117b13596c864"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fdocuments%2F%7BdocumentId%3A%5B0-9a-f-%5D%2B%7D::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "687311e21ce47e081960c4c0453838523fd42e0bafb1a68982f9296fd2c075fe"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fdocuments%2F%7BdocumentId%3A%5B0-9a-f-%5D%2B%7D%2Frevisions::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "f29ae1131609b730d10df1e6cbc3dc146322c45d8b6aa6a0c9b0df991fb217e5"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fpreferences::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "7b12574ecb9170e71e62a84745595aaf365cac721b108bd22f0ac6376694f254"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fprojects::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "a6db4fa8e777fb7f4b5fe3399112c7621520b72a8e955396ecaf688a310988ed"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fprojects%2F%7BprojectId%3A%5B0-9a-f-%5D%2B%7D%2Fbrief::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "95633045c53bff23e0630f6f0f5296f8afd6c4152dac0a13ff8fb3f3b7c80f90"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:GET%20%2Fv1%2Fprojects%2F%7BprojectId%3A%5B0-9a-f-%5D%2B%7D%2Fdirections::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "a20a912194abc4d91911a04578760a82439742c350e18bf2f706b830d17a5250"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fagent%2Fdesign-sets::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "c8b32028ee92299dbc3c90e006d810eb5716b6c7577f0dc4c5b227d39c610ef3"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fagent%2Frevisions::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "f723e3a6feafe360ec0245eca1e7d30cfadba043f918bf4ff68fd0b096f75771"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fapprovals::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "5ce8acefecd1c64e63ce691410ea736091a98e42a7d4fcbf37ed7a3e292b5d9c"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fartifacts::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "9513268b9926c59fc57968db1adecc738bc39fb579b27b105dddc871d82462d8"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fbaselines::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "9544a16cf3d24efea4d4aa0e58bf5de09d55dbbb92b473d82964bbc982b40211"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fcorpus::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "73605f31a265bf57f95831c516156bff40c54d2f6c215bdb7be5358c801f06c4"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fdirections%2F%7BdirectionId%3A%5B0-9a-f-%5D%2B%7D%2Ffeedback::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "87e7f59b5ca2d571fa67ea47794ecaf8dfcc1c0b5ff396465504e492bb4bf458"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fdirections%2F%7BdirectionId%3A%5B0-9a-f-%5D%2B%7D%2Fselect::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "46f0d0e8d75b073a62d9d5774dfb9f30713c13a1cd773cab94d8f9dc17983c17"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fdispatch::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "7cd03c5f820008da58a11b440b37a2807ba0492cc416a6855b224c76d849e101"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fdocuments::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "93c6b7512d2282c45d432552bfe372a7a24bb4064908672480e0f584c4093b37"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fdocuments%2F%7BdocumentId%3A%5B0-9a-f-%5D%2B%7D%2Fengine::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "ddfc899d8b4e8084f503c2c695f17d103c0594764795c3b7fc164c5f7ce381bd"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fdocuments%2F%7BdocumentId%3A%5B0-9a-f-%5D%2B%7D%2Foperations::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "a8adea0a09505bb350a03fdbd253af63ef6e0df1aed85048734cc5d1a48b0260"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fdocuments%2F%7BdocumentId%3A%5B0-9a-f-%5D%2B%7D%2Frevisions%2F%7BrevisionId%3A%5B0-9a-f-%5D%2B%7D%2Frestore::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "98c2fd00d819f940b81043a4aa4ac4f88a76ee6ef1de05417b43d63825aeb437"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fpreferences::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "c5c736c122b5edde1d280f02a60fe6847bf3e105769ae6742d888e36b52452d6"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fprojects::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "ac393ae181733cdf9a4edf36b93bc908b2b40093c9e3ab8f5f7218c907dad4d5"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fprojects%2F%7BprojectId%3A%5B0-9a-f-%5D%2B%7D%2Fdirections::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "6388fd5e529993ef737b10ede3f061f06982c46603406b16acbbb20d96670af3"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:POST%20%2Fv1%2Fsession::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "8a070cc24dd07c00fc973dddb40899097aaa33b4219ab6eec82c2810eb3efaad"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fcontrol-server.ts:endpoints:PUT%20%2Fv1%2Fpreferences%2Fpolicy::::",
             "source": "skills/prism/server/control-server.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "97fccf33bf930b7b36e7e6c2bea2358bdf07898a84f491e84f929b9d286b05c8"
           },
@@ -16937,84 +16937,84 @@
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fingestion.ts:endpoints:ANY%20%2Fhealth::::",
             "source": "skills/prism/server/ingestion.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "015ada93dd5851a16179b5e24fe84f8295dc0e96d5e948f8f6f11201b33008ab"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fingestion.ts:endpoints:ANY%20%2Fready::::",
             "source": "skills/prism/server/ingestion.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "615547c43928eb537fce50bf6455d8136bc73232ba6da73de8946b68b2601030"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fingestion.ts:endpoints:DELETE%20%2Fv1%2Facquisitions%2F%7BacquisitionId%3A%5Ba-f0-9%5D%7B64%7D%7D::::",
             "source": "skills/prism/server/ingestion.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "d67515228bb0313cd954a7f8f52d1784431349634f8380b4cd293d7974b22426"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fingestion.ts:endpoints:POST%20%2Fv1%2Facquisitions::::",
             "source": "skills/prism/server/ingestion.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "996373c06b54401f4c352f7c5e01208f577d62f93dfa6af80da792f475ec44a6"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Finternal-artifacts.ts:endpoints:GET%20%2Fv1%2Finternal%2Fartifacts%2F%7BartifactId%3Asha256%3A%5Ba-f0-9%5D%7B64%7D%7D::::",
             "source": "skills/prism/server/internal-artifacts.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "2c868632cf219a02306e2298ba30e200cbd4c9274dd0ae448e3eef2f6d8e6838"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Finternal-artifacts.ts:endpoints:POST%20%2Fv1%2Finternal%2Fartifacts%2F%7BartifactId%3Asha256%3A%5Ba-f0-9%5D%7B64%7D%7D::::",
             "source": "skills/prism/server/internal-artifacts.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "91268aab3ca8a3ebdf2ea8a5ae88ad277aec3a74c522c20df2d179bf65378f2d"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fproduct-decisions.ts:endpoints:GET%20%2Fv1%2Fproduct-decisions::::",
             "source": "skills/prism/server/product-decisions.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "ac0a7872ac540181f9c1b80f32d8ecf61819621342be567528eb56b2a0e0523a"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fproduct-decisions.ts:endpoints:GET%20%2Fv1%2Fproduct-decisions%2Foperator::::",
             "source": "skills/prism/server/product-decisions.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "9f2e2cd372a11c8f73f2d4a9cc8cbb27897cefa6003073e576ab7f4a1ec578cd"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fproduct-decisions.ts:endpoints:GET%20%2Fv1%2Fproduct-decisions%2Fsubjects::::",
             "source": "skills/prism/server/product-decisions.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "420a8e3fbb450a52f9e4edf20cc4702784fcbd41a4ff2584e457c22636d15bff"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fproduct-decisions.ts:endpoints:POST%20%2Fv1%2Fproduct-decisions::::",
             "source": "skills/prism/server/product-decisions.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "a1dff5cfea9e2a326b1cec9e2a0685ff6d6a8dac5ebb8ecd7ea14be008eaa7e9"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fproduct-decisions.ts:endpoints:POST%20%2Fv1%2Fproduct-decisions%2F%7BproductDecisionId%3A%5B0-9a-f-%5D%7B36%7D%7D%2Frecover::::",
             "source": "skills/prism/server/product-decisions.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "4ffd2d0066e33c9526e5309ffc9c6ea036e00e0340f2f02fbe3b12bb7c7f2ce5"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fproduct-decisions.ts:endpoints:POST%20%2Fv1%2Fsession::::",
             "source": "skills/prism/server/product-decisions.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "b4227ca7c2d3820020c39efecb31eea5d7ddea4c0ab1ebabdfb802b9adaecd15"
           },
@@ -17042,28 +17042,28 @@
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fstudio-request.ts:endpoints:ANY%20%2F*::::",
             "source": "skills/prism/server/studio-request.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "01192996996627f9adb961c772da63e2b52f9892a0bd3b0a6d34cbe9a6c65a22"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fstudio-request.ts:endpoints:ANY%20%2Fhealth::::",
             "source": "skills/prism/server/studio-request.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "619c21452039316defa1643882456116cbc7676211e704fe14dcd3ab7c4c7e97"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fstudio-request.ts:endpoints:ANY%20%2Fready::::",
             "source": "skills/prism/server/studio-request.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "702eedec5fee889ee919908bdd74d2c3ffe2a15f69c8c2c4d9a9d149b8156b07"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fstudio-request.ts:endpoints:ANY%20%2Fv1%2F*::::",
             "source": "skills/prism/server/studio-request.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "18c0dd3fc4de05914595a67da57b21c15b68506dc0d44841eef73f163eeba05e"
           },
@@ -17084,28 +17084,28 @@
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fworker-service.ts:endpoints:ANY%20%2Fbootstrap::::",
             "source": "skills/prism/server/worker-service.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "1d9ab050ab3929b3fc8cc212598fdd236f2be4e805527f5fd467bebc477adda1"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fworker-service.ts:endpoints:ANY%20%2Fhealth::::",
             "source": "skills/prism/server/worker-service.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "8506a3fa1560ad932bd35abd0e7eb78d384b3dad969b187f868859e22dea7842"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fworker-service.ts:endpoints:ANY%20%2Fready::::",
             "source": "skills/prism/server/worker-service.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "1b651dd757208f5866a2b1a5e284a9e9e8beaca27b85b9e55cf1b64194c28618"
           },
           {
             "sourceId": "platform:skills%2Fprism%2Fserver%2Fworker-service.ts:endpoints:POST%20%2Fv1%2Fattempts::::",
             "source": "skills/prism/server/worker-service.ts",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "c470a790672edba9fb82c49e11609ea80882d4826421266e3c1b90f571654a0c"
           },
@@ -17147,14 +17147,14 @@
           {
             "sourceId": "platform:tools%2Fops-mcp%2Fsrc%2Fserver.mjs:endpoints:ANY%20%2Fhealthz::::",
             "source": "tools/ops-mcp/src/server.mjs",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "1136aab4d7838277cf6cae43efdf4fb05bc6ccc00b204cca438e825fa7b1e03d"
           },
           {
             "sourceId": "platform:tools%2Fops-mcp%2Fsrc%2Fserver.mjs:endpoints:ANY%20%2Fmcp::::",
             "source": "tools/ops-mcp/src/server.mjs",
-            "target": "docs/site/understand/communication.md#endpoint-catalogue",
+            "target": "docs/site/understand/communication.md#endpoint-catalog",
             "owner": "runtime and platform maintainers",
             "factsSha256": "1ad1dd783c24f69a5eacf6317466def13ef79855727b59a3eeb87d94ec21b079"
           },
@@ -47604,7 +47604,7 @@
             "source": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "f0ddeb213b9348d91b3f4ab9d2b506039db6e0808c0e3545492ffcf7b959b945"
+            "factsSha256": "d2d686bc4c730c24bb32245a07d31967af957a44226275fdf6ec4f62beba5fa5"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fsecurity-providers%2Fschemas%2Fheaders.schema.json:%24.rules.add%5B%5D.severity:%5B%5D",
@@ -47667,7 +47667,7 @@
             "source": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
             "target": "docs/site/reference/plugin-configuration.md#registered-schemas",
             "owner": "configuration source owners listed for each schema",
-            "factsSha256": "b9239d97d16cf45abe897b8bcc453a0fbb5aed16e3906f438479372a57c30cc3"
+            "factsSha256": "5f5f6033d7486983a45adec9ecf0e9969730e92d4787ed743687385f4791fdb6"
           },
           {
             "sourceId": "configuration-schema:skills%2Fbuster%2Fplugins%2Fsecurity-providers%2Fschemas%2Fheaders.schema.json:%24.rules.replace%5B%5D.severity:%5B%5D",

@@ -21,7 +21,7 @@ Do not use it as a complete manual accessibility review.
 
 ## Most Important Limit
 
-Its result covers Axe-detectable rules in the tested page state only.
+Its result is only for the Axe rules used in the tested page state.
 
 The package guide explains package-specific behavior. The shared guides explain
 the contract and lifecycle rules that apply to this package.

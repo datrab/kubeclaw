@@ -1,7 +1,7 @@
 {
   "schemaVersion": "sdk-reference-inventory.v1",
   "purpose": "Compiler-discovered public SDK facts and finite owning callback closure; consumer explanations are authored in the documentation scripts. Not content acceptance.",
-  "sourceRevision": "7994a51e16bc752357c3a801190b12b7d6a191a4",
+  "sourceRevision": "949a217e6530f929d9e43e5398712fa49db91ef4",
   "owner": "documentation automation",
   "canonicalTarget": "docs/site/reference/sdk.md",
   "generatedTarget": "docs/site/reference/sdk-exports.md",
@@ -5042,7 +5042,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.EventIdentity"
       },
-      "consumerSemantics": "Run ID is required. Stage, attempt, effect, wait and artifact IDs are optional links. Omission means the event does not carry that link. It does not mean that a missing value should be copied from an unrelated event.",
+      "consumerSemantics": "Run ID is required. Stage, attempt, effect, wait and artifact IDs are optional links. Omission means the event does not carry that link. A missing value is not a reason to copy a value from an unrelated event.",
       "example": "const identity: EventIdentity = {runId:'run1'};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -12165,7 +12165,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.ResourceIdentity"
       },
-      "consumerSemantics": "Capability-owned resource type and nonempty canonical ID. Canonical IDs can be URLs, absolute paths, dot or catalogue keys. This schema does not apply a universal path grammar. The selected capability implementation checks its own resource and authorization rules.",
+      "consumerSemantics": "Capability-owned resource type and nonempty canonical ID. Canonical IDs can be URLs, absolute paths, dot or catalog keys. This schema does not apply a universal path grammar. The selected capability implementation checks its own resource and authorization rules.",
       "example": "const resource: ResourceIdentity = {type:'example.object',canonicalId:'item1'};",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },
@@ -18421,7 +18421,7 @@
         "source": "scripts/docs-sdk-semantics.mjs",
         "symbol": "sdkSemantics.canonicalJson"
       },
-      "consumerSemantics": "Legacy JSON codec sorts object keys with localeCompare. Preserve it for existing identities. Its collation is locale-sensitive and must not be relabelled portable. Accepted values and rejection codes are the same as portableJson. It returns text, writes no file and does not hash.",
+      "consumerSemantics": "Legacy JSON codec sorts object keys with localeCompare. Preserve it for existing identities. Its collation is locale-sensitive and must not be relabeled portable. Accepted values and rejection codes are the same as portableJson. It returns text, writes no file and does not hash.",
       "example": "canonicalJson({z:1,a:2}); // '{\"a\":2,\"z\":1}'",
       "exampleStatus": "source-only; illustrative fragment; not executed"
     },

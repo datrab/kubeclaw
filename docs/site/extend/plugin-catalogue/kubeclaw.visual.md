@@ -13,7 +13,7 @@ Run visual comparison checks and produce bounded image evidence in Buster.
 
 ## When To Use It
 
-When a test plan must detect changes against approved visual baselines, use it.
+When a test plan must find changes against approved visual baselines, use it.
 
 ## When Not To Use It
 

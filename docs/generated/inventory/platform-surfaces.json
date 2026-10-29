@@ -1,6 +1,6 @@
 {
   "schemaVersion": "kubeclaw-platform-surfaces.v1",
-  "sourceRevision": "ea887c6daacde7f94ed61ee89837bf393e7436df",
+  "sourceRevision": "949a217e6530f929d9e43e5398712fa49db91ef4",
   "acceptanceContract": {
     "source": "docs/blueprint/AP09-acceptance-contract.md",
     "acceptanceIds": [
@@ -11839,11 +11839,11 @@
       "id": "nova-effect-result-blobs",
       "category": "externalized effect authority",
       "owner": "Nova Core maintainers; plugin Foundation/SDK maintainers for shared persistence",
-      "pathMeaning": "Large effect results are content-addressed siblings of the effects journal; audit summaries are separate projections.",
+      "pathMeaning": "Large effect results are content-addressed siblings of the effects journal. Audit summaries are separate projections.",
       "retentionMeaning": "Externalization threshold changes representation, not store capacity or expiry.",
-      "cleanupTrigger": "Atomic staging/link cleanup removes temporary names, not committed result blobs; no general blob-deletion method is exposed here.",
-      "failureBoundary": "Missing or changed referenced bytes prevent hydration; a completed event does not authorize their deletion.",
-      "retainedAuthority": "Retain referenced result bytes with effect request, acceptance and completion history.",
+      "cleanupTrigger": "Atomic staging/link cleanup removes temporary names, not committed result blobs. No general blob-deletion method is exposed here.",
+      "failureBoundary": "Missing or changed referenced bytes prevent reconstruction of the full effect result. A completed event is not deletion permission.",
+      "retainedAuthority": "Keep referenced result bytes with effect request, acceptance and completion history.",
       "explanation": "docs/site/reference/stores-and-retention.md#distinguish-retirement-from-arbitrary-cleanup",
       "authorities": [
         {
@@ -12047,13 +12047,13 @@
     },
     {
       "id": "foundation-outbox",
-      "category": "acknowledgement compaction",
+      "category": "acknowledgment compaction",
       "owner": "plugin Foundation/SDK maintainers",
       "pathMeaning": "A caller-selected directory stores the producer outbox.",
-      "retentionMeaning": "Caller admission limits bound stored entries; no active production default is invented here.",
+      "retentionMeaning": "Caller admission limits bound stored entries. No active production default is invented here.",
       "cleanupTrigger": "Explicit compaction removes acknowledged entries only.",
-      "failureBoundary": "An unmatched acknowledgement cannot authorize removal; pending entries remain delivery authority.",
-      "retainedAuthority": "Retain unacknowledged records until the corresponding canonical acknowledgement exists.",
+      "failureBoundary": "An unmatched acknowledgment is not removal permission. Pending entries are still delivery authority.",
+      "retainedAuthority": "Keep unacknowledged records until there is a corresponding canonical acknowledgment.",
       "explanation": "docs/site/reference/stores-and-retention.md#distinguish-retirement-from-arbitrary-cleanup",
       "authorities": [
         {
@@ -12416,9 +12416,9 @@
       "owner": "plugin Foundation/SDK maintainers",
       "pathMeaning": "A selected directory stores admitted records, gaps, quarantine and canonical cursor state.",
       "retentionMeaning": "Ingress and state/quarantine admission bounds do not authorize arbitrary history deletion.",
-      "cleanupTrigger": "Explicit closed-completion projection retains a canonical source reference and duplicate acknowledgement.",
-      "failureBoundary": "Overflow remains diagnostic/unresolved or rejects; gaps and unresolved observations block retirement.",
-      "retainedAuthority": "Retain canonical completion/evidence source, cursor, producer and duplicate acknowledgement authority.",
+      "cleanupTrigger": "An explicit closed-completion projection keeps a canonical source reference and duplicate acknowledgment.",
+      "failureBoundary": "On overflow, the store records diagnostic/unresolved state or rejects input. Gaps and unresolved observations block retirement.",
+      "retainedAuthority": "Keep canonical completion/evidence source, cursor, producer and duplicate acknowledgment authority.",
       "explanation": "docs/site/reference/stores-and-retention.md#distinguish-retirement-from-arbitrary-cleanup",
       "authorities": [
         {

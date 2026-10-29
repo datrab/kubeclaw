@@ -107,7 +107,7 @@ Inputs:
 
 ## Failure Behavior
 
-The provider verifies LCOV input sizes and digests before reducing coverage budgets. Duplicate content, missing files, or changed bytes fail validation. It does not create coverage measurements.
+The provider verifies LCOV input sizes and digests before comparing measured coverage with the declared budget when a minimum is configured. Duplicate content, missing files, or changed bytes fail validation. It does not create coverage measurements.
 
 Registry validation checks declared paths, schemas, and capability names.
 Activation or the Buster loader checks executable exports. Discovery does not import package code.

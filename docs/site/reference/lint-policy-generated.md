@@ -170,16 +170,18 @@ sources. Runtime reports include only explicit policy `config_path` digests.
 | `jscpd-tests.json` | implicit imported or companion source | `ad5863319bfcde746150cdd37f36664d82a84e075b0bdc341ff151a81b9838b5` |
 | `type-evidence-eslint-plugin.mjs` | implicit imported or companion source | `e80eaa390bc2b0887e7f9d2380f38a1f9d394ec7bfab3f268cd3643b5cc95160` |
 
-## Runtime Analyser Version Authority
+<a id="runtime-analyser-version-authority"></a>
 
-These are the lint-relevant explicit runtime pins. Direct Nova npm analyser
+## Runtime Analyzer Version Authority
+
+These are the lint-relevant explicit runtime pins. Direct Nova npm analyzer
 versions are also checked against the root entry in its package lock. Python and
-Go analysers installed by the image build use the explicit `versions.json`
+Go analyzers installed by the image build use the explicit `versions.json`
 arguments below. Tools supplied as Debian-snapshot packages have no independent
 semantic version authority here: their authority is the built Nova tools image
 identity together with its `DEBIAN_SNAPSHOT` input (`20261008T000000Z`).
 
-| Analyser | Version | Canonical source |
+| Analyzer | Version | Canonical source |
 | --- | --- | --- |
 | `gocyclo` | `v0.6.0` | `versions.json` build argument |
 | `govulncheck` | `v1.1.4` | `versions.json` build argument |
@@ -288,7 +290,7 @@ Historical commits: `c33020319b13ac0054622812eb454a828b0d5f74`, `c73802816dc86b0
 
 This inventory gives source-derived identities. The
 [authored rule guide](lint-rules.md) explains triggers, boundaries, and recovery.
-External analysers can add version-specific codes, so their upstream identities
+External analyzers can add version-specific codes, so their upstream identities
 cannot form a finite repository-owned list.
 
 | Family | Count | Source-derived identities |

@@ -90,7 +90,7 @@ Declared manifest facts:
 
 ## Failure Behavior
 
-The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. The output artifact identity must match the producing attempt. The stage rejects output with a different identity. The generated narrative remains draft-not-entailment-verified, not proof of factual entailment or publication readiness.
+The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. The output artifact identity must match the producing attempt. The stage rejects output with a different identity. The generated narrative has status `draft-not-entailment-verified`. The generator gives no verification result for the draft's factual statements. The draft is not publication-readiness evidence.
 
 artifacts.write and returned-artifact binding checks occur outside the dispatch try block: they can reject after narrative dispatch without a StageResult. Preserve and reconcile dispatch and persistence outcomes before retry. Generated text is not a stored case-study result.
 

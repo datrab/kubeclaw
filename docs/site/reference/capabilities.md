@@ -1,4 +1,6 @@
-# Capability Catalogue
+# Capability Catalog
+
+<a id="capability-catalogue"></a>
 
 Status: implemented
 Audience: plugin author, operator, security reviewer
@@ -9,7 +11,7 @@ Last verified: generated source listing only; package checks and their limits ar
 
 ## Purpose
 
-Use this catalogue to identify the authority system that interprets a capability name.
+Use this catalog to identify the authority system that interprets a capability name.
 Nova grants and Buster runtime capabilities are separate allowlists.
 A shared name does not transfer a Nova grant into Buster or a Buster route into Nova.
 
@@ -37,11 +39,11 @@ Start with the component that rejected the operation, not with a matching capabi
 
 | Namespace | What the declaration means | Enforcement and reader route | No automatic translation |
 | --- | --- | --- | --- |
-| Nova plugin registration | `requiredCapabilities` requests authority; `providesCapabilities` offers an implementation. | The platform grant resolver selects providers and grants constraints; invocation checks the stage lease. Use the Nova tables and platform policy below. | Neither declaration grants permission by itself. A Buster test-provider declaration uses its own runtime namespace. |
-| Buster test-provider runtime | A provider requests named runtime operations. | Buster resolves the provider and checks its configured runtime routes; use the Buster table below. | A Nova grant does not install a Buster route or bypass Buster admission. |
-| Worker profile and attempt | Profile `capabilities` bounds the attempt; `grantedCapabilities` must be a subset. `resourceCapabilities` describes measurement semantics, not permission. | [Worker profiles, engines, and roles](worker-profiles-and-roles.md) explains profile digests, host admission, budgets, and measured results. | A matching `artifacts.read` or `network.http` string is not a Nova lease or a Kubernetes permission. A profile declaration is not a measured observation. |
+| Nova plugin registration | `requiredCapabilities` requests authority. `providesCapabilities` offers an implementation. | The platform grant resolver selects providers and grants constraints. Invocation checks the stage lease. Use the Nova tables and platform policy below. | Neither declaration grants permission by itself. A Buster test-provider declaration uses its own runtime namespace. |
+| Buster test-provider runtime | A provider requests named runtime operations. | Buster resolves the provider and checks its configured runtime routes. Use the Buster table below. | A Nova grant does not install a Buster route or bypass Buster admission. |
+| Worker profile and attempt | Profile `capabilities` bounds the attempt. `grantedCapabilities` must be a subset. `resourceCapabilities` describes measurement semantics, not permission. | [Worker profiles, engines, and roles](worker-profiles-and-roles.md) explains profile digests, host admission, budgets, and measured results. | A matching `artifacts.read` or `network.http` string is not a Nova lease or a Kubernetes permission. A profile declaration is not a measured observation. |
 | Kubernetes RBAC | Roles bind API verbs, resource types, and scopes to a Kubernetes subject such as a ServiceAccount. | [Security and trust](../understand/security-and-trust.md) separates API authority, workload identity, network access, and plugin leases. | Neither a Nova grant nor a worker capability grants Kubernetes API access. RBAC does not authorize an unrelated application HTTP operation. |
-| Codex plugin interface | The Ops plugin advertises `Read` in `interface.capabilities`. | [Codex integration](../understand/codex-integration.md) follows the separate MCP connection, bearer check, API token, and RBAC boundaries. | `Read` is interface metadata, not a Nova grant, a Buster route, or an enforcement guarantee. The optional Ops Pod can separately grant namespace-scoped pod exec. |
+| Codex plugin interface | The Ops plugin advertises `Read` in `interface.capabilities`. | [Codex integration](../understand/codex-integration.md) explains the separate MCP connection, bearer check, API token, and RBAC boundaries. | `Read` is interface metadata, not a Nova grant, a Buster route, or an enforcement guarantee. The optional Ops Pod can separately grant namespace-scoped pod exec. |
 
 For a denied Nova call, check the requesting registration, selected provider, grant constraints, and concrete lease operation/resource. For a Buster denial, check the provider request and runtime route separately.
 For worker admission, compare the advertised profile digest, attempted capability subset, and host resource policy. For a Kubernetes denial, inspect the actual caller ServiceAccount and bound API verb/resource/namespace; do not broaden a plugin grant to fix RBAC.
@@ -107,7 +109,7 @@ The test-provider contract owns request details; this table does not define Nova
 
 ## Registration Capability Declarations
 
-The following rows distinguish requested authority from offered authority for every discovered pipeline-plugin registration.
+These rows distinguish requested authority from offered authority for every discovered pipeline-plugin registration.
 An empty declaration is shown as None. These are repository declarations, not installed registrations, enabled consumers, selected providers, or granted permissions.
 Test providers use the separate Buster runtime namespace. Report adapters do not acquire Nova grants from their registration kind.
 
