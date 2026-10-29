@@ -6,6 +6,8 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { createRegistrationDependencyCollector, joinNativeDependencyAuthorities, acquireNativeDependencyReport, schemaSemanticText } from '../plugin-registration-dependencies.mjs';
+import { table } from '../docs-generate-core.mjs';
+import { renderReaderMarkdown } from '../docs-reader/renderer.mjs';
 
 // Quote source-owned structured fallback data; preserve links, Markdown code and raw HTML blocks.
 for (const fallback of [[], {}, ['accept', 'content-type']]) {
@@ -27,6 +29,27 @@ for (const fallback of [[], {}, ['accept', 'content-type']]) {
   const genuineLink = `See [${literal}](../defaults.md).`;
   assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: genuineLink } }), genuineLink);
   assert.equal(schemaSemanticText({ ...field, meaning: { text, runtimeDefault: fallback } }), text);
+}
+
+
+// Render literal field references and declared diagnostic placeholders through the native reader.
+for (const fieldPath of ['$.targets.{*}.tokenSecret', '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}.tokenSecret']) {
+  const failureMeaning = 'Activation rejects input with RUNTIME_CONFIG_INVALID:openclaw:<targetId>.';
+  const nestedCode = '``new Error(value.error || `Prism control returned HTTP ${response.status}`)``';
+  const text = `Accepted values: string with minLength=1.\n\nChange effect: A change to ${fieldPath} has the stated effect.\n\nFailure: ${failureMeaning} Read the constraints and branches for ${fieldPath}. Preserve ${nestedCode}. See [owner](https://example.invalid/owner).`;
+  const field = { path: fieldPath, constraints: [], meaning: { text, failureMeaning, acceptedValues: 'string with minLength=1' } };
+  const formatted = schemaSemanticText(field);
+  const { html } = renderReaderMarkdown(table(['Meaning'], [[formatted]]), 'fixture.md', new Map(), new Set());
+  assert.ok(html.includes(`<code>${fieldPath}</code>`), fieldPath);
+  assert.ok(html.includes('<code>&lt;targetId&gt;</code>'));
+  assert.ok(html.includes('<code>new Error(value.error || `Prism control returned HTTP ${response.status}`)</code>'));
+  assert.ok(html.includes('href="https://example.invalid/owner"'));
+  assert.doesNotMatch(html, /<em>/u);
+  assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: formatted } }), formatted);
+  for (const protectedText of ['`<targetId>`', '<pre>\n<targetId>\n</pre>', '[<targetId>](https://example.invalid/owner)']) {
+    assert.equal(schemaSemanticText({ ...field, meaning: { ...field.meaning, text: protectedText } }), protectedText);
+  }
+  assert.equal(schemaSemanticText({ ...field, meaning: { text: '<targetId>', failureMeaning: 'No diagnostic placeholder.' } }), '<targetId>');
 }
 
 const root = fs.mkdtempSync(path.join(os.tmpdir(), 'registration-dependencies-'));

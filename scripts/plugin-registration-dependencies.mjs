@@ -39,6 +39,7 @@ export function schemaSemanticText(field) {
   const values = [...new Set([
     field.meaning?.acceptedValues,
     field.path,
+    ...(field.meaning?.failureMeaning?.includes('<targetId>') ? ['<targetId>'] : []),
     ...(field.constraints ?? []).map(({ name, value }) => `${name}=${JSON.stringify(value)}`),
   ].filter(Boolean))].sort((a, b) => b.length - a.length);
   let result = '';

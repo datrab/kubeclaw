@@ -12,6 +12,8 @@ import {
   table,
 } from './docs-generate-core.mjs';
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
+import { schemaSemanticText } from './plugin-registration-dependencies.mjs';
+import { stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
 import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamApiReference } from './docs-api-reference.mjs';
 import { generateSdkReference } from './docs-sdk-reference.mjs';
 import { readVerifiedRetainedLanguageBundle } from './lib/docs-retained-language-bundle.mjs';
@@ -284,7 +286,10 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
     // Schema regexes contain Markdown-looking `[label](target)` fragments.
     // Escape brackets in generated prose so they render as literal contract
     // syntax while real source links, appended below, remain discoverable.
-    const literalMeaning = field.meaning.text.replaceAll('[', '\\[').replaceAll(']', '\\]');
+    const semanticText = schemaSemanticText(field);
+    const visible = stripMarkdownCodeAndRawHtml(semanticText);
+    const literalMeaning = semanticText.replace(/[\[\]]/gu, (character, index) =>
+      visible[index] === character ? `\\${character}` : character);
     const additionalEvidence = (field.meaning.additionalImplementationEvidence ?? []).map(meaningEvidenceLink);
     const base = `${literalMeaning}<br>Status: \`${field.meaning.status}\`<br>Evidence: ${[meaningEvidenceLink(field.meaning.evidence), ...additionalEvidence].join(', ')}`;
     if (!/blocker/u.test(field.meaning.status)) return base;
