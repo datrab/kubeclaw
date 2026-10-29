@@ -141,7 +141,7 @@ function renderEntry(row, family, index, revision) {
   const sources = row.sources.map(source =>
     `[${literal(source.path)}](https://github.com/datrab/kubeclaw/blob/${revision}/${source.path})`).map(link => `- ${link}`).join('\n');
   const procedure = ['guide', 'route'].includes(family) && row.procedure
-    ? `\n\nFollow the [complete guide procedure](../${row.procedure.replace(/^docs\/site\//u, '')}).` : '';
+    ? `\n\nUse the [complete guide procedure](../${row.procedure.replace(/^docs\/site\//u, '')}).` : '';
   let declarations = '';
   if (row.scriptDefinitions !== undefined) {
     if (typeof row.resolvedScriptDefinitions !== 'string') throw new Error('script definitions require the authenticated loader');
