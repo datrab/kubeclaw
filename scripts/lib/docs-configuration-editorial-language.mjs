@@ -56,7 +56,7 @@ The exact field sources below identify the selected resource, document and path.
 
 export const retainedPayloadLanguageNotes = `### Recorded Tool Messages And Runtime Limits
 
-The message, principle and remediation strings below are recorded tool configuration. A message gives a source-pattern warning, not an observed exploit, a passed check or evidence that the suggested operation prevents every attack. The recorded wording stays visible so that a reader can identify the actual message. These explanations state its bounded meaning.
+The strings below give recorded tool configuration for messages, principles and remediation. A message gives a source-pattern warning, not an observed exploit, a passed check or evidence that the suggested operation prevents every attack. The recorded wording stays visible so that a reader can identify the actual message. These explanations state its bounded meaning.
 
 - To pass an argument is to supply it to the receiving function. This does not mean that a check passed. A programming exception reports a failure to an exception handler. To catch an exception is to receive it in that handler.
 

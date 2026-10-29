@@ -114,7 +114,7 @@
       "useWhen": "When a test plan must enforce measurable coverage thresholds, use it.",
       "avoidWhen": "Do not use it to run tests or infer coverage without an LCOV report.",
       "criticalLimit": "The decision is only as complete as the supplied LCOV data.",
-      "operationNote": "The provider verifies LCOV input sizes and digests before comparing measured coverage with the declared budget when a minimum is configured. Duplicate content, missing files, or changed bytes fail validation. It does not create coverage measurements."
+      "operationNote": "The provider verifies LCOV input sizes and digests before comparing measured coverage with the declared budget when the configuration gives a minimum. Duplicate content, missing files, or changed bytes fail validation. It does not create coverage measurements."
     },
     {
       "id": "kubeclaw.delivery-lint",
