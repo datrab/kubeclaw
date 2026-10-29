@@ -6,7 +6,7 @@
   "canonicalTarget": "docs/site/reference/sdk.md",
   "generatedTarget": "docs/site/reference/sdk-exports.md",
   "discoveryScope": {
-    "entrypoints": "All exports in the actual SDK package export map, including export-star and explicit overrides.",
+    "entrypoints": "This scope includes all exports in the SDK package-export map, with export-star and named export overrides. It includes no other exports.",
     "parser": "Installed TypeScript compiler with SDK tsconfig.build.json; JSON Schema recursive keyword extraction with explicit unsupported-keyword failures.",
     "sourceRoots": [
       "skills/common/plugin-runtime/sdk/src",
@@ -30,7 +30,7 @@
       }
     ],
     "check": "generateSdkReference / checkSdkReference and scripts/docs-sdk-reference.mjs --check",
-    "readerTask": "Select an SDK entrypoint, follow its consumer meaning and exact field/codec rules, and use the bounded pure JSON example."
+    "readerTask": "Select an SDK entrypoint. Use its consumer meaning. Obey all its field/codec rules. Use the bounded pure JSON example."
   },
   "package": "@kubeclaw/plugin-sdk",
   "private": true,

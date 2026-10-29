@@ -87,8 +87,8 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
       targets.set(item.qualifiedName, `${page}#${anchor}`);
     }
     const add = domain('sdk-support', file, 'scripts/docs-sdk-reference.mjs', ['node scripts/docs-sdk-reference.mjs --check'],
-      'Find the source-qualified support declaration, its members and referenced declaration before changing a public SDK callback or wrapper contract.',
-      'Every compiler-discovered KubeClaw support declaration reachable through the public SDK, its resolved members and qualified local reference edges; these are not extra named exports.');
+      'Before you change a public SDK callback or wrapper contract, find the source-qualified support declaration. Also find its members and referenced declaration.',
+      'This scope includes all KubeClaw support declarations that the compiler finds through the public SDK. It also includes their resolved members and qualified local reference edges. It includes no other declarations. These declarations are not named SDK exports.');
     for (const item of data.supportTypes) {
       const target = targets.get(item.qualifiedName);
       add(['declaration', item.qualifiedName], item.source.source, target, item);
@@ -107,8 +107,8 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
     const file = inventory('platform-surfaces'), data = read(file), bindings = read('docs/config/platform-surface-map.json');
     const add = domain('platform', file, 'scripts/docs-platform-surface-inventory.mjs',
       ['npm run docs:ap09:platform-inventory:check', 'npm run docs:ap09:platform-drift:mutations'],
-      'Find the selected source occurrence, activation boundary and owning platform explanation before changing or operating it.',
-      'The nine existing platform inventory groups; source-qualified occurrences preserve equal names in different sources.');
+      'Before you change or operate the selected item, find its source occurrence and activation boundary. Also find the platform explanation with authority for the selected item.',
+      'This scope includes only the nine platform inventory groups. Names can be the same in different sources. Source-qualified occurrences keep their source identities.');
     for (const group of ['dependencies', 'dependencySignals', 'resources', 'secretReferences', 'endpoints', 'outboundConnections', 'stores', 'events', 'opsTools']) {
       assert(bindings[group], `source-map unmapped platform group: ${group}`);
       for (const item of data[group]) {
@@ -122,8 +122,8 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
   {
     const file = inventory('workflows'), data = read(file);
     const add = domain('workflow', file, 'scripts/docs-generate.mjs', ['npm run docs:inventory:check', 'npm run docs:generate:check'],
-      'Find the workflow trigger, job and command/action authority before changing a CI path.',
-      'All workflow and job records discovered by the existing workflow inventory; not arbitrary workflow action internals.');
+      'Before you change a CI path, find the workflow trigger, job, and command/action authority.',
+      'This scope includes all workflow and job records that the workflow inventory finds. It includes no other workflow or job records. It does not include workflow action internals outside these records.');
     for (const workflow of data.workflows) {
       const target = workflow.path === '.github/workflows/docs-checks.yaml'
         ? 'docs/site/extend/documentation-maintenance.md#generate-only-owned-facts-then-check'
@@ -135,8 +135,8 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
   {
     const file = inventory('plugin-system'), data = read(file);
     const add = domain('plugin', file, 'scripts/plugin-system-inventory.mjs', ['npm run plugin-system:inventory:check', 'npm run docs:publication:check'],
-      'Find a package manifest and its exact registration before selecting the package guide and changing its contract.',
-      'Manifest packages and registrations from the existing plugin-system inventory, not every implementation file.');
+      'Before you select a package guide or change the package contract, find the package manifest and registration identity.',
+      'This scope includes all manifest packages and registrations from the plugin-system inventory. It includes no other packages or registrations. It does not include all implementation files.');
     const packages = new Map(data.packages.map(item => [item.id, item]));
     const catalogue = pkg => `docs/site/extend/plugin-catalogue/${pkg.id}.md`;
     for (const item of data.packages) add(['package', item.id], item.manifest, `${catalogue(item)}#package-reference`, item);
@@ -149,8 +149,8 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
   {
     const file = inventory('configuration-values'), data = read(file);
     const add = domain('configuration-value', file, 'scripts/docs-generate.mjs', ['npm run docs:inventory:config:check', 'npm run docs:generate:check', 'npm run docs:drift:config:mutations'],
-      'Locate the exact source document and nested field, then read its receiver, precedence and failure boundary before changing it.',
-      'Every document field in the existing recursive configuration-values inventory, preserving document index and path.');
+      'Before you change a configuration field, find its source document and nested field identity. Then read its receiver, precedence, and failure boundary.',
+      'This scope includes all document fields in the recursive configuration-values inventory. It includes no other document fields. It keeps each document index and field path.');
     for (const file of data.files) for (const document of file.documents) for (const field of document.fields) {
       add([document.index, field.path], file.path, reference('helm-values'), field);
     }
@@ -158,8 +158,8 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
   {
     const file = inventory('configuration-schemas'), data = read(file);
     const add = domain('configuration-schema', file, 'scripts/docs-generate.mjs', ['npm run docs:inventory:config:check', 'npm run docs:generate:check', 'npm run docs:drift:config:mutations'],
-      'Locate the registered schema or compact swarm field and distinguish declared validation/defaults from runtime consumer behavior.',
-      'Registered schema fields and compact swarm fields in the existing inventory; field paths retain branch identities.');
+      'Find the registered schema or compact swarm field. Read its declared validation/defaults and runtime consumer behavior. Do not use one as the other.',
+      'This scope includes registered schema fields and compact swarm fields in the inventory. It includes no other fields. Field identities keep paths and branch identities.');
     for (const schema of [...data.files, data.swarm]) for (const field of schema.fields) {
       add([field.path, JSON.stringify(field.branches ?? [])], schema.path, `${reference('plugin-configuration')}#${schema === data.swarm ? 'compact-swarm-configuration' : 'registered-schemas'}`, field);
     }
@@ -167,8 +167,8 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
   {
     const file = inventory('configuration-runtime-inputs'), data = read(file);
     const add = domain('operator-cli', file, 'scripts/docs-generate.mjs', ['npm run docs:inventory:config:check', 'npm run docs:drift:cli:check', 'npm run docs:generate:check'],
-      'Find the exact command owner and flag, then follow the selected operator procedure and argument failure rules.',
-      'Only operator-runtime CLI definitions; maintainer-verification flags remain explicitly outside the operator contract.');
+      'Find the command owner and flag by their identities. Obey the selected operator procedure and argument failure rules.',
+      'This scope includes only operator-runtime CLI definitions. Maintainer-verification flags are outside the operator contract.');
     for (const flag of data.cliFlags.filter(item => item.surface === 'operator-runtime')) {
       const target = flag.documentationStatus === 'authored-documentation'
         ? flag.documentationAuthority.replace(/:\d+(?:-\d+)?$/u, '') : `${reference('cli')}#defined-flags`;
@@ -183,8 +183,8 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
     exhaustivePages.get(page).push(surface.sourceId);
   }
   return {
-    authority: 'Inventory-to-reader ownership join only. Run the declared owning inventory checks to establish source freshness; this map does not independently discover source APIs or prove semantic completeness.',
-    unmappedScope: 'Network exposure details outside the nine platform mapping groups, environment/secret/derived-value occurrence ownership, deployed payload fields and API/error/capability/contract families outside these explicit adapters are not asserted covered.',
+    authority: 'This map gives only the relation between inventories and reader ownership. Execute the declared inventory checks for source freshness. All these checks must exit with code zero. The inventories give source API information to the map. The map is not a check of semantic completeness.',
+    unmappedScope: 'This map gives no coverage result for network exposure details outside the nine platform mapping groups. It gives none for environment/secret/derived-value occurrence ownership or deployed payload fields. It gives none for API/error/capability/contract families outside these adapters.',
     domains,
     pageSources: [...exhaustivePages].sort(([a], [b]) => a.localeCompare(b, 'en')).map(([page, sourceIds]) => ({ page, sourceIds: sourceIds.sort() })),
   };

@@ -4079,8 +4079,8 @@
     }
   ],
   "sourceSurfaceMap": {
-    "authority": "Inventory-to-reader ownership join only. Run the declared owning inventory checks to establish source freshness; this map does not independently discover source APIs or prove semantic completeness.",
-    "unmappedScope": "Network exposure details outside the nine platform mapping groups, environment/secret/derived-value occurrence ownership, deployed payload fields and API/error/capability/contract families outside these explicit adapters are not asserted covered.",
+    "authority": "This map gives only the relation between inventories and reader ownership. Execute the declared inventory checks for source freshness. All these checks must exit with code zero. The inventories give source API information to the map. The map is not a check of semantic completeness.",
+    "unmappedScope": "This map gives no coverage result for network exposure details outside the nine platform mapping groups. It gives none for environment/secret/derived-value occurrence ownership or deployed payload fields. It gives none for API/error/capability/contract families outside these adapters.",
     "domains": [
       {
         "domain": "sdk",
@@ -4089,8 +4089,8 @@
         "checks": [
           "node scripts/docs-sdk-reference.mjs --check"
         ],
-        "readerTask": "Select an SDK entrypoint, follow its consumer meaning and exact field/codec rules, and use the bounded pure JSON example.",
-        "scope": "All exports in the actual SDK package export map, including export-star and explicit overrides.",
+        "readerTask": "Select an SDK entrypoint. Use its consumer meaning. Obey all its field/codec rules. Use the bounded pure JSON example.",
+        "scope": "This scope includes all exports in the SDK package-export map, with export-star and named export overrides. It includes no other exports.",
         "surfaces": [
           {
             "sourceId": "sdk:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:.:ReportAdapterOutput:member:casesTruncated:0",
@@ -8728,8 +8728,8 @@
         "checks": [
           "node scripts/docs-sdk-reference.mjs --check"
         ],
-        "readerTask": "Find the source-qualified support declaration, its members and referenced declaration before changing a public SDK callback or wrapper contract.",
-        "scope": "Every compiler-discovered KubeClaw support declaration reachable through the public SDK, its resolved members and qualified local reference edges; these are not extra named exports.",
+        "readerTask": "Before you change a public SDK callback or wrapper contract, find the source-qualified support declaration. Also find its members and referenced declaration.",
+        "scope": "This scope includes all KubeClaw support declarations that the compiler finds through the public SDK. It also includes their resolved members and qualified local reference edges. It includes no other declarations. These declarations are not named SDK exports.",
         "surfaces": [
           {
             "sourceId": "sdk-support:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts:declaration:contracts%2Fpipeline-test-gate%2Fv1%2Fsrc%2Ftypes.ts%23ArtifactRefV1",
@@ -10106,8 +10106,8 @@
           "npm run docs:ap09:platform-inventory:check",
           "npm run docs:ap09:platform-drift:mutations"
         ],
-        "readerTask": "Find the selected source occurrence, activation boundary and owning platform explanation before changing or operating it.",
-        "scope": "The nine existing platform inventory groups; source-qualified occurrences preserve equal names in different sources.",
+        "readerTask": "Before you change or operate the selected item, find its source occurrence and activation boundary. Also find the platform explanation with authority for the selected item.",
+        "scope": "This scope includes only the nine platform inventory groups. Names can be the same in different sources. Source-qualified occurrences keep their source identities.",
         "surfaces": [
           {
             "sourceId": "platform:charts%2Fkubeclaw%2Ftemplates%2Farchviewer.yaml:dependencies:archviewer::::",
@@ -17224,8 +17224,8 @@
           "npm run docs:inventory:check",
           "npm run docs:generate:check"
         ],
-        "readerTask": "Find the workflow trigger, job and command/action authority before changing a CI path.",
-        "scope": "All workflow and job records discovered by the existing workflow inventory; not arbitrary workflow action internals.",
+        "readerTask": "Before you change a CI path, find the workflow trigger, job, and command/action authority.",
+        "scope": "This scope includes all workflow and job records that the workflow inventory finds. It includes no other workflow or job records. It does not include workflow action internals outside these records.",
         "surfaces": [
           {
             "sourceId": "workflow:.github%2Fworkflows%2Fauto-promote-runtime.yaml:job:publish",
@@ -17594,8 +17594,8 @@
           "npm run plugin-system:inventory:check",
           "npm run docs:publication:check"
         ],
-        "readerTask": "Find a package manifest and its exact registration before selecting the package guide and changing its contract.",
-        "scope": "Manifest packages and registrations from the existing plugin-system inventory, not every implementation file.",
+        "readerTask": "Before you select a package guide or change the package contract, find the package manifest and registration identity.",
+        "scope": "This scope includes all manifest packages and registrations from the plugin-system inventory. It includes no other packages or registrations. It does not include all implementation files.",
         "surfaces": [
           {
             "sourceId": "plugin:skills%2Fbuster%2Fplugins%2Fapi-flow%2Fplugin.json:package:kubeclaw.api-flow",
@@ -18420,8 +18420,8 @@
           "npm run docs:generate:check",
           "npm run docs:drift:config:mutations"
         ],
-        "readerTask": "Locate the exact source document and nested field, then read its receiver, precedence and failure boundary before changing it.",
-        "scope": "Every document field in the existing recursive configuration-values inventory, preserving document index and path.",
+        "readerTask": "Before you change a configuration field, find its source document and nested field identity. Then read its receiver, precedence, and failure boundary.",
+        "scope": "This scope includes all document fields in the recursive configuration-values inventory. It includes no other document fields. It keeps each document index and field path.",
         "surfaces": [
           {
             "sourceId": "configuration-value:charts%2Fgitops%2Fvalues.yaml:0:%24",
@@ -45825,8 +45825,8 @@
           "npm run docs:generate:check",
           "npm run docs:drift:config:mutations"
         ],
-        "readerTask": "Locate the registered schema or compact swarm field and distinguish declared validation/defaults from runtime consumer behavior.",
-        "scope": "Registered schema fields and compact swarm fields in the existing inventory; field paths retain branch identities.",
+        "readerTask": "Find the registered schema or compact swarm field. Read its declared validation/defaults and runtime consumer behavior. Do not use one as the other.",
+        "scope": "This scope includes registered schema fields and compact swarm fields in the inventory. It includes no other fields. Field identities keep paths and branch identities.",
         "surfaces": [
           {
             "sourceId": "configuration-schema:charts%2Fkubeclaw%2Ffiles%2Fconfig%2Fswarm.config.json:%24:%5B%5D",
@@ -51943,8 +51943,8 @@
           "npm run docs:drift:cli:check",
           "npm run docs:generate:check"
         ],
-        "readerTask": "Find the exact command owner and flag, then follow the selected operator procedure and argument failure rules.",
-        "scope": "Only operator-runtime CLI definitions; maintainer-verification flags remain explicitly outside the operator contract.",
+        "readerTask": "Find the command owner and flag by their identities. Obey the selected operator procedure and argument failure rules.",
+        "scope": "This scope includes only operator-runtime CLI definitions. Maintainer-verification flags are outside the operator contract.",
         "surfaces": [
           {
             "sourceId": "operator-cli:scripts%2Fdeploy.sh:--with-code",
