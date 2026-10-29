@@ -1335,8 +1335,8 @@ function markdown(inventory, mapping) {
   };
   const policySection = [
     '## Store Policies', '',
-    'Choose the actual store instance and its caller before interpreting a limit. A fallback applies only when the input is absent; a configured expression is not an observed effective value. Capacity admission, lease expiry, pending-evidence reclamation, domain retirement, backup freshness and physical-media deletion are different operations.', '',
-    'The source tables identify actual declarations and rules without running them. A selected chart value does not prove upstream enforcement or a live mount. An owner with no general deletion method does not establish that no external cleanup tool exists. Follow the linked operating explanation and stop when ownership or quiescence is uncertain.', '',
+    'Choose the actual store instance and its caller before interpreting a limit. Use the fallback condition for the exact receiving field. A configured expression is not an observed effective value. Capacity admission, lease expiry, pending-evidence reclamation, domain retirement, backup freshness and physical-media deletion are different operations.', '',
+    'The source tables identify declarations and rules without running them. A selected chart value is not evidence of upstream enforcement or a live mount. An owner without a general deletion method is not evidence that external cleanup tools are unavailable. Use the linked operating explanation. Stop when ownership or quiescence is uncertain.', '',
     '| Discovered identity | Source | Policy families | Interpretation limit |',
     '| --- | --- | --- | --- |',
     ...inventory.stores.map(item => `| ${literal(item.value)} | ${sourceLink(item)} | ${item.policyFamilies.map(id => `[${id}](#${id})`).join(', ')} | ${cell(item.interpretationLimits.join(' ') || 'Use the selected policy and caller; this literal alone is not deletion permission.')} |`), '',
@@ -1350,9 +1350,9 @@ function markdown(inventory, mapping) {
         if (value === undefined) return [];
         const provenance = authority.resourceProvenance;
         const meaning = authority.representation === 'selected-native-resource-value'
-          ? `Native origin ${provenance.origin}; ${provenance.activationState}${provenance.activationCondition ? `: ${provenance.activationCondition}` : ''}. ${provenance.policyComparisonFixture?.limit ?? 'Selected render or parsed manifest, not a live observation or inferred default'}`
-          : Object.hasOwn(authority, 'value') ? 'Literal declaration; not a live observation' : 'Nullish fallback only; not the selected effective value';
-        return leaves(value).map(([key, scalar]) => `| ${literal(authority.id)} | ${literal(key)} | ${literal(scalar)} | ${cell(authority.unit ?? 'See the selected field and receiver')} | ${cell(meaning)} |`);
+          ? `Native origin: ${provenance.origin}. Activation: ${provenance.activationState}${provenance.activationCondition ? `: ${provenance.activationCondition}` : ''}. ${provenance.policyComparisonFixture?.limit ?? 'Selected render or parsed manifest, not a live observation or inferred default'}`
+          : Object.hasOwn(authority, 'value') ? 'Literal declaration. Not a live observation.' : 'Nullish fallback only. Not the selected effective value.';
+        return leaves(value).map(([key, scalar]) => `| ${literal(authority.id)} | ${literal(key)} | ${literal(scalar)} | ${cell(authority.unit ?? 'Read the selected field and receiver')} | ${cell(meaning)} |`);
       });
       return [
         `### ${policy.id}`, '',

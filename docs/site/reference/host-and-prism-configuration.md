@@ -51,7 +51,7 @@ The chart ships this compact shape:
 
 The shipped expander is currently part of real-run verification support. It is
 not the production plugin-platform loader. Code that calls this expander
-accepts the following compact fields:
+accepts these compact fields:
 
 | Field | Rule |
 | --- | --- |

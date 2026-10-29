@@ -212,7 +212,7 @@ not capacity proof.
    Native Prism uses its fixed v3 profile instead of this registration path.
 3. A local v1 attempt selects an advertised profile by its complete digest.
    A fresh native v3 attempt must match Prism's fixed profile. Capability
-   grants and resource requests must follow the selected version's contract.
+   grants and resource requests must obey the selected version's contract.
 4. Each path validates its attempt contract. Fresh native v3 admission also
    compares requested budgets with native host policy.
 5. Stage `agentRole` can influence dispatch routing inside an adapter, but it

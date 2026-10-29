@@ -1683,9 +1683,22 @@ baseline below. Stop before injecting the fault if any baseline check fails.
 
 #### Prepare the OpenClaw Memory Reader
 
-This task targets OpenClaw `v2026.9.4`, source commit
-`3a9d69db306cd7f081e06254cb89c4bcc14a7107`, selected by the pinned
-KubeClaw image. Run these commands from the operator shell used for this exercise. Use the
+The memory-consumer procedure below records historical OpenClaw `v2026.9.4`
+source at `3a9d69db306cd7f081e06254cb89c4bcc14a7107`. The selected
+[embedding client](../understand/platform-and-operations.md#embedding-client-limits-and-failure-rules)
+is OpenClaw `2026.10.3`, not that historical client.
+
+Stop before the memory-reader baseline or fault injection.
+Ask the OpenClaw and platform maintainers for the selected image's memory commands and configuration.
+They must identify the workspace, database, reader ownership and necessary Pod and administration access.
+They must also give the synthetic-note, derived-index and network-policy cleanup steps.
+Continue only after those maintainers give these inputs for the selected image.
+
+The historical commands, source links and local checks below do not give those current inputs.
+Do not use the newer version label in place of the old client's behavior.
+A direct HTTP probe is not memory-consumer evidence.
+
+ Run these commands from the operator shell used for this exercise. Use the
 existing `NAMESPACE`, `EVIDENCE_DIR`, and `assert_cluster_binding` procedure.
 Access must permit Pod exec, Deployment and Pod reads, and creation and removal
 of the named Cilium policy. The agent container must have Node, the pinned

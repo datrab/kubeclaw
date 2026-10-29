@@ -99,7 +99,7 @@ The root is closed. Every listed field is required except `demo`.
 | `repositoryRoot` | Normalized absolute path | The one repository publication lane. Relative paths are invalid. |
 | `workspaceRoot` | Normalized absolute path outside `repositoryRoot` | Parent for temporary module worktrees. It cannot equal or be below the repository. |
 | `baseRevision` | Exactly 40 lowercase hexadecimal characters | Committed source baseline used by source admission, coverage, start checks, and worktrees. |
-| `architecture` | Closed source-admission object | Pins the architecture ref and control files; see below. |
+| `architecture` | Closed source-admission object | Pins the architecture ref and control files. Refer to [Architecture source admission](#architecture-source-admission). |
 | `modules` | Array of 1–128 closed module objects | Units of implementation, ownership, and module coverage. |
 | `final` | Closed cumulative gate object | Full-repository lint, optional review, mandatory test, and integration requirements. |
 | `demo` | Optional closed demo object | Adds candidate, delivery, and readiness stages only when the final resolved plan proves the required deployment chain. |
@@ -176,7 +176,7 @@ Module `test` and `final.test` use the same closed shape:
 | `agentRole` | Optional role string passed through when present. |
 | `testAgentEnabled` | Optional boolean; default `true`. `false` suppresses test-agent dispatch, not provider execution or coverage checks. |
 | `requiredChecks` | Required by project policy and used to build coverage. Each entry uses the coverage check shape described in [Project test pipeline](pipeline-json.md#coverage-object). |
-| `providerPlan` | Required closed resolved-plan envelope; see below. |
+| `providerPlan` | Required closed resolved-plan envelope. Refer to the provider-plan envelope fields in the table below. |
 
 The authored provider-plan envelope contains exactly these fields:
 
@@ -405,7 +405,7 @@ propagate failures. Source-preflight keeps its report write inside the same
 try: write failure or cancellation there returns `blocked`,
 `source_preflight.invalid`, with no artifact. A new attempt rereads or recaptures
 source; never edit an earlier subject/report to force continuation. Preserve
-run and artifact evidence, and follow the [plugin lifecycle](../use/plugins.md)
+run and artifact evidence, and use the [plugin lifecycle](../use/plugins.md)
 for activation/removal; no stage-owned temporary data needs cleanup.
 
 For a positive check use the exact block above with owned prefix `web` and the

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import {semanticEvidenceLinks,retainedSemanticNotice} from './docs-retained-semantic-evidence.mjs';
 import {createHash} from 'node:crypto';
 import {retainedHelmIntroduction,environmentConsumerGuidance} from './docs-configuration-reference-guidance.mjs';
-import { editorialOwners } from './docs-configuration-editorial-language.mjs';
+import { editorialOwners, retainedEnvironmentDisplayText, retainedApiReceiverNotes, retainedPayloadLanguageNotes, retainedHelmReceiverGuidance, retainedHelmDisplayText } from './docs-configuration-editorial-language.mjs';
 import {yamlFieldPathTokens} from './docs-retained-yaml-field-path.mjs';
 export function table(headers, rows) {
   const escape = (value) => String(value ?? '').replaceAll('|', '\\|').replaceAll('\n', '<br>');
@@ -83,8 +83,18 @@ function literalCode(value) {
   return `<code>${literalText(value)}</code>`;
 }
 
-function selectedValue(value) {
+function selectedValue(value, type) {
+  const summary = ['object', 'array'].includes(type)
+    ? /^<(object|array): ([0-9]+) entries; see child rows>$/u.exec(String(value)) : null;
+  if (summary && summary[1] === type) {
+    const label = `<${summary[1]}: ${summary[2]} ${summary[2] === '1' ? 'entry' : 'entries'}. Read the child rows.>`;
+    return literalCode(label);
+  }
   return value === '' ? `${literalCode('""')} (empty string)` : literalCode(String(value));
+}
+
+function literalParagraphs(value) {
+  return String(value).split('\n\n').map((paragraph) => `<p>${literalText(paragraph)}</p>`).join('');
 }
 
 function currentHelmEvidence(sourcePath, fieldPath) {
@@ -115,19 +125,26 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     const linked = match ? sourceLink(match[1], Number(match[2]), source) : sourceLink(source, 1, source);
     return details.length > 0 ? `${linked}; ${details.join('; ')}` : linked;
   };
+  const fieldExplanationText = (field, text) => {
+    if (typeof text !== 'string') return text;
+    const metadataContract = field.meaning.apiCollectionAuthority?.authority.includes('io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta');
+    return retainedHelmDisplayText(metadataContract
+      ? text.replaceAll('for the exact field ``.', `for the source field \`${field.path}\`.`)
+      : text);
+  };
   const readerMeaning = (field, sourceClass) => {
-    const meaning = literalText(field.meaning.text);
+    const meaning = literalText(fieldExplanationText(field, field.meaning.text));
     const collection = field.meaning.apiCollectionAuthority
       ? `<br>[Exact API collection contract](#${collectionSchemaAnchor(field.meaning.apiCollectionAuthority)})`
       : '';
     if (banner && sourceClass === 'helm-example' && field.required === 'not-applicable-unused'
       && ['inactive-profile', 'unused-field'].includes(field.meaning.status)) {
       const historical = field.meaning.status === 'inactive-profile'
-        ? 'The recorded inactive-profile marker is limited here to this unused leaf. It does not prove that the complete file is unselected.<br>' : '';
+        ? 'The recorded inactive-profile marker is limited here to this unused leaf. It is not evidence that the full file is unselected.<br>' : '';
       return `${historical}${literalText(editorialOwners.unusedHelmExampleLeaf)}<br>Owner: ${literalText(field.meaning.blockerOwner)}. Required before use: ${literalText(field.meaning.closureCondition)}<br>Recorded source evidence: ${meaningEvidence(field.meaning.evidence)}`;
     }
-    if (field.meaning.status === 'inactive-profile') return `${meaning}<br>This file is not selected by a checked-in deployment path.`;
-    if (/blocker/u.test(field.meaning.status)) return `${meaning}${collection}<br>This field is not ready for operator use because its receiving behavior is not yet proved.<br>Owner: ${field.blockerOwner}. Required before use: ${field.closureCondition}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}`;
+    if (field.meaning.status === 'inactive-profile') return `${meaning}<br>The recorded inactive-profile marker does not by itself exclude bootstrap or manual direct loading. Read the named loader and its selected profile.`;
+    if (/blocker/u.test(field.meaning.status)) return `${meaning}${collection}<br>This field is not ready for operator use because there is not yet evidence of its receiving behavior.<br>Owner: ${field.blockerOwner}. Required before use: ${field.closureCondition}<br>Source evidence: ${meaningEvidence(field.meaning.evidence)}`;
     const authority = field.meaning.apiAuthority ? `<br>Behavior authority: ${field.meaning.apiAuthority}` : '';
     const semantic = field.meaning.semanticContractEvidence;
     const semanticAuthority = semantic
@@ -138,13 +155,17 @@ function renderHelmValues(configurationValues, configurationSchemas) {
   const schemaContractText = (node) => {
     if (!node) return 'This field has no contract at this boundary.';
     const { description, observedSchemaKeywords, schemaReferenceChain, referencedContract, ...constraints } = node;
-    return `${description === undefined ? 'The schema supplies no description for this node.' : literalText(description)}<br>Constraints and alternatives: ${literalCode(JSON.stringify(constraints))}<br>Keywords at this boundary: ${literalCode(JSON.stringify(observedSchemaKeywords))}${schemaReferenceChain ? `<br>Reference: ${literalCode(JSON.stringify(schemaReferenceChain))}<br>Referenced definition: ${schemaContractText(referencedContract)}` : ''}`;
+    return `${description === undefined ? 'The schema supplies no description for this node.' : 'Recorded schema description: ' + literalText(description)}<br>Constraints and alternatives: ${literalCode(JSON.stringify(constraints))}<br>Keywords at this boundary: ${literalCode(JSON.stringify(observedSchemaKeywords))}${schemaReferenceChain ? `<br>Reference: ${literalCode(JSON.stringify(schemaReferenceChain))}<br>Referenced definition: ${schemaContractText(referencedContract)}` : ''}`;
   };
   const apiCollectionSections = [...apiCollectionSchemas.values()].sort((left, right) => collectionSchemaKey(left.schema).localeCompare(collectionSchemaKey(right.schema))).map(({ schema, fields }) => {
+    const metadataSchema = schema.authority.includes('io.k8s.apimachinery.pkg.apis.meta.v1.ObjectMeta');
+    const schemaIdentity = metadataSchema
+      ? `Containing resource API version: \`${schema.apiVersion}\`. Resource kind: \`${schema.kind}\`.`
+      : `API: \`${schema.apiVersion}/${schema.kind}\`.`;
     const children = [...Object.entries(schema.children).map(([name, node]) => [`Child \`${name}\``, schemaContractText(node)]),
       ...Object.entries(schema.itemChildren).map(([name, node]) => [`Item child \`${name}\``, schemaContractText(node)])];
-    const parents = schema.parentContracts.map((parent) => [`Parent \`${parent.path || '<API object>'}\``, schemaContractText(parent)]);
-    return `<a id="${collectionSchemaAnchor(schema)}"></a>\n\n### ${schema.kind}: ${schema.resolvedPath === '' ? 'API object root' : literalCode(schema.resolvedPath)}\n\nAuthority: ${schema.authority}. Content SHA-256: \`${schema.authoritySha256}\`. API: \`${schema.apiVersion}/${schema.kind}\`.\n\nThis section preserves the exact pinned schema descriptions. It describes accepted shape and the stated API behavior. Read the linked field row for the selected input, actual apply or loader receiver, operational consequence, and controller limit. A missing schema default does not prove that the controller inserts no default. A patch annotation does not select the client's apply mode.\n\n${table(['Boundary', 'Exact schema contract'], [
+    const parents = schema.parentContracts.map((parent) => [`Parent \`${parent.path || (metadataSchema ? 'metadata' : '<API object>')}\``, schemaContractText(parent)]);
+    return `<a id="${collectionSchemaAnchor(schema)}"></a>\n\n### ${schema.kind}: ${metadataSchema ? literalCode('metadata' + (schema.resolvedPath ? '.' + schema.resolvedPath : '')) : schema.resolvedPath === '' ? 'API object root' : literalCode(schema.resolvedPath)}\n\nAuthority: ${schema.authority}. Content SHA-256: \`${schema.authoritySha256}\`. ${schemaIdentity}\n\nThis section keeps the exact pinned schema descriptions as recorded source quotations. The descriptions are not new instructions or proof of current API behavior.\n\nFor ObjectMeta, the path in this heading is relative to the resource object and starts with metadata. ObjectMeta gives metadata fields, not the full resource. A metadata namespace default does not apply to a cluster-scoped resource. Read the linked field row for the selected input, actual apply or loader receiver, operational consequence, and controller limit. A missing schema default is not evidence that the controller inserts no default. A patch annotation does not select the client's apply mode.\n\n${table(['Boundary', 'Exact schema contract'], [
       ['Field', schemaContractText(schema.contract)], ['List item', schemaContractText(schema.item)],
       ['Map value', schemaContractText(schema.mapValue)], ...children, ...parents,
     ])}\n\nField sources:\n\n${fields.map((field) => `- ${sourceLink(field.source, field.line)} — document ${field.document}, \`${field.path}\`.`).join('\n')}\n`;
@@ -212,13 +233,13 @@ function renderHelmValues(configurationValues, configurationSchemas) {
     const links = sourceRangeLinks(file.path);
     return `<details>\n<summary><code>${file.path}</code> — ${fields.length} discovered fields, including lists and maps</summary>\n\nSource evidence:\n\n${links}\n\n${table(['Field', 'Behavior', 'Type and selected value', 'Required state and limits', 'Source and runtime owner', 'Receiving source', 'Precedence and effective value', 'Change impact and failure'], fields.map((field) => [
       `\`${field.path}\``,
-      `${readerMeaning(field, file.sourceClass)}${literalKeyOverride(field, file.sourceClass)}${currentHelmEvidence(file.path,field.path)}`,
-      `\`${field.type}\`<br>${selectedValue(field.value)}<br>${selectedValueType(field)}`,
-      `${requiredState(field)}: ${field.requiredReason}<br>${field.constraints.length ? field.constraints.map(literalText).join('<br>') : 'No additional repository constraint.'}`,
+      `${retainedHelmReceiverGuidance(field, file.path).map((note) => `Receiving contract: ${literalParagraphs(note.text)}`).join('')}${retainedHelmReceiverGuidance(field, file.path).length ? 'Recorded retained field explanation (read with the specific qualifications above):<br>' : ''}${readerMeaning(field, file.sourceClass)}${literalKeyOverride(field, file.sourceClass)}${currentHelmEvidence(file.path,field.path)}`,
+      `\`${field.type}\`<br>${selectedValue(field.value, field.type)}<br>${selectedValueType(field)}`,
+      `${requiredState(field)}: ${field.requiredReason}<br>${field.constraints.length ? field.constraints.map((value) => literalText(fieldExplanationText(field, value))).join('<br>') : 'No additional repository constraint.'}`,
       `Source: ${field.ownerComponent} (\`${field.ownerEvidence}\`)<br>Runtime: ${field.runtimeOwner}`,
       consumerText(field),
       `${field.precedence.join(' → ')}<br>Proof: ${field.effectiveValueProof}`,
-      `${field.changeImpact}<br>Failure: ${field.failureMeaning}`,
+      `${retainedHelmDisplayText(field.changeImpact)}<br>Failure: ${retainedHelmDisplayText(field.failureMeaning)}`,
     ]))}\n\n</details>`;
   }).join('\n\n');
   const deployedConfigSections = (configurationSchemas.deployedPayloads ?? []).map((payload) => {
@@ -233,10 +254,10 @@ function renderHelmValues(configurationValues, configurationSchemas) {
       .join('\n');
     const fields = payload.fields.length
       ? table(['Field', 'Type', 'Selected checked-in value'], payload.fields.map((field) => [
-        `\`${field.path}\``, `\`${field.type}\``, selectedValue(field.value),
+        `\`${field.path}\``, `\`${field.type}\``, selectedValue(field.value, field.type),
       ]))
       : 'This file is executable or tool-specific configuration rather than a YAML or JSON data tree. The inventory pins the complete file bytes and does not invent field behavior.';
-    return `<details>\n<summary><code>${payload.path}</code> — ${payload.parseMode === 'recursive-yaml' || payload.parseMode === 'recursive-json' ? `${payload.leafFields} recursive fields` : 'complete opaque file'}</summary>\n\nSource: ${sourceLink(payload.path)}\n\nProved delivery steps:\n\n${chain}\n\nSource selection and retention:\n\n${payload.selectionPrecedence}\n\n${selection}\n\nRuntime reader boundary:\n\n${payload.readerBoundary}${unboundReader ? `\n\nRelated evidence that does not close the boundary:\n\n${unboundReader}` : ''}\n\n${fields}\n\n</details>`;
+    return `<details>\n<summary><code>${payload.path}</code> — ${payload.parseMode === 'recursive-yaml' || payload.parseMode === 'recursive-json' ? `${payload.leafFields} recursive fields` : 'complete opaque file'}</summary>\n\nSource: ${sourceLink(payload.path)}\n\nRecorded source and materialization steps:\n\n${chain}\n\nSource selection and retention:\n\n${payload.selectionPrecedence}\n\n${selection}\n\nRuntime reader boundary:\n\n${payload.readerBoundary}${unboundReader ? `\n\nRelated evidence that does not close the boundary:\n\n${unboundReader}` : ''}\n\n${fields}\n\n</details>`;
   }).join('\n\n');
   const undeployedConfigSections = (configurationSchemas.undeployedPayloads ?? []).map((payload) => {
     const references = payload.references
@@ -244,7 +265,7 @@ function renderHelmValues(configurationValues, configurationSchemas) {
       .join('<br>→<br>\n');
     const fields = payload.fields.length
       ? table(['Field', 'Type', 'Selected checked-in value'], payload.fields.map((field) => [
-        `\`${field.path}\``, `\`${field.type}\``, selectedValue(field.value),
+        `\`${field.path}\``, `\`${field.type}\``, selectedValue(field.value, field.type),
       ]))
       : 'This file is executable or tool-specific configuration rather than a YAML or JSON data tree.';
     return `<details>\n<summary><code>${payload.path}</code> — ${payload.parseMode === 'recursive-yaml' || payload.parseMode === 'recursive-json' ? `${payload.leafFields} recursive fields` : 'complete opaque file'}</summary>\n\nSource: ${sourceLink(payload.path)}\n\nChecked-in reference and failure boundary:\n\n${references}\n\n${payload.deliveryGap}\n\n${fields}\n\n</details>`;
@@ -275,7 +296,7 @@ ${table(['Class', 'Count', 'Meaning'], [
   ['Active operator configuration leaves', configurationValues.totals.activeOperatorConfigurationLeaves, 'Local chart, external chart, payload, or loader configuration after API-object fields and inactive profiles are separated.'],
   ['Fields without a complete behavior contract', configurationValues.totals.activeMeaningBlockers, 'These fields are not ready for operator use until the receiving behavior and failure result are proved.'],
   ['Opaque payloads without a proved reader', configurationValues.totals.embeddedPayloadContractsNeedingConsumerProof, 'Kubernetes stores these ConfigMap or Secret values, but the application reader must define their meaning.'],
-  [banner ? 'Recorded inactive-profile leaf markers' : 'Inactive profile leaves', configurationValues.totals.inactiveProfileLeaves, banner ? 'This count records historical leaf classifications. A field-level unused marker does not prove that all other fields in its file are inactive.' : 'No checked-in active binding proves runtime effect.'],
+  [banner ? 'Recorded inactive-profile leaf markers' : 'Inactive profile leaves', configurationValues.totals.inactiveProfileLeaves, banner ? 'This count records historical leaf classifications. A field-level unused marker is not evidence that all other fields in its file are inactive.' : 'No checked-in active binding proves runtime effect.'],
 ])}
 ## Discovered Value Sources
 
@@ -288,7 +309,9 @@ ${table(['File', 'Class', 'Documents', 'Recursive fields'], valueFiles.map((file
 
 ## Recursive Value Reference
 
-Each field row separates the checked-in source from the runtime receiver. It follows local Helm templates, Argo CD value-file bindings, and Kubernetes resource authorities. An external chart or Kubernetes API owns validation when its schema is outside this repository. A field with no active deployment binding is identified as inactive instead of being presented as an effective option.
+Each field row separates the checked-in source from the runtime receiver. It follows local Helm templates, Argo CD value-file bindings, and Kubernetes resource authorities. An external chart or Kubernetes API owns validation when its schema is outside this repository. A recorded inactive binding is not an effective option through that binding. It does not exclude another bootstrap or manual loader for the complete file.
+
+${retainedApiReceiverNotes}
 
 ${fieldSections}
 
@@ -298,9 +321,13 @@ Each field row links to its own kind and schema path below. These contracts incl
 
 ${apiCollectionSections}
 
-## Deployed Configuration Payloads
+<a id="deployed-configuration-payloads"></a>
 
-The chart embeds each file below in the swarm ConfigMap and the init process materializes it in runtime configuration. YAML and JSON files are expanded to every leaf. Executable JavaScript and HCL files remain complete, digest-pinned files because treating their syntax as ordinary key/value data would invent semantics. A payload without a checked-in reader is identified as tool- or image-owned.
+## Configuration Payload Source And Materialization
+
+The recorded chart templates embed each file below in the swarm ConfigMap and define its init-process materialization path. These source relationships are not evidence that a running process receives these bytes or executes a tool with them. YAML and JSON files are expanded to every leaf. Executable JavaScript and HCL files stay full, digest-pinned files because treating their syntax as ordinary key/value data would invent semantics. A payload without a checked-in reader is identified as tool- or image-owned.
+
+${retainedPayloadLanguageNotes}
 
 ${deployedConfigSections}
 
@@ -325,14 +352,14 @@ ${generatedEnd()}
 | persistence | creates workspace/config PVCs for gateway and plugin-runtime state | rendered PVCs and security contexts match production values |
 | service and extra ports | exposes gateway/bridge ClusterIP ports plus explicit extra NodePorts | rendered Services contain only documented ports |
 | buster namespace broker | adds lease CRD/RBAC/controller and controller env vars | Buster render includes CRD, lease client RBAC, controller Deployment, and namespace fence docs |
-| probes, startup doctor, and dependency checks | configures gateway, Redis, and LiteLLM health checks; \`gateway.startupDoctor\` runs \`openclaw doctor --fix\` as a blocking state update while the gateway is stopped | rendered init container, env vars, and smoke commands exercise the health and doctor surfaces |
+| probes, startup doctor, and dependency checks | configures gateway, Redis, and LiteLLM health checks. \`gateway.startupDoctor\` runs \`openclaw doctor --fix\` as a blocking state update while the gateway is stopped | rendered init container, env vars, and smoke commands exercise the health and doctor surfaces |
 
 ## Failure Signals
 
 - A top-level value appears in this page but has no rendered effect: add deployment truth coverage or remove the stale value.
 - Rendered Secret refs do not match \`my-values/setup-secrets.sh\`: update values, helper, inventory, and docs together.
 - Buster values disable sandbox/broker behavior unexpectedly: inspect \`my-values/buster-values.yaml\` before changing chart templates.
-- A live pod keeps old config after values change: remember the init container preserves persisted config unless override flags request replacement.
+- If a Pod uses old configuration after a values change, examine the source-selection and retention rules for that payload. Semgrep and the base ESLint configuration keep a persistent file unless the override is true or the file does not exist. TFLint, Yamllint, and the named ESLint configuration copies replace the file when the mounted source exists.
 
 ## Generated from
 
@@ -430,7 +457,9 @@ ${table(['Class', 'Count', 'Meaning'], [
 ])}
 ## Variables
 
-${table(['Name', 'Surface and direct setting', 'Purpose, impact, and failure', 'Accepted form', 'Default, empty, invalid, and precedence', 'Sensitivity class', 'Required and source precedence', 'Consumer-specific contract', 'Consumers'], rows.map((item) => [
+${table(['Name', 'Surface and direct setting', 'Purpose, impact, and failure', 'Accepted form', 'Default, empty, invalid, and precedence', 'Sensitivity class', 'Required and source precedence', 'Consumer-specific contract', 'Consumers'], rows.map((sourceItem) => {
+  const item = retainedEnvironmentDisplayText(sourceItem);
+  return [
   `\`${item.name}\``,
   `\`${item.surface}\`<br>${item.direction}<br>${directSettingGuidance(item)}`,
   environmentMeaning(item),
@@ -447,7 +476,8 @@ ${table(['Name', 'Surface and direct setting', 'Purpose, impact, and failure', '
   `${item.required}<br>${groupedPrecedence(item)}`,
   consumerContracts(item),
   groupedConsumers(item),
-]))}
+];
+}))}
 ${generatedEnd()}
 ## Ownership And Runtime Boundaries
 

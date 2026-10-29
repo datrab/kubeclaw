@@ -473,7 +473,7 @@ it does not grant pipeline lifecycle authority.
 Discovery means that the runtime found and validated a package declaration.
 Registration means that the fixed registry contains its declared surface.
 Activation means that configuration enabled one registration and loaded its executable.
-Invocation means that an active stage reached that executable with a valid lease.
+Plugin invocation is a call from the owning runtime to an activated registration. The call must have the context for that registration. Core stage and observer calls use a valid lease.
 
 These are four different events.
 

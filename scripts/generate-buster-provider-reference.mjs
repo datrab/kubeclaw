@@ -231,7 +231,7 @@ const lines = [
 ];
 
 lines.push('## Source Inventory', '',
-  'These exact committed inputs establish the installed provider inventory, contract IDs, selected schemas and catalogue parser:', '',
+  'These committed inputs are the sources for the installed provider inventory, contract IDs, selected schemas and catalog parser:', '',
   ...sources.map((file) => `- [${file}](https://github.com/datrab/kubeclaw/blob/${revision}/${file})`), '');
 
 function appendContract(title, schema, file) {
@@ -293,14 +293,14 @@ appendContract('kubeclaw.api-flow-document@1', flow, flowFile);
 lines.push(providerCatalogueReference.replaceAll('CATALOGUE_SOURCE_REVISION', revision).trimEnd(), '');
 
 lines.push('## Maintenance Rule', '',
-  'Run from a clean repository checkout with Git and a Node.js runtime supporting native ESM and `import.meta.dirname`. No cluster or remote service is needed.',
-  'Commit changes to the generator, catalogue prose template, schemas and manifests before generation. Select that source commit: every installed provider manifest, selected configuration schema, API-flow schema, remote catalogue parser, catalogue prose template and generator must match it byte-for-byte.',
-  'Replace `<full-source-commit>` with that existing lowercase 40-hex commit, then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.',
-  'Expected write result: `wrote docs/site/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.',
-  'Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This proves generated freshness, not provider execution or remote health.',
-  'If `BUSTER_PROVIDER_SOURCE_REVISION` fails, check the selected commit, missing objects and exact committed input bytes. Commit the intended source and select its revision; do not weaken the pin.',
-  'A stale-output assertion requires regeneration from the selected matching inputs. For an inventory-count or provider-contract assertion, inspect the changed provider contracts and review the generator before regeneration. Do not change the count merely to obtain a pass.',
-  'Review the generated diff and limits as a contract change, then commit the generated reference. The command writes only the tracked reference: it starts no service and creates no temporary resource to clean up. If abandoning the change, restore only your own generated-file edit after preserving any pre-existing work.', '');
+  'Run from a clean repository checkout with Git and a Node.js runtime supporting native ESM and `import.meta.dirname`. Generation does not require a cluster or remote service.', '',
+  'Commit changes to the generator, catalog prose template, schemas and manifests before generation. Select that source commit. All installed provider manifests must match it byte-for-byte. All selected configuration schemas and API-flow schemas must also match it byte-for-byte. The remote catalog parser, catalog prose template and generator must match it byte-for-byte.', '',
+  'Replace `<full-source-commit>` with that existing lowercase 40-hex commit, then run `node scripts/generate-buster-provider-reference.mjs --write --revision=<full-source-commit>`.', '',
+  'Expected write result: `wrote docs/site/reference/buster-provider-configuration.md`. Then run `node scripts/generate-buster-provider-reference.mjs` without `--write`.', '',
+  'Expected check result: `Buster provider configuration verified: 19 providers and one flow document`. This result is evidence of generated freshness, not provider execution or remote health.', '',
+  'If `BUSTER_PROVIDER_SOURCE_REVISION` fails, examine the selected commit, missing objects and exact committed input bytes. Commit the intended source and select its revision. Do not weaken the pin.', '',
+  'A stale-output assertion requires regeneration from the selected matching inputs. For an inventory-count or provider-contract assertion, examine the changed provider contracts and review the generator before regeneration. Do not change the count only to remove the error.', '',
+  'Review the generated diff and limits as a contract change, then commit the generated reference. The command writes only the tracked reference. It starts no service and creates no temporary resource to clean up. If abandoning the change, restore only your own generated-file edit after preserving any pre-existing work.', '');
 
 const output = `${lines.join('\n').trimEnd()}\n`;
 if (process.argv.includes('--write')) {

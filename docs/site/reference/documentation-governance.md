@@ -16,7 +16,7 @@ For these reasons, KubeClaw checks source facts and authored explanations throug
 
 ## One Canonical Home for Each Topic
 
-Use the following homes. Link to a canonical page when another reader path needs the same explanation.
+Use these homes. Link to a canonical page when another reader path needs the same explanation.
 Do not copy the explanation into a second page.
 
 | Information | Canonical home | Owner role |
@@ -100,9 +100,9 @@ secret and derived-value occurrence ownership and public families without an
 adapter. A mapped family is not proof that every field explanation is complete,
 or that every exhaustive page or public API in the repository is already joined.
 
-The plugin catalogue has two input authorities. Source manifests and schemas
+The plugin catalog has two input authorities. Source manifests and schemas
 own mechanical package facts. Maintainers own the purpose, use, exclusions, and
-limits in the catalogue guidance input. The generator reads that guidance; do
+limits in the catalog guidance input. The generator reads that guidance; do
 not edit its generated package pages as a second authored authority. See the
 [current page construction](https://github.com/datrab/kubeclaw/blob/9509581d0e7bacfe36e4edf63618802753abbcd2/scripts/docs-publication.mjs#L255-L299).
 The plugin-foundation owner maintains package guidance. Documentation and the
@@ -181,7 +181,7 @@ A page is not complete because it exists or because a build passes. Completion r
 - claims agree with their source and declared revision;
 - mechanisms, ownership, failures, recovery, and limits have sufficient detail;
 - significant choices include reasons and consequences;
-- a new technical reader can follow the explanation without chat history;
+- a new technical reader can understand the explanation without chat history;
 - instructions contain prerequisites, observations, stop conditions, and recovery;
 - extension tasks produce the declared checked result;
 - links and evidence resolve in source and publication output;

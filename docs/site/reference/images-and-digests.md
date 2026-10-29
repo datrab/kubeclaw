@@ -97,7 +97,7 @@ the presence of the word `latest` in that name alone does not make it tag-only.
 
 ## Source-to-selection paths
 
-The following source-described paths are not an observed build or rollout.
+These source-described paths are not an observed build or rollout.
 
 ```mermaid
 flowchart LR
@@ -166,7 +166,7 @@ for changing values. It is not a manually copied digest/version inventory.
 | `codex-ops` / ops | [`ops/pod/Dockerfile`](../../../ops/pod/Dockerfile) | `ops/pod` | Ops workload `codex` container |
 | `ops-mcp` / ops | [`tools/ops-mcp/Dockerfile`](../../../tools/ops-mcp/Dockerfile) | `tools/ops-mcp` | Ops workload `ops-mcp` container |
 
-The image repositories follow their family's source receipt. Placeholder
+Use the image repositories named by their family's source receipt. Placeholder
 owners or candidate tags are not deployable substitutes for those receipts.
 Role enablement and chart conditions still select which listed consumers exist.
 External Tailscale, Envoy, PostgreSQL, upstream-chart and other operator-produced

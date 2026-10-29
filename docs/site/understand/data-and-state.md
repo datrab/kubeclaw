@@ -499,7 +499,7 @@ unbound message.
 
 Select the installed adapter and its configured `root` before interpreting a
 read. A namespace or wait resource does not select an arbitrary filesystem
-path. The following are adapter capability requests, not additional CLI commands.
+path. These are adapter capability requests, not additional CLI commands.
 Platform grants and Core effect/fence rules still apply.
 
 | Capability and operation | Input and selection | Response |
@@ -1572,7 +1572,7 @@ backup, or Redis data while a publisher can still rely on its dedup window.
 | Prism database exists but an artifact is missing | Backup group is incomplete or storage is corrupt | Keep Prism isolated. Restore a matched database-and-artifact group. |
 | LiteLLM data decrypts with neither retained key | Credential authority is incomplete | Do not overwrite encrypted fields. Recover the original master/salt keys or select an older compatible group. |
 | Redis is empty after restore | Transport and dedup history is absent | Restore Redis if that history is required, then replay from canonical journals within policy. Do not infer that Nova events were lost. |
-| Telemetry sink is missing records | Diagnostic projection is incomplete | Inspect observer checkpoints and canonical events; replay through the owned observer path. |
+| Telemetry sink is missing records | Diagnostic projection is incomplete | Examine observer checkpoints and canonical events. Replay is permitted only through the observer's recovery procedure and within its remaining retry budget. Some telemetry can stay missing. |
 | Prism quarantine object is absent | The temporary Pod store restarted, expired, or was cleaned | Reacquire the source. Do not create a database or artifact reference for missing bytes. |
 | Registry manifest exists but a layer is missing | Registry storage is incomplete or corrupt | Stop release use of that digest. Restore the registry group or rebuild from the exact retained source and build contract, then publish a new verified result. |
 | Alloy positions are lost | Collection can reread retained CRI bytes or skip bytes that kubelet already rotated | Keep one collector. Compare source files and Loki time range, then accept documented duplication/gap or restore a known position; do not infer completeness from readiness. |

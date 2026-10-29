@@ -65,7 +65,7 @@
       "purpose": "Run Axe accessibility checks through the Buster provider contract.",
       "useWhen": "When rendered web content needs automated accessibility findings, use it.",
       "avoidWhen": "Do not use it as a complete manual accessibility review.",
-      "criticalLimit": "Its result covers Axe-detectable rules in the tested page state only.",
+      "criticalLimit": "Its result is only for the Axe rules used in the tested page state.",
       "operationNote": "The provider invokes browser.axe with resolved target and profile limits. It rejects ambiguous targets and malformed capability results. A browser is required for the package execution test."
     },
     {
@@ -90,7 +90,7 @@
       "useWhen": "When a completed delivery needs the declared showcase narrative, use it.",
       "avoidWhen": "Do not use it as general documentation generation.",
       "criticalLimit": "It produces only the outputs declared by its stage contract.",
-      "operationNote": "The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. The output artifact identity must match the producing attempt. The stage rejects output with a different identity. The generated narrative remains draft-not-entailment-verified, not proof of factual entailment or publication readiness.\n\nartifacts.write and returned-artifact binding checks occur outside the dispatch try block: they can reject after narrative dispatch without a StageResult. Preserve and reconcile dispatch and persistence outcomes before retry. Generated text is not a stored case-study result."
+      "operationNote": "The stage reads a report-evidence snapshot, dispatches the narrative task, and stores the result. The output artifact identity must match the producing attempt. The stage rejects output with a different identity. The generated narrative has status `draft-not-entailment-verified`. The generator gives no verification result for the draft's factual statements. The draft is not publication-readiness evidence.\n\nartifacts.write and returned-artifact binding checks occur outside the dispatch try block: they can reject after narrative dispatch without a StageResult. Preserve and reconcile dispatch and persistence outcomes before retry. Generated text is not a stored case-study result."
     },
     {
       "id": "kubeclaw.command-runner",
@@ -114,7 +114,7 @@
       "useWhen": "When a test plan must enforce measurable coverage thresholds, use it.",
       "avoidWhen": "Do not use it to run tests or infer coverage without an LCOV report.",
       "criticalLimit": "The decision is only as complete as the supplied LCOV data.",
-      "operationNote": "The provider verifies LCOV input sizes and digests before reducing coverage budgets. Duplicate content, missing files, or changed bytes fail validation. It does not create coverage measurements."
+      "operationNote": "The provider verifies LCOV input sizes and digests before comparing measured coverage with the declared budget when a minimum is configured. Duplicate content, missing files, or changed bytes fail validation. It does not create coverage measurements."
     },
     {
       "id": "kubeclaw.delivery-lint",
@@ -369,7 +369,7 @@
       "useWhen": "When an extension needs an approved secret value at runtime, use it.",
       "avoidWhen": "Do not use it to place literal secrets in project or plugin configuration.",
       "criticalLimit": "Callers receive only secrets allowed by their exact grant.",
-      "operationNote": "The resolve operation maps a logical secret ID to an allowed environment variable. An unmapped ID is denied and an empty or missing variable is unavailable. Removal does not erase the external secret."
+      "operationNote": "The resolve operation maps a logical secret ID to an allowed environment variable. The adapter denies the request if the mapping result gives `false` after conversion to Boolean. An empty or missing selected environment value is unavailable. Removal does not erase the external secret."
     },
     {
       "id": "kubeclaw.security-providers",
@@ -430,7 +430,7 @@
     {
       "id": "kubeclaw.visual",
       "purpose": "Run visual comparison checks and produce bounded image evidence in Buster.",
-      "useWhen": "When a test plan must detect changes against approved visual baselines, use it.",
+      "useWhen": "When a test plan must find changes against approved visual baselines, use it.",
       "avoidWhen": "Do not use it for functional browser interaction without visual comparison.",
       "criticalLimit": "Results depend on stable rendering conditions and the selected baseline.",
       "operationNote": "The provider requires either a configured root HTTP/HTTPS origin url with no typed inputs, or exactly one typed deployment/public-endpoint value input. Zero or two inputs without url fail VISUAL_TARGET_REQUIRED. Configured url plus any input fails VISUAL_TARGET_AMBIGUOUS. endpointName is used only for deployment inputs. Omission selects the first endpoint, while public-endpoint input ignores it.\n\nmanifestFile and profileFile are required repository-relative regular files: realpaths must stay within the selected repository, each JSON is bounded to one MiB and validated. Selected targets must exist in the manifest and match browser/profile/page identity.\n\nBaseline PNGs stay within that repository, have bounded encoded/decoded dimensions and verified SHA-256. Violations block before capture. The project owns baseline/profile input and generated evidence custody.\n\ncomparisonProfile defaults strict-v1 (difference/pixel/uncertainty thresholds 0/0.1/0). balanced-v1 uses 0.5/0.1/0.25. overrides can replace maximumDifferencePercent (0..100), pixelThreshold (0..1) and uncertaintyMarginPercent (0..100). These overrides change the verdict boundary. masks bind unique selected target IDs to selectors passed to Playwright masking.\n\ntimeoutMs defaults 30000 for capture. Capture and image/evidence size checks are automated checks, not manual visual acceptance. timeoutMs is passed only to capture. Synchronous PNG/pixelmatch compare calls after capture have no separate computation timeout, and pending browser launch can outlast the capture deadline.\n\nCapture closes all WebSockets, including same-origin connections: neither allowedOrigins nor fixture authority permits them. Attempts recorded by the post-navigation check fail BROWSER_VISUAL_SUBRESOURCE_ORIGIN_DENIED. Later sockets are still closed and may alter rendered state. Do not use this route to claim WebSocket-dependent rendering or functional success."

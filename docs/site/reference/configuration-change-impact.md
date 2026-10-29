@@ -53,7 +53,7 @@ a full directory mount, a `subPath` mount, an environment variable, or a
 separate API client. An application that reads a file only at startup still
 requires its documented restart, even when the mounted file changes.
 
-The following mechanisms describe Kubernetes v1.35.0. The Kubelet setting
+These mechanisms describe Kubernetes v1.35.0. The Kubelet setting
 `configMapAndSecretChangeDetectionStrategy` selects its ConfigMap manager;
 a different server or Kubelet version needs its own verification.
 [manager selection](https://github.com/kubernetes/kubernetes/blob/66452049f3d692768c39c797b21b793dce80314e/pkg/kubelet/kubelet.go#L650-L669)
@@ -318,7 +318,7 @@ There are three separate checks:
    their component procedure. A changed pod template or a running pod alone
    does not prove that the intended value reached its runtime consumer.
 
-The following effects follow from current local templates and loaders. The
+The table gives the effects of current local templates and loaders. The
 render observations were checked locally; controller actions and runtime
 effects were not executed on a cluster.
 
@@ -546,7 +546,7 @@ to inspect the volume before creating replacement storage or attempting recovery
 
 ### Selected SMB deletion route
 
-The following table applies only to the default external-provisioner v6.0.0
+This table applies only to the default external-provisioner v6.0.0
 and SMB driver v1.20.0 selected by SMB chart 1.20.0. An image override or a
 different PV driver requires its own source contract.
 [chart image defaults](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/charts/v1.20.0/csi-driver-smb/values.yaml#L1-L14)
@@ -583,7 +583,7 @@ pinned v1.20.0 implementation this member remains empty, as explained below. [ef
 | Unparseable nonempty handle, or completed handle in the in-process deletion cache | Can return success without new directory work. Even a no-directory-work success caches the handle, so a later call with secrets can still skip directory work. A cached response is not durable proof of data recovery. [handle checks](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L150-L165), [cache check](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L190-L200), [cached completion including no-action](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L256-L261) |
 
 Mount, rename and removal errors propagate. Deferred unmount failure is logged
-without changing the completed RPC result. Inspect the server state after an
+without changing the completed driver-call result. Inspect the server state after an
 error or interrupted response before deciding what can safely repeat.
 [deferred unmount](https://github.com/kubernetes-csi/csi-driver-smb/blob/1bd5463f965be7b173ff1e7fc3c9a3c29972539c/pkg/smb/controllerserver.go#L202-L209)
 

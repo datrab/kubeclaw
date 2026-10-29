@@ -156,7 +156,7 @@ Use this sequence:
    choices, and concurrency groups explicitly where needed.
 6. Keep project-specific commands, origins, image names, and credentials out of
    a shared template unless they are a deliberate product default.
-7. Add the suite to the catalogue input used by Nova and test duplicate IDs.
+7. Add the suite to the catalog input used by Nova and test duplicate IDs.
 8. Add resolver vectors for selection, exclusion, permitted override, matrix,
    link compatibility, retry safety, deterministic order, and stable digest.
 9. Add a remote runner vector for success and one representative failure.

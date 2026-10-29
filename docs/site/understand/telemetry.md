@@ -17,7 +17,8 @@ change what the pipeline decided.
 In the Nova path, Nova first commits a canonical event to its run journal. An observer can then
 receive that event, redact it, and send a projection to a file store, Redis, an
 operator channel, or another granted adapter. If a sink fails, the canonical
-event still exists. Recovery restarts delivery from a verified checkpoint.
+event still exists. Recovery uses the recorded delivery state. Delivery can continue only through
+the observer's recovery procedure and within its remaining retry budget.
 
 This order is deliberate. It prevents a dashboard, transport, or notification
 service from becoming a second pipeline state machine.
@@ -1403,7 +1404,9 @@ is the broad correlation key. The optional identities and `causationId` provide
 the narrower chain. A sink must not claim cross-run or cross-producer total
 ordering from timestamps.
 
-## Ordering and Deduplification
+<a id="ordering-and-deduplification"></a>
+
+## Ordering and Deduplication
 
 ### Canonical order
 
@@ -1925,11 +1928,11 @@ audit output from different runs or journal heads.
 | --- | --- | --- |
 | Observer is not activated | Canonical event journal | Correct activation and grants. Do not advance a checkpoint manually. |
 | Observer times out | Event, attempt record, stable delivery ID | Let the configured policy retry. Check the sink for a lost acknowledgment before manual action. |
-| Required observer exhausts attempts | Canonical event and failed delivery history | Repair the sink or configuration, preserve journals, and restart owned recovery. |
-| Best-effort observer fails | Canonical event and failed delivery history | Other observers can continue. Repair this observer; replay from its last valid checkpoint. |
+| Required observer exhausts attempts | Canonical event and failed delivery history | Repair the sink or configuration and keep journals. An exhausted retry budget stays exhausted. Continuation is permitted only through the observer owner's recovery procedure. |
+| Best-effort observer fails | Canonical event and failed delivery history | Other observers can continue. Repair this observer and keep its last valid checkpoint. Continuation is permitted only through the observer owner's recovery procedure and within the remaining retry budget. |
 | Checkpoint conflicts with event ID | Event journal and conflicting checkpoint evidence | Stop delivery. Restore or investigate the checkpoint journal; do not select one by timestamp. |
 | Redis dedup key expired | Canonical event and any retained stream entry | Consumer deduplicates by event/delivery identity, or operator accepts policy-defined duplicate projection. |
-| Redis stream trimmed old entry | Nova event journal | Replay only through the observer path when policy and sink allow it. A checkpoint may need an owner-approved rewind procedure; do not edit it casually. |
+| Redis stream trimmed old entry | Nova event journal | Replay only through the observer path when policy and sink allow it. A completed checkpoint can prevent redelivery. If the observer owner has no permitted replay procedure, keep the delivery gap. Do not edit the checkpoint. |
 | OpenClaw host queue is full or the event is too large | No durable copy exists in this path; process counters and a warning remain until restart | Reduce event content or writer pressure. Do not claim recovery; the producer has no queue replay source. |
 | OpenClaw payload-stream write fails | No durable copy exists; the writer makes one attempt | Repair Redis for later events. The failed payload event cannot be replayed by this extension. |
 | OpenClaw control-stream writes exhaust retries | A dead-letter copy can exist if its single write succeeds | Inspect `droppedWriteFailureControl`, `deadLetterWritten`, `deadLetterFailed`, and Redis directly. No repository consumer processes the DLQ. |

@@ -70,7 +70,7 @@ Source: [suite override merge](https://github.com/datrab/kubeclaw/blob/d57ac3568
 [selected nodes and suite-add collision](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L370-L380),
 [shared duplicate-ID guard](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L328-L331),
 and [direct declarations](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L384-L389).
-See also [matrix merge and timeout bound](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L546-L566),
+Also refer to [matrix merge and timeout bound](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L546-L566),
 [provider configuration resolution](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/common/plugin-runtime/foundation/registry/configuration.ts#L102-L121),
 [clone and schema defaults](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/common/plugin-runtime/foundation/registry/schema.ts#L86-L110),
 [execution limit bounds](https://github.com/datrab/kubeclaw/blob/d57ac3568d29ae757173d15499ce48549c22eb4f/skills/nova/core/test-gates/resolver.ts#L427-L434),

@@ -41,7 +41,7 @@ procedures. This section gives exact names and source-backed facts.
 - [Environment variables](environment-variables.md) lists deployment and secret-setup variables.
 - [Helm values](helm-values.md) lists current value families and Secret references.
 - [Secrets](secrets.md) lists names, keys, owners, consumers, and recovery rules.
-- [Endpoints](endpoints.md) catalogues Services, ports, ingresses, inbound routes, outbound connections, trust boundaries, health, and failure effects.
+- [Endpoints](endpoints.md) gives Services, ports, ingresses, inbound routes, outbound connections, trust boundaries, health, and failure effects.
 - [Service routes and diagnosis](service-routing.md) connects supported Service producers to ports, endpoints, DNS, network owners, and read-only failure checks.
 - [Configuration precedence](configuration-precedence.md) identifies which source wins for each consumer without treating unrelated configuration families as one override stack.
 - [API object updates](api-object-updates.md) explains client-side apply, patches, Argo operation selection, field ownership, and recovery boundaries.
@@ -58,7 +58,7 @@ procedures. This section gives exact names and source-backed facts.
 - [Plugin SDK](sdk.md) explains both entrypoints, public helpers and types, exact JSON/digest rules, source identity, compatibility and rejection boundaries.
 - [Complete SDK exports and fields](sdk-exports.md) records every discovered export, member and recursive schema rule with its consumer meaning and source.
 - [Capabilities](capabilities.md) lists every grantable capability and registration.
-- [Plugin catalogue](../extend/plugin-catalogue/README.md) lists every extension package.
+- [Plugin catalog](../extend/plugin-catalogue/README.md) lists every extension package.
 - [Extension contracts](../extend/contracts.md) explains registration inputs and results.
 
 ## Shared Language

@@ -43,7 +43,7 @@ links do not. No search query is sent to an external service.
 ## Topic routing and supporting sources
 
 Use the reader pages to open a topic. Source locations identify supporting repository
-code and metadata. This map does not certify a procedure or select a required
+code and metadata. This map does not give procedure-execution evidence or select a required
 runtime dependency.
 
 | Topic | Reader pages | Supporting sources |
@@ -78,7 +78,7 @@ an assertion that every procedure or deployment passed.
 
 A source link must remain useful without JavaScript. The local build
 turns plain Evidence paths into GitHub links at the checkout's HEAD. Existing
-explicit links in prose retain their written revisions. The plugin catalogue
+explicit links in prose retain their written revisions. The plugin catalog
 also checks selected source snippets against the separate documentation source
 revision before it creates pinned links. These are different revision paths.
 A dirty checkout can therefore make a new HEAD link describe older bytes than
@@ -87,9 +87,9 @@ do not repair a mismatch by weakening its source guard.
 
 > **Source — evidence revisions**
 >
-> Claim: selected catalogue evidence uses the documentation source revision; plain Evidence links in published pages use HEAD.
+> Claim: selected catalog evidence uses the documentation source revision; plain Evidence links in published pages use HEAD.
 > Implementation: [sourceEvidenceLink](https://github.com/datrab/kubeclaw/blob/f99aecbb00cb399b46dfbbeb3ddb375fba6218e7/scripts/docs-publication.mjs#L148-L166); current Evidence conversion belongs to `build` in `scripts/docs-publication.mjs`.
-> Contract: the catalogue checks tracked regular source bytes and the selected line range; the staging conversion uses its checkout commit. Existing explicit prose links retain their written revision.
+> Contract: the catalog checks tracked regular source bytes and the selected line range; the staging conversion uses its checkout commit. Existing explicit prose links retain their written revision.
 > Validation: no build or test execution for this statement.
 > Source binding: these linked function bodies match the inspected checkout. Other publisher sections have local changes; this is not whole-file or publication acceptance.
 > Limit: the displayed excerpt is historical source, not proof that HEAD contains local changes or that the cited behavior ran. Reconcile the source bytes before creating a commit permalink.
@@ -98,7 +98,7 @@ For a source-evidence box, the build reads each linked file at its exact full
 commit and adds a native **Source** disclosure inside that same box. The
 disclosure shows its path, line range, revision, source link, and automatically
 read code. An explicit line range is retained in full. A file link without a
-range shows its first 80 lines (or fewer for a shorter file), labelled as an
+range shows its first 80 lines (or fewer for a shorter file), labeled as an
 excerpt. Directory links and named Markdown anchors remain ordinary links.
 The original claim, contract, test or validation statement, and limits remain
 in the box; the preview does not invent missing evidence or a successful test.
@@ -207,7 +207,7 @@ The [route registry](documentation-route-registry.json) owns explicit transfers.
 The build compiles it with selected canonical pages and the pinned known-route
 baseline, rejecting missing successors, collisions and lost declared anchors.
 The optional loopback preview sends actual HTTP redirects; static fallback
-behavior has a separate JavaScript/no-script boundary. Follow
+behavior has a separate JavaScript/no-script boundary. Use
 [redirect maintenance](#maintain-redirects-without-inventing-history) for the
 exact source-route and fragment contract. None of this proves external hosting.
 
@@ -247,7 +247,7 @@ access. Local reading does not execute the published runnable examples.
 
 Use Node.js 24, npm, Git and the committed root and reader lockfiles. Keep the
 selected checkout and its source objects available throughout the build.
-Follow the [clean-checkout procedure](../extend/developer-handbook.md#prepare-a-clean-checkout).
+Use the [clean-checkout procedure](../extend/developer-handbook.md#prepare-a-clean-checkout).
 Install both dependency sets from the repository root:
 
 ```bash
@@ -298,7 +298,7 @@ node scripts/tests/docs-reader-redirects.browser.mjs
 ```
 Prepare the selected route's additional tools and source revision through the
 [handbook prerequisites](../extend/developer-handbook.md#add-tools-and-credentials-only-for-the-selected-route).
-The publisher reads plugin manifests, dependency contracts, catalogue guidance,
+The publisher reads plugin manifests, dependency contracts, catalog guidance,
 local-verification records, and source-revision data before it selects a mode.
 It invokes Git even for `check`. A readable checkout with its required commit
 objects and a supported GitHub origin is therefore required, not only Markdown.
@@ -306,7 +306,7 @@ It accepts `git@github.com:owner/repository.git` or an HTTPS GitHub origin.
 Missing tools, dependencies, source objects, or divergent pinned source stop the
 run; retain the first diagnostic and repair that input rather than bypass it.
 
-Follow the [common documentation-change chain](../extend/developer-handbook.md#documentation-change-chain)
+Use the [common documentation-change chain](../extend/developer-handbook.md#documentation-change-chain)
 after updating the owning inputs. Its stable checks precede staging:
 
 ```sh
@@ -331,7 +331,7 @@ unprepared or restricted environment.
 
 | Mode | Reads and result | Writes and failure boundary |
 | --- | --- | --- |
-| `docs:publication:generate` | Builds plugin catalogue/capability content and the operator plugin matrix from their inputs | Writes those owned pages/sections sequentially. A failure can leave earlier writes; inspect the diff and first error. It is not the prose-page generator. |
+| `docs:publication:generate` | Builds plugin catalog/capability content and the operator plugin matrix from their inputs | Writes those owned pages/sections sequentially. A failure can leave earlier writes; inspect the diff and first error. It is not the prose-page generator. |
 | `docs:publication:check` | Runs the declared publication helper tests, then compares generated content and checks selected pages, assets, metadata, language, links, and all classified examples at their native, projection, syntax, or authored-contract boundary | Does not invoke publication `generate` or `build`. A nonzero helper or publisher result stops the chain. It does not render a website. |
 | `docs:publication:build` | Runs publication input checks, then renders HTML, navigation, local search, Markdown and approved assets with reports | After successful input checks, removes and recreates `.tmp/docs-publication`. A later copy/write failure can leave partial output. Exit zero and the fresh report are required. |
 | `docs:publish-check` | Runs the broader `docs:check` chain, then the HTML build | Includes mutation tests and the staging replacement. It is not a lightweight link check or a hosting deployment. |
@@ -385,7 +385,7 @@ production hosting configuration, authenticated service or deployment recipe.
 For offline reading, open `index.html` from the complete artifact. Navigation,
 page content, source links and diagram alternatives remain available without
 JavaScript. Full-text search needs local JavaScript; use navigation or browser
-Find without it. Following an external source URL still needs network access;
+Find without it. Opening an external source URL still needs network access;
 the displayed local excerpt remains part of the artifact.
 
 ## Maintain redirects without inventing history
@@ -420,7 +420,7 @@ The existing `index.html` home entry uses the same preservation boundary,
 without inventing a historical migration entry.
 
 Without JavaScript, the static page stays at the original URL and displays a
-working canonical link and explicit fragment instructions. Follow that link
+working canonical link and explicit fragment instructions. Use that link
 and retain any original `#fragment` on the destination address manually. This
 is a usable fallback, not automatic opaque-fragment forwarding. Native meta
 refresh drops that fragment, so the reader does not use it for registered

@@ -16,7 +16,7 @@ group. The detailed sections retain the exact constraints and measurable limits.
 | Decision group | Context and decision | Alternatives and reason | Consequences | Approval | Implementation and verification | Supersession |
 | --- | --- | --- | --- | --- | --- | --- |
 | Product and data ownership | Nova owns product architecture. Prism owns design exploration, revisions, approval evidence, and publication inside that boundary. | A second orchestrator and one undifferentiated data store are rejected because they obscure authority and recovery. | Design Document, PostgreSQL, and immutable artifacts have separate recovery and retention duties. | The Prism architecture decision marks the boundary accepted. It does not record one approver and date for every clause. | The linked domain and storage implementation establishes the current code boundary. Deployment and human product acceptance remain separate. | Later native-host and recovery decisions refine deployment and storage details without moving product authority. |
-| Design Document and editor | A typed operation model changes canonical design state. Editor frameworks and previews remain replaceable clients. | Whole-state replacement, arbitrary expressions, executable terminal content, and same-origin preview trust are rejected. | The adapter requires more work, but mobile, undo, recovery, and preview messages use one controlled model. | The schema decision was accepted in August. Individual clause approvers are not recorded. | Current domain code and fixtures implement the bounded paths described here. Browser and physical-device proof remain open. | The typed schema and current node catalogue are authoritative. A future deferred node needs a new contract and capability proof. |
+| Design Document and editor | A typed operation model changes canonical design state. Editor frameworks and previews remain replaceable clients. | Whole-state replacement, arbitrary expressions, executable terminal content, and same-origin preview trust are rejected. | The adapter requires more work, but mobile, undo, recovery, and preview messages use one controlled model. | The schema decision was accepted in August. Individual clause approvers are not recorded. | Current domain code and fixtures implement the bounded paths described here. Browser and physical-device proof remain open. | The typed schema and current node catalog are authoritative. A future deferred node needs a new contract and capability proof. |
 | Retrieval and preferences | Start with PostgreSQL full-text search and exact vectors. Preserve explicit preference provenance and project override. | A separate vector service, approximate indexes, automatic decay, and passive taste evidence need measured or approved justification. | The first system stays operationally small. Exact search can cost more at larger scale. | The architecture accepts the no-decay preference contract. No approval establishes the implemented 180-day decay or the relaxed latency target. | Local retrieval evidence exists. Native PostgreSQL, production scale, and preference reconciliation remain open. | The accepted no-decay contract conflicts with current decay and remains tracked. A measured limit can later justify an index or service. |
 | Durable operations and publication | Bind replay, approval, publication, and worker evidence to exact identities and digests. | Header-derived identity, reusable approval after edits, and a separate Prism orchestration platform are rejected. | Retries become safe and publication stays auditable, with stricter storage and cleanup duties. | Accepted architecture and recovery sources govern the boundary; not every refinement has a named approver. | Source and local contract evidence exist. Native services, browsers, delivery, recovery and the complete project journey still require live proof. | The accepted recovery contract qualifies unconditional PITR wording. Native host-pool decisions qualify the earlier workload-only direction. |
 
@@ -87,13 +87,13 @@ The other recorded criteria include precision at 10 of 0.70, recall at 20 of 0.8
 The top ten must also contain four product or source families when four are eligible.
 Rights and status filters must have zero false inclusions.
 The same query, corpus snapshot, model, and ranking version must return the same ordered IDs.
-Hybrid search must match or improve the better individual search method on the labelled query set.
+Hybrid search must match or improve the better individual search method on the labeled query set.
 Exact vector search must preserve full vector recall. The optional 100,000-row scale probe does not block v1.
 These are acceptance targets, not measured production results.
 
 Here, p95 is the query time that at least 95% of measured queries meet.
 Precision at 10 measures the share of relevant results in the first ten results.
-Recall at 20 measures the share of the labelled relevant results found in the first twenty.
+Recall at 20 measures the share of the labeled relevant results found in the first twenty.
 Together with diversity and access filters, these checks prevent a fast but unhelpful or unauthorized result from passing.
 
 The spike criteria
@@ -137,7 +137,7 @@ That HMAC receipt is distinct from other suites' external Ed25519 receipts.
 Neither a service-level end-to-end test nor a schema/CEL matrix proves the complete Nova–Forge–Buster–human journey.
 An August controller failure is historical evidence, not a current cluster diagnosis.
 
-Use the acceptance areas for [native PostgreSQL and service state](../status/acceptance.md#prism-database-jobs-sessions-and-resources) and [browser and mobile behaviour](../status/acceptance.md#prism-browser-studio-artifacts-and-retained-memory).
+Use the acceptance areas for [native PostgreSQL and service state](../status/acceptance.md#prism-database-jobs-sessions-and-resources) and [browser and mobile behavior](../status/acceptance.md#prism-browser-studio-artifacts-and-retained-memory).
 Separate areas cover [human and controller authority](../status/acceptance.md#demo-kubernetes-admission-tailnet-and-human-acceptance), [recovery](../status/acceptance.md#gitops-stateful-services-restore-and-capacity), and the [complete project journey](../status/acceptance.md#complete-user-journey-and-evidence-backed-final-report).
 Physical-device, real database, clean namespace, failure recovery, and protected receipt checks retain their actual prerequisites.
 The current issue register contains the remaining implementation work and its present status.

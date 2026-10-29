@@ -1137,7 +1137,7 @@ It does not receive artifacts from unrelated branches.
 This visibility rule matches the graph's data authority.
 
 **Why checkpoints exist:** A long fan-out stage can complete valuable units before its process exits.
-A durable checkpoint lets the next attempt reuse certified work.
+A durable checkpoint lets the next attempt use the work recorded in that checkpoint again.
 It does not let a partial attempt claim final stage success.
 
 > **Source evidence — checkpoint admission and replay**

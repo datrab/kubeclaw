@@ -483,7 +483,7 @@ producer runId without comparing it to spec.runId.
 exists. The controller does not create workload Services from these fields. E2E
 egress uses declared valid servicePort and serviceTargetPort (falling back to the
 former); when different, both TCP destinations are permitted only toward owned
-namespace/labelled target Pods. Preview exposure has its separate port fallback.
+namespace/labeled target Pods. Preview exposure has its separate port fallback.
 
 Use a new lease for changed immutable authority. Before retiring the old lease,
 identify its exact UID, retained readiness and external effects; use the controller

@@ -28,12 +28,12 @@ page apply before any audit command linked elsewhere.
 ## Select the family and consumer
 
 These named routes are a bounded index, not a claim that every product event
-and payload producer has been catalogued. A consumer is the component that
+and payload producer has been cataloged. A consumer is the component that
 actually reads or subscribes to the record, not a guessed owner from its name.
 
 | Family / exact version | Producer and payload authority | Consumer / transport | Persistence and repeat boundary |
 | --- | --- | --- | --- |
-| `lifecycle-event.v2` | Nova runner/executor and effect bridge; exact lifecycle enum and event-specific producer payload | Nova event journal, recovery readers and subscribed observers | Canonical journal order; each append has its own event ID. No global sink or host order follows |
+| `lifecycle-event.v2` | Nova runner/executor and effect bridge; exact lifecycle enum and event-specific producer payload | Nova event journal, recovery readers and subscribed observers | Canonical journal order; each append has its own event ID. This gives no global sink or host order |
 | `plugin-domain-event.v2` | Granted plugin context; registration provenance, namespaced type, owned payload meaning | Same event journal and exact subscribed observers/domain readers | Extension names are constrained; envelope validity alone does not define each payload's meaning |
 | `observer-delivery.v2` | Observer invocation wraps one canonical lifecycle/domain event | Activated observer under its lease/grants and configured policy | Stable delivery identity, changing delivery attempt; not a new canonical lifecycle event |
 | `observer-checkpoint.v2` | Observer runtime after successful handling | Checkpoint journal and recovery/drain logic | Per observer/run sequence and event identity; no manual advancement to hide a failed sink |
@@ -43,7 +43,7 @@ actually reads or subscribes to the record, not a guessed owner from its name.
 | `attempt-progress-event.v1`, `worker-log-part.v1`, selected Worker result version | Worker executor and selected resource/result contract | Configured progress/log callbacks and caller/result adapter | Progress is best effort; terminal result/cleanup authority is separate from the last message |
 | Prism operation / Buster job and result records | Exact engine/remote dispatch and durable operation contract | Service/controller/import consumers; see their detailed guides | Bound job/operation/attempt/result and import identities, not automatically a Nova event envelope |
 | OpenClaw agent-observability schema `1` | Host observer source `openclaw.plugin.agent-observer` and declared ingress types | Control/payload/dead-letter Redis streams | Distinct host envelope and loss/retry rules; not the retained flat telemetry v1 contract |
-| Retained flat telemetry v1 assets | Delivered schemas/catalogue/types, as declared by their README | No active flat-envelope runtime producer/consumer found in that source declaration; external readers unresolved | Assets do not implement ingestion, authentication, ordering or retention; version label alone gives no compatibility |
+| Retained flat telemetry v1 assets | Delivered schemas/catalog/types, as declared by their README | No active flat-envelope runtime producer/consumer found in that source declaration; external readers unresolved | Assets do not implement ingestion, authentication, ordering or retention; version label alone gives no compatibility |
 
 For the complete Worker record fields and resource-version distinction, use
 [Worker Core](../understand/worker-core.md) and [worker profiles](worker-profiles-and-roles.md).
@@ -245,7 +245,7 @@ fail. This is not general corrupt-journal recovery.
 
 ## Coverage and change impact
 
-This catalogue binds selected canonical v2 definitions and producers, observer
+This catalog binds selected canonical v2 definitions and producers, observer
 policy, Worker executor records, selected adapters, host constants and retained
 assets. It is not a complete census of all dynamic event builders, payload
 versions, consumers, native/service/operations paths or external sinks.

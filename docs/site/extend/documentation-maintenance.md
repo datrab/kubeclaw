@@ -35,11 +35,11 @@ change procedure; it does not replace the component's technical guide.
    Read the actual generator's boundary and the actual consumer. If no mapping
    exists, assign an owner and canonical page before calling the change covered.
 4. Identify permissions and effects before execution. Node.js 24 and locked root
-   dependencies are common prerequisites, not the whole toolchain. Follow the
+   dependencies are common prerequisites, not the whole toolchain. Use the
    [selected-route tools](developer-handbook.md#add-tools-and-credentials-only-for-the-selected-route)
    for any Helm, Go, Kubernetes, native, or other requirement. A source or local
    check is not a live deployment result. Missing prerequisites stop that route;
-   do not switch to a partial parser or omit a source to obtain a green result.
+   do not use a partial parser or remove a source to get exit status 0.
 
 Keep a small change record: source boundary, parser/selector, owner, canonical
 page, generator or manual explanation, check, reader task, and exclusions.
@@ -61,7 +61,7 @@ for that extractor, not proof that the surface does not exist.
 | Commands and flags | Owning entrypoint, subcommand, aliases, value-taking, required/optional relationships, defaults, duplicate and unknown-option behavior, exit/failure meaning, consumer | Use [CLI commands](../reference/cli.md) and the component guide. `docs:inventory` covers deployment/secret/Helm/workflow facts; the configuration runtime-input inventory has a separate owned-definition CLI surface. `docs:drift:cli:check` checks that inventory and its declared semantics. External-command invocations are not owned CLI definitions. |
 | Contract | Exact identity/version, producer and consumer, schema/type relationship, compatibility direction, migration and retirement | Use [Configuration compatibility](../reference/configuration-compatibility.md), [SDK](../reference/sdk.md), or the component's contract guide. Select its real generator/check; do not assume a configuration-schema extractor covers all request, result, and snapshot contracts. |
 | Event | Producer, consumer or explicit unknown consumer, payload/version, transport, correlation, ordering, repeat delivery, persistence and retention | Use [Telemetry](../understand/telemetry.md) and the component guide. The [platform surface reference](../reference/platform-surfaces-generated.md) supplies bounded facts, not every payload's meaning. Read its discovery boundary. |
-| Error | Exact code or dynamic construction rule, throw/emit location, trigger, effect and lifecycle state, retry rule, safe action, retained data | Use [Configuration errors](../reference/configuration-errors.md), [Buster errors](../reference/buster-error-codes.md), and the producing component. Follow dynamic prefixes/arguments and shared error constructors; a string-literal search alone cannot establish completeness. |
+| Error | Exact code or dynamic construction rule, throw/emit location, trigger, effect and lifecycle state, retry rule, safe action, retained data | Use [Configuration errors](../reference/configuration-errors.md), [Buster errors](../reference/buster-error-codes.md), and the producing component. Examine dynamic prefixes, arguments and shared error constructors. A string-literal search alone is not full-discovery evidence. |
 | Endpoint | Producer/listener, caller, Service/route/port, transport, authentication and authority, limits, failure and recovery | Use [Endpoints](../reference/endpoints.md) and [Service routes](../reference/service-routing.md). Reconcile chart/config/runtime consumers, not only one default render. |
 | Store | Writer/reader, exact path or resolution rule, authority, lifetime, retention, quota, cleanup, backup/restore and loss impact | Use [Data and state](../understand/data-and-state.md), [Recovery](../use/recovery.md), and [Capacity](../use/capacity.md). An absent default can defer to another authority; do not invent a retention policy or restore command. |
 | Capability | Namespace, provider, caller grant, resource match, translation boundary, denial behavior | Use [Capabilities](../reference/capabilities.md) and [Roles and package ownership](../reference/roles-and-package-ownership.md). A runtime role, Nova grant, Buster capability, and Kubernetes RBAC rule are not interchangeable. |
@@ -106,8 +106,8 @@ selector must agree. Non-Markdown reader assets need their separate allowance.
 
 ## Generate only owned facts, then check
 
-Follow the handbook's [single common chain](developer-handbook.md#documentation-change-chain).
-The following choices explain its effects; they do not authorize a command in
+Use the handbook's [single common chain](developer-handbook.md#documentation-change-chain).
+These choices explain its effects; they do not authorize a command in
 an environment whose source/tool prerequisites have not been qualified.
 
 | Input change | Selected command and output | Check or failure meaning |
@@ -144,7 +144,7 @@ an environment whose source/tool prerequisites have not been qualified.
 > Tree checker snapshot SHA-256: `ee1487ec2e081cc6630ac7869895bd69f3251e0c44ffd8877e574b335981ae52`.
 >
 > These digests identify only that committed snapshot. Recheck current bytes before reusing the procedure.
-> Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. No effect admission or current-output approval follows from these locators.
+> Limit: selected SDK/discovery, source/Git and child-process prerequisites remain in force. These locators give no effect admission or current-output approval.
 
 For store-policy changes, commit the actual parser, selector meanings and product
 inputs before generation. The explicit revision must equal the checked-out
@@ -179,15 +179,15 @@ source, reader and quality review. Do not refresh a failed baseline merely to
 make the comparison pass.
 
 When the source component owner intentionally retires a package from source
-discovery, reconcile its catalogue page in the same reviewed source change.
+discovery, reconcile its catalog page in the same reviewed source change.
 `docs:publication:generate` writes current pages but does not delete orphaned
-catalogue files; `docs:publication:check` rejects a remaining page with no
+catalog files; `docs:publication:check` rejects a remaining page with no
 installed plugin. After confirming the retired manifest ID is absent from the
 candidate discovery set, have the plugin-foundation owner review removal of only
 its generated `docs/site/extend/plugin-catalogue/<manifest-id>.md` page and repair
 incoming links and package guidance/inventory/verification inputs. Then generate
 and check again. Do not delete an authored guide, an AP10 file, an active runtime
-package, or old pinned-run data as catalogue cleanup. Ordinary activation changes
+package, or old pinned-run data as catalog cleanup. Ordinary activation changes
 and candidate runtime retirement do not authorize source-package deletion; use
 [the plugin lifecycle procedure](../use/plugins.md#5-replace-or-remove) for those
 separate boundaries. An orphan-page check is a stop condition, not automatic
@@ -236,7 +236,7 @@ After committing the owning source change, publish its reference with
 The source revision must match the actual checkout. This route owns only
 `reference/plugin-configuration.md`; it does not update the shared revision lock
 or qualify the other inventories. Use `--check` for a read-only comparison of
-that same selected page. The separate publication generator owns the catalogue
+that same selected page. The separate publication generator owns the catalog
 and operator matrix; regenerate those after the schema inventory succeeds.
 A bounded success is not a global generation PASS.
 
@@ -402,7 +402,7 @@ has not qualified that exact checkout location. It is not documentation drift.
 Use a finite checkout-specific input binding rather than allowing arbitrary roots.
 Compare the root manifest and lockfile with the bound revision, then verify the
 entire installed TypeScript 5.9.3 package against the existing member/directory
-catalogue before qualifying the new input. The compiler directory and all its
+catalog before qualifying the new input. The compiler directory and all its
 members must be physical files/directories, not links into another checkout.
 A matching version string or entrypoint hash alone is insufficient.
 
@@ -446,14 +446,14 @@ then rerun the owning inventory generator. Discovery separately checks the
 source-bound derived input and an uninstrumented render; do not update those
 bindings to bypass a failure.
 
-Stop before deployment: this illustration is still incomplete. Follow the
+Stop before deployment: this illustration is still incomplete. Use the
 [configuration selection procedure](../use/install.md#select-configuration)
 to prepare a complete runtime container, registry transport and credentials,
 and require successful offline rendering of that selected configuration. A
 continued rejection, a newly successful illustration, or a different error
-requires diagnosis before changing its recorded classification. Requalifying
-this rejection neither certifies valid profiles nor supplies a runtime release
-receipt or a live deployment result.
+requires diagnosis before changing its recorded classification. A check of
+this rejection is not evidence of valid profiles. It supplies no runtime release
+receipt or live deployment result.
 
 Discovery must also render genuinely new output branches. The Archviewer
 `networkPolicyProvider` enum has separate `cilium` and `kubernetes` profiles:
@@ -472,7 +472,7 @@ inventory. That discovery also checks deployment API producer recipes. An
 command before it writes the Helm authority registry. This is a failed baseline,
 not a successful Helm-field drift probe.
 
-Read the structured operation diff and follow changed helper calls. The current
+Read the structured operation diff and examine changed helper calls. The current
 bundle reader, `scripts/bundle-values-field.mjs`, parses YAML, selects the overlay
 before the base for the requested key, skips null/empty values, and rejects
 non-string selected values. `scripts/bundle-override-values.mjs` serializes the

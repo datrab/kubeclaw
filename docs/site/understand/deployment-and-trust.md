@@ -565,7 +565,7 @@ The table shows the expected boundary.
 | Prism Ingestion stops | New corpus acquisition and cleanup stop. | Existing active corpus and other Prism operations. | Reconcile quarantine and inactive revision state before resubmission. |
 | Artifact PVC fails | Prism content becomes unavailable. | Relational records can remain. | Restore the matched database-and-artifact backup group. |
 | SPIRE or Envoy fails | Protected worker routes fail closed. | Local durable state and unrelated public paths. | Restore identity service and verify exact peer routes. |
-| Observer destination fails | Derived telemetry becomes delayed. | Canonical lifecycle journal. | Replay durable observer delivery. |
+| Observer destination fails | Some derived telemetry can stay missing. | Canonical lifecycle journal. | Keep lifecycle state. Replay is permitted only under the observer's contract. |
 | Redis fails | Configured transport and status projections can stop. | File-backed canonical Nova state. | Restore Redis and reconcile projections; do not infer lifecycle loss. |
 
 ## Infrastructure Dependency Order

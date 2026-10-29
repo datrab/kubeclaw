@@ -46,7 +46,7 @@ Do not move a change into Control only because Control has a reachable endpoint.
 
 ## Prepare and finish one bounded change
 
-1. Follow [Prepare a clean checkout](../developer-handbook.md#prepare-a-clean-checkout).
+1. Use [Prepare a clean checkout](../developer-handbook.md#prepare-a-clean-checkout).
    Select the actual full source commit for your change. Use its lockfile and
    selected tools; do not substitute a global compiler or a live run directory.
    The handbook's historical example commit is not a universal current baseline.
@@ -59,7 +59,7 @@ Do not move a change into Control only because Control has a reachable endpoint.
 4. Change the owning source, not a generated copy. Add positive and denied-neighbor
    cases for the changed rule, plus interruption/replay/compatibility cases when
    state or effects cross the boundary. Select the smallest **complete** chain
-   from the component route and command tables, not an arbitrary single green test.
+   from the component route and command tables, not an arbitrary single test with exit status 0.
 5. Update the canonical explanation, affected operator task and recorded source
    dependency. Use [documentation maintenance](../documentation-maintenance.md)
    for its tools, generation ownership and drift checks. Keep original failures,
@@ -98,7 +98,7 @@ Retained recovery compares the original graph; incompatible changed input belong
 to a new run, not a relabeled recovery. Platform paths resolve from the canonical
 configuration file's directory, not an assumed shell working directory.
 
-Follow [Change Nova lifecycle, scheduling or run authority](../developer-handbook.md#change-nova-lifecycle-scheduling-or-run-authority).
+Use [Change Nova lifecycle, scheduling or run authority](../developer-handbook.md#change-nova-lifecycle-scheduling-or-run-authority).
 Select lifecycle contract checks and lifecycle/replay fixtures; add SDK/package
 ownership checks when schemas, packages or public contracts also change.
 Update Nova Core's explanation and the affected run/recovery task. On graph or
@@ -127,7 +127,7 @@ wait kinds or permit a stale/foreign signal. Preserve wait identity and the
 original approved payload across interruption. Test allowed transitions, denied
 neighbor states, exhausted budgets and live/replayed equality. Include the
 process-death fixture, which writes a journal and kills a real Node child.
-See the [lifecycle route](../developer-handbook.md#change-nova-lifecycle-scheduling-or-run-authority)
+Use the [lifecycle route](../developer-handbook.md#change-nova-lifecycle-scheduling-or-run-authority)
 and [original-state recovery](../../use/recovery.md#pipeline-state-recovery).
 
 **Source — one reducer and stable waits across live work and replay**
@@ -152,16 +152,16 @@ failure evidence; do not hide it with a retry. Cover interruption before/after
 acceptance and receipt, lost response, conflicting identity, corruption and
 failed renewal/release. The external-effect fixture starts the real CLI and a
 local service, writes durable temporary state and can kill the child; it is not
-an inert assertion-only test. See the handbook's
+an inert assertion-only test. Use the handbook's
 [effect change route](../developer-handbook.md#change-nova-lifecycle-scheduling-or-run-authority).
 
-Before audit or recovery, follow [Pipeline state recovery](../../use/recovery.md#pipeline-state-recovery):
-establish the writer fence and preserve the original related stores. FileJournal
+Before audit or recovery, use [Pipeline state recovery](../../use/recovery.md#pipeline-state-recovery):
+set the writer fence and preserve the original related stores. FileJournal
 construction can create a lock and truncate a nonempty incomplete tail through
 its last newline, possibly to zero, then synchronize it before parsing.
 A projected audit adds no canonical event, but is not a guarantee of unchanged
 storage. Preserve the first diagnostic and original bytes before an authorized
-inspection; never remove a live lock inode or manufacture a no-record substitute.
+inspection. Do not remove a live lock inode or manufacture a no-record substitute.
 
 ### Change an effect identity or persisted result format
 
@@ -184,7 +184,7 @@ inspection; never remove a live lock inode or manufacture a no-record substitute
    `completed` records and referenced results must both remain readable.
    Test the threshold, missing/corrupt sidecar, wrong size/digest, conflicting
    request/receipt and interrupted publication. Retain journal and sidecars as
-   one group; no automatic format migration or sidecar retirement follows.
+   one group. This gives no automatic format migration or sidecar retirement.
 4. Add a new explicit version and coordinated reader/writer path if the old
    contract cannot be retained. Do not rewrite an active run as a migration.
    Keep genuine historical-producer fixtures, current fixtures and replay
@@ -221,7 +221,7 @@ A cgroup is a kernel resource-control boundary, not a JavaScript memory limit.
 The pool binds the real filesystem/device/inode; a copied pathname or policy
 file is not proof of the original host boundary.
 
-Follow [Change Worker Core or native execution](../developer-handbook.md#change-worker-core-or-native-execution).
+Use [Change Worker Core or native execution](../developer-handbook.md#change-worker-core-or-native-execution).
 Keep protocol/version, host/boot identity, supervisor lifetime lock, cancellation,
 spool sealing and recovery consistent. The spool owns bounded private output
 files and synchronizes accepted bytes; channel framing alone does not define
@@ -273,7 +273,7 @@ optional field is not compatibility proof for a closed JSON schema. Package
 version, wire version, source digest and portable JSON encoding are different
 identities; choose the transition for the intended identity change explicitly.
 
-Follow [Change SDK or shared contracts](../developer-handbook.md#change-sdk-or-shared-contracts)
+Use [Change SDK or shared contracts](../developer-handbook.md#change-sdk-or-shared-contracts)
 and the [SDK reference](../../reference/sdk.md). The SDK check compiles the genuine
 schema with the installed locked dependency and compares generated bytes;
 without `--check` that generator writes the maintained generated TypeScript file.
@@ -309,7 +309,7 @@ and [telemetry mechanism](../../understand/telemetry.md).
 Select changed security/provider and observer/store fixtures. The selected
 telemetry generator's `--check` still runs PATH-selected `gofmt`; non-check mode
 writes generated outputs. Require the actual producer-to-consumer denial,
-ordering, version and retirement cases. Use the following ordered introduction tasks before activation or removal.
+ordering, version and retirement cases. Use these ordered introduction tasks before activation or removal.
 
 ### Introduce a capability
 
@@ -332,14 +332,14 @@ ordering, version and retirement cases. Use the following ordered introduction t
    dependency-cycle checks and caller grants through
    `foundation/registry/capabilities.ts`.
 3. Supply the selected platform policy and least-privilege resource constraints
-   through the real configuration loader. Follow [capability grants](../../reference/capabilities.md)
+   through the real configuration loader. Use [capability grants](../../reference/capabilities.md)
    and [configuration precedence](../../reference/configuration-precedence.md).
    Exercise the actual caller-to-provider boundary with allowed and denied
    neighboring resources, unknown operations/names, missing grants and an
    invalid/ambiguous provider. A manifest-only positive case is insufficient.
 4. Add the package to the intended [runtime role](../../reference/roles-and-package-ownership.md)
    only through its role/ownership inputs. Regenerate plugin inventory and
-   catalogue through their owners; verify registration, provider and role facts.
+   catalog through their owners; verify registration, provider and role facts.
    Update the capability reference, resource constraints and consuming guide.
    Security review must inspect the translated receiver authority, not only
    whether the caller possesses a string with the right name.
@@ -358,13 +358,13 @@ npm run plugin-system:inventory:check
 ```
 
 A missing provider, denial, resource mismatch or retained consumer stops
-activation/removal. A local green result does not install a cluster grant.
+activation/removal. A local test result is not a cluster grant.
 
 ### Introduce an event
 
 1. Select the actual contract family. A namespaced `plugin-domain-event.v2`
    remains a plugin-domain event; do not insert it into the separate flat-v1
-   telemetry catalogue merely to reuse that generator.
+   telemetry catalog merely to reuse that generator.
 2. For a flat-v1 telemetry event, edit `contracts/telemetry/v1/catalog.json`
    and add `payloads/<event-type>.schema.json`. Define required payload fields,
    correlation, unknown-field policy, ordering and whether work ownership
@@ -669,9 +669,9 @@ check's scope, not product, native, browser or deployed success.
 | `npm run plugin-system:sdk:check` | Installed json-schema-to-typescript; real compilation and generated-byte comparison; selected check does not write generated target | Current canonical generated types only |
 | `npm run plugin-system:sdk:build` | Locked root tsc; emits SDK build outputs | Build, not full consumer compatibility |
 | `npm run plugin-system:sandbox:build` | PATH cc/C11 hardening; writes temporary maintained sandbox binary, chmod then rename | Built isolation launcher, not trusted running host |
-| `npm run docs:inventory:config:check` | Follow documentation-maintenance native/input prerequisites; traverse real config/schema sources and compare inventory | Named inventory drift, not global configuration acceptance |
+| `npm run docs:inventory:config:check` | Use documentation-maintenance native/input prerequisites; traverse real config/schema sources and compare inventory | Named inventory drift, not global configuration acceptance |
 | `npm run docs:inventory:local-helm:check` | Qualified Helm and selected chart/value inputs; generator check then boolean semantics checker | Local authorities/selected branch semantics, not live cluster state |
-| `npm run docs:generate:check` | Follow documentation-maintenance source/input/native acquisition prerequisites; genuine source discovery and generated-output comparison | Selected generated outputs, not write-free execution merely because --check is present |
+| `npm run docs:generate:check` | Use documentation-maintenance source/input/native acquisition prerequisites; genuine source discovery and generated-output comparison | Selected generated outputs, not write-free execution merely because --check is present |
 | `npm run docs:governance:check` | Classification, registered dependencies and baseline inputs; compare governance outputs | Governance constraints, not independent content correctness |
 | `npm run docs:check:refs` | Actual referenced checkout/source objects and documented reference prerequisites | Selected repository references, not published browser routes |
 | `npm run docs:publication:check` | Runs docs:publication:test before publication check; test fixture/effect prerequisites apply | Publication input checks, not an observed browser task or live site |
@@ -750,9 +750,9 @@ Implementation: [`actual_current_protected_revision`](https://github.com/datrab/
 | Accepted effect, missing receipt or lost response | Remote outcome is unknown | Adapter/resource owner reconciles the original request through its supported receipt contract; no duplicate request/new identity |
 | Native ownership, capacity, channel or cleanup unresolved | Supported host admission is unproved | Worker and host owners retain boot/process/spool evidence and fence new work until original recovery completes |
 | Untrusted package or denied capability | Trust/provider/grant contract failed | Foundation/security owner corrects the owning input; no blanket grant, trust-root widening or protected identity edit |
-| Schema/generated output or Core source guard drift | Caller contract or evidence no longer matches | Contract/documentation owner reviews source and explanation; do not edit generated output or merely repin to green |
+| Schema/generated output or Core source guard drift | Caller contract or evidence no longer matches | Contract/documentation owner reviews source and explanation; do not edit generated output or change the pinned revision only to get exit status 0 |
 | UI revision conflict, wrong local server or missing publisher | Result does not describe intended user/source state | Preserve user intent, identify the real server and use the component route; no screenshot/build substituted for the missing path |
-| Render/test succeeds but rollout or restore is unknown | No actual receiver/data observation | Operator/data owner follows its original procedure, preserves partial effects and checks compatibility before retry/rollback |
+| Render/test succeeds but rollout or restore is unknown | No actual receiver/data observation | Operator/data owner uses its original procedure, preserves partial effects and checks compatibility before retry/rollback |
 
 Cleanup is part of the selected procedure, not a universal delete command.
 Retain original failed evidence and account for owned processes, locks, temporary

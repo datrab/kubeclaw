@@ -63,6 +63,9 @@ The public `CapabilityInvocation` is the readonly interface selected by the main
 
 ## From plugin request to adapter result
 
+This sequence is for Core stage and observer capability requests.
+
+
 1. The registry validates a plugin manifest and its referenced schemas. A registration names the module, exported function, schemas and required capabilities. An adapter registration also declares the capabilities it supplies.
 2. The runtime supplies a `PluginContext` contract and wraps it in `PluginInvocationContext`. The contract carries a lease, resolved input/configuration and visible artifact references. Optional producer profiles remain explicit data.
 3. A plugin calls `context.invoke(capability, request)`. The runtime checks its active lease, the capability grant and the capability's constraints. For a tagged runtime dispatch request, it also validates the closed invocation schema. The request's `resource.canonicalId` has capability-specific meaning. It is not always a relative path.
@@ -85,7 +88,7 @@ The fragment alone does not register or activate the stage. A manifest, matching
 
 ### Adapter lifecycle and cleanup
 
-`AdapterFactory` can return an instance directly or through a Promise. Core starts required adapter dependencies first, calls the factory, then calls `ready()`. A dependency cycle, missing provider, factory rejection or readiness failure stops startup. Core rolls back started instances and aborts their lifecycle controllers. It bounds activation and readiness with the configured shutdown timeout.
+`AdapterFactory` can return an instance directly or through a Promise. Core starts required adapter dependencies first, calls the factory, then calls `ready()`. A dependency cycle, missing provider, factory rejection or readiness failure stops startup. Core starts outer rollback only after failed-readiness cleanup completes or fails. While that cleanup is pending, outer rollback does not revoke other started contexts. It bounds activation and readiness with the configured shutdown timeout.
 
 Implement `ready`, `invoke` and `shutdown`. `receipt` is optional and can return `undefined` when the adapter cannot find an earlier external result. Do not turn an uncertain external outcome into a new effect merely because a caller rejected or lost its response.
 
@@ -207,7 +210,7 @@ A missing tag means the owner retains historical behavior. It does not mean “s
 | Contract | Explicit current selection | Absence and rejection |
 | --- | --- | --- |
 | Portable artifact/reference encoding | `encoding: 'kubeclaw-json.utf16.v1'` | An untagged artifact preserves original historical bytes. A different explicit encoding fails. Never recanonicalize it and keep its old digest. |
-| Review/source identity | `identityEncoding: 'kubeclaw-json.utf16.v1'` | For dense plain-JSON records, omission uses legacy `canonicalJson`. An own different value, including undefined, fails. Ordinary property lookup can select an inherited portable tag. An inherited unknown tag is not rejected and selects legacy. See the local-parser limits below. |
+| Review/source identity | `identityEncoding: 'kubeclaw-json.utf16.v1'` | For dense plain-JSON records, omission uses legacy `canonicalJson`. An own different value, including undefined, fails. Ordinary property lookup can select an inherited portable tag. An inherited unknown tag is not rejected and selects legacy. Refer to the local-parser limits below. |
 | Runtime dispatch profile | `{schemaVersion:'runtime-dispatch-profile.v1', encoding:'json-utf16-v1'}` | Historical absence preserves the legacy producer. Exact finite profile only. No inferred fallback. |
 | Review cache profile | `{schemaVersion:'review-cache-profile.v1', recordVersion:'review-content-cache.v2', encoding:'json-utf16-v1'}` | Historical absence preserves review-content-cache.v1 and its original effect operations. Other transport/artifact versions imply nothing. |
 | Run snapshots | v3 requires runtime profile. V4 requires runtime and cache profiles | Read the selected snapshot schema. An absent cache member in the v3 shape does not select the current cache producer. |

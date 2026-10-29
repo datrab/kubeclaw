@@ -36,7 +36,7 @@ standalone file. It is not a global
 catalog of all input, result, checkpoint, chart or host contracts.
 
 **Source — config selection and package-local acquisition:**
-[registeredSchemaAuthorities](../../../scripts/docs-configuration-inventory.mjs#L3076-L3108) (`scripts/docs-configuration-inventory.mjs:3076–3108`, current-checkout SHA-256 `571d67b1adf37243fa3eca8c9fcefe69cc0fa2cc44c10192526152db505f03d8`). [validateRegistrationFiles / assertPackageFile](../../../skills/common/plugin-runtime/foundation/registry/build.ts#L30-L70) (`skills/common/plugin-runtime/foundation/registry/build.ts:30–70`, current-checkout SHA-256 `c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867`).
+[registeredSchemaAuthorities](../../../scripts/docs-configuration-inventory.mjs#L3076-L3108) (`scripts/docs-configuration-inventory.mjs:3076–3108`, current-checkout SHA-256 `18d5a2c1aa11fa2f714c707f6dc8fc5b57f63f926c8f5968e142a0098eca6bd0`). [validateRegistrationFiles / assertPackageFile](../../../skills/common/plugin-runtime/foundation/registry/build.ts#L30-L70) (`skills/common/plugin-runtime/foundation/registry/build.ts:30–70`, current-checkout SHA-256 `c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867`).
 
 <a id="stage-input-result-and-checkpoint-catalogue"></a>
 
@@ -237,7 +237,7 @@ its declared recursive forms and rejects unsupported keyword/reference routes.
 It is not a universal interpreter for all schema languages.
 
 **Source — recursive table meaning:**
-[flattenSchema — unsupported controls, references and cycles](../../../scripts/docs-configuration-inventory.mjs#L5219-L5264) (`scripts/docs-configuration-inventory.mjs:5219–5264`, current-checkout SHA-256 `571d67b1adf37243fa3eca8c9fcefe69cc0fa2cc44c10192526152db505f03d8`). [flattenSchema — recursive children, alternatives, conditions, negation and definitions](../../../scripts/docs-configuration-inventory.mjs#L5265-L5300) (`scripts/docs-configuration-inventory.mjs:5265–5300`, current-checkout SHA-256 `571d67b1adf37243fa3eca8c9fcefe69cc0fa2cc44c10192526152db505f03d8`).
+[flattenSchema — unsupported controls, references and cycles](../../../scripts/docs-configuration-inventory.mjs#L5219-L5264) (`scripts/docs-configuration-inventory.mjs:5219–5264`, current-checkout SHA-256 `18d5a2c1aa11fa2f714c707f6dc8fc5b57f63f926c8f5968e142a0098eca6bd0`). [flattenSchema — recursive children, alternatives, conditions, negation and definitions](../../../scripts/docs-configuration-inventory.mjs#L5265-L5300) (`scripts/docs-configuration-inventory.mjs:5265–5300`, current-checkout SHA-256 `18d5a2c1aa11fa2f714c707f6dc8fc5b57f63f926c8f5968e142a0098eca6bd0`).
 
 For a field task, keep a record of the root path/pointer, parent object, selected
 conditional branch, referenced target, exact validator and default operation.

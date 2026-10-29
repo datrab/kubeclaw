@@ -105,7 +105,7 @@ Top-level `tests` and `fixtures` keep their declared IDs.
 | `retries` | 1 for retry-safe providers; 0 for unsafe providers | Integer from zero through the policy maximum. |
 | `acceptUnsafeRetry` | `false` | Must be explicitly `true` for a positive retry on an unsafe provider. This acknowledges risk; policy can still reject it. |
 | `concurrencyGroup` | None | Stable group ID. Effective limit comes from suite, project, and operator policy. |
-| `matrix.<field>[]` | No matrix | Non-empty JSON values. The provider must declare the field. Cartesian expansion must remain within policy. |
+| `matrix.<field>[]` | No matrix | Non-empty JSON values. The provider must declare the field. The expansion into all combinations of matrix values must stay within policy. |
 | `evidence.onPass[]` | Provider default | Evidence retained after pass. Every type must appear in the provider manifest. |
 | `evidence.onFail[]` | Provider default | Evidence retained after assertion failure. |
 | `evidence.onError[]` | Provider default | Evidence retained after execution error. |
@@ -127,7 +127,7 @@ within the operator maximum. When selected suites name the same group, the
 resolver takes the lowest requested limit. A node without a group still counts
 against the job-wide concurrency limit.
 
-Matrix expansion sorts field names, computes the Cartesian product, and creates
+Matrix expansion sorts field names, computes all combinations of field values, and creates
 IDs such as `http/matrix-001`. Each variation has a separate execution ID and
 stable test identity. Every expanded variation named by a required coverage
 check must pass; one passing variation does not cover its siblings.
@@ -371,8 +371,8 @@ deployment lease retains final expiry authority; exposure does not extend it.
 ## 6. API Suite
 
 **Purpose:** Check simple HTTP health, a stateful API flow, and selected OpenAPI
-operations. **Boundary:** The three nodes are independent checks. A green health
-request cannot replace contract or flow evidence.
+operations. **Boundary:** The three nodes are independent checks. A health
+request result cannot replace contract or flow evidence.
 
 The shipped template contains:
 
@@ -620,6 +620,7 @@ there. The broker selects simulated throttling and enables screen emulation.
 `budgets` may be empty or contain up to 32 named, nonempty objects. Each accepts
 only `minimumScore` 0–100, `maximumLcpMs` 0–120000, `maximumCls` 0–10 and
 `maximumTbtMs` 0–120000. Any subset is allowed, but not an empty budget.
+The three maximum fields limit largest contentful paint (LCP), cumulative layout shift (CLS), and total blocking time (TBT), respectively.
 Only configured thresholds produce performance checks; absence is not an
 implicit zero threshold. The loader validates every profile and budget, then
 requires the named `profile` and optional named `budget` to exist. A present
@@ -899,7 +900,7 @@ its regeneration is not a manual edit to this table.
 >
 > **Contract or setting:** [OpenAPI support guard](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/openapi/src/schema-support.js#L44-L73) and [Size constants](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/size-budget/src/provider.js#L7-L10) define separate parser boundaries.
 >
-> **Test evidence:** This catalogue has no combined ceiling-test execution receipt. This catalogue reports the linked Source constants and rejection branches, not an observed larger-input run.
+> **Test evidence:** This catalog has no combined ceiling-test execution receipt. This catalog reports the linked Source constants and rejection branches, not an observed larger-input run.
 >
 > **Revision:** `3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f`; each linked whole file matches current Source.
 >
@@ -955,7 +956,7 @@ applies additional runtime restrictions:
 The [input validator](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae1e0ba4c47cceb08c98f4c70b7f/skills/buster/plugins/demo-auth-smoke/src/protocol.js#L44-L79)
 requires exactly the three manifest-declared native value links, with the
 `deployment`, `credentials` and `exposure` schema IDs shown in the
-[package catalogue](../extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md).
+[package catalog](../extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md).
 It checks the declared lease/namespace, immutable image/manifest digest,
 credential-source Secret identity and digest, and pending exposure's owner,
 lease UID and positive generation. Deployment, exposure and handoff expiry must
@@ -1029,8 +1030,7 @@ remain distinct from a compiled native deployment or operator execution.
 
 A link must name the producer node, output port, consumer node, and input port.
 Schema and media types must match. The resolver rejects a link that relies only
-on similar names. This makes data movement visible in the plan and prevents a
-test from reading an undeclared file or resource.
+on similar names. This makes declared data movement visible in the plan. Port-link validation is not process isolation or a resource-access grant.
 
 ## Evidence and Reports
 
@@ -1090,7 +1090,7 @@ for complete/truncated counts and omitted-detail relationships.
 The installed JUnit adapter is declared by package `kubeclaw.junit-report@1.0.0`
 using `pipeline-plugin-v2`. Report formats are not declared by the production
 runtime configuration loader: that loader assembles the package registry.
-The adapter manifest declares the following fields; the format identifies the
+The adapter manifest declares these fields; the format identifies the
 report protocol, while the module and export identify its normalization code.
 
 | Adapter ID | Manifest field | Declared value |
@@ -1126,7 +1126,7 @@ routing view. It groups codes by the operator action that they require.
 | Suite or boundary | Code families and important exact codes | Safe action |
 | --- | --- | --- |
 | Plan and suite | `TEST_PLAN_SUITE_*`, `TEST_PLAN_NODE_*`, `TEST_PLAN_CONFIGURATION_INVALID`, `TEST_PLAN_MATRIX_*`, `TEST_PLAN_DEPENDENCY_*`, `TEST_PLAN_PORT_*`, `TEST_PLAN_COVERAGE_*` | Correct the declaration or installed registry. Do not send an unresolved plan. |
-| Unit and reports | `DIRECT_COMMAND_*`, `TEST_REPORT_*`, `JUNIT_*`, `COVERAGE_*` | Check catalogue executable, paths, exit, report/LCOV bytes, and declared outputs. Keep JUnit required when the tool supports it. |
+| Unit and reports | `DIRECT_COMMAND_*`, `TEST_REPORT_*`, `JUNIT_*`, `COVERAGE_*` | Check catalog executable, paths, exit, report/LCOV bytes, and declared outputs. Keep JUnit required when the tool supports it. |
 | Container build | `CONTAINER_BUILD_*` | Check repository paths, definition, BuildKit, registry policy, pushed manifest, and digest equality. |
 | Kubernetes fixture | `KUBERNETES_FIXTURE_*` | Check image/manifest inputs, lease status, broker authorization, credentials, readiness, and cleanup. Do not bypass the lease. |
 | HTTP | `HTTP_CONFIG_*`, `HTTP_INPUT_*`, `HTTP_TARGET_*`, `HTTP_REQUEST_FAILED`, `HTTP_REQUEST_TIMEOUT`, `HTTP_RESPONSE_INVALID` | Separate invalid declaration, target selection, transport failure, and assertion findings. |

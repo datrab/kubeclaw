@@ -160,9 +160,9 @@ node must then perform an uncached pull of the same digest.
 ## Lint Concurrency and Deployed Extension Acceptance
 
 The current lint adapter can accept concurrent invocations, but discovery
-diagnostics use shared process state and native analysers use shared cache
+diagnostics use shared process state and native analyzers use shared cache
 directories. The planned change must make diagnostic ownership
-invocation-local. It must also isolate a cache or prove that its owning analyser
+invocation-local. It must also isolate a cache or prove that its owning analyzer
 supports concurrent writers. Concurrency tests must overlap two distinguishable
 runs and prove that findings, diagnostics, cancellation, cleanup, and artifacts
 remain bound to the correct request.
@@ -209,7 +209,7 @@ failure run that proves exact rollback and leaves no unidentified resource.
 ## Promotion Rule
 
 Move an item from planned to delivered status only when implementation exists. At least
-one proof from the following list must also exist:
+one proof from this list must also exist:
 
 - source and tests prove the behavior;
 - rendered manifests and commands prove deployment behavior;

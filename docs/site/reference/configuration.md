@@ -25,7 +25,7 @@ native-host permission, use [Roles and package ownership](roles-and-package-owne
 
 The component in the Consumer column owns the behavior. These routes describe
 named, supported source families; they are not a claim that every possible
-configuration source in the repository has been catalogued.
+configuration source in the repository has been cataloged.
 
 | Artifact or setting | Version / selection | Consumer and authority | Defaults and override boundary | Detailed route |
 | --- | --- | --- | --- | --- |

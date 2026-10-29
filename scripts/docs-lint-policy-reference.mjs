@@ -374,16 +374,18 @@ sources. Runtime reports include only explicit policy \`config_path\` digests.
 | --- | --- | --- |
 ${configDigestRows}
 
-## Runtime Analyser Version Authority
+<a id="runtime-analyser-version-authority"></a>
 
-These are the lint-relevant explicit runtime pins. Direct Nova npm analyser
+## Runtime Analyzer Version Authority
+
+These are the lint-relevant explicit runtime pins. Direct Nova npm analyzer
 versions are also checked against the root entry in its package lock. Python and
-Go analysers installed by the image build use the explicit \`versions.json\`
+Go analyzers installed by the image build use the explicit \`versions.json\`
 arguments below. Tools supplied as Debian-snapshot packages have no independent
 semantic version authority here: their authority is the built Nova tools image
 identity together with its \`DEBIAN_SNAPSHOT\` input (\`${repositoryVersions.buildArgs.DEBIAN_SNAPSHOT}\`).
 
-| Analyser | Version | Canonical source |
+| Analyzer | Version | Canonical source |
 | --- | --- | --- |
 ${analyserVersionRows}
 
@@ -441,7 +443,7 @@ ${admissionRows}
 
 This inventory gives source-derived identities. The
 [authored rule guide](lint-rules.md) explains triggers, boundaries, and recovery.
-External analysers can add version-specific codes, so their upstream identities
+External analyzers can add version-specific codes, so their upstream identities
 cannot form a finite repository-owned list.
 
 | Family | Count | Source-derived identities |

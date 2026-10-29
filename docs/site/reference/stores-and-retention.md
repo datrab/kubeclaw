@@ -152,7 +152,7 @@ server or source identity to obtain a successful-looking restore.
 
 | Group / operation | What its actual source establishes | What it does not establish |
 | --- | --- | --- |
-| Nova run plus adapter stores | Original identities, stopped writers, matched raw copies, strict copied-journal inspection and external-effect reconciliation before legal recovery | A single `events.jsonl` copy, audit JSON or new run cannot replace complete original recovery authority |
+| Nova run plus adapter stores | Original identities, stopped writers, matched raw copies, strict copied-journal inspection and external-effect reconciliation before recovery under the owning contract | A single `events.jsonl` copy, audit JSON or new run cannot replace complete original recovery authority |
 | Prism DB/artifact backup | DB snapshot first, immutable artifact superset copied next; artifact index, metadata, checksums and bounded completed-group publication; administrative deletion/restore must not overlap | DB-only consistency, automatic age pruning, external credential recovery or completed disaster recovery |
 | Prism scheduled SQL proof | Unique temporary same-server database, native restore and selected application-table queries, then owned cleanup | An independent failure-domain restore, all artifact/application readers or live cutover |
 | PostgreSQL native recovery | Verifies selected source/client/version, refuses same server and nonempty target, requires original owner/ACL roles, bounded single-transaction restore | It explicitly still requires application verification; a native-success message is not restored service readiness |
@@ -192,7 +192,7 @@ inspection, then the original supported audit/recovery route only when its
 prerequisites pass. Do not use audit to make a corrupt copied journal pass.
 No read-only/no-record bypass flag, pure-parser substitute or general repair
 guarantee is asserted. Other durable-store readiness/reads can acquire locks;
-qualify the actual call path instead of labelling every read write-free.
+qualify the actual call path instead of labeling every read write-free.
 
 **Source — original audit/constructor/lock effects:**
 [missing-file guard and post-construction run lookup](../../../skills/nova/core/telemetry/audit.ts#L15-L27) (`skills/nova/core/telemetry/audit.ts:15–27`, current-checkout SHA-256 `59eb49b7c0e2e430b38c53572edb5d7563724957996bd2dfda261fe1a1569bfd`). [constructor and conditional incomplete-tail load](../../../skills/nova/core/state/journal.ts#L30-L81) (`skills/nova/core/state/journal.ts:30–81`, current-checkout SHA-256 `25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf`). [stable lock file and flock child](../../../skills/nova/core/state/file-mutex.ts#L8-L24) (`skills/nova/core/state/file-mutex.ts:8–24`, current-checkout SHA-256 `d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c`).

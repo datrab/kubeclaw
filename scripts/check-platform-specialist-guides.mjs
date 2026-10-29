@@ -67,7 +67,7 @@ const specifications = [
     '## Publication And Lifecycle', '## Failure And Recovery',
   ]],
   ['docs/site/understand/communication.md', 12, [
-    '## Complete Connection Matrix', '## Endpoint Catalogue',
+    '## Complete Connection Matrix', '## Endpoint Catalog', '<a id="endpoint-catalogue"></a>',
     '### Nova And Buster', '### Core, Plugins, And Worker Control', '### Redis',
     '### SPIFFE And mTLS', '### Git, OCI, BuildKit, And Tailscale',
     '## Global Retry Rules', '## Evidence Limits',
@@ -82,7 +82,7 @@ const specifications = [
   ['docs/site/understand/telemetry.md', 15, [
     '## Two Contract Families', '## Active Data Path', '## Active Event Catalog',
     '## Producer and Consumer Matrix', '## Identity and Correlation',
-    '## Ordering and Deduplification', '## Redaction and Sensitive Data',
+    '## Ordering and Deduplication', '<a id="ordering-and-deduplification"></a>', '## Redaction and Sensitive Data',
     '## Observer Delivery, Checkpoints, and Recovery', '## Sink Contracts',
     '## Retention, Capacity, and Backpressure', '## Audit Is a Projection',
     '## Failure and Recovery Matrix', '## Change Guide',

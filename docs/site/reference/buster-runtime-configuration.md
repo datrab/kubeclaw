@@ -113,8 +113,8 @@ not make an unbounded value safe.
 
 This minimal file starts an authenticated service without executable provider
 capabilities. It is useful for validating storage, authentication, source
-attestation, package discovery, recovery, and HTTP readiness. It cannot execute
-a test plan because `allowedCapabilities` is empty.
+attestation, package discovery, recovery, and HTTP readiness. An empty `allowedCapabilities` array gives no runtime capability. It is not test-plan
+execution evidence.
 
 ```json
 {
@@ -498,7 +498,7 @@ defaults to GET and HEAD](https://github.com/datrab/kubeclaw/blob/3cf7dc4f72c2ae
 
 Do not add a capability only because a plugin is installed. Do not put secret
 values in the JSON file. Do not make a broad network suffix, registry prefix,
-namespace prefix, read root, executable catalogue, or secret allowlist to avoid
+namespace prefix, read root, executable catalog, or secret allowlist to avoid
 a validation error. Each allowlist is an authority boundary.
 
 ## Failure, Recovery, and Change Control

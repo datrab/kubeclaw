@@ -251,7 +251,7 @@ first errors and actual durable identities before selecting another action.
    inspection alone is not a passing run. The local tests use contract
    deployment/TokenReview vectors; no native cluster, real Tailnet or Discord
    success is claimed.
-4. Update this package guide, its generated catalogue/configuration facts and
+4. Update this package guide, its generated catalog/configuration facts and
    source-bound complexity assignment. Run the relevant schema/registration
    checks and [documentation maintenance](../documentation-maintenance.md).
 5. Validate the selected Nova role, package snapshot, stage configs, grants,

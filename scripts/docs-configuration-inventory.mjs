@@ -4272,7 +4272,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
       id: `Sets the unique security-header rule identifier used when ${context} merges rule overrides.`,
       header: `Names the HTTP response header checked by one configured rule in ${context}.`,
       severity: `Sets the finding severity emitted when one configured security-header rule fails in ${context}.`,
-      kind: `Selects the exact presence, equality, containment, or HSTS-age comparison for one rule in ${context}.`,
+      kind: `Selects the presence, equality, containment, or HTTP Strict Transport Security (HSTS) age comparison for one rule in ${context}.`,
       value: `Supplies the comparison value for a non-presence security-header rule in ${context}.`,
     }[leaf] ?? null;
   }

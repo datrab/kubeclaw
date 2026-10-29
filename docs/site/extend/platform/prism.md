@@ -35,7 +35,7 @@ Select the component that owns the meaning.
 | Source acquisition | Prism Ingestion | Rights, quarantine, digest, retention, Control handoff |
 | Retrieval or ranking | Corpus module and PostgreSQL | Eligibility policy, query evidence, benchmark |
 | A visual editor action | Prism Studio | Typed domain operation and stale-revision handling |
-| HTML rendering | Renderer | Contract node catalogue, output limits, preview isolation |
+| HTML rendering | Renderer | Contract node catalog, output limits, preview isolation |
 | A durable field or invariant | Prism storage migration and repository | Backup, rollback, reader compatibility, operator procedure |
 | Nova or Buster handoff | Prism pipeline adapter or Nova stage plugin | Approved digest, immutable artifacts, downstream contract |
 
@@ -90,7 +90,7 @@ and deployment checks require their named environment.
 > **Claim:** Prism exposes focused component commands; contract generation and environment-dependent checks remain separate prerequisites.
 > **Implementation:** Prism and contract package scripts select their own tests, generation, type checking and service/build entrypoints.
 > **Contract or setting:** Contract `pretest`/`pretypecheck` generate validators; Studio `prebuild:studio` does likewise, so selected checks can write generated files.
-> **Test evidence:** Package scripts were inspected, not executed; no component, browser, PostgreSQL or native-worker result follows from their declarations.
+> **Test evidence:** Package scripts were inspected, not executed; their declarations give no component, browser, PostgreSQL or native-worker result.
 > **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; both linked package definitions remain byte-identical.
 > **Limit:** Command availability does not supply its dependencies, native authority or a successful prepared checkout.
 
@@ -190,7 +190,7 @@ unsafe.
 A node type crosses four boundaries: contract, semantics, renderer, and Studio.
 Treat these changes as one unit.
 
-1. Add the node name and closed property rules to the contract catalogue.
+1. Add the node name and closed property rules to the contract catalog.
 2. Define which properties accept tokens, data bindings, actions, children,
    variants, state patches, and responsive patches.
 3. Add semantic rules for references and forbidden type changes.
@@ -206,13 +206,13 @@ execution authority.
 
 > **Source evidence — rendering boundary**
 >
-> [The renderer checks the contract node catalogue, resolves bounded tokens and data, escapes output, and selects explicit render branches](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/renderer/index.ts#L1-L225).
+> [The renderer checks the contract node catalog, resolves bounded tokens and data, escapes output, and selects explicit render branches](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/skills/prism/renderer/index.ts#L1-L225).
 >
 > [Document semantics prevent component-type replacement through state and responsive patches](https://github.com/datrab/kubeclaw/blob/4e52c72788ac002788bc036a497d76c13e6a35fd/contracts/prism/v1/src/document-semantics.ts).
 >
 > **Claim:** Renderer changes must preserve contract-governed nodes and escaped output rather than treating design data as executable markup.
 > **Implementation:** The renderer resolves declared tokens/data and explicit node branches; document semantics reject component-type changes through patches.
-> **Contract or setting:** Node catalogue and document semantics constrain supported properties; a new renderer feature cannot bypass those input rules.
+> **Contract or setting:** Node catalog and document semantics constrain supported properties; a new renderer feature cannot bypass those input rules.
 > **Test evidence:** The maintained `test:renderer` command selects renderer/remediation assertions; it was not executed for this inspection.
 > **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; linked renderer and document-semantics files remain byte-identical.
 > **Limit:** Escaped renderer output does not prove browser layout, CSP isolation, accessibility or arbitrary external asset safety.
@@ -324,9 +324,9 @@ Do not replace source events with one mutable preference score.
 > **Claim:** Evaluation findings and time-dependent preference projections supply evidence, not human approval or replacement source history.
 > **Implementation:** The evaluator hashes stable finding content; preference projection validates identities, rejects conflicting duplicates and honors retractions before scoring.
 > **Contract or setting:** Finding levels remain blocking/review/information; effective preference scores depend on the supplied projection time and retained origins.
-> **Test evidence:** `quality.test.mts` asserts blocked findings, preference retraction and decay; inspected, not executed; no human approval result follows.
+> **Test evidence:** `quality.test.mts` asserts blocked findings, preference retraction and decay; inspected, not executed; this gives no human approval result.
 > **Revision:** `4e52c72788ac002788bc036a497d76c13e6a35fd`; the linked evaluator and preference projection retain those bytes.
-> **Limit:** No visual-quality gate or approval follows from deterministic findings, and projection scores do not erase original preference events.
+> **Limit:** Deterministic findings give no visual-quality gate or approval, and projection scores do not erase original preference events.
 
 ## Change Control or an HTTP Route
 
@@ -486,7 +486,7 @@ commit the database reference.
 
 ## Change Publication or Pipeline Handoff
 
-Publication spends human approval authority.
+Publication uses human approval authority.
 Bind approval to the exact design revision, document digest, warnings,
 architecture input, previews, specification, and bundle content.
 

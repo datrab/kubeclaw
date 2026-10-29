@@ -1035,7 +1035,7 @@ closed until those checks succeed.
 
 ## The Complete Studio Journey
 
-The following status map applies to every step below at the recorded revision.
+This status map applies to every step below at the recorded revision.
 “Implemented” means that the linked product code provides the operation; it does
 not mean that this deployment exercised it. At that recorded revision, the absent
 runtime release selection stopped that checkout before deployment and the live journey.
@@ -1587,7 +1587,7 @@ Switch to Preview mode and inspect each required combination:
 1. Select each view.
 2. Select each declared state.
 3. Check compact, regular, and wide viewports.
-4. Follow every declared user action.
+4. Test every declared user action.
 5. Confirm the success state and each recovery path.
 6. Check keyboard operation, focus, names, contrast, motion, and alternative text.
 7. Confirm that all assets load.

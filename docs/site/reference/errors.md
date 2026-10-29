@@ -50,7 +50,7 @@ use [Diagnose](../use/diagnose.md). For retained-state procedures, use
 
 ## Choose the owner and detailed reference
 
-The following is a finite routing index, not an exhaustive code catalogue.
+This is a finite routing index, not a complete code catalog.
 Use the exact emitting site for the condition and the detailed page for its
 procedure; do not copy one component's recovery rule to a similar prefix.
 
@@ -213,7 +213,7 @@ before the request append. It checks cancellation again after Secret resolution
 and network completion. `ADAPTER_CANCELLED` can therefore mean before send or
 after remote acceptance; `ADAPTER_SHUTTING_DOWN` denies new work, not remote
 cancellation. A fence error comes from the caller's current fence authority,
-not this message catalogue.
+not this message catalog.
 
 After reservation, the publisher attempts to store
 `transport-publication-failure.v1` for Secret/network/response/receipt errors,
@@ -221,8 +221,7 @@ then rethrows the original error. Stored failure retains a 16-hex-character
 reason digest and at most 2,048 message characters, not the original error class,
 stack or complete cause. The same attempt rethrows its stored bounded message
 without sending; a different attempt can send again. An unresolved reservation
-can also re-enter sending. No automatic publisher retry or exactly-once promise
-follows from these diagnostics.
+can also re-enter sending. These diagnostics give no evidence of automatic publisher retry or exactly-once delivery.
 
 ### Publisher persistence is a separate failure boundary
 
@@ -230,7 +229,7 @@ follows from these diagnostics.
 | --- | --- | --- |
 | `DURABLE_RECORD_IDEMPOTENCY_CONFLICT` | Same target/key request differs from retained payload or owner. Request append can reject before send. | Retain both identities and original payload; investigate the conflicting writer. Do not erase the request or force a new key. |
 | `DURABLE_RECORD_SIZE_EXCEEDED`, `DURABLE_RECORD_STORE_FULL` | Record/count/whole-store capacity rejects append or transition. Request/terminal reservation admission occurs before send; a later terminal write can fail after send. | Determine which operation failed. Preserve store/effect/receiver evidence; reconcile remote acceptance before a new publication attempt. |
-| `DURABLE_RECORD_TRANSITION_CONFLICT` | Terminal record's retained digest differs from the reserved digest at CAS. | Publisher rereads accepted receipt state; a racing accepted receipt can win. If conflict still escapes, reconcile the original terminal, not a copied receipt or manual digest edit. |
+| `DURABLE_RECORD_TRANSITION_CONFLICT` | Terminal record's retained digest differs from the reserved digest at [compare-and-swap (CAS)](glossary.md#compare-and-swap). | Publisher rereads accepted receipt state; a racing accepted receipt can win. If conflict still escapes, reconcile the original terminal, not a copied receipt or manual digest edit. |
 | `DURABLE_RECORD_NOT_FOUND`, `DURABLE_RECORD_RETIRED`, replay/IO errors | Expected state is absent, retired, corrupt or unavailable at its actual store operation. | Stop mutation and preserve the complete root. Restore through its owner or report unsupported recovery; do not construct a successful terminal by hand. |
 
 The publisher can surface a transition error instead of its original error if
@@ -401,8 +400,8 @@ File open/stat, JSON decode, NRI SDK construction and SDK run failures can retai
 native error text rather than a `NATIVE_NRI_*` prefix. Normal main prints a
 returned error to stderr and exits 1. The selected container callback returns its
 error and no adjustment at the rejecting site; the SDK/container runtime owns
-the upstream lifecycle. No universal rollback, durable attempt result or safe
-restart follows from this namespace.
+the upstream lifecycle. This namespace gives no universal rollback, durable attempt result or safe
+restart.
 
 The builder has separate `NATIVE_NRI_BUILD_OUTPUT_EXISTS` and
 `NATIVE_NRI_SELECTED_GO_VERSION_REQUIRED` guards. It checks the PATH-selected Go
@@ -418,7 +417,7 @@ a diagnostic has this prefix. They are not a generic retry or rollback command;
 a later failure can follow installed files or a service/runtime restart. Keep
 the exact bundle/backup and first failure for the host owner. Do not delete live
 pools, retained ownership state or installed authority files to make readiness
-green. Follow the [native fixture-host boundary](../extend/developer-handbook.md#prepare-a-native-worker-fixture-host)
+green. Use the [native fixture-host boundary](../extend/developer-handbook.md#prepare-a-native-worker-fixture-host)
 and [native pool policy](worker-profiles-and-roles.md#native-pool-policy).
 
 > **Source — exact emitter, entry mode and selected callers**

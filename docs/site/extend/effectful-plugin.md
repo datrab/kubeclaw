@@ -37,7 +37,7 @@ The selected design separates four responsibilities:
 - the effect coordinator records request, acceptance, lock ownership, and receipt;
 - recovery refuses to guess when durable evidence cannot determine the outcome.
 
-**Benefit:** A stage cannot silently acquire authority, and recovery can distinguish
+**Benefit:** Capability calls stay subject to grants, and recovery can distinguish
 a safe repeat from an uncertain mutation.
 
 **Cost:** Authors must design stable resource identity, idempotency, reconciliation,
@@ -58,7 +58,7 @@ still holds the resource lock when it performs the mutation.
 
 Check the closed capability vocabulary first. If an installed adapter already owns
 the required operation, create only the stage registration and request that
-capability. Blueprint Sync follows this pattern:
+capability. Blueprint Sync uses this pattern:
 
 - `artifacts.read` verifies bound approval and lineage evidence when it exists;
 - `artifacts.write` stores immutable result evidence;
@@ -75,7 +75,7 @@ Adding a new capability name is a Core and policy change, not a package-only cha
 
 ## Follow One Effectful Stage From Package To Test
 
-Blueprint Sync is the maintained reference. Follow its structure, but select only
+Blueprint Sync is the maintained reference. Use its structure, but select only
 the capabilities that your operation needs.
 
 1. Define strict configuration, input, and result schemas.
@@ -253,7 +253,7 @@ provide that guarantee.
 | Acceptance exists, receipt absent | External outcome is unknown | Reconcile externally; do not repeat automatically |
 | Completed receipt exists, attempt terminal event absent | Mutation result exists but lifecycle import is incomplete | Stop; the reconciliation/import procedure is not available in this checkout |
 | Adapter returns a normal failure receipt | External operation failed with recorded evidence | Apply the operation-specific retry rule |
-| Stage times out or is cancelled | Local execution stopped | Inspect effect records before retry or cleanup |
+| Stage times out or is cancelled | Owned work can continue after local cancellation or deadline expiry | Inspect effect records before retry or cleanup |
 | Same state key has different payload | Caller reused identity for different intent | Stop and correct identity; never overwrite history |
 
 ## Verification

@@ -9,11 +9,11 @@ Last verified: 2026-10-09 for RPO, RTO, and SVID; 2026-10-10 for Prism request p
 
 ## Purpose
 
-This glossary gives one plain meaning to each KubeClaw term.
-The architecture and operator pages use these meanings consistently.
-Use the same definition at the first operational use of each term, and link
-that use to its canonical section below. Keep target values,
-measured results, identity verification, and application permission distinct.
+This glossary gives meanings for KubeClaw terms.
+Use the meaning for the named operation.
+At the first operational use of a term, give its meaning.
+Add a link to its definition.
+Keep target values, measured results, identity verification, and application permission distinct.
 
 | Term | Plain meaning |
 | --- | --- |
@@ -63,7 +63,7 @@ measured results, identity verification, and application permission distinct.
 | Prism | The design engine and product surface that creates revisioned design work and approved baselines. |
 | Provider | Use a qualified name: [Nova capability provider](pipeline-platform.md#adapter-selection-and-validation) or [Buster test provider](../extend/buster.md#implement-a-test-provider). Their permissions and runtime contracts are separate. |
 | Reachable | Usable through the configured running process and network path in one environment. |
-| Reconciliation | Work that determines the outcome of earlier activity before the system permits new activity. |
+| Reconciliation | Work that uses the [scoped meanings of reconcile](#technical-verb-reconcile). For an uncertain external effect, use the owner's recovery procedure to find the outcome before new work. Do not do the effect again or edit state to replace an unknown outcome. For a controller, compare the desired and observed states. Do only the permitted provisioning, update or deletion work, with the owner's authority, retry and cleanup rules. This work can include first provisioning. |
 | Registration | One declared extension surface inside a plugin package. |
 | Remediation | A declared path that sends a product defect to a stage that can repair it. |
 | Repair budget | A limit on automatic and authorized remediation orders, grouped by defect category. |

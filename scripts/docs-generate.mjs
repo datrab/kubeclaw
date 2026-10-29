@@ -461,10 +461,10 @@ ${table(['Method and target', 'Caller', 'Provider or base', 'Activation', 'Imple
 ${generatedEnd()}
 ## Trust, Health, And Failure Meaning
 
-- A route record proves that the shipped source registers or handles the path. It does not prove public reachability. Service, ingress, network policy, identity, and authorization settings determine reachability and access.
-- A health or readiness route reports only the checks implemented at its linked source. It does not prove that a complete user workflow succeeds.
-- An outbound record proves a possible call site and its activation condition. It does not prove that DNS, credentials, policy, or the remote service are available.
-- The generated inventory does not infer undocumented authentication or retry behavior. Follow the implementation link and the relevant operational procedure before you expose, retry, or disable a connection.
+- A route record is evidence that the shipped source registers or handles the path. It is not evidence of public reachability. Service, ingress, network policy, identity, and authorization settings determine reachability and access.
+- A health or readiness route reports only the checks implemented at its linked source. It is not evidence that a full user workflow completed without failure.
+- An outbound record is evidence of a possible call site and its activation condition. It is not evidence that DNS, credentials, policy, or the remote service are available.
+- The generated inventory does not infer undocumented authentication or retry behavior. Use the implementation link and the related operational procedure before you expose, retry, or disable a connection.
 
 ## Checks
 
@@ -924,7 +924,7 @@ and [operator procedure](../use/operate.md) for prerequisites and recovery.
 | \`smoke\`, \`smoke-agent <name>\` | Inspects deployed workloads, waits for readiness and executes gateway/health/file checks inside containers. Requires cluster read and pod-exec authority. \`smoke\` also checks Prism when enabled. | Successful checks establish only the tested pod/health boundary, not a full pipeline run. Diagnose a failed check before changing deployments. |
 | \`status\` | Reads resource status; includes Prism status when enabled. Requires resource-read authority in the selected namespaces. | Displays observed resources, not functional pipeline acceptance. Missing or unhealthy resources require diagnosis, not an automatic redeploy. |
 
-These effects follow the dispatch and \`cmd_image\`, \`cmd_smoke_agent\`, \`cmd_smoke\`,
+These are effects of the dispatch and \`cmd_image\`, \`cmd_smoke_agent\`, \`cmd_smoke\`,
 \`cmd_status\` and \`cmd_nova_production_preflights\` implementations in
 [scripts/deploy.sh](../../../scripts/deploy.sh). This documentation correction did not run commands against a live deployment.
 

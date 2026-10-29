@@ -146,7 +146,7 @@ and [lint policy](lint-policy.md) own the detailed procedures and inputs.
 >
 > [Publisher receipt/failure CAS and retained terminal outcomes](https://github.com/datrab/kubeclaw/blob/0e35889a3c4e65d5c47ba88e924611aace67eb1d/skills/common/plugins/transport-publisher/src/adapter.ts#L283-L339).
 >
-> **Claim:** Compatibility follows each actual producer and retained reader, including selected versions, supported normalization and explicit rejection.
+> **Claim:** Each actual producer and retained reader has its own compatibility rules for selected versions, supported normalization and explicit rejection.
 >
 > **Implementation:** The linked profiles, journals, caches, envelopes and archives expose their owning version branches.
 >
@@ -181,7 +181,7 @@ Do not delete a record, invent a new key or copy an ACK into another protocol.
 
 ## Contract families and their canonical owners
 
-Use the following ownership boundaries for identities that do not need a
+Use these ownership boundaries for identities that do not need a
 version conversion. A logical ID such as `kubeclaw.*@1` selects a producer/reader
 interface, not the enclosing artifact's record version. A schema-only asset
 and a currently composed runtime path remain different support classes.
@@ -266,10 +266,10 @@ with a stage-result schema because both return JSON.
 ## Check the selected compatibility boundary
 
 Use the owning component's tests before changing either side of a contract.
-The following local checks exercise actual current/retained readers and negative
+These local checks exercise actual current/retained readers and negative
 version, identity, digest or mode cases. They need repository dependencies,
-Node 24 and Linux with `flock`; archive locale tests use the Node Intl runtime.
-They do not require a cluster or prove a deployed upgrade.
+Node 24 and Linux with `flock`. Archive locale tests use the Node Intl runtime.
+They do not require a cluster. They do not give evidence of a deployed upgrade.
 
 ```bash
 env -u SWARM_CONFIG -u NODE_ENV node --test \
@@ -293,20 +293,19 @@ pinned runtime; do not weaken a schema to obtain a passing fixture.
 
 Retirement removes old data or an interface only after its readers and retained
 work no longer require it. Migration is a defined transformation with its own
-writer, destination, validation and recovery procedure. Neither follows solely
-from publishing a newer schema or package.
+writer, destination, validation and recovery procedure. A newer published schema or package is not sufficient for migration or retirement.
 
 1. Record the exact current writer, logical ID, record version, encoding,
    content digest, installed registration and known internal/external readers.
 2. Identify active and retained runs/records that pin the old authority. Keep
    original package bytes and required credentials, keys, profiles and readers.
-3. Establish the supported direction with the actual consuming validator and
-   semantic rules. Stop if conversion, downgrade, external reader or recovery
-   applicability is unknown; do not relabel bytes as a newer version.
+3. Use the actual consuming validator and semantic rules to find the supported
+   direction. Stop if conversion, downgrade, external reader or recovery
+   applicability is unknown. Do not relabel bytes as a newer version.
 4. Preserve a consistent data group and writer fence using
    [Recovery](../use/recovery.md). A fence prevents conflicting owners from
-   writing; a lock-file name alone does not establish that work stopped.
-5. Use only the component's supported migration or drain procedure. Retain
+   writing. A lock-file name alone does not give evidence that work stopped.
+5. Use only the component's supported migration or drain procedure. Keep
    original input/output identities, first diagnostic and partial failures.
 6. Before removal, verify recovery through the original application readers
    and required external consumers. Schema syntax or a native database check

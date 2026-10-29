@@ -54,7 +54,7 @@ An indexed page identifies the authority while its complete reference remains un
 | SUR-CFG-01 | Project input and compiled graph | [Nova project](reference/nova-project.md) and [project test pipeline](reference/pipeline-json.md) | [Project compiler](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/nova/project/compiler.ts) | Detailed |
 | SUR-CFG-02 | Explicit pipeline graph | [Pipeline definition](reference/pipeline-definition.md) | [Pipeline schema](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json) | Detailed |
 | SUR-CFG-03 | Platform installation, trust, grants, and adapters | [Pipeline platform](reference/pipeline-platform.md) and [operation procedure](use/operate.md#configure-the-platform) | [Platform schema](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/config/platform.schema.json) | Detailed |
-| SUR-CFG-04 | Plugin and host configuration | [Host and Prism configuration](reference/host-and-prism-configuration.md), [plugin operation](use/plugins.md), and [plugin catalogue](extend/plugin-catalogue/README.md) | [Installed manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills) | Detailed |
+| SUR-CFG-04 | Plugin and host configuration | [Host and Prism configuration](reference/host-and-prism-configuration.md), [plugin operation](use/plugins.md), and [plugin catalog](extend/plugin-catalogue/README.md) | [Installed manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills) | Detailed |
 | SUR-CFG-05 | Worker profiles and runtime role membership | [Worker profiles and roles](reference/worker-profiles-and-roles.md) and [deployment trust](understand/deployment-and-trust.md) | [Role manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles) | Detailed |
 | SUR-CFG-06 | Helm, GitOps, and deployment values | [Helm values](reference/helm-values.md), [precedence](reference/configuration-precedence.md), and [change impact](reference/configuration-change-impact.md) | [Charts](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/charts) | Detailed |
 | SUR-CFG-07 | Environment variables and secret references | [Environment variables](reference/environment-variables.md) and [Secrets](reference/secrets.md) | [Deployment scripts](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/scripts) | Partial |
@@ -69,10 +69,10 @@ An indexed page identifies the authority while its complete reference remains un
 | SUR-API-03 | Schemas, constraints, defaults, and versions | [Reference](reference/README.md) | [Contract schemas](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/contracts) | Indexed |
 | SUR-API-04 | Events, payloads, ordering, and correlation | [Telemetry](understand/telemetry.md) | [Active v2 event contract](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L672) | Detailed |
 | SUR-API-05 | Error codes, effects, and recovery actions | [Observe and Diagnose](use/diagnose.md) | [Runtime error types](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/errors.ts) | Indexed |
-| SUR-API-06 | Nova grants and Buster runtime capabilities | [Capability catalogue](reference/capabilities.md) | [Capability vocabulary](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts) | Partial |
+| SUR-API-06 | Nova grants and Buster runtime capabilities | [Capability catalog](reference/capabilities.md) | [Capability vocabulary](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts) | Partial |
 | SUR-API-07 | Internal and external communication protocols | [Communication](understand/communication.md) | [Runtime contracts](https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/contracts) | Detailed |
 | SUR-API-08 | Durable stores, paths, retention, and cleanup | [Data and state](understand/data-and-state.md) | [State adapters](https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins) | Detailed |
-| SUR-API-09 | Ports, endpoints, callers, and network exposure | [Communication endpoint catalogue](understand/communication.md#endpoint-catalogue) | [Deployment charts](https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts) | Detailed |
+| SUR-API-09 | Ports, endpoints, callers, and network exposure | [Communication endpoint catalog](understand/communication.md#endpoint-catalogue) | [Deployment charts](https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/charts) | Detailed |
 | SUR-API-10 | Images, versions, digests, and promotion | [Plan and Install](use/install.md) | [Image build workflow](https://github.com/datrab/kubeclaw/blob/d8c38328ae305d431574aed008c4e1333e4b49f5/.github/workflows/build-images.yaml) | Partial |
 | SUR-API-11 | Verification commands and automation workflows | [Verification commands](reference/verification-commands.md) and [Workflow inventory](reference/workflows.md) | [Verification scripts](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/tests/verification) | Partial |
 
@@ -90,7 +90,7 @@ An indexed page identifies the authority while its complete reference remains un
 | SUR-DAT-04 | Prism revisions, approvals, artifacts, corpus, preferences, and PostgreSQL data | [Data and state](understand/data-and-state.md#postgresql-owners) and [Prism data architecture](understand/prism-data.md) | [Prism storage](https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/prism/storage) | Detailed |
 | SUR-DAT-05 | LiteLLM PostgreSQL data | [Data and state](understand/data-and-state.md#litellm-postgresql) | [LiteLLM deployment](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/my-values/infra/litellm-deployment.yaml) | Detailed |
 | SUR-DAT-06 | Artifact identities, digests, encoding, retention, and backup groups | [Data and state](understand/data-and-state.md#artifact-lifecycle) | [Artifact store](https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugins/artifact-store) | Detailed |
-| SUR-TEL-01 | Telemetry envelope, event catalogue, and correlation identity | [Telemetry](understand/telemetry.md#active-event-catalog) | [Active v2 SDK contract](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L672) | Detailed |
+| SUR-TEL-01 | Telemetry envelope, event catalog, and correlation identity | [Telemetry](understand/telemetry.md#active-event-catalog) | [Active v2 SDK contract](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/common/plugin-runtime/sdk/src/generated/contracts.ts#L597-L672) | Detailed |
 | SUR-TEL-02 | Event producers, consumers, redaction, and evidence boundary | [Telemetry](understand/telemetry.md#producer-and-consumer-matrix) | [Nova telemetry runtime](https://github.com/datrab/kubeclaw/tree/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry) | Detailed |
 | SUR-TEL-03 | Observer checkpoints, retries, retention, and backpressure | [Telemetry](understand/telemetry.md#observer-delivery-checkpoints-and-recovery) | [Observer runtime](https://github.com/datrab/kubeclaw/blob/569f7b4933d4859cc67c80ddf40d5154ffd95ce5/skills/nova/core/telemetry/observers.ts) | Detailed |
 
@@ -159,19 +159,19 @@ The pipeline does not require them when another supported component supplies the
 | SUR-EXT-08 | Specialist engines | [Host and engine boundaries](extend/host-and-engine.md) | [Worker attempt contract](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/contracts/pipeline-worker-core) | Partial |
 | SUR-EXT-09 | Runtime roles and deployable package sets | [Host and engine boundaries](extend/host-and-engine.md) | [Runtime role manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles) | Partial |
 | SUR-EXT-10 | Core and Foundation changes | [Extension decision guide](extend/README.md) | [Plugin foundation](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation) | Partial |
-| SUR-EXT-11 | Installed extension packages and registrations | [Plugin catalogue](extend/plugin-catalogue/README.md) | [Installed package manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills) | Detailed |
+| SUR-EXT-11 | Installed extension packages and registrations | [Plugin catalog](extend/plugin-catalogue/README.md) | [Installed package manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills) | Detailed |
 
 ## Inventory Boundaries
 
 This page maps public surface families; its labels describe guide depth, not a
 claim that a family row enumerates every leaf field or proves runtime readiness.
 Use the current [CLI reference](reference/cli.md), [schema authorities](reference/schemas.md),
-[SDK exports](reference/sdk-exports.md), [plugin catalogue](extend/plugin-catalogue/README.md),
+[SDK exports](reference/sdk-exports.md), [plugin catalog](extend/plugin-catalogue/README.md),
 [recursive plugin configuration](reference/plugin-configuration.md),
 [platform surface inventory](reference/platform-surfaces-generated.md), and
 [workflow inventory](reference/workflows.md) for their discovered source-bound
 entries. Their individual scope and limits still apply; a link from this map
-does not independently certify exhaustive reconciliation across those inventories.
+does not by itself give evidence of full reconciliation across those inventories.
 
 The [first-project exercise](use/workflows/README.md#materialize-and-compile-a-first-project)
 provides complete project and compiled graph inputs, but deliberately stops

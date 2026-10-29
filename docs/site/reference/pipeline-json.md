@@ -65,7 +65,7 @@ Each `modules.<id>` or `gates.<id>` value can contain these fields:
 
 | Field | Type and empty behavior | Meaning |
 | --- | --- | --- |
-| `coverage` | Optional `gate-coverage.v1` object | Independent mapping from requirements to mandatory declared node IDs. Usually generated from `nova-project.v2`; see below. |
+| `coverage` | Optional `gate-coverage.v1` object | Independent mapping from requirements to mandatory declared node IDs. Usually generated from `nova-project.v2`. Refer to [Coverage object](#coverage-object). |
 | `suites` | Object from local suite instance ID to a suite selection | Expands a shipped `test-suite-template.v1`. `{}` adds no nodes. |
 | `tests` | Object from stable node ID to node declaration | Direct blocking or advisory test nodes. |
 | `fixtures` | Object from stable node ID to node declaration | Setup/resource nodes. Their resolved `mode` is `null`, not blocking/advisory. |
@@ -80,7 +80,7 @@ ASCII letter or digit, and then use letters, digits, `.`, `_`, `:`, `/`, or
 
 | Path | Type and rule |
 | --- | --- |
-| `suites.<instance>.uses` | Required versioned contract ID such as `kubeclaw.unit-suite@1`; the template must be installed in the resolver catalogue. |
+| `suites.<instance>.uses` | Required versioned contract ID such as `kubeclaw.unit-suite@1`; the template must be installed in the resolver catalog. |
 | `suites.<instance>.exclude` | Optional string array of template-local node IDs. Every ID must exist in the selected template. Exclusion is recorded for coverage; it is not a passing result. |
 | `suites.<instance>.overrides.<node>` | Optional partial node declaration without `uses`. The node must exist. `config` deep-merges; arrays and scalar values replace; evidence outcome lists merge by field. |
 | `suites.<instance>.add.<node>` | Optional complete test-node declaration. The ID must not collide with a template node. |

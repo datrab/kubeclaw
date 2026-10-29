@@ -18,7 +18,7 @@ The runtime moves a package through a sequence of narrower decisions:
 3. Registry construction validates references and assigns each public name to one owner.
 4. Platform policy selects registrations, providers, configuration, and grants.
 5. Activation checks the bytes again before it loads an executable export.
-6. Each invocation receives a time-limited lease and only its required grants.
+6. Core stage and observer invocations receive time-limited leases with only the grants selected for them.
 7. Core owns durable state, effects, recovery, and final lifecycle decisions.
 
 This page explains that complete path. It focuses on runtime behavior and safety.
@@ -36,7 +36,7 @@ flowchart LR
     E --> F[Configuration validation]
     F --> G[Integrity recheck and import audit]
     G --> H[Activation]
-    H --> I[Lease-bound invocation]
+    H --> I[Lease-bound Core stage or observer invocation]
     I --> J[Core-owned effects, events, and state]
     J --> K[Durable recovery record]
 ```
@@ -54,12 +54,12 @@ Each row names a directed connection. Labels preserve the diagram’s conditions
 | Provider and grant resolution | Directed connection | Configuration validation |
 | Configuration validation | Directed connection | Integrity recheck and import audit |
 | Integrity recheck and import audit | Directed connection | Activation |
-| Activation | Directed connection | Lease-bound invocation |
-| Lease-bound invocation | Directed connection | Core-owned effects, events, and state |
+| Activation | Directed connection | Lease-bound Core stage or observer invocation |
+| Lease-bound Core stage or observer invocation | Directed connection | Core-owned effects, events, and state |
 | Core-owned effects, events, and state | Directed connection | Durable recovery record |
 
 
-Text version: the host starts with operator-installed bytes. It reads data before it executes code. It then validates global ownership, resolves policy, validates configuration, checks integrity, and activates only the selected runtime surfaces. An invocation can use external authority only through a valid lease and a matching grant. Core records the result and the recovery facts.
+Text version: the host starts with operator-installed bytes. It reads data before it executes code. It then validates global ownership, resolves policy, validates configuration, checks integrity, and activates only the selected runtime surfaces. Core stage and observer capability calls must have a valid lease and a matching grant. Core records the result and the recovery facts.
 
 This order is a safety property. The runtime must know *which bytes*, *which owner*, and *which authority* before plugin code can run.
 
@@ -278,19 +278,19 @@ The trust record keeps the verifier, method, verification time, source reference
 
 ## External Package Installation
 
-Installation is an operator action. The installer accepts an already local, bundled source tree. It does not download a package.
+Installation is an operator action. The installer accepts an already local, bundled source tree. It does not download a package. The local bundle path (`sourceRoot`) and its recorded source reference (`canonicalSource`) are different inputs.
 
 Before publication, it verifies:
 
-- the actor appears in the operator allowlist;
-- the canonical source is not empty and is not a local or file reference;
-- the source digest or attestation matches policy;
-- file count and total size remain below configured limits;
-- there are no symlinks, unusual file types, `node_modules`, or package lifecycle scripts;
-- every bundled JavaScript or TypeScript file has valid syntax;
-- the manifest, references, schemas, and registry rules are valid;
-- the expected content digest matches;
-- the external package contains no capability adapter.
+- The actor appears in the operator allowlist.
+- The bundled source has a non-empty `canonicalSource` that does not start with `local:` or `file:`.
+- The source digest or attestation matches policy.
+- File count and total size remain below configured limits.
+- There are no symlinks, unusual file types, `node_modules`, or package lifecycle scripts.
+- Every bundled JavaScript or TypeScript file has valid syntax.
+- The manifest, references, schemas, and registry rules are valid.
+- The expected content digest matches.
+- The external package contains no capability adapter.
 
 The installer copies files to a private staging directory, validates the copy again, and then publishes it with a rename.
 The installed directory name includes a safe package ID, package version, and digest prefix.
@@ -1010,19 +1010,19 @@ Once selected, it must pass the complete admission path.
 
 The implemented design provides these source-level guarantees:
 
-- discovery does not import executable registration modules;
-- exact package bytes have a deterministic digest;
-- the runtime records trust scope and trust evidence separately from integrity;
-- global ownership conflicts stop registry creation;
-- provider choice and grants are explicit;
-- the platform cannot grant an undeclared capability;
-- the pipeline cannot expand platform authority;
-- trusted imports pass a bounded side-effect audit before host import;
-- external stages and observers use a per-invocation operating-system boundary;
-- invocation authority expires and can be permanently revoked;
-- plugin state is append-only, idempotent, and registration-owned;
-- existing runs remain pinned to their package and configuration facts;
-- removal cannot target an arbitrary nested or outside path.
+- Discovery does not import executable registration modules.
+- Exact package bytes have a deterministic digest.
+- The runtime records trust scope and trust evidence separately from integrity.
+- Global ownership conflicts stop registry creation.
+- Provider choice and grants are explicit.
+- The platform cannot grant an undeclared capability.
+- The pipeline cannot expand platform authority.
+- Trusted imports pass a bounded side-effect audit before host import.
+- External stages and observers use a per-invocation operating-system boundary.
+- Core stage and observer context authority expires and can be permanently revoked.
+- Plugin state is append-only, idempotent, and registration-owned.
+- Existing runs remain pinned to their package and configuration facts.
+- Removal cannot target an arbitrary nested or outside path.
 
 These guarantees do not mean that every deployment host has passed live kernel checks.
 They also do not make plugin code logically correct.

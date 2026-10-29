@@ -105,8 +105,8 @@ cat "$publication_evidence/discovery.txt"
 Expected observation: `.swarm/progress.scaffold.json` exists and discovery
 reports `TODO:` diagnostics for the description, notes, and provider origin.
 Discovery can exit zero with these diagnostics because it prepares a form.
-This is not a publication success. Neither current JSON file nor a committed
-pointer should exist yet.
+This is not a publication success. Correct result after discovery: there are no current JSON files and no committed
+pointer.
 
 ### 2. Complete and validate the authoring input
 
