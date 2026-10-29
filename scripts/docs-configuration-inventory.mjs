@@ -2738,7 +2738,7 @@ function completeYamlCollection(row, context, value, fields) {
       : 'Helm merges map keys recursively: a later {} keeps earlier keys; omission keeps the earlier map. Explicit null removes the merged key before schema and template evaluation; the receiving contract can reject it or apply a fallback.'
     : context.resource
       ? 'This document is an API manifest. Its named client apply or synchronization operation, existing object state and field ownership control which stored keys or items are retained or removed. kubectl client-side apply compares the submitted manifest, live object and last-applied configuration; fields managed elsewhere can remain. API patch/list annotations describe patch behavior, not Helm values merge. Empty, omitted and null input then pass through the exact API admission/defaulting and controller contracts; null is not a general reset command.'
-      : 'This is a source-loader collection. The exact named loader controls empty, omitted and null input; a nearby chart reference does not establish Helm values precedence.';
+      : 'This is a source-loader collection. Only the named loader can give rules for empty, omitted and null input. A chart reference alone is not a Helm values precedence contract.';
   row.collection = { entries: Object.keys(value).length, empty: Object.keys(value).length === 0, childPaths: descendants.map((field) => field.path), mergeBehavior: merge,
     receiverClass, rejectedHelmBinding: context.rejectedHelmBinding ?? null };
   row.constraints = [...new Set([...row.constraints, merge])];
@@ -2758,19 +2758,19 @@ function completeYamlCollection(row, context, value, fields) {
   const children = descendants.filter((field) => yamlFieldPathTokens(field.path).length === yamlFieldPathTokens(row.path).length + 1);
   const contracts = leaves.length ? leaves : children;
   if (!contracts.length) {
-    row.meaning = { status: 'collection-meaning-blocker', text: `This empty ${row.type} has no exact collection contract. ${merge}`, evidence: `${context.sourcePath}:${row.sourceLine}`, blockerOwner: context.owner.component, closureCondition: `Add an exact collection authority for ${context.sourcePath}#${row.path}, including new keys or items, accepted forms, empty/omitted/null behavior, receiver and failure effect.` };
+    row.meaning = { status: 'collection-meaning-blocker', text: `This empty ${row.type} has no bound collection contract. ${merge}`, evidence: `${context.sourcePath}:${row.sourceLine}`, blockerOwner: context.owner.component, closureCondition: `Add a field-specific collection authority for ${context.sourcePath}#${row.path}. Include new keys or items, accepted forms, empty/omitted/null behavior, the receiver and failure effect.` };
     row.blockerOwner = row.meaning.blockerOwner;
     row.closureCondition = row.meaning.closureCondition;
     return;
   }
-  row.requiredReason = 'This row groups the named nested contracts. Their required states and conditions still apply after collection merge or replacement.';
+  row.requiredReason = 'This row groups the named nested contracts. Their field-presence states and conditions also apply after collection merge or replacement.';
   row.runtimeOwner = [...new Set(contracts.map((field) => field.runtimeOwner))].join('; ');
   row.consumers = [...new Map(contracts.flatMap((field) => field.consumers).map((consumer) => [`${consumer.path}:${consumer.line}:${consumer.kind}`, consumer])).values()];
   row.precedence = [...new Set(contracts.flatMap((field) => field.precedence))];
   row.effectiveValueProof = `Nested contract paths: ${contracts.map((field) => field.path).join(', ')}. Each child row pins its complete receiving chain.`;
   row.changeImpact = 'Changing this group changes its accepted nested values. Each child row identifies its receiving effect and whether a workload or controller must be reconciled.';
-  row.failureMeaning = 'Removing or replacing the group can remove required children. The linked nested schema, template and runtime contracts determine the rejected render, admission or startup failure.';
-  row.meaning.text = `Groups the nested fields ${children.map((field) => `\`${field.path}\``).join(', ')}. It has no separately proved whole-collection receiver. Accepted keys and item variants are those defined by the nested schema and consumer contracts; this row does not authorize arbitrary new keys. ${merge}`;
+  row.failureMeaning = 'Removing or replacing the group can remove children that must be present. The linked nested schema, template and runtime contracts give the failure conditions for rendering, admission or startup.';
+  row.meaning.text = `Groups the nested fields ${children.map((field) => `\`${field.path}\``).join(', ')}. This row has no bound whole-collection receiver contract. The nested schema and consumer contracts give accepted keys and item variants. This row gives no permission for new keys.\n\n ${merge}`;
 }
 
 // Bind an authored receiver registry to its declared API version. A new version
@@ -3245,15 +3245,15 @@ function schemaNamedSegments(fieldPath) {
 }
 
 function schemaAcceptedValues(field) {
-  if (field.type === 'never') return 'no value is accepted at this location';
-  if (field.presence === 'forbidden') return `field must be absent when ${field.branches.join(' > ')} matches`;
+  if (field.type === 'never') return 'This schema location rejects every value';
+  if (field.presence === 'forbidden') return `When ${field.branches.join(' > ')} matches, the field must be absent`;
   const rules = field.constraints.map((constraint) => {
     if (constraint.name === 'propertyNames') return `every property name must match ${JSON.stringify(constraint.value)}`;
-    if (constraint.name === 'dependentRequired') return `when a listed property is present, its paired properties are required: ${JSON.stringify(constraint.value)}`;
-    if (constraint.name === 'contains') return `the array must contain matching items: ${JSON.stringify(constraint.value)} (minContains defaults to 1 unless declared)`;
+    if (constraint.name === 'dependentRequired') return `when a property in this declaration is in the configuration, its paired properties must also be in the configuration: ${JSON.stringify(constraint.value)}`;
+    if (constraint.name === 'contains') return `the array must contain matching items: ${JSON.stringify(constraint.value)} (unless declared, minContains defaults to 1)`;
     return `${constraint.name}=${JSON.stringify(constraint.value)}`;
   });
-  const branch = field.branches.length ? `; branch ${field.branches.join(' > ')}` : '';
+  const branch = field.branches.length ? `. Branch: ${field.branches.join(' > ')}` : '';
   const accepted = `${field.type}${rules.length ? ` with ${rules.join(', ')}` : ' with no narrower scalar constraint'}${branch}`;
   return field.negated ? `any value except (${accepted})` : accepted;
 }
@@ -3470,44 +3470,44 @@ function schemaUsesProviderDefaults(authorityPath) {
 }
 
 function schemaDefaultBehavior(authorityPath, field, runtimeFallback) {
-  if (field.presence === 'forbidden') return `The field must be omitted when ${field.branches.join(' > ')} matches.`;
-  const annotation = field.default !== '<none>' ? `The schema advertises ${JSON.stringify(field.default)} as a default. ` : 'The schema declares no default. ';
+  if (field.presence === 'forbidden') return `When ${field.branches.join(' > ')} matches, do not include the field.`;
+  const annotation = field.default !== '<none>' ? `The schema gives ${JSON.stringify(field.default)} as a default. ` : 'The schema declares no default. ';
   if (field.default !== '<none>' && schemaUsesProviderDefaults(authorityPath)) {
-    return `${annotation}The test-provider resolver clones the authored values and applies schema defaults before provider invocation (skills/common/plugin-runtime/foundation/registry/configuration.ts:102; schema.ts:108). Explicit values, including permitted empty collections, remain unchanged.`;
+    return `${annotation}The test-provider resolver clones the authored values and applies schema defaults before provider invocation (skills/common/plugin-runtime/foundation/registry/configuration.ts:102; schema.ts:108). The resolver keeps configured values. It also keeps permitted empty collections.`;
   }
-  if (field.required) return `${annotation}The immediate parent requires this field. Validation without default insertion rejects omission.`;
+  if (field.required) return `${annotation}The immediate parent must have this field. Validation without default insertion rejects omission.`;
   if (runtimeFallback) return `${annotation}When the field is absent, the linked runtime uses ${JSON.stringify(runtimeFallback.value)} (${runtimeFallback.evidence}). Stage, observer, and adapter validation does not insert defaults.`;
-  return `${annotation}Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer owns any later fallback; a schema annotation alone does not establish an effective value.`;
+  return `${annotation}Stage, observer, adapter, and platform validation leaves an omitted field absent. The linked consumer selects any subsequent fallback. This schema annotation is not an effective value.`;
 }
 
 function schemaEmptyBehavior(field) {
-  if (field.negated) return 'This row describes a negated schema fragment. Its local rejection condition is inverted by the enclosing not rule; enclosing types and sibling constraints still apply to an empty string.';
+  if (field.negated) return 'This row describes a negated schema fragment. The enclosing not rule inverts its local rejection condition. Enclosing types and sibling constraints still apply to an empty string.';
   const constraints = new Map(field.constraints.map((constraint) => [constraint.name, constraint.value]));
   if (field.type === 'array') {
-    if (Number(constraints.get('minItems') ?? 0) > 0) return 'An empty array is invalid because minItems requires at least one item.';
-    if (constraints.has('contains') && Number(constraints.get('minContains') ?? 1) > 0) return 'An empty array is invalid because contains requires a matching item.';
-    return 'The local array constraints permit zero items. Apply every listed conditional constraint and the linked consumer rules before using an empty array.';
+    if (Number(constraints.get('minItems') ?? 0) > 0) return 'An empty array is invalid because minItems makes at least one item necessary.';
+    if (constraints.has('contains') && Number(constraints.get('minContains') ?? 1) > 0) return 'An empty array is invalid because contains makes a matching item necessary.';
+    return 'With the local array constraints, zero items are permitted. Before you use an empty array, apply all conditional constraints for this field and linked consumer rules.';
   }
   if (field.type === 'object') {
-    if (Number(constraints.get('minProperties') ?? 0) > 0 || (constraints.get('required') ?? []).length > 0) return 'An empty object is invalid because this object requires properties.';
-    return 'The local object constraints permit zero properties. Apply every listed conditional constraint and the linked consumer rules before using an empty object.';
+    if (Number(constraints.get('minProperties') ?? 0) > 0 || (constraints.get('required') ?? []).length > 0) return 'An empty object is invalid because this object must have properties.';
+    return 'With the local object constraints, zero properties are permitted. Before you use an empty object, apply all conditional constraints for this field and linked consumer rules.';
   }
   if (field.type.includes('string')) {
     if (Number(constraints.get('minLength') ?? 0) > 0) return 'An empty string is invalid.';
-    if (constraints.has('const') && constraints.get('const') !== '') return 'An empty string does not match the required constant.';
+    if (constraints.has('const') && constraints.get('const') !== '') return 'An empty string does not match the declared constant.';
     if (constraints.has('enum') && !constraints.get('enum').includes('')) return 'An empty string is not one of the allowed values.';
-    if (constraints.has('format')) return `An empty string does not match the required ${constraints.get('format')} format.`;
+    if (constraints.has('format')) return `An empty string does not match the declared ${constraints.get('format')} format.`;
     if (constraints.has('pattern')) {
       try {
-        if (!new RegExp(constraints.get('pattern'), 'u').test('')) return 'An empty string does not match the required pattern.';
+        if (!new RegExp(constraints.get('pattern'), 'u').test('')) return 'An empty string does not match the declared pattern.';
       } catch {
         return 'The schema pattern is the validation authority; its regular-expression dialect is not evaluated by this documentation generator.';
       }
     }
-    return 'The schema accepts an empty string; the linked runtime can still reject it for a stronger operational reason.';
+    return 'The schema accepts an empty string. The linked runtime can still reject it for a stronger operational reason.';
   }
   if (['any', 'unspecified'].includes(field.type)) return field.branches.length
-    ? 'This schema fragment does not declare a type. It does not reject an empty string by type; enclosing and sibling branches, resolved references, and the linked runtime validator determine whether that value is accepted.'
+    ? 'This schema fragment does not declare a type. It does not reject an empty string by type. Enclosing and sibling branches, resolved references, and the linked runtime validator determine acceptance of that value.'
     : 'This schema does not declare a type. An empty string is permitted unless a listed value or branch constraint rejects it; the linked runtime can validate it against a separate operation contract.';
   if (field.type === 'never') return 'This false schema rejects every value, including an empty string.';
   return 'A JSON empty string has the wrong declared type. Apply enclosing and sibling constraints as well.';
@@ -3517,20 +3517,20 @@ function webProviderTargetRules(authorityPath, fieldPath) {
   const match = authorityPath.match(/^skills\/buster\/plugins\/(lighthouse|openapi|playwright)\/schemas\/config\.schema\.json$/u);
   if (!match || !['$.url', '$.endpointName'].includes(fieldPath)) return null;
   const name = match[1];
-  const selection = name === 'openapi' ? 'Omission requires exactly one deployment endpoint; multiple endpoints require a matching name.' : 'Omission selects the first deployment endpoint, even when several are present.';
+  const selection = name === 'openapi' ? 'With one deployment endpoint, omission selects it. With multiple endpoints, a matching name is necessary.' : 'Omission selects the first deployment endpoint, even when several are present.';
   const url = name === 'playwright'
     ? 'Supplies an HTTP/HTTPS root origin only: embedded credentials, non-root path, query and fragment are rejected. Tests choose application routes separately.'
     : name === 'lighthouse'
-      ? 'Supplies a URL whose new URL(value).origin is used as the audit base. Any configured URL path is discarded; configured routes select the actual root-relative audit paths.'
+      ? 'Supplies a URL whose new URL(value).origin is used as the audit base. The provider discards any configured URL path. Configured routes select the actual root-relative audit paths.'
       : 'Supplies the OpenAPI request base. OpenAPI operation paths are root-relative and resolved with new URL(route, base), so a configured base-path prefix is discarded rather than prepended.';
-  const selector = `Selects an exact named endpoint only from a typed Kubernetes deployment input. ${selection} A typed public-endpoint input supplies its URL without consulting endpointName; direct url also ignores endpointName.`;
+  const selector = `Selects a named endpoint only from a typed Kubernetes deployment input. With endpointName supplied, the endpoint name must be the same as endpointName. ${selection} A typed public-endpoint input supplies its URL without endpointName. A direct url also ignores endpointName.`;
   const prefix = name.toUpperCase();
   return {
     purpose: fieldPath === '$.url' ? url : selector,
     accepted: fieldPath === '$.url' ? url : selector,
-    omission: fieldPath === '$.url' ? `Without url exactly one typed deployment or public-endpoint input must supply the target. ${selection}` : selector,
-    empty: 'Null or an empty string is not an omission fallback; the declared field type/pattern and selected provider validation apply.',
-    failure: `Configured url combined with any typed input raises ${prefix}_TARGET_AMBIGUOUS. Missing target or invalid typed input fails before the capability call. A missing named deployment endpoint raises ${prefix}_ENDPOINT_NOT_FOUND. ${name === 'playwright' ? 'A non-origin direct url raises PLAYWRIGHT_TARGET_INVALID; a non-origin typed URL raises PLAYWRIGHT_INPUT_INVALID.' : 'The selected runtime capability separately checks URL admission and execution limits.'}`,
+    omission: fieldPath === '$.url' ? `Without url, one and only one typed deployment or public-endpoint input must supply the target. ${selection}` : selector,
+    empty: 'Null or an empty string is not an omission fallback. The declared field type/pattern and selected provider validation apply.',
+    failure: `Configured url combined with any typed input raises ${prefix}_TARGET_AMBIGUOUS. Missing target or invalid typed input fails before the capability call. A missing named deployment endpoint raises ${prefix}_ENDPOINT_NOT_FOUND. ${name === 'playwright' ? 'A non-origin direct url raises PLAYWRIGHT_TARGET_INVALID. A non-origin typed URL raises PLAYWRIGHT_INPUT_INVALID.' : 'The selected runtime capability separately checks URL admission and execution limits.'}`,
     evidence: [`skills/buster/plugins/${name}/src/provider.js:${name === 'openapi' ? 18 : name === 'playwright' ? 9 : 14}`],
   };
 }
@@ -3538,45 +3538,45 @@ function webProviderTargetRules(authorityPath, fieldPath) {
 function schemaRuntimeValidationRules(authorityPath, field) {
   const durableConfigurationRule = {
   "skills/common/plugins/state-store/schemas/config.schema.json::$.root": {
-    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
-    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
-    "failure": "Activation rejects missing, non-string or empty root with state root is required. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "accepted": "A nonempty string is necessary for the schema and activation. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions. This field gives no automatic private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default. An empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with state root is required. Native path-type, symlink or OS permission/I/O failures can occur subsequently. Path resolution from the process working directory is not a readiness or write result. Do not promise automatic private directory permissions.",
     "evidence": [
       "skills/common/plugins/state-store/src/adapter.ts:27",
       "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
     ]
   },
   "skills/common/plugins/wait-store/schemas/config.schema.json::$.root": {
-    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
-    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
-    "failure": "Activation rejects missing, non-string or empty root with root is required. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "accepted": "A nonempty string is necessary for the schema and activation. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions. This field gives no automatic private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default. An empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with root is required. Native path-type, symlink or OS permission/I/O failures can occur subsequently. Path resolution from the process working directory is not a readiness or write result. Do not promise automatic private directory permissions.",
     "evidence": [
       "skills/common/plugins/wait-store/src/adapter.ts:189",
       "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
     ]
   },
   "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.root": {
-    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
-    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
-    "failure": "Activation rejects missing, non-string or empty root with root is required. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "accepted": "A nonempty string is necessary for the schema and activation. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions. This field gives no automatic private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default. An empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with root is required. Native path-type, symlink or OS permission/I/O failures can occur subsequently. Path resolution from the process working directory is not a readiness or write result. Do not promise automatic private directory permissions.",
     "evidence": [
       "skills/common/plugins/telemetry-store/src/adapter.ts:6",
       "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
     ]
   },
   "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.deliveryRoot": {
-    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
-    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
-    "failure": "Activation rejects missing, non-string or empty root with OPERATOR_CONFIG_INVALID:deliveryRoot. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "accepted": "A nonempty string is necessary for the schema and activation. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions. This field gives no automatic private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default. An empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with OPERATOR_CONFIG_INVALID:deliveryRoot. Native path-type, symlink or OS permission/I/O failures can occur subsequently. Path resolution from the process working directory is not a readiness or write result. Do not promise automatic private directory permissions.",
     "evidence": [
       "skills/common/plugins/operator-messaging/src/adapter.ts:69",
       "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
     ]
   },
   "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.deliveryRoot": {
-    "accepted": "The schema and activation require a nonempty string. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions; this field does not establish automatically private directory permissions.",
-    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
-    "failure": "Activation rejects missing, non-string or empty root with TRANSPORT_CONFIG_INVALID:deliveryRoot. Later native path-type, symlink or OS permission/I/O failures remain possible; processcwd resolution is not proof of successful readiness or write. Do not promise automatic private directory permissions.",
+    "accepted": "A nonempty string is necessary for the schema and activation. The supplied value is not trimmed or confined to a repository. The store uses records/store.json below the resolved root. Access depends on process identity and filesystem permissions. This field gives no automatic private directory permissions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default. An empty value is not an omission fallback.",
+    "failure": "Activation rejects missing, non-string or empty root with TRANSPORT_CONFIG_INVALID:deliveryRoot. Native path-type, symlink or OS permission/I/O failures can occur subsequently. Path resolution from the process working directory is not a readiness or write result. Do not promise automatic private directory permissions.",
     "evidence": [
       "skills/common/plugins/transport-publisher/src/adapter.ts:197",
       "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61"
@@ -3584,25 +3584,25 @@ function schemaRuntimeValidationRules(authorityPath, field) {
   },
   "skills/nova/plugins/remote-test-gate/schemas/config.schema.json::$.stateRoot": {
     "accepted": "Native configuration resolves a nonempty supplied string with path.resolve. allowedRepositoryRoots applies to separate repository inputs, not to confinement of this state root. Access remains subject to process identity and filesystem permissions.",
-    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
-    "failure": "Non-string or empty root rejects native configuration with REMOTE_TEST_GATE_CONFIG_INVALID. Native path.resolve accepts relative root against processcwd; allowedRepositoryRoots constrain different repository inputs, not this state root.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default. An empty value is not an omission fallback.",
+    "failure": "Non-string or empty root rejects native configuration with REMOTE_TEST_GATE_CONFIG_INVALID. Native path.resolve accepts a relative root against the process working directory. The allowedRepositoryRoots setting constrains different repository inputs, not this state root.",
     "evidence": [
       "skills/nova/plugins/remote-test-gate/src/adapter.ts:45"
     ]
   },
   "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json::$.stateRoot": {
-    "accepted": "Activation requires a nonempty string of at most 2048 characters, an absolute path, and path.normalize(root) equal to the supplied root. Invocation requires fs.realpathSync(root) to equal the supplied root. Imported records and blobs use its imports child. The schema nonempty-string rule alone does not express these native conditions.",
-    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
-    "failure": "text(value) rejects non-string/empty/length>2048 with DEMO_EVIDENCE_INVALID. An absolute normalized root is required at activation or DEMO_EVIDENCE_STORE_INVALID; invocation compares actual fs.realpathSync(root) to root. Native filesystem lookup can fail; no successful evidence import/read inferred.",
+    "accepted": "For activation, the root must be a nonempty string of at most 2048 characters. It must be an absolute path, with path.normalize(root) equal to its supplied value. At invocation, fs.realpathSync(root) must be the supplied root. Imported records and blobs use its imports child. The schema nonempty-string rule alone does not express these native conditions.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default. An empty value is not an omission fallback.",
+    "failure": "text(value) rejects non-string/empty/length>2048 with DEMO_EVIDENCE_INVALID. With no absolute normalized root, activation fails with DEMO_EVIDENCE_STORE_INVALID. Invocation compares fs.realpathSync(root) to root. Native filesystem lookup can fail. This row is not an evidence import/read result.",
     "evidence": [
       "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:53",
       "skills/nova/core/test-gates/remote-result-import.ts:96"
     ]
   },
   "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.storageRoot": {
-    "accepted": "Activation checks the string type; the required nonempty schema rule still applies. Snapshot selection additionally requires an absolute root. Its existing path components must be directories and not symbolic links. This is selection-time source admission, not an extra activation-time absolute-path check.",
-    "empty": "An empty string fails the schema minLength rule. This field has no path default; an empty value is not an omission fallback.",
-    "failure": "Activation validates type alongside issuer/budgets with REPORT_READER_CONFIG_INVALID; it does not itself reject all relative strings. Snapshot invocation calls readRunEvidence, whose selection rejects nonabsolute root with RUN_EVIDENCE_SELECTION_INVALID and root traversal rejects symlink/non-directory with RUN_EVIDENCE_ROOT_INVALID. Preserve exact timing of rejection.",
+    "accepted": "Activation checks the string type. The declared nonempty schema rule also applies. An absolute root is also necessary for snapshot selection. Its existing path components must be directories and not symbolic links. This is selection-time source admission, not an extra activation-time absolute-path check.",
+    "empty": "An empty string fails the schema minLength rule. This field has no path default. An empty value is not an omission fallback.",
+    "failure": "Activation validates type alongside issuer/budgets with REPORT_READER_CONFIG_INVALID. It does not itself reject all relative strings. Snapshot invocation calls readRunEvidence. Its selection rejects a nonabsolute root with RUN_EVIDENCE_SELECTION_INVALID. Its root traversal rejects a symlink/non-directory with RUN_EVIDENCE_ROOT_INVALID. Do not change when each check rejects the value.",
     "evidence": [
       "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:16",
       "skills/nova/core/state/read-run-evidence.ts:50",
@@ -3612,7 +3612,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/state-store/schemas/config.schema.json::$.maxEntryBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
     "failure": "Activation rejects a non-positive or unsafe value with maxEntryBytes is invalid. A stored record payload above the limit fails with STATE_ENTRY_SIZE_EXCEEDED. Separate record-count and serialized-store limits still apply.",
     "evidence": [
@@ -3624,9 +3624,9 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/state-store/schemas/config.schema.json::$.maximumRecords": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
-    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. A matching idempotent existing record is handled before the new-record count check; existing byte and per-record bounds remain.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. The store handles a matching idempotent existing record before the new-record count check. Existing byte and per-record bounds also apply.",
     "evidence": [
       "skills/common/plugins/state-store/src/adapter.ts:30",
       "skills/common/plugins/state-store/src/adapter.ts:33",
@@ -3636,9 +3636,9 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/state-store/schemas/config.schema.json::$.maximumStoreBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
-    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL; reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL. Reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
     "evidence": [
       "skills/common/plugins/state-store/src/adapter.ts:31",
       "skills/common/plugins/state-store/src/adapter.ts:34",
@@ -3648,7 +3648,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/wait-store/schemas/config.schema.json::$.maxEntryBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
     "failure": "Activation rejects a non-positive or unsafe value with maxEntryBytes is invalid. A stored record payload above the limit fails with WAIT_ENTRY_SIZE_EXCEEDED. Separate record-count and serialized-store limits still apply.",
     "evidence": [
@@ -3660,9 +3660,9 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/wait-store/schemas/config.schema.json::$.maximumRecords": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
-    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. A matching idempotent existing record is handled before the new-record count check; existing byte and per-record bounds remain.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. The store handles a matching idempotent existing record before the new-record count check. Existing byte and per-record bounds also apply.",
     "evidence": [
       "skills/common/plugins/wait-store/src/adapter.ts:192",
       "skills/common/plugins/wait-store/src/adapter.ts:195",
@@ -3672,9 +3672,9 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/wait-store/schemas/config.schema.json::$.maximumStoreBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
-    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL; reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL. Reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
     "evidence": [
       "skills/common/plugins/wait-store/src/adapter.ts:193",
       "skills/common/plugins/wait-store/src/adapter.ts:196",
@@ -3684,7 +3684,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maxRecordBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
     "failure": "Activation rejects a non-positive or unsafe value with maxRecordBytes is invalid. A stored record payload above the limit fails with TELEMETRY_RECORD_SIZE_EXCEEDED. Separate record-count and serialized-store limits still apply.",
     "evidence": [
@@ -3698,9 +3698,9 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maximumRecords": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
-    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. A matching idempotent existing record is handled before the new-record count check; existing byte and per-record bounds remain.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumRecords is invalid. A new metadata append at the count limit fails with DURABLE_RECORD_STORE_FULL. The store handles a matching idempotent existing record before the new-record count check. Existing byte and per-record bounds also apply.",
     "evidence": [
       "skills/common/plugins/telemetry-store/src/adapter.ts:9",
       "skills/common/plugins/telemetry-store/src/adapter.ts:12",
@@ -3710,9 +3710,9 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maximumStoreBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Native activation additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for native activation. the schema minimum alone does not express that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
-    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL; reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
+    "failure": "Activation rejects a non-positive or unsafe value with maximumStoreBytes is invalid. An over-budget new serialized store state fails with DURABLE_RECORD_STORE_FULL. Reads of an existing over-budget metadata file also reject. Record count and per-record payload bounds remain separate.",
     "evidence": [
       "skills/common/plugins/telemetry-store/src/adapter.ts:10",
       "skills/common/plugins/telemetry-store/src/adapter.ts:13",
@@ -3722,7 +3722,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryRecords": {
-    "accepted": "The schema requires an integer with minimum 1. Native configuration additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. Native configuration must also have a positive safe integer, at most 9007199254740991. The schema minimum alone does not give that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
     "failure": "Native configuration rejects an invalid positive-safe-integer limit with OPERATOR_CONFIG_INVALID:maximumDeliveryRecords. A new append exceeding the configured count or serialized-store byte allowance fails with DURABLE_RECORD_STORE_FULL. Existing bounded reads and fixed per-record limits remain separate.",
     "evidence": [
@@ -3736,7 +3736,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Native configuration additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. Native configuration must also have a positive safe integer, at most 9007199254740991. The schema minimum alone does not give that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
     "failure": "Native configuration rejects an invalid positive-safe-integer limit with OPERATOR_CONFIG_INVALID:maximumDeliveryBytes. A new append exceeding the configured count or serialized-store byte allowance fails with DURABLE_RECORD_STORE_FULL. Existing bounded reads and fixed per-record limits remain separate.",
     "evidence": [
@@ -3750,7 +3750,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryRecords": {
-    "accepted": "The schema requires an integer with minimum 1. Native configuration additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. Native configuration must also have a positive safe integer, at most 9007199254740991. The schema minimum alone does not give that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
     "failure": "Native configuration rejects an invalid positive-safe-integer limit with TRANSPORT_CONFIG_INVALID:maximumDeliveryRecords. A new append exceeding the configured count or serialized-store byte allowance fails with DURABLE_RECORD_STORE_FULL. Existing bounded reads and fixed per-record limits remain separate.",
     "evidence": [
@@ -3764,7 +3764,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Native configuration additionally requires a positive safe integer, at most 9007199254740991; the schema minimum alone does not express that upper bound.",
+    "accepted": "The schema accepts only integers with minimum 1. Native configuration must also have a positive safe integer, at most 9007199254740991. The schema minimum alone does not give that upper bound.",
     "empty": "Null and an empty string fail the declared integer type. Neither is an authored omission fallback.",
     "failure": "Native configuration rejects an invalid positive-safe-integer limit with TRANSPORT_CONFIG_INVALID:maximumDeliveryBytes. A new append exceeding the configured count or serialized-store byte allowance fails with DURABLE_RECORD_STORE_FULL. Existing bounded reads and fixed per-record limits remain separate.",
     "evidence": [
@@ -3778,9 +3778,9 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumJournalBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Activation additionally requires a positive safe integer, at most 9007199254740991. The schema minimum alone does not establish that native upper bound.",
-    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are required; no omission fallback is selected.",
-    "failure": "Native activation rejects a non-positive or unsafe budget with REPORT_READER_CONFIG_INVALID. The selected events file uses this allowance; the snapshot and effects readers use the remaining allowance. Legacy run discovery has its own bounded selection logic; do not infer one overall I/O execution limit.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for activation. The schema minimum alone does not establish that native upper bound.",
+    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are necessary. The adapter selects no omission fallback.",
+    "failure": "Native activation rejects a non-positive or unsafe budget with REPORT_READER_CONFIG_INVALID. The selected events file uses this allowance. The snapshot and effects readers use the remaining allowance. Legacy run discovery has its own bounded selection logic. Do not infer one overall I/O execution limit.",
     "evidence": [
       "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:22",
       "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:33",
@@ -3792,8 +3792,8 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumArtifactBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Activation additionally requires a positive safe integer, at most 9007199254740991. The schema minimum alone does not establish that native upper bound.",
-    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are required; no omission fallback is selected.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for activation. The schema minimum alone does not establish that native upper bound.",
+    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are necessary. The adapter selects no omission fallback.",
     "failure": "Native activation rejects a non-positive or unsafe budget with REPORT_READER_CONFIG_INVALID. The adapter sums selected artifact sizes and rejects an invalid or over-budget aggregate with REPORT_ARTIFACT_BUDGET_EXCEEDED. Exact source and artifact identity checks remain independent.",
     "evidence": [
       "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:22",
@@ -3806,8 +3806,8 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumBundleBytes": {
-    "accepted": "The schema requires an integer with minimum 1. Activation additionally requires a positive safe integer, at most 9007199254740991. The schema minimum alone does not establish that native upper bound.",
-    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are required; no omission fallback is selected.",
+    "accepted": "The schema accepts only integers with minimum 1. A positive safe integer, at most 9007199254740991, is also necessary for activation. The schema minimum alone does not establish that native upper bound.",
+    "empty": "An empty string and null fail the declared integer type. All three evidence budgets are necessary. The adapter selects no omission fallback.",
     "failure": "Native activation rejects a non-positive or unsafe budget with REPORT_READER_CONFIG_INVALID. The final canonical serialized bundle above this limit fails with REPORT_BUNDLE_BUDGET_EXCEEDED. The reader does not itself establish successful report persistence.",
     "evidence": [
       "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts:22",
@@ -3820,16 +3820,16 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     ]
   },
   "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json::$.gateStageId": {
-    "accepted": "In addition to the schema nonempty-string rule, the evidence adapter requires a string of at most 2048 JavaScript string-length units. It does not trim the supplied stage identifier.",
-    "failure": "A non-string, empty or overlength stage identifier fails with DEMO_EVIDENCE_INVALID. Exact manifest, producer and gate-stage bindings still apply; a valid identifier does not prove evidence acceptance.",
+    "accepted": "In addition to the schema nonempty-string rule, the evidence adapter accepts only strings of at most 2048 JavaScript string-length units. It does not trim the supplied stage identifier.",
+    "failure": "A non-string, empty or overlength stage identifier fails with DEMO_EVIDENCE_INVALID. Manifest, producer and gate-stage bindings must also match. Identifier validation alone is not evidence acceptance.",
     "evidence": [
       "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:15",
       "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:55"
     ]
   },
   "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json::$.manifestStageId": {
-    "accepted": "In addition to the schema nonempty-string rule, the evidence adapter requires a string of at most 2048 JavaScript string-length units. It does not trim the supplied stage identifier.",
-    "failure": "A non-string, empty or overlength stage identifier fails with DEMO_EVIDENCE_INVALID. Exact manifest, producer and gate-stage bindings still apply; a valid identifier does not prove evidence acceptance.",
+    "accepted": "In addition to the schema nonempty-string rule, the evidence adapter accepts only strings of at most 2048 JavaScript string-length units. It does not trim the supplied stage identifier.",
+    "failure": "A non-string, empty or overlength stage identifier fails with DEMO_EVIDENCE_INVALID. Manifest, producer and gate-stage bindings must also match. Identifier validation alone is not evidence acceptance.",
     "evidence": [
       "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:15",
       "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts:55"
@@ -3840,19 +3840,19 @@ function schemaRuntimeValidationRules(authorityPath, field) {
   if (authorityPath === "skills/common/plugins/artifact-store/schemas/config.schema.json") {
     const rules = {
       "$.artifactRoot": {
-        accepted: "The schema and activation require a nonempty string. The adapter does not trim it or confine it to a repository. Metadata uses records/store.json below the resolved root; blobs use blobs/sha256 below that root. Access depends on the process identity and filesystem permissions.",
+        accepted: "A nonempty string is necessary for the schema and activation. The adapter does not trim it or confine it to a repository. Metadata uses records/store.json below the resolved root. Blobs use blobs/sha256 below that root. Access depends on the process identity and filesystem permissions.",
         failure: "Missing or non-string root rejects activation with artifactRoot is required. Filesystem, path-type or permission failures can occur during readiness or operations. ready() reads metadata only and does not establish blob read/write success.",
         evidence: ["skills/common/plugins/artifact-store/src/adapter.ts:159", "skills/common/plugins/artifact-store/src/adapter.ts:160", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:61", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:229", "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:133"],
       },
       "$.maximumRecords": {
-        accepted: "The native adapter requires a positive safe integer from 1 through 9007199254740991; the schema minimum alone does not express that upper bound.",
-        failure: "Activation rejects a non-positive or unsafe integer with maximumRecords is invalid. A new metadata append at the record limit fails with DURABLE_RECORD_STORE_FULL. A matching idempotent existing record is returned before the new-record count check; byte and per-record limits remain separate.",
+        accepted: "The native adapter must have a positive safe integer from 1 through 9007199254740991. The schema minimum alone does not give that upper bound.",
+        failure: "Activation rejects a non-positive or unsafe integer with maximumRecords is invalid. A new metadata append at the record limit fails with DURABLE_RECORD_STORE_FULL. The store returns a matching idempotent existing record before the new-record count check. Byte and per-record limits also apply.",
         empty: 'Null and an empty string fail the declared integer type. Neither is a valid authored omission value.',
         evidence: ["skills/common/plugins/artifact-store/src/adapter.ts:165", "skills/common/plugins/artifact-store/src/adapter.ts:167", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:88", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:92"],
       },
       "$.maximumStoreBytes": {
-        accepted: "The native adapter requires a positive safe integer from 1 through 9007199254740991; the schema minimum alone does not express that upper bound. Metadata capacity includes serialized store state. Blob capacity counts stored blob-subtree file bytes independently.",
-        failure: "Activation rejects a non-positive or unsafe integer with maximumStoreBytes is invalid. An over-budget new metadata state fails with DURABLE_RECORD_STORE_FULL; an over-budget blob write fails with DURABLE_BLOB_STORE_LIMIT_EXCEEDED. Existing metadata reads also obey the byte bound. Metadata is admitted before the blob, so a later blob failure does not undo the metadata intent; do not infer successful whole-artifact storage from metadata readiness.",
+        accepted: "The native adapter must have a positive safe integer from 1 through 9007199254740991. The schema minimum alone does not give that upper bound. Metadata capacity includes serialized store state. Blob capacity counts stored blob-subtree file bytes independently.",
+        failure: "Activation rejects a non-positive or unsafe integer with maximumStoreBytes is invalid. An over-budget new metadata state fails with DURABLE_RECORD_STORE_FULL. An over-budget blob write fails with DURABLE_BLOB_STORE_LIMIT_EXCEEDED. Existing metadata reads also obey the byte bound. The store admits metadata before the blob. A subsequent blob failure therefore does not undo the metadata intent. Metadata readiness is not a result for storing the full artifact.",
         empty: 'Null and an empty string fail the declared integer type. Neither is a valid authored omission value.',
         evidence: ["skills/common/plugins/artifact-store/src/adapter.ts:164", "skills/common/plugins/artifact-store/src/adapter.ts:166", "skills/common/plugins/artifact-store/src/adapter.ts:170", "skills/common/plugins/artifact-store/src/adapter.ts:173", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:106", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:251", "skills/common/plugin-runtime/foundation/observability/durable-records.ts:281", "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts:111"],
       },
@@ -3863,8 +3863,8 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     && ['$.expectedStatuses', '$.expectedText', '$.expectedContentType', '$.path'].includes(field.path)) {
     const omission = {
       '$.expectedStatuses': 'The schema declares no default. Omission selects success statuses 200 through 299. A supplied list instead selects membership in that list.',
-      '$.expectedText': 'The schema declares no default. Omission adds no response-body substring assertion; other configured assertions still apply.',
-      '$.expectedContentType': 'The schema declares no default. Omission adds no content-type equality assertion; other configured assertions still apply.',
+      '$.expectedText': 'The schema declares no default. Omission adds no response-body substring assertion. Other configured assertions still apply.',
+      '$.expectedContentType': 'The schema declares no default. Omission adds no content-type equality assertion. Other configured assertions still apply.',
       '$.path': 'The schema declares no default. Omission uses the selected typed public-endpoint URL pathname, otherwise /. An explicit path replaces that route.',
     }[field.path];
     return {
@@ -3881,8 +3881,8 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     return {
       omission: `The schema declares no default. Omission disables this individual ${growth ? 'growth' : field.path.endsWith('FileCount') ? 'artifact-entry-count' : 'total-byte'} acceptance check. Other configured checks and fixed input, archive and integrity bounds remain.`,
       failure: growth
-        ? 'A configured growth bound requires a valid baseline or raises SIZE_BUDGET_BASELINE_REQUIRED. Exceeding the bound yields a failed result; positive growth from a zero-byte baseline fails a percentage bound.'
-        : 'Exceeding this configured bound yields a failed size-budget result. Blocking mode additionally requires at least one configured total, count, growth or matching-file limit.',
+        ? 'With a configured growth bound and no valid baseline, the provider raises SIZE_BUDGET_BASELINE_REQUIRED. A value above the bound yields a failed result. Positive growth from a zero-byte baseline fails a percentage bound.'
+        : 'Exceeding this configured bound yields a failed size-budget result. In blocking mode, at least one configured total, count, growth or matching-file limit is also necessary.',
       evidence: ['skills/buster/plugins/size-budget/src/provider.js:56', 'skills/buster/plugins/size-budget/src/provider.js:68', 'skills/buster/plugins/size-budget/src/provider.js:313', 'skills/buster/plugins/size-budget/src/provider.js:320', 'skills/buster/plugins/size-budget/src/provider.js:333'],
     };
   }
@@ -3904,13 +3904,13 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     && ['$.targets.{*}.maxPollMs', '$.targets.{*}.sessionTimeoutMs'].includes(field.path)) {
     const timeout = field.path.endsWith('.sessionTimeoutMs');
     if (!timeout) return {
-      accepted: 'Native admission requires maxPollMs to be at least pollMs, in addition to each scalar schema bound',
+      accepted: 'For native admission, maxPollMs must be at least pollMs. Each scalar schema bound also applies.',
       failure: 'A target with maxPollMs below pollMs rejects activation with RUNTIME_CONFIG_INVALID:openclaw:<targetId>. An omitted maxPollMs still selects its documented fallback before this comparison.',
       evidence: ['skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:29', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:32'],
     };
     return {
-      accepted: 'Native admission requires sessionTimeoutMs to be at least pollMs. Its timer begins only when status polling starts after spawn or reattachment',
-      failure: 'A target with sessionTimeoutMs below pollMs rejects activation with RUNTIME_CONFIG_INVALID:openclaw:<targetId>. Later polling exhaustion raises OPENCLAW_SESSION_TIMEOUT; spawning, result import and cleanup have separate bounds.',
+      accepted: 'For native admission, sessionTimeoutMs must be at least pollMs. Its timer begins only when status polling starts after spawn or reattachment',
+      failure: 'A target with sessionTimeoutMs below pollMs rejects activation with RUNTIME_CONFIG_INVALID:openclaw:<targetId>. Subsequent polling exhaustion raises OPENCLAW_SESSION_TIMEOUT. Different bounds apply to spawning, result import and cleanup.',
       evidence: ['skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:32', 'skills/common/plugins/runtime-dispatch/src/openclaw-session.ts:219', 'skills/common/plugins/runtime-dispatch/src/openclaw.ts:284', 'skills/common/plugins/runtime-dispatch/src/openclaw.ts:293'],
     };
   }
@@ -3919,7 +3919,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     const artifact = authorityPath.includes('/artifact-store/');
     const name = field.path.slice(2);
     return {
-      accepted: 'The native adapter additionally requires a positive safe integer, at most 9007199254740991. The schema minimum alone does not establish this native upper bound',
+      accepted: 'A positive safe integer, at most 9007199254740991, is also necessary for the native adapter. The schema minimum alone does not establish this native upper bound',
       empty: 'Null and an empty string fail the declared integer type. Neither is a valid authored omission value.',
       failure: `Adapter activation rejects a non-positive or unsafe integer with ${name} is invalid. A documented default does not prove a successful read or write.`,
       evidence: artifact ? ['skills/common/plugins/artifact-store/src/adapter.ts:162', 'skills/common/plugins/artifact-store/src/adapter.ts:163']
@@ -3932,17 +3932,17 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     const fallback = field.path.endsWith('.agentId') ? 'codex' : 'the enclosing target map key';
     return {
       accepted: thinking
-        ? 'The schema requires a nonempty string when supplied. The consumer trims supplied strings, but does not validate this field against a closed reasoning-level enum'
-        : 'The schema requires a nonempty string when supplied. The consumer retains only strings matching its target-ID pattern; other schema-valid strings select the omission fallback instead',
+        ? 'When supplied, the string must be nonempty. The consumer trims supplied strings but does not validate this field against a closed reasoning-level enum'
+        : 'When supplied, the string must be nonempty under the schema. The consumer retains only strings that match its target-ID pattern. Other schema-valid strings select the omission fallback instead',
       omission: thinking
-        ? 'The schema declares no default. The consumer selects high when thinking is absent.'
+        ? 'The schema declares no default. When thinking is absent, the consumer selects high.'
         : `The schema declares no default. The consumer selects ${fallback} when this field is absent. This is a consumer fallback, not schema default insertion.`,
       empty: thinking
         ? 'An empty string fails the schema. A whitespace-only nonempty string passes the schema, trims to empty, and does not select high.'
-        : 'An empty string fails the schema. A schema-valid string outside the target-ID pattern selects the same fallback; do not infer rejection or trimming.',
+        : 'An empty string fails the schema. A schema-valid string outside the target-ID pattern selects the same fallback. Do not infer rejection or trimming.',
       failure: thinking
-        ? 'The local parser does not reject a trimmed-empty or unknown thinking string. It forwards the selected value to sessions_spawn; the selected runtime owns later admission.'
-        : 'An invalid optional agent identity or role string falls back rather than causing target rejection. Other required target fields still undergo independent admission checks.',
+        ? 'The local parser does not reject a trimmed-empty or unknown thinking string. It forwards the selected value to sessions_spawn. The selected runtime applies later admission checks.'
+        : 'An invalid optional agent identity or role string falls back rather than causing target rejection. Admission checks also apply to other target fields that must be present.',
       evidence: ['skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:3', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:11', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:12', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:58', 'skills/common/plugins/runtime-dispatch/src/openclaw-config.ts:59'],
     };
   }
@@ -3956,7 +3956,7 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     && ['$.workers', '$.minimumExecutedTests'].includes(field.path)) return {
     accepted: field.path === '$.workers'
       ? 'The authored worker count must satisfy the schema. The provider requests at least one worker, bounded by the request and max(1, invocation.limits.processes minus 4)'
-      : 'The provider compares passed plus failed test counts with the effective minimum. Blocking mode requires at least one executed test even for an explicit zero',
+      : 'The provider compares passed plus failed test counts with the effective minimum. In blocking mode, at least one executed test is necessary, also with a configured zero.',
     omission: field.path === '$.workers'
       ? 'The schema declares no default. The provider starts with four workers on omission, then applies the process-budget clamp.'
       : 'The schema declares no default. Omission selects one executed test. The effective minimum is max(blocking mode ? 1 : 0, configured value or omission fallback 1).',
@@ -3968,13 +3968,13 @@ function schemaRuntimeValidationRules(authorityPath, field) {
   };
   if (authorityPath === 'skills/common/plugins/notification-observer/schemas/config.schema.json' && field.path === '$.maxMessageChars') return {
     accepted: 'This bounds usable lifecycle summary or message text after control-character replacement, measured in JavaScript UTF-16 string-length units. Title fallback and other fields have separate limits',
-    omission: 'The schema declares no default. observe selects 8192 when maxMessageChars is absent; preview notification construction does not consume this setting.',
+    omission: 'The schema declares no default. When maxMessageChars is absent, observe selects 8192. Preview notification construction does not consume this setting.',
     failure: 'A configured value must satisfy the schema. Missing or unusable summary/message text selects the separately bounded title, which this setting does not truncate. This is not a whole-notification byte cap.',
     evidence: ['skills/common/plugins/notification-observer/src/observer.ts:58', 'skills/common/plugins/notification-observer/src/observer.ts:117', 'skills/common/plugins/notification-observer/src/observer.ts:136', 'skills/common/plugins/notification-observer/src/observer.ts:177', 'skills/common/plugins/notification-observer/src/observer.ts:198'],
   };
   if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json' && field.path.endsWith('.maxPayloadBytes')) return {
     accepted: 'The consumer bounds UTF-8 JSON serialization of the admitted operator payload before format conversion. json sends that payload; discord_webhook constructs a different envelope',
-    failure: 'An admitted payload above the cap rejects with OPERATOR_PAYLOAD_SIZE_EXCEEDED. No second maxPayloadBytes check bounds the transformed webhook envelope; separate durable-store and network limits still apply.',
+    failure: 'An admitted payload above the cap rejects with OPERATOR_PAYLOAD_SIZE_EXCEEDED. No second maxPayloadBytes check bounds the transformed webhook envelope. Durable-store and network limits also apply.',
     evidence: ['skills/common/plugins/operator-messaging/src/payload.ts:100', 'skills/common/plugins/operator-messaging/src/adapter.ts:36', 'skills/common/plugins/operator-messaging/src/adapter.ts:37', 'skills/common/plugins/operator-messaging/src/discord-payload.ts:8'],
   };
   if (['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json'].includes(authorityPath)
@@ -3985,16 +3985,16 @@ function schemaRuntimeValidationRules(authorityPath, field) {
   };
   if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json'
     && ['endpoint', 'tokenSecret', 'endpointSecret', 'endpointOrigin'].some((name) => field.path.endsWith(`.${name}`))) return {
-    accepted: 'Schema anyOf admits a direct endpoint/tokenSecret pair or an endpointSecret/endpointOrigin pair but does not exclude mixed-mode keys. Adapter activation is stricter: presence of endpointSecret OR endpointOrigin selects secret-endpoint mode and forbids a simultaneous endpoint; a complete selected pair and its URL/identifier checks must pass',
-    empty: 'An empty value is not a mode-selection fallback; declared type/minLength and the selected parser checks apply.',
-    failure: 'A schema-valid mixed target such as endpoint plus tokenSecret plus endpointOrigin rejects activation with OPERATOR_CONFIG_INVALID:endpoint_mode:<targetId>. Schema acceptance is not deployability. No runtime or schema hardening is implied; qualify exactly one complete mode before activation.',
+    accepted: 'Schema anyOf admits a direct endpoint/tokenSecret pair or an endpointSecret/endpointOrigin pair but does not exclude mixed-mode keys. Adapter activation is stricter. The presence of endpointSecret OR endpointOrigin selects secret-endpoint mode and forbids a simultaneous endpoint. The adapter rejects an incomplete selected pair or a failed URL/identifier check.',
+    empty: 'An empty value is not a mode-selection fallback. The declared type/minLength and the selected parser checks apply.',
+    failure: 'A schema-valid mixed target such as endpoint plus tokenSecret plus endpointOrigin rejects activation with OPERATOR_CONFIG_INVALID:endpoint_mode:<targetId>. Schema acceptance is not deployability. This row establishes no runtime or schema hardening. Before activation, make sure that the target has one complete mode and no other mode.',
     evidence: ['skills/common/plugins/operator-messaging/src/config.ts:61', 'skills/common/plugins/operator-messaging/src/config.ts:64', 'skills/common/plugins/operator-messaging/src/config.ts:69', 'skills/common/plugins/operator-messaging/src/config.ts:78'],
   };
   if (authorityPath === 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json' && field.path === '$.reviewerRuntime') return {
-    accepted: 'The schema admits acp or subagent. Audit and revalidation independently consume this expected runtime identity; the returned runtime attestation must match the selected identity',
-    omission: 'Audit stageConfig selects subagent for undefined reviewerRuntime. Revalidation runtimeIdentity independently uses config.reviewerRuntime ?? subagent; both select subagent on valid omission.',
-    empty: 'The schema rejects null and empty strings. If validation is bypassed, revalidation null falls through its nullish fallback, whereas audit rejects a non-enum value; omission and invalid values are not interchangeable.',
-    failure: 'Audit rejects invalid runtime settings with repository audit config is invalid. Revalidation runtimeIdentity casts the selected setting and validates returned runtime attestation against its own expected identity; do not attribute that path to audit stageConfig.',
+    accepted: 'The schema admits acp or subagent. Audit and revalidation independently consume this expected runtime identity. The returned runtime attestation must match the selected identity',
+    omission: 'Audit stageConfig selects subagent for undefined reviewerRuntime. Revalidation runtimeIdentity independently uses config.reviewerRuntime ?? subagent. Both select subagent on valid omission.',
+    empty: 'The schema rejects null and empty strings. Without validation, revalidation null falls through its nullish fallback. Audit rejects a non-enum value. Omission and invalid values are not interchangeable.',
+    failure: 'Audit rejects invalid runtime settings with repository audit config is invalid. Revalidation runtimeIdentity casts the selected setting. It validates the returned runtime attestation against its expected identity. Do not attribute that path to audit stageConfig.',
     evidence: ['skills/nova/plugins/review/src/repository-audit-stage.ts:114', 'skills/nova/plugins/review/src/repository-audit-stage.ts:118', 'skills/nova/plugins/review/src/repository-revalidation-stage.ts:130', 'skills/nova/plugins/review/src/repository-revalidation-stage.ts:134'],
   };
 
@@ -4002,60 +4002,60 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     const plugin = authorityPath.split('/')[3];
     const stage = `skills/nova/plugins/${plugin}/src/stage.ts`;
     return {
-      accepted: 'The schema requires a string with minLength 1; the selected stage additionally requires agent.trim() to be nonempty',
-      empty: 'Empty strings fail the schema; whitespace-only strings pass minLength but are rejected by the selected stage before any capability invocation.',
+      accepted: 'The schema accepts only strings with minLength 1. The selected stage also rejects an empty agent.trim() result.',
+      empty: 'Empty strings fail the schema. The minLength constraint accepts whitespace-only strings. The selected stage rejects them before any capability invocation.',
       failure: `${plugin} rejects an empty trimmed agent before dispatch with ${plugin === 'review' ? 'review' : plugin === 'case-study' ? 'case study' : 'pipeline review'} agent is not configured. This configuration rejection is outside the stage dispatch catch and is not a successful or blocked report. ${plugin === 'review' ? 'The review stage uses the trimmed agent.' : 'The stage checks the trimmed value but forwards the original agent string.'}`,
       evidence: [`${stage}:${plugin === 'case-study' ? 5 : plugin === 'pipeline-review' ? 6 : 43}`],
     };
   }
   if (authorityPath === 'skills/nova/plugins/prism-design/schemas/config.schema.json' && ['$.issuerId', '$.timeoutMinutes'].includes(field.path)) return {
-    accepted: field.path === '$.issuerId' ? 'A nonempty string naming the exact authorized operator issuer for prism.approval.resolved' : 'An integer from 1 through 525600; expiry is computed at wait creation as Date.now() plus timeoutMinutes times 60000',
-    omission: 'The schema requires this field and supplies no default. No-design execution returns before configuration is read.',
-    empty: 'An empty issuer fails minLength; a noninteger, null or empty timeout fails the declared integer constraint.',
-    failure: 'On the design path invalid configuration or incompatible approval guidance rejects before the dispatch try block. The returned wait must match this issuer and computed expiry or PRISM_DESIGN_WAIT_INVALID blocks execution; approval must match the operator issuer and architecture digest or PRISM_DESIGN_APPROVAL_INVALID rejects guidance.',
+    accepted: field.path === '$.issuerId' ? 'The nonempty string gives the authorized operator issuer identity. The prism.approval.resolved issuer must have the same identity.' : 'An integer from 1 through 525600. At wait creation, the stage computes expiry as Date.now() plus timeoutMinutes times 60000',
+    omission: 'The schema makes this field necessary and gives no default. No-design execution returns before configuration is read.',
+    empty: 'An empty issuer fails minLength. A noninteger, null or empty timeout fails the declared integer constraint.',
+    failure: 'On the design path invalid configuration or approval guidance that is not compatible rejects before the dispatch try block. The returned wait must match this issuer and computed expiry. If its issuer or expiry is different, PRISM_DESIGN_WAIT_INVALID blocks execution. Approval must match the operator issuer and architecture digest. If the issuer or digest is different, PRISM_DESIGN_APPROVAL_INVALID rejects guidance.',
     evidence: ['skills/nova/plugins/prism-design/src/stage.ts:7', 'skills/nova/plugins/prism-design/src/stage.ts:8', 'skills/nova/plugins/prism-design/src/stage.ts:9', 'skills/nova/plugins/prism-design/src/stage.ts:23'],
   };
   if (authorityPath === 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json' && ['$.agent', '$.reviewerModel', '$.reviewerAgentId', '$.reviewerThinking'].includes(field.path)) return {
-    accepted: 'The declared nonempty-string constraint applies. Repository audit trims these strings and rejects an empty result; repository revalidation runtimeIdentity requires nonempty already-trimmed text of at most 1024 characters',
-    empty: 'Whitespace-only values are not usable runtime identities; omission is permitted only for fields with the documented consumer fallback.',
-    failure: 'Repository audit stageConfig rejects invalid settings with repository audit config is invalid. Repository revalidation runtimeIdentity separately validates config.agent, config.reviewerAgentId, config.reviewerModel and config.reviewerThinking; invalid identity is an integrity failure. The revalidation stage dispatches its own findings, not the audit dispatch path.',
+    accepted: 'The declared nonempty-string constraint applies. Repository audit trims these strings and rejects an empty result. For repository revalidation runtimeIdentity, text must be nonempty, the same as its trimmed form and at most 1024 characters.',
+    empty: 'Whitespace-only values are not usable runtime identities. Omission is permitted only for fields with the documented consumer fallback.',
+    failure: 'Repository audit stageConfig rejects invalid settings with repository audit config is invalid. Repository revalidation runtimeIdentity separately validates config.agent, config.reviewerAgentId, config.reviewerModel and config.reviewerThinking. An invalid identity is an integrity failure. The revalidation stage dispatches its own findings, not the audit dispatch path.',
     evidence: ['skills/nova/plugins/review/src/repository-audit-stage.ts:106', 'skills/nova/plugins/review/src/repository-audit-stage.ts:111', 'skills/nova/plugins/review/src/repository-revalidation-stage.ts:42', 'skills/nova/plugins/review/src/repository-revalidation-stage.ts:130'],
   };
 
   if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json' && field.path === '$.serviceTargetPort') return {
     accepted: 'An integer from 1 through 65535 used as the expected resolved target port of the checked Service manifest, not a command to rewrite a workload or Service.',
-    omission: 'Omission adds no expected-target-port equality constraint. The runtime still resolves the checked Service targetPort: a numeric target is used directly, omission in the manifest uses servicePort, and a named target must resolve to one unique declared container port.',
-    empty: 'Null and an empty string fail the integer type; neither means omission.',
-    failure: 'A mismatched, unresolved or out-of-range manifest target raises KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH before lease creation. The resolved value informs lease/network policy; the checked manifest bytes are applied unchanged, so changing configuration does not rewrite its ports.',
+    omission: 'Omission adds no expected-target-port equality constraint. The runtime still resolves the checked Service targetPort. It uses a numeric target directly. Omission in the manifest uses servicePort. A named target must resolve to one unique declared container port.',
+    empty: 'Null and an empty string fail the integer type. Null and an empty string are not omission.',
+    failure: 'A mismatched, unresolved or out-of-range manifest target raises KUBERNETES_FIXTURE_SERVICE_TARGET_PORT_MISMATCH before lease creation. The resolved value informs lease/network policy. The runtime applies the checked manifest bytes unchanged. A configuration change does not rewrite the manifest ports.',
     evidence: ['skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:348', 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:387', 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:662', 'skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts:715'],
   };
 
   if (authorityPath === 'skills/common/plugins/transport-publisher/schemas/config.schema.json'
     && field.path.endsWith('.endpoint')) return {
-    accepted: 'An HTTP or HTTPS URL without userinfo or fragment. URI/pattern schema acceptance alone does not establish these stronger adapter activation constraints; HTTPS is not mandatory in the current adapter.',
-    omission: 'Each configured target requires endpoint; there is no effective fallback.',
+    accepted: 'An HTTP or HTTPS URL without userinfo or fragment. URI/pattern schema acceptance does not replace these stronger adapter activation constraints. HTTPS is not mandatory in the current adapter.',
+    omission: 'An endpoint is necessary for each configured target. There is no effective fallback.',
     empty: 'An empty string is rejected rather than selecting a default endpoint.',
-    failure: 'Malformed URL, forbidden protocol, userinfo or fragment rejects adapter activation with TRANSPORT_CONFIG_INVALID:endpoint, before publication or credential resolution. HTTP remains accepted and must be independently qualified by the deployment owner.',
+    failure: 'Malformed URL, forbidden protocol, userinfo or fragment rejects adapter activation with TRANSPORT_CONFIG_INVALID:endpoint, before publication or credential resolution. The current adapter accepts HTTP. The deployment owner must independently qualify its use.',
     evidence: ['skills/common/plugins/transport-publisher/src/adapter.ts:49', 'skills/common/plugins/transport-publisher/src/adapter.ts:57'],
   };
 
   const webTarget = webProviderTargetRules(authorityPath, field.path);
   if (webTarget) return webTarget;
   if (authorityPath === 'skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema' && field.path === '$.controlUrl') return {
-    accepted: 'The schema accepts any string. The consumer resolves the operation path against the selected base using new URL; it imposes no explicit protocol restriction or timeout',
-    omission: 'A truthy PRISM_CONTROL_URL environment value is used, otherwise http://127.0.0.1:28080. A truthy configured controlUrl takes precedence over both',
-    empty: 'An empty string is schema-valid and falls through to the environment value or built-in base. Null is not schema-valid',
-    failure: 'An invalid base rejects in new URL before fetch. Fetch owns network and protocol errors. A non-success HTTP response throws its parsed error value or a status-based error; failed JSON parsing supplies HTTP plus the response status. There is no explicit request timeout',
+    accepted: 'The schema accepts any string. The consumer uses new URL to resolve the operation path against the selected base. The post function adds no protocol restriction or timeout.',
+    omission: 'With no truthy configured controlUrl and a truthy PRISM_CONTROL_URL value, the consumer uses that environment value. With no truthy value from either source, the consumer uses http://127.0.0.1:28080. A truthy configured controlUrl takes precedence over both.',
+    empty: 'An empty string is schema-valid and falls through to the environment value or built-in base. Null is not schema-valid.',
+    failure: 'An invalid base fails in new URL before fetch. Network or protocol errors can make fetch fail. With response.ok false, post evaluates ``new Error(value.error || `Prism control returned HTTP ${response.status}`)``. With a null JSON value, value.error access can fail before that Error is constructed. Failed JSON parsing gives HTTP plus the response status. The post function adds no request timeout.',
     evidence: ['skills/prism/openclaw-plugin/index.mjs:10', 'skills/prism/openclaw-plugin/index.mjs:11', 'skills/prism/openclaw-plugin/index.mjs:17', 'skills/prism/openclaw-plugin/index.mjs:18'],
   };
   if (authorityPath === 'skills/buster/plugins/coverage-budget/schemas/config.schema.json'
     && ['$.minimumLinePercent', '$.combine'].includes(field.path)) return {
     accepted: field.path === '$.combine'
-      ? 'True measures the merged LCOV file/line set, retaining the maximum hit count for duplicate lines. False measures the lowest percentage among the individual inputs.'
-      : 'A finite percentage from 0 through 100; measured coverage at or above it passes, and lower coverage returns a failed provider decision.',
+      ? 'True measures the merged LCOV file/line set. It retains the maximum hit count for duplicate lines. False measures the lowest percentage among the individual inputs.'
+      : 'A finite percentage from 0 through 100. With measured coverage at or above this value, the provider accepts that coverage. Lower coverage returns a failed provider decision.',
     omission: field.path === '$.combine'
-      ? 'The consumer uses combined coverage when combine is omitted; only an explicit false selects the lowest individual input percentage.'
-      : 'No threshold is enforced when minimumLinePercent is omitted: the budget decision passes regardless of measured coverage. Required LCOV inputs, integrity checks and parsing still apply and can fail.',
+      ? 'When combine is omitted, the consumer uses combined coverage. Only a configured false selects the lowest individual input percentage.'
+      : 'When minimumLinePercent is omitted, the provider enforces no threshold. Measured coverage cannot fail this budget decision. Required LCOV inputs, integrity checks and parsing still apply and can fail.',
     empty: 'Null and an empty string fail the declared field type. Omission is a separate supported state, not an empty value.',
     failure: 'A threshold miss returns outcome failed with a coverage.minimum-lines finding, not a successful coverage gate. Missing, malformed, duplicate or digest-mismatched LCOV inputs still reject execution even when no threshold is configured.',
     evidence: ['skills/buster/plugins/coverage-budget/src/provider.js:53', 'skills/buster/plugins/coverage-budget/src/provider.js:79', 'skills/buster/plugins/coverage-budget/src/provider.js:81'],
@@ -4063,14 +4063,14 @@ function schemaRuntimeValidationRules(authorityPath, field) {
   if (authorityPath === 'skills/buster/plugins/container-build/schemas/config.schema.json'
     && ['$.platform', '$.outputName'].includes(field.path)) return {
     accepted: field.path === '$.platform'
-      ? 'A Linux platform string accepted by the declared pattern; the selected container.build capability must also support the requested build platform.'
-      : 'A name accepted by the declared pattern; explicit outputName replaces the invocation-derived name rather than modifying it.',
+      ? 'A Linux platform string that matches the declared pattern. The selected container.build capability must also support the requested build platform.'
+      : 'A name that matches the declared pattern. When outputName is present, it replaces the invocation-derived name. It does not modify that name.',
     omission: field.path === '$.platform'
       ? 'The consumer selects linux/amd64 when platform is omitted. This is an effective provider default, not a schema default.'
-      : 'The consumer uses moduleId when present, otherwise nodeId, converts it to a string, lowercases it and replaces each character outside a-z, 0-9, dot, underscore and hyphen with a hyphen. It then validates the derived output name; an invalid derived name is rejected.',
+      : 'When moduleId is null or undefined, the consumer uses nodeId. For any other moduleId value, it uses moduleId. It converts the value to a string and lowercases it. It replaces each character outside a-z, 0-9, dot, underscore and hyphen with a hyphen. Then it validates the derived output name. It rejects an invalid derived name.',
     empty: 'The schema rejects null and an empty string. The native consumer also rejects an empty string rather than applying the omission fallback.',
     failure: field.path === '$.platform'
-      ? 'Invalid native platform syntax raises CONTAINER_BUILD_PLATFORM_INVALID. A syntactically valid platform can still fail in the selected container.build capability; a documented default is not a successful image build.'
+      ? 'Invalid native platform syntax raises CONTAINER_BUILD_PLATFORM_INVALID. A syntactically valid platform can fail in the selected container.build capability. A documented default is not an image-build result.'
       : 'An invalid explicit or derived name raises CONTAINER_BUILD_OUTPUT_NAME_INVALID before the build capability is invoked.',
     evidence: ['skills/buster/plugins/container-build/src/provider.js:84', 'skills/buster/plugins/container-build/src/provider.js:85', 'skills/buster/plugins/container-build/src/provider.js:86', 'skills/buster/plugins/container-build/src/provider.js:87'],
   };
@@ -4078,27 +4078,27 @@ function schemaRuntimeValidationRules(authorityPath, field) {
     && ['$.endpointName', '$.url'].includes(field.path)) return {
     accepted: field.path === '$.endpointName'
       ? 'The declared name pattern applies. Deployment endpoint names match exactly; a typed public endpoint supplies its URL without using endpointName.'
-      : 'The schema requires a nonempty string. The selected network capability separately checks the actual URL and its allowed origin.',
+      : 'The schema accepts only nonempty strings. The selected network capability separately checks the actual URL and its allowed origin.',
     omission: field.path === '$.endpointName'
-      ? 'A typed deployment with one endpoint selects that endpoint. Multiple endpoints require a matching name; there is no implicit first-entry selection. A direct URL or typed public endpoint does not use this selector.'
+      ? 'A typed deployment with one endpoint selects that endpoint. With multiple endpoints, a matching name is necessary. there is no implicit first-entry selection. A direct URL or typed public endpoint does not use this selector.'
       : 'Without url, one typed deployment or public-endpoint input must supply the destination. No target fails with API_FLOW_TARGET_REQUIRED.',
     empty: field.path === '$.endpointName'
-      ? 'The schema pattern rejects an empty name; null is not a string. Do not use an empty name to request automatic selection.'
+      ? 'The schema pattern rejects an empty name. Null is not a string. Do not use an empty name to request automatic selection.'
       : 'The schema rejects an empty string and null. These are not equivalent to omitting url.',
-    failure: 'API_FLOW_ENDPOINT_NOT_FOUND means no matching deployment endpoint or no selected URL. Supplying url alongside a typed deployment/endpoint input raises API_FLOW_TARGET_AMBIGUOUS. Missing target raises API_FLOW_TARGET_REQUIRED; invalid input shape raises API_FLOW_INPUT_INVALID.',
+    failure: 'API_FLOW_ENDPOINT_NOT_FOUND means no matching deployment endpoint or no selected URL. Supplying url alongside a typed deployment/endpoint input raises API_FLOW_TARGET_AMBIGUOUS. Missing target raises API_FLOW_TARGET_REQUIRED. Invalid input shape raises API_FLOW_INPUT_INVALID.',
     evidence: ['skills/buster/plugins/api-flow/src/provider.js:26', 'skills/buster/plugins/api-flow/src/provider.js:30', 'skills/buster/plugins/api-flow/src/provider.js:40'],
   };
   if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && field.path === '$.activeAdapters[]') return {
-    accepted: 'An existing adapter registration identifier. This list is the explicit initial set; required capabilities of enabled adapters, observers and stages recursively enable their selected provider adapters',
-    empty: 'An empty identifier does not name a registered adapter. Removing every item removes only this initial adapter set; required provider adapters can still become enabled.',
-    failure: 'An unknown enabled identifier or an unavailable required capability prevents registry admission. An enabled adapter can then fail its registered configuration schema or startup. Configuration for a disabled adapter is not schema-validated, but its configured identifier must still exist.',
+    accepted: 'An existing adapter registration identifier. This list is the configured initial set. The requiredCapabilities declarations of enabled adapters, observers and stages recursively enable their selected provider adapters',
+    empty: 'An empty identifier does not name a registered adapter. Removal of every item removes only this initial adapter set. Providers of necessary capabilities can also become enabled.',
+    failure: 'An unknown enabled identifier or an unavailable requiredCapabilities entry prevents registry admission. An enabled adapter can then fail its registered configuration schema or startup. Configuration for a disabled adapter is not schema-validated, but its configured identifier must still exist.',
     evidence: ['skills/nova/core/execution/engine-runtime.ts:47', 'skills/common/plugin-runtime/foundation/registry/capabilities.ts:149', 'skills/common/plugin-runtime/foundation/registry/configuration.ts:59', 'skills/common/plugin-runtime/foundation/registry/configuration.ts:75'],
   };
   if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && field.path === '$.shutdownTimeoutMs') return {
-    accepted: 'The schema requires an integer of at least 1 and sets no maximum. Use 1 through 2,147,483,647 milliseconds for the current Node timers: a larger delay becomes 1 millisecond rather than a longer deadline. [Node 24.21.0 timer contract](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args)',
-    omission: 'The platform schema requires the field and supplies no default. The loader does not insert one.',
+    accepted: 'The schema accepts only integers of at least 1 and sets no maximum. Use 1 through 2,147,483,647 milliseconds for the current Node timers: a larger delay becomes 1 millisecond rather than a longer deadline. [Node 24.21.0 timer contract](https://nodejs.org/download/release/v24.21.0/docs/api/timers.html#settimeoutcallback-delay-args)',
+    omission: 'The platform schema makes the field necessary and gives no default. The loader does not insert one.',
     empty: 'Null, an empty string and zero fail the integer/minimum constraint. A schema-valid delay above the Node timer range is still an unsafe deadline input.',
-    failure: 'Adapter activation and readiness race their operation against a timer and can reject with ADAPTER_START_TIMEOUT. Overall shutdown races against ADAPTER_SHUTDOWN_TIMEOUT. These rejections and abort signals do not prove that the underlying adapter work stopped. Readiness teardown, rollback and late activation cleanup pass an abort signal but still await the shutdown promise; an adapter that ignores cancellation can keep that cleanup pending. Stop before declaring cleanup complete or replaying an uncertain effect.',
+    failure: 'Adapter activation and readiness race their operation against a timer and can reject with ADAPTER_START_TIMEOUT. Overall shutdown races against ADAPTER_SHUTDOWN_TIMEOUT. These rejections and abort signals do not prove that the underlying adapter work stopped. \n\nReadiness teardown, rollback and late activation cleanup pass an abort signal. They still await the shutdown promise. An adapter that ignores cancellation can keep that cleanup pending. Stop before declaring cleanup complete or replaying an uncertain effect.',
     evidence: ['skills/nova/core/execution/adapters.ts:79', 'skills/nova/core/execution/adapter-support.ts:17', 'skills/nova/core/execution/adapter-support.ts:21', 'skills/nova/core/execution/adapter-startup.ts:153', 'skills/nova/core/execution/adapter-startup.ts:162'],
   };
   if (authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema') {
@@ -4111,15 +4111,15 @@ function schemaRuntimeValidationRules(authorityPath, field) {
   }
   if (authorityPath === 'skills/buster/plugins/openapi/schemas/config.schema.json' && field.path === '$.operations[].body') return {
     accepted: 'The configuration schema imposes no body type. At execution the selected OpenAPI operation must declare a JSON request body; its request schema validates the actual value',
-    empty: 'The configuration schema accepts an empty string. The selected OpenAPI request schema can accept or reject that string; omission is separately checked against requestBody.required.',
-    failure: 'An undeclared JSON request body, an operation request-schema violation, or a missing required body records an operation failure before the HTTP request is sent.',
+    empty: 'The configuration schema accepts an empty string. The selected OpenAPI request schema can accept or reject that string. The provider also checks omission against requestBody.required.',
+    failure: 'An undeclared JSON request body, an operation request-schema violation, or a missing body made necessary by requestBody.required records an operation failure before the HTTP request is sent.',
     evidence: ['skills/buster/plugins/openapi/src/provider.js:226'],
   };
   if (authorityPath !== 'skills/common/plugins/runtime-dispatch/schemas/config.schema.json') return null;
   const rules = {
-    '$.targets.{*}.endpoint': ['An HTTP or HTTPS URL without username, password or fragment. HMAC targets outside loopback require HTTPS; spiffe-proxy targets must use loopback', 'Empty is rejected by the URL constructor; a configured target requires an endpoint.', 'Malformed URLs or forbidden protocol, credentials or fragments reject adapter activation. Non-loopback plaintext HMAC returns RUNTIME_CONFIG_INVALID:plaintextHmac; non-loopback SPIFFE proxy returns RUNTIME_CONFIG_INVALID:spiffeProxy.'],
-    '$.targets.{*}.tokenSecret': ['With HMAC, a secret identifier matching `^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$` is required. In spiffe-proxy mode no token secret is used', 'Empty is rejected in HMAC mode; spiffe-proxy omits the tokenSecret from its effective target.', 'A missing or invalid HMAC secret identifier rejects activation with RUNTIME_CONFIG_INVALID:tokenSecret. A later unavailable secret returns RUNTIME_SECRET_UNAVAILABLE.'],
-    '$.targets.{*}.authentication': ['spiffe-proxy selects loopback-only SPIFFE transport. The runtime otherwise selects HMAC, including when authentication is absent; the schema restricts explicitly configured values', 'An explicit empty value violates the schema enum. If that validator is bypassed, the runtime selects HMAC.', 'A target that does not satisfy its selected authentication mode rejects activation.'],
+    '$.targets.{*}.endpoint': ['An HTTP or HTTPS URL without username, password or fragment. For HMAC targets outside loopback, HTTPS is necessary. The spiffe-proxy targets must use loopback', 'The URL constructor rejects an empty value. An endpoint is necessary for a configured target.', 'Malformed URLs or forbidden protocol, credentials or fragments reject adapter activation. Non-loopback plaintext HMAC returns RUNTIME_CONFIG_INVALID:plaintextHmac. A non-loopback SPIFFE proxy returns RUNTIME_CONFIG_INVALID:spiffeProxy.'],
+    '$.targets.{*}.tokenSecret': ['With HMAC, a secret identifier matching `^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$` is necessary. In spiffe-proxy mode no token secret is used', 'HMAC mode rejects an empty value. The spiffe-proxy effective target has no tokenSecret.', 'A missing or invalid HMAC secret identifier rejects activation with RUNTIME_CONFIG_INVALID:tokenSecret. A subsequently unavailable secret returns RUNTIME_SECRET_UNAVAILABLE.'],
+    '$.targets.{*}.authentication': ['spiffe-proxy selects loopback-only SPIFFE transport. When authentication is not spiffe-proxy, the runtime selects HMAC. When authentication is undefined, the runtime also selects HMAC. The schema restricts explicitly configured values', 'An explicit empty value violates the schema enum. If that validator is bypassed, the runtime selects HMAC.', 'A target that does not satisfy its selected authentication mode rejects activation.'],
   };
   const rule = rules[field.path];
   return rule ? { accepted: rule[0], empty: rule[1], failure: rule[2], evidence: ['skills/common/plugins/runtime-dispatch/src/adapter.ts:20', 'skills/common/plugins/runtime-dispatch/src/adapter.ts:65'] } : null;
@@ -4141,12 +4141,12 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   "skills/common/plugins/wait-store/schemas/config.schema.json::$.maxEntryBytes": "Limits the serialized payload of one durable metadata record. This includes the adapter-specific state or wait wrapper where present, not the complete store file or its record headers.",
   "skills/common/plugins/wait-store/schemas/config.schema.json::$.maximumRecords": "Caps the total metadata record count in this store, across its streams. It is not a separate allowance per namespace or a filesystem-file count.",
   "skills/common/plugins/wait-store/schemas/config.schema.json::$.maximumStoreBytes": "Caps the serialized durable metadata store state, including its record metadata. It is not a bound on all files or filesystem space under the root.",
-  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maxRecordBytes": "Bounds the incoming telemetry snapshot and the redacted payload stored in one durable metadata record. Redaction can change size; this is not the complete store-file byte limit.",
+  "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maxRecordBytes": "Bounds the incoming telemetry snapshot and the redacted payload stored in one durable metadata record. Redaction can change size. This is not the complete store-file byte limit.",
   "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maximumRecords": "Caps the total metadata record count in this store, across its streams. It is not a separate allowance per namespace or a filesystem-file count.",
   "skills/common/plugins/telemetry-store/schemas/config.schema.json::$.maximumStoreBytes": "Caps the serialized durable metadata store state, including its record metadata. It is not a bound on all files or filesystem space under the root.",
-  "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryRecords": "Caps the total delivery metadata record count across targets. One logical send can retain multiple intent, attempt or receipt records; this is not a one-record-per-send allowance.",
+  "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryRecords": "Caps the total delivery metadata record count across targets. One logical send can retain multiple intent, attempt or receipt records. This is not a one-record-per-send allowance.",
   "skills/common/plugins/operator-messaging/schemas/config.schema.json::$.maximumDeliveryBytes": "Caps the serialized delivery metadata store state across its targets. This includes record metadata, not every file or filesystem-space use under deliveryRoot.",
-  "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryRecords": "Caps the total delivery metadata record count across targets. One logical send can retain multiple intent, attempt or receipt records; this is not a one-record-per-send allowance.",
+  "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryRecords": "Caps the total delivery metadata record count across targets. One logical send can retain multiple intent, attempt or receipt records. This is not a one-record-per-send allowance.",
   "skills/common/plugins/transport-publisher/schemas/config.schema.json::$.maximumDeliveryBytes": "Caps the serialized delivery metadata store state across its targets. This includes record metadata, not every file or filesystem-space use under deliveryRoot.",
   "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumJournalBytes": "Sets the shared byte allowance for selected run events, snapshot and effects evidence files. This is not the returned report-bundle byte limit.",
   "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json::$.maximumArtifactBytes": "Caps the aggregate selected artifact bytes read for the pipeline-review evidence bundle. It is not a separate allowance for each artifact.",
@@ -4165,7 +4165,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     const purpose = {
       '$.policy.profile': 'Names the identity of this complete review-policy object. The separate profile field selects a built-in gate, lean or audit policy. A supplied policy replaces that whole object.',
       '$.policy.limits.maxProposals': 'Sets the proposed-findings count limit used by proposal preflight. Exceeding it adds a proposal-count limit violation. Context-expansion capacity uses separate limits.',
-      '$.policy.verification.semanticVerifier': 'Selects semantic-verification mode, not a required verifier result. disabled selects none; p0-only limits eligible candidates to P0. all-blockers uses configured blocking priorities. Category, evidence, diff and scope requirements still apply.',
+      '$.policy.verification.semanticVerifier': 'Selects semantic-verification mode, not a verifier result that must be present. The disabled mode selects none. The p0-only mode limits eligible candidates to P0. all-blockers uses configured blocking priorities. Category, evidence, diff and scope requirements still apply.',
     }[fieldPath];
     if (purpose) return purpose;
   }
@@ -4179,26 +4179,26 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     }[fieldPath];
     if (purpose) return purpose;
   }
-  if (authorityPath === 'skills/buster/plugins/container-build/schemas/config.schema.json' && fieldPath === '$.definition.dockerfile') return 'Selects the repository-relative Dockerfile, independently of buildContext. The provider requires an existing file and rejects lexical or canonical escape from the repository.';
-  if (authorityPath === 'skills/buster/plugins/playwright/schemas/config.schema.json' && fieldPath === '$.configFile') return 'Selects the Playwright configuration file relative to projectDirectory, which is itself repository-relative. The provider requires an existing file and canonical containment within projectDirectory.';
+  if (authorityPath === 'skills/buster/plugins/container-build/schemas/config.schema.json' && fieldPath === '$.definition.dockerfile') return 'Selects the repository-relative Dockerfile, independently of buildContext. The provider must have an existing file and rejects lexical or canonical escape from the repository.';
+  if (authorityPath === 'skills/buster/plugins/playwright/schemas/config.schema.json' && fieldPath === '$.configFile') return 'Selects the Playwright configuration file relative to projectDirectory, which is itself repository-relative. An existing file and canonical containment within projectDirectory are necessary for the provider.';
   if (authorityPath === 'skills/buster/plugins/lighthouse/schemas/config.schema.json' && fieldPath === '$.profile') return 'Selects a named profile from the profiles map in the selected settingsFile. The provider loads this JSON file before selection. An unknown profile raises LIGHTHOUSE_PROFILE_NOT_FOUND.';
   if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json' && fieldPath.endsWith('.maxPayloadBytes')) return 'Caps UTF-8 serialized bytes of the admitted operator payload before format conversion. It does not cap the transformed discord_webhook envelope.';
   if (authorityPath === 'skills/common/plugins/notification-observer/schemas/config.schema.json' && fieldPath === '$.maxMessageChars') return 'Caps normalized supplied lifecycle summary/message text, not the whole notification. Title fallback, other fields and preview notifications have separate limits or paths.';
-  if (authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies navigation and analysis timeout budgets calculated from a fresh deadline for each profile/route combination after browser launch. Screenshot calls consult the remaining budget, but screenshot timeout errors are suppressed: screenshots are best-effort and do not enforce a combination completion deadline. Browser/context setup and cleanup are not bounded by this scalar. The enclosing provider or worker deadline is separate.';
+  if (authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies navigation and analysis timeout budgets from a new deadline for each profile/route combination after browser launch. Screenshot calls use the remaining budget. The runtime ignores screenshot timeout errors. Screenshots are best-effort and do not enforce a combination completion deadline. This scalar does not bound browser/context setup and cleanup. The enclosing provider or worker has a different deadline.';
   if (authorityPath === 'skills/buster/plugins/lighthouse/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies the timeout wrapper for each sequential Lighthouse audit run after Chrome launch. This is not a whole-measurement-set deadline or a bound on browser launch or cleanup. The enclosing provider or worker deadline is separate.';
   if (authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema') {
     if (fieldPath === '$.deadLetterMaxLen') return 'Sets the approximate Redis Stream MAXLEN ~ trim target for dead-letter writes. Retained length can exceed the target; this is not a strict record or byte cap.';
     if (fieldPath === '$.hookTimeoutMs') return 'Passes timeoutMs to the OpenClaw host api.on hook registration. Enforcement and timeout reporting belong to the selected host; the local synchronous observer callback supplies no own timeout or failure-report mechanism. Registration alone does not prove host enforcement.';
   }
-  if (authorityPath === 'skills/buster/plugins/visual/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies the browser.visual capture request timeout in milliseconds, with provider default 30000. It does not set a deadline for later compare calls. Capture has deadline checks, but browser launch can outlast them; synchronous PNG/pixelmatch comparison has no separate computation timer and cannot be preempted by this setting.';
+  if (authorityPath === 'skills/buster/plugins/visual/schemas/config.schema.json' && fieldPath === '$.timeoutMs') return 'Supplies the browser.visual capture request timeout in milliseconds, with provider default 30000. It does not set a deadline for subsequent compare calls. Capture has deadline checks, but browser launch can outlast them. This setting supplies no computation timer for synchronous PNG/pixelmatch comparison. This setting cannot preempt that comparison.';
 
-  if (authorityPath === 'skills/buster/plugins/security-providers/schemas/dependency.schema.json' && fieldPath === '$.projectDirectory') return 'Selects a repository-relative scan target. The provider checks lexical repository containment and the runtime resolves canonical workspace containment, but neither requires a directory. An existing file can be scanned without covering the intended project; the platform owner must verify that the selected path is the actual project directory and check expected project coverage before treating results as whole-project evidence.';
+  if (authorityPath === 'skills/buster/plugins/security-providers/schemas/dependency.schema.json' && fieldPath === '$.projectDirectory') return 'Selects a repository-relative scan target. The provider checks lexical repository containment and the runtime resolves canonical workspace containment, but those checks do not make a directory necessary. The selected path can be a file and not the intended project directory. Before treating results as whole-project evidence, the platform owner must verify the selected path as the actual project directory. The owner must also check expected project coverage.';
 
   if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json') {
     const manifestSelection = {
-      '$.serviceName': 'Selects the existing named Service required in the checked manifest and used for the returned internal endpoint; it does not create or rename that Service by rewriting the manifest.',
-      '$.servicePort': 'Selects the exact Service port required in the checked manifest and published in the returned internal endpoint; the checked manifest must already declare that port.',
-      '$.serviceTargetPort': 'Optionally constrains the resolved target port already declared by the checked Service manifest. A mismatch fails validation; this setting does not change workload or Service ports. The resolved target is carried into lease network policy, and manifest bytes are applied unchanged.',
+      '$.serviceName': 'Selects the existing named Service that must be in the checked manifest and is used for the returned internal endpoint. It does not rewrite the manifest to make or rename that Service.',
+      '$.servicePort': 'Selects the Service port that must be in the checked manifest and is published in the returned internal endpoint. The checked manifest must declare that port.',
+      '$.serviceTargetPort': 'Optionally constrains the resolved target port declared by the checked Service manifest. A mismatch fails validation. This setting does not change workload or Service ports. The resolved target is carried into lease network policy, and manifest bytes are applied unchanged.',
     };
     if (manifestSelection[fieldPath]) return manifestSelection[fieldPath];
   }
@@ -4206,24 +4206,24 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   const webTarget = webProviderTargetRules(authorityPath, fieldPath);
   if (webTarget) return webTarget.purpose;
   if (authorityPath === 'skills/common/plugins/network-http/schemas/config.schema.json') {
-    const facts = { '$.allowedOrigins': 'Lists admitted URL origins. The runtime normalizes each configured URL with new URL(value).origin; path text is not an additional route restriction.', '$.allowedMethods': 'Lists admitted request methods; the runtime uppercases values and defaults to GET when absent.', '$.allowedHeaders': 'Lists admitted request header names; the runtime lowercases names and defaults to accept, content-type and idempotency-key when absent.', '$.maxRequestBytes': 'Caps encoded request-body bytes; the runtime default is 1048576 bytes.', '$.maxResponseBytes': 'Caps observed response bytes, including streamed bodies; the runtime default is 1048576 bytes.', '$.timeoutMs': 'Sets the request timeout combined with caller cancellation; the runtime default is 30000 milliseconds.' };
+    const facts = { '$.allowedOrigins': 'Gives the admitted URL origins. The runtime normalizes each configured URL with new URL(value).origin. Path text is not an additional route restriction.', '$.allowedMethods': 'Gives the admitted request methods. When this setting is absent, the runtime defaults to GET. The runtime uppercases supplied values.', '$.allowedHeaders': 'Gives the admitted request header names. When this setting is absent, the runtime defaults to accept, content-type and idempotency-key. The runtime lowercases supplied names.', '$.maxRequestBytes': 'The runtime rejects encoded request bodies above this byte limit. The runtime default is 1048576 bytes.', '$.maxResponseBytes': 'The runtime rejects observed response bytes above this limit, with streamed bodies included. The runtime default is 1048576 bytes.', '$.timeoutMs': 'Sets the request timeout combined with caller cancellation. The runtime default is 30000 milliseconds.' };
     if (facts[fieldPath]) return facts[fieldPath];
   }
   if (authorityPath === 'skills/common/plugins/redis-transport/schemas/config.schema.json' && fieldPath === '$.url') return 'Selects the configured Redis endpoint used by both publisher and telemetry registrations. Neither registration declares a typed endpoint input or runtime endpoint override.';
   if (authorityPath === 'skills/common/plugins/operator-messaging/schemas/config.schema.json') {
     const target = '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}';
-    if (fieldPath === `${target}.tokenSecret`) return 'Names the confidential HMAC-SHA256 signing key resolved for this operator target. It signs requests and JSON receipt lookups; it is not sent as a bearer token.';
-    if (fieldPath === `${target}.endpointSecret`) return 'Names the Secret containing the confidential endpoint URL. The consumer requires its URL origin to match endpointOrigin and rejects embedded user credentials or fragments; the same resolved URL value is also the HMAC-SHA256 key for request signatures and JSON receipt lookups. tokenSecret is not selected in this mode.';
+    if (fieldPath === `${target}.tokenSecret`) return 'Names the confidential HMAC-SHA256 signing key resolved for this operator target. The key signs requests and JSON receipt lookups. The consumer does not send it as a bearer token.';
+    if (fieldPath === `${target}.endpointSecret`) return 'Names the Secret containing the confidential endpoint URL. The URL origin must match endpointOrigin. The consumer rejects embedded user credentials or fragments. The same resolved URL value is also the HMAC-SHA256 key for request signatures and JSON receipt lookups. tokenSecret is not selected in this mode.';
     if (fieldPath === `${target}.receiptEndpoint`) return 'Selects a remote receipt lookup URL only for format json, to reconcile an uncertain delivery before resending. discord_webhook does not query this URL and uses the local Discord receipt path. In both formats any supplied URL is still validated at activation as HTTP(S), without user credentials or fragment, and with the same target origin.';
   }
-  if (authorityPath === 'skills/buster/plugins/tailscale-exposure/schemas/config.schema.json' && fieldPath === '$.endpointName') return 'Selects an exact endpoint name from the deployment input. Omission selects only a sole endpoint; multiple endpoints are rejected as ambiguous. This selector is not approval or authorization. The provider defaults path to /, readiness to 120 seconds and retention to release.';
-  if (authorityPath === 'skills/buster/plugins/visual/schemas/config.schema.json' && fieldPath === '$.endpointName') return 'Selects a matching deployment endpoint; omission uses the first deployment endpoint. A typed public-endpoint input ignores this selector. Configured url combined with any typed input is rejected as ambiguous.';
+  if (authorityPath === 'skills/buster/plugins/tailscale-exposure/schemas/config.schema.json' && fieldPath === '$.endpointName') return 'Selects an endpoint from the deployment input. With endpointName supplied, the endpoint name must be the same as endpointName. Omission selects the only endpoint. The provider rejects multiple endpoints as ambiguous. This selector is not approval or authorization. The provider defaults path to /, readiness to 120 seconds and retention to release.';
+  if (authorityPath === 'skills/buster/plugins/visual/schemas/config.schema.json' && fieldPath === '$.endpointName') return 'Selects a matching deployment endpoint. Omission uses the first deployment endpoint. A typed public-endpoint input ignores this selector. Configured url combined with any typed input is rejected as ambiguous.';
 
-  if (authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && fieldPath === '$.url') return 'Supplies a configured target whose new URL(url).origin is used as the scan base. The configured path is discarded; routes select scanned paths, so changing only the URL path changes no scanned route. A configured URL cannot be combined with typed inputs.';
-  if (authorityPath === 'skills/buster/plugins/http/schemas/config.schema.json' && fieldPath === '$.url') return 'Supplies a canonical HTTP or HTTPS base origin, optionally ending in /. A non-root path, query, fragment or embedded credentials is rejected by explicitBase; path selects the request route separately. A configured base cannot be combined with a typed deployment or endpoint input.';
-  if (authorityPath === 'skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema' && fieldPath === '$.controlUrl') return 'Selects the base URL for Prism design-set and revision POST operations; a truthy configured value overrides the environment and built-in fallback.';
+  if (authorityPath === 'skills/buster/plugins/axe/schemas/config.schema.json' && fieldPath === '$.url') return 'Supplies a configured target whose new URL(url).origin is used as the scan base. The provider discards the configured path. Routes select scanned paths. Changing only the URL path changes no scanned route. A configured URL cannot be combined with typed inputs.';
+  if (authorityPath === 'skills/buster/plugins/http/schemas/config.schema.json' && fieldPath === '$.url') return 'Supplies a canonical HTTP or HTTPS base origin, optionally ending in /. The explicitBase function rejects a non-root path, query, fragment or embedded credentials. The path setting selects the request route separately. A configured base cannot be combined with a typed deployment or endpoint input.';
+  if (authorityPath === 'skills/prism/openclaw-plugin/openclaw.plugin.json#$.configSchema' && fieldPath === '$.controlUrl') return 'Selects the base URL for Prism design-set and revision POST operations. A truthy configured value overrides the environment and built-in fallback.';
   if (authorityPath === 'skills/buster/plugins/coverage-budget/schemas/config.schema.json') {
-    if (fieldPath === '$.minimumLinePercent') return 'Sets the enforced minimum line-coverage percentage; omitting this threshold disables budget enforcement, not LCOV input validation.';
+    if (fieldPath === '$.minimumLinePercent') return 'Sets the enforced minimum line-coverage percentage. Omitting this threshold disables budget enforcement, not LCOV input validation.';
     if (fieldPath === '$.combine') return 'Chooses merged line coverage or the lowest individual input percentage for the coverage-budget decision.';
   }
   if (authorityPath === 'skills/buster/plugins/container-build/schemas/config.schema.json') {
@@ -4231,7 +4231,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     if (fieldPath === '$.outputName') return 'Sets the build output identity instead of deriving it from the module or node identity.';
   }
   if (authorityPath === 'skills/buster/plugins/api-flow/schemas/config.schema.json' && fieldPath === '$.endpointName') {
-    return 'Selects an exact named endpoint only from a typed Kubernetes deployment fixture. Omission selects its sole endpoint; multiple endpoints require a matching name. A typed public-endpoint input already supplies its URL and ignores this selector.';
+    return 'Selects a named endpoint only from a typed Kubernetes deployment fixture. With endpointName supplied, the endpoint name must be the same as endpointName. Omission selects its only endpoint. With multiple endpoints, a matching name is necessary. A typed public-endpoint input supplies its URL and ignores this selector.';
   }
   if (authorityPath === 'skills/buster/plugins/api-flow/schemas/config.schema.json' && fieldPath === '$.url') {
     return 'Supplies a direct target instead of a typed deployment/endpoint input. Combining both sources is ambiguous and fails before any network operation.';
@@ -4243,8 +4243,8 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   if (!leaf) return null;
   if (authorityPath === 'skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json'
     && ['$.secretReferences', '$.secretReferences[]'].includes(fieldPath)) {
-    const selection = fieldPath.endsWith('[]') ? 'Names one Kubernetes Secret object to copy' : 'Lists Kubernetes Secret objects to copy';
-    return `${selection} from the approved source namespace into the deployment lease namespace created by ${context}. The runtime allowedSecretReferences and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlists must both admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections; listing a copied Secret does not create those projections. The local name pattern permits uppercase and underscore, so passing local schema/runtime validation is not Kubernetes Secret-name validation or proof that the object can be copied. Use actual Kubernetes-compatible source Secret names admitted by both owners, and verify source lookup and target copy; an invalid or missing object can fail at the controller/API boundary.`;
+    const selection = fieldPath.endsWith('[]') ? 'Names one Kubernetes Secret object to copy' : 'Gives Kubernetes Secret objects to copy';
+    return `${selection} from the approved source namespace into the deployment lease namespace created by ${context}. The runtime allowedSecretReferences allowlist and controller BUSTER_ALLOWED_SOURCE_SECRETS allowlist must each admit each name. The separately applied checked workload manifest defines volume, environment and imagePullSecret projections. An entry for a copied Secret does not create those projections.\n\n The local name pattern lets names have uppercase characters and underscores. Local schema/runtime validation does not validate Kubernetes Secret names. A copy can fail after local validation. Use Kubernetes-compatible source Secret names that each allowlist admits. Verify source lookup and target copy. An invalid or missing object can fail at the controller/API boundary.`;
   }
   if (authorityPath === 'skills/common/plugin-runtime/foundation/config/platform.schema.json' && fieldPath === '$.shutdownTimeoutMs') return 'Sets the timer delay used for adapter activation, readiness and shutdown. Some paths reject at the deadline; cleanup paths that only pass an abort signal can remain pending if the adapter does not settle.';
 
@@ -4253,7 +4253,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     return {
       id: `Sets the unique evidence identifier for one declared ${declarationKind} produced by ${context}.`,
       path: authorityPath === 'skills/buster/plugins/direct-command/schemas/config.schema.json'
-        ? `Selects the output path relative to the configured workingDirectory for one declared ${declarationKind}. The provider requires a regular file and canonical containment within that directory.`
+        ? `Selects the output path relative to the configured workingDirectory for one declared ${declarationKind}. A regular file and canonical containment within that directory are necessary for the provider.`
         : `Selects the repository-relative output path copied for one declared ${declarationKind} in ${context}.`,
       mediaType: `Declares the exact media type accepted for one ${declarationKind} output in ${context}.`,
       format: `Declares the parser format used for one ${declarationKind} output in ${context}.`,
@@ -4293,8 +4293,8 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
   if (/operations\[\]\.query\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one scalar query-parameter value for each configured parameter name in ${context}.`;
   if (/operations\[\]\.pathParameters\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one scalar path-parameter value for each OpenAPI path placeholder in ${context}.`;
   if (/definition\.buildArgs\.\{\*\}$/u.test(pathWithoutRoot)) return `Supplies one Docker build-argument value for each configured argument name in ${context}.`;
-  if (authorityPath === 'skills/common/plugins/secret-resolver/schemas/config.schema.json' && /environment\.\{\*\}$/u.test(pathWithoutRoot)) return 'Maps one allowed logical secret identifier to the process environment-variable name read for its confidential resolve request; the mapping stores the variable name, not the secret value.';
-  if (/environment\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one declared environment name to the value given to ${context}; it does not grant ambient host-environment access.`;
+  if (authorityPath === 'skills/common/plugins/secret-resolver/schemas/config.schema.json' && /environment\.\{\*\}$/u.test(pathWithoutRoot)) return 'Maps one allowed logical secret identifier to the process environment-variable name read for its confidential resolve request. The mapping stores the variable name, not the secret value.';
+  if (/environment\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one declared environment name to the value given to ${context}. It does not grant ambient host-environment access.`;
   if (/executableCatalog\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one logical executable identifier to the exact executable path that ${context} can start.`;
   if (/stageLabels\.\{\*\}$/u.test(pathWithoutRoot)) return `Maps one stage identifier to the bounded label shown by ${context}.`;
   if (/externalTrust\.allowedSourceDigests\.\{\*\}\[\]$/u.test(pathWithoutRoot)) return `Adds one allowed package digest under a canonical external source reference for ${context}.`;
@@ -4315,7 +4315,9 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
       maxRequestBytes: `Limits the serialized request bytes sent to one named target by ${context}.`,
       maxResponseBytes: `Limits response bytes retained from one named target by ${context}.`,
       receiptEndpoint: `Sets the same-origin endpoint that ${context} queries to reconcile an uncertain delivery.`,
-      tokenSecret: `Names the confidential token or signing secret resolved for one named target in ${context}.`,
+      tokenSecret: authorityPath === 'skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json'
+        ? `Names the confidential bearer token resolved for one named OpenClaw gateway target.`
+        : `Names the confidential token or signing secret resolved for one named target in ${context}.`,
       agentId: `Selects the OpenClaw agent identity used for one named dispatch target.`,
       agentRole: `Sets the stable role label used in OpenClaw task identity and diagnostics for one named target.`,
       collectorMode: `Selects the OpenClaw collect-and-wait protocol instead of the announcing spawn path for one named target.`,
@@ -4346,8 +4348,8 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     }[leaf];
     if (targetPurpose) return targetPurpose;
   }
-  if (/policy\.ranking\.categoryWeights\./u.test(pathWithoutRoot)) return `Sets the ranking weight for the ${leaf} finding category; a larger value moves otherwise comparable findings earlier.`;
-  if (/policy\.ranking\.priorityWeights\./u.test(pathWithoutRoot)) return `Sets the ranking weight for ${leaf} findings; a larger value moves otherwise comparable findings earlier.`;
+  if (/policy\.ranking\.categoryWeights\./u.test(pathWithoutRoot)) return `Sets the ranking weight for the ${leaf} finding category. When all other ranking values are the same, a larger value moves a finding before a finding with a smaller value.`;
+  if (/policy\.ranking\.priorityWeights\./u.test(pathWithoutRoot)) return `Sets the ranking weight for ${leaf} findings. When all other ranking values are the same, a larger value moves a finding before a finding with a smaller value.`;
   if (/assertions\[\]\.equals$/u.test(pathWithoutRoot)) return `Defines the exact Boolean, number, or string value expected at the assertion's JSON Pointer in ${context}.`;
   if (/assertions\[\]\.pointer$/u.test(pathWithoutRoot)) return `Selects the JSON Pointer read from the protected response for one assertion in ${context}.`;
   if (/acceptances\[\]\./u.test(pathWithoutRoot)) {
@@ -4410,8 +4412,8 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     artifactRoot: `Selects the private filesystem root where ${context} stores content-addressed blobs and metadata.`,
     artifacts: `Lists the bounded files that ${context} publishes as typed artifacts after the command completes.`,
     authentication: `Selects the closed authentication protocol used by ${context}.`,
-    authorEmail: `Sets the explicit Git commit-author email used by ${context}; ambient Git identity is ignored.`,
-    authorName: `Sets the explicit Git commit-author name used by ${context}; ambient Git identity is ignored.`,
+    authorEmail: `Sets the Git commit-author email used by ${context}. The adapter ignores Git identity from the host.`,
+    authorName: `Sets the Git commit-author name used by ${context}. The adapter ignores Git identity from the host.`,
     body: `Supplies the JSON request body for one selected operation in ${context}.`,
     budget: `Selects the named performance budget evaluated by ${context}.`,
     buildContext: `Selects the repository-relative build context sent to ${context}.`,
@@ -4432,7 +4434,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     deadLetterMaxLen: `Caps retained dead-letter records for the Redis stream written by ${context}.`,
     dedupTtlMs: `Sets how long ${context} retains a Redis idempotency key before it can be accepted again.`,
     definition: `Selects the closed Dockerfile or built-in template definition used by ${context}.`,
-    deliveryManifestEncoding: `Pins the portable JSON encoding required for delivery-manifest input to ${context}.`,
+    deliveryManifestEncoding: `Sets the portable JSON encoding that delivery-manifest input to ${context} must use.`,
     deliveryRoot: `Selects the private durable-record root used to reconcile sends after restart in ${context}.`,
     deliveryStageId: `Names the stage whose delivery artifact ${context} binds into the handoff.`,
     digest: `Pins content to the exact SHA-256 digest consumed by ${context}.`,
@@ -4450,7 +4452,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     exclude: `Lists selectors deliberately omitted from the accessibility scan performed by ${context}.`,
     executable: `Selects the logical executable that ${context} requests from the command capability.`,
     expectedContentType: `Requires the HTTP response from ${context} to have the specified content type.`,
-    expectedHead: `Pins repository reads to the expected Git commit; ${context} rejects a changed head.`,
+    expectedHead: `Repository reads must use the expected Git commit. If the head changes, ${context} rejects repository reads.`,
     expectedStatuses: `Lists the HTTP status codes that count as successful assertions in ${context}.`,
     expectedText: `Requires the HTTP response body from ${context} to contain the specified text.`,
     expiresAt: `Sets the date after which the configured acceptance in ${context} is rejected.`,
@@ -4530,10 +4532,10 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     operationId: `Selects the exact OpenAPI operation executed by ${context}.`,
     operations: `Lists exact OpenAPI operations executed by ${context}.`,
     operatorTarget: `Selects the configured operator-message target that receives the demo handoff.`,
-    orchestratorIssuerId: `Sets the issuer identity required on orchestrator decisions accepted by ${context}.`,
+    orchestratorIssuerId: `Sets the issuer identity that must be on orchestrator decisions accepted by ${context}.`,
     outputName: `Sets the stable logical name of the image output produced by ${context}.`,
     outsideScope: `Selects how the review treats a proposed finding outside the declared review scope.`,
-    passwordKey: `Names the JSON property in the login request body populated from the fixed confidential credentials.values.password field; it does not rename the credential object field.`,
+    passwordKey: `Names the JSON property in the login request body that receives the fixed confidential credentials.values.password field. It does not rename the credential object field.`,
     passwordSecret: `Names the confidential Redis password that ${context} resolves through the secret capability.`,
     path: `Sets the URL path used by ${context}.`,
     paths: `Lists the URL paths checked by ${context}.`,
@@ -4560,13 +4562,13 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     registryVersion: `Pins the simplification-rule registry version used by the review policy.`,
     remove: `Removes entries from the selected rule set used by ${context}.`,
     replace: `Replaces entries in the selected rule set used by ${context}.`,
-    reportArtifactEncoding: `Pins the portable JSON encoding required for the stored review report.`,
+    reportArtifactEncoding: `Sets the portable JSON encoding that the stored review report must use.`,
     reports: `Lists command-produced report files that ${context} parses as test evidence.`,
-    resultMode: `Selects whether ${context} requires JUnit evidence or uses the command exit code as its result.`,
+    resultMode: `Selects whether JUnit evidence is necessary for ${context} or whether it uses the command exit code as its result.`,
     redisCommandTimeoutMs: `Limits one Redis command issued by ${context}.`,
     redisHost: `Sets the Redis host contacted by ${context}.`,
     redisNetworkIsolation: `Selects the network-isolation binding passed to the Redis connection used by ${context}.`,
-    redisPassword: `Supplies the Redis password used by ${context}; environment precedence is resolved before connection.`,
+    redisPassword: `Supplies the Redis password used by ${context}. Environment precedence resolves before connection.`,
     redisPort: `Sets the Redis TCP port contacted by ${context}.`,
     redisTls: `Controls whether ${context} protects the Redis connection with TLS.`,
     redisUsername: `Supplies the Redis ACL username used by ${context}.`,
@@ -4594,12 +4596,12 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     secretName: `Names the Kubernetes Secret used by ${context}.`,
     selector: `Limits the configured accessibility exception to one exact DOM selector.`,
     selectors: `Lists DOM selectors masked for one visual-comparison target in ${context}.`,
-    semanticVerifier: `Selects the verifier result required before a proposed review finding can be accepted.`,
+    semanticVerifier: `Selects the verifier result that is necessary before a proposed review finding can be accepted.`,
     serviceName: `Sets the DNS service name created inside the namespace lease by ${context}.`,
     servicePort: `Sets the service port published in the typed endpoint returned by ${context}.`,
     serviceTargetPort: `Sets the workload target port when it differs from the published service port.`,
     settingsFile: `Selects the repository-relative Lighthouse settings file loaded by ${context}.`,
-    shutdownTimeoutMs: `Sets the shutdown timeout passed to ${context}; its receiving cancellation contract determines whether work actually stops.`,
+    shutdownTimeoutMs: `Sets the shutdown timeout passed to ${context}. Its receiving cancellation contract determines whether work actually stops.`,
     signingSecret: `Names the confidential HMAC key used by ${context} to sign one target's request.`,
     sourceAuthority: `Sets the exact source-attestation authority accepted by ${context}.`,
     sourcePrivateKeySecret: `Names the confidential private key used to sign source attestations sent by ${context}.`,
@@ -4624,7 +4626,7 @@ function schemaSpecificPurpose(authorityPath, fieldPath, context) {
     unknownScope: `Selects how the review treats a proposed finding whose diff scope cannot be proved.`,
     unverifiedRequirement: `Selects the review outcome when a stated requirement cannot be verified.`,
     url: `Sets the absolute target URL contacted by ${context} when no typed endpoint input supplies it.`,
-    usernameKey: `Names the JSON property in the login request body populated from the fixed confidential credentials.values.username field; it does not rename the credential object field.`,
+    usernameKey: `Names the JSON property in the login request body that receives the fixed confidential credentials.values.username field. It does not rename the credential object field.`,
     usernamePointer: `Selects the JSON Pointer that must equal the authenticated username in ${context}.`,
     workers: `Sets the number of Playwright workers used by ${context}.`,
     workingDirectory: `Selects the allowlisted repository-relative directory in which ${context} starts the command.`,
@@ -4867,7 +4869,7 @@ const busterSource = (plugin) => `skills/buster/plugins/${plugin}/src/provider.j
 collectionAuthority(busterSchema('direct-command'), ['$.args'], busterSource('direct-command'), 'const args = value.args ?? []',
   'Supplies the ordered arguments passed to the selected executable.', 'The provider uses an empty argument list when omitted.', 'An empty array passes no arguments.');
 collectionAuthority(busterSchema('direct-command'), ['$.environment'], busterSource('direct-command'), 'environment: { ...environment, CI:',
-  'Supplies permitted command environment entries. The provider sets CI to the string true after these entries.', 'Omission uses an empty authored map, then inserts CI=true.', 'An empty object still produces CI=true. Protected environment names, invalid names, NUL values, or more than 64 entries are rejected. The shipped common command-runner rejects every payload.environment, including this injected CI entry, with COMMAND_ENVIRONMENT_DENIED. This provider therefore needs an executor that explicitly supports its environment payload; the common command-runner does not execute this request.');
+  'Supplies permitted command environment entries. The provider sets CI to the string true after these entries.', 'Omission uses an empty authored map, then inserts CI=true.', 'An empty object still produces CI=true. Protected environment names, invalid names, NUL values, or more than 64 entries are rejected. The shipped common command-runner rejects every payload.environment, including this injected CI entry, with COMMAND_ENVIRONMENT_DENIED. An executor that supports its environment payload is necessary for this provider. The common command-runner does not execute this request.');
 SCHEMA_COLLECTION_AUTHORITIES.get(`${busterSchema('direct-command')}::$.environment`).secondaryAuthorities = [
   ['skills/common/plugins/command-runner/src/adapter.ts', "request.payload.environment !== undefined"],
 ];
@@ -4875,23 +4877,23 @@ for (const kind of ['reports', 'coverage', 'artifacts']) {
   collectionAuthority(busterSchema('direct-command'), [`$.${kind}`], busterSource('direct-command'), `const ${kind} = declarations(value.${kind}`,
     `Declares the ${kind} copied from output files relative to the configured workingDirectory. Identifiers and paths must be unique across all three evidence collections.`,
     'The declarations parser uses an empty list when omitted.', kind === 'reports'
-      ? 'An empty list is required for resultMode=exit-code and forbidden for resultMode=junit-required.'
+      ? 'With resultMode=exit-code, the list must be empty. With resultMode=junit-required, the list must not be empty.'
       : 'An empty list declares no output of this kind.');
   collectionAuthority(busterSchema('direct-command'), [`$.${kind}[]`], busterSource('direct-command'), `const ${kind} = declarations(value.${kind}`,
     `Declares one ${kind} item copied from an output file relative to the configured workingDirectory. Identifiers and paths must be unique across all three evidence collections.`,
-    'An omitted collection supplies no items. Each authored item must satisfy its own required fields.',
-    'An empty object fails the authored item required fields. Collection-level empty-list and resultMode conditions remain separate.');
+    'An omitted collection supplies no items. Each authored item must have the fields that its schema makes necessary.',
+    'An empty object does not have the necessary fields for an authored item. Different collection-level empty-list and resultMode conditions also apply.');
 }
 collectionAuthority(busterSchema('container-build'), ['$.definition.buildArgs'], busterSource('container-build'), "buildArgs = object(definition.buildArgs",
   'Maps Docker build-argument names to values sent to the immutable image build.', 'Omission leaves the initial buildArgs map empty.', 'An empty map supplies no build arguments.');
 collectionAuthority(busterSchema('demo-auth-smoke'), ['$.assertions', '$.assertions[]'], 'skills/buster/plugins/demo-auth-smoke/src/protocol.js', 'Array.isArray(value.assertions)',
-  'Selects protected-response business assertions in addition to the authenticated username check.', 'The protocol requires assertions; omission is invalid.', 'An empty list is rejected with DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED.');
+  'Selects protected-response business assertions in addition to the authenticated username check.', 'Assertions are necessary for the protocol. Omission is invalid.', 'An empty list is rejected with DEMO_AUTH_BUSINESS_ASSERTION_REQUIRED.');
 for (const plugin of ['axe', 'lighthouse']) collectionAuthority(busterSchema(plugin), ['$.acceptances', '$.acceptances[]'], busterSource(plugin), 'config.acceptances ?? []',
   `Declares expiring exceptions for exact ${plugin} findings.`, 'Omission uses an empty acceptance list.', 'An empty list suppresses no finding.');
 for (const [field, anchor, purpose, omission, empty] of [
-  ['image', 'value.image === undefined ? object', 'Selects the immutable image reference and digest for a Kubernetes deployment lease.', 'Omission selects exactly one image input; no config image and no input is rejected. Supplying both is ambiguous.', 'An empty image object lacks the required matching reference and digest and is rejected.'],
+  ['image', 'value.image === undefined ? object', 'Selects the immutable image reference and digest for a Kubernetes deployment lease.', 'With no configured image, one and only one image input is necessary. With no configured image and no image input, the provider rejects the request. Supplying both is ambiguous.', 'The provider rejects an empty image object because a matching reference and digest are both necessary.'],
   ['retention', 'value.retention === undefined ? {}', 'Controls whether the isolated deployment is deleted or retained and sets its lease lifetime.', 'Omission uses an empty policy, then mode=delete and seconds=1800.', 'An empty object uses mode=delete and seconds=1800.'],
-  ['testCredentials', 'value.testCredentials === undefined ? null', 'Requests generation of isolated demo credentials under one declared Secret name.', 'Omission disables credential generation.', 'An empty object lacks mode=generate and a valid secretName and is rejected.'],
+  ['testCredentials', 'value.testCredentials === undefined ? null', 'Requests generation of isolated demo credentials under one declared Secret name.', 'Omission disables credential generation.', 'The provider rejects an empty object because it lacks mode=generate and a valid secretName.'],
 ]) collectionAuthority(busterSchema('kubernetes-fixture'), [`$.${field}`], busterSource('kubernetes-fixture'), anchor, purpose, omission, empty);
 for (const [field, anchor, purpose] of [
   ['headers', 'header: selected.headers ?? {}', 'Maps HTTP request-header names to values for one selected OpenAPI operation.'],
@@ -4900,13 +4902,13 @@ for (const [field, anchor, purpose] of [
   ['expectedStatuses', 'selected.expectedStatuses.includes(response.status)', 'Selects the response status codes accepted for one operation in addition to the response-schema checks.'],
 ]) collectionAuthority(busterSchema('openapi'), [`$.operations[].${field}`], busterSource('openapi'), anchor, purpose,
   field === 'expectedStatuses' ? 'Omission performs no additional expectedStatuses membership check.' : 'Omission uses an empty supplied parameter map. Required OpenAPI parameters must still be satisfied.',
-  field === 'expectedStatuses' ? 'An empty array is invalid under minItems.' : 'An empty map supplies no parameter of this kind. The loaded OpenAPI document can require parameters that make it invalid.');
+  field === 'expectedStatuses' ? 'An empty array is invalid under minItems.' : 'An empty map supplies no parameter of this kind. The loaded OpenAPI document can make parameters necessary, so an empty map can be invalid.');
 for (const provider of ['dependency', 'headers', 'image', 'kubernetes-policy', 'kubernetes-runtime']) {
   const schemaPath = `skills/buster/plugins/security-providers/schemas/${provider}.schema.json`;
   collectionAuthority(schemaPath, ['$.policy'], 'skills/buster/plugins/security-providers/src/common.js', 'item.profile !== POLICY.profile',
-    'Selects the strict-v1 security decision policy and its time-bounded finding exceptions.', 'Omission is invalid: the policy object and strict-v1 profile are required.', 'An empty object lacks profile=strict-v1 and is rejected.');
+    'Selects the strict-v1 security decision policy and its time-bounded finding exceptions.', 'The policy object and strict-v1 profile are necessary. Omission is invalid.', 'An empty object lacks profile=strict-v1 and is rejected.');
   collectionAuthority(schemaPath, ['$.policy.acceptances', '$.policy.acceptances[]'], 'skills/buster/plugins/security-providers/src/common.js', 'acceptances: acceptances(item.acceptances)',
-    'Declares exact finding identifiers whose suppression ends at expiresAt; each entry requires a reason and a unique findingId.', 'The acceptance parser uses an empty list when omitted.', 'An empty list suppresses no finding.');
+    'Declares finding identifiers whose suppression ends at expiresAt. Each entry must have a reason and a findingId used by no other entry.', 'The acceptance parser uses an empty list when omitted.', 'An empty list suppresses no finding.');
 }
 for (const [field, anchor, purpose] of [
   ['rules', 'const value = overrides === undefined ? {}', 'Supplies removals, additions, and replacements for the selected built-in security-header rule profile.'],
@@ -4915,27 +4917,27 @@ for (const [field, anchor, purpose] of [
 collectionAuthority(busterSchema('size-budget'), ['$.matchingFiles'], busterSource('size-budget'), 'const matchingFiles = value.matchingFiles ?? []',
   'Declares named glob rules with a maximum aggregate byte count for each matched artifact-entry set.',
   'Omission uses an empty matching-rule list.',
-  'An empty list adds no matching-file check. Only blocking mode requires at least one total, count, growth or matching-file limit; otherwise SIZE_BUDGET_BLOCKING_LIMIT_REQUIRED rejects configuration.');
+  'An empty list adds no matching-file check. At least one total, count, growth or matching-file limit is necessary only in blocking mode. Without such a limit, SIZE_BUDGET_BLOCKING_LIMIT_REQUIRED rejects configuration in blocking mode.');
 collectionAuthority(busterSchema('size-budget'), ['$.matchingFiles[]'], busterSource('size-budget'), 'const matchingFiles = value.matchingFiles ?? []',
   'Declares one named glob rule with a maximum aggregate byte count for its matched artifact-entry set.',
-  'An omitted collection supplies no rules. Each authored rule requires id, pattern and maximumBytes.',
-  'An empty object lacks the required rule fields and is invalid. The separate blocking-mode condition applies to the whole configured limit set.');
+  'An omitted collection supplies no rules. Each authored rule must have id, pattern and maximumBytes.',
+  'An empty object does not have the necessary rule fields and is invalid. The blocking-mode condition also applies to the full configured limit set.');
 for (const [field, anchor, purpose, omission, empty] of [
   ['masks', 'config.masks ?? []', 'Declares CSS selector masks for selected screenshot targets.', 'Omission uses an empty mask list.', 'An empty list masks no element.'],
-  ['masks[]', 'config.masks ?? []', 'Binds one selector list to a target already present in targets.', null, 'An empty object lacks a target and selector list and is rejected.'],
+  ['masks[]', 'config.masks ?? []', 'Binds one selector list to a target in targets.', null, 'The provider rejects an empty object because it lacks a target and selector list.'],
   ['overrides', 'config.overrides ?? {}', 'Overrides named thresholds in the selected visual comparison profile.', 'Omission uses an empty override map.', 'An empty map keeps every selected comparison-profile threshold.'],
 ]) collectionAuthority(busterSchema('visual'), [`$.${field}`], busterSource('visual'), anchor, purpose, omission, empty);
 const platformSchema = 'skills/common/plugin-runtime/foundation/config/platform.schema.json';
 const engineRuntime = 'skills/nova/core/execution/engine-runtime.ts';
 for (const [paths, anchor, purpose, empty] of [
-  [['$.activeAdapters'], 'platform.activeAdapters.forEach', 'Selects the initially enabled adapter registrations. Observer and stage registrations also enter the initial enabled set; required capabilities then recursively enable their selected provider adapters. Configuration alone does not activate an adapter.', 'An empty list enables no adapter directly through this field. Dependencies of enabled observers and stages can still enable and start provider adapters.'],
-  [['$.adapters', '$.adapters.{*}'], 'adapters: objectMap(platform.adapters)', 'Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. Only adapters in the complete enabled set have their configuration validated against the registered schema; disabled adapters are not schema-validated or started.', 'An empty map supplies no explicit adapter config; an enabled adapter receives {} and must satisfy its registered schema.'],
+  [['$.activeAdapters'], 'platform.activeAdapters.forEach', 'Selects the initially enabled adapter registrations. Observer and stage registrations also enter the initial enabled set. The requiredCapabilities declarations then recursively enable their selected provider adapters. Configuration alone does not activate an adapter.', 'An empty list enables no adapter directly through this field. Dependencies of enabled observers and stages can still enable and start provider adapters.'],
+  [['$.adapters', '$.adapters.{*}'], 'adapters: objectMap(platform.adapters)', 'Maps adapter registration identifiers to their activation configuration. Every configured identifier must exist. The loader validates configuration against registered schemas only for adapters in the full enabled set. It does not validate or start disabled adapters.', 'An empty map gives no adapter configuration. An enabled adapter receives {}. The loader validates that object against its registered schema.'],
   [['$.observers', '$.observers.{*}'], 'observers: objectMap(platform.observers)', 'Maps enabled observer registration identifiers to their exact configuration.', 'An empty map enables no observer.'],
-  [['$.externalTrust', '$.externalTrust.allowedSourceDigests', '$.externalTrust.allowedSourceDigests.{*}'], 'platform.externalTrust.allowedSourceDigests', 'Selects allowed external package digests for each canonical source reference.', 'An empty digest map permits no source by digest allowlisting; an empty per-source list permits no digest for that source.'],
+  [['$.externalTrust', '$.externalTrust.allowedSourceDigests', '$.externalTrust.allowedSourceDigests.{*}'], 'platform.externalTrust.allowedSourceDigests', 'Selects allowed external package digests for each canonical source reference.', 'With an empty digest map, no source is permitted by digest allowlisting. With an empty per-source list, no digest is permitted for that source.'],
   [['$.externalTrust.verifiedAttestations'], 'platform.externalTrust.verifiedAttestations', 'Maps external package digests to verified attestation digests used by package admission.', 'An empty map provides no verified attestation admission.'],
-  [['$.providers'], 'new Map(Object.entries(platform.providers))', 'Selects one adapter registration for each configured capability identifier.', 'An empty map selects no capability providers. Registrations that require capabilities can fail admission.'],
+  [['$.providers'], 'new Map(Object.entries(platform.providers))', 'Selects one adapter registration for each configured capability identifier.', 'An empty map selects no capability providers. Registrations with requiredCapabilities entries can fail admission.'],
   [['$.grants', '$.grants.{*}', '$.grants.{*}.{*}'], 'grants: nestedMap(platform.grants)', 'Maps registration identifiers and capability identifiers to their resource-scoped grants.', 'An empty grant map grants no capability at that level. Configuration cannot create permission outside this policy.'],
-]) collectionAuthority(platformSchema, paths, engineRuntime, anchor, purpose, 'The loader inserts no map or list at this path. Omission must satisfy the listed parent required constraints.', empty);
+]) collectionAuthority(platformSchema, paths, engineRuntime, anchor, purpose, 'The loader inserts no map or list at this path. The parent field-presence constraints in this row also apply to omission.', empty);
 SCHEMA_COLLECTION_AUTHORITIES.get(`${platformSchema}::$.activeAdapters`).secondaryAuthorities = [
   ['skills/common/plugin-runtime/foundation/registry/capabilities.ts', 'function enableProviders('],
 ];
@@ -4944,15 +4946,15 @@ for (const field of ['$.adapters', '$.adapters.{*}']) SCHEMA_COLLECTION_AUTHORIT
   ['skills/common/plugin-runtime/foundation/registry/configuration.ts', 'for (const [registrationId, entry] of snapshot.adapters)'],
 ];
 collectionAuthority(platformSchema, ['$.administrativeDecisionIssuers', '$.administrativeDecisionIssuers[]'], 'skills/nova/core/execution/engine-admin.ts', 'administrativeDecisionIssuers.some',
-  'Selects the operator or administrator identities allowed to reopen a run.', 'The platform schema requires this list.', 'An empty list denies every administrative reopen principal. An empty entry lacks type and id and is invalid.');
+  'Selects the operator or administrator identities allowed to reopen a run.', 'The platform schema makes this list necessary.', 'An empty list denies every administrative reopen principal. An empty entry lacks type and id and is invalid.');
 collectionAuthority(platformSchema, ['$.isolation'], 'skills/common/plugin-runtime/foundation/config/platform.ts', 'config.isolation ? { isolation:',
   'Selects the cgroup root passed to plugin activation after resolution relative to the platform file.', 'Omission supplies no isolation override.', 'An empty object lacks cgroupRoot and is invalid.');
 collectionAuthority('skills/common/plugins/command-runner/schemas/config.schema.json', ['$.executableCatalog'], 'skills/common/plugins/command-runner/src/adapter.ts', 'catalogFrom(context.config.executableCatalog)',
-  'Maps stable logical executable identifiers to canonical executable paths added to the command allowlist. propertyNames constrains every identifier.', 'Omission uses an empty catalog; allowedExecutables remains a separate allowlist.', 'An empty map adds no executable path.');
+  'Maps stable logical executable identifiers to canonical executable paths added to the command allowlist. propertyNames constrains every identifier.', 'Omission uses an empty catalog. The allowedExecutables setting is a different allowlist.', 'An empty map adds no executable path.');
 collectionAuthority('skills/common/plugins/secret-resolver/schemas/config.schema.json', ['$.environment'], 'skills/common/plugins/secret-resolver/src/adapter.ts', 'const mapping = context.config.environment',
-  'Maps allowed secret identifiers to process environment-variable names. It controls which confidential requests can resolve a value.', 'Omission is rejected as a missing environment mapping.', 'An empty object resolves no secret identifier; lookup returns SECRET_DENIED.');
+  'Maps allowed secret identifiers to process environment-variable names. It controls which confidential requests can resolve a value.', 'Omission is rejected as a missing environment mapping.', 'An empty object resolves no secret identifier. Lookup returns SECRET_DENIED.');
 collectionAuthority('skills/common/plugins/notification-observer/schemas/config.schema.json', ['$.stageLabels'], 'skills/common/plugins/notification-observer/src/observer.ts', 'const stageLabels = context.contract.config.stageLabels',
-  'Maps stage identifiers to bounded labels in lifecycle notifications.', 'Omission supplies no configured stage labels; notification presentation uses its built-in stage identity or agent-role label.', 'An empty map overrides no stage label.');
+  'Maps stage identifiers to bounded labels in lifecycle notifications.', 'Omission supplies no configured stage labels. Notification presentation uses its built-in stage identity or agent-role label.', 'An empty map overrides no stage label.');
 const operatorTargetPath = '$.targets.{pattern:^[a-z0-9](?:[a-z0-9._:-]{0,126}[a-z0-9])?$}';
 collectionAuthority('skills/common/plugins/operator-messaging/schemas/config.schema.json', [operatorTargetPath], 'skills/common/plugins/operator-messaging/src/config.ts', "exactKeys(raw, TARGET_KEYS",
   'Selects one closed operator-message target: a direct endpoint with a token, or a secret endpoint paired with its public origin.');
@@ -4963,17 +4965,17 @@ for (const [schemaName, sourceName, anchor] of [
   schemaName === 'config' ? 'Maps target identifiers to generic dispatcher endpoints and authentication policy.' : 'Maps target identifiers to OpenClaw session configuration, token budgets, result import, and polling limits.');
 for (const schemaPath of ['skills/nova/plugins/review/schemas/config.schema.json', 'skills/nova/plugins/review/schemas/repository-audit-config.schema.json']) {
   collectionAuthority(schemaPath, ['$.policy'], 'skills/nova/plugins/review/src/review-policy-resolver.ts', "candidates.push(['settings_file', validated(input.settingsFile",
-    'Supplies a complete replacement review policy. The resolver validates the built-in policy first, then selects this settings policy as a whole; it does not merge individual fields.',
+    'Supplies a complete replacement review policy. The resolver first validates the built-in policy. Then it selects this settings policy as a whole. It does not merge individual fields.',
     'Omission selects the built-in policy named by profile. The stage applies its own default profile when profile is also absent.',
-    'An empty object is invalid because the complete review-policy fields are required.');
+    'An empty object is invalid because the policy must have the full set of necessary review-policy fields.');
   for (const [section, purpose] of Object.entries({
     blocking: 'Selects blocking finding priorities and categories and their diff/evidence conditions. P0 and correctness, security, and contract cannot be omitted.',
     limits: 'Sets finding, bundle, context, expansion, and advisory capacities. Context and file bytes must fit the enclosing byte budgets. Initial context must leave both file and byte capacity for expansion.',
     scope: 'Selects what happens to outside-scope, unknown-scope, and pre-existing findings.',
     verification: 'Selects semantic verification and the action for insufficient evidence or an unverified requirement.',
-    simplification: 'Selects simplification rules, confidence, and recommendation capacity. Enabled policies need rules and positive capacity; disabled policies require neither.',
+    simplification: 'Selects simplification rules, confidence, and recommendation capacity. Rules and positive capacity are necessary for enabled policies. For disabled policies, rules and positive capacity are not necessary.',
     ranking: 'Sets priority, category, diff, and evidence weights used to order finding clusters.',
-    followUp: 'Selects retained follow-up priorities and their capacity. follow_up actions require both non-empty priorities and positive capacity.',
+    followUp: 'Selects retained follow-up priorities and their capacity. For follow_up actions, both nonempty priorities and positive capacity are necessary.',
     governor: 'Sets repair-cycle and growth budgets used to stop further repairs.',
   })) collectionAuthority(schemaPath, [`$.policy.${section}`], 'skills/nova/plugins/review/src/review-policy-parser.ts', `section(input, '${section}')`, purpose);
   for (const category of ['priority', 'category']) collectionAuthority(schemaPath, [`$.policy.ranking.${category}Weights`], 'skills/nova/plugins/review/src/review-policy-parser.ts', `weights(value.${category}Weights`,
@@ -5020,7 +5022,7 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
       authorityKey,
       status: 'structural-container',
       text: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema'
-        ? 'The observer merges registration configuration, then service configuration, then hook configuration. Later defined keys replace earlier keys; undefined is ignored, while null and empty replace earlier values. Each resulting defined key wins over its environment value before the field normalizer runs. Child rows state the actual bounds, defaults and failure rules.'
+        ? 'The observer merges registration configuration, then service configuration, then hook configuration. A subsequently defined value replaces the previous value for the same key. The merge ignores undefined keys. Null and empty values replace previous values. Each resulting defined key wins over its environment value before the field normalizer normalizes that value. Child rows state the actual bounds, defaults and failure rules.'
         : 'Structural schema container. Child fields define configurable behavior.',
       evidence: authorityPath === 'skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema' ? 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts:21' : schemaAuthorityPath(authorityPath),
       schemaEvidence: schemaAuthorityPath(authorityPath),
@@ -5060,16 +5062,23 @@ function schemaFieldMeaning(authorityPath, field, consumerEvidence) {
   const runtimeFallback = schemaRuntimeFallback(authorityPath, field);
   const describedPurpose = authoredDescription || purpose;
   const runtimeRules = schemaRuntimeValidationRules(authorityPath, field);
-  const acceptedValues = [schemaAcceptedValues(field), runtimeRules?.accepted].filter(Boolean).map((value) => value.replace(/\.$/u, '')).join('; ');
+  const acceptedValues = [schemaAcceptedValues(field), runtimeRules?.accepted].filter(Boolean).map((value) => value.replace(/\.$/u, '')).join('. ');
   const defaultBehavior = runtimeRules?.omission ?? collection?.omission ?? schemaDefaultBehavior(authorityPath, field, runtimeFallback);
   const emptyBehavior = runtimeRules?.empty ?? collection?.empty ?? schemaEmptyBehavior(field);
   if (describedPurpose && implementation) {
-    const changeImpact = `Changing ${field.path} changes this exact configured behavior when ${context} next loads it: ${describedPurpose}`;
-    const failureMeaning = runtimeRules?.failure ?? `Schema validation rejects ${field.path} when it violates ${acceptedValues}. The linked consumer at ${implementation.path}:${implementation.line} owns any later operational rejection for this field; no unrelated target, path, secret, or resource failure is inferred.`;
+    const changeImpact = `When ${context} next loads the configuration, a change to ${field.path} has the effect given above.`;
+    const failureMeaning = runtimeRules?.failure ?? `Schema validation rejects ${field.path} when it violates ${acceptedValues}. If operational processing rejects this field subsequently, use the linked consumer at ${implementation.path}:${implementation.line} to find the conditions. This row gives no failure contract for other targets, paths, secrets or resources.`;
     return {
       authorityKey,
       status: field.description?.trim() ? 'schema-and-runtime-authority' : 'qualified-runtime-authority',
-      text: `${describedPurpose} Accepted values: ${acceptedValues}. Omission: ${defaultBehavior} Empty value: ${emptyBehavior} Change effect: ${changeImpact} Failure: ${failureMeaning}`,
+      text: [
+        describedPurpose,
+        `Accepted values: ${acceptedValues}.`,
+        `Omission: ${defaultBehavior}`,
+        `Empty value: ${emptyBehavior}`,
+        `Change effect: ${changeImpact}`,
+        `Failure: ${failureMeaning}`,
+      ].join('\n\n'),
       evidence: `${implementation.path}:${implementation.line}`,
       schemaEvidence: schemaAuthorityPath(authorityPath),
       implementationEvidence: `${implementation.path}:${implementation.line}`,
@@ -5584,22 +5593,37 @@ function buildSchemaInventory() {
       sourceDigest: sha256(text),
       fields: yamlFields(JSON.parse(text), { sourcePath: swarmPath, chartRoot: null, consumerMap: new Map(), sourceClass: 'swarm-authored-config', owner: sourceOwner(swarmPath), resource: null, externalBindings: [], runtimeBindings: [] }).map((field) => ({
         ...field,
+        meaning: field.path !== '$' && (field.type === 'object' || field.type === 'array') ? {
+          status: 'runtime-meaning-blocker',
+          text: 'This row gives the values in the checked-in file. These values give no rules for accepted keys, item variants, defaults or empty values. There is no bound versioned loader collection contract.',
+          evidence: swarmPath,
+          blockerOwner: 'OpenClaw/swarm loader contract owner',
+          closureCondition: 'Before you change collection values, bind a versioned external loader collection contract.',
+        } : field.type === 'object' || field.type === 'array' ? field.meaning : {
+          status: 'runtime-meaning-blocker',
+          text: 'When swarmConfigJson is not selected, the chart embeds this compact swarm file. The init path parses and writes the selected file. These operations give no rules for accepted keys, defaults or empty values. There is no bound versioned loader field schema.',
+          evidence: swarmPath,
+          blockerOwner: 'OpenClaw/swarm loader contract owner',
+          closureCondition: 'Bind a versioned field schema when the loader publishes one.',
+        },
         required: field.type === 'object' || field.type === 'array' ? 'not-applicable-container' : 'external-schema',
         requiredReason: field.type === 'object' || field.type === 'array'
-          ? 'This row is a structural container; child leaf rows own loader semantics.'
-          : 'The checked-in repository has no field schema; the OpenClaw/swarm loader owns acceptance.',
+          ? 'This row is a structural container. The child leaf rows give the loader field contracts, if known.'
+          : 'This inventory has no bound versioned field contract from the OpenClaw/swarm loader. Accepted fields are unknown.',
         defaultKind: field.type === 'object' || field.type === 'array' ? 'authored-container' : 'authored-runtime-base',
         constraints: field.type === 'object' || field.type === 'array' ? [] : ['valid JSON plus external OpenClaw/swarm loader contract'],
         runtimeOwner: 'OpenClaw gateway runtime configuration loader',
         consumers: [{ path: 'charts/kubeclaw/templates/configmap-swarm-config.yaml', line: 14, kind: 'helm-file-embedding', authority: '.Files.Get files/config/swarm.config.json' }, { path: 'charts/kubeclaw/templates/deployment.yaml', line: 674, kind: 'runtime-config-materialization', authority: 'JSON parse and runtime file write' }],
         precedence: ['checked-in swarm.config.json base', 'init normalization', 'runtime Secret/environment injection where implemented', 'more specific project progress configuration where implemented'],
         effectiveValueProof: `${swarmPath} -> charts/kubeclaw/templates/configmap-swarm-config.yaml:14 -> charts/kubeclaw/templates/deployment.yaml:674`,
-        changeImpact: 'Changes the base runtime swarm configuration after the chart rematerializes the file.',
-        failureMeaning: 'Invalid JSON stops materialization; a loader-rejected field prevents or degrades gateway startup.',
-        blockerOwner: field.type === 'object' || field.type === 'array' ? null : 'OpenClaw/swarm loader contract owner',
-        closureCondition: field.type === 'object' || field.type === 'array' ? null : 'Bind a versioned field schema when the loader publishes one.',
+        changeImpact: 'With this source selected, a source change changes the file written by the init path. Loader field use is unknown.',
+        failureMeaning: 'Invalid JSON stops materialization. Without a versioned loader field contract, the effect of each field on gateway startup is unknown.',
+        blockerOwner: field.path === '$' ? null : 'OpenClaw/swarm loader contract owner',
+        closureCondition: field.path !== '$' && (field.type === 'object' || field.type === 'array')
+          ? 'Before you change collection values, bind a versioned external loader collection contract.'
+          : field.type === 'object' || field.type === 'array' ? null : 'Bind a versioned field schema when the loader publishes one.',
       })),
-      schemaAuthority: 'external OpenClaw/swarm loader contract; repository proves JSON materialization but has no bound field schema',
+      schemaAuthority: 'The external OpenClaw/swarm loader contract is the schema authority. The repository has JSON materialization code but no bound field schema.',
     };
   }
   const allSchemaFields = files.flatMap((file) => file.fields);

@@ -112,13 +112,13 @@ const observerSettings = {
 };
 for (const [name, [setting, kind]] of Object.entries(observerSettings)) {
   const required = ['positive', 'integer', 'boolean-required', 'event'].includes(kind);
-  const form = kind === 'string' ? 'A string converted with String and trimmed; blank becomes undefined.' : kind === 'port' ? 'A Number-convertible integer from 1 through 65535, or an absent value.' : kind === 'raw' ? 'The supplied value is retained without normalization here; Redis activation validates the security policy.' : kind.startsWith('boolean') ? 'A boolean, or text normalized with trim and lowercase. Only 1, true, yes, on and enabled become true; other non-empty text becomes false.' : kind === 'event' ? 'A positive integer within the ingress contract maximum; see normalizeAgentObservabilityMaxEventBytes.' : `A Number-convertible ${kind === 'integer' ? 'integer, including zero and negative values' : 'positive integer'}.`;
-  add(observer, name, `Supplies ${setting} to the OpenClaw agent observer when its plugin configuration omits that key.`, form,
-    kind === 'boolean' ? 'Uses false when neither source supplies a value.' : required ? 'No fallback; a required effective value must be supplied.' : 'No value default; an omitted value remains undefined.',
-    kind === 'string' ? 'Empty or whitespace-only becomes undefined.' : kind === 'boolean' ? 'Empty uses false; whitespace-only non-empty text also becomes false.' : kind === 'port' ? 'Empty becomes undefined; whitespace-only text becomes zero and is rejected.' : kind === 'raw' ? 'Empty is passed unchanged to the Redis security-policy reader.' : 'Empty is rejected. Whitespace-only numeric text becomes zero: hookPriority accepts it; positive values reject it.',
-    kind.startsWith('boolean') ? 'Unknown non-empty text becomes false; it is not rejected as an invalid boolean token.' : kind === 'string' ? 'This helper does not validate host, username or password syntax; connection checks own later rejection.' : kind === 'raw' ? 'This helper does not validate it; Redis activation can reject a missing plaintext isolation declaration.' : 'Invalid numeric bounds throw a field-specific configuration error.',
-    `An explicitly defined plugin config.${setting} wins, including null or empty values. Otherwise env.${name} applies; normalization then runs.`,
-    `Changes observer ${setting}; reload the observer to apply it. Redis connection and event queue behavior depend on the full configuration.`, 'Required-value or numeric errors stop observer config resolution; Redis policy and connection failures can occur during activation.',
+  const form = kind === 'string' ? 'A string converted with String and trimmed. Blank becomes undefined.' : kind === 'port' ? 'A Number-convertible integer from 1 through 65535, or an absent value.' : kind === 'raw' ? 'The supplied value has no normalization here. Redis activation validates the security policy.' : kind.startsWith('boolean') ? 'A boolean, or text normalized with trim and lowercase. Only 1, true, yes, on and enabled become true. Other non-empty text becomes false.' : kind === 'event' ? 'A positive integer at or below the ingress contract maximum. Read normalizeAgentObservabilityMaxEventBytes.' : `A Number-convertible ${kind === 'integer' ? 'integer, with zero and negative values permitted' : 'positive integer'}.`;
+  add(observer, name, `Supplies ${setting} to the OpenClaw agent observer when plugin config.${setting} is undefined.`, form,
+    kind === 'boolean' ? 'When the two source values are undefined, the observer uses false.' : required ? 'There is no fallback. An effective value is necessary.' : 'There is no value default. When the two source values are undefined, the effective value stays undefined.',
+    kind === 'string' ? 'Empty or whitespace-only becomes undefined.' : kind === 'boolean' ? 'Empty uses false. Whitespace-only non-empty text also becomes false.' : kind === 'boolean-required' ? 'The normalizer rejects undefined, null and an empty string. Whitespace-only non-empty text becomes false.' : kind === 'port' ? 'Empty becomes undefined. Whitespace-only text becomes zero, which the normalizer rejects.' : kind === 'raw' ? 'For an empty value, config resolution gives the Redis security-policy reader the same value.' : 'The normalizer rejects empty values. Whitespace-only numeric text becomes zero. The hookPriority setting accepts zero. Positive-value settings reject zero.',
+    kind.startsWith('boolean') ? 'Unknown non-empty text becomes false. The normalizer does not reject it as an invalid boolean token.' : kind === 'string' ? 'This helper does not validate host, username or password syntax. Connection checks can reject these values subsequently.' : kind === 'raw' ? 'This helper does not validate the value. Redis activation can reject a missing plaintext isolation declaration.' : 'Invalid numeric bounds throw a field-specific configuration error.',
+    `When plugin config.${setting} is not undefined, the observer uses it. This includes null and empty values. When plugin config.${setting} is undefined, the observer uses env.${name}. Then the observer normalizes the selected value.`,
+    `The observer must load its configuration again to apply a change to ${setting}. Redis connection and event queue behavior depend on the full configuration.`, 'Missing necessary values or numeric errors stop observer config resolution. Redis policy and connection failures can occur during activation.',
     `skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json:configSchema.${setting}`, required ? 'required effective plugin or environment value' : 'optional');
 }
 
@@ -1324,14 +1324,14 @@ for (const [name, [setting, kind]] of Object.entries(observerSettings)) {
     );
   }
   if (name.startsWith('REDIS_')) {
-    contract.purpose += ' The Redis writer then requires a trimmed non-empty host and a valid port. Its default secure policy requires a password, TLS, or an accepted network-isolation declaration, including for loopback.';
+    contract.purpose += ' The Redis writer must have a trimmed nonempty host and a valid port. With its default secure policy, a password, TLS or an accepted network-isolation declaration is necessary, also for loopback.';
     contract.evidence.push(
       { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts', line: 27, endLine: 44 },
       { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts', line: 10, endLine: 11 },
       { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts', line: 50, endLine: 76 },
       { path: 'skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts', line: 112, endLine: 140 },
     );
-    if (kind === 'raw') contract.acceptedForm = 'Passed unchanged by config resolution, then normalized as a boolean or trimmed lowercase text: 1, true, yes, on, required, enabled, isolated, network-policy, network_policy or documented marks isolation; other values are false.';
+    if (kind === 'raw') contract.acceptedForm = 'Config resolution gives Redis the same value. Redis normalizes it as a boolean or trimmed lowercase text. For 1, true, yes, on, required, enabled, isolated, network-policy, network_policy or documented, isolation is true. Other values are false.';
   }
 }
 
@@ -1341,7 +1341,7 @@ export function observerInlineFieldContract(field) {
   const contract = runtimeConsumerContract(pair[0], observer);
   return { ...contract,
     purpose: `Configures observer ${field}. ${contract.purpose}`,
-    precedence: `Registration configuration is merged first, then service configuration, then hook configuration. Later defined keys replace earlier keys; undefined keys are ignored. Null and empty values replace earlier values. The merged config.${field}, when not undefined, wins over env.${pair[0]}; normalization then runs.`,
+    precedence: `The observer merges registration configuration, then service configuration, then hook configuration. A subsequently defined value replaces the previous value for the same key. The merge ignores undefined keys.\n\nNull and empty values replace previous values. When the merged config.${field} is not undefined, the observer uses it instead of env.${pair[0]}. Then the observer normalizes the selected value.`,
     evidence: [...(contract.evidence ?? []),
       { path: 'skills/common/plugins/openclaw-agent-observer/src/observer-support.ts', line: 21, endLine: 29 },
       { path: 'skills/common/plugins/openclaw-agent-observer/src/index.ts', line: 195, endLine: 200 },

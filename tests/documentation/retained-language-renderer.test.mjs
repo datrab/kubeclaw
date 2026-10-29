@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import fs from 'node:fs';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
@@ -55,7 +56,14 @@ test('full historical renderer reproduces original pages and preserves all rows 
     .reduce((sum, match) => sum + Number(match[1]), 0);
   assert.equal(countFields(changed), 3813);
   assert.equal(projected.runtimeInputs.environment.length, 435);
-  assert.equal(projected.changes.length, 106);
+  const expectedObserver=JSON.parse(fs.readFileSync(new URL('./fixtures/retained-observer-editorial.expected.json',import.meta.url),'utf8'));
+  const observerPointers=new Set(expectedObserver.editorial.map(change=>change.jsonPointer));
+  const pointerValues=changes=>changes.map(({inventory,jsonPointer,oldValue,newValue})=>({inventory,jsonPointer,oldValue,newValue})).sort((a,b)=>(a.inventory+a.jsonPointer).localeCompare(b.inventory+b.jsonPointer));
+  assert.deepEqual(pointerValues(projected.changes.filter(change=>!observerPointers.has(change.jsonPointer))),pointerValues(expectedObserver.publishedBaselineEditorial));
+  const actualObserver=projected.changes.filter(change=>observerPointers.has(change.jsonPointer)).map(({inventory,jsonPointer,oldValue,newValue})=>({inventory,jsonPointer,oldValue,newValue})).sort((a,b)=>a.jsonPointer.localeCompare(b.jsonPointer));
+  assert.deepEqual(actualObserver,expectedObserver.editorial.map(({inventory,jsonPointer,oldValue,newValue})=>({inventory,jsonPointer,oldValue,newValue})).sort((a,b)=>a.jsonPointer.localeCompare(b.jsonPointer)));
+  assert.equal(projected.changes.length,106+expectedObserver.editorial.length);
+  for(const change of expectedObserver.semantic){const parts=change.jsonPointer.slice(1).split('/');let value=projected.runtimeInputs;for(const part of parts)value=value[part];assert.equal(value,change.oldValue,'v1 must not silently correct historical boolean meaning');}
   for (const [file, fieldPath] of [['examples/buster-values.yaml', '$.serviceAccount.name'], ['examples/nova-values.yaml', '$.processor.enabled']]) {
     const section = page => { const start = page.indexOf(`<summary><code>${file}</code>`); assert(start >= 0); return page.slice(start, page.indexOf('</details>', start)); };
     const currentRow = section(changed).split('\n').find(line => line.startsWith(`| \`${fieldPath}\` |`));
@@ -74,4 +82,19 @@ test('full historical renderer reproduces original pages and preserves all rows 
   assert(projected.preservation.secretsEqual);
   assert.throws(() => renderRetainedConfigurationReferences({ ...args, sourceRevision: artifactRevision }),
     /UNSUPPORTED_RETAINED_RENDERER_SOURCE_VERSION/);
+});
+
+test('observer projection rejects changed, missing, duplicate and retyped historical tuples', () => {
+  const snapshot=loadRetainedConfigurationSnapshot({root,artifactRevision,sourceRevision});
+  for(const mutate of [
+    runtime=>{runtime.environment.find(entry=>entry.name==='OPENCLAW_AGENT_OBSERVER_ENABLED').consumerContracts[0].defaultBehavior='foreign default';},
+    runtime=>{runtime.environment.find(entry=>entry.name==='OPENCLAW_AGENT_OBSERVER_ENABLED').consumerContracts=[];},
+    runtime=>{const entry=runtime.environment.find(entry=>entry.name==='OPENCLAW_AGENT_OBSERVER_ENABLED');entry.consumerContracts.push(structuredClone(entry.consumerContracts[0]));},
+    runtime=>{runtime.environment.find(entry=>entry.name==='OPENCLAW_AGENT_OBSERVER_ENABLED').consumerContracts[0].emptyBehavior=7;},
+  ]){
+    const runtimeInputs=structuredClone(snapshot.inventories.runtimeInputs);mutate(runtimeInputs);
+    assert.throws(()=>buildHistoricalOwners({runtimeInputs,configurationValues:snapshot.inventories.configurationValues,readSourceText:snapshot.readSourceText,readArtifactJson:snapshot.readArtifactJson}),/HISTORICAL_ENV_/);
+  }
+  const changedModule=path=>snapshot.readSourceText(path)+(path==='scripts/docs-runtime-consumer-contracts.mjs'?'\n':'');
+  assert.throws(()=>buildHistoricalOwners({...snapshot.inventories,readSourceText:changedModule,readArtifactJson:snapshot.readArtifactJson}),/HISTORICAL_OBSERVER_WHOLE_SOURCE_GRAMMAR_DRIFT/);
 });

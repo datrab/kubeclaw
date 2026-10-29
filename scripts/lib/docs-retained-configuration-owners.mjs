@@ -1,9 +1,9 @@
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
-import {historicalEnvironmentDeclarations,historicalQuantityContract} from './docs-retained-owner-constructors.mjs';
+import {historicalEnvironmentDeclarations,historicalObserverEnvironmentDeclarations,historicalQuantityContract} from './docs-retained-owner-constructors.mjs';
 export const HISTORICAL_SOURCE_REVISION='6fa4830a48244d29655104a5be58957d5fa87d2f';
 export const HISTORICAL_ARTIFACT_REVISION='145da1d0b30fb3b636c4b03fb3d3252819ee2bf5';
-export const REQUIRED_SOURCE_FILES=Object.freeze(['scripts/docs-configuration-inventory.mjs']);
+export const REQUIRED_SOURCE_FILES=Object.freeze(['scripts/docs-configuration-inventory.mjs','scripts/docs-runtime-consumer-contracts.mjs']);
 export const REQUIRED_ARTIFACT_FILES=Object.freeze(['scripts/docs-local-helm-field-authorities.json']);
 // Exact entire byte grammar is intentionally stricter than structural AST equality.
 // It binds every literal, tuple, branch, constructor and potential side effect.
@@ -26,7 +26,8 @@ export function buildHistoricalOwners({runtimeInputs,configurationValues,readSou
  assert.equal(typeof readSourceText,'function');assert.equal(typeof readArtifactJson,'function');
  const ownerText=readSourceText(REQUIRED_SOURCE_FILES[0]);assert.equal(typeof ownerText,'string');
  assert.equal(sha256(ownerText),HISTORICAL_OWNER_SOURCE_SHA256,'HISTORICAL_OWNER_WHOLE_SOURCE_GRAMMAR_DRIFT');
- const envBindings=historicalEnvironmentDeclarations();
+ assert.equal(sha256(readSourceText(REQUIRED_SOURCE_FILES[1])),'7cc530f43693188691d2485e5bdef0c57de9307696b957c060ef6356a021dfaa','HISTORICAL_OBSERVER_WHOLE_SOURCE_GRAMMAR_DRIFT');
+ const envBindings=[...historicalEnvironmentDeclarations(),...historicalObserverEnvironmentDeclarations()];
  for(const binding of envBindings){
   const entries=runtimeInputs.environment.filter(e=>e.name===binding.name);assert.equal(entries.length,1,'HISTORICAL_ENV_ENTRY_MISSING_OR_AMBIGUOUS');
   const tuples=entries[0].consumerContracts.filter(c=>c.path===binding.path);assert.equal(tuples.length,1,'HISTORICAL_ENV_TUPLE_MISSING_OR_AMBIGUOUS');const tuple=tuples[0];

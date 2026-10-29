@@ -7,6 +7,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import test from 'node:test';
 import { editorialSourceFiles, semanticOwnerFiles } from '../../scripts/lib/docs-retained-language-bundle.mjs';
+import { OBSERVER_SEMANTIC_RECEIVERS } from '../../scripts/lib/docs-retained-observer-semantics.mjs';
 import { PRISM_SEMANTIC_RECEIVERS } from '../../scripts/lib/docs-retained-prism-semantics.mjs';
 
 const nativeRoot = fileURLToPath(new URL('../../', import.meta.url));
@@ -34,7 +35,7 @@ function isolatedOwner(t) {
     }
   }
   // Some sources are hashed rather than imported; copy the complete declared set.
-  for (const relative of [...editorialSourceFiles, ...semanticOwnerFiles, ...PRISM_SEMANTIC_RECEIVERS.map(x => x.path)]) copy(relative);
+  for (const relative of [...editorialSourceFiles, ...semanticOwnerFiles, ...[...PRISM_SEMANTIC_RECEIVERS,...OBSERVER_SEMANTIC_RECEIVERS].map(x => x.path)]) copy(relative);
   copy('scripts/docs-retained-language-projection.mjs', true);
   git('add', '.');
   git('-c', 'user.name=Retained Semantic Fixture', '-c', 'user.email=fixture@example.invalid', 'commit', '-m', 'Owned native semantic CLI source fixture');
@@ -51,7 +52,10 @@ test('actual native CLI v1 and v2 use authenticated Git facts; failed guards pre
   const legacy = f.run([]); assert.equal(legacy.status, 0, legacy.stderr);
   const v1 = JSON.parse(fs.readFileSync(f.output, 'utf8'));
   assert.equal(v1.schemaVersion, 'kubeclaw-retained-configuration-language.v1');
-  assert.equal(v1.changes.length, 106);
+  const expectedObserver=JSON.parse(fs.readFileSync(new URL('./fixtures/retained-observer-editorial.expected.json',import.meta.url),'utf8'));
+  assert.equal(expectedObserver.publishedBaselineEditorial.length,106);
+  assert.equal(expectedObserver.editorial.length,195);
+  assert.equal(v1.changes.length,expectedObserver.publishedBaselineEditorial.length+expectedObserver.editorial.length);
   assert.equal(v1.preservation.secretsEqual, true);
   const legacyDigest = digest(fs.readFileSync(f.output));
   assert.equal(f.run(['--check']).status, 0);
@@ -63,12 +67,14 @@ test('actual native CLI v1 and v2 use authenticated Git facts; failed guards pre
   result = f.run(semanticArgs); assert.equal(result.status, 0, result.stderr);
   const v2 = JSON.parse(fs.readFileSync(f.output, 'utf8'));
   assert.equal(v2.schemaVersion, 'kubeclaw-retained-configuration-semantics.v2');
-  assert.equal(v2.meaningEvidence.environment.length, 11);
+  assert.equal(v2.meaningEvidence.environment.length, 12);
   assert.equal(v2.meaningEvidence.helm.length, 16);
   assert.equal(v2.meaningEvidence.secrets.length, 15);
   assert.equal(v2.inventories.runtimeInputs.secrets.length, 123);
   assert.equal(v2.inventories.runtimeInputs.environment.length, 435);
-  assert.deepEqual(v2.changes.slice(0, 106), v1.changes);
+  assert.deepEqual(v2.changes.slice(0, v1.changes.length), v1.changes);
+  const semanticObserver=v2.changes.filter(change=>change.owner==='ObserverEnabledBooleanMeaning').sort((a,b)=>a.jsonPointer.localeCompare(b.jsonPointer));
+  assert.deepEqual(semanticObserver,expectedObserver.semantic.map(({inventory,jsonPointer,oldValue,newValue})=>({inventory,jsonPointer,owner:'ObserverEnabledBooleanMeaning',oldValue,newValue})).sort((a,b)=>a.jsonPointer.localeCompare(b.jsonPointer)));
   assert.equal(v2.limits.currentDiscoveryPerformed, false);
   assert.equal(v2.limits.currentProducerQualificationGranted, false);
   assert.equal(f.run([...semanticArgs, '--check']).status, 0);

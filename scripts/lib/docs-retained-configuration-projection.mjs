@@ -2,6 +2,7 @@ import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {environmentConsumerPurpose,formatLocalHelmMeaning,formatApiOperationalMeaning,versionedApiSchemaContract} from './docs-retained-configuration-formatters.mjs';
 import { editorialOwners } from './docs-configuration-editorial-language.mjs';
+import { runtimeConsumerContract } from '../docs-runtime-consumer-contracts.mjs';
 
 const canonical=x=>JSON.parse(JSON.stringify(x));
 const same=(a,b,label)=>assert.deepEqual(canonical(a),canonical(b),label);
@@ -10,6 +11,16 @@ const sameModeled=(expected,actual,label)=>{const selected={};for(const key of O
 const sha256=s=>createHash('sha256').update(s).digest('hex');
 const pointer=s=>String(s).replaceAll('~','~0').replaceAll('/','~1');
 function envUpdate(binding,editorial){
+ if(binding.path==='skills/common/plugins/openclaw-agent-observer/src/config.ts'){
+  const current=runtimeConsumerContract(binding.name,binding.path);assert(current,'RETAINED_OBSERVER_OWNER_MISSING');
+  const patch={};
+  for(const key of ['purpose','acceptedForm','defaultBehavior','emptyBehavior','invalidBehavior','precedence','impact','failure']){
+   if(binding.name==='OPENCLAW_AGENT_OBSERVER_ENABLED'&&key==='emptyBehavior')continue;
+   assert.equal(typeof current[key],'string','RETAINED_OBSERVER_OWNER_FIELD_MISSING');
+   patch[key]=key==='purpose'?environmentConsumerPurpose({...binding.raw,purpose:current.purpose}):current[key];
+  }
+  return patch;
+ }
  switch(binding.name){
  case 'BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY': return {acceptedForm:editorial.ed25519AcceptedForm};
  case 'KUBERNETES_SERVICE_HOST': return {defaultBehavior:editorial.kubernetesHostDefault};
@@ -31,10 +42,10 @@ export function projectRetainedInventoryLanguage({runtimeInputs,configurationVal
   same(environmentConsumerPurpose(raw),c.purpose,'RETAINED_ENV_PURPOSE_RECONSTRUCTION');
   const patch=envUpdate(binding,editorial);
   for(const [key,value] of Object.entries(patch)){
-   same(c[key],binding.raw[key],'RETAINED_ENV_DECLARATION_DRIFT');
+   same(c[key],key==='purpose'?environmentConsumerPurpose(raw):binding.raw[key],'RETAINED_ENV_DECLARATION_DRIFT');
    set(c,key,value,'runtimeInputs',`/environment/${ei}/consumerContracts/${i}`,'ENV:'+binding.name+':'+binding.path);
    // Existing single-consumer aggregate rule copies exactly this contract leaf.
-   if(e.meaningStatus==='authored-consumer-specific-contract'&&e.consumerContracts.length===1){same(e[key],binding.historicalTuple[key],'RETAINED_ENV_AGGREGATE_RECONSTRUCTION');set(e,key,value,'runtimeInputs',`/environment/${ei}`,'ENV-aggregate:'+binding.name);}
+   if(e.meaningStatus==='authored-consumer-specific-contract'&&e.consumerContracts.length===1){const aggregateKey=({purpose:'meaning',precedence:'precedenceExplanation',impact:'changeImpact',failure:'failureMeaning'})[key]??key;same(e[aggregateKey],binding.historicalTuple[key],'RETAINED_ENV_AGGREGATE_RECONSTRUCTION');set(e,aggregateKey,value,'runtimeInputs',`/environment/${ei}`,'ENV-aggregate:'+binding.name);}
   }
  }
  let localCount=0,quantityCount=0;

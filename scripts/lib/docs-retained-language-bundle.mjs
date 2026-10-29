@@ -6,10 +6,12 @@ import { fileURLToPath } from 'node:url';
 import { assertEditorialSourceRevision, loadRetainedConfigurationSnapshot, stableBundleText, retainedSemanticSourceManifest } from './docs-retained-source.mjs';
 import { buildHistoricalOwners, HISTORICAL_ARTIFACT_REVISION, HISTORICAL_SOURCE_REVISION } from './docs-retained-configuration-owners.mjs';
 import { projectRetainedPrismSemantics, PRISM_SEMANTIC_RECEIVERS } from './docs-retained-prism-semantics.mjs';
+import { projectRetainedObserverMeaning, OBSERVER_SEMANTIC_RECEIVERS } from './docs-retained-observer-semantics.mjs';
 import { projectRetainedInventoryLanguage } from './docs-retained-configuration-projection.mjs';
 
 export const retainedSemanticSchema = 'kubeclaw-retained-configuration-semantics.v2';
 export const semanticOwnerFiles = Object.freeze([
+  'scripts/lib/docs-retained-observer-semantics.mjs',
   'scripts/docs-runtime-consumer-contracts.mjs', 'scripts/generate-local-helm-authorities.mjs',
   'scripts/lib/docs-prism-helm-semantic-corrections.mjs',
   'scripts/lib/docs-retained-prism-semantics.mjs', 'scripts/lib/docs-retained-prism-historical-models.mjs',
@@ -18,6 +20,7 @@ export const semanticOwnerFiles = Object.freeze([
 ]);
 export const retainedLanguageSchema = 'kubeclaw-retained-configuration-language.v1';
 export const editorialSourceFiles = Object.freeze([
+  'scripts/docs-runtime-consumer-contracts.mjs',
   'scripts/docs-retained-language-projection.mjs',
   'scripts/docs-generate.mjs',
   'scripts/docs-configuration-inventory.mjs',
@@ -53,17 +56,19 @@ export function buildRetainedLanguageBundle({ root, artifactRevision = HISTORICA
   if (semanticOwnerRevision !== null) assert.equal(semanticOwnerRevision, editorialRevision,
     'RETAINED_SEMANTIC_OWNER_MUST_MATCH_EDITORIAL_REVISION');
   const semanticInputs = semanticOwnerRevision === null ? null
-    : retainedSemanticSourceManifest(root, semanticOwnerRevision, PRISM_SEMANTIC_RECEIVERS,
+    : retainedSemanticSourceManifest(root, semanticOwnerRevision, [...PRISM_SEMANTIC_RECEIVERS,...OBSERVER_SEMANTIC_RECEIVERS],
       [...editorialSourceFiles, ...semanticOwnerFiles]);
   const snapshot = loadRetainedConfigurationSnapshot({ root, artifactRevision, sourceRevision });
   const { runtimeInputs, configurationValues, ...otherInventories } = snapshot.inventories;
   const historicalOwners = buildHistoricalOwners({ runtimeInputs, configurationValues,
     readSourceText: snapshot.readSourceText, readArtifactJson: snapshot.readArtifactJson });
   const projected = projectRetainedInventoryLanguage({ runtimeInputs, configurationValues, historicalOwners });
-  const semantics = semanticOwnerRevision === null ? null : projectRetainedPrismSemantics({
+  const prismSemantics = semanticOwnerRevision === null ? null : projectRetainedPrismSemantics({
     runtimeInputs: projected.runtimeInputs, configurationValues: projected.configurationValues,
     historicalOwners, readSourceText: snapshot.readSourceText, readArtifactJson: snapshot.readArtifactJson,
   });
+  const observerMeaning=prismSemantics===null?null:projectRetainedObserverMeaning({runtimeInputs:prismSemantics.runtimeInputs,readSourceText:snapshot.readSourceText});
+  const semantics=prismSemantics===null?null:{...prismSemantics,runtimeInputs:observerMeaning.runtimeInputs,changes:[...prismSemantics.changes,...observerMeaning.changes],meaningEvidence:{...prismSemantics.meaningEvidence,environment:[...prismSemantics.meaningEvidence.environment,...observerMeaning.meaningEvidence.environment]},preservation:{...prismSemantics.preservation,environmentTuples:12,observerBooleanMeaning:observerMeaning.preservation}};
   return {
     schemaVersion: semantics === null ? retainedLanguageSchema : retainedSemanticSchema,
     ...(semantics === null ? {} : { semanticOwnerRevision, semanticInputs,

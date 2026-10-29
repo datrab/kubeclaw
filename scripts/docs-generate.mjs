@@ -256,11 +256,11 @@ function configurationWriteMap(deploy, secrets, configurationValues, runtimeInpu
 
 function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
   const statusDefinitions = {
-    'qualified-runtime-authority': 'A field-specific explanation and its implementation evidence are recorded. Read the row for omission, empty-value and failure behavior; this label does not mean a live run passed.',
-    'schema-and-runtime-authority': 'The accepted shape comes from the schema, and the row identifies the runtime consumer. The schema alone does not prove that a default is applied.',
-    'structural-container': 'This row describes schema structure. Child fields and collection rules determine the accepted configuration; the label does not establish a runtime default.',
+    'qualified-runtime-authority': 'The inventory records a field-specific explanation and its implementation evidence. Read the row for omission, empty-value and failure behavior. This label is not a result from live execution.',
+    'schema-and-runtime-authority': 'The accepted shape comes from the schema, and the row identifies the runtime consumer. A schema declaration is not evidence that the runtime applies a default.',
+    'structural-container': 'This row describes schema structure. Child fields and collection rules determine the accepted configuration. The label does not establish a runtime default.',
     'schema-meaning-blocker': 'The accepted shape is known, but the field meaning or consumer evidence is incomplete. Do not use the row as a completed operator contract.',
-    'runtime-meaning-blocker': 'The current implementation is not sufficient evidence for a complete field contract. Use the stated safe boundary and required follow-up.',
+    'runtime-meaning-blocker': 'The current implementation is not sufficient evidence for a complete field contract. Use the stated safe boundary and do the necessary subsequent work.',
   };
   const observedStatuses = [...new Set(configurationSchemas.files.flatMap((file) => file.fields.map((field) => field.meaning.status)))].sort();
   for (const status of observedStatuses) {
@@ -288,9 +288,9 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
     const additionalEvidence = (field.meaning.additionalImplementationEvidence ?? []).map(meaningEvidenceLink);
     const base = `${literalMeaning}<br>Status: \`${field.meaning.status}\`<br>Evidence: ${[meaningEvidenceLink(field.meaning.evidence), ...additionalEvidence].join(', ')}`;
     if (!/blocker/u.test(field.meaning.status)) return base;
-    return `${base}<br>Not a completed operator option. Authority owner: ${field.meaning.blockerOwner}. Completion requires qualified full-path meaning and runtime-consumer evidence.`;
+    return `${base}<br>Not a completed operator option. Authority owner: ${field.meaning.blockerOwner}. For completion, qualified full-path meaning and runtime-consumer evidence are necessary.`;
   };
-  const sections = configurationSchemas.files.map((file) => `<details>\n<summary><code>${file.path}</code> — ${file.fields.length} recursive schema facts</summary>\n\nSource evidence:\n\n${sourceRangeLinks(file.path)}\n\n${table(
+  const sections = configurationSchemas.files.map((file) => `<details>\n<summary><code>${file.path}</code> — ${file.fields.length} recursive schema fact${file.fields.length === 1 ? '' : 's'}</summary>\n\nSource evidence:\n\n${sourceRangeLinks(file.path)}\n\n${table(
     ['Field', 'Meaning', 'Type', 'Required', 'Schema default', 'Constraints and branches', 'Owner and consumer evidence'],
     file.fields.map((field) => [
       `\`${field.path}\``,
@@ -309,7 +309,7 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
   const swarmContainerMeaning = (field) => {
     const meaning = field.meaning;
     const text = field.path === '$' && swarm.path === 'charts/kubeclaw/files/config/swarm.config.json'
-      ? 'JSON document root. The chart embeds the complete file. The init path parses and writes JSON. The structural inventory entry does not prove whole-object loader requiredness or accepted fields.'
+      ? 'JSON document root. When swarmConfigJson is not selected, the chart embeds the full checked-in file. The init path parses and writes the selected JSON file. This structural row gives no whole-object loader requirement or accepted-field contract.'
       : meaning.text;
     const description = `${literalText(text)}<br>Inventory meaning status: ${literalText(meaning.status)}`;
     if (!/blocker/u.test(meaning.status)) return description;
@@ -319,14 +319,14 @@ function renderPluginConfiguration(configurationSchemas, runtimeInputs) {
   const swarmTable = swarm ? table(['Field', 'Type and value', 'Required and constraint authority', 'Owner and consumers', 'Precedence and proof', 'Impact, failure, and closure'], swarm.fields.map((field) => {
     const wrapper = field.required === 'not-applicable-container';
     const requirement = wrapper
-      ? `Recorded inventory marker: ${literalText(field.required)}. This classifies the structural inventory entry, not runtime applicability or whole-object requiredness.<br>${field.constraints.join('<br>') || 'No additional constraint is recorded here. This does not prove that the runtime loader has no whole-object constraints.'}`
+      ? `Recorded inventory marker: ${literalText(field.required)}. This classifies the structural inventory entry, not runtime applicability or whole-object requiredness.<br>${field.constraints.join('<br>') || 'No additional constraint is recorded here. This is not evidence that the runtime loader has no whole-object constraints.'}`
       : `${field.required}: ${field.requiredReason}<br>${field.constraints.join('<br>') || 'none for structural container'}`;
-    const failure = `${field.changeImpact}<br>Failure: ${field.failureMeaning}${field.closureCondition ? `<br>Not a completed operator option. Authority owner: ${field.blockerOwner}; a versioned field contract is required.` : ''}`;
+    const failure = `${field.changeImpact}<br>Failure: ${field.failureMeaning}${field.closureCondition ? `<br>Not a completed operator option. Authority owner: ${field.blockerOwner}. A versioned field contract is necessary.` : ''}`;
     return [
       `\`${field.path}\``, `\`${field.type}\`<br>${selectedValue(field.value)}`, requirement,
       `Source: \`${field.ownerComponent}\` (${field.ownerEvidence})<br>Runtime: ${field.runtimeOwner}<br>${field.consumers.map((consumer) => `\`${consumer.path}:${consumer.line}\` (${consumer.kind})`).join('<br>')}`,
       `${field.precedence.join(' → ')}<br>${field.effectiveValueProof}`,
-      wrapper ? `${failure}<br>${swarmContainerMeaning(field)}` : failure,
+      `${failure}<br>${swarmContainerMeaning(field)}`,
     ];
   })) : 'No compact swarm configuration source was discovered.';
   return `# Plugin And Platform Configuration Schemas
@@ -340,14 +340,14 @@ Last verified: generated from the current source inventory
 
 ## Purpose
 
-Use this page to find the exact field contract before you change plugin or platform configuration. The generator follows every \`configSchema\` registration in plugin manifests. It does not assume that a file named \`config.schema.json\` is the complete set.
+Before you change plugin or platform configuration, use this page to find the field contract for that setting. The generator uses all \`configSchema\` registrations in plugin manifests. It does not assume that a file named \`config.schema.json\` is the complete set.
 
 ${generatedNotice(['docs/generated/inventory/configuration-schemas.json'])}
 ## How To Read Field Evidence
 
 ${statusLegend}
 
-The **Schema default** column reports the schema declaration. It is not a universal runtime default. Test-provider configuration can resolve schema defaults before validation; stage, adapter and observer registration validates supplied values without that resolution. A consumer can apply its own fallback. Read the field's implementation evidence before relying on omission or an empty value.
+The **Schema default** column gives the schema declaration. It is not a universal runtime default. Test-provider configuration can resolve schema defaults before validation. Stage, adapter and observer registration validates supplied values without that resolution. A consumer can apply its own fallback. Before you rely on omission or an empty value, read the field's implementation evidence.
 
 Authority: [registration validation](${pinnedSourceUrl('skills/common/plugin-runtime/foundation/registry/configuration.ts', 42, 78)}) and [provider default resolution](${pinnedSourceUrl('skills/common/plugin-runtime/foundation/registry/configuration.ts', 102, 120)}). These rules apply to configuration validation before execution.
 
@@ -361,25 +361,25 @@ ${swarmTable}
 
 The compact swarm file has no bound field schema in the current source. The chart embeds it in a ConfigMap and the init path materializes it for the OpenClaw gateway. Leaf rows therefore identify the external loader contract and its closure condition. Do not infer validation rules that the loader does not publish.
 
-A structural inventory marker does not prove whole-object requiredness, accepted keys or runtime constraints. The \`$.overrides\` collection contract remains open with the owner and closure condition in its row. Until the owner qualifies that contract, stop before you use unknown keys. Do not assume that the loader accepts empty, omitted or null input.
+A structural inventory marker is not evidence of whole-object requiredness, accepted keys or runtime constraints. The \`$.overrides\` collection contract remains open with the owner and closure condition in its row. Until the owner qualifies that contract, stop before you use unknown keys. Do not assume that the loader accepts empty, omitted or null input.
 
 Consumer coordinates in the table come from recorded inventory metadata. They are not a new verification of current line positions.
 
-Current source evidence: [ConfigMap embedding](${pinnedSourceUrl('charts/kubeclaw/templates/configmap-swarm-config.yaml', 10, 15)}), [JSON parsing](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 699, 704)}), [JSON writing](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 745, 746)}) and [runtime mount](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 1486, 1487)}). These source statements prove materialization and mounting only. They do not prove a whole-object loader contract or live acceptance.
+Current source evidence: [ConfigMap embedding](${pinnedSourceUrl('charts/kubeclaw/templates/configmap-swarm-config.yaml', 10, 15)}), [JSON parsing](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 699, 704)}), [JSON writing](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 745, 746)}) and [runtime mount](${pinnedSourceUrl('charts/kubeclaw/templates/deployment.yaml', 1486, 1487)}). These source statements give evidence of materialization and mounting only. They give no evidence of a whole-object loader contract or live acceptance.
 
 ${generatedEnd()}
 ## How To Use This Reference
 
 1. Find the schema registered by the provider, observer, adapter, or engine that reads the configuration.
-2. Check required fields, branches, limits, and defaults before you edit the authored value.
-3. Follow the consumer evidence to confirm how the runtime interprets the field.
-4. Run \`npm run docs:drift:config:check\` after a schema or consumer changes.
+2. Before you edit the authored value, examine fields marked \`required\`, branches, limits and defaults.
+3. Use the consumer evidence to find how the runtime interprets the field.
+4. After a schema or consumer changes, execute \`npm run docs:drift:config:check\`.
 
 ## Inventory Limits
 
-- A schema proves accepted shape and declared defaults. It does not prove that each runtime branch uses each accepted field.
-- A manifest or package path proves source ownership. It does not identify an organizational owner when the repository does not declare one.
-- An unknown consumer remains an explicit gap. Inspect the implementation before changing that field.
+- A schema gives the accepted shape and declared defaults. It gives no evidence that each runtime branch uses each accepted field.
+- A manifest or package path identifies the source component. It does not identify an organizational owner when the repository does not declare one.
+- An unknown consumer remains an explicit gap. Before you change that field, examine the implementation.
 
 ## Generated From
 
