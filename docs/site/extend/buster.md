@@ -199,8 +199,12 @@ runs. Add that test to the applicable `verify:test-gate:*implementation` command
 For a practical suite, execute one resolved success and one representative failed
 or skipped dependency through the runner. Cancel a run while its fixture is ready.
 Verify that dependent tests stop and fixture cleanup remains visible in the result.
-If the suite uses a non-retry-safe provider, assert that an override cannot add a
-retry.
+
+For a non-retry-safe provider, assert that a positive retry count is rejected
+without `acceptUnsafeRetry: true`. With an otherwise valid node, separately test
+that a positive count within policy is permitted with explicit acknowledgment.
+Assert that acknowledgment does not change the provider's `retrySafe` declaration.
+Also test rejection of a count above the policy maximum.
 
 To update compatible defaults, edit the current version and accept that new plans
 receive a new template digest. To change consumer meaning, add a new `@2` contract

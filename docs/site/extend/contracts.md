@@ -246,9 +246,13 @@ Its registration declares:
 
 The resolver binds the exact package version and digest into an immutable test plan.
 It validates configuration, connects compatible ports, expands bounded matrices,
-applies conditions, and gives retries only to providers that declare `retrySafe`.
-The declaration is not a promise that arbitrary retry is safe. The provider author
-must make that statement true for the provider's external effects.
+and applies conditions.
+
+A positive retry count must stay within policy. The provider must declare
+`retrySafe` or the node must explicitly set `acceptUnsafeRetry: true`.
+A non-retry-safe provider has no default retries. The acknowledgment does not
+make the provider retry-safe. Earlier effects remain unchanged by the acknowledgment.
+The provider author must make the `retrySafe` declaration true for the provider's external effects.
 
 Buster snapshots the package before execution and loads it in the plugin sandbox.
 The provider receives a bounded workspace, abort signal, log sink, and only its

@@ -82,8 +82,10 @@ Nova -> 127.0.0.1:28891 -> Nova Envoy -> SPIFFE mTLS
 ```
 
 The Buster Service targets the Envoy port. It does not target the runtime port.
-The runtime remains reachable on the pod network for kubelet health probes.
-NetworkPolicy denies workload ingress to that port.
+The runtime listens on `0.0.0.0:28891` in the selected Buster profile.
+Kubelet HTTP probes use the Pod address on port `28891`.
+The colocated Envoy reaches the runtime at `127.0.0.1:28891`.
+NetworkPolicy denies workload ingress to the runtime port.
 
 ### Exact listener and Service boundaries
 
@@ -94,7 +96,8 @@ runtime address for a proxy address.
 | --- | --- | --- |
 | `127.0.0.1:28891` in Nova | Nova Envoy egress for Buster plan requests. | Nova processes can call this loopback address. Envoy sends the request to Buster with mTLS. |
 | `0.0.0.0:18891` in Buster | Buster Envoy mTLS ingress. | The Buster Service targets the named Envoy port `buster-plan`. |
-| `127.0.0.1:28891` in Buster | Buster plan runtime, named `plan-runtime`. | Kubelet probes and the colocated Envoy can reach it. No Service may target the runtime ports. |
+| `127.0.0.1:28891` in Buster | Local Envoy upstream to the Buster plan runtime, named `plan-runtime`. | The colocated Envoy forwards here. No Service may target the runtime ports. |
+| `0.0.0.0:28891` in Buster | Buster plan runtime listen address. | Kubelet probes use the Pod address, not loopback. The Service still targets Envoy. |
 | `127.0.0.1:28080` in Nova | Nova Envoy egress for the Prism agent. | Nova dispatch enters the protected Prism path here. |
 | `127.0.0.1:28080` in a Prism agent or worker | Envoy egress to Prism Control. | The colocated process calls this address. Envoy verifies the Control identity. |
 | `0.0.0.0:18082` in the Prism agent | Envoy mTLS ingress for Nova, Prism Control, and the isolated test runner. | Envoy forwards an admitted request to the local agent bridge on `127.0.0.1:18080`. |
