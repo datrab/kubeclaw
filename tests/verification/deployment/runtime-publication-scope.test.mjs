@@ -77,7 +77,18 @@ test('Buster authorization refuses full export, including shared-image rebuild f
 
 test('automatic selector checks authorization before changing selected receipts', () => {
   const workflow = yaml.load(fs.readFileSync('.github/workflows/auto-promote-runtime.yaml', 'utf8'));
-  assert.equal(workflow.jobs.publish.env.RUNTIME_PUBLICATION_SCOPE, 'buster');
+  assert.equal(workflow.jobs.publish.env.RUNTIME_PUBLICATION_SCOPE, 'all');
+  const next = structuredClone(prior);
+  next.images['prism-studio'] = 'new-prism-editor';
+  next.code.bundles.prism.sha256 = 'new-prism-bundle';
+  const command = runtimePublicationCommand(prior, next, true);
+  assert.equal(command, 'export');
+  assert.doesNotThrow(() => assertRuntimePublicationScope(command, workflow.jobs.publish.env.RUNTIME_PUBLICATION_SCOPE));
+  const publish = workflow.jobs.publish.steps.at(-1);
+  assert.equal(workflow.jobs.publish.permissions.packages, 'read');
+  assert.ok(publish.env.TRIVY_PASSWORD);
+  assert.ok(publish.run.indexOf('scan-runtime-images.sh') > publish.run.indexOf('materialize-release'));
+  assert.ok(publish.run.indexOf('scan-runtime-images.sh') < publish.run.indexOf('git commit'));
   const source = fs.readFileSync('scripts/updates/select-runtime-deployment.mjs', 'utf8');
   assert.ok(source.indexOf('assertRuntimePublicationScope(exportCommand,') < source.indexOf("fs.mkdirSync('releases'"));
 });
