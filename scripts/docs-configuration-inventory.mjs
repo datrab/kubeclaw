@@ -10254,7 +10254,7 @@ export function configurationDiscoveryDeclaration() {
         yamlSecrets: {
           selector: 'Supplied yamlInventory.files are reread with parseAllDocuments; error-free documents feed secretFactsFromYaml with exact source ranges.',
           parser: 'Recursive Secret declaration/reference/imagePullSecrets tree extraction.',
-          mode: 'Default build supplies buildYamlInventory(); --runtime-only supplies files:[] and therefore has no YAML-document secret sources.',
+          mode: 'Default build supplies buildYamlInventory(); --runtime-only supplies the same selected YAML files through buildYamlInventory({ selectedYamlOnly: true }), retaining YAML authority and Secret guards without claiming executable program-output API discovery.',
         },
         shellSecrets: {
           selector: 'Only runtimeTextSources paths ending in .sh, after existence checks and quoted-heredoc masking.',
@@ -10313,7 +10313,19 @@ export function buildConfigurationInventories() {
   if (argv.includes('--helm-values-only')) return new Map([
     ['configuration-helm-values.json', buildYamlInventory({ selectedYamlOnly: true })],
   ]);
-  if (argv.includes('--runtime-only')) return new Map([['configuration-runtime-inputs.json', buildRuntimeInputInventory({ files: [] })]]);
+  if (argv.includes('--runtime-only')) {
+    // Complete environment/Secret inputs use the same selected YAML files and
+    // authority guards. Program-output API discovery is a separate scope.
+    const yaml = buildYamlInventory({ selectedYamlOnly: true });
+    const runtime = buildRuntimeInputInventory(yaml);
+    runtime.discovery.composition = {
+      scope: 'complete selected environment and Secret inputs, including YAML-document sources',
+      yamlSourceMode: 'buildYamlInventory({ selectedYamlOnly: true })',
+      yamlSources: yaml.files.map(file => file.path),
+      exclusion: 'executable program-output API discovery; no full-configuration/API-output success claimed',
+    };
+    return new Map([['configuration-runtime-inputs.json', runtime]]);
+  }
   if (argv.includes('--schemas-only')) return new Map([['configuration-schemas.json', buildSchemaInventory()]]);
   const yaml = buildYamlInventory();
   return new Map([
