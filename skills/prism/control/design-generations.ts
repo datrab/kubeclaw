@@ -32,11 +32,11 @@ export async function startDesignRound(db: Database, input: DesignRoundStart, op
     }
     const rows = await connection.query<ActiveRequest>("SELECT id,architecture_digest,architecture_revision,current_round_id,request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY architecture_revision DESC LIMIT 1",[projectId]);
     const active = rows.rows[0];
-    if (!active || active.architecture_digest !== input.architectureDigest || Number(active.architecture_revision) !== input.architectureRevision) throw new Error('design round active architecture has changed');
+    assertActiveArchitecture(active,input);
     // Pipeline recovery changes transport attempt identity, not design intent.
     // Only initial pipeline dispatch opts in; explicit Studio rounds retain CAS.
-    if (options.resumeActive && active.current_round_id && !input.parentRoundId && !input.documentId) {
-      return activePipelineRound(connection,active.current_round_id,input.subjectId);
+    if (canResumeActive(options,active,input)) {
+      return activePipelineRound(connection,active.current_round_id!,input.subjectId);
     }
     if ((input.parentRoundId ?? null) !== active.current_round_id) throw new Error('design round parent has changed');
     const revisionId = await sourceRevision(connection,input,active);
@@ -92,4 +92,12 @@ async function activePipelineRound(connection:Queryable,id:string,subjectId:stri
   const round=rows.rows[0];
   if (!round || round.snapshot.subjectId !== subjectId) throw new Error('pipeline resume preference subject conflicts with active round');
   return {generationId:round.id,snapshotDigest:round.snapshot_digest,snapshot:round.snapshot,request:round.request,result:round.result};
+}
+
+function canResumeActive(options:{resumeActive?:boolean},active:ActiveRequest,input:DesignRoundStart):boolean {
+  return Boolean(options.resumeActive && active.current_round_id && !input.parentRoundId && !input.documentId);
+}
+
+function assertActiveArchitecture(active:ActiveRequest|undefined,input:DesignRoundStart):asserts active is ActiveRequest {
+  if (!active || active.architecture_digest !== input.architectureDigest || Number(active.architecture_revision) !== input.architectureRevision) throw new Error('design round active architecture has changed');
 }
