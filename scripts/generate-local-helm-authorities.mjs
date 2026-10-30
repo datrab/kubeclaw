@@ -3,6 +3,7 @@
 // documentation build reads the generated JSON and never uses a prior inventory.
 import crypto from 'node:crypto';
 import { prismHelmScalarCorrection } from './lib/docs-prism-helm-semantic-corrections.mjs';
+import { helmProfileBinding } from './docs-helm-profile-bindings.mjs';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
@@ -46,6 +47,8 @@ const local = inventory.files.flatMap((file) => file.documents.flatMap((document
   }))));
 
 const chartRootFor = (sourcePath) => {
+  const explicitProfile = helmProfileBinding(sourcePath);
+  if (explicitProfile) return explicitProfile.chartRoot;
   const declaration = approvedRegistry.files[sourcePath];
   if (declaration) return declaration.chartRoot;
   const discovered = local.find((field) => field.sourcePath === sourcePath)?.consumers[0]?.path.split('/templates/')[0];
@@ -762,7 +765,7 @@ function collectionContract(field) {
     'commands.ownerAllowFrom': ['owner identity strings in the exact gateway helper forms', 'An effective [] grants no owner identity through this list.', 'owner-command authority'],
     'discord.execApprovers': ['Discord approver identity strings accepted by the gateway', 'An effective [] names no execution approvers through this list.', 'execution approval recipients and authority'],
     'gateway.command': ['ordered executable and argument strings', 'An effective [] or null supplies no command override to the container API; Kubernetes then uses the image entrypoint. The template does not select the chart baseline command again.', 'gateway process launch and argument order'],
-    'pluginSeed.specs': ['pinned plugin-package specification strings', 'An effective [] installs no seeded plugin packages.', 'startup-installed plugin code'],
+    'pluginSeed.specs': ['pinned official npm package specifications available in the selected image offline cache', 'An effective [] selects no package installs when reseeding runs; matching image-cache and install-mode markers still skip the reseed block.', 'startup plugin reseeding only after cache/mode mismatch; changing the list alone does not invalidate a matching persisted cache marker'],
     'probes.dependencies.registries.endpoints': ['registry endpoint origins accepted by the dependency probe', 'An effective [] or null becomes an empty KUBECLAW_HEALTH_REGISTRIES string. An enabled registry check then fails with no registry endpoints configured; a disabled dependency check skips it.', 'registry readiness checks'],
     'networkPolicy.apiServerCIDRs': ['IPv4 or IPv6 CIDR strings naming the API-server reachability boundary', 'When networkPolicy.enabled is true an empty or removed collection fails the chart required guard; a disabled parent renders no policy.', 'permitted API-server destination addresses'],
     'rbac.namespaces': ['namespace strings for the chart RoleBindings', 'An effective [] creates no namespaced grants through this list.', 'namespaces receiving the configured ServiceAccount permissions'],
@@ -824,8 +827,23 @@ for (const field of local) {
   // One maintenance transition accepts the former ambiguous dotted spelling as
   // the semantic source.  The generated registry always writes the quoted key,
   // so normal check mode cannot keep or recreate the ambiguous form.
-  const approved = collectionContract(field) ?? approvedRegistry.files?.[field.sourcePath]?.fields?.[field.path]
-    ?? null;
+  const profile = helmProfileBinding(field.sourcePath);
+  const localApproved = collectionContract(field) ?? approvedRegistry.files?.[field.sourcePath]?.fields?.[field.path];
+  const inherited = !localApproved && profile && [profile.semanticSource, `${chartRoot}/values.yaml`]
+    .map(source => ({ source, declaration: approvedRegistry.files?.[source] }))
+    .find(({ declaration }) => declaration?.chartRoot === chartRoot && declaration.fields?.[field.path]);
+  if (inherited) {
+    // A shared array index is not a shared environment/container identity.
+    let selected = parsedSource(field.sourcePath), origin = parsedSource(inherited.source);
+    for (const token of fieldPathTokens(field.path)) {
+      selected = selected?.[token]; origin = origin?.[token];
+      if (typeof token === 'number' && (selected?.name !== undefined || origin?.name !== undefined)) {
+        assert.equal(selected?.name, origin?.name,
+          `LOCAL_HELM_PROFILE_NAMED_ITEM_IDENTITY_DRIFT: ${field.sourcePath}#${field.path}; author its own field contract`);
+      }
+    }
+  }
+  const approved = localApproved ?? inherited?.declaration.fields[field.path] ?? null;
   if (!approved) {
     throw new Error(`LOCAL_HELM_AUTHORITY_REQUIRED: ${field.sourcePath}#${field.path} has a render binding but no explicitly maintained semantic contract`);
   }

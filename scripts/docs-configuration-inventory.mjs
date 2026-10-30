@@ -1,6 +1,7 @@
 #!/usr/bin/env node
 import crypto from 'node:crypto';
 import { editorialOwners } from './lib/docs-configuration-editorial-language.mjs';
+import { helmProfileBinding } from './docs-helm-profile-bindings.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -1038,6 +1039,8 @@ function canonicalHelmPath(value) {
 function helmValueLeafCatalog() {
   const result = new Map();
   const sourceChart = (sourcePath) => {
+    const declared = helmProfileBinding(sourcePath);
+    if (declared) return declared.chartRoot;
     if (sourcePath.startsWith('charts/')) return sourcePath.split('/').slice(0, 2).join('/');
     if (sourcePath === 'my-values/prism-values.yaml') return 'charts/prism';
     return 'charts/kubeclaw';
@@ -1478,6 +1481,11 @@ function externalChartProfileBindings() {
 }
 
 function runtimeFileBindings(sourcePath) {
+  const declared = helmProfileBinding(sourcePath);
+  if (declared) return [
+    { ...declared.producer, kind: declared.kind === 'generated-release-base' ? 'generated-file-producer' : 'configured-values-profile', direction: declared.kind === 'generated-release-base' ? 'write' : 'select' },
+    { ...declared.selector, kind: 'runtime-file-reader-invocation', direction: 'read', authority: declared.selector.authority + ' ' + declared.precedence },
+  ];
   const exactReaders = new Map([
     ['my-values/infra/native-worker-pools.yaml', [
       { path: 'scripts/gitops.mjs', line: 171, kind: 'runtime-file-reader', direction: 'read', authority: 'preflightGitOps passes the selected policy file to loadNativeNodePolicy; the parser reads and validates it before native Prism selection' },
@@ -1613,6 +1621,8 @@ function discoveredRenderProfiles() {
 }
 
 function localHelmBinding(sourcePath) {
+  const declared = helmProfileBinding(sourcePath);
+  if (declared) return { chartRoot: declared.chartRoot, evidence: `${declared.selector.path}:${declared.selector.line} ${declared.selector.authority} ${declared.precedence}` };
   if (sourcePath.startsWith('charts/')) return { chartRoot: sourcePath.split('/').slice(0, 2).join('/'), evidence: sourcePath };
   if (sourcePath === 'gitops/platform/values/codex-ops.yaml') {
     return {
