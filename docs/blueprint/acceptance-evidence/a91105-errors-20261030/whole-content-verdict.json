@@ -1,0 +1,98 @@
+{
+  "candidateRevision": "6ca4c341de6c4b1261a85b1e9b07cfbb00c30163",
+  "originalCriterion": "A911-05 requires exact diagnostic identity/family, throw or emit site, trigger, effect, lifecycle state, retry boundary, safe action, and dynamic construction. Literal-only regex coverage is expressly insufficient.",
+  "historicalFailureDisposition": {
+    "verdict": "PRESERVED",
+    "revision": "e161be41",
+    "reason": "The former active `RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD:<key>` family omission and Buster-only catalogue limitation remain historical failures; they are not rewritten as historical success."
+  },
+  "exactDimensionJudgments": {
+    "identity": {
+      "verdict": "PASS",
+      "judgment": "The 187 supported owned family records each provide an identity and representation/kind, while the hub distinguishes messages, typed codes, returned reasons, HTTP/status translations, and control outcomes."
+    },
+    "throwEmitSite": {
+      "verdict": "PASS",
+      "judgment": "Each catalogue record has owning source locations. The formerly omitted dynamic family is directly tied to `parseTarget` calling `exact(raw, KEYS, 'RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD')` in `skills/common/plugins/runtime-dispatch/src/openclaw-config.ts`, with `activate` calling `targetsFrom` before adapter creation."
+    },
+    "trigger": {
+      "verdict": "PASS",
+      "judgment": "All current family records have a trigger field. The dynamic target family accurately states that the first unknown own enumerable target property is rejected."
+    },
+    "effect": {
+      "verdict": "PASS",
+      "judgment": "All records supply an effect boundary. The runtime-target route correctly says activation returns no usable adapter and is neither an HTTP response nor evidence of a dispatched request."
+    },
+    "lifecycle": {
+      "verdict": "PASS",
+      "judgment": "The common hub requires readers to identify the phase and preserve target/run/attempt identity; `errors.md` supplies the dynamic family's pre-dispatch activation state and requires separate reconciliation of earlier uncertain work. Buster and detailed routing retain their respective execution, cleanup, and retained-state distinctions."
+    },
+    "retry": {
+      "verdict": "PASS",
+      "judgment": "All 187 records provide a retry boundary. The target-field family explicitly stops unchanged-input activation retries, and the hub forbids treating a timeout or failed acknowledgement as proof that no external effect occurred."
+    },
+    "safeAction": {
+      "verdict": "PASS",
+      "judgment": "All records provide a safe action. For the dynamic target family, the action is to preserve target identity, correct/remove the unsupported property against the release parser/schema, revalidate, and reconcile any earlier operation separately."
+    },
+    "dynamicFormation": {
+      "verdict": "PASS",
+      "judgment": "The old omitted `RUNTIME_CONFIG_UNKNOWN_TARGET_FIELD:<key>` construction is now explained as a dynamic message with a symbolic offending-property suffix, not a fixed code. The catalogue also retains an independently documented dynamic message family, `OPENCLAW_<UPPERTOOL>_REJECTED:<status>[:<cap>]`, separate from its stable `error.code`."
+    }
+  },
+  "sourceAccuracy": {
+    "verdict": "PASS",
+    "judgment": "The exact runtime-config constructor and activation parent were inspected and agree with the published explanation. Relative to the prior REF005 candidate, relevant runtime-config source and routing pages are unchanged; the only catalogue/page delta is a source-accurate clarification of CAS semantics in the platform controller family. Reused REF005 source qualifications remain within their original supported-product bounds."
+  },
+  "readerUsability": {
+    "verdict": "PASS",
+    "judgment": "A reader can begin at the common hub, choose an owning family, preserve the first diagnostic and lifecycle identity, then reach detailed routing. `configuration-errors.md` routes the dynamic target message to the dedicated `errors.md` explanation rather than pretending its suffix identifies a target or remote result. Buster error codes remain a complementary detailed route rather than the catalogue's sole scope."
+  },
+  "quality": {
+    "verdict": "PASS",
+    "judgment": "This is a usable source-backed diagnostic reference, not a literal dump: structured entries carry identity, trigger, effect, retry, safe action, retention, consumer/translation, and source fields; the pages make symbolic and dependency-vocabulary limits explicit. Family count was used only as a consistency observation, not as acceptance proof."
+  },
+  "originalWholeGateVerdict": {
+    "verdict": "PASS",
+    "scope": "Supported owned runtime and operator diagnostic families at the documented source-only scope.",
+    "judgment": "A911-05's additional dynamic-formation and lifecycle requirements are now materially met. The prior active runtime-config dynamic family is covered with its constructor, activation ordering, effect boundary, retry stop, safe correction, and reconciliation limit; the catalog is no longer a Buster-only diagnostic surface."
+  },
+  "materialFindings": [],
+  "reusedQualifiedEvidence": [
+    {
+      "evidence": "actual-original-REF005-first-content-verdict.json",
+      "scope": "Qualified source fidelity, practical usability, and completeness for supported owned diagnostic constructions, carrier distinctions, effects, and recovery."
+    },
+    {
+      "evidence": "actual-original-MNT005-topic-final-content-v2-verdict.json",
+      "scope": "Common generated catalogue structure, family routing, fence classification, and retained non-execution limits."
+    },
+    {
+      "evidence": "Current structured catalogue",
+      "scope": "187 entries across Foundation, Nova, Worker, Prism, platform, and configuration; all contain the required operational fields."
+    }
+  ],
+  "limits": [
+    "This is not a claim that every AST token, external dependency message, upstream vocabulary, live dispatch, Kubernetes outcome, or recovery result is documented or executed.",
+    "Source links and source inspection establish the stated construction/meaning scope, not runtime success.",
+    "No A91306, QUA002, REF005, or MNT005 award is inferred from this gate decision; their prior qualified scopes are reused only where unchanged.",
+    "No repository, Git, runtime, publication, checker, or remote action was performed."
+  ],
+  "inspectedSources": [
+    "docs/blueprint/documentation-completion-matrix.json (A911-05 record)",
+    "docs/blueprint/AP09-completeness-audit.md (REF-005/MNT-005 historical criterion context)",
+    "docs/site/reference/common-errors.md and all six family pages",
+    "docs/site/reference/errors.md",
+    "docs/site/reference/configuration-errors.md",
+    "docs/site/reference/buster-error-codes.md",
+    "docs/config/common-error-catalogue.json",
+    "skills/common/plugins/runtime-dispatch/src/openclaw-config.ts",
+    "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+    "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
+    "skills/common/plugins/runtime-dispatch/src/result-persistence.ts"
+  ],
+  "remainingTechnicalConditions": [
+    "This first independent content decision does not register or mutate A911-05.",
+    "Any required technical registration, checker, publication, and remote evidence remains a separate post-content condition and is not claimed passed here."
+  ]
+}

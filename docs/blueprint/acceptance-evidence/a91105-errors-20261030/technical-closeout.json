@@ -1,0 +1,35 @@
+{
+  "scope": "Atomic A911-05 registration candidate; not whole PR",
+  "catalogueCheck": {
+    "argv": [
+      "node",
+      "scripts/docs-common-error-catalogue.mjs",
+      "--check"
+    ],
+    "exitCode": 0,
+    "at": "2026-10-30T22:03:51.338970+00:00",
+    "revision": "6ca4c341de6c4b1261a85b1e9b07cfbb00c30163"
+  },
+  "originalReceiver": {
+    "argv": [
+      "node",
+      "scripts/check-ap09-acceptance-contract.mjs"
+    ],
+    "exitCode": 0,
+    "result": {
+      "ok": true,
+      "policy": "compact-topic-review-20261019",
+      "acceptancePoints": 89,
+      "catalogueRequirements": 261,
+      "acceptedGates": 71,
+      "acceptedRequirements": 250,
+      "complete": false,
+      "contentReviewPerformedByChecker": false
+    },
+    "logSha256": "df9092a80d720dc2eb8f96cb36f5cf7be0d3e8ea60b347980a805330ecf31908"
+  },
+  "readerGeneratorRuntimeChanges": [],
+  "publicationDisposition": "No publication byte changes. Reuse existing exact relevant qualified REF005/MNT005 publication scopes, independently assessed in whole-content verdict. No new publication execution claimed.",
+  "firstContentVerdictRemainingConditions": "Historical first-stage snapshot preserved unmodified. Actual receiver condition subsequently satisfied here; registration is this atomic candidate; exact remote only after reviewed commit/push.",
+  "remoteDisposition": "Pending final commit/push: no remote success claimed before execution."
+}
