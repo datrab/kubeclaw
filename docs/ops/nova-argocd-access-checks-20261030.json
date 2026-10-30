@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "nova-argocd-access-checks.v1",
+  "revision": "eece988ef83f98a6a8868b3a012c976fcb9845a9",
+  "sourceHashes": {
+    "scripts/platform-services.mjs": "0b5ea9ed0e72cc346388dd3a17d1e8026a6f81de82c0d633c6c8cba520c414cf",
+    "tests/verification/deployment/nova-argocd-access.test.mjs": "b24cae28e14a0d39b557b26d0dac827e9dbe2b00f9b902326abc3c58918a748f",
+    "versions.json": "46169a89165aa94c376470e8f894485a4c1fd30b5b06433cebc7058cc4404653",
+    "gitops/platform/bootstrap/nova-argocd-access.yaml": "27e96468e1b0ac5cf21d6474e2acb5b2c0ae2ea43009666e2509af04f942d30f",
+    "gitops/platform/nova-argocd-access/resources.yaml": "b66bc3ebdb28b9eda98f427e61a4324fb27aaf52fdc0d5a3eff49e02dbb05adb"
+  },
+  "dependency": {
+    "name": "js-yaml",
+    "version": "4.3.1"
+  },
+  "status": "passed",
+  "jobId": "job:f0a696f8f39833845af0ed25b4c6a4e4ff2737c70fe0297fce267c0c755acbe1",
+  "runId": "run:unit-preflight:7a3a5cb9-10fe-4a53-8dfd-885fdad756dc",
+  "planDigest": "sha256:67b878c8c90416e9bcf24ff5114beb43ce2056989a4e916695c93e45a3dede85",
+  "resultDigest": "sha256:24b94859417bcc75f6daf828a36d3ffafe6289af90c3dfca6b66008466484de0",
+  "decisionDigest": "sha256:d2284a9f1f02c6e4a378b44569db7aa109baa33f210c36e911467dcd0642d601",
+  "evidenceDigests": [
+    "sha256:85810d567055851be42db08e8347ecba7360a3876ad164c685574f4fd82594d0"
+  ],
+  "counts": {
+    "failed": 0,
+    "passed": 3,
+    "skipped": 0,
+    "total": 3
+  },
+  "exitCode": 0,
+  "attempts": 1,
+  "cleanupErrors": [],
+  "scope": "Source/registration tests, not live connectivity or tailnet acceptance",
+  "generatorDriftCheck": "passed",
+  "reviewCommand": "autoreview --mode local --codex-bin /app/extensions/codex/node_modules/.bin/codex --no-web-search",
+  "review": {
+    "findings": [],
+    "overall_correctness": "patch is correct",
+    "overall_explanation": "No actionable defects were identified in the supplied change bundle. Repository inspection was blocked by the execution environment, so bootstrap integration and existing policy compatibility could not be independently verified. No tests were run.",
+    "overall_confidence": 0.68
+  }
+}
