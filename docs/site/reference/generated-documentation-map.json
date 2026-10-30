@@ -2365,7 +2365,7 @@
       "lastVerified": "generated from current inventory",
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
-        "docs/generated/inventory/configuration-values.json",
+        "docs/generated/inventory/configuration-helm-values.json",
         "scripts/docs-configuration-inventory.mjs"
       ],
       "checks": [
