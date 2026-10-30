@@ -727,6 +727,26 @@ function unapprovedContractProposal(field) {
 
 // Maintained collection profiles are restricted to named receiving contracts.
 // A new unclassified collection still stops authority maintenance and strict CI.
+function inheritedFieldContract(field) {
+  const chartRoot = chartRootFor(field.sourcePath);
+  const profile = helmProfileBinding(field.sourcePath);
+  const inherited = profile && [profile.semanticSource, `${chartRoot}/values.yaml`]
+    .map(source => ({ source, declaration: approvedRegistry.files?.[source] }))
+    .find(({ declaration }) => declaration?.chartRoot === chartRoot && declaration.fields?.[field.path]);
+  if (inherited) {
+    // A shared array index is not a shared environment/container identity.
+    let selected = parsedSource(field.sourcePath), origin = parsedSource(inherited.source);
+    for (const token of fieldPathTokens(field.path)) {
+      selected = selected?.[token]; origin = origin?.[token];
+      if (typeof token === 'number' && (selected?.name !== undefined || origin?.name !== undefined)) {
+        assert.equal(selected?.name, origin?.name,
+          `LOCAL_HELM_PROFILE_NAMED_ITEM_IDENTITY_DRIFT: ${field.sourcePath}#${field.path}; author its own field contract`);
+      }
+    }
+  }
+  return inherited || undefined;
+}
+
 function collectionContract(field) {
   if (!['object', 'array'].includes(field.type)) return null;
   const chart = chartRootFor(field.sourcePath);
@@ -753,7 +773,13 @@ function collectionContract(field) {
   }
   if (p === 'extraContainers') return api('spec.containers', 'Defines additional containers appended to the Pod.', 'An effective [] adds no containers. Null omits the optional range; buster-v2-runtime entries pass through the dedicated registry-client helper instead of unrestricted serialization.', 'Changes the Pod container set and can start a rollout; each image process retains its own startup contract.');
   const podTarget = /^extraContainers\[\](?:\.(.*))?$/u.exec(p);
-  if (podTarget) return api(`spec.containers[0]${podTarget[1] ? `.${podTarget[1].replaceAll('[]', '[0]')}` : ''}`, `Defines ${p} in an additional Pod container.`, 'Deleting a required nested field can fail admission. The buster-v2-runtime helper applies its own registry-client environment, mount and security constraints before serialization.', 'Changes the additional container specification; Helm reconciliation can roll the workload and apply startup, security, probe and resource changes.');
+  if (podTarget) {
+    const containerIndex = fieldPathTokens(field.path)[1];
+    const busterHelper = parsedSource(field.sourcePath).extraContainers?.[containerIndex]?.name === 'buster-v2-runtime';
+    return api(`spec.containers[0]${podTarget[1] ? `.${podTarget[1].replaceAll('[]', '[0]')}` : ''}`, `Defines ${p} in an additional Pod container.`, busterHelper
+      ? 'Deleting a required nested field can fail admission. The buster-v2-runtime helper applies its own registry-client environment, mount and security constraints before serialization.'
+      : 'Deleting required nested fields or supplying a scalar where an object or list is required can fail Kubernetes admission. This ordinary extraContainers entry uses toYaml, not the Buster-specific helper. No same-container process reader is established by this collection.', 'Changes the additional container specification; Helm reconciliation can roll the workload and apply startup, security, probe and resource changes.');
+  }
   const volumeTarget = /^extraVolumes(?:\[\])?(?:\.(.*))?$/u.exec(p);
   if (volumeTarget) return api(`spec.volumes${p.includes('[]') ? '[0]' : ''}${volumeTarget[1] ? `.${volumeTarget[1].replaceAll('[]', '[0]')}` : ''}`, 'Defines additional Pod volumes and their selected volume-source variants.', 'An effective empty extraVolumes list adds no volumes. Removing referenced volumes leaves mounts invalid; required nested source fields still apply.', 'Changes projected, persistent or host-backed data available to the workload and can require Pod replacement.');
   const envTarget = /^extraEnv(?:\[\])?(?:\.(.*))?$/u.exec(p);
@@ -774,6 +800,8 @@ function collectionContract(field) {
     const part = /\.(requests|limits)$/u.exec(p)?.[1];
     return api(`spec.containers[0].resources${part ? `.${part}` : ''}`, `Defines ${part ?? 'resource requests and limits'} for the container selected by ${p}.`, 'An effective empty resource map adds no boundaries through this field. {} preserves earlier resource keys; null can remove them only if the chart schema and template permit it. Prism ingestion retains its enabled-mode required CPU/memory constraints.', 'Changes scheduling reservations or runtime enforcement; new Pod resources apply after workload reconciliation.');
   }
+  if (chart === 'charts/kubeclaw' && p === 'agent.model') return make('gateway-model-object', 'Groups primary and ordered fallback model selections serialized into agents.defaults.model.', 'A map with primary provider-qualified model identifier and a fallbacks list; selected gateway/provider configuration owns supported identifiers and authorization.', 'An effective empty or removed model object does not provide the intended primary model. An effective empty fallbacks list selects no fallback models.', 'Changes gateway model selection after configuration reconciliation and reload or restart; provider access and successful inference are not proved.', 'Invalid model configuration can fail gateway startup or model requests; unavailable or unauthorized models can fail requests or select another configured fallback.');
+  if (chart === 'charts/kubeclaw' && p === 'gateway.startupDoctor') return make('gateway-state-migration-options', 'Groups the blocking pre-setup OpenClaw state-migration init settings.', 'A map with enabled, nodeOptions and resources fields; each child retains its Helm condition, Node option or Kubernetes resource contract.', 'Omission retains earlier merged settings. Removing the map must still satisfy the template receiver; use the Boolean enabled=false to omit migration deliberately.', 'Controls whether and how the migration init runs before later setup; resource and NODE_OPTIONS settings apply to that init container, not the running gateway.', 'Failed migration, invalid Node options or unavailable resources can block startup. Disabling migration can leave existing state incompatible with later setup.');
   const named = {
     'agent.model.fallbacks': ['ordered provider-qualified model identifiers', 'An effective [] configures no fallback model; primary selection remains separate.', 'model fallback order, request recovery, provider cost and latency'],
     'busterNamespaceBroker.controller.allowedAccess': ['subject/modes maps; subjects are canonical namespace/name or DNS labels and modes are tester or deployer', 'An empty list fails the controller requirement for at least one permitted subject.', 'subjects and modes authorized to request leased access'],
@@ -797,7 +825,7 @@ function collectionContract(field) {
   if (/^capabilityProviders(?:\.[^.[]+)?(?:\.capabilities(?:\["[^"\]]+"\])?)?$/u.test(p)) return make('capability-provider-map', `Defines capability providers for runtime dispatch${/\.capabilities\["([^"]+)"\]/u.exec(field.path)?.[1] ? ` through literal capability key \`${/\.capabilities\["([^"]+)"\]/u.exec(field.path)[1]}\`` : ' and their literal capability identifiers'}.`, 'Provider keys must be DNS labels; each provider selects an accepted agentRole, namespace, release and capabilities map. Literal capability keys such as runtime.dispatch remain one map key; each entry must satisfy its linked protocol, contract and port guards.', 'An effective empty provider map adds no provider catalog. Removing required provider or capability fields fails the corresponding chart guard; {} preserves earlier entries through Helm merge.', 'Changes runtime capability routing and trust destinations after release reconciliation and Pod replacement.', 'An invalid provider key, missing required entry or unsupported capability contract stops rendering; incorrect valid targets fail dispatch.');
   if (/^(?:image|images(?:\.(?:control|studio|worker|ingestion))?|busterNamespaceBroker\.controller\.image|runtimeInfrastructure(?:\.(registry|dockerHubMirror))?|control\.productDecisions)$/u.test(p)) {
     const descendants = inventory.files.find((file) => file.path === field.sourcePath)?.documents.flatMap((document) => document.fields).filter((child) => !['object', 'array'].includes(child.type) && child.path.startsWith(`${field.path}.`)) ?? [];
-    const contracts = descendants.map((child) => { const approved = approvedRegistry.files[field.sourcePath]?.fields[child.path]; return approved ? { ...approved, ...(exactScalarCorrection({ ...child, sourcePath: field.sourcePath }) ?? {}) } : null; }).filter(Boolean);
+    const contracts = descendants.map((child) => { const approved = approvedRegistry.files[field.sourcePath]?.fields[child.path] ?? inheritedFieldContract({ ...child, sourcePath: field.sourcePath })?.declaration.fields[child.path]; return approved ? { ...approved, ...(exactScalarCorrection({ ...child, sourcePath: field.sourcePath }) ?? {}) } : null; }).filter(Boolean);
     if (!contracts.length) throw new Error(`LOCAL_HELM_COLLECTION_CHILD_AUTHORITY_REQUIRED: ${field.sourcePath}#${field.path}`);
     const childPaths = descendants.map((child) => `\`${child.path}\``).join(', ');
     return make('qualified-collection-group', `Groups the ${p} inputs checked or serialized by the linked chart receiver. Exact nested contracts: ${childPaths}.`, 'A map of the named nested fields. Each child row retains its accepted type, limits and receiving contract; this group does not authorize arbitrary extra keys.', 'An effective empty or removed map must still satisfy the chart required-field guards and schema; it does not independently disable its parent feature. The named child default expressions remain in effect.', 'Changes the grouped image, registry or trust inputs when the linked receiver and parent conditions select them. Each named child row identifies the concrete effect and whether release reconciliation or process restart applies.', 'Replacing this map cannot bypass its required children or the exact collection schema. Missing or invalid children fail the linked chart guard, admission or runtime parser; child rows identify the resulting image, registry or trust failure.');
@@ -847,26 +875,12 @@ for (const field of local) {
   // One maintenance transition accepts the former ambiguous dotted spelling as
   // the semantic source.  The generated registry always writes the quoted key,
   // so normal check mode cannot keep or recreate the ambiguous form.
-  const profile = helmProfileBinding(field.sourcePath);
   const ownRecord = approvedRegistry.files?.[field.sourcePath]?.fields?.[field.path];
   const collection = collectionContract(field);
-  const inherited = !ownRecord && profile && [profile.semanticSource, `${chartRoot}/values.yaml`]
-    .map(source => ({ source, declaration: approvedRegistry.files?.[source] }))
-    .find(({ declaration }) => declaration?.chartRoot === chartRoot && declaration.fields?.[field.path]);
-  if (inherited) {
-    // A shared array index is not a shared environment/container identity.
-    let selected = parsedSource(field.sourcePath), origin = parsedSource(inherited.source);
-    for (const token of fieldPathTokens(field.path)) {
-      selected = selected?.[token]; origin = origin?.[token];
-      if (typeof token === 'number' && (selected?.name !== undefined || origin?.name !== undefined)) {
-        assert.equal(selected?.name, origin?.name,
-          `LOCAL_HELM_PROFILE_NAMED_ITEM_IDENTITY_DRIFT: ${field.sourcePath}#${field.path}; author its own field contract`);
-      }
-    }
-  }
+  const inherited = ownRecord ? undefined : inheritedFieldContract(field);
   const existingProofs = ownRecord?.runtimeConsumerProof
-    ?? inherited?.declaration.fields[field.path]?.runtimeConsumerProof ?? [];
-  const approved = collection ?? ownRecord ?? inherited?.declaration.fields[field.path] ?? null;
+    ?? inherited?.declaration?.fields?.[field.path]?.runtimeConsumerProof ?? [];
+  const approved = collection ?? ownRecord ?? inherited?.declaration?.fields?.[field.path] ?? null;
   if (!approved) {
     throw new Error(`LOCAL_HELM_AUTHORITY_REQUIRED: ${field.sourcePath}#${field.path} has a render binding but no explicitly maintained semantic contract`);
   }

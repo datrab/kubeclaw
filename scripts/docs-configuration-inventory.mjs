@@ -2637,7 +2637,8 @@ function yamlFields(value, context, fieldPath = '$', result = [], pathSegments =
     assert.deepEqual(actualConsumers, expectedConsumers,
       `CONFIG_YAML_AUTHORITY_DRIFT: exact Helm consumer changed for ${context.sourcePath}#${fieldPath}`);
   }
-  const runtimeProofConsumers = authority?.runtimeConsumerProof?.map((proof) => ({
+  // A transport-only image boundary is not a checked-in process reader.
+  const runtimeProofConsumers = authority?.runtimeConsumerProof?.filter((proof) => proof.kind !== 'selected-image-runtime-boundary').map((proof) => ({
     path: proof.path,
     line: proof.line,
     kind: proof.kind,

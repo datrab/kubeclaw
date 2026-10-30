@@ -16722,12 +16722,12 @@
           ]
         },
         "$.pluginSeed.installMode": {
-          "group": "plugin-install-mode",
-          "purpose": "Selects the verified installation mechanism for seeded OpenClaw plugins.",
-          "acceptedValues": "Exactly an installation mode implemented by the init setup; this baseline uses `official-npm-v1`.",
-          "emptyBehavior": "An empty mode cannot select a trusted installer.",
-          "impact": "Changes package resolution, integrity verification, and the files installed before the gateway starts.",
-          "failure": "An unsupported mode stops init setup and prevents the application containers from starting.",
+          "group": "plugin-reseed-marker",
+          "purpose": "Sets the persisted comparison marker for the offline OpenClaw plugin cache reseed. It does not select a separately validated installer implementation.",
+          "acceptedValues": "A string marker; the chart default is official-npm-v3-authoritative-reseed. The template quotes the merged value into PLUGIN_INSTALL_MODE and compares it with the persisted marker; it does not enforce an enum.",
+          "emptyBehavior": "Omission retains the earlier merged chart or overlay value. An effective empty marker is compared and persisted as empty; the template does not reject it as an unsupported installation mode.",
+          "impact": "A changed merged marker changes the init script in the Deployment Pod template. At the next init, a different marker or image cache version triggers an authoritative offline reseed when the baked cache exists. Matching non-empty cache versions and matching mode markers skip reseeding. The reseed uninstalls selected managed plugins when a prior cache version exists, resets managed npm project roots, installs pinned specs with --no-enable, restores managed desired configuration, runs doctor migration and refreshes the registry before writing markers. No atomic rollback or live gateway success is proved.",
+          "failure": "The init script runs with set -e. An unhandled uninstall, reset, install, restore, doctor or registry failure stops initialization and leaves the application containers unstarted. A missing baked cache produces a warning and skips this reseed block; it is not proof that the desired plugins were installed.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "official-npm-v1",
           "runtimeConsumerProof": [],
@@ -16814,11 +16814,11 @@
         },
         "$.pluginSeed.specs[0]": {
           "group": "plugin-package-spec",
-          "purpose": "Adds one ordered plugin package specification to the offline startup seed.",
-          "acceptedValues": "A pinned package specification accepted by the selected install mode, including an explicit package version.",
-          "emptyBehavior": "An empty list item is invalid; an empty list installs no seeded plugin.",
-          "impact": "Changes plugin code installed before the gateway starts and therefore changes available runtime extensions.",
-          "failure": "An invalid, unavailable, or unverified package stops init setup.",
+          "purpose": "Adds an ordered pinned official npm package specification to the image-backed offline plugin reseed.",
+          "acceptedValues": "A pinned package specification available in the selected image offline cache, such as npm:@openclaw/acpx@2026.10.3 or npm:@openclaw/discord@2026.10.3. The child OpenClaw installer owns package parsing and verification; the chart loop does not validate each string.",
+          "emptyBehavior": "Omission retains the earlier merged list. A later empty list replaces it with no selected installs. An empty item is passed to the installer and is not a supported package specification.",
+          "impact": "The spec is consumed only when the cache-version/install-mode comparison enters reseeding. Changing the list alone does not invalidate a matching persisted cache/mode marker. A changed image cache version or marker is needed to enter that path. During reseeding, the list drives the managed-plugin uninstall IDs and the ordered offline installs with --force --pin --no-enable --accept-capabilities before desired configuration restoration, doctor migration and registry refresh. It does not by itself enable a plugin.",
+          "failure": "An unavailable cached package, rejected specification or other unhandled installer failure stops the set -e init process. No registry network fallback or atomic restoration of an interrupted reseed is promised.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "npm:@openclaw/acpx@2026.9.4",
           "runtimeConsumerProof": [],
@@ -16859,11 +16859,11 @@
         },
         "$.pluginSeed.specs[1]": {
           "group": "plugin-package-spec",
-          "purpose": "Adds one ordered plugin package specification to the offline startup seed.",
-          "acceptedValues": "A pinned package specification accepted by the selected install mode, including an explicit package version.",
-          "emptyBehavior": "An empty list item is invalid; an empty list installs no seeded plugin.",
-          "impact": "Changes plugin code installed before the gateway starts and therefore changes available runtime extensions.",
-          "failure": "An invalid, unavailable, or unverified package stops init setup.",
+          "purpose": "Adds an ordered pinned official npm package specification to the image-backed offline plugin reseed.",
+          "acceptedValues": "A pinned package specification available in the selected image offline cache, such as npm:@openclaw/acpx@2026.10.3 or npm:@openclaw/discord@2026.10.3. The child OpenClaw installer owns package parsing and verification; the chart loop does not validate each string.",
+          "emptyBehavior": "Omission retains the earlier merged list. A later empty list replaces it with no selected installs. An empty item is passed to the installer and is not a supported package specification.",
+          "impact": "The spec is consumed only when the cache-version/install-mode comparison enters reseeding. Changing the list alone does not invalidate a matching persisted cache/mode marker. A changed image cache version or marker is needed to enter that path. During reseeding, the list drives the managed-plugin uninstall IDs and the ordered offline installs with --force --pin --no-enable --accept-capabilities before desired configuration restoration, doctor migration and registry refresh. It does not by itself enable a plugin.",
+          "failure": "An unavailable cached package, rejected specification or other unhandled installer failure stops the set -e init process. No registry network fallback or atomic restoration of an interrupted reseed is promised.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "npm:@openclaw/discord@2026.9.4",
           "runtimeConsumerProof": [],
@@ -27198,6 +27198,30 @@
               }
             }
           ]
+        },
+        "$.discord.requireMention": {
+          "group": "discord-guild-mention-policy",
+          "purpose": "Controls whether the enabled Discord gateway requires a mention for guild messages through the wildcard guild policy. It does not replace sender or group authorization.",
+          "acceptedValues": "Supported inputs are Boolean true or false. The template uses toJson and passes the merged JSON value through; this field has no chart Boolean schema guard. The selected gateway owns acceptance of other types.",
+          "emptyBehavior": "Omission keeps the earlier merged value: the chart default is true. scripts/deploy.sh selects releases/values/nova.yaml, which currently selects false; my-values/nova-values.yaml independently selects false only when explicitly used for direct Helm or supplied as NOVA_VALUES_FILE. Later supplied values and generated command overrides win. Explicit null or an empty scalar is not a supported Boolean choice and is not coerced to false by this template.",
+          "impact": "The value is serialized into channels.discord.guilds[\"*\"].requireMention in the gateway ConfigMap. That ConfigMap contributes to the Deployment checksum/config Pod-template annotation, so a reconciled value change changes the Pod template and requests replacement; no completed rollout or Discord delivery is proved.",
+          "failure": "A non-Boolean value is serialized as JSON; the selected gateway owns invalid-type acceptance. An invalid gateway policy can prevent startup or intended Discord handling. An unintended false value permits non-mention messages subject to the other configured authorization rules; an unintended true value can suppress intended messages.",
+          "booleanInputSemantics": {
+            "operationalFailure": "An invalid gateway policy can prevent startup or intended Discord handling. An unintended false value permits non-mention messages subject to the other configured authorization rules; an unintended true value can suppress intended messages.",
+            "operationalEmptyBehavior": "Omission keeps the earlier merged value: chart true; deploy.sh release Nova profile false; optional explicitly selected my-values Nova overlay false; then later supplied values and generated command overrides. Explicit null or an empty scalar is not a supported Boolean choice and is not coerced to false by the template."
+          },
+          "semanticAuthority": "explicit-field-contract",
+          "consumerProof": []
+        },
+        "$.archviewer.networkPolicyProvider": {
+          "group": "archviewer-network-policy-provider",
+          "purpose": "Selects the policy resource kind for the enabled Nova-only Archviewer sidecar boundary.",
+          "acceptedValues": "The merged effective selector must be cilium or kubernetes after Helm default selection. A Helm-empty input falls back to cilium; another non-empty value fails the explicit membership guard when Archviewer is enabled.",
+          "emptyBehavior": "Omission keeps earlier merged values. An effective Helm-empty value selects cilium through default \"cilium\". When Archviewer is disabled, this template emits no Archviewer resources and does not evaluate the provider guard.",
+          "impact": "For enabled Archviewer on Nova, kubernetes renders a networking.k8s.io/v1 NetworkPolicy and cilium renders a cilium.io/v2 CiliumNetworkPolicy. Reconcile the selected policy resources with the appropriate controller/CNI. This selector does not itself change the workload Pod template or prove a workload restart, network enforcement or uninterrupted traffic.",
+          "failure": "Enabled Archviewer with a non-Nova role stops Helm rendering. A non-empty selector outside cilium|kubernetes stops rendering with the named provider error. A rendered policy can still lack enforcement when its controller or matching semantics are unavailable.",
+          "semanticAuthority": "explicit-field-contract",
+          "consumerProof": []
         }
       }
     },
@@ -66688,7 +66712,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "environment": "BUSTER_V2_TOKEN",
+              "sourceLineSha256": "abd0988fd2b36811d3af180312c7d70676c6831eb3b27da9ddb118b79e2231e1",
+              "authority": "PASS_SOURCE_ONLY: the Buster runtime entrypoint captures a nonempty token before its later transport branch. This qualifies only the Buster runtime container, not Nova's same-named extraEnv."
             }
           ],
           "consumerProof": [
@@ -66750,7 +66776,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "environment": "BUSTER_V2_TOKEN",
+              "sourceLineSha256": "abd0988fd2b36811d3af180312c7d70676c6831eb3b27da9ddb118b79e2231e1",
+              "authority": "PASS_SOURCE_ONLY: the Buster runtime entrypoint captures a nonempty token before its later transport branch. This qualifies only the Buster runtime container, not Nova's same-named extraEnv."
             }
           ],
           "consumerProof": [
@@ -66830,7 +66858,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "environment": "BUSTER_V2_TOKEN",
+              "sourceLineSha256": "abd0988fd2b36811d3af180312c7d70676c6831eb3b27da9ddb118b79e2231e1",
+              "authority": "PASS_SOURCE_ONLY: the Buster runtime entrypoint captures a nonempty token before its later transport branch. This qualifies only the Buster runtime container, not Nova's same-named extraEnv."
             }
           ],
           "consumerProof": [
@@ -66910,7 +66940,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "environment": "BUSTER_V2_TOKEN",
+              "sourceLineSha256": "abd0988fd2b36811d3af180312c7d70676c6831eb3b27da9ddb118b79e2231e1",
+              "authority": "PASS_SOURCE_ONLY: the Buster runtime entrypoint captures a nonempty token before its later transport branch. This qualifies only the Buster runtime container, not Nova's same-named extraEnv."
             }
           ],
           "consumerProof": [
@@ -66972,7 +67004,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "environment": "BUSTER_V2_TOKEN",
+              "sourceLineSha256": "abd0988fd2b36811d3af180312c7d70676c6831eb3b27da9ddb118b79e2231e1",
+              "authority": "PASS_SOURCE_ONLY: the Buster runtime entrypoint captures a nonempty token before its later transport branch. This qualifies only the Buster runtime container, not Nova's same-named extraEnv."
             }
           ],
           "consumerProof": [
@@ -67034,7 +67068,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "environment": "BUSTER_V2_TOKEN",
+              "sourceLineSha256": "abd0988fd2b36811d3af180312c7d70676c6831eb3b27da9ddb118b79e2231e1",
+              "authority": "PASS_SOURCE_ONLY: the Buster runtime entrypoint captures a nonempty token before its later transport branch. This qualifies only the Buster runtime container, not Nova's same-named extraEnv."
             }
           ],
           "consumerProof": [
@@ -67111,10 +67147,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 107,
+              "line": 114,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY"
+              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+              "sourceLineSha256": "c867395eae4804479dab488d147c09342d84aa061a76d573075b68fba24f7c48",
+              "authority": "PASS_SOURCE_ONLY: nonempty shell prerequisite before generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -67173,10 +67211,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 107,
+              "line": 114,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY"
+              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+              "sourceLineSha256": "c867395eae4804479dab488d147c09342d84aa061a76d573075b68fba24f7c48",
+              "authority": "PASS_SOURCE_ONLY: nonempty shell prerequisite before generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -67253,10 +67293,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 107,
+              "line": 114,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY"
+              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+              "sourceLineSha256": "c867395eae4804479dab488d147c09342d84aa061a76d573075b68fba24f7c48",
+              "authority": "PASS_SOURCE_ONLY: nonempty shell prerequisite before generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -67333,10 +67375,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 107,
+              "line": 114,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY"
+              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+              "sourceLineSha256": "c867395eae4804479dab488d147c09342d84aa061a76d573075b68fba24f7c48",
+              "authority": "PASS_SOURCE_ONLY: nonempty shell prerequisite before generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -67395,10 +67439,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 107,
+              "line": 114,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY"
+              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+              "sourceLineSha256": "c867395eae4804479dab488d147c09342d84aa061a76d573075b68fba24f7c48",
+              "authority": "PASS_SOURCE_ONLY: nonempty shell prerequisite before generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -67457,10 +67503,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 107,
+              "line": 114,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY"
+              "environment": "BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY",
+              "sourceLineSha256": "c867395eae4804479dab488d147c09342d84aa061a76d573075b68fba24f7c48",
+              "authority": "PASS_SOURCE_ONLY: nonempty shell prerequisite before generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -67540,21 +67588,27 @@
               "line": 5,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "ec3bc4fd6fc1258e947d852afa2492d225e96d579f3c2dfe6e240dc840430cc8",
+              "authority": "PASS_SOURCE_ONLY: optional shell capture."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 174,
+              "line": 181,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "access": "shell-parameter",
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "5122bf527005733c7e13b34a58d1ad18b88290e235e7e7aecdc04b64f5a840ea",
+              "authority": "PASS_SOURCE_ONLY: selects the trusted-peer configuration branch while constructing runtime.json."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 175,
+              "line": 182,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "access": "shell-parameter",
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "db2b39de6797db42f73b1812e96d61d1fe57bc80d9cfe87bdfabe1b54a10b561",
+              "authority": "PASS_SOURCE_ONLY: copies the selected identity into trustedPeerSpiffeIds."
             }
           ],
           "consumerProof": [
@@ -67616,21 +67670,27 @@
               "line": 5,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "ec3bc4fd6fc1258e947d852afa2492d225e96d579f3c2dfe6e240dc840430cc8",
+              "authority": "PASS_SOURCE_ONLY: optional shell capture."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 174,
+              "line": 181,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "access": "shell-parameter",
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "5122bf527005733c7e13b34a58d1ad18b88290e235e7e7aecdc04b64f5a840ea",
+              "authority": "PASS_SOURCE_ONLY: selects the trusted-peer configuration branch while constructing runtime.json."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 175,
+              "line": 182,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "access": "shell-parameter",
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "db2b39de6797db42f73b1812e96d61d1fe57bc80d9cfe87bdfabe1b54a10b561",
+              "authority": "PASS_SOURCE_ONLY: copies the selected identity into trustedPeerSpiffeIds."
             }
           ],
           "consumerProof": [
@@ -67692,21 +67752,27 @@
               "line": 5,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "ec3bc4fd6fc1258e947d852afa2492d225e96d579f3c2dfe6e240dc840430cc8",
+              "authority": "PASS_SOURCE_ONLY: optional shell capture."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 174,
+              "line": 181,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "access": "shell-parameter",
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "5122bf527005733c7e13b34a58d1ad18b88290e235e7e7aecdc04b64f5a840ea",
+              "authority": "PASS_SOURCE_ONLY: selects the trusted-peer configuration branch while constructing runtime.json."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 175,
+              "line": 182,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID"
+              "access": "shell-parameter",
+              "environment": "BUSTER_TRUSTED_PEER_SPIFFE_ID",
+              "sourceLineSha256": "db2b39de6797db42f73b1812e96d61d1fe57bc80d9cfe87bdfabe1b54a10b561",
+              "authority": "PASS_SOURCE_ONLY: copies the selected identity into trustedPeerSpiffeIds."
             }
           ],
           "consumerProof": [
@@ -67783,10 +67849,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 173,
+              "line": 180,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_PLAN_PORT"
+              "environment": "BUSTER_PLAN_PORT",
+              "sourceLineSha256": "9e815e876e7aee9c83c25c084f430c381c3222f0c8788fd6b4ca342da42acae0",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with a 18891 fallback while writing runtime.json; this line does not establish later bind success."
             }
           ],
           "consumerProof": [
@@ -67845,10 +67913,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 173,
+              "line": 180,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_PLAN_PORT"
+              "environment": "BUSTER_PLAN_PORT",
+              "sourceLineSha256": "9e815e876e7aee9c83c25c084f430c381c3222f0c8788fd6b4ca342da42acae0",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with a 18891 fallback while writing runtime.json; this line does not establish later bind success."
             }
           ],
           "consumerProof": [
@@ -67907,10 +67977,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 173,
+              "line": 180,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_PLAN_PORT"
+              "environment": "BUSTER_PLAN_PORT",
+              "sourceLineSha256": "9e815e876e7aee9c83c25c084f430c381c3222f0c8788fd6b4ca342da42acae0",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with a 18891 fallback while writing runtime.json; this line does not establish later bind success."
             }
           ],
           "consumerProof": [
@@ -67990,7 +68062,9 @@
               "line": 39,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_PLAN_STATE_DIR"
+              "environment": "BUSTER_PLAN_STATE_DIR",
+              "sourceLineSha256": "0e040b6daa821eaabc2777c1d19012bf3ef4990f32162d3447d5f5d67b9e433f",
+              "authority": "PASS_SOURCE_ONLY: shell default selects the plan-state path."
             }
           ],
           "consumerProof": [
@@ -68052,7 +68126,9 @@
               "line": 39,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_PLAN_STATE_DIR"
+              "environment": "BUSTER_PLAN_STATE_DIR",
+              "sourceLineSha256": "0e040b6daa821eaabc2777c1d19012bf3ef4990f32162d3447d5f5d67b9e433f",
+              "authority": "PASS_SOURCE_ONLY: shell default selects the plan-state path."
             }
           ],
           "consumerProof": [
@@ -68114,7 +68190,9 @@
               "line": 39,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_PLAN_STATE_DIR"
+              "environment": "BUSTER_PLAN_STATE_DIR",
+              "sourceLineSha256": "0e040b6daa821eaabc2777c1d19012bf3ef4990f32162d3447d5f5d67b9e433f",
+              "authority": "PASS_SOURCE_ONLY: shell default selects the plan-state path."
             }
           ],
           "consumerProof": [
@@ -68194,7 +68272,9 @@
               "line": 40,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_PLAN_RUN_DIR"
+              "environment": "BUSTER_PLAN_RUN_DIR",
+              "sourceLineSha256": "4e509df38c2c634e9300734050a0db30d75ea108f018d883b002454d97bc2fc1",
+              "authority": "PASS_SOURCE_ONLY: shell default selects the run path."
             }
           ],
           "consumerProof": [
@@ -68256,7 +68336,9 @@
               "line": 40,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_PLAN_RUN_DIR"
+              "environment": "BUSTER_PLAN_RUN_DIR",
+              "sourceLineSha256": "4e509df38c2c634e9300734050a0db30d75ea108f018d883b002454d97bc2fc1",
+              "authority": "PASS_SOURCE_ONLY: shell default selects the run path."
             }
           ],
           "consumerProof": [
@@ -68318,7 +68400,9 @@
               "line": 40,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_PLAN_RUN_DIR"
+              "environment": "BUSTER_PLAN_RUN_DIR",
+              "sourceLineSha256": "4e509df38c2c634e9300734050a0db30d75ea108f018d883b002454d97bc2fc1",
+              "authority": "PASS_SOURCE_ONLY: shell default selects the run path."
             }
           ],
           "consumerProof": [
@@ -68395,10 +68479,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 183,
+              "line": 190,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_V2_MAX_ARCHIVE_BYTES"
+              "environment": "BUSTER_V2_MAX_ARCHIVE_BYTES",
+              "sourceLineSha256": "98ab190e61f00e3d4c2f93e4911db60f80b7a294a075c7bdd78082af38233244",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with the stated fallback in generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -68457,10 +68543,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 183,
+              "line": 190,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_V2_MAX_ARCHIVE_BYTES"
+              "environment": "BUSTER_V2_MAX_ARCHIVE_BYTES",
+              "sourceLineSha256": "98ab190e61f00e3d4c2f93e4911db60f80b7a294a075c7bdd78082af38233244",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with the stated fallback in generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -68519,10 +68607,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 183,
+              "line": 190,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_V2_MAX_ARCHIVE_BYTES"
+              "environment": "BUSTER_V2_MAX_ARCHIVE_BYTES",
+              "sourceLineSha256": "98ab190e61f00e3d4c2f93e4911db60f80b7a294a075c7bdd78082af38233244",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with the stated fallback in generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -68599,10 +68689,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 187,
+              "line": 194,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_V2_MAX_EXTRACTED_BYTES"
+              "environment": "BUSTER_V2_MAX_EXTRACTED_BYTES",
+              "sourceLineSha256": "7de2fc6fba08b02d6d6474c83eea7542f90302100b060f3345e803b1871715c2",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with the stated fallback in generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -68661,10 +68753,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 187,
+              "line": 194,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_V2_MAX_EXTRACTED_BYTES"
+              "environment": "BUSTER_V2_MAX_EXTRACTED_BYTES",
+              "sourceLineSha256": "7de2fc6fba08b02d6d6474c83eea7542f90302100b060f3345e803b1871715c2",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with the stated fallback in generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -68723,10 +68817,12 @@
           "runtimeConsumerProof": [
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 187,
+              "line": 194,
               "kind": "checked-in-runtime-reader",
               "access": "embedded-node-process-env",
-              "environment": "BUSTER_V2_MAX_EXTRACTED_BYTES"
+              "environment": "BUSTER_V2_MAX_EXTRACTED_BYTES",
+              "sourceLineSha256": "7de2fc6fba08b02d6d6474c83eea7542f90302100b060f3345e803b1871715c2",
+              "authority": "PASS_SOURCE_ONLY: Number conversion with the stated fallback in generated runtime configuration."
             }
           ],
           "consumerProof": [
@@ -69210,25 +69306,22 @@
           "selectedBaseline": "<object: 2 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "cmd/buster-namespace-controller/main.go",
-              "line": 184,
-              "kind": "checked-in-runtime-reader",
-              "access": "go-process-env",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
-            },
-            {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 148,
+              "line": 155,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
+              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS",
+              "sourceLineSha256": "184172581a550b09593c751c4d45cb83986657e722c5f28440688d8143a24ac7",
+              "authority": "PASS_SOURCE_ONLY: optional shell value is explicitly forwarded into the inline Node configuration construction."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 226,
+              "line": 233,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
+              "access": "shell-parameter",
+              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS",
+              "sourceLineSha256": "d8e9a044033a00423469941cf0a439a79b24424fadf0bd27095e1328772d51b4",
+              "authority": "PASS_SOURCE_ONLY: comma-splits and filters the forwarded value into allowedSecretReferences."
             }
           ],
           "consumerProof": [
@@ -69286,25 +69379,22 @@
           "selectedBaseline": "BUSTER_ALLOWED_SOURCE_SECRETS",
           "runtimeConsumerProof": [
             {
-              "path": "cmd/buster-namespace-controller/main.go",
-              "line": 184,
-              "kind": "checked-in-runtime-reader",
-              "access": "go-process-env",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
-            },
-            {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 148,
+              "line": 155,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
+              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS",
+              "sourceLineSha256": "184172581a550b09593c751c4d45cb83986657e722c5f28440688d8143a24ac7",
+              "authority": "PASS_SOURCE_ONLY: optional shell value is explicitly forwarded into the inline Node configuration construction."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 226,
+              "line": 233,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
+              "access": "shell-parameter",
+              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS",
+              "sourceLineSha256": "d8e9a044033a00423469941cf0a439a79b24424fadf0bd27095e1328772d51b4",
+              "authority": "PASS_SOURCE_ONLY: comma-splits and filters the forwarded value into allowedSecretReferences."
             }
           ],
           "consumerProof": [
@@ -69362,25 +69452,22 @@
           "selectedBaseline": "kubeclaw-fixture-preflight,prism-test-provider,prism-test-runtime,prism-test-postgresql-auth,prism-test-ghcr",
           "runtimeConsumerProof": [
             {
-              "path": "cmd/buster-namespace-controller/main.go",
-              "line": 184,
-              "kind": "checked-in-runtime-reader",
-              "access": "go-process-env",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
-            },
-            {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 148,
+              "line": 155,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
+              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS",
+              "sourceLineSha256": "184172581a550b09593c751c4d45cb83986657e722c5f28440688d8143a24ac7",
+              "authority": "PASS_SOURCE_ONLY: optional shell value is explicitly forwarded into the inline Node configuration construction."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 226,
+              "line": 233,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS"
+              "access": "shell-parameter",
+              "environment": "BUSTER_ALLOWED_SOURCE_SECRETS",
+              "sourceLineSha256": "d8e9a044033a00423469941cf0a439a79b24424fadf0bd27095e1328772d51b4",
+              "authority": "PASS_SOURCE_ONLY: comma-splits and filters the forwarded value into allowedSecretReferences."
             }
           ],
           "consumerProof": [
@@ -69664,14 +69751,18 @@
               "line": 41,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT"
+              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
+              "sourceLineSha256": "4567b22bcbd96ae76a4b41f0ddecb44e989000c964cfc73a73b59802c6186a4c",
+              "authority": "PASS_SOURCE_ONLY: required shell input, followed by local filesystem safety checks."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 292,
+              "line": 299,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT"
+              "access": "shell-parameter",
+              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
+              "sourceLineSha256": "aed101ca1b719ec1ab2a2ec0e608fab87c551ac6087c30b00e3dcfb54194f41d",
+              "authority": "PASS_SOURCE_ONLY: emits the checked cgroup root into browserPlaywright configuration."
             }
           ],
           "consumerProof": [
@@ -69733,14 +69824,18 @@
               "line": 41,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT"
+              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
+              "sourceLineSha256": "4567b22bcbd96ae76a4b41f0ddecb44e989000c964cfc73a73b59802c6186a4c",
+              "authority": "PASS_SOURCE_ONLY: required shell input, followed by local filesystem safety checks."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 292,
+              "line": 299,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT"
+              "access": "shell-parameter",
+              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
+              "sourceLineSha256": "aed101ca1b719ec1ab2a2ec0e608fab87c551ac6087c30b00e3dcfb54194f41d",
+              "authority": "PASS_SOURCE_ONLY: emits the checked cgroup root into browserPlaywright configuration."
             }
           ],
           "consumerProof": [
@@ -69802,14 +69897,18 @@
               "line": 41,
               "kind": "checked-in-runtime-reader",
               "access": "shell-parameter",
-              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT"
+              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
+              "sourceLineSha256": "4567b22bcbd96ae76a4b41f0ddecb44e989000c964cfc73a73b59802c6186a4c",
+              "authority": "PASS_SOURCE_ONLY: required shell input, followed by local filesystem safety checks."
             },
             {
               "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 292,
+              "line": 299,
               "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT"
+              "access": "shell-parameter",
+              "environment": "BUSTER_BROWSER_PLAYWRIGHT_CGROUP_ROOT",
+              "sourceLineSha256": "aed101ca1b719ec1ab2a2ec0e608fab87c551ac6087c30b00e3dcfb54194f41d",
+              "authority": "PASS_SOURCE_ONLY: emits the checked cgroup root into browserPlaywright configuration."
             }
           ],
           "consumerProof": [
@@ -94151,12 +94250,12 @@
         },
         "$.extraEnv[0]": {
           "group": "kubernetes-collection-contract",
-          "purpose": "Defines additional environment entries injected into the primary runtime container.",
+          "purpose": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "collectionInputType": "object",
           "acceptedValues": "A object accepted by the pinned v1/Pod schema at spec.containers[0].env[0]. Keys and item variants, including valueFrom and security-context alternatives, must satisfy that exact API contract.",
           "emptyBehavior": "Omission keeps the earlier map; a later {} keeps earlier keys through recursive Helm merge. An effective [] adds no extra variables; null removes the key and its optional render block. Entries select name plus literal value or valueFrom; Secret bytes remain outside this reference.",
-          "impact": "Changes process configuration after the Pod is replaced; each named process owns its parsing and failure behavior.",
-          "failure": "An invalid type, key, item variant or required relationship fails Kubernetes admission. An accepted configuration can still prevent scheduling, image pull, volume setup or process readiness.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "apiSchemaAuthority": {
             "authority": "Kubernetes v1.35.0 OpenAPI io.k8s.api.core.v1.Pod",
             "authoritySha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
@@ -94178,11 +94277,11 @@
           "selectedBaseline": "<object: 2 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 4,
-              "kind": "checked-in-runtime-reader",
-              "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "path": "my-values/nova-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "BUSTER_V2_TOKEN",
+              "authority": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -94231,20 +94330,20 @@
         },
         "$.extraEnv[0].name": {
           "group": "environment-runtime-contract",
-          "purpose": "Binds the paired value to environment variable `BUSTER_V2_TOKEN`. Checked-in deployment sources inject BUSTER_V2_TOKEN. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-          "acceptedValues": "A valid Kubernetes environment-variable name; this exact receiver requires `BUSTER_V2_TOKEN`. The paired value accepts string accepted by the linked consumer; use its source validation and listed default",
+          "purpose": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
+          "acceptedValues": "A Kubernetes environment-variable name; the checked-in declaration names BUSTER_V2_TOKEN. No process-specific parser or accepted-value claim is qualified here.",
           "emptyBehavior": "An empty name fails Kubernetes API validation. For the paired value: The owning producer or runtime defines empty-value behavior.",
-          "impact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
-          "failure": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "BUSTER_V2_TOKEN",
           "runtimeConsumerProof": [
             {
-              "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 4,
-              "kind": "checked-in-runtime-reader",
-              "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "path": "my-values/nova-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "BUSTER_V2_TOKEN",
+              "authority": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -94293,12 +94392,12 @@
         },
         "$.extraEnv[0].valueFrom": {
           "group": "kubernetes-collection-contract",
-          "purpose": "Defines additional environment entries injected into the primary runtime container.",
+          "purpose": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "collectionInputType": "object",
           "acceptedValues": "A object accepted by the pinned v1/Pod schema at spec.containers[0].env[0].valueFrom. Keys and item variants, including valueFrom and security-context alternatives, must satisfy that exact API contract.",
           "emptyBehavior": "Omission keeps the earlier map; a later {} keeps earlier keys through recursive Helm merge. An effective [] adds no extra variables; null removes the key and its optional render block. Entries select name plus literal value or valueFrom; Secret bytes remain outside this reference.",
-          "impact": "Changes process configuration after the Pod is replaced; each named process owns its parsing and failure behavior.",
-          "failure": "An invalid type, key, item variant or required relationship fails Kubernetes admission. An accepted configuration can still prevent scheduling, image pull, volume setup or process readiness.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "apiSchemaAuthority": {
             "authority": "Kubernetes v1.35.0 OpenAPI io.k8s.api.core.v1.Pod",
             "authoritySha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
@@ -94320,11 +94419,11 @@
           "selectedBaseline": "<object: 1 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 4,
-              "kind": "checked-in-runtime-reader",
-              "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "path": "my-values/nova-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "BUSTER_V2_TOKEN",
+              "authority": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -94373,12 +94472,12 @@
         },
         "$.extraEnv[0].valueFrom.secretKeyRef": {
           "group": "kubernetes-collection-contract",
-          "purpose": "Defines additional environment entries injected into the primary runtime container.",
+          "purpose": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "collectionInputType": "object",
           "acceptedValues": "A object accepted by the pinned v1/Pod schema at spec.containers[0].env[0].valueFrom.secretKeyRef. Keys and item variants, including valueFrom and security-context alternatives, must satisfy that exact API contract.",
           "emptyBehavior": "Omission keeps the earlier map; a later {} keeps earlier keys through recursive Helm merge. An effective [] adds no extra variables; null removes the key and its optional render block. Entries select name plus literal value or valueFrom; Secret bytes remain outside this reference.",
-          "impact": "Changes process configuration after the Pod is replaced; each named process owns its parsing and failure behavior.",
-          "failure": "An invalid type, key, item variant or required relationship fails Kubernetes admission. An accepted configuration can still prevent scheduling, image pull, volume setup or process readiness.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "apiSchemaAuthority": {
             "authority": "Kubernetes v1.35.0 OpenAPI io.k8s.api.core.v1.Pod",
             "authoritySha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
@@ -94400,11 +94499,11 @@
           "selectedBaseline": "<object: 2 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 4,
-              "kind": "checked-in-runtime-reader",
-              "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "path": "my-values/nova-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "BUSTER_V2_TOKEN",
+              "authority": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -94453,20 +94552,20 @@
         },
         "$.extraEnv[0].valueFrom.secretKeyRef.key": {
           "group": "secret-key-reference",
-          "purpose": "Selects the data key inside the configured Secret for extra env / value from / secret key ref.",
+          "purpose": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "acceptedValues": "A non-empty Kubernetes Secret data-key string.",
           "emptyBehavior": "An empty key cannot select the required value and is accepted only when the complete Secret integration is disabled.",
-          "impact": "Changes which value from the named Secret reaches the linked workload.",
-          "failure": "A missing key prevents environment or volume materialization and leaves the workload unready.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "busterV2Token",
           "runtimeConsumerProof": [
             {
-              "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 4,
-              "kind": "checked-in-runtime-reader",
-              "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "path": "my-values/nova-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "BUSTER_V2_TOKEN",
+              "authority": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -94515,20 +94614,20 @@
         },
         "$.extraEnv[0].valueFrom.secretKeyRef.name": {
           "group": "object-reference",
-          "purpose": "Selects the Kubernetes Secret object that supplies `BUSTER_V2_TOKEN`.",
+          "purpose": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "acceptedValues": "A DNS-compatible Secret name in the same namespace as the rendered Pod.",
           "emptyBehavior": "An empty or omitted name cannot resolve the required Secret reference.",
-          "impact": "Changes which Secret supplies `BUSTER_V2_TOKEN` without putting credential bytes in values.",
-          "failure": "A missing or malformed Secret name prevents Pod environment materialization and the container does not start.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "openclaw-shared-secrets",
           "runtimeConsumerProof": [
             {
-              "path": "docker/buster-runtime-entrypoint.sh",
-              "line": 4,
-              "kind": "checked-in-runtime-reader",
-              "access": "shell-parameter",
-              "environment": "BUSTER_V2_TOKEN"
+              "path": "my-values/nova-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "BUSTER_V2_TOKEN",
+              "authority": "This declaration transports BUSTER_V2_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -100577,6 +100676,20 @@
               }
             }
           ]
+        },
+        "$.discord.requireMention": {
+          "group": "discord-guild-mention-policy",
+          "purpose": "Controls whether the enabled Discord gateway requires a mention for guild messages through the wildcard guild policy. It does not replace sender or group authorization.",
+          "acceptedValues": "Supported inputs are Boolean true or false. The template uses toJson and passes the merged JSON value through; this field has no chart Boolean schema guard. The selected gateway owns acceptance of other types.",
+          "emptyBehavior": "Omission keeps the earlier merged value: the chart default is true. scripts/deploy.sh selects releases/values/nova.yaml, which currently selects false; my-values/nova-values.yaml independently selects false only when explicitly used for direct Helm or supplied as NOVA_VALUES_FILE. Later supplied values and generated command overrides win. Explicit null or an empty scalar is not a supported Boolean choice and is not coerced to false by this template.",
+          "impact": "The value is serialized into channels.discord.guilds[\"*\"].requireMention in the gateway ConfigMap. That ConfigMap contributes to the Deployment checksum/config Pod-template annotation, so a reconciled value change changes the Pod template and requests replacement; no completed rollout or Discord delivery is proved.",
+          "failure": "A non-Boolean value is serialized as JSON; the selected gateway owns invalid-type acceptance. An invalid gateway policy can prevent startup or intended Discord handling. An unintended false value permits non-mention messages subject to the other configured authorization rules; an unintended true value can suppress intended messages.",
+          "booleanInputSemantics": {
+            "operationalFailure": "An invalid gateway policy can prevent startup or intended Discord handling. An unintended false value permits non-mention messages subject to the other configured authorization rules; an unintended true value can suppress intended messages.",
+            "operationalEmptyBehavior": "Omission keeps the earlier merged value: chart true; deploy.sh release Nova profile false; optional explicitly selected my-values Nova overlay false; then later supplied values and generated command overrides. Explicit null or an empty scalar is not a supported Boolean choice and is not coerced to false by the template."
+          },
+          "semanticAuthority": "explicit-field-contract",
+          "consumerProof": []
         }
       }
     },
@@ -106867,42 +106980,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 60,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/ingestion.ts",
-              "line": 97,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 9,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/worker-config.ts",
-              "line": 13,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "tools/ops-mcp/src/config.mjs",
-              "line": 11,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
+              "environment": "PORT",
+              "sourceLineSha256": "f45349f674a8bd9e61c09916b48e80a08ff6a45967c06b50f6ba0865bacdffc1",
+              "authority": "PASS_SOURCE_ONLY for my-values/prism-agent-values.yaml extraContainers[name=prism-agent-bridge]. Dockerfile.prism-agent copies this exact bridge program to /opt/kubeclaw-prism and the profile invokes it there. It converts PORT with fallback 18080 and listens locally; this is not a successful-listener claim."
             }
           ],
           "consumerProof": [
@@ -106972,42 +107052,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 60,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/ingestion.ts",
-              "line": 97,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 9,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/worker-config.ts",
-              "line": 13,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "tools/ops-mcp/src/config.mjs",
-              "line": 11,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
+              "environment": "PORT",
+              "sourceLineSha256": "f45349f674a8bd9e61c09916b48e80a08ff6a45967c06b50f6ba0865bacdffc1",
+              "authority": "PASS_SOURCE_ONLY for my-values/prism-agent-values.yaml extraContainers[name=prism-agent-bridge]. Dockerfile.prism-agent copies this exact bridge program to /opt/kubeclaw-prism and the profile invokes it there. It converts PORT with fallback 18080 and listens locally; this is not a successful-listener claim."
             }
           ],
           "consumerProof": [
@@ -107077,42 +107124,9 @@
               "line": 4,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 60,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/ingestion.ts",
-              "line": 97,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 9,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "skills/prism/server/worker-config.ts",
-              "line": 13,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
-            },
-            {
-              "path": "tools/ops-mcp/src/config.mjs",
-              "line": 11,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PORT"
+              "environment": "PORT",
+              "sourceLineSha256": "f45349f674a8bd9e61c09916b48e80a08ff6a45967c06b50f6ba0865bacdffc1",
+              "authority": "PASS_SOURCE_ONLY for my-values/prism-agent-values.yaml extraContainers[name=prism-agent-bridge]. Dockerfile.prism-agent copies this exact bridge program to /opt/kubeclaw-prism and the profile invokes it there. It converts PORT with fallback 18080 and listens locally; this is not a successful-listener claim."
             }
           ],
           "consumerProof": [
@@ -107196,25 +107210,13 @@
           "selectedBaseline": "<object: 2 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/openclaw-plugin/index.mjs",
-              "line": 11,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
               "path": "skills/prism/server/agent-bridge.mjs",
               "line": 5,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 16,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_CONTROL_URL"
+              "environment": "PRISM_CONTROL_URL",
+              "sourceLineSha256": "6f2828638b15d76f7f48c3d8292a60781229b801a665f8fade435a349ec25043",
+              "authority": "PASS_SOURCE_ONLY for the same bridge container: selects the URL with a local fallback, then supplies it to the bridge runner and request paths. It does not prove Control reachability or request success."
             }
           ],
           "consumerProof": [
@@ -107280,25 +107282,13 @@
           "selectedBaseline": "PRISM_CONTROL_URL",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/openclaw-plugin/index.mjs",
-              "line": 11,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
               "path": "skills/prism/server/agent-bridge.mjs",
               "line": 5,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 16,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_CONTROL_URL"
+              "environment": "PRISM_CONTROL_URL",
+              "sourceLineSha256": "6f2828638b15d76f7f48c3d8292a60781229b801a665f8fade435a349ec25043",
+              "authority": "PASS_SOURCE_ONLY for the same bridge container: selects the URL with a local fallback, then supplies it to the bridge runner and request paths. It does not prove Control reachability or request success."
             }
           ],
           "consumerProof": [
@@ -107364,25 +107354,13 @@
           "selectedBaseline": "http://127.0.0.1:28080",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/openclaw-plugin/index.mjs",
-              "line": 11,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
               "path": "skills/prism/server/agent-bridge.mjs",
               "line": 5,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 16,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_CONTROL_URL"
+              "environment": "PRISM_CONTROL_URL",
+              "sourceLineSha256": "6f2828638b15d76f7f48c3d8292a60781229b801a665f8fade435a349ec25043",
+              "authority": "PASS_SOURCE_ONLY for the same bridge container: selects the URL with a local fallback, then supplies it to the bridge runner and request paths. It does not prove Control reachability or request success."
             }
           ],
           "consumerProof": [
@@ -107439,12 +107417,12 @@
         },
         "$.extraContainers[0].env[2]": {
           "group": "kubernetes-collection-contract",
-          "purpose": "Defines extraContainers[].env[] in an additional Pod container.",
+          "purpose": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "collectionInputType": "object",
           "acceptedValues": "A object accepted by the pinned v1/Pod schema at spec.containers[0].env[0]. Keys and item variants, including valueFrom and security-context alternatives, must satisfy that exact API contract.",
-          "emptyBehavior": "Omission keeps the earlier map; a later {} keeps earlier keys through recursive Helm merge. Deleting a required nested field can fail admission. The buster-v2-runtime helper applies its own registry-client environment, mount and security constraints before serialization.",
-          "impact": "Changes the additional container specification; Helm reconciliation can roll the workload and apply startup, security, probe and resource changes.",
-          "failure": "An invalid type, key, item variant or required relationship fails Kubernetes admission. An accepted configuration can still prevent scheduling, image pull, volume setup or process readiness.",
+          "emptyBehavior": "Omission retains earlier merged keys; a later empty map recursively retains earlier keys. Null removes the optional key or block. The ordinary extraContainers renderer transports the resulting environment entry; it does not use the Buster-specific helper. Kubernetes validates the rendered environment and Secret-reference structure. A scalar or incomplete object at this position can fail Kubernetes validation; no same-container reader or process behavior is qualified.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "apiSchemaAuthority": {
             "authority": "Kubernetes v1.35.0 OpenAPI io.k8s.api.core.v1.Pod",
             "authoritySha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
@@ -107466,11 +107444,11 @@
           "selectedBaseline": "<object: 2 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 54,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_STUDIO_PUBLIC_URL"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "PRISM_STUDIO_PUBLIC_URL",
+              "authority": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -107527,20 +107505,20 @@
         },
         "$.extraContainers[0].env[2].name": {
           "group": "environment-runtime-contract",
-          "purpose": "Binds the paired value to environment variable `PRISM_STUDIO_PUBLIC_URL`. Selects the public Prism Studio URL placed into Control responses and links.",
-          "acceptedValues": "A valid Kubernetes environment-variable name; this exact receiver requires `PRISM_STUDIO_PUBLIC_URL`. The paired value accepts An absolute URL accepted by the WHATWG URL parser.",
-          "emptyBehavior": "An empty name fails Kubernetes API validation. For the paired value: An explicitly empty string is passed to the URL parser and rejected, except the Studio public URL which is retained as text.",
-          "impact": "Changing it redirects internal service traffic or the public link authority.",
-          "failure": "Control startup fails for parsed endpoint errors, or requests and links target the wrong valid endpoint.",
+          "purpose": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
+          "acceptedValues": "A Kubernetes environment-variable name; the checked-in declaration names PRISM_STUDIO_PUBLIC_URL. No process-specific parser or accepted-value claim is qualified here.",
+          "emptyBehavior": "An empty environment-variable name fails Kubernetes admission. A paired literal empty string is transported if rendered; no same-container interpretation, validation, or failure behavior is qualified.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "PRISM_STUDIO_PUBLIC_URL",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 54,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_STUDIO_PUBLIC_URL"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "PRISM_STUDIO_PUBLIC_URL",
+              "authority": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -107597,20 +107575,20 @@
         },
         "$.extraContainers[0].env[2].value": {
           "group": "environment-runtime-contract",
-          "purpose": "Supplies `PRISM_STUDIO_PUBLIC_URL` to its exact receiving process. Selects the public Prism Studio URL placed into Control responses and links.",
-          "acceptedValues": "An absolute URL accepted by the WHATWG URL parser.",
-          "emptyBehavior": "An explicitly empty string is passed to the URL parser and rejected, except the Studio public URL which is retained as text.",
-          "impact": "Changing it redirects internal service traffic or the public link authority.",
-          "failure": "This loader does not parse the Studio value; downstream link consumers expose an invalid selection. Control startup fails for parsed endpoint errors, or requests and links target the wrong valid endpoint.",
+          "purpose": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
+          "acceptedValues": "A string transported by Kubernetes; no same-container process parser is qualified.",
+          "emptyBehavior": "A literal empty string is transported by Kubernetes if rendered; no same-container interpretation, validation, or failure behavior is qualified.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "https://prism-studio",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 54,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_STUDIO_PUBLIC_URL"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "PRISM_STUDIO_PUBLIC_URL",
+              "authority": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -107667,12 +107645,12 @@
         },
         "$.extraContainers[0].env[3]": {
           "group": "kubernetes-collection-contract",
-          "purpose": "Defines extraContainers[].env[] in an additional Pod container.",
+          "purpose": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "collectionInputType": "object",
           "acceptedValues": "A object accepted by the pinned v1/Pod schema at spec.containers[0].env[0]. Keys and item variants, including valueFrom and security-context alternatives, must satisfy that exact API contract.",
-          "emptyBehavior": "Omission keeps the earlier map; a later {} keeps earlier keys through recursive Helm merge. Deleting a required nested field can fail admission. The buster-v2-runtime helper applies its own registry-client environment, mount and security constraints before serialization.",
-          "impact": "Changes the additional container specification; Helm reconciliation can roll the workload and apply startup, security, probe and resource changes.",
-          "failure": "An invalid type, key, item variant or required relationship fails Kubernetes admission. An accepted configuration can still prevent scheduling, image pull, volume setup or process readiness.",
+          "emptyBehavior": "Omission retains earlier merged keys; a later empty map recursively retains earlier keys. Null removes the optional key or block. The ordinary extraContainers renderer transports the resulting environment entry; it does not use the Buster-specific helper. Kubernetes validates the rendered environment and Secret-reference structure. A scalar or incomplete object at this position can fail Kubernetes validation; no same-container reader or process behavior is qualified.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "apiSchemaAuthority": {
             "authority": "Kubernetes v1.35.0 OpenAPI io.k8s.api.core.v1.Pod",
             "authoritySha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
@@ -107694,18 +107672,11 @@
           "selectedBaseline": "<object: 2 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 790,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
-            },
-            {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 791,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "OPENCLAW_GATEWAY_TOKEN",
+              "authority": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -107762,27 +107733,20 @@
         },
         "$.extraContainers[0].env[3].name": {
           "group": "environment-runtime-contract",
-          "purpose": "Binds the paired value to environment variable `OPENCLAW_GATEWAY_TOKEN`. Checked-in deployment sources inject OPENCLAW_GATEWAY_TOKEN. Configure its declared producer or external authority; do not set this transport variable as an operator option from this reference.",
-          "acceptedValues": "A valid Kubernetes environment-variable name; this exact receiver requires `OPENCLAW_GATEWAY_TOKEN`. The paired value accepts string accepted by the linked consumer; use its source validation and listed default",
+          "purpose": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
+          "acceptedValues": "A Kubernetes environment-variable name; the checked-in declaration names OPENCLAW_GATEWAY_TOKEN. No process-specific parser or accepted-value claim is qualified here.",
           "emptyBehavior": "An empty name fails Kubernetes API validation. For the paired value: The owning producer or runtime defines empty-value behavior.",
-          "impact": "Changes the behavior of each listed runtime consumer when that process receives the variable.",
-          "failure": "An absent value selects the listed default or leaves behavior to the external runtime binding.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "OPENCLAW_GATEWAY_TOKEN",
           "runtimeConsumerProof": [
             {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 790,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
-            },
-            {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 791,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "OPENCLAW_GATEWAY_TOKEN",
+              "authority": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -107839,12 +107803,12 @@
         },
         "$.extraContainers[0].env[3].valueFrom": {
           "group": "kubernetes-collection-contract",
-          "purpose": "Defines extraContainers[].env[].valueFrom in an additional Pod container.",
+          "purpose": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "collectionInputType": "object",
           "acceptedValues": "A object accepted by the pinned v1/Pod schema at spec.containers[0].env[0].valueFrom. Keys and item variants, including valueFrom and security-context alternatives, must satisfy that exact API contract.",
-          "emptyBehavior": "Omission keeps the earlier map; a later {} keeps earlier keys through recursive Helm merge. Deleting a required nested field can fail admission. The buster-v2-runtime helper applies its own registry-client environment, mount and security constraints before serialization.",
-          "impact": "Changes the additional container specification; Helm reconciliation can roll the workload and apply startup, security, probe and resource changes.",
-          "failure": "An invalid type, key, item variant or required relationship fails Kubernetes admission. An accepted configuration can still prevent scheduling, image pull, volume setup or process readiness.",
+          "emptyBehavior": "Omission retains earlier merged keys; a later empty map recursively retains earlier keys. Null removes the optional key or block. The ordinary extraContainers renderer transports the resulting environment entry; it does not use the Buster-specific helper. Kubernetes validates the rendered environment and Secret-reference structure. A scalar or incomplete object at this position can fail Kubernetes validation; no same-container reader or process behavior is qualified.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "apiSchemaAuthority": {
             "authority": "Kubernetes v1.35.0 OpenAPI io.k8s.api.core.v1.Pod",
             "authoritySha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
@@ -107866,18 +107830,11 @@
           "selectedBaseline": "<object: 1 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 790,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
-            },
-            {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 791,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "OPENCLAW_GATEWAY_TOKEN",
+              "authority": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -107934,12 +107891,12 @@
         },
         "$.extraContainers[0].env[3].valueFrom.secretKeyRef": {
           "group": "kubernetes-collection-contract",
-          "purpose": "Defines extraContainers[].env[].valueFrom.secretKeyRef in an additional Pod container.",
+          "purpose": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "collectionInputType": "object",
           "acceptedValues": "A object accepted by the pinned v1/Pod schema at spec.containers[0].env[0].valueFrom.secretKeyRef. Keys and item variants, including valueFrom and security-context alternatives, must satisfy that exact API contract.",
-          "emptyBehavior": "Omission keeps the earlier map; a later {} keeps earlier keys through recursive Helm merge. Deleting a required nested field can fail admission. The buster-v2-runtime helper applies its own registry-client environment, mount and security constraints before serialization.",
-          "impact": "Changes the additional container specification; Helm reconciliation can roll the workload and apply startup, security, probe and resource changes.",
-          "failure": "An invalid type, key, item variant or required relationship fails Kubernetes admission. An accepted configuration can still prevent scheduling, image pull, volume setup or process readiness.",
+          "emptyBehavior": "Omission retains earlier merged keys; a later empty map recursively retains earlier keys. Null removes the optional key or block. The ordinary extraContainers renderer transports the resulting environment entry; it does not use the Buster-specific helper. Kubernetes validates the rendered environment and Secret-reference structure. A scalar or incomplete object at this position can fail Kubernetes validation; no same-container reader or process behavior is qualified.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "apiSchemaAuthority": {
             "authority": "Kubernetes v1.35.0 OpenAPI io.k8s.api.core.v1.Pod",
             "authoritySha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
@@ -107961,18 +107918,11 @@
           "selectedBaseline": "<object: 2 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 790,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
-            },
-            {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 791,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "OPENCLAW_GATEWAY_TOKEN",
+              "authority": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -108029,27 +107979,20 @@
         },
         "$.extraContainers[0].env[3].valueFrom.secretKeyRef.key": {
           "group": "secret-key-reference",
-          "purpose": "Selects the data key inside the configured Secret for extra containers / env / value from / secret key ref.",
+          "purpose": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "acceptedValues": "A non-empty Kubernetes Secret data-key string.",
           "emptyBehavior": "An empty key cannot select the required value and is accepted only when the complete Secret integration is disabled.",
-          "impact": "Changes which value from the named Secret reaches the linked workload.",
-          "failure": "A missing key prevents environment or volume materialization and leaves the workload unready.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "gatewayToken-prism",
           "runtimeConsumerProof": [
             {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 790,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
-            },
-            {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 791,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "OPENCLAW_GATEWAY_TOKEN",
+              "authority": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -108106,27 +108049,20 @@
         },
         "$.extraContainers[0].env[3].valueFrom.secretKeyRef.name": {
           "group": "object-reference",
-          "purpose": "Selects the Kubernetes Secret object that supplies `OPENCLAW_GATEWAY_TOKEN`.",
+          "purpose": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "acceptedValues": "A DNS-compatible Secret name in the same namespace as the rendered Pod.",
           "emptyBehavior": "An empty or omitted name cannot resolve the required Secret reference.",
-          "impact": "Changes which Secret supplies `OPENCLAW_GATEWAY_TOKEN` without putting credential bytes in values.",
-          "failure": "A missing or malformed Secret name prevents Pod environment materialization and the container does not start.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "openclaw-shared-secrets",
           "runtimeConsumerProof": [
             {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 790,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
-            },
-            {
-              "path": "charts/kubeclaw/templates/deployment.yaml",
-              "line": 791,
-              "kind": "checked-in-runtime-reader",
-              "access": "embedded-node-process-env",
-              "environment": "OPENCLAW_GATEWAY_TOKEN"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "OPENCLAW_GATEWAY_TOKEN",
+              "authority": "This declaration transports OPENCLAW_GATEWAY_TOKEN into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -110837,21 +110773,9 @@
               "line": 11,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/agent-bridge.mjs",
-              "line": 5,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 16,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_CONTROL_URL"
+              "environment": "PRISM_CONTROL_URL",
+              "sourceLineSha256": "b1b1176798107fb59c2d1a7b565a5baf0061071875e5d70cbf757fd591dbb511",
+              "authority": "PASS_SOURCE_ONLY for prism-agent extraEnv only: Dockerfile.prism-agent copies the extension into the primary image, and this fallback is consulted after config.controlUrl. It does not prove plugin registration, invocation, or Control HTTP success."
             }
           ],
           "consumerProof": [
@@ -110913,21 +110837,9 @@
               "line": 11,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/agent-bridge.mjs",
-              "line": 5,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 16,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_CONTROL_URL"
+              "environment": "PRISM_CONTROL_URL",
+              "sourceLineSha256": "b1b1176798107fb59c2d1a7b565a5baf0061071875e5d70cbf757fd591dbb511",
+              "authority": "PASS_SOURCE_ONLY for prism-agent extraEnv only: Dockerfile.prism-agent copies the extension into the primary image, and this fallback is consulted after config.controlUrl. It does not prove plugin registration, invocation, or Control HTTP success."
             }
           ],
           "consumerProof": [
@@ -110989,21 +110901,9 @@
               "line": 11,
               "kind": "checked-in-runtime-reader",
               "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/agent-bridge.mjs",
-              "line": 5,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env",
-              "environment": "PRISM_CONTROL_URL"
-            },
-            {
-              "path": "skills/prism/server/studio-config.ts",
-              "line": 16,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_CONTROL_URL"
+              "environment": "PRISM_CONTROL_URL",
+              "sourceLineSha256": "b1b1176798107fb59c2d1a7b565a5baf0061071875e5d70cbf757fd591dbb511",
+              "authority": "PASS_SOURCE_ONLY for prism-agent extraEnv only: Dockerfile.prism-agent copies the extension into the primary image, and this fallback is consulted after config.controlUrl. It does not prove plugin registration, invocation, or Control HTTP success."
             }
           ],
           "consumerProof": [
@@ -111052,12 +110952,12 @@
         },
         "$.extraEnv[1]": {
           "group": "kubernetes-collection-contract",
-          "purpose": "Defines additional environment entries injected into the primary runtime container.",
+          "purpose": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
           "collectionInputType": "object",
           "acceptedValues": "A object accepted by the pinned v1/Pod schema at spec.containers[0].env[0]. Keys and item variants, including valueFrom and security-context alternatives, must satisfy that exact API contract.",
           "emptyBehavior": "Omission keeps the earlier map; a later {} keeps earlier keys through recursive Helm merge. An effective [] adds no extra variables; null removes the key and its optional render block. Entries select name plus literal value or valueFrom; Secret bytes remain outside this reference.",
-          "impact": "Changes process configuration after the Pod is replaced; each named process owns its parsing and failure behavior.",
-          "failure": "An invalid type, key, item variant or required relationship fails Kubernetes admission. An accepted configuration can still prevent scheduling, image pull, volume setup or process readiness.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "apiSchemaAuthority": {
             "authority": "Kubernetes v1.35.0 OpenAPI io.k8s.api.core.v1.Pod",
             "authoritySha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
@@ -111079,11 +110979,11 @@
           "selectedBaseline": "<object: 2 entries; see child rows>",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 54,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_STUDIO_PUBLIC_URL"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "PRISM_STUDIO_PUBLIC_URL",
+              "authority": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -111132,20 +111032,20 @@
         },
         "$.extraEnv[1].name": {
           "group": "environment-runtime-contract",
-          "purpose": "Binds the paired value to environment variable `PRISM_STUDIO_PUBLIC_URL`. Selects the public Prism Studio URL placed into Control responses and links.",
-          "acceptedValues": "A valid Kubernetes environment-variable name; this exact receiver requires `PRISM_STUDIO_PUBLIC_URL`. The paired value accepts An absolute URL accepted by the WHATWG URL parser.",
-          "emptyBehavior": "An empty name fails Kubernetes API validation. For the paired value: An explicitly empty string is passed to the URL parser and rejected, except the Studio public URL which is retained as text.",
-          "impact": "Changing it redirects internal service traffic or the public link authority.",
-          "failure": "Control startup fails for parsed endpoint errors, or requests and links target the wrong valid endpoint.",
+          "purpose": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
+          "acceptedValues": "A Kubernetes environment-variable name; the checked-in declaration names PRISM_STUDIO_PUBLIC_URL. No process-specific parser or accepted-value claim is qualified here.",
+          "emptyBehavior": "An empty environment-variable name fails Kubernetes admission. A paired literal empty string is transported if rendered; no same-container interpretation, validation, or failure behavior is qualified.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "PRISM_STUDIO_PUBLIC_URL",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 54,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_STUDIO_PUBLIC_URL"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "PRISM_STUDIO_PUBLIC_URL",
+              "authority": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
@@ -111194,20 +111094,20 @@
         },
         "$.extraEnv[1].value": {
           "group": "environment-runtime-contract",
-          "purpose": "Supplies `PRISM_STUDIO_PUBLIC_URL` to its exact receiving process. Selects the public Prism Studio URL placed into Control responses and links.",
-          "acceptedValues": "An absolute URL accepted by the WHATWG URL parser.",
-          "emptyBehavior": "An explicitly empty string is passed to the URL parser and rejected, except the Studio public URL which is retained as text.",
-          "impact": "Changing it redirects internal service traffic or the public link authority.",
-          "failure": "This loader does not parse the Studio value; downstream link consumers expose an invalid selection. Control startup fails for parsed endpoint errors, or requests and links target the wrong valid endpoint.",
+          "purpose": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here.",
+          "acceptedValues": "A string transported by Kubernetes; no same-container process parser is qualified.",
+          "emptyBehavior": "A literal empty string is transported by Kubernetes if rendered; no same-container interpretation, validation, or failure behavior is qualified.",
+          "impact": "Changes the transported environment entry or its Secret source when the Pod is replaced; no use by a checked-in reader or resulting service behavior is established.",
+          "failure": "Kubernetes can reject an invalid environment or Secret reference, or Pod setup can fail for a missing required Secret. A successful injection does not establish that this container consumes the value.",
           "semanticAuthority": "explicit-field-contract",
           "selectedBaseline": "https://prism-studio",
           "runtimeConsumerProof": [
             {
-              "path": "skills/prism/server/control-config.ts",
-              "line": 54,
-              "kind": "checked-in-runtime-reader",
-              "access": "node-process-env-alias",
-              "environment": "PRISM_STUDIO_PUBLIC_URL"
+              "path": "my-values/prism-agent-values.yaml",
+              "line": 1,
+              "kind": "selected-image-runtime-boundary",
+              "environment": "PRISM_STUDIO_PUBLIC_URL",
+              "authority": "This declaration transports PRISM_STUDIO_PUBLIC_URL into this selected container only. No checked-in same-container reader is qualified; readers in other services or images do not establish its use here."
             }
           ],
           "consumerProof": [
