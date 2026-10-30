@@ -35,8 +35,8 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment', 'native-supervisor-environment', 'cli', 'helm-values'].includes(only)) {
-  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification, configuration, environment, native-supervisor-environment, cli or helm-values');
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment', 'secrets', 'native-supervisor-environment', 'cli', 'helm-values'].includes(only)) {
+  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification, configuration, environment, secrets, native-supervisor-environment, cli or helm-values');
 }
 if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
@@ -244,6 +244,9 @@ function stableWriteMap() {
   if (only === 'environment') return new Map([['docs/site/reference/environment-variables.md', renderEnvironment(
     readJson('docs/generated/inventory/deploy-script.json'), readJson('docs/generated/inventory/secret-setup.json'),
     readJson('docs/generated/inventory/configuration-runtime-inputs.json'))]]);
+  if (only === 'secrets') return new Map([['docs/site/reference/secrets.md', renderSecrets(
+    readJson('docs/generated/inventory/secret-setup.json'), readJson('docs/generated/inventory/configuration-runtime-inputs.json'),
+    (sourcePath, line) => `[\`${sourcePath}${line ? `:${line}` : ''}\`](${pinnedSourceUrl(sourcePath, line ?? 1, line ?? 1)})`)]]);
   if (only === 'configuration') return configurationWriteMap(
     readJson('docs/generated/inventory/deploy-script.json'),
     readJson('docs/generated/inventory/secret-setup.json'),
