@@ -442,6 +442,41 @@
       "canonicalUrl": "/reference/cli.html"
     },
     {
+      "sourcePath": "docs/site/reference/common-errors-configuration.md",
+      "route": "/reference/common-errors-configuration.html",
+      "canonicalUrl": "/reference/common-errors-configuration.html"
+    },
+    {
+      "sourcePath": "docs/site/reference/common-errors-foundation.md",
+      "route": "/reference/common-errors-foundation.html",
+      "canonicalUrl": "/reference/common-errors-foundation.html"
+    },
+    {
+      "sourcePath": "docs/site/reference/common-errors-nova.md",
+      "route": "/reference/common-errors-nova.html",
+      "canonicalUrl": "/reference/common-errors-nova.html"
+    },
+    {
+      "sourcePath": "docs/site/reference/common-errors-platform.md",
+      "route": "/reference/common-errors-platform.html",
+      "canonicalUrl": "/reference/common-errors-platform.html"
+    },
+    {
+      "sourcePath": "docs/site/reference/common-errors-prism.md",
+      "route": "/reference/common-errors-prism.html",
+      "canonicalUrl": "/reference/common-errors-prism.html"
+    },
+    {
+      "sourcePath": "docs/site/reference/common-errors-worker.md",
+      "route": "/reference/common-errors-worker.html",
+      "canonicalUrl": "/reference/common-errors-worker.html"
+    },
+    {
+      "sourcePath": "docs/site/reference/common-errors.md",
+      "route": "/reference/common-errors.html",
+      "canonicalUrl": "/reference/common-errors.html"
+    },
+    {
       "sourcePath": "docs/site/reference/configuration-change-impact.md",
       "route": "/reference/configuration-change-impact.html",
       "canonicalUrl": "/reference/configuration-change-impact.html"

@@ -7,6 +7,9 @@ Evidence: skills/common/plugins/transport-publisher/src/adapter.ts; skills/commo
 Applies to: the named diagnostic representations, families and current source boundaries below
 Last verified: 2026-10-15 original topics; HTTP error chapter source and local probes 2026-10-21; NRI units and API-validator controls 2026-10-21; no live recovery
 
+For source-bound triggers, effects and recovery limits across components, use the
+[common error catalogue](common-errors.md). This page explains diagnostic routing.
+
 ## Start with the first owning boundary
 
 An error tells you where a boundary rejected or lost confidence in work. It

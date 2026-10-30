@@ -35913,6 +35913,62 @@
       "originalPath": "docs/generated/inventory/event-contracts.json",
       "expectedPath": "docs/generated/inventory/event-contracts.json",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/common-errors-configuration.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/common-errors-configuration.md",
+      "expectedPath": "docs/site/reference/common-errors-configuration.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/common-errors-foundation.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/common-errors-foundation.md",
+      "expectedPath": "docs/site/reference/common-errors-foundation.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/common-errors-nova.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/common-errors-nova.md",
+      "expectedPath": "docs/site/reference/common-errors-nova.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/common-errors-platform.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/common-errors-platform.md",
+      "expectedPath": "docs/site/reference/common-errors-platform.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/common-errors-prism.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/common-errors-prism.md",
+      "expectedPath": "docs/site/reference/common-errors-prism.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/common-errors-worker.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/common-errors-worker.md",
+      "expectedPath": "docs/site/reference/common-errors-worker.md",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/reference/common-errors.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Published, user-facing KubeClaw documentation.",
+      "originalPath": "docs/site/reference/common-errors.md",
+      "expectedPath": "docs/site/reference/common-errors.md",
+      "introducedAfterBaseline": true
     }
   ]
 }

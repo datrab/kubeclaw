@@ -26351,28 +26351,94 @@
       "unqualifiedReaders": []
     },
     {
-      "acceptedForm": "A base-10 positive process ID below 4,294,967,295 and no sign or trailing characters.",
+      "acceptedForm": "Varies by receiving process; see the consumer-specific contracts.",
       "blockerOwner": null,
-      "changeImpact": "The binding prevents a detached caller from reusing the root launcher after the trusted supervisor exits.",
+      "changeImpact": "Changes only the processes that receive the variable, according to each listed consumer contract.",
       "closureCondition": null,
       "consumerContracts": [
         {
-          "acceptedForm": "A base-10 positive process ID below 4,294,967,295 and no sign or trailing characters.",
+          "acceptedForm": "NativeWorkerOwnershipLease writes String(process.pid), the decimal PID of the producing supervisor. The C converter uses strtoul with base 10: it can accept a leading plus sign or whitespace, but rejects conversion errors, empty text, trailing characters, zero, values at or above 4,294,967,295, and a minus sign in the first character. The supervisor check additionally rejects values above INT_MAX and requires equality with the live parent PID.",
           "access": "c-getenv",
           "boundary": "checked-in receiving source",
           "defaultBehavior": "No default.",
           "emptyBehavior": "An absent value returns `WORKER_NATIVE_LAUNCH_PARENT_REQUIRED`; an empty value returns `WORKER_NATIVE_LAUNCH_IDENTITY_INVALID`.",
           "evidence": [],
-          "failure": "The launcher writes the exact `WORKER_NATIVE_LAUNCH_*` code to stderr and exits 125 before entering the worker cgroup or dropping identity.",
+          "failure": "The launcher writes its exact failure code to stderr and exits 125. Failures can occur before or after cgroup attachment and before or after credential changes, including the second parent check and exec. An error does not prove that attachment or credential changes were undone.",
           "impact": "The binding prevents a detached caller from reusing the root launcher after the trusted supervisor exits.",
-          "invalidBehavior": "Malformed, zero, negative, overflowed, or stale process identity is rejected; a changed parent returns `WORKER_NATIVE_LAUNCH_PARENT_LOST`.",
+          "invalidBehavior": "The identity converter rejects invalid text or its unsigned-range violations with `WORKER_NATIVE_LAUNCH_IDENTITY_INVALID`. A value above INT_MAX, a failed parent-death-signal operation, or a different parent PID returns `WORKER_NATIVE_LAUNCH_PARENT_LOST`. These checks do not prove that an arbitrary supplied PID is an authorized caller.",
           "line": 49,
           "owner": "@kubeclaw/worker-core",
           "owningSurface": "The receiving setting or command in skills/worker/core/worker/native-worker-launcher.c; see the exact source and its producer bindings.",
           "path": "skills/worker/core/worker/native-worker-launcher.c",
-          "precedence": "The launcher reads only its process environment and then verifies it against the live parent PID after installing a parent-death signal.",
-          "purpose": "Binds the privileged native-worker launcher to the exact unprivileged supervisor process that invoked it. Owner: @kubeclaw/worker-core. Owning setting: The receiving setting or command in skills/worker/core/worker/native-worker-launcher.c; see the exact source and its producer bindings. Boundary: checked-in receiving source.",
+          "precedence": "NativeWorkerOwnershipLease overwrites command.environment with String(process.pid) for this key when it spawns the launcher. The launcher reads that process value, installs a parent-death signal and checks the live parent PID. It repeats the signal installation and parent check after changing credentials, before exec.",
+          "purpose": "Binds the privileged native-worker launcher to the exact privileged supervisor process that invoked it. The launcher subsequently changes the child user and group identities before it executes role code. Owner: @kubeclaw/worker-core. Owning setting: The receiving setting or command in skills/worker/core/worker/native-worker-launcher.c; see the exact source and its producer bindings. Boundary: checked-in receiving source.",
           "required": "required"
+        },
+        {
+          "acceptedForm": "String(process.pid), the decimal PID of the producing supervisor. The receiving C launcher separately checks conversion, INT_MAX, parent identity and parent-death-signal operations.",
+          "access": "owned-process-env",
+          "boundary": "checked-in owned process producer; receiving native launcher source is separately qualified",
+          "contract": {
+            "acceptedForm": "String(process.pid), the decimal PID of the producing supervisor. The receiving C launcher separately checks conversion, INT_MAX, parent identity and parent-death-signal operations.",
+            "boundary": "checked-in owned process producer; receiving native launcher source is separately qualified",
+            "defaultBehavior": "Every call to this owned spawn supplies the current process PID; it does not use a default from command.environment.",
+            "emptyBehavior": "This producer does not supply an empty string. Separate receiver checks reject missing or empty input.",
+            "evidence": [
+              {
+                "endLine": 95,
+                "line": 90,
+                "path": "skills/worker/core/worker/native-worker-ownership.ts"
+              }
+            ],
+            "failure": "The producer can be fenced before spawning. Spawn failures and stage-specific launcher failures remain separate; this assignment proves neither execution nor cleanup.",
+            "impact": "Binds this launcher child to the supervisor process that spawned it, rather than an operator-selected PID.",
+            "invalidBehavior": "Producer assignment does not prove runtime acceptance; the C launcher validates its privileged caller and checks the parent twice.",
+            "owner": "@kubeclaw/worker-core",
+            "owningSurface": "NativeWorkerOwnershipLease.#spawn owned process environment",
+            "precedence": "The explicit property follows the command.environment spread and replaces the same inherited key.",
+            "purpose": "Supplies the current trusted supervisor PID to its native launcher child. This owned producer overwrites an inherited command value; operators must not set the binding directly.",
+            "required": "supplied by every owned native launcher spawn"
+          },
+          "custody": {
+            "callRange": [
+              4237,
+              4521
+            ],
+            "expression": "String(process.pid)",
+            "override": "after command.environment",
+            "receiver": "skills/worker/core/worker/native-worker-launcher.c",
+            "schemaVersion": "owned-process-environment-custody.v1",
+            "sourceRange": [
+              4037,
+              4526
+            ],
+            "sourceSha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd",
+            "valueRange": [
+              4452,
+              4503
+            ]
+          },
+          "defaultBehavior": "Every call to this owned spawn supplies the current process PID; it does not use a default from command.environment.",
+          "emptyBehavior": "This producer does not supply an empty string. Separate receiver checks reject missing or empty input.",
+          "evidence": [
+            {
+              "endLine": 95,
+              "line": 90,
+              "path": "skills/worker/core/worker/native-worker-ownership.ts"
+            }
+          ],
+          "failure": "The producer can be fenced before spawning. Spawn failures and stage-specific launcher failures remain separate; this assignment proves neither execution nor cleanup.",
+          "impact": "Binds this launcher child to the supervisor process that spawned it, rather than an operator-selected PID.",
+          "invalidBehavior": "Producer assignment does not prove runtime acceptance; the C launcher validates its privileged caller and checks the parent twice.",
+          "line": 94,
+          "name": "KUBECLAW_NATIVE_SUPERVISOR_PID",
+          "owner": "@kubeclaw/worker-core",
+          "owningSurface": "NativeWorkerOwnershipLease.#spawn owned process environment",
+          "path": "skills/worker/core/worker/native-worker-ownership.ts",
+          "precedence": "The explicit property follows the command.environment spread and replaces the same inherited key.",
+          "purpose": "Supplies the current trusted supervisor PID to its native launcher child. This owned producer overwrites an inherited command value; operators must not set the binding directly. Owner: @kubeclaw/worker-core. Owning setting: NativeWorkerOwnershipLease.#spawn owned process environment. Producer binding: NativeWorkerOwnershipLease.#spawn: this.#launchers.spawn(this.#launcher, …), env after command.environment. Boundary: checked-in owned process producer; receiving native launcher source is separately qualified.",
+          "required": "supplied by every owned native launcher spawn",
+          "sourceSha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd"
         }
       ],
       "consumers": [
@@ -26382,14 +26448,14 @@
           "path": "skills/worker/core/worker/native-worker-launcher.c"
         }
       ],
-      "defaultBehavior": "No default.",
-      "direction": "read as process input; producer is the operator, CI host, or external runtime",
-      "emptyBehavior": "An absent value returns `WORKER_NATIVE_LAUNCH_PARENT_REQUIRED`; an empty value returns `WORKER_NATIVE_LAUNCH_IDENTITY_INVALID`.",
-      "failureMeaning": "The launcher writes the exact `WORKER_NATIVE_LAUNCH_*` code to stderr and exits 125 before entering the worker cgroup or dropping identity.",
-      "invalidBehavior": "Malformed, zero, negative, overflowed, or stale process identity is rejected; a changed parent returns `WORKER_NATIVE_LAUNCH_PARENT_LOST`.",
-      "meaning": "Binds the privileged native-worker launcher to the exact unprivileged supervisor process that invoked it. Owner: @kubeclaw/worker-core. Owning setting: The receiving setting or command in skills/worker/core/worker/native-worker-launcher.c; see the exact source and its producer bindings. Boundary: checked-in receiving source.",
+      "defaultBehavior": "Varies by receiving process; no merged default is valid.",
+      "direction": "supplied by the checked-in owned supervisor spawn and read by its native launcher child",
+      "emptyBehavior": "Varies by receiving process; an empty string can be rejected, retained, or converted to a value.",
+      "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
+      "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
+      "meaning": "The meaning of KUBECLAW_NATIVE_SUPERVISOR_PID differs by receiving process. Use the contract attached to the exact consumer source.",
       "meaningEvidence": "skills/worker/core/worker/native-worker-launcher.c:49",
-      "meaningStatus": "authored-consumer-specific-contract",
+      "meaningStatus": "authored-consumer-specific-contracts",
       "name": "KUBECLAW_NATIVE_SUPERVISOR_PID",
       "precedence": [
         {
@@ -26399,9 +26465,109 @@
           "source": "process environment or injected Kubernetes env"
         }
       ],
-      "precedenceExplanation": "The launcher reads only its process environment and then verifies it against the live parent PID after installing a parent-death signal.",
-      "producerContracts": [],
-      "producers": [],
+      "precedenceExplanation": "Each receiving process captures and interprets its own environment. No consumer contract overrides another consumer.",
+      "producerContracts": [
+        {
+          "access": "owned-process-env",
+          "contract": {
+            "acceptedForm": "String(process.pid), the decimal PID of the producing supervisor. The receiving C launcher separately checks conversion, INT_MAX, parent identity and parent-death-signal operations.",
+            "boundary": "checked-in owned process producer; receiving native launcher source is separately qualified",
+            "defaultBehavior": "Every call to this owned spawn supplies the current process PID; it does not use a default from command.environment.",
+            "emptyBehavior": "This producer does not supply an empty string. Separate receiver checks reject missing or empty input.",
+            "evidence": [
+              {
+                "endLine": 95,
+                "line": 90,
+                "path": "skills/worker/core/worker/native-worker-ownership.ts"
+              }
+            ],
+            "failure": "The producer can be fenced before spawning. Spawn failures and stage-specific launcher failures remain separate; this assignment proves neither execution nor cleanup.",
+            "impact": "Binds this launcher child to the supervisor process that spawned it, rather than an operator-selected PID.",
+            "invalidBehavior": "Producer assignment does not prove runtime acceptance; the C launcher validates its privileged caller and checks the parent twice.",
+            "owner": "@kubeclaw/worker-core",
+            "owningSurface": "NativeWorkerOwnershipLease.#spawn owned process environment",
+            "precedence": "The explicit property follows the command.environment spread and replaces the same inherited key.",
+            "purpose": "Supplies the current trusted supervisor PID to its native launcher child. This owned producer overwrites an inherited command value; operators must not set the binding directly.",
+            "required": "supplied by every owned native launcher spawn"
+          },
+          "custody": {
+            "callRange": [
+              4237,
+              4521
+            ],
+            "expression": "String(process.pid)",
+            "override": "after command.environment",
+            "receiver": "skills/worker/core/worker/native-worker-launcher.c",
+            "schemaVersion": "owned-process-environment-custody.v1",
+            "sourceRange": [
+              4037,
+              4526
+            ],
+            "sourceSha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd",
+            "valueRange": [
+              4452,
+              4503
+            ]
+          },
+          "line": 94,
+          "name": "KUBECLAW_NATIVE_SUPERVISOR_PID",
+          "owner": "@kubeclaw/worker-core",
+          "owningSurface": "NativeWorkerOwnershipLease.#spawn: this.#launchers.spawn(this.#launcher, …), env after command.environment",
+          "path": "skills/worker/core/worker/native-worker-ownership.ts",
+          "qualified": true,
+          "sourceSha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd"
+        }
+      ],
+      "producers": [
+        {
+          "access": "owned-process-env",
+          "contract": {
+            "acceptedForm": "String(process.pid), the decimal PID of the producing supervisor. The receiving C launcher separately checks conversion, INT_MAX, parent identity and parent-death-signal operations.",
+            "boundary": "checked-in owned process producer; receiving native launcher source is separately qualified",
+            "defaultBehavior": "Every call to this owned spawn supplies the current process PID; it does not use a default from command.environment.",
+            "emptyBehavior": "This producer does not supply an empty string. Separate receiver checks reject missing or empty input.",
+            "evidence": [
+              {
+                "endLine": 95,
+                "line": 90,
+                "path": "skills/worker/core/worker/native-worker-ownership.ts"
+              }
+            ],
+            "failure": "The producer can be fenced before spawning. Spawn failures and stage-specific launcher failures remain separate; this assignment proves neither execution nor cleanup.",
+            "impact": "Binds this launcher child to the supervisor process that spawned it, rather than an operator-selected PID.",
+            "invalidBehavior": "Producer assignment does not prove runtime acceptance; the C launcher validates its privileged caller and checks the parent twice.",
+            "owner": "@kubeclaw/worker-core",
+            "owningSurface": "NativeWorkerOwnershipLease.#spawn owned process environment",
+            "precedence": "The explicit property follows the command.environment spread and replaces the same inherited key.",
+            "purpose": "Supplies the current trusted supervisor PID to its native launcher child. This owned producer overwrites an inherited command value; operators must not set the binding directly.",
+            "required": "supplied by every owned native launcher spawn"
+          },
+          "custody": {
+            "callRange": [
+              4237,
+              4521
+            ],
+            "expression": "String(process.pid)",
+            "override": "after command.environment",
+            "receiver": "skills/worker/core/worker/native-worker-launcher.c",
+            "schemaVersion": "owned-process-environment-custody.v1",
+            "sourceRange": [
+              4037,
+              4526
+            ],
+            "sourceSha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd",
+            "valueRange": [
+              4452,
+              4503
+            ]
+          },
+          "line": 94,
+          "name": "KUBECLAW_NATIVE_SUPERVISOR_PID",
+          "owningSurface": "NativeWorkerOwnershipLease.#spawn: this.#launchers.spawn(this.#launcher, …), env after command.environment",
+          "path": "skills/worker/core/worker/native-worker-ownership.ts",
+          "sourceSha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd"
+        }
+      ],
       "readers": [
         {
           "access": "c-getenv",
@@ -26409,7 +26575,7 @@
           "path": "skills/worker/core/worker/native-worker-launcher.c"
         }
       ],
-      "required": "required",
+      "required": "varies by receiving process",
       "runtimeOwner": "@kubeclaw/worker-core",
       "sensitive": false,
       "sensitivityClass": "ordinary-value",
@@ -26421,7 +26587,7 @@
           "evidence": "skills/worker/core/package.json"
         }
       ],
-      "surface": "runtime-process-boundary",
+      "surface": "checked-in-injected-transport",
       "unqualifiedProducers": [],
       "unqualifiedReaders": []
     },

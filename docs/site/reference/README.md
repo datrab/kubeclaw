@@ -15,6 +15,7 @@ procedures. This section gives exact names and source-backed facts.
 
 ## Configuration and Operation
 
+- [Common error catalogue](common-errors.md) gives source-bound triggers, effects, retry limits and recovery routes across components.
 - [Errors and safe diagnostics](errors.md) maps diagnostic representations, owning boundaries, effects, and safe retry decisions.
 - [Events and payloads](events.md) separates canonical records, actual consumers, delivery, ordering, retention, and audit effects.
 - [Contracts, versions, and compatibility](contracts.md) Identify selected producer/reader versions, migration and retirement limits.
