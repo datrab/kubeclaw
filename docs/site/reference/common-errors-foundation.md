@@ -25,11 +25,11 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 - [RedisTransportPolicyError](#js-shared-redistransportpolicyerror)
 - [MissingDependencyError](#js-shared-missingdependencyerror)
 - [OpenClawToolRejectedError](#js-shared-openclawtoolrejectederror)
-- [skills/common/plugin-runtime/foundation/observability/durable-attempts.ts::requireIdentity](#j15-helper-1)
-- [skills/common/plugin-runtime/foundation/observability/durable-records.ts::positiveInteger](#j15-helper-2)
-- [skills/common/plugin-runtime/foundation/observability/durable-records.ts::identity](#j15-helper-3)
-- [skills/common/plugins/prompt-contract/src/index.ts::positiveInteger](#j15-helper-4)
-- [skills/common/plugins/prompt-contract/src/index.ts::text](#j15-helper-5)
+- [requireIdentity — skills/common/plugin-runtime/foundation/observability/durable-attempts.ts](#j15-helper-1)
+- [positiveInteger — skills/common/plugin-runtime/foundation/observability/durable-records.ts](#j15-helper-2)
+- [identity — skills/common/plugin-runtime/foundation/observability/durable-records.ts](#j15-helper-3)
+- [positiveInteger — skills/common/plugins/prompt-contract/src/index.ts](#j15-helper-4)
+- [text — skills/common/plugins/prompt-contract/src/index.ts](#j15-helper-5)
 - [Published pair guard failure construction](#j16-published-pair)
 - [Operator configuration URL/key error factories](#j16-operator-config)
 - [HTTP request failure/cancellation and bounded upstream response](#j17-network-request)
@@ -353,7 +353,7 @@ new OpenClawToolRejectedError(tool, status.toLowerCase(), governingCap)
 
 <a id="j15-helper-1"></a>
 
-## skills/common/plugin-runtime/foundation/observability/durable-attempts.ts::requireIdentity
+## requireIdentity — skills/common/plugin-runtime/foundation/observability/durable-attempts.ts
 
 **Representation:** failure
 
@@ -377,7 +377,7 @@ new OpenClawToolRejectedError(tool, status.toLowerCase(), governingCap)
 
 <a id="j15-helper-2"></a>
 
-## skills/common/plugin-runtime/foundation/observability/durable-records.ts::positiveInteger
+## positiveInteger — skills/common/plugin-runtime/foundation/observability/durable-records.ts
 
 **Representation:** failure
 
@@ -401,7 +401,7 @@ new OpenClawToolRejectedError(tool, status.toLowerCase(), governingCap)
 
 <a id="j15-helper-3"></a>
 
-## skills/common/plugin-runtime/foundation/observability/durable-records.ts::identity
+## identity — skills/common/plugin-runtime/foundation/observability/durable-records.ts
 
 **Representation:** failure
 
@@ -425,7 +425,7 @@ new OpenClawToolRejectedError(tool, status.toLowerCase(), governingCap)
 
 <a id="j15-helper-4"></a>
 
-## skills/common/plugins/prompt-contract/src/index.ts::positiveInteger
+## positiveInteger — skills/common/plugins/prompt-contract/src/index.ts
 
 **Representation:** failure
 
@@ -449,7 +449,7 @@ new OpenClawToolRejectedError(tool, status.toLowerCase(), governingCap)
 
 <a id="j15-helper-5"></a>
 
-## skills/common/plugins/prompt-contract/src/index.ts::text
+## text — skills/common/plugins/prompt-contract/src/index.ts
 
 **Representation:** failure
 

@@ -34,7 +34,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 - [NativeWorkerAttemptBusy](#js-shared-nativeworkerattemptbusy)
 - [WorkerPhaseUnresolved](#js-shared-workerphaseunresolved)
 - [NativeWorkerCapacityExceeded](#js-shared-nativeworkercapacityexceeded)
-- [skills/worker/core/worker/local-runtime.ts::positiveTimer](#j15-helper-10)
+- [positiveTimer — skills/worker/core/worker/local-runtime.ts](#j15-helper-10)
 - [sandbox-c:filesystem-rule](#sandbox-c-filesystem-rule)
 - [sandbox-c:network-rule](#sandbox-c-network-rule)
 - [sandbox-c:seccomp-policy-install](#sandbox-c-seccomp-policy-install)
@@ -554,7 +554,7 @@ new NativeWorkerCapacityExceeded()
 
 <a id="j15-helper-10"></a>
 
-## skills/worker/core/worker/local-runtime.ts::positiveTimer
+## positiveTimer — skills/worker/core/worker/local-runtime.ts
 
 **Representation:** failure
 

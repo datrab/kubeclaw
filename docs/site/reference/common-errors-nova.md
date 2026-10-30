@@ -42,10 +42,10 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 - [Completed attempt cleanup control](#j14-stage-completion-control)
 - [Durable adapter failure receipt and lock-release aggregation](#j14-durable-failure-receipt)
 - [Confidential effect failure redaction](#j14-confidential-audit-failure)
-- [skills/nova/plugins/remote-test-gate/src/adapter.ts::canonicalDirectory](#j15-helper-6)
-- [skills/nova/plugins/remote-test-gate/src/adapter.ts::string](#j15-helper-7)
-- [skills/nova/plugins/remote-test-gate/src/adapter.ts::positiveInteger](#j15-helper-8)
-- [skills/nova/plugins/repository-adapter/src/revision-reader.ts::assertExpected](#j15-helper-9)
+- [canonicalDirectory — skills/nova/plugins/remote-test-gate/src/adapter.ts](#j15-helper-6)
+- [string — skills/nova/plugins/remote-test-gate/src/adapter.ts](#j15-helper-7)
+- [positiveInteger — skills/nova/plugins/remote-test-gate/src/adapter.ts](#j15-helper-8)
+- [assertExpected — skills/nova/plugins/repository-adapter/src/revision-reader.ts](#j15-helper-9)
 - [FileMutex timeout and acquisition failures](#j16-file-mutex)
 
 <a id="js-shared-novagatetimeouterror"></a>
@@ -901,7 +901,7 @@ new ReviewStageIntegrityError(`requested context exceeds policy limits: ${remain
 
 <a id="j15-helper-6"></a>
 
-## skills/nova/plugins/remote-test-gate/src/adapter.ts::canonicalDirectory
+## canonicalDirectory — skills/nova/plugins/remote-test-gate/src/adapter.ts
 
 **Representation:** failure
 
@@ -925,7 +925,7 @@ new ReviewStageIntegrityError(`requested context exceeds policy limits: ${remain
 
 <a id="j15-helper-7"></a>
 
-## skills/nova/plugins/remote-test-gate/src/adapter.ts::string
+## string — skills/nova/plugins/remote-test-gate/src/adapter.ts
 
 **Representation:** failure
 
@@ -949,7 +949,7 @@ new ReviewStageIntegrityError(`requested context exceeds policy limits: ${remain
 
 <a id="j15-helper-8"></a>
 
-## skills/nova/plugins/remote-test-gate/src/adapter.ts::positiveInteger
+## positiveInteger — skills/nova/plugins/remote-test-gate/src/adapter.ts
 
 **Representation:** failure
 
@@ -973,7 +973,7 @@ new ReviewStageIntegrityError(`requested context exceeds policy limits: ${remain
 
 <a id="j15-helper-9"></a>
 
-## skills/nova/plugins/repository-adapter/src/revision-reader.ts::assertExpected
+## assertExpected — skills/nova/plugins/repository-adapter/src/revision-reader.ts
 
 **Representation:** failure
 
