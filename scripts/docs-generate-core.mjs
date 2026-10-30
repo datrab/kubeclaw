@@ -1,3 +1,4 @@
+import { renderCliDocumentationFacts } from './lib/cli/cli-semantic-composition.mjs';
 export function table(headers, rows) {
   const escape = (value) => String(value ?? '').replaceAll('|', '\\|').replaceAll('\n', '<br>');
   return [
@@ -20,7 +21,7 @@ export function generatedEnd() {
   return '\n\n<!-- END GENERATED -->\n';
 }
 
-export function renderCli(deploy, runtimeInputs, sourceLink = (sourcePath, line) => `\`${sourcePath}:${line}\``) {
+export function renderCli(deploy, runtimeInputs, sourceLink = (sourcePath, line) => `\`${sourcePath}:${line}\``, nativeCli = null) {
   const publishedFlags = runtimeInputs.cliFlags.filter((flag) => ['operator-runtime', 'maintainer-verification'].includes(flag.surface));
   const definitions = publishedFlags.filter((flag) => flag.classification === 'definition');
   const derived = runtimeInputs.derivedValues;
@@ -29,7 +30,7 @@ export function renderCli(deploy, runtimeInputs, sourceLink = (sourcePath, line)
 Status: generated reference
 Audience: reference reader, operator, developer
 Owner: platform-operations
-Evidence: docs/generated/inventory/deploy-script.json; docs/generated/inventory/configuration-runtime-inputs.json; scripts/docs-generate.mjs
+Evidence: docs/generated/inventory/deploy-script.json; docs/generated/inventory/configuration-runtime-inputs.json; docs/generated/inventory/cli-surfaces.json; scripts/docs-generate.mjs
 Applies to: deployment commands and published operator/developer CLI definitions
 Last verified: generated from current inventory
 
@@ -89,6 +90,7 @@ ${table(['Name', 'Class', 'Formula and analysis', 'Inputs', 'Precedence', 'Owner
   `${item.changeImpact}<br>${item.failureMeaning}`,
   sourceLink(item.path, item.line),
 ]))}
+${nativeCli ? renderCliDocumentationFacts(nativeCli) : ''}
 ${generatedEnd()}
 ## Used by
 

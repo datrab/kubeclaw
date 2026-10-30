@@ -1,4 +1,5 @@
 #!/usr/bin/env node
+import { generateNativeCliModel } from './lib/cli/cli-native-driver.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -459,8 +460,11 @@ function stableJson(value) {
   return `${JSON.stringify(value, null, 2)}\n`;
 }
 
-function outputs() {
+async function outputs() {
+  const cli = await generateNativeCliModel(root);
+  if (process.argv.includes('--cli')) return new Map([['cli-surfaces.json', cli]]);
   return new Map([
+    ['cli-surfaces.json', cli],
     ['deploy-script.json', buildDeployScriptInventory()],
     ['secret-setup.json', buildSecretSetupInventory()],
     ['helm-values.json', buildHelmValuesInventory()],
@@ -470,7 +474,7 @@ function outputs() {
 
 if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url)) {
 const stale = [];
-const generated = outputs();
+const generated = await outputs();
 
 if (!checkOnly) {
   fs.mkdirSync(outDir, { recursive: true });

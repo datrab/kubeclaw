@@ -1,0 +1,3665 @@
+{
+  "schemaVersion": "kubeclaw-cli-source-ownership.v1",
+  "authority": "Native source ownership and publication boundary only; no flag/default/exit values or execution receipt. Actual parser values must be acquired from current committed Source.",
+  "interfaces": [
+    {
+      "source": ".codex/handoffs/documentation-cloud/verify-transfer.py",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "charts/kubeclaw/files/reset-managed-plugin-projects.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "charts/kubeclaw/files/restore-managed-plugin-config.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "charts/prism/files/prism-backup.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "cmd/buster-namespace-controller/main.go",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "contracts/delivery-manifest/v3/tests/contract.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "contracts/pipeline-observability/v1/go/fixturecheck/main.go",
+      "kind": "private-parser-helper",
+      "supportState": "private-parser-helper",
+      "boundary": "Private controlled static/helper protocol, not an application CLI or runtime authority."
+    },
+    {
+      "source": "contracts/pipeline-observability/v1/src/validation.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "contracts/pipeline-test-gate/v1/src/validation.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v2.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/scripts/generate-resource-schema-v3.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "contracts/prism/v1/scripts/generate-validators.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "contracts/prism/v1/tests/contracts.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "docker/buster-runtime-entrypoint.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/A911-09-currentc559/checks/current-html-reconciliation-producer.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a208-docs-governance.mjs.reviewed-source.raw",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a212-generate-buster-provider-reference.mjs.reviewed-source.raw",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/A911-10-currentee1a67d4/artifacts/a213-docs-check-refs.mjs.reviewed-source.raw",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/fixture/scripts/deploy.sh",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/fixture/scripts/runtime-tool-locks.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/fixture/scripts/scan-runtime-images.sh",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/fixture/scripts/versions.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/members/012.bin",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/members/039.bin",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/pr6-stateful-upgrades/commands.txt",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/pr6-worker-final-observation/commands.txt",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/resume-84-prism-review/static-parity.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/resume-84-worker-pg-native-entry/routing-negative.mts",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/run13-prism-reader-independent-identity.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/run2-sdk-remaining/repair-authorization-locale.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/run3-adapter-dependency-locale.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/run5-adapter-legacy-cli-diagnostic.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/run6-sdk-profile-collision-independent.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/run7-sdk-cache-context-case-probe.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/run9-sdk-transport-proxy-audit.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/sdk-json-compatibility-audit.mts",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/wave47-project-cli-execution-probe.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/wave47-project-legacy-resume-cutover-probe.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/wave47-project-scaffold-cli-probe.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/wave47-sdk-independent-lock-probe.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/review/evidence/wave47-sdk-independent/legacy-identity.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "docs/site/extend/examples/observer-lifecycle/journey.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "docs/site/use/workflows/examples/compiled-project-input.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "docs/site/use/workflows/examples/compiled-project.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "docs/site/use/workflows/examples/first-project.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "docs/site/use/workflows/examples/local-core.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "handoffs/pr13-reset-20261021/active-role-bundle-observer.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "handoffs/pr13-reset-20261021/active-role-bundle-observer.test.mjs",
+      "kind": "excluded-history",
+      "supportState": "excluded-history",
+      "boundary": "Historical code/evidence copy, not active product entrypoint."
+    },
+    {
+      "source": "my-values/setup-secrets.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "ops/pod/bootstrap.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "ops/pod/kubectl-build/main.go",
+      "kind": "upstream-wrapper",
+      "supportState": "upstream-wrapper",
+      "boundary": "First-party wrapper; external parser owns pass-through command/options. Do not invent first-party flags from upstream imports."
+    },
+    {
+      "source": "ops/pod/kubectl-build/verify-version.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "ops/pod/shell.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "ops/pod/supervisor.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "ops/pod/test-image.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "ops/pod/test/deployment.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "ops/pod/test/supervisor_test.py",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "ops/pod/verify.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/activate-native-worker-ax41.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/align-spire-webhook-order.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/ap08-extension-inventory.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/ap08-review-scope.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/argocd-self-management.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/bootstrap-prism-tests.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/build-native-worker-nri.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/build-runtime-role-bundle.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/bundle-override-values.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/bundle-values-field.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/buster-resource-overlay.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/check-action-pins.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-ap08-advanced-guides.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-ap08-choice-guide.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-ap08-effectful-guide.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-ap08-host-lifecycle-catalogue.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-ap08-minimal-plugin.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-ap08-observers.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-ap08-reader-references.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-ap09-acceptance-contract.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-built-runtime-image.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-buster-guides.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-capability-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-capability-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-capability-policy-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-capability-policy-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift-controls.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/check-capability-registrations-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-capability-swarm-boundary.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-capability-vocabulary-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-cni-portability.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-configuration-cli-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-configuration-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-contract-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-contract-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-core-architecture-guides.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-error-code-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-error-code-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-extension-class-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-extension-class-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-fixture-registration-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-local-helm-boolean-semantics.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-materialized-tree.mjs",
+      "kind": "source-only-unqualified",
+      "supportState": "not established",
+      "boundary": "Standalone source declaration only. Supported owner/operational invocation is not established; do not execute from this record."
+    },
+    {
+      "source": "scripts/check-monitoring.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-operator-task-registry-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-operator-task-registry.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-platform-adoption-live.py",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-platform-services.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-platform-specialist-guides.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-platform-surface-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-plugin-manifest-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-prism-guides.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-progress-contract-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-provider-registration-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-provider-registration-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-report-registration-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-report-registration-drift.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-role-image.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/check-runtime-adoption-live.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/check-runtime-role-manifests.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-schema-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-sdk-contract-mutation-constructors.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-site-reader-boundary.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-suite-migration-workflow.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-suite-parity-ledger.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-workflow-drift-mutations.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/check-workflow-yaml.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/cleanup-consolidated-branches.py",
+      "kind": "source-only-unqualified",
+      "supportState": "not established",
+      "boundary": "Standalone source declaration only. Supported owner/operational invocation is not established; do not execute from this record."
+    },
+    {
+      "source": "scripts/compact-buster-job.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/configure-prism-job-cleanup.sh",
+      "kind": "qualified-maintenance",
+      "supportState": "qualified-maintenance",
+      "boundary": "Bounded maintainer/install/repair or syntax-only interface; original prerequisite, mode and stop conditions remain."
+    },
+    {
+      "source": "scripts/deploy-argocd.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/deploy-cilium.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/deploy-ops-pod.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/deploy.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-ap09-catalogue.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-ap09-mutation-fixture.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-go-output-role-adapter.go",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-go-output-shapes.go",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-output-role-classification.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-python-ast-v1.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-python-output-adapter.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-schema-authorities.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-api-versions-map-output.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-blueprint-generate.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-check-coverage.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-check-refs.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-check.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-governance.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-inventory.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-lint-policy-reference.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-local-helm-authorities.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-parity-batches.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-parity-check.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-parity-extract.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-parity-review-assignments.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-parity-status.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-parity-transition.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-platform-surface-inventory.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-plugin-complexity.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-product-pipeline-reference.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-publication-examples.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-publication.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-reader/check-artifact.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-reader/check-diagrams.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-reader/check-search.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-reader/check-source-links.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-reader/check-source-previews.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-reader/diagrams.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-reader/serve.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-retained-language-projection.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/docs-sdk-reference.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-status.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-tree-boundary.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/docs-yaml-field-authorities.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/format-repository-review-status.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/generate-buster-error-reference.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/generate-buster-provider-reference.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/generate-knip-config.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/generate-local-helm-authorities.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/generate-operator-task-registry.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/generate-plugin-dependency-aggregate.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/generate-plugin-sdk-types.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/generate-real-e2e-visual-baseline.mjs",
+      "kind": "source-only-unqualified",
+      "supportState": "not established",
+      "boundary": "Standalone source declaration only. Supported owner/operational invocation is not established; do not execute from this record."
+    },
+    {
+      "source": "scripts/generate-suite-migration-status.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/generate-telemetry-contracts.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/gitops-continuous.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/gitops-owner.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/gitops-rollback.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/gitops.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/infrastructure-chart.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/infrastructure-image-renderer.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/infrastructure-oci-chart.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/infrastructure-release.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/inspect-data-plane-mtls.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/inspect-node-registry.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/inspect-platform-adoption.py",
+      "kind": "source-only-unqualified",
+      "supportState": "not established",
+      "boundary": "Standalone source declaration only. Supported owner/operational invocation is not established; do not execute from this record."
+    },
+    {
+      "source": "scripts/install-native-worker-pools-stage.sh",
+      "kind": "qualified-maintenance",
+      "supportState": "qualified-maintenance",
+      "boundary": "Bounded maintainer/install/repair or syntax-only interface; original prerequisite, mode and stop conditions remain."
+    },
+    {
+      "source": "scripts/install/register-runtime-argo.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/kubernetes-api-probe.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/lib/cli/cli-native-driver.mjs",
+      "kind": "private-parser-helper",
+      "supportState": "maintained private extraction producer",
+      "boundary": "Called by the native documentation inventory only. Source extraction protocol does not grant an independent operator invocation or product runtime authority."
+    },
+    {
+      "source": "scripts/lib/cli/cli-semantic-composition.mjs",
+      "kind": "private-parser-helper",
+      "supportState": "maintained private extraction producer",
+      "boundary": "Called by the native documentation inventory only. Source extraction protocol does not grant an independent operator invocation or product runtime authority."
+    },
+    {
+      "source": "scripts/lib/cli/cli-source-model.mjs",
+      "kind": "private-parser-helper",
+      "supportState": "maintained private extraction producer",
+      "boundary": "Called by the native documentation inventory only. Source extraction protocol does not grant an independent operator invocation or product runtime authority."
+    },
+    {
+      "source": "scripts/lib/cli/go_cli_ast.go",
+      "kind": "private-parser-helper",
+      "supportState": "maintained private extraction producer",
+      "boundary": "Called by the native documentation inventory only. Source extraction protocol does not grant an independent operator invocation or product runtime authority."
+    },
+    {
+      "source": "scripts/lib/cli/manifest-cli-launch-join.mjs",
+      "kind": "private-parser-helper",
+      "supportState": "maintained private extraction producer",
+      "boundary": "Called by the native documentation inventory only. Source extraction protocol does not grant an independent operator invocation or product runtime authority."
+    },
+    {
+      "source": "scripts/lib/cli/python_cli_ast.py",
+      "kind": "private-parser-helper",
+      "supportState": "maintained private extraction producer",
+      "boundary": "Called by the native documentation inventory only. Source extraction protocol does not grant an independent operator invocation or product runtime authority."
+    },
+    {
+      "source": "scripts/lib/cli/shell-cli-adapter.mjs",
+      "kind": "private-parser-helper",
+      "supportState": "maintained private extraction producer",
+      "boundary": "Called by the native documentation inventory only. Source extraction protocol does not grant an independent operator invocation or product runtime authority."
+    },
+    {
+      "source": "scripts/lib/cli/typed-cli-ast.mjs",
+      "kind": "private-parser-helper",
+      "supportState": "maintained private extraction producer",
+      "boundary": "Called by the native documentation inventory only. Source extraction protocol does not grant an independent operator invocation or product runtime authority."
+    },
+    {
+      "source": "scripts/lib/docs-publication-example-coverage.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/lib/docs-retained-language-bundle.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/lint-baseline-prune.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/lint-baseline-update.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/migrate-kubeclaw-network-policies-to-cilium.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/native-worker-deployment-preflight.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/native-worker-node-preflight.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/observability-retirement-plan.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/openclaw-concurrency-preflight.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/package-agent-skill-bundle.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/pipeline-light-openclaw-notify.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/pipeline-light-watchdog.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/pipeline-unit-parity-report.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/platform-surface-source-discovery.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/plugin-system-inventory.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/postgresql-recovery.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/prepare-ax41-buster-browser.sh",
+      "kind": "qualified-maintenance",
+      "supportState": "qualified-maintenance",
+      "boundary": "Bounded maintainer/install/repair or syntax-only interface; original prerequisite, mode and stop conditions remain."
+    },
+    {
+      "source": "scripts/prepare-image-build-runner.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/prepare-native-worker-pools.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/prepare-nova-archviewer-auth.sh",
+      "kind": "qualified-maintenance",
+      "supportState": "qualified-maintenance",
+      "boundary": "Bounded maintainer/install/repair or syntax-only interface; original prerequisite, mode and stop conditions remain."
+    },
+    {
+      "source": "scripts/prepare-postgresql-production-upgrade.sh",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/prepare-reliability-services.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/production-receipt-attestation.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/recover-openclaw-audit-input.mjs",
+      "kind": "source-only-unqualified",
+      "supportState": "not established",
+      "boundary": "Standalone source declaration only. Supported owner/operational invocation is not established; do not execute from this record."
+    },
+    {
+      "source": "scripts/redis-prepare-migration.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/registry-client-config.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/reliability-tests.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/remove-qdrant.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/render-kubernetes-api-probe.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/render-litellm-deployment.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/render-native-worker-node.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/render-postgresql-recovery.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/render-registry-local.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/render-stateful-network-policies.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/repair-k3s-reservation-arguments.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/repair-native-nri-launch.sh",
+      "kind": "qualified-maintenance",
+      "supportState": "qualified-maintenance",
+      "boundary": "Bounded maintainer/install/repair or syntax-only interface; original prerequisite, mode and stop conditions remain."
+    },
+    {
+      "source": "scripts/repair-native-worker-pools-lifetime.sh",
+      "kind": "qualified-maintenance",
+      "supportState": "qualified-maintenance",
+      "boundary": "Bounded maintainer/install/repair or syntax-only interface; original prerequisite, mode and stop conditions remain."
+    },
+    {
+      "source": "scripts/repository-review-status.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/retire-admission.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/retire-attempt-result.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/retire-nova-dispatch.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/retire-operator-request.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/retire-telemetry.mjs",
+      "kind": "source-only-unqualified",
+      "supportState": "not established",
+      "boundary": "Standalone source declaration only. Supported owner/operational invocation is not established; do not execute from this record."
+    },
+    {
+      "source": "scripts/run-lint-report.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/runtime-tool-locks.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/scan-runtime-images.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/setup.sh",
+      "kind": "legacy-gated",
+      "supportState": "legacy-gated",
+      "boundary": "Legacy explicitly gated entry, not default supported onboarding."
+    },
+    {
+      "source": "scripts/stateful-database-service.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/stateful-release-preflight.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/suite-parity-report.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/supervise-repository-review.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/sync-codex-lock.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/api-output-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/api-output-node-entry-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/api-output-publication.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/api-product-strategic-patch.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/api-reference-reader-language.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/api-reference.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/api-schema-boundaries.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/api-schema-reference-overlay.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/argocd-checked-artifacts.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/auth-delete-receiver.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/buster-authored-unknown-field.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/buster-lease-receiver.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/cluster-configuration-receiver.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/clusterspiffeid-selected-receiver.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/cronjob-selected-claims.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/deployment-config-output-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/deployment-scalar-occurrence-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-api-utility-declarations.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-cli-composition.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "maintained extraction regression implementation",
+      "boundary": "Native extraction regression fixtures and assertions; not an independent product CLI parser or supported invocation."
+    },
+    {
+      "source": "scripts/tests/docs-cli-launch.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "maintained extraction regression implementation",
+      "boundary": "Native extraction regression fixtures and assertions; not an independent product CLI parser or supported invocation."
+    },
+    {
+      "source": "scripts/tests/docs-cli-shell.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "maintained extraction regression implementation",
+      "boundary": "Native extraction regression fixtures and assertions; not an independent product CLI parser or supported invocation."
+    },
+    {
+      "source": "scripts/tests/docs-cli-source-model.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "maintained extraction regression implementation",
+      "boundary": "Native extraction regression fixtures and assertions; not an independent product CLI parser or supported invocation."
+    },
+    {
+      "source": "scripts/tests/docs-cli-typed.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "maintained extraction regression implementation",
+      "boundary": "Native extraction regression fixtures and assertions; not an independent product CLI parser or supported invocation."
+    },
+    {
+      "source": "scripts/tests/docs-compact-acceptance.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-documentation-owner-purpose.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-minimal-plugin-fixture-output-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-parity-status.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/docs-publication-examples.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/docs-reader-page-records.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/docs-reader-redirects.browser.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/docs-reader-redirects.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/docs-reader.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/docs-runtime-receiving-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-sdk-reference-navigation.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-source-freshness.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-source-surface-map.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/docs-status.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/docs-tree-boundary.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/docs_cli_go_test.py",
+      "kind": "excluded-test-implementation",
+      "supportState": "maintained extraction regression implementation",
+      "boundary": "Native extraction regression fixtures and assertions; not an independent product CLI parser or supported invocation."
+    },
+    {
+      "source": "scripts/tests/docs_cli_python_test.py",
+      "kind": "excluded-test-implementation",
+      "supportState": "maintained extraction regression implementation",
+      "boundary": "Native extraction regression fixtures and assertions; not an independent product CLI parser or supported invocation."
+    },
+    {
+      "source": "scripts/tests/documentation-variable-child-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/environment-custody-boundaries.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/expanded-workload-receiver.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/exposure-predecessor-role.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/go-cache-authority.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/identity-secret-selected-receiver.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/image-assembly-byte-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/native-output-adapter-custody.test.py",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/node-workloads-receiver.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/ops-bootstrap-environment-contracts.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/plugin-registration-dependencies.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/plugin-source-closure.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/prometheus-selected-receiver.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/python-environment-discovery.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/recover-openclaw-audit-input.integration.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/repository-review-operations.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/repository-review-supervisor-state.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/tests/runtime-bundle-copy-custody.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/vendor-external-helm-authorities.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/tests/workload-termination-defaults.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "scripts/updates/code-release.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/updates/deployment-release.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/updates/inspect-release-image.mjs",
+      "kind": "qualified-maintenance",
+      "supportState": "qualified-maintenance",
+      "boundary": "Bounded maintainer/install/repair or syntax-only interface; original prerequisite, mode and stop conditions remain."
+    },
+    {
+      "source": "scripts/updates/materialize-release.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/updates/release-images.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/updates/runtime-inputs.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/vendor-external-helm-authorities.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/verify-all-skill-tests.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/verify-cilium-policies.py",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "scripts/verify-plugin-live-capabilities.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/verify-plugin-packages.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "scripts/versions.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/buster/engine/remote-plan-cli.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/buster/engine/test-gates/provider-loader.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/buster/engine/test-gates/tests/process-input-lifecycle.test.ts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/import-audit-child.mjs",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/common/plugins/command-runner/tests/process-group-exit.test.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/common/plugins/openclaw-agent-observer/scripts/build.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/nova/core/cli.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/nova/core/test-gates/remote-gate-cli.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/nova/pipeline.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/buster-quality-gate/tests/suite-first.test.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/demo-handoff/tests/handoff.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/nova/plugins/lint/tests/eslint-discipline.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/lint/tests/eslint-type-evidence.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/lint/tests/report-contract.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/remote-test-gate/tests/evidence-projection.test.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/evaluate-review-quality.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/evaluate-scalable-review.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/scripts/generate-verification-schema.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/live-function.test.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/repository-review-io.test.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/review-contract-parity.unit.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/review-evidence-encoding-independent.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/review-evidence-live-locales.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/review-evidence-schema-independent.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/review-quality-corpus.unit.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/review-report-builder.unit.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/plugins/review/tests/review-report-contract.unit.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/nova/project/cli.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/nova/project/legacy-import-cli.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/nova/project_setup/tools/progress-scaffold.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/integration/engine-capture-retention.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/server/agent-attempt.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/prism/server/native-worker-execution.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/prism/server/studio-config.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/prism/server/worker.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/storage/index.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/prism/studio/playwright.config.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/studio/preview.ts",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "skills/prism/studio/tests/remediation.spec.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/studio/tests/studio.spec.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/studio/vite.config.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/tests/artifact-durability.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/tests/control-decisions.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/tests/control-product-composition.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/tests/domain-storage.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/tests/domain.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/tests/ingestion-service.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/tests/native/operation-journal.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/tests/native/postgres-suite.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/tests/native/worker-readiness-gate.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/tests/product-decisions.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/tests/storage.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/tests/studio-adapter.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "skills/prism/tests/studio-service.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/tests/worker-process-shutdown.native.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "skills/prism/tests/worker-readiness-chart.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "spikes/prism/mobile-editor/tests/mobile.spec.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "spikes/prism/postgres-retrieval/verify-local.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "spikes/prism/postgres-retrieval/verify.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "spikes/prism/preview-isolation/tests/isolation.spec.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/documentation/operator-dependency-table.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/documentation/retained-language-renderer.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/documentation/retained-prism-cli.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/documentation/retained-prism-projection.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/documentation/sdk-reference.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/documentation/store-policy-rendered.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/fixtures/buster-fixture-control-child.mts",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/buster-fixture-writer.mts",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/isolation-parent.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/native-cancellation-child.mts",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/prism-native-operation-writer.mts",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/worker-control-child.mts",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/worker-journal-writer.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/worker-native-scope-child.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/worker-observation-writer.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/worker-output-writer.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/fixtures/worker-ownership-supervisor.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-agent-namespace-rbac.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-deploy-prism-command.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-direct-command-provider.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-observability-legacy-cutover.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-observability-phase-5-7-a.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-phase10-vertical.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-phase8-vertical.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-agent-output-contracts.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-checkpoint-recovery.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-isolation-kernel.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-isolation.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-live-crashes.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-prism-nova-stage.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-prism-runtime-role.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-production-receipt-attestation.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/contracts/check-project-compiler.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-review-bundle-tokenizer.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-worker-trust-documentation.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/check-worker-trust-live-coverage.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/contracts/load-runtime-bundle-plugins.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/deployment/buster-cgroup-ownership.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/deployment/buster-readiness.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/deployment/check-buster-build.sh",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/deployment/check-deployment-truth.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/deployment/check-envoy-image.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/deployment/data-plane-inventory_test.py",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/deployment/docs-reference-scope.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/deployment/gitops-bootstrap.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/deployment/gitops-release.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/deployment/postgresql-recovery-native.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/deployment/registry-client-config.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/deployment/registry-health.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/docs/check-install-schema-step.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/docs/check-published-retention-sql.py",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/docs/prepare-retention-postgresql.py",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/approval-operator.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/audit-failure-matrix-contracts.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/check-real-e2e-capabilities.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/check-real-e2e-capabilities.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/check-v2-production-contracts.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/fixture-coverage.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/fixtures/nginx-project/scripts/verify-fixture.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/verification/e2e/malformed-output-publisher.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/nova-a11y-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/nova-api-production-preflight.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/nova-buildkit-production-preflight.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/nova-e2e-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/nova-http-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/nova-kubernetes-fixture-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/nova-lighthouse-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/nova-security-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/nova-tailscale-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/nova-unit-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/nova-visual-production-preflight.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/production-graph-validation.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/real-run-workspace.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/real-run-workspace.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/redis-test-client.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-e2e.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-e2e.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-failure-matrix.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/e2e/run-real-pipeline-failure-matrix.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/run-v2-production-pipeline.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/scenario-proof.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/e2e/support/platform-config.ts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/fixtures/evidence-discovery/provider.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-child.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/delivery-manifest-stage-boundary.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/review-semantic-history-child.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/review-semantic-history-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/review-semantic-selector-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/review-semantic-summary-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/run11-semantic-producer-child.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/historical-branch-acceptance/run11-semantic-producer-locales.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/integration/demo-auth-smoke-live.test.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/integration/evidence-discovery-adapter.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/integration/fixtures/prism-baseline-input.mts",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/verification/integration/fixtures/prism-baseline-locale.mts",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/verification/integration/http-provider-live.test.ts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/integration/pipeline-gate-remediation.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/integration/prism-archive.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/integration/prism-baseline-archive.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/integration/prism-contract-remediation.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/integration/product-native-api.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/lib/contract-check-helpers.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/lib/verification-console.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/live/worker-trust-cluster-e2e.sh",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-historical.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-identity.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/adapter-dependency-locale-fixture.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/admission-retirement.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/artifact-checkpoint-encoding.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/blob-budget.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/blob-read-boundary.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/blob-read-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/buster-fixture-control.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/buster-fixture-journal.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/buster-job-compaction.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/decisions-and-snapshots.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-gate-reference.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-import-boundary.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-v3-cancellation.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-v3-durability.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary-child.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/delivery-manifest-v3-stage-boundary.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/effect-identity-version.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/fixtures/operator-retention-worker.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/verification/reliability/fixtures/state-lock-worker.mjs",
+      "kind": "excluded-fixture",
+      "supportState": "excluded-fixture",
+      "boundary": "Private fixture/spike, not independent supported invocation."
+    },
+    {
+      "source": "tests/verification/reliability/kubernetes-manifest-budget.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/legacy-cli-diagnostic-reproducibility.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/lifecycle.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/native-process-cancellation.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/nova-dispatch-projection.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/observability-retirement-plan.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/prism-reader-consumer.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/prism-reader-fixture.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/prism-reader-replay.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/prism-reader-value.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/project-recovery-version.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/record-fenced-read-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/repair-identity-historical.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/repair-identity-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/repair-identity-locale.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/repair-identity-resume.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/report-evidence.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/report-identity-fixture.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/repository-result-paths.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/result-reservation.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-cache-native-profile.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-cache-profile.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/review-evidence-compiler-recovery.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-report-compiler-recovery.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/review-report-corruption-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-report-crash-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-report-locale-child.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-report-locale-fixture.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-report-locales.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/review-semantic-inner-owners.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/review-semantic-summary-child.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/review-semantic-summary.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/runtime-dispatch-profile-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/runtime-dispatch-profile.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/runtime-profile-proxy-independent.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/sdk-json-portable.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/source-identity-version.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/source-snapshot-version.test.mjs",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/state-ownership.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/worker-control-channel.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/worker-native-journal.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/worker-native-launcher.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/worker-native-scope-live.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/reliability/worker-observation-durability.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/worker-output-spool.test.mts",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/reliability/worker-ownership-store.test.mts",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tests/verification/run-fast-verification.sh",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/run-full-verification.sh",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tests/verification/run-local-acp-verification.sh",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tools/native-worker-nri/main.go",
+      "kind": "delegated-receiver",
+      "supportState": "delegated-receiver",
+      "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately."
+    },
+    {
+      "source": "tools/ops-mcp/hubble/main.go",
+      "kind": "upstream-wrapper",
+      "supportState": "upstream-wrapper",
+      "boundary": "First-party wrapper; external parser owns pass-through command/options. Do not invent first-party flags from upstream imports."
+    },
+    {
+      "source": "tools/ops-mcp/test-image.sh",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    },
+    {
+      "source": "tools/ops-mcp/test/authentication.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tools/ops-mcp/test/bootstrap.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tools/ops-mcp/test/http.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tools/ops-mcp/test/local.test.mjs",
+      "kind": "excluded-test-implementation",
+      "supportState": "excluded-test-implementation",
+      "boundary": "Private delegated test implementation; child fixture options are not public product options."
+    },
+    {
+      "source": "tools/ops-mcp/test/policy_contract_test.py",
+      "kind": "supported",
+      "supportState": "supported",
+      "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation."
+    }
+  ],
+  "manifestRoles": [
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/fixture/package.json",
+      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3",
+      "kind": "archived-data-manifest",
+      "boundary": "Full root manifest copied as sealed scopeInput for source-module import/package scope; not a versionOutputs output member; acquisition imports only scripts/versions.mjs then invokes versionOutputs(fixture) once. No npm script launch.",
+      "entryScope": "read-only-declaration-appendix-not-current-launch-root",
+      "roleAuthorities": [
+        "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/README.md",
+        "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/versions-map-current-data-acquire-v2.mjs.raw"
+      ]
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/fixture/ops/pod/package.json",
+      "sha256": "30867c450d00584fc4faa0345d1b9fb4e6f67039016938275a32119505597e1a",
+      "kind": "archived-data-manifest",
+      "boundary": "Manifest is source text input/output DATA to bindApplicationVersions: exact replacement of @openai/codex version; no npm/script dispatch. Output bytes retained as original ordered Map member.",
+      "entryScope": "read-only-declaration-appendix-not-current-launch-root",
+      "roleAuthorities": [
+        "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/README.md",
+        "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/versions-map-current-data-acquire-v2.mjs.raw"
+      ]
+    },
+    {
+      "source": "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/original-versions-capture/fixture/skills/common/plugins/openclaw-agent-observer/package.json",
+      "sha256": "3685149c841d4a5a65e8e1b99e20fcf405fe0020c608f965ee334045997d60ce",
+      "kind": "archived-data-manifest",
+      "boundary": "Manifest is source text input/output DATA to bindApplicationVersions: exact replacement of openclawVersion; no npm/script dispatch. Output bytes retained as original ordered Map member.",
+      "entryScope": "read-only-declaration-appendix-not-current-launch-root",
+      "roleAuthorities": [
+        "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/README.md",
+        "docs/blueprint/acceptance-evidence/combined-api-adapters-20261022/versions-map-current-data-acquire-v2.mjs.raw"
+      ]
+    }
+  ]
+}

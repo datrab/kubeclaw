@@ -21,11 +21,34 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24"
+      - name: Set up qualified CLI Python parser
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11.18"
       - name: Set up documentation Go parser
         uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: "1.26.3"
+          go-version: "1.26.5"
           cache: false
+      - name: Prepare checksum-pinned CLI shell parser
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import crypto from 'node:crypto';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import { execFileSync } from 'node:child_process';
+          assert.equal(process.platform, 'linux'); assert.equal(process.arch, 'x64');
+          const pins = JSON.parse(fs.readFileSync('versions.json', 'utf8')).buildArgs;
+          const directory = fs.mkdtempSync(path.join(process.env.RUNNER_TEMP, 'docs-shfmt-'));
+          const binary = path.join(directory, 'shfmt');
+          try {
+            execFileSync('curl', ['--fail', '--silent', '--show-error', '--location',
+              `https://github.com/mvdan/sh/releases/download/v${pins.SHFMT_VERSION}/shfmt_v${pins.SHFMT_VERSION}_linux_amd64`, '-o', binary]);
+            assert.equal(crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex'), pins.SHFMT_SHA256_AMD64);
+            execFileSync('sudo', ['install', '-m', '0755', binary, '/usr/local/bin/shfmt']);
+          } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+          JS
       - name: Set up documentation Helm renderer
         uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
         with:
@@ -111,11 +134,34 @@ jobs:
         uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4
         with:
           node-version: "24"
+      - name: Set up qualified CLI Python parser
+        uses: actions/setup-python@ece7cb06caefa5fff74198d8649806c4678c61a1 # v6
+        with:
+          python-version: "3.11.18"
       - name: Set up documentation Go parser
         uses: actions/setup-go@40f1582b2485089dde7abd97c1529aa768e1baff # v5
         with:
-          go-version: "1.26.3"
+          go-version: "1.26.5"
           cache: false
+      - name: Prepare checksum-pinned CLI shell parser
+        run: |
+          node --input-type=module - <<'JS'
+          import assert from 'node:assert/strict';
+          import crypto from 'node:crypto';
+          import fs from 'node:fs';
+          import path from 'node:path';
+          import { execFileSync } from 'node:child_process';
+          assert.equal(process.platform, 'linux'); assert.equal(process.arch, 'x64');
+          const pins = JSON.parse(fs.readFileSync('versions.json', 'utf8')).buildArgs;
+          const directory = fs.mkdtempSync(path.join(process.env.RUNNER_TEMP, 'docs-shfmt-'));
+          const binary = path.join(directory, 'shfmt');
+          try {
+            execFileSync('curl', ['--fail', '--silent', '--show-error', '--location',
+              `https://github.com/mvdan/sh/releases/download/v${pins.SHFMT_VERSION}/shfmt_v${pins.SHFMT_VERSION}_linux_amd64`, '-o', binary]);
+            assert.equal(crypto.createHash('sha256').update(fs.readFileSync(binary)).digest('hex'), pins.SHFMT_SHA256_AMD64);
+            execFileSync('sudo', ['install', '-m', '0755', binary, '/usr/local/bin/shfmt']);
+          } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+          JS
       - name: Set up documentation Helm renderer
         uses: azure/setup-helm@bf6a7d304bc2fdb57e0331155b7ebf2c504acf0a # v4
         with:

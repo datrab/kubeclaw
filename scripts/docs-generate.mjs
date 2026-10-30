@@ -34,8 +34,8 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment', 'native-supervisor-environment'].includes(only)) {
-  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification or configuration');
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment', 'native-supervisor-environment', 'cli'].includes(only)) {
+  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification, configuration, environment, native-supervisor-environment or cli');
 }
 if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
@@ -212,8 +212,10 @@ function stableWriteMap() {
   if (only === 'workflows') return new Map([
     ['docs/site/reference/workflows.md', renderWorkflows(readJson('docs/generated/inventory/workflows.json'))],
   ]);
-  // Publish the existing endpoint renderer without acquiring or rewriting
-  // unrelated SDK, configuration or retained historical references.
+  // Publish a selected bounded renderer without rewriting unrelated references.
+  if (only === 'cli') return new Map([
+    ['docs/site/reference/cli.md', renderCli(readJson('docs/generated/inventory/deploy-script.json'), readJson('docs/generated/inventory/configuration-runtime-inputs.json'), (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`, readJson('docs/generated/inventory/cli-surfaces.json'))],
+  ]);
   if (only === 'endpoints') return new Map([
     ['docs/site/reference/endpoints.md', renderEndpoints(readJson('docs/generated/inventory/platform-surfaces.json'))],
   ]);
@@ -262,7 +264,7 @@ function stableWriteMap() {
 // Shared native five-page configuration boundary, including isolated mutations.
 function configurationWriteMap(deploy, secrets, configurationValues, runtimeInputs, configurationSchemas) {
   return new Map([
-    ['docs/site/reference/cli.md', renderCli(deploy, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`)],
+    ['docs/site/reference/cli.md', renderCli(deploy, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}:${line}\`](${pinnedSourceUrl(sourcePath, line, line)})`, readJson('docs/generated/inventory/cli-surfaces.json'))],
     ['docs/site/reference/secrets.md', renderSecrets(secrets, runtimeInputs, (sourcePath, line) => `[\`${sourcePath}${line ? `:${line}` : ''}\`](${pinnedSourceUrl(sourcePath, line ?? 1, line ?? 1)})`)],
     ['docs/site/reference/helm-values.md', renderHelmValues(configurationValues, configurationSchemas)],
     ['docs/site/reference/environment-variables.md', renderEnvironment(deploy, secrets, runtimeInputs)],
