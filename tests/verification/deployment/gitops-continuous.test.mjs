@@ -131,6 +131,19 @@ test('real Helm environment rendering remains identical after the bundle commit 
       assert.equal(app.spec.source.targetRevision, 'main');
       assert.ok(fs.existsSync(path.join(root, app.spec.source.path, 'resources.yaml')));
     }
+    const householdFile = path.join(root, 'gitops/production/household-applications.yaml');
+    const household = {apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',
+      metadata: {name: 'familyclaw', namespace: 'argocd'},
+      spec: {project: 'familyclaw', source: {repoURL: 'https://github.com/example/Familyclaw.git'}, syncPolicy: {}}};
+    fs.writeFileSync(householdFile, yaml.dump(household));
+    const withHousehold = yaml.loadAll(render(first).files['apps/applications.yaml']);
+    assert.deepEqual(withHousehold.find(d => d.metadata?.name === 'familyclaw'), household);
+    assert.equal(withHousehold.filter(d => d.kind === 'Application').length, 4);
+    fs.writeFileSync(householdFile, yaml.dump({...household, metadata: {name: 'agents-buster', namespace: 'argocd'}}));
+    assert.throws(() => render(first), /HOUSEHOLD_APPLICATION_INVALID/);
+    fs.writeFileSync(householdFile, yaml.dump({...household, spec: {...household.spec, syncPolicy: {automated: {prune: true}}}}));
+    assert.throws(() => render(first), /HOUSEHOLD_APPLICATION_INVALID/);
+    fs.unlinkSync(householdFile);
     fs.writeFileSync(path.join(root, 'merge-marker'), 'Simulate the final merged tree');
     const second = commit();
     assert.notEqual(first, second);

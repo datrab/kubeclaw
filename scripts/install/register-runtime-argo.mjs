@@ -39,7 +39,7 @@ try {
     for (const key of ['kubeclaw.dev/gitops-root', 'kubeclaw.dev/gitops-project']) {
       if (expectedLabels[key] && labels[key] !== expectedLabels[key]) throw new Error(`REGISTRATION_OWNER_CONFLICT:${document.metadata.name}`);
     }
-    if (document.kind === 'Application' && (live.spec.project !== document.spec.project || live.spec.source?.repoURL !== repository || live.spec.destination?.namespace !== document.spec.destination.namespace)) throw new Error(`REGISTRATION_APPLICATION_CONFLICT:${document.metadata.name}`);
+    if (document.kind === 'Application' && (live.spec.project !== document.spec.project || live.spec.source?.repoURL !== document.spec.source?.repoURL || live.spec.destination?.namespace !== document.spec.destination.namespace)) throw new Error(`REGISTRATION_APPLICATION_CONFLICT:${document.metadata.name}`);
     if (document.kind === 'Application' && document.metadata.name !== config.naming.rootName && (live.spec.syncPolicy?.automated || live.operation)) throw new Error(`REGISTRATION_ALREADY_ACTIVE:${document.metadata.name}`);
   }
   const input = documents.map(d => yaml.dump(d, {noRefs: true})).join('---\n');

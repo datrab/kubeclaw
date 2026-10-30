@@ -163,3 +163,66 @@ spec:
         duration: 10s
         factor: 2
         maxDuration: 1m
+---
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: familyclaw
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '-1'
+spec:
+  description: Family household stack; separate from Kubeclaw runtime permissions.
+  sourceRepos:
+    - https://github.com/datrab/Familyclaw.git
+  destinations:
+    - namespace: familyclaw
+      server: https://kubernetes.default.svc
+  clusterResourceWhitelist: []
+  namespaceResourceWhitelist:
+    - group: ''
+      kind: ConfigMap
+    - group: ''
+      kind: PersistentVolumeClaim
+    - group: ''
+      kind: Service
+    - group: apps
+      kind: Deployment
+    - group: apps
+      kind: StatefulSet
+    - group: batch
+      kind: Job
+    - group: batch
+      kind: CronJob
+    - group: networking.k8s.io
+      kind: NetworkPolicy
+  orphanedResources:
+    warn: true
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: familyclaw
+  namespace: argocd
+  annotations:
+    argocd.argoproj.io/sync-wave: '10'
+    kubeclaw.io/health-mode: observed
+    argocd.argoproj.io/ignore-healthcheck: 'true'
+    argocd.argoproj.io/sync-options: Prune=false,Delete=false
+spec:
+  project: familyclaw
+  source:
+    repoURL: https://github.com/datrab/Familyclaw.git
+    targetRevision: main
+    path: deploy/helm/family-stack
+    helm:
+      releaseName: familyclaw
+      valueFiles:
+        - values-household.yaml
+        - values-production.yaml
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: familyclaw
+  syncPolicy:
+    syncOptions:
+      - FailOnSharedResource=true

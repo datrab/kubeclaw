@@ -102,6 +102,25 @@ function configuration(repository) {
   return config;
 }
 
+// Maintained household definitions survive generated runtime bundle promotions.
+export function appendHouseholdApplications(repository, documents, namespace) {
+  const file = path.join(repository, environment, 'household-applications.yaml');
+  if (!fs.existsSync(file)) return documents;
+  const additional = yaml.loadAll(fs.readFileSync(file, 'utf8')).filter(Boolean);
+  const identities = new Set(documents.map(d => `${d.kind}/${d.metadata?.namespace}/${d.metadata?.name}`));
+  for (const document of additional) {
+    const identity = `${document.kind}/${document.metadata?.namespace}/${document.metadata?.name}`;
+    if (!['Application', 'AppProject'].includes(document.kind)
+      || document.apiVersion !== 'argoproj.io/v1alpha1' || document.metadata?.namespace !== namespace
+      || !gitOpsName(document.metadata?.name) || identities.has(identity)
+      || (document.kind === 'Application' && (document.spec?.syncPolicy?.automated || document.operation))) {
+      throw new Error('GITOPS_HOUSEHOLD_APPLICATION_INVALID');
+    }
+    identities.add(identity);
+  }
+  return [...documents, ...additional];
+}
+
 export function renderContinuousEnvironment(repository, directory, url, revision, config, baselineDirectory) {
   const result = bootstrapDocuments(repository, directory, url, revision, config.argoNamespace, config.naming);
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'gitops-continuous-'));
@@ -111,7 +130,7 @@ export function renderContinuousEnvironment(repository, directory, url, revision
     const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),
       '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },
-      files: { 'apps/applications.yaml': dump(retainUnchangedApplications(repository, retainBaselineApplications(repository, continuousApplications(rendered, config), config, baselineDirectory))),
+      files: { 'apps/applications.yaml': dump(appendHouseholdApplications(repository, retainUnchangedApplications(repository, retainBaselineApplications(repository, continuousApplications(rendered, config), config, baselineDirectory)), config.argoNamespace)),
         'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),
         'selection.json': JSON.stringify({ directory }, null, 2) + '\n' } };
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
