@@ -669,7 +669,7 @@ ${currentSelected ? `
 ## Select And Verify A Change
 
 1. Find the owning file below. Chart values are defaults; a checked-in overlay is not automatically selected by every command.
-2. Read the receiving source and precedence column. Direct deploy uses generated release values and its optional selected overlay; production GitOps selects the immutable bundle resources through its Application source.
+2. Read the receiving source and precedence column. Direct deploy uses generated release values and its optional selected overlay. Production GitOps selects immutable bundle resources through its Application source.
 3. Change the owning input, not a generated release copy alone. Render the selected chart or regenerate the bundle through the linked producer. Inspect the affected workload, Secret reference and policy before applying it.
 4. After the normal deployment, verify the effective resource and process health. Source discovery and rendering do not prove a rollout, API admission, image behavior or cluster policy enforcement.
 
