@@ -34,7 +34,7 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration'].includes(only)) {
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment'].includes(only)) {
   throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification or configuration');
 }
 if (only && argv.includes('--update-source-revision')) {
@@ -220,6 +220,9 @@ function stableWriteMap() {
   if (only === 'verification') return new Map([
     ['docs/site/reference/verification-commands.md', renderVerification(readJson('docs/generated/inventory/deploy-script.json'))],
   ]);
+  if (only === 'environment') return new Map([['docs/site/reference/environment-variables.md', renderEnvironment(
+    readJson('docs/generated/inventory/deploy-script.json'), readJson('docs/generated/inventory/secret-setup.json'),
+    readJson('docs/generated/inventory/configuration-runtime-inputs.json'))]]);
   if (only === 'configuration') return configurationWriteMap(
     readJson('docs/generated/inventory/deploy-script.json'),
     readJson('docs/generated/inventory/secret-setup.json'),

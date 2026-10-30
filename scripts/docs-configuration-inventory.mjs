@@ -10,6 +10,7 @@ import { pathToFileURL } from 'node:url';
 import { spawnSync } from 'node:child_process';
 import vm from 'node:vm';
 import ts from 'typescript';
+import { nativeSupervisorEnvironmentProducer } from './lib/docs-owned-process-environment.mjs';
 import YAML from 'yaml';
 import { shellHeredocCustody, shellCommandAcquisitions } from './docs-shell-source-custody.mjs';
 import { helmEnvironmentHelperProjectionPlans } from './docs-helm-environment-projections.mjs';
@@ -673,14 +674,14 @@ for (const [name, contract] of Object.entries({
 })) addEnvironmentConsumerContract(name, 'tools/ops-mcp/src/config.mjs', contract);
 
 addEnvironmentConsumerContract('KUBECLAW_NATIVE_SUPERVISOR_PID', 'skills/worker/core/worker/native-worker-launcher.c', environmentContract({
-  purpose: 'Binds the privileged native-worker launcher to the exact unprivileged supervisor process that invoked it.',
-  acceptedForm: 'A base-10 positive process ID below 4,294,967,295 and no sign or trailing characters.',
+  purpose: 'Binds the privileged native-worker launcher to the exact privileged supervisor process that invoked it. The launcher subsequently changes the child user and group identities before it executes role code.',
+  acceptedForm: 'NativeWorkerOwnershipLease writes String(process.pid), the decimal PID of the producing supervisor. The C converter uses strtoul with base 10: it can accept a leading plus sign or whitespace, but rejects conversion errors, empty text, trailing characters, zero, values at or above 4,294,967,295, and a minus sign in the first character. The supervisor check additionally rejects values above INT_MAX and requires equality with the live parent PID.',
   defaultBehavior: 'No default.',
   emptyBehavior: 'An absent value returns `WORKER_NATIVE_LAUNCH_PARENT_REQUIRED`; an empty value returns `WORKER_NATIVE_LAUNCH_IDENTITY_INVALID`.',
-  invalidBehavior: 'Malformed, zero, negative, overflowed, or stale process identity is rejected; a changed parent returns `WORKER_NATIVE_LAUNCH_PARENT_LOST`.',
-  precedence: 'The launcher reads only its process environment and then verifies it against the live parent PID after installing a parent-death signal.',
+  invalidBehavior: 'The identity converter rejects invalid text or its unsigned-range violations with `WORKER_NATIVE_LAUNCH_IDENTITY_INVALID`. A value above INT_MAX, a failed parent-death-signal operation, or a different parent PID returns `WORKER_NATIVE_LAUNCH_PARENT_LOST`. These checks do not prove that an arbitrary supplied PID is an authorized caller.',
+  precedence: 'NativeWorkerOwnershipLease overwrites command.environment with String(process.pid) for this key when it spawns the launcher. The launcher reads that process value, installs a parent-death signal and checks the live parent PID. It repeats the signal installation and parent check after changing credentials, before exec.',
   impact: 'The binding prevents a detached caller from reusing the root launcher after the trusted supervisor exits.',
-  failure: 'The launcher writes the exact `WORKER_NATIVE_LAUNCH_*` code to stderr and exits 125 before entering the worker cgroup or dropping identity.',
+  failure: 'The launcher writes its exact failure code to stderr and exits 125. Failures can occur before or after cgroup attachment and before or after credential changes, including the second parent check and exec. An error does not prove that attachment or credential changes were undone.',
   required: 'required',
 }));
 
@@ -9183,11 +9184,15 @@ function verifyEnvironmentConsumerCoverage() {
       if (!externalProducerContract(name, producer.path, {...producer,sourceRoot:root})) missing.push(`${name}:${producer.path}:external boundary`);
     }
   }
+  const ownedProducer = nativeSupervisorEnvironmentProducer(root);
+  assertRuntimeConsumerContract(ownedProducer.contract, `${ownedProducer.name}:${ownedProducer.path}`);
+  assert(entries.has(ownedProducer.name), 'CONFIG_OWNED_PROCESS_PRODUCER_RECEIVER_MISSING');
   assert.equal(missing.length, 0, `CONFIG_SEMANTIC_GAP: unqualified environment receiving sources: ${[...new Set(missing)].join(', ')}`);
   console.log(`PASS exact environment receiving-source coverage (${entries.size} discovered names; every reader and producer pair qualified; ${configuredEnvironmentReceivers.length} explicit configured-key receivers).`);
 }
 
 function environmentProducerSetting(producer) {
+  if (producer.access === 'owned-process-env') return producer.owningSurface;
   const selectedPath=producer.custodyEvidence?.selectedSourcePath??producer.path;
   const selectedLine=producer.custodyEvidence?.selectedSourceLine??producer.line;
   const lines = read(selectedPath).split('\n');
@@ -9221,11 +9226,11 @@ function environmentProducerSetting(producer) {
       : `${location}; exact maintained workload environment declaration`;
 }
 
-function buildRuntimeInputInventory(yamlInventory) {
+function buildRuntimeInputInventory(yamlInventory, { nativeSupervisorOnly = false } = {}) {
   const environment = [];
   const cliFlags = [];
   const derivedValues = [];
-  for (const sourcePath of runtimeTextSources()) {
+  for (const sourcePath of (nativeSupervisorOnly ? ['skills/worker/core/worker/native-worker-launcher.c', 'skills/worker/core/worker/native-worker-ownership.ts'] : runtimeTextSources())) {
     const text = read(sourcePath);
     environment.push(...environmentOccurrences(sourcePath, text));
     cliFlags.push(...ownedCliFlags(sourcePath, text));
@@ -9235,6 +9240,7 @@ function buildRuntimeInputInventory(yamlInventory) {
     }
   }
   const groupedEnvironment = new Map();
+  const ownedNativeProducer = nativeSupervisorEnvironmentProducer(root);
   for (const occurrence of environment) {
     const entry = groupedEnvironment.get(occurrence.name) ?? {
       name: occurrence.name,
@@ -9335,8 +9341,10 @@ function buildRuntimeInputInventory(yamlInventory) {
     const consumerPaths = entry.consumers.map((consumer) => consumer.path);
     const onlyInjection = [...accessKinds].every((access) => access === 'kubernetes-env');
     entry.producers = entry.consumers.filter((consumer) => consumer.access === 'kubernetes-env');
+    if (entry.name === ownedNativeProducer.name) entry.producers.push(ownedNativeProducer);
     entry.readers = entry.consumers.filter((consumer) => consumer.access !== 'kubernetes-env');
     entry.direction = onlyInjection ? 'injection-only; receiving runtime reader is external or unproved'
+      : entry.producers.some(producer => producer.access === 'owned-process-env') ? 'supplied by the checked-in owned supervisor spawn and read by its native launcher child'
       : entry.producers.length ? 'injected by checked-in manifest and read by checked-in runtime source'
         : 'read as process input; producer is the operator, CI host, or external runtime';
     const ciContext = /^(?:CI(?:$|_)|GITHUB_|GITLAB_|BUILDKITE_|JENKINS_|RUNNER_)/u.test(entry.name);
@@ -9398,15 +9406,17 @@ function buildRuntimeInputInventory(yamlInventory) {
         ...qualified, purpose: environmentConsumerPurpose(qualified) });
     }
     entry.consumerContracts = [...contractsByReader.values()];
-    entry.unqualifiedProducers = entry.producers.filter((producer) => !qualifiedProducerBindings.has(`${entry.name}:${producer.path}`));
+    entry.unqualifiedProducers = entry.producers.filter((producer) => producer.access !== 'owned-process-env'
+      && !qualifiedProducerBindings.has(`${entry.name}:${producer.path}`));
     entry.producerContracts = entry.producers.map((producer) => ({ ...producer,
       owner: sourceOwner(producer.path).component,
       owningSurface: environmentProducerSetting(producer),
-      qualified: qualifiedProducerBindings.has(`${entry.name}:${producer.path}`),
+      qualified: producer.access === 'owned-process-env' || qualifiedProducerBindings.has(`${entry.name}:${producer.path}`),
     }));
     {
       for (const producer of entry.producers) {
-        const contract = externalProducerContract(entry.name, producer.path, {...producer,sourceRoot:root});
+        const contract = producer.access === 'owned-process-env' ? producer.contract
+          : externalProducerContract(entry.name, producer.path, {...producer,sourceRoot:root});
         if (!contract) { entry.unqualifiedProducers.push(producer); continue; }
         assertRuntimeConsumerContract(contract, `${entry.name}:${producer.path}`);
         entry.consumerContracts.push({ ...producer, ...contract,
@@ -9469,6 +9479,16 @@ function buildRuntimeInputInventory(yamlInventory) {
         { order: 2, source: 'command-local child-process export', condition: 'the validator Node process starts', evidence: 'charts/kubeclaw/templates/deployment.yaml:1023' },
       ];
     }
+  }
+  // Named single-boundary projection for this factual documentation correction.
+  // It is not the global environment/Secret inventory and does not bypass its checks.
+  if (nativeSupervisorOnly) {
+    const entry = groupedEnvironment.get('KUBECLAW_NATIVE_SUPERVISOR_PID');
+    assert(entry?.readers.some(reader => reader.path === 'skills/worker/core/worker/native-worker-launcher.c'));
+    assert(entry.producers.some(producer => producer.access === 'owned-process-env'));
+    assert.equal(entry.unqualifiedReaders.length + entry.unqualifiedProducers.length, 0);
+    return { profile: 'native-supervisor-owned-environment-entry.v1', environment: [entry],
+      limit: 'Only the owned native supervisor PID producer and C receiver; not global environment or Secret coverage.' };
   }
   assert.equal([...groupedEnvironment.values()].filter((entry) => /blocker/u.test(entry.meaningStatus) && (!entry.blockerOwner || !entry.closureCondition)).length, 0,
     'quality gate: every unresolved environment meaning needs an owner and concrete closure condition');
@@ -10012,6 +10032,11 @@ if (argv.includes('--environment-producer-custody-probe')) {
   assert(!input || fs.lstatSync(input).isFile(), 'ENVIRONMENT_PRODUCER_CUSTODY_UNSUPPORTED: probe input must be a regular local text file');
   const text = input ? fs.readFileSync(input,'utf8') : read(sourcePath);
   await new Promise((resolve,reject)=>process.stdout.write(JSON.stringify(environmentProducerOccurrences(sourcePath,text),null,2)+'\n',error=>error?reject(error):resolve()));
+  process.exit(0);
+}
+
+if (argv.includes('--native-supervisor-environment-entry')) {
+  process.stdout.write(stableJson(buildRuntimeInputInventory({ files: [] }, { nativeSupervisorOnly: true })));
   process.exit(0);
 }
 
