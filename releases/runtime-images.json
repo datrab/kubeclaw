@@ -1,71 +1,70 @@
 {
   "schemaVersion": 1,
-  "commit": "d73b68be5f462c3ab265ecd15e8dd99fe3043f46",
+  "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
   "images": {
-    "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:21bbeda9585eb53584e390c36854648ddb4cc7359e726d607ca5ad553e418cf7",
-    "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:2054278d44f5523f110e0f6c91d21d838a4077e896524f45ccf93a39e14aa47d",
-    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:c664db9d2ecb3faffa5e5ea4851bb82feed52c09a981368f81acf4cab5dd3cd1",
-    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:45562e14f2ed566ebe914463abedeff0a4753d83e8c8515a401454ca865985ec",
-    "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:916b6df757f479a8a81fdef27b0de859334f00c12cc31b520d6944963e1089be",
-    "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:b0d561e14b20aed5e9a308a6bfc112b6fdc1929e1f1bf7dc836c0aba0dc7e773",
-    "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:40de287ee05073d2db74c26d3e955fab684d211168edb1c0079c72aed417689e",
-    "prism-studio": "ghcr.io/datrab/kubeclaw-prism-studio@sha256:e275d9db52aa6c880ec7efcd1bf4d35bce0bcd0ab84b9a33744fccd48c6b4e3e",
-    "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:de084768a1fd59f5c6b1b2903d3daad25c160a9fae571c308ebc51643bd2e9fc",
-    "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:b1b537ccd303b210731d4b4d0f1066f40a284f659125bbc49356ff94c4b789c0"
+    "nova": "ghcr.io/datrab/kubeclaw-nova@sha256:7ddbd45223ff705e4462d4971ae72bbf2dc6ae2447812301db99bf9bf8515fe6",
+    "prism-agent": "ghcr.io/datrab/kubeclaw-prism-agent@sha256:67979b01c7c7aba696f9adc2e9adbf81b76b2c532efa2fa7e0a37034651ab8d2",
+    "buster-gateway": "ghcr.io/datrab/kubeclaw-buster-gateway@sha256:17f587a03bc75d49f098d893bb4a81fa05af19d4337ed1d378d42c066c245905",
+    "buster-runtime": "ghcr.io/datrab/kubeclaw-buster-runtime@sha256:9092a09ac0697c9c415b6994e395a7a25703c8f1793b02e95961228c24f488fe",
+    "namespace-controller": "ghcr.io/datrab/kubeclaw-namespace-controller@sha256:4dc9b6758f36e913a6095aa312f939adfbd21987d1c090d37cf32dead0c7d53b",
+    "archviewer": "ghcr.io/datrab/kubeclaw-archviewer@sha256:1e42b94423517cc703ea9542a2c7cde85e49a018eeaf5b44ce674fea4eafd063",
+    "prism-control": "ghcr.io/datrab/kubeclaw-prism-control@sha256:78fb342e46607a215015aaf9db7ccf363e7106f01afeccb0557b52081d005c7b",
+    "prism-studio": "ghcr.io/datrab/kubeclaw-prism-studio@sha256:2eef23f59ffd24363dbbae8d4d8c5c783ff5ac52252a2d1355b5900d0293e7d2",
+    "prism-worker": "ghcr.io/datrab/kubeclaw-prism-worker@sha256:9f56b48211d30c190b3360df57e17cdba97df089212bbc7ec557afb91cec2146",
+    "prism-ingestion": "ghcr.io/datrab/kubeclaw-prism-ingestion@sha256:e37b255286b0902cef66947b1060264337d7303d9e9542f4aee91faa9ad435fd"
   },
-  "sourceRunId": 40598494650,
+  "sourceRunId": 41107130975,
   "sourceRunAttempt": 1,
   "imageSources": {
     "nova": {
-      "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-      "sourceRunId": 40000895109,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "prism-agent": {
-      "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-      "sourceRunId": 40000895109,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "buster-gateway": {
-      "commit": "d73b68be5f462c3ab265ecd15e8dd99fe3043f46",
-      "sourceRunId": 40598494650,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "buster-runtime": {
-      "commit": "d73b68be5f462c3ab265ecd15e8dd99fe3043f46",
-      "sourceRunId": 40598494650,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "namespace-controller": {
-      "commit": "d73b68be5f462c3ab265ecd15e8dd99fe3043f46",
-      "sourceRunId": 40598494650,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "archviewer": {
-      "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-      "sourceRunId": 40000895109,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "prism-control": {
-      "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-      "sourceRunId": 40000895109,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "prism-studio": {
-      "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-      "sourceRunId": 40000895109,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "prism-worker": {
-      "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-      "sourceRunId": 40000895109,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     },
     "prism-ingestion": {
-      "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-      "sourceRunId": 40000895109,
+      "commit": "c9d6adda72021e2d226789ad483b311f1ccaf4d3",
+      "sourceRunId": 41107130975,
       "sourceRunAttempt": 1
     }
-  },
-  "retainedBaseline": "releases/gitops/prism-cpu-headroom-20261027"
+  }
 }
