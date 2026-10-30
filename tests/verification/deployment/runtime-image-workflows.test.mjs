@@ -10,6 +10,20 @@ import { runtimeImages } from '../../../scripts/updates/runtime-components.mjs';
 const read = name => YAML.parse(fs.readFileSync(`.github/workflows/${name}.yaml`, 'utf8'));
 const main = read('build-images'), pr = read('role-images'), updates = read('update-checks'), promote = read('promote-runtime');
 
+test('a release proposal verifies provenance and scans private immutable images without publication authority', () => {
+  assert.ok(promote.on.pull_request.paths.includes('releases/runtime-images.json'));
+  assert.equal(promote.jobs.prepare.if, "github.event_name == 'workflow_dispatch'");
+  const proposal = promote.jobs['verify-proposal'];
+  assert.equal(proposal.if, "github.event_name == 'pull_request'");
+  assert.deepEqual(proposal.permissions, { contents: 'read', actions: 'read', packages: 'read' });
+  assert.equal(proposal.steps[0].with['persist-credentials'], false);
+  const verification = proposal.steps.findIndex(step => step.run === 'node scripts/updates/verify-release-source.mjs');
+  const scan = proposal.steps.findIndex(step => step.run?.includes('bash scripts/scan-runtime-images.sh'));
+  assert.ok(verification >= 0 && scan > verification, 'scan only receipt-bound successful main artifacts');
+  assert.equal(proposal.steps[scan].env.TRIVY_PASSWORD, '${{ github.token }}');
+  assert.ok(proposal.steps.every(step => !/git push|gh pr create|deploy\.sh|gitops-continuous.*(?:prepare|apply)/u.test(step.run ?? '')), 'proposal checks cannot promote or deploy');
+});
+
 test('update checks validate previous release selections while replacements build', () => {
   const run = updates.jobs.policy.steps.find(step => step.name === 'Check generated versions and release receipt validation').run;
   assert.match(run, /materialize-release\.mjs --check --check-selected-source(?: --family=ops)?/u);

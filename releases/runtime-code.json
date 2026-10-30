@@ -1,34 +1,23 @@
 {
   "schemaVersion": 1,
-  "commit": "d73b68be5f462c3ab265ecd15e8dd99fe3043f46",
-  "sourceRunId": 40598494650,
+  "commit": "d7f366cd7e0a8f7bdd94fb82575b31a2dee7a55d",
+  "sourceRunId": 41111231907,
   "sourceRunAttempt": 1,
   "bundles": {
     "nova": {
-      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-40000895109-1/nova-308fbb39bfdf52a59a38b27a27e2c80529cb0937.tgz",
-      "sha256": "77c9a4a62814115a6af775ec213860d8dfe576d98bd4a7872f4a6513aaff22fc",
-      "contractVersion": "v2",
-      "source": {
-        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-        "sourceRunId": 40000895109,
-        "sourceRunAttempt": 1
-      }
+      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-41111231907-1/nova-d7f366cd7e0a8f7bdd94fb82575b31a2dee7a55d.tgz",
+      "sha256": "eb73e30bd7e5dff8bff95b1768e49f51c7100360716722e4f2c4c71f2e648ecc",
+      "contractVersion": "v2"
     },
     "buster": {
-      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-40598494650-1/buster-d73b68be5f462c3ab265ecd15e8dd99fe3043f46.tgz",
-      "sha256": "c1163ac3de1444f230ec3bbfd8b300aa91e3dc337c234439a83422bf789ac5b9",
+      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-41111231907-1/buster-d7f366cd7e0a8f7bdd94fb82575b31a2dee7a55d.tgz",
+      "sha256": "6a070832c988aab5f1baa7bc713772fe19c68cbdc869302482d1ab56541b7532",
       "contractVersion": "v2"
     },
     "prism": {
-      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-40000895109-1/prism-308fbb39bfdf52a59a38b27a27e2c80529cb0937.tgz",
-      "sha256": "91a4923da7b0cba535520e6cadc3b33f1063f5267f06de70e41571b972c5d44e",
-      "contractVersion": "v2",
-      "source": {
-        "commit": "308fbb39bfdf52a59a38b27a27e2c80529cb0937",
-        "sourceRunId": 40000895109,
-        "sourceRunAttempt": 1
-      }
+      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-41111231907-1/prism-d7f366cd7e0a8f7bdd94fb82575b31a2dee7a55d.tgz",
+      "sha256": "57569d699820e491c31f81e72d1b37f8c52653428777c93ed02e1ff4b84da481",
+      "contractVersion": "v2"
     }
-  },
-  "retainedBaseline": "releases/gitops/prism-cpu-headroom-20261027"
+  }
 }

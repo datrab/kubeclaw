@@ -1,5 +1,10 @@
 name: Promote image release
 on:
+  pull_request:
+    paths:
+      - releases/runtime-images.json
+      - releases/runtime-code.json
+      - .github/workflows/promote-runtime.yaml
   workflow_dispatch:
     inputs:
       family:
@@ -17,10 +22,45 @@ permissions:
   actions: read
   packages: read
 concurrency:
-  group: promote-${{ inputs.family }}
-  cancel-in-progress: false
+  group: promote-${{ github.event_name == 'pull_request' && format('pr-{0}', github.event.pull_request.number) || inputs.family }}
+  cancel-in-progress: ${{ github.event_name == 'pull_request' }}
 jobs:
+  verify-proposal:
+    if: github.event_name == 'pull_request'
+    runs-on: ubuntu-latest
+    timeout-minutes: 45
+    permissions:
+      contents: read
+      actions: read
+      packages: read
+    steps:
+      - uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803 # v6
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - uses: actions/setup-node@a0853c24544627f65ddf259abe73b1d18a591444 # v5
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts --no-audit --no-fund
+      - name: Authenticate proposed immutable source receipts
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: node scripts/updates/verify-release-source.mjs
+      - name: Scan proposed immutable runtime images
+        env:
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ github.token }}
+        run: |
+          mapfile -t images < <(jq -r '.images[]' releases/runtime-images.json)
+          bash scripts/scan-runtime-images.sh "${images[@]}"
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        if: always()
+        with:
+          name: proposed-runtime-scans
+          path: dist/trivy
+          if-no-files-found: ignore
   prepare:
+    if: github.event_name == 'workflow_dispatch'
     runs-on: ubuntu-latest
     env:
       RELEASE_FAMILY: ${{ inputs.family }}
