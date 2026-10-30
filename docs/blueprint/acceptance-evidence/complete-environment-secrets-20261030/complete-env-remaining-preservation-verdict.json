@@ -1,0 +1,141 @@
+{
+  "candidateRevision": "5be36e11c830c8312e0ca0c13deed17a6ccab1a4",
+  "reviewScope": "The 24 remaining existing completion records affected by the two generator branches and regenerated CLI/environment/secrets artifacts. CFG-011/REF-012 whole PASS and the earlier fourteen preservation judgments are reused and not re-adjudicated.",
+  "observedTechnicalContext": {
+    "environmentSecretsNative": "Observed terminal success: final complete environment/Secret native check and negative controls.",
+    "environmentSecretsOutput": "Observed --only environment and --only secrets current-output checks both exit 0.",
+    "cliPage": "Observed current output: generated reference docs are current.",
+    "cliNative": "Observed terminal process output: docs inventory is current; Go 1.26.5. The prior session identifier is unavailable after handoff, so no reconstructed exit code is asserted.",
+    "originalChecker": "Still correctly refuses changed-scope revision metadata. This is preserved as a registration consequence, not a semantic-preservation failure."
+  },
+  "remaining24Preservation": {
+    "AP09-reader-developers-20261020": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The shared generator adds only the bounded secrets renderer branch; developer routes, limits, and prior non-live boundaries are unchanged."
+    },
+    "AP09-reviewed-configuration-20261020": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "Selected-YAML runtime composition strengthens current environment/Secret completeness without changing this record’s configuration responsibilities or limits."
+    },
+    "AP09-reviewed-maintenance-20261020": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "Generator maintenance behavior remains source-locked and bounded; no maintenance procedure, historical check, or runtime claim is changed."
+    },
+    "AP09-closeout-config-reference-20261020": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "No accepted configuration/reference meaning is removed or broadened into deployed behavior."
+    },
+    "AP09-closeout-developer-maintenance-20261020": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The shared renderer branch does not alter developer/extension maintenance responsibilities or their retained limits."
+    },
+    "AP09-complete-public-cli-20261020": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "CLI output remains current under the normal page check; the environment inventory addition does not grant new invocation authority or alter CLI scope."
+    },
+    "AP09-complete-platform-change-content-20261021": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "No platform-change content, source authority, or deployment claim is changed by either generator branch."
+    },
+    "AP09-complete-publication-reference-navigation-20261021": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "Generated-reference navigation remains bounded to local source-backed documentation; no rendered-site or live-route claim is added."
+    },
+    "AP09-complete-developer-reader-contracts-20261021": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "Existing developer-reader contracts remain intact; the new secrets-only selection does not replace their routes or evidence limits."
+    },
+    "AP09-complete-static-reader-search-20261021": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The three regenerated pages retain searchable, visible technical text; this is preservation of the limited static-reader scope, not a fresh browser/search award."
+    },
+    "AP09-whole-trust-and-spiffe-contract-20261021": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The regenerated Secret reference preserves redaction and trust boundaries; it adds no SPIFFE, credential-enforcement, or live-rotation claim."
+    },
+    "AP09-reference-network-paths-80178-20261021": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The generator change has no network-path semantic effect; original local-reference and non-live limits remain exact."
+    },
+    "A99-09-whole-workflow-security-content-20261021": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "Secret rendering remains safely redacted and preserves source/consumer/failure boundaries; no security-control effectiveness is inferred."
+    },
+    "AP09-publication-positive-scope-7ef16585": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The regenerated pages are confined to their normal renderer destinations; no broader publication-positive scope is claimed."
+    },
+    "A910-03-whole-command-prerequisite-contract-20261022": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "No command prerequisite, authority, or safe-stop instruction changes; shared generator support alone does not modify this contract."
+    },
+    "A911-06-authored-surface-bindings-20261025": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The new --only secrets path has explicit canonical target ownership and retains source-revision and bounded-renderer guards."
+    },
+    "A910-10-whole-supported-extension-lifecycle-20261026": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "No extension lifecycle facts, routes, or operational effects are changed."
+    },
+    "MNT-014-whole-native-publication-examples-20261027": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "Current generated pages are observed current at their bounded native checks; no historical execution is rewritten and no live publication result is asserted."
+    },
+    "A99-11-whole-published-example-claims-20261027": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The affected generated examples remain source-backed and redacted; no example is promoted into an execution or deployment receipt."
+    },
+    "QUA-005-whole-published-live-and-completeness-claims-20261027": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "New environment/Secret prose explicitly distinguishes source evidence from effective deployed state, preserving the record’s truthfulness limits."
+    },
+    "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The shared generator additions do not alter endpoint/controller semantics or create an activation claim."
+    },
+    "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "Current source links are pinned to 5be36e11 and remain evidence of checked-in source only; no citation is treated as runtime proof."
+    },
+    "MNT-004-whole-source-owned-cli-reference-20261030": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The CLI artifact is current under the observed terminal native inventory result and current page check. The environment/Secret change neither changes CLI extraction semantics nor grants runtime invocation authority."
+    },
+    "A91306-QUA002-original-controlled-language-whole-20261030": {
+      "verdict": "PASS",
+      "eligibleToAdvanceRevision": true,
+      "judgment": "The regenerated pages preserve the previously qualified language scope and limits. This is not a fresh whole-language, blind-reader, or ASD certification award."
+    }
+  },
+  "materialFindings": [],
+  "preservationConditions": [
+    "Advance only the affected records’ revision/impact metadata; retain every original criterion, summary, limit, historical check, negative finding, and reviewer attribution exactly.",
+    "Record the observed CLI terminal output as such; do not invent a lost session identifier or a reconstructed numeric exit status.",
+    "Keep the full default configuration/API failure explicit. The selected-YAML route closes only the complete current environment/Secret scope."
+  ],
+  "overallPreservationVerdict": "PASS",
+  "newAwardsImplied": []
+}

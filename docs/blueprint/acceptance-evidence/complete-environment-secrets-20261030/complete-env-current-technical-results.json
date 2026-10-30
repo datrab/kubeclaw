@@ -1,0 +1,38 @@
+{
+  "at": "2026-10-30T23:42:04.453420+00:00",
+  "sourceRevision": "5be36e11c830c8312e0ca0c13deed17a6ccab1a4",
+  "nativeCompleteEnvironmentCheck": {
+    "exitCode": 0,
+    "log": "final-complete-env-native-check.log",
+    "terminalSession": 33975
+  },
+  "negativeControls": {
+    "exitCode": 0,
+    "terminalSession": 47381,
+    "report": "complete-env-negative-controls.json"
+  },
+  "normalEnvironmentAndSecretsOutputChecks": "actual-current-env-secret-output-checks.json",
+  "cliPageCheck": {
+    "observedOutput": "generated reference docs are current\n",
+    "log": "current-cli-page-check.log"
+  },
+  "cliNativeCheck": {
+    "status": "terminal",
+    "observedOutput": "docs inventory is current\n",
+    "processNoLongerPresent": true,
+    "log": "current-cli-native-check.log",
+    "toolchain": "Go1.26.5",
+    "terminalToolSessionIdUnavailableAfterContextHandoff": true
+  },
+  "unmodifiedOriginalChecker": {
+    "exitCode": 1,
+    "terminalSession": 73415,
+    "log": "current-generated-original-checker.log",
+    "meaning": "expected changed-scope revision refusal; no checker modified"
+  },
+  "limits": "Complete selected environment/Secrets+YAML scope, no default-global-configuration/API or live-product claim.",
+  "generatedDiffCheck": {
+    "exitCode": 0,
+    "log": "current-generated-diff-check.log"
+  }
+}

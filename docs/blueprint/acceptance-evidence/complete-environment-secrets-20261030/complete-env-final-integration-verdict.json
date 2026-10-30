@@ -1,0 +1,35 @@
+{
+  "verdict": "PASS",
+  "candidateRevision": "8cae29358164100c8478154ddd3d61ea15e73689",
+  "scope": "Metadata-only integration of the already final CFG-011/REF-012 whole-topic decision and 38 existing-record preservation decisions.",
+  "newAwards": {
+    "requirementIds": [
+      "CFG-011",
+      "REF-012"
+    ],
+    "gateIds": [],
+    "judgment": "Exactly two original requirements are recorded. The new completion record accurately carries the already issued Source-exposed sourceAccuracy/readerUsability/quality PASS, with no blind-reader or Astra-model claim."
+  },
+  "finalIntegrationDisposition": {
+    "verdict": "PASS",
+    "judgment": "AP09 acceptance-contract §§1–3 permits one independent coherent topical review covering source fidelity, practical reader usability, and quality. The recorded non-author reviewer identity and explicit Source-exposure limit are truthful; legacy matrix labels do not require fabrication of a separate Astra execution."
+  },
+  "preservation": {
+    "verdict": "PASS",
+    "records": 38,
+    "judgment": "The 38 affected records advance only their revision plus append-only preservation checks and revisionImpacts. Their original criteria, summaries, reviewers, checks, limits, history, negative findings, and accepted-ID scopes remain intact; unaffected records are exact."
+  },
+  "historyAndLimits": {
+    "verdict": "PASS",
+    "judgment": "Both original NOT_READY closure decisions remain in closureDecisionHistory. The new PASS explicitly retains the global default configuration/API failure, source-only limits, redaction boundary, and absence of live cluster/deployment/restart/rotation/authentication claims."
+  },
+  "evidenceBinding": {
+    "verdict": "PASS",
+    "judgment": "The five copied immutable reports are directly referenced by the new completion record and preservation impacts. The record’s three native checks accurately describe the completed selected-YAML environment/Secret scope rather than a general configuration/API success."
+  },
+  "materialFindings": [],
+  "remainingTechnicalConditions": [
+    "The unchanged original checker is still running at inspection time; its log is empty, so no checker result is claimed.",
+    "Publication and exact-remote verification remain root follow-up work and are not implied by this metadata verdict."
+  ]
+}
