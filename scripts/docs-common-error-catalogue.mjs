@@ -54,12 +54,12 @@ for (const section of data.sections) {
       lines.push('', '### Find a specific diagnostic', '', 'A message and a code are different fields. Values below come from owning source constructions, not a closed dependency vocabulary. Source substitutions remain symbolic; use the family handling rules above.', '', '| Field | Diagnostic | Message pattern / condition | Owning source |', '| --- | --- | --- | --- |');
       for (const identity of e.observedIdentities) {
         const source = identity.source;
-        lines.push(`| ${literalCell(identity.carrier)} | ${literalCell(identity.identity)} | ${identity.messageExpression ? literalCell(identity.messageExpression) : 'Use the family construction rule above.'}${identity.identityRule ? '<br>' + prose(identity.identityRule) : ''} | [${source.path}:${source.line}](../../../${source.path}#L${source.line}) |`);
+        lines.push(`| ${literalCell(identity.carrier)} | ${literalCell(identity.identity)} | ${identity.messageExpression ? literalCell(identity.messageExpression) : 'Use the family construction rule above.'}${identity.handlingNote ? '<br>' + prose(identity.handlingNote) : ''} | [${source.path}:${source.line}](../../../${source.path}#L${source.line}) |`);
       }
     }
     if (e.declaredOnlyIdentities?.length) {
       lines.push('', '**Declared vocabulary without an identified own construction:**');
-      for (const identity of e.declaredOnlyIdentities) lines.push('', `${literalCell(identity.identity)} — ${prose(identity.identityRule)}`);
+      for (const identity of e.declaredOnlyIdentities) lines.push('', `${literalCell(identity.carrier)}: ${literalCell(identity.identity)} — ${prose(identity.identityRule)}`);
     }
     if (e.diagnostics?.length) {
       lines.push('', '### Render diagnostics and guards', '', 'Each expression shows the diagnostic text and value argument. Enclosing controls constrain when it runs; helper calls retain their supplied context.');
