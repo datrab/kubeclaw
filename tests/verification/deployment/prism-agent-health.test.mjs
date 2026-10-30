@@ -11,9 +11,20 @@ import path from 'node:path';
 
 const execute = promisify(execFile);
 async function render(release, chart, values, namespace = 'kubeclaw') {
-  const { stdout } = await execute(process.env.HELM_BIN || 'helm', ['template', release, chart, '-n', namespace, '-f', values], { maxBuffer: 8 * 1024 * 1024 });
+  const { stdout } = await execute(process.env.HELM_BIN || 'helm', ['template', release, chart, '-n', namespace, ...[values].flat().flatMap(file => ['-f', file])], { maxBuffer: 8 * 1024 * 1024 });
   return loadAll(stdout).filter(Boolean);
 }
+
+test('production Control and both agent callers publish the same full mobile-reachable Studio origin', async () => {
+  const expected = 'https://prism-studio.tail576648.ts.net';
+  const services = await render('prism', 'charts/prism', ['my-values/prism-values.yaml', 'gitops/production/overlays/prism-ax41.yaml']);
+  const control = services.find(r => r.kind === 'Deployment' && r.metadata.name === 'prism-control').spec.template.spec.containers.find(c => c.name === 'control');
+  const agents = await render('agent-prism', 'charts/kubeclaw', 'my-values/prism-agent-values.yaml');
+  const containers = agents.find(r => r.kind === 'Deployment' && r.metadata.name === 'agent-prism').spec.template.spec.containers;
+  for (const caller of [control, ...containers.filter(c => ['kubeclaw', 'prism-agent-bridge'].includes(c.name))]) {
+    assert.equal(caller.env.find(e => e.name === 'PRISM_STUDIO_PUBLIC_URL')?.value, expected, `${caller.name} must not return the internal hostname as a user link`);
+  }
+});
 
 test('Prism redeployment preserves repaired login selection and installs the current model route', async () => {
   const resources = await render('agent-prism', 'charts/kubeclaw', 'my-values/prism-agent-values.yaml');

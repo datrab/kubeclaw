@@ -25,6 +25,10 @@ selection on restart. New installations must provision their own usable login.
 The managed Prism model route is `openai/gpt-6.1-sol`, with
 `openai/gpt-6-astra` as fallback; redeployment must preserve a repaired login
 while refreshing that route.
+Set `studio.publicUrl` to the actual user-facing HTTPS origin, not an internal
+Service hostname. Production Control and both Prism agent callers use
+`https://prism-studio.tail576648.ts.net` so generated deep links work on mobile
+through the existing Tailscale ingress.
 The [database transition guide](prism-database-transitions.md) defines the
 compatible migration contract, maintenance password transition, isolated restore
 procedure and deferred rollout-failure acceptance.

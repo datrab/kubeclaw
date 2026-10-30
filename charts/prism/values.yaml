@@ -27,6 +27,7 @@ control:
   replicas: 1
   resources: { requests: { cpu: 500m, memory: 1Gi }, limits: { cpu: "4", memory: 4Gi } }
 studio:
+  publicUrl: https://prism-studio
   replicas: 1
   resources: { requests: { cpu: 250m, memory: 256Mi }, limits: { cpu: "2", memory: 1Gi } }
 worker:

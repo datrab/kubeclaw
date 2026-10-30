@@ -73,7 +73,7 @@ service:
 
 extraEnv:
   - { name: PRISM_CONTROL_URL, value: "http://127.0.0.1:28080" }
-  - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio" }
+  - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio.tail576648.ts.net" }
 
 extraContainers:
   - name: prism-agent-bridge
@@ -83,7 +83,7 @@ extraContainers:
     env:
       - { name: PORT, value: "18080" }
       - { name: PRISM_CONTROL_URL, value: "http://127.0.0.1:28080" }
-      - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio" }
+      - { name: PRISM_STUDIO_PUBLIC_URL, value: "https://prism-studio.tail576648.ts.net" }
       - name: OPENCLAW_GATEWAY_TOKEN
         valueFrom: { secretKeyRef: { name: openclaw-shared-secrets, key: gatewayToken-prism } }
     volumeMounts:
