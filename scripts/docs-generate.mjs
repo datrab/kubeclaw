@@ -34,8 +34,8 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment', 'native-supervisor-environment', 'cli'].includes(only)) {
-  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification, configuration, environment, native-supervisor-environment or cli');
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment', 'native-supervisor-environment', 'cli', 'helm-values'].includes(only)) {
+  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification, configuration, environment, native-supervisor-environment, cli or helm-values');
 }
 if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
@@ -211,6 +211,13 @@ function stableWriteMap() {
   // Keep bounded workflow publication independent of unrelated SDK inventories.
   if (only === 'workflows') return new Map([
     ['docs/site/reference/workflows.md', renderWorkflows(readJson('docs/generated/inventory/workflows.json'))],
+  ]);
+  // Current Helm/GitOps values have a bounded acquisition artifact. Do not
+  // relabel the retained global environment/API inventories as current.
+  if (only === 'helm-values') return new Map([
+    ['docs/site/reference/helm-values.md', renderHelmValues(
+      readJson('docs/generated/inventory/configuration-helm-values.json'), {},
+      { inventoryPath: 'docs/generated/inventory/configuration-helm-values.json', currentSelected: true })],
   ]);
   // Publish a selected bounded renderer without rewriting unrelated references.
   if (only === 'cli') return new Map([
@@ -494,7 +501,7 @@ ${generatedEnd()}
 `;
 }
 
-function renderHelmValues(configurationValues, configurationSchemas) {
+function renderHelmValues(configurationValues, configurationSchemas, { inventoryPath = 'docs/generated/inventory/configuration-values.json', currentSelected = false } = {}) {
   const valueFiles = configurationValues.files;
   const rejectedApiProfiles = renderRejectedApiOutputProfiles(configurationValues.rejectedApiOutputProfiles,(source,line)=>`[${literalText(source)}](${pinnedSourceUrl(source,line,line)})`,root);
   const apiResourceSections = renderApiResourceReference(configurationValues.apiResources,
@@ -648,15 +655,25 @@ function renderHelmValues(configurationValues, configurationSchemas) {
 Status: generated reference
 Audience: reference reader, operator
 Owner: platform-operations
-Evidence: docs/generated/inventory/configuration-values.json; scripts/docs-configuration-inventory.mjs; scripts/docs-generate.mjs
+Evidence: ${inventoryPath}; scripts/docs-configuration-inventory.mjs; scripts/docs-generate.mjs
 Applies to: checked-in Helm, GitOps, release, and infrastructure YAML configuration
 Last verified: generated from current inventory
 
 ## Summary
 
 ${helmSnapshotSummary}
+${currentSelected ? `
+## Select And Verify A Change
 
-${generatedNotice(['docs/generated/inventory/configuration-values.json'])}
+1. Find the owning file below. Chart values are defaults; a checked-in overlay is not automatically selected by every command.
+2. Read the receiving source and precedence column. Direct deploy uses generated release values and its optional selected overlay; production GitOps selects the immutable bundle resources through its Application source.
+3. Change the owning input, not a generated release copy alone. Render the selected chart or regenerate the bundle through the linked producer. Inspect the affected workload, Secret reference and policy before applying it.
+4. After the normal deployment, verify the effective resource and process health. Source discovery and rendering do not prove a rollout, API admission, image behavior or cluster policy enforcement.
+
+Scope: all YAML inputs currently discovered under charts, examples, gitops, my-values and releases/values. The file index records the actual selected membership, not a fixed count. Nested API contracts explain the selected manifest fields; this bounded values reference does not renew unrelated global program-output, environment or CI-purpose qualifications. Secret and access-list contents remain redacted. Unsupported or image-owned boundaries are stated in their rows.
+` : ''}
+
+${generatedNotice([inventoryPath])}
 ## Coverage
 
 ${table(['Class', 'Count', 'Meaning'], [
@@ -700,7 +717,7 @@ Each field row links to its own kind and schema path below. These entries identi
 
 ${apiCollectionSections}
 
-## Deployed Configuration Payloads
+${currentSelected ? '## Other Configuration Boundaries\n\nFor materialized plugin configuration and its runtime-reader limits, use the [Plugin Configuration Reference](plugin-configuration.md). Environment and Secret references retain their separately stated source and execution boundaries.\n' : `## Deployed Configuration Payloads
 
 The chart embeds each file below in the swarm ConfigMap and the init process materializes it in runtime configuration. YAML and JSON files are expanded to every leaf. Executable JavaScript and HCL files remain complete, digest-pinned files because treating their syntax as ordinary key/value data would invent semantics. A payload without a checked-in reader is identified as tool- or image-owned.
 
@@ -711,6 +728,7 @@ ${deployedConfigSections}
 The files below exist in the chart source and another checked-in configuration references them. The current chart does not embed or copy them into runtime configuration. They are not working operator options. The reference and loader boundary explain the resulting failure without claiming an unsupported delivery path.
 
 ${undeployedConfigSections || 'No checked-in configuration payload is missing a chart delivery path.'}
+`}
 ${generatedEnd()}
 ## Used by
 
@@ -738,7 +756,7 @@ ${generatedEnd()}
 
 ## Generated from
 
-- \`../generated/inventory/configuration-values.json\`
+- \`${inventoryPath.replace(/^docs\//u, '../')}\`
 - \`../../scripts/docs-configuration-inventory.mjs\`
 - \`../../scripts/docs-generate.mjs\`
 `;

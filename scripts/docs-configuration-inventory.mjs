@@ -1777,7 +1777,8 @@ function manifestReceivingPaths(sourcePath, resource = null, exactPath = '') {
 
 function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
   const exactLine = context.fieldLine ?? 1;
-  const semanticPath = yamlFieldMatcherPath(exactPath);
+  const annotationTokens = yamlFieldPathTokens(exactPath);
+  const annotationKey = annotationTokens.length === 3 && annotationTokens[0] === 'metadata' && annotationTokens[1] === 'annotations' ? annotationTokens[2] : null;
   if (boundary.kind === 'embedded-helm-payload') {
     const suffix = canonicalHelmPath(exactPath.replace(/^spec\.sources?(?:\[[0-9]+\])?\.helm\.(?:valuesObject|values)\.?/u, ''));
     const sources = context.documentValue?.spec?.sources ?? (context.documentValue?.spec?.source ? [context.documentValue.spec.source] : []);
@@ -1806,14 +1807,27 @@ function embeddedPayloadConsumers(context, exactPath, boundary, valueType) {
     }];
   }
   if (boundary.kind === 'controller-annotation-payload') {
-    if (semanticPath === 'metadata.annotations.kubeclaw.io/health-mode') return [{
+    if (annotationKey === 'kubeclaw.io/health-mode') return [{
       path: 'gitops/platform/bootstrap/argocd.yaml', line: 40, kind: 'checked-in-controller-reader', direction: 'read',
       authority: 'the Application health Lua code from the pinned Argo CD chart 10.8.0 reads this exact annotation key',
     }];
-    if (/^metadata\.annotations\.argocd\.argoproj\.io\/(?:ignore-healthcheck|sync-wave|compare-options)$/u.test(semanticPath)) return [{
+    if (['argocd.argoproj.io/ignore-healthcheck', 'argocd.argoproj.io/sync-wave', 'argocd.argoproj.io/compare-options'].includes(annotationKey)) return [{
       path: 'gitops/platform/bootstrap/argocd.yaml', line: 15, kind: 'version-bound-external-controller-contract', direction: 'read',
       authority: 'the pinned Argo CD chart 10.8.0 selects the controller version that owns this exact argocd.argoproj.io annotation contract',
     }];
+    const localAnnotationReceivers = {
+      'kubeclaw.dev/runtime-namespaces': ['scripts/gitops-owner.mjs', "  const annotation = application.metadata?.annotations?.['kubeclaw.dev/runtime-namespaces'];", 'checked-in-ownership-reader', 'claimedNamespaces parses and validates the JSON namespace array and adds the destination namespace; a claim blocks direct deployment, not an Argo sync.'],
+      'kubeclaw.dev/helm-releases': ['charts/gitops/templates/applications.yaml', '    kubeclaw.dev/helm-releases: {{ .helmReleases | toJson | quote }}', 'informational-release-metadata', 'The chart serializes release context. The prerequisite check reads bundle group helmReleases, not this annotation; no runtime annotation consumer is claimed.'],
+      'kubeclaw.dev/immutable-bundle-path': ['gitops/platform/bootstrap/argocd.yaml', '                    or source.path == nil or annotations["kubeclaw.dev/immutable-bundle-path"] ~= source.path then return pending end', 'checked-in-health-customization', 'The installed health customization checks this exact path only in its main-branch different-revision exception, together with healthy/synced state, successful operation and matching applied source.'],
+    };
+    if (Object.hasOwn(localAnnotationReceivers, annotationKey)) {
+      const [receiverPath, anchor, kind, authority] = localAnnotationReceivers[annotationKey];
+      const lines = read(receiverPath).split('\n');
+      const matches = lines.flatMap((line, index) => line === anchor ? [index] : []);
+      assert.equal(matches.length, 1, `CONFIG_ANNOTATION_RECEIVER_DRIFT: ${annotationKey} in ${receiverPath}`);
+      return [{ path: receiverPath, line: matches[0] + 1, sourceLineSha256: sha256(anchor), kind,
+        direction: kind === 'informational-release-metadata' ? 'none' : 'read', authority }];
+    }
     return [{ path: context.sourcePath, line: exactLine, kind: 'embedded-payload-consumer-unproved', direction: 'unknown', authority: 'no exact version-bound annotation controller was found' }];
   }
   if (boundary.kind === 'workload-process-payload') {
@@ -2195,6 +2209,18 @@ function deploymentApiCollectionContract(resource, exactPath, valueType, documen
       'Invalid combinations fail Cilium rule validation. Changing the wrong list level can block traffic or broaden the retained peer rule. Stop before treating an empty list as a deny-all or disable switch; inspect the complete peer and port rule together.',
       { source: '[Cilium 1.20.1 rule translation](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/utils/parserules.go#L19-L46); [port iteration and L3-only allowance](https://github.com/cilium/cilium/blob/7d68cfb394f2960e10aa72e76d0d51e66c1b2ebc/pkg/policy/rule.go#L356-L413)' });
   }
+  if (resource.kind === 'AppProject' && field === 'spec.orphanedResources') return result('argo-orphan-monitor', 'Enables discovery of eligible orphaned namespace resources for Applications in this project.',
+    'In a fresh typed project, omission or null leaves the monitor pointer nil and disables this discovery path. An empty object enables discovery but leaves warn nil, which does not emit warnings. Explicit warn:true reports eligible remaining orphans after managed-resource, permission, other-Application and exclusion filters. None of these states deletes or adopts resources.',
+    'Changes the orphaned-resource tree and optional warning condition, not sync permissions, pruning or ownership.', 'Discovery and hierarchy failures return errors; disabling warnings can hide a useful signal.',
+    { source: `${argoSource('types.go', 'L2805-L2823')}; [orphan discovery and warning](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/controller/appcontroller.go#L580-L688)` });
+  if (resource.kind === 'Application' && field === 'spec.syncPolicy.retry') return result('argo-sync-retry-strategy', 'Configures retries of failed or errored sync operations.',
+    'In a fresh typed Application, omission or null leaves retry nil; an empty object creates a strategy with limit zero, backoff nil and refresh false. A zero limit permits no retry under that strategy; negative limit permits unlimited retries while not terminating. Sync initiators can supply a default strategy, so absence alone does not prove every automatic retry is disabled. Backoff schedules retries; it does not increase the limit.',
+    'Changes retry eligibility and timing, not a guarantee that synchronization succeeds or an execution timeout.', 'A negative limit can retry indefinitely. Invalid duration strings fail retry scheduling with OperationError.',
+    { source: `${argoSource('types.go', 'L1518-L1605')}; [controller eligibility](https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/controller/appcontroller.go#L1619-L1639)` });
+  if (resource.kind === 'Application' && field === 'spec.syncPolicy.retry.backoff') return result('argo-sync-retry-backoff', 'Sets the delay calculation for eligible failed-sync retries.',
+    'Omission or null leaves backoff nil; an empty object has empty duration and maxDuration and nil factor. Both use scheduler defaults: 5 seconds base, factor 2, cap 3 minutes. Supplied duration and maxDuration parse as integer seconds or Go duration text; empty strings use defaults. Only a positive maxDuration caps the delay. Explicit zero or negative factor is retained. Removing backoff does not remove retry.limit.',
+    'Changes base times factor to the retry-count power, capped only by a positive maximum; not total sync lifetime.', 'Invalid duration text fails scheduling. Nonpositive delays or factors can make retries immediately due or signed; a nonpositive maximum removes the cap.',
+    { source: `${argoSource('types.go', 'L1543-L1605')}; ${argoSource('application_defaults.go', 'L5-L8')}` });
   if (resource.kind === 'AppProject') {
     if (/^spec\.(?:cluster|namespace)ResourceWhitelist(?:\[\])?$/u.test(field)) return result('argo-resource-permissions', 'Defines resource group and kind permissions in this Argo CD project.',
       'For namespaced resources, [] is an explicit deny-all whitelist, while omission or null permits namespaced kinds subject to blacklist and destination checks. For cluster-scoped resources, empty, omitted or null grants no kinds. A nonempty list permits matching entries unless a blacklist denies them. Each item requires the actual group/kind or supported wildcard; an empty item is not permission.',

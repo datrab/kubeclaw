@@ -604,6 +604,39 @@ for (const [pathName, digest] of [
   });
 }
 
+// Production GitOps metadata: namespace ownership, release context and health
+// provenance have different consumers; none is a deployment-success receipt.
+file('gitops/production/bootstrap.yaml', 'c87c6cddf689d45c2e2fcde4f2a178f27b6971c944498376c38c9af4058d4935');
+special('gitops/production/bootstrap.yaml', '$.metadata.annotations["kubeclaw.dev/runtime-namespaces"]', {
+  purpose: 'Declares additional runtime namespaces claimed by this root Application to the KubeClaw direct-deployment ownership guard.',
+  acceptedValues: 'A JSON-encoded array of names accepted by gitOpsName, for example `["kubeclaw"]`. The destination namespace is also claimed.',
+  emptyBehavior: 'Omission contributes no additional namespace; `[]` does the same. Empty text or invalid JSON fails parsing; null or a non-array fails the ownership annotation check.',
+  impact: 'A matching claim stops direct deployment with GITOPS_OWNER_PRESENT. It neither creates a namespace nor transfers ownership; retained tracked workloads can still block deployment after Application deletion.',
+  failure: 'Invalid claims stop the ownership check; an omitted claim can hide an intended runtime namespace from this guard. Keep it consistent with the reviewed bundle and bootstrap preflight.',
+});
+file('gitops/production/apps/applications.yaml', '237d439f5b54e5775ac4e5a3ffbd0784fd3424aefc14f8fb27e124f2ce0802f5');
+special('gitops/production/apps/applications.yaml', '$.metadata.annotations["argocd.argoproj.io/sync-wave"]', {
+  purpose: 'Selects the resource sync wave within the parent Argo CD operation: project -1, Buster/Prism 0 and Nova 1 in this file.',
+  acceptedValues: 'An integer encoded as annotation text. Argo CD orders waves within a sync phase; this is not an independent workload readiness guarantee.',
+  emptyBehavior: 'Missing or unparseable text falls back to Helm hook weight when present, otherwise wave zero. Empty text therefore loses any requested nonzero ordering.',
+  impact: 'Changes parent sync task ordering, not the child Application sync policy. Manual registration sets child waves to zero; pruning reverses wave order.',
+  failure: 'Wrong waves can submit Applications before their project or delay dependent resources. A wave alone does not prove a child has reconciled successfully.',
+});
+special('gitops/production/apps/applications.yaml', '$.metadata.annotations["kubeclaw.dev/helm-releases"]', {
+  purpose: 'Records the release names associated with this group for operator context; the GitOps chart serializes the group helmReleases array.',
+  acceptedValues: 'JSON text representing the reviewed group release-name array, such as `["agent-buster"]` or `["prism","agent-prism"]`.',
+  emptyBehavior: 'Removing or emptying this annotation removes release context. The deployment ownership prerequisite reads bundle group helmReleases, not this annotation.',
+  impact: 'Changes metadata only in the checked-in ownership path. It does not install a Helm release, change resources or bypass the namespace ownership guard.',
+  failure: 'Stale release names mislead operators. Do not use this metadata as evidence that a release was installed or as the ownership-check authority.',
+});
+special('gitops/production/apps/applications.yaml', '$.metadata.annotations["kubeclaw.dev/immutable-bundle-path"]', {
+  purpose: 'Binds the Application health customization to its uniquely named immutable release directory when main advances without changing that bundle.',
+  acceptedValues: 'The exact selected spec.source.path under releases/gitops/<bundle>/{buster,nova,prism}, with directory.include resources.yaml; continuousApplications authors the marker only for that path shape.',
+  emptyBehavior: 'Missing, empty or mismatched text disables the different-revision health exception. The ordinary matching-revision success path remains separate.',
+  impact: 'The exception still requires healthy and synced state, a successful operation and matching applied repository/path/targetRevision/directory include. It affects reported health, not synchronization or rollout.',
+  failure: 'A stale marker prevents the exception and leaves health pending. Matching text alone is not bundle immutability or successful-execution proof; preserve the unique directory and all source checks.',
+});
+
 special('gitops/platform/bootstrap/spire.yaml', '$.metadata.annotations["argocd.argoproj.io/compare-options"]', {
   purpose: 'Selects Argo CD server-side diff for the SPIRE Application so comparison uses Kubernetes field ownership and defaulting.',
   acceptedValues: 'Exactly `ServerSideDiff=true` for this checked-in SPIRE comparison contract.',
