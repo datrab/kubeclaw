@@ -18,7 +18,7 @@ Generated from: `scripts/deploy.sh`, `my-values/setup-secrets.sh`
 | `AGENT_HELM_TIMEOUT` | Helm wait timeout for agent upgrades (default: 45m) | `45m` |  |
 | `AGENT_ROLLOUT_TIMEOUT` | Pod/deployment readiness timeout for agents (default: 45m) | `45m` |  |
 | `ALLOW_PARTIAL_INFRA` | true\|false (default: false) | `false` |  |
-| `BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE` | Digest-pinned probe image (default: managed BUILDKIT_BASE) | `moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c` |  |
+| `BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE` | Digest-pinned probe image (default: managed BUILDKIT_BASE) | `moby/buildkit:v0.34.1-rootless@sha256:f68752a5a94acfcdad2d07867b7075601a421638e17fc5f28efc1c814d0c4f89` |  |
 | `BUSTER_CODE_BUNDLE_ARCHIVE_URL` | Resolved Buster bundle archive URL for code deploy |  |  |
 | `BUSTER_CODE_BUNDLE_EXPECTED_COMMIT` | Expected Buster source commit for code deploy |  |  |
 | `CODE_BUNDLE_GITHUB_REPOSITORY` | owner/repo override for derived GitHub release bundle URLs |  |  |

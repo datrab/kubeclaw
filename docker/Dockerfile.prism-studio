@@ -1,5 +1,5 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
-ARG NODE_BASE=node:24.15.0-bookworm-slim@sha256:4e6b70dd6cbfc88c8157ba19aa3d9f9cce6ba4703576d55459e45efcbc9c5f5d
+ARG NODE_BASE=node:24.21.0-bookworm-slim@sha256:d6aa754f16b3197301076f047b5def2f02ea1dbbc2ca920407d46d7ec7f87b20
 FROM ${NODE_BASE} AS build
 USER root
 WORKDIR /build

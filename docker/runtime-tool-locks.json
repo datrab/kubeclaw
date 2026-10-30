@@ -4,7 +4,7 @@
     "docker/python-tools/common.in": "6fa6f7f60fa49beebfe2c6987b7ff88ed5e9f7ac0164a850029bfb6b7bd29ff9",
     "docker/python-tools/semgrep-nova.in": "f96295d98f4c2b52f429380773c7e8b45c7553cd200c80722ddc0c7a90962188",
     "docker/python-tools/buster.in": "382ebca1979ffa306d27ba26dd06def23d8ee702aa9fb7c899299152afb855ea",
-    "docker/go-tools/requirements.json": "8f403fa26ac90caec632138739384cb494901674dbc57f9651fadc475ce88d7c"
+    "docker/go-tools/requirements.json": "2ff12cb6521d18cbd32f4289a3d9223634ea1f6edf9641bf54581420bfe92e56"
   },
   "outputs": {
     "docker/python-tools/common.txt": "ee0f07f1179ec73f5f06282794901bd8fb56b89227fbc613b64956f89d03cef9",
