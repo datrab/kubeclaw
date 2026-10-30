@@ -220,3 +220,49 @@ Successful supervisor shutdown logs `prism_native_worker_shutdown` with
 uncertainty exits nonzero with `prism_native_worker_failure`; none permits further
 admission. A remote receiver may already have persisted bytes when a request is
 cancelled, and such bytes are not reported as rolled back.
+
+## Reconcile an interrupted OpenClaw design action
+
+`needs_nova` is intentionally not an automatic retry. First inspect the exact
+job's gateway/session history and persisted result. Establish that the external
+turn is stopped and that no result or other external effect was committed. An
+expired claim, fixed credentials, pod restart or a CLI exit alone is not proof.
+If the outcome is still uncertain, leave the session blocked.
+
+The trusted Nova host has a dedicated mTLS Control connection at
+`http://127.0.0.1:28081`; the existing dispatch connection at port28080 still goes
+to the Prism agent bridge. The agent cannot authorize its own reconciliation.
+
+1. `GET /v1/pipeline/agent-jobs/{jobId}` reads the exact persisted attempt.
+2. Preserve the gateway/session investigation in the content-addressed Prism
+   artifact store. Evidence references must exist; their semantic interpretation
+   is the trusted operator's responsibility, not inferred from timeout.
+3. After establishing stopped execution and no effects, submit:
+
+```json
+{
+  "decisionId": "a-new-UUID",
+  "expectedFence": "the-exact-old-attempt-UUID",
+  "expectedOutcomeDigest": "sha256:...",
+  "resolution": "retry-confirmed-no-effect",
+  "reason": "What was checked, how nonexecution was established, and what was repaired",
+  "evidence": ["artifact:sha256:..."]
+}
+```
+
+POST this to `/v1/pipeline/agent-jobs/{jobId}/reconcile`. Compute the expected
+outcome digest with WorkerCore `sha256Digest(job.outcome)`, not a hand-formatted
+JSON hash. Keep and reuse the exact decision on uncertain HTTP delivery.
+
+The transaction records the authenticated Nova SPIFFE identity and a complete
+snapshot of the prior attempt before requeueing the same job. It rejects a changed
+fence/outcome, committed result, obsolete source or competing unresolved session.
+The next claim uses a new fence and incremented attempt/claim generation. Old
+callbacks fail fencing. Replaying a recorded decision never requeues again, even
+after the new attempt has started. Original failures remain in
+`prism.agent_reconciliation`; ordinary runtime has SELECT/INSERT, not UPDATE/DELETE.
+
+This does not reopen a terminal Nova pipeline. Use its separately authenticated
+`reopenBlockedPipelineV2` administrative-reopen API after resolving ambiguous
+effects. A normal approval wait still uses the typed approval signal. Never
+rewrite either ledger or silently replace a blocked project/session.

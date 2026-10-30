@@ -1,3 +1,4 @@
+import { handleAgentReconciliation } from './agent-reconciliation-routes.ts';
 import { productAuthorityHandler } from './product-decisions.ts';
 import { assembleBaselineArchive, BASELINE_V2 } from '@kubeclaw/prism-contracts-v1/baseline-archive';
 import { handleAgentJobs } from './agent-job-routes.ts';
@@ -146,6 +147,7 @@ private runWorker(
       await pool.query("SELECT 1");
       return json(response, 200, { status: "ready" });
     }
+    if (await handleAgentReconciliation(request,response,url,{db:pool,spiffeEnabled,trustedNovaId:trustedNovaSpiffeId,readBody:body,readArtifact:id=>artifacts.get(id)})) return;
     if (await handleInternalArtifact(request, response, url, {
       artifacts, spiffeEnabled, workerSecret, trustedWorkerSpiffeId, trustedControlSpiffeId, trustedPrismAgentSpiffeId,
     })) return;

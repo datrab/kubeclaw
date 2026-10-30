@@ -21,7 +21,7 @@ data:
       listeners:
         {{- include "kubeclaw.trustReadinessListeners" (dict "identity" (printf "spiffe://%s/ns/%s/sa/%s" $trustDomain $namespace (include "kubeclaw.fullname" .)) "trustDomain" $trustDomain) | nindent 8 }}
       {{- if eq .Values.agentRole "nova" }}
-      {{- range $listener := list (dict "name" "buster-plan" "port" 28891 "cluster" "buster-plan") (dict "name" "prism-agent" "port" 28080 "cluster" "prism-agent") }}
+      {{- range $listener := list (dict "name" "buster-plan" "port" 28891 "cluster" "buster-plan") (dict "name" "prism-agent" "port" 28080 "cluster" "prism-agent") (dict "name" "prism-control" "port" 28081 "cluster" "prism-control") }}
         - name: {{ $listener.name }}-egress
           address: { socket_address: { address: 127.0.0.1, port_value: {{ $listener.port }} } }
           filter_chains:
@@ -127,7 +127,7 @@ data:
             cluster_name: spire-agent
             endpoints: [{ lb_endpoints: [{ endpoint: { address: { pipe: { path: {{ .Values.workerTrust.spiffe.socketPath | quote }} } } } }] }]
       {{- if eq .Values.agentRole "nova" }}
-      {{- range $cluster := list (dict "name" "buster-plan" "host" "agent-buster" "port" 18891 "peer" "agent-buster") (dict "name" "prism-agent" "host" "agent-prism" "port" 8080 "peer" "agent-prism") }}
+      {{- range $cluster := list (dict "name" "buster-plan" "host" "agent-buster" "port" 18891 "peer" "agent-buster") (dict "name" "prism-agent" "host" "agent-prism" "port" 8080 "peer" "agent-prism") (dict "name" "prism-control" "host" "prism-control-internal" "port" 8443 "peer" "prism-control") }}
         - name: {{ $cluster.name }}
           connect_timeout: 3s
           type: STRICT_DNS

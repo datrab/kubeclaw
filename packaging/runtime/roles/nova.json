@@ -20,7 +20,8 @@
     "pipeline-test-gate-contract",
     "pipeline-worker-core-contract",
     "pipeline-observability-contract",
-    "nova-project"
+    "nova-project",
+    "prism-contract"
   ],
   "plugins": [
     "kubeclaw.agent-observability",

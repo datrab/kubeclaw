@@ -73,6 +73,11 @@ try {
       cwd: temporary,
       env: { PATH: process.env.PATH ?? '', HOME: temporary, NODE_PATH: '', NODE_NO_WARNINGS: '1' },
     });
+    if (role === 'nova') {
+      const stage = pathToFileURL(path.join(output, 'skills/plugins/prism-design/src/stage.ts')).href;
+      execFileSync(process.execPath, ['--input-type=module', '-e', `const m=await import(${JSON.stringify(stage)});if(typeof m.execute!=='function')process.exit(2);`],
+        {cwd:temporary,env:{PATH:process.env.PATH ?? '',NODE_PATH:''}});
+    }
     if (role === 'prism') {
       assert.equal(fs.existsSync(path.join(output, 'skills/packages/prism-contract/schemas/prism-v1.schema.json')), true,
         'Prism bundle must contain its canonical schema');
