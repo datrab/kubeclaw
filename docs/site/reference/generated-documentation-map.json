@@ -2754,7 +2754,7 @@
       "audience": "reference reader, operator",
       "owner": "platform-security",
       "appliesTo": "Kubernetes secret setup and checked-in Secret references",
-      "lastVerified": "retained artifact 145da1d0b30fb3b636c4b03fb3d3252819ee2bf5; original sources 6fa4830a48244d29655104a5be58957d5fa87d2f; semantic owner 522d3736649e4323192467cff9981fda5e4c1eef",
+      "lastVerified": "retained artifact 145da1d0b30fb3b636c4b03fb3d3252819ee2bf5; original sources 6fa4830a48244d29655104a5be58957d5fa87d2f; semantic owner 9af1ad3f20ab83fc529080b00c042e8a840e5020",
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
         "docs/generated/inventory/secret-setup.json",
