@@ -49278,7 +49278,7 @@
       ]
     },
     {
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -49602,6 +49602,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -49621,8 +49626,8 @@
       "openIssues": [],
       "verdict": "PASS",
       "id": "MNT-014-whole-native-publication-examples-20261027",
-      "reviewer": "Independent whole_criterion_selection original MNT014 adjudicator; cross-author complete content/native delta assessors; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nOriginal MNT-014/F7 complete executable/schema-validated publication example obligation: exhaustive authored discovery and failclosed normalcheck/build native input/contract/projection/syntax joins, including both full project factories; no selected-plugin/resume-only substitution and no mandatory live deployment.",
+      "reviewer": "Independent whole_criterion_selection original MNT014 adjudicator; cross-author complete content/native delta assessors; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nOriginal MNT-014/F7 complete executable/schema-validated publication example obligation: exhaustive authored discovery and failclosed normalcheck/build native input/contract/projection/syntax joins, including both full project factories; no selected-plugin/resume-only substitution and no mandatory live deployment.",
       "independentOriginalDecision": {
         "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt014-owner-policy-20261027/whole-original-mnt014-final/verdict.json",
         "sha256": "14842c2740c534386be55a06cf779a52d024b888e20f58985154e32e2429eb50",
@@ -49955,7 +49960,7 @@
       ]
     },
     {
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -50279,6 +50284,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -50298,8 +50308,8 @@
       "openIssues": [],
       "verdict": "PASS",
       "id": "A99-11-whole-published-example-claims-20261027",
-      "reviewer": "Independent fresh_technical_reader original A99-11 whole-gate adjudicator; exact qualified full content/native proof union; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nOriginal whole A99-11: all published examples discoverable and checked according to their actual claim; executable instructions retain toolchain, prerequisites, expected result, errors/effects/cleanup, and explanatory or unexecuted product paths are explicit. Separately adjudicated full original automatic-failure predicates; not an automatic promotion from MNT014.",
+      "reviewer": "Independent fresh_technical_reader original A99-11 whole-gate adjudicator; exact qualified full content/native proof union; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nOriginal whole A99-11: all published examples discoverable and checked according to their actual claim; executable instructions retain toolchain, prerequisites, expected result, errors/effects/cleanup, and explanatory or unexecuted product paths are explicit. Separately adjudicated full original automatic-failure predicates; not an automatic promotion from MNT014.",
       "independentOriginalDecision": {
         "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt014-owner-policy-20261027/original-a9911-final/verdict.json",
         "sha256": "dae9ab43fdd52e6ebcc8833bc10f360bc9a787ddd9445451a03e0becf2dce0bd",
@@ -50753,9 +50763,9 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova documentation claim integration and sole shared-lease writer",
-      "reviewer": "Independent /root/fresh_technical_reader original whole QUA005 Source/semanticReader/Quality adjudicator, qualified complete cross-author content assessors; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent /root/fresh_technical_reader original whole QUA005 Source/semanticReader/Quality adjudicator, qualified complete cross-author content assessors; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "QUA-005"
@@ -51058,6 +51068,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -51065,7 +51080,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nNo material false live-success or unsupported unbounded completeness claim found in complete qualified actual publication contexts; not merely sampled pages, keyword absence or hashes.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nNo material false live-success or unsupported unbounded completeness claim found in complete qualified actual publication contexts; not merely sampled pages, keyword absence or hashes.",
       "limits": [
         "Original QUA005 claim-honesty obligation only. Missing live execution is not itself a documentation defect; actual unavailable/unknown proof must remain explicit, not recast as success.",
         "Complete non-example/source/metadata/prose responsibility must be substantively audited. Prior examples/native checks or valid links/hashes alone cannot certify this wholeglobalnegative or every technicalfield truth.",
@@ -51410,9 +51425,9 @@
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova sole shared-lease documentation integration writer",
-      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality assessor; fresh /root/a91310_clean_operator_restore_reader original Operator02 participant; qualified cross-author topic peers; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality assessor; fresh /root/a91310_clean_operator_restore_reader original Operator02 participant; qualified cross-author topic peers; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [
         "A913-10"
       ],
@@ -52092,6 +52107,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -52099,7 +52119,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-configuration-inventory.mjs, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original applicability and visible product-boundary duty independently passed:294 structured contexts,9 authored/generated applicability families,25 owner/acceptance boundaries and complete177page/28asset implicit responsibilities. Material GitOps-status, Swarm-wrapper and unused-field/profile findings repaired through native owners and independently checked at actual full delivery. Fresh original Operator02 scored4/4. Current committed publication and all five Reader controls pass; no missing execution is disguised as N/A.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-configuration-inventory.mjs, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original applicability and visible product-boundary duty independently passed:294 structured contexts,9 authored/generated applicability families,25 owner/acceptance boundaries and complete177page/28asset implicit responsibilities. Material GitOps-status, Swarm-wrapper and unused-field/profile findings repaired through native owners and independently checked at actual full delivery. Fresh original Operator02 scored4/4. Current committed publication and all five Reader controls pass; no missing execution is disguised as N/A.",
       "limits": [
         "No A91306/QUA002 language, wholeQUA004 technical truth, external global API/currentrole/newpurpose grant, source-lock/profile/custody waiver or live product defect closure.",
         "Remaining26Helm/env/Secret technical claim issues and endpoint/language defects remain their actual original unaccepted duties; no hidden resolution claimed.",
@@ -52300,9 +52320,9 @@
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova sole shared-lease documentation integration writer",
-      "reviewer": "Independent /root/whole_criterion_selection original Source/semanticReader/Quality adjudicator, with independent /root/language_projection_architecture authored-family Source/codeQuality and actual delivery/preservation peers; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent /root/whole_criterion_selection original Source/semanticReader/Quality adjudicator, with independent /root/language_projection_architecture authored-family Source/codeQuality and actual delivery/preservation peers; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "CFG-007"
@@ -52692,6 +52712,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -52699,7 +52724,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, scripts/docs-configuration-inventory.mjs, scripts/docs-generate.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original CFG007: all857 recursive schema declarations and actual consumer meanings plus15Swarm settings are current and source-qualified. Earlier53corrections retain actual valid qualification; new29meanings(artifact3+26durable/evidence) now state real defaults/admission/path bases/count/payload/store budgets and failure timing. Complete actual central reference and selected operator projection are independently qualified; associated29native mapfacts, qualified3scope claims and committed326 finalcontrols pass. No declaration/count/hash-only acceptance.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, scripts/docs-configuration-inventory.mjs, scripts/docs-generate.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original CFG007: all857 recursive schema declarations and actual consumer meanings plus15Swarm settings are current and source-qualified. Earlier53corrections retain actual valid qualification; new29meanings(artifact3+26durable/evidence) now state real defaults/admission/path bases/count/payload/store budgets and failure timing. Complete actual central reference and selected operator projection are independently qualified; associated29native mapfacts, qualified3scope claims and committed326 finalcontrols pass. No declaration/count/hash-only acceptance.",
       "limits": [
         "Only the named original requirements are accepted; no gate, whole A98-14 mutation exercise, global API/purpose/SourceLock/profile role, QUA004 technical whole, QUA002/A91306 language, accessibility or fresh humanpersona award follows.",
         "Current generation/tests were executed at their recorded source and byte vectors; final committed326 build and all five automated Reader controls/repositoryrefs passed. Native28 actions are validated by unchanged build owner, but child detailJSON is suppressed; no independentlyparsed current28 result/input details are claimed.",
@@ -53299,9 +53324,9 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
-      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "MNT-015"
@@ -53421,6 +53446,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -53428,7 +53458,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original MNT015 source-to-canonical-page/owner/applicable-check and mandatory independent-topic review responsibility independently passed across seven composed source families and five duties. Existing exported prompt-library missing route genuinely repaired through native metadata/real workspace checks; all affected generation/failure/addition/removal/STOP and historical/source/local/live boundaries retained. Exact current source/code/bindings, meaningful native controls, committed Reader and original115 preservation qualified; not automatic closure from one witness or counts.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original MNT015 source-to-canonical-page/owner/applicable-check and mandatory independent-topic review responsibility independently passed across seven composed source families and five duties. Existing exported prompt-library missing route genuinely repaired through native metadata/real workspace checks; all affected generation/failure/addition/removal/STOP and historical/source/local/live boundaries retained. Exact current source/code/bindings, meaningful native controls, committed Reader and original115 preservation qualified; not automatic closure from one witness or counts.",
       "limits": [
         "MNT015 whole original owner/review maintenance duty only; no associated gate, MNT009/A91107/global API/every-field technical coverage or hosted approval enforcement award.",
         "Maintenance routes compose native inventory identities, metadata parents, actual package/schema consumers and shared mandatory independent Source/Reader/Quality procedure. No fabricated per-symbol reviewer column, new framework, sixth registration or runtime lookup API.",
@@ -53701,9 +53731,9 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
-      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "CFG-013"
@@ -53888,6 +53918,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -53895,7 +53930,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original CFG-013 independently passed across all ten actual configuration families: producer-to-consumer merge/default/capture, absence/empty/null/false, conflict/error and safe effective-value inspection duties. Newly found genuine fixed-env/extraEnv duplicate and required-Secret failure gap repaired through the canonical authored owner and a semantic maintained one-page contract successor. Complete core and host/Helm/Kubernetes/Secret responsibilities and individual23 historical finding facets qualified; original global failures remain unawarded. Actual committed publication controls and original117 semantic preservation complete; no table/count/hash-only closure.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original CFG-013 independently passed across all ten actual configuration families: producer-to-consumer merge/default/capture, absence/empty/null/false, conflict/error and safe effective-value inspection duties. Newly found genuine fixed-env/extraEnv duplicate and required-Secret failure gap repaired through the canonical authored owner and a semantic maintained one-page contract successor. Complete core and host/Helm/Kubernetes/Secret responsibilities and individual23 historical finding facets qualified; original global failures remain unawarded. Actual committed publication controls and original117 semantic preservation complete; no table/count/hash-only closure.",
       "limits": [
         "CFG-013 only; no A98-10/11 or other gate, CFG010/011/global environment census, global ToolSource parser/custody/source-role/API, purpose/profile/SourceLock, MNT009/A91107, fullQUA004, controlled-language or other requirement grant.",
         "Whole554line canonical responsibility composes complete508line baseline review plus entire46line correction and integration context, not a fictitious repeat whole-body read. One canonical page plus95 regular tracked sources retain precise full/range/delegated/analytical qualifications. Pinned external primary sources and completionledger control snapshot are qualified non-delivery inputs, not invented tracked source paths.",
@@ -53978,9 +54013,9 @@
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
-      "reviewer": "Independent /root/whole_criterion_selection whole original Source/semanticReader/Quality, finite current native/projection/delivered/governance/maintained-source qualification and complete original118 preservation; pinned Terra/high P2 independently clean; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent /root/whole_criterion_selection whole original Source/semanticReader/Quality, finite current native/projection/delivered/governance/maintained-source qualification and complete original118 preservation; pinned Terra/high P2 independently clean; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "CFG-010"
@@ -54183,6 +54218,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -54190,7 +54230,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, docs/site/reference/environment-variables.md, docs/site/reference/generated-documentation-map.json, scripts/docs-configuration-inventory.mjs, scripts/docs-generate.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original CFG-010 independently passed across all seven actual host/Prism/OpenClaw/standalone-Codex families: configuration sources, defaults, Secret consumers, precedence, startup capture and safe verification. Stage agentRole versus actual config.agent selection and standalone Codex persisted-home/forced-MCP/credential boundaries corrected centrally. Complete63 Prism names/77 consumer contracts and158 Helm meaning cells were source-reconciled; eight real semantic families corrected through existing shared native owners and genuinely implemented authenticated finite v2 delivery (11 ENV tuples/16 Helm identities/15 DB Secret consumers), not hand-edited raw inventories. Current meaning provenance is separate from retained historical observations. Whole13 original finding facets qualified only locally. Actual committed publication7, full physical/Git output/source binding and original118 semantic preservation independently passed; no count/hash-only or unexecuted live closure.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, docs/site/reference/environment-variables.md, docs/site/reference/generated-documentation-map.json, scripts/docs-configuration-inventory.mjs, scripts/docs-generate.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original CFG-010 independently passed across all seven actual host/Prism/OpenClaw/standalone-Codex families: configuration sources, defaults, Secret consumers, precedence, startup capture and safe verification. Stage agentRole versus actual config.agent selection and standalone Codex persisted-home/forced-MCP/credential boundaries corrected centrally. Complete63 Prism names/77 consumer contracts and158 Helm meaning cells were source-reconciled; eight real semantic families corrected through existing shared native owners and genuinely implemented authenticated finite v2 delivery (11 ENV tuples/16 Helm identities/15 DB Secret consumers), not hand-edited raw inventories. Current meaning provenance is separate from retained historical observations. Whole13 original finding facets qualified only locally. Actual committed publication7, full physical/Git output/source binding and original118 semantic preservation independently passed; no count/hash-only or unexecuted live closure.",
       "limits": [
         "CFG-010 only, no gate or other requirement award. Original globalfinding objects, API/producer/current-role/ToolSource parser/custody/purpose/SourceLock/profile debts remain unchanged; no blanket exemption or full modern inventory acquisition grant.",
         "Four delivered pages plus120 regular tracked source/context paths retain precise full/range/delegated/analytical qualifications. No fictitious full model-read of17MB Helm,4MB map, large classifier/raw inventory or every124file. Complete finite semantic responsibilities compose the original topic; whole-object/native output reversals preserve remaining observations/unknown fields.",
@@ -54258,9 +54298,9 @@
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova /root sole product integration author and writer",
-      "reviewer": "Independent /root/language_projection_architecture whole original Source/semanticReader/Quality and actual native delivery; /root/whole_criterion_selection complete Go/Ops, code/default/map/maintained-source and original119 final preservation; pinned Terra/high P2 clean; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent /root/language_projection_architecture whole original Source/semanticReader/Quality and actual native delivery; /root/whole_criterion_selection complete Go/Ops, code/default/map/maintained-source and original119 final preservation; pinned Terra/high P2 clean; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "CFG-012"
@@ -54418,6 +54458,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -54425,7 +54470,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, docs/site/reference/generated-documentation-map.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original CFG-012 independently passed for configured ports, Services, inbound/outbound endpoints and ingress: all22 exposures/72 inbound/65 outbound occurrences reconciled across39 actual producer/receiver bodies and coherent trust/health/failure/operator duties. Four ordinary controller Kubernetes calls incorrectly hidden behind optional readiness activation corrected through the existing native caller-aware owner. Omitted PostgreSQL targetPort now preserves the raw omission and explains numeric Service-port default with pinned primary evidence; named targets and profile-specific ownership/storage/ports remain distinct. Genuine source-first bounded endpoint publication delivered both remedies without full configuration/SDK regeneration. Whole delivered content, seven committed publication controls, actual output/Git/native-metadata binding and every original119 scope independently passed.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/publication-example-claims.json, docs/site/reference/generated-documentation-map.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original CFG-012 independently passed for configured ports, Services, inbound/outbound endpoints and ingress: all22 exposures/72 inbound/65 outbound occurrences reconciled across39 actual producer/receiver bodies and coherent trust/health/failure/operator duties. Four ordinary controller Kubernetes calls incorrectly hidden behind optional readiness activation corrected through the existing native caller-aware owner. Omitted PostgreSQL targetPort now preserves the raw omission and explains numeric Service-port default with pinned primary evidence; named targets and profile-specific ownership/storage/ports remain distinct. Genuine source-first bounded endpoint publication delivered both remedies without full configuration/SDK regeneration. Whole delivered content, seven committed publication controls, actual output/Git/native-metadata binding and every original119 scope independently passed.",
       "limits": [
         "CFG-012 only; no other requirement or gate award. SourceLock/profile/global API/producer/purpose/ToolSource/parser debts and original global findings remain unchanged; no blanket exemptions.",
         "Two canonical pages plus57 qualified regular source/context paths retain full/range/fresh/reused/delegated/analytical responsibilities. No fullmodel read of420k unrelated platform collections,14MB maintained declaration, every1465discovery line or all global APIs. Exact finite duties and reversal proofs compose this topic.",
@@ -54483,9 +54528,9 @@
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova /root sole product integration author and writer",
-      "reviewer": "Independent native /root/ref016_canonical_owner_review whole original Source/Reader/Quality; /root/language_projection_architecture bounded independent source/package/claim scopes and original120 preservation; pinned Terra/high/P2 code reviews clean; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent native /root/ref016_canonical_owner_review whole original Source/Reader/Quality; /root/language_projection_architecture bounded independent source/package/claim scopes and original120 preservation; pinned Terra/high/P2 code reviews clean; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "REF-016"
@@ -55570,6 +55615,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -55577,7 +55627,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-configuration-inventory.mjs, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original REF-016 independently passed: all301 root npm aliases,14 actual CI workflows,41 deployment forms,18 guide forms and88 concrete package/specialist routes map purpose, scope, environment, authority/write/residual effects, expected results/limits, existing canonical maintainer owner and change-to-check. Actual private/delegated versus public frontdoor scope is Source-reasoned, not a counts exemption. All49 wrapper-selected package lifecycles plus explicit focused Prism/Ops/lint, telemetry and committed Reader routes retain concrete duties. Exact301 raw root command declarations and58 selected manifest definitions are read-only literal Source data; genuine native loader/Source guards, independent semantic review and actual current HTML prove values/order/cwd and preserve wildcards without executing those commands. Actual native current generation/publication/Reader/references and old120 preservation passed.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-configuration-inventory.mjs, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original REF-016 independently passed: all301 root npm aliases,14 actual CI workflows,41 deployment forms,18 guide forms and88 concrete package/specialist routes map purpose, scope, environment, authority/write/residual effects, expected results/limits, existing canonical maintainer owner and change-to-check. Actual private/delegated versus public frontdoor scope is Source-reasoned, not a counts exemption. All49 wrapper-selected package lifecycles plus explicit focused Prism/Ops/lint, telemetry and committed Reader routes retain concrete duties. Exact301 raw root command declarations and58 selected manifest definitions are read-only literal Source data; genuine native loader/Source guards, independent semantic review and actual current HTML prove values/order/cwd and preserve wildcards without executing those commands. Actual native current generation/publication/Reader/references and old120 preservation passed.",
       "limits": [
         "Original REF-016 only; no gate or other requirement award, broad Prism package-suite/runtime coverage, globaltree/API/producer/purpose/profile/SourceLock/parser or human/live/hosting acceptance. Global treeFAIL176 and API_REFERENCE_REJECTED_PROFILE_INVENTORY_MISSING remain precise original limits, not green or waived.",
         "Complete supported native command/guide/package boundary follows original product scope, exact first-class forms, actual receiver/lifecycle semantics and canonical specialist routing; not every private assertion/import/CLI inspection is a new public verification frontdoor. No all-imported-algorithm certification. Full/range/reused/native/delegated Source scopes and complete input limitations remain in ref016-original-20261028 evidence.",
@@ -55625,9 +55675,9 @@
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native original_closeout whole original Source/Reader/Quality and121preservation; platform_transfer current two-page Reader/Quality and complete Platform/native governance transfers; route_partition complete Verification transfer; prior other-author complete native29/external23 Source qualifications and clean pinned Terra code reviews reused exactly; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Independent native original_closeout whole original Source/Reader/Quality and121preservation; platform_transfer current two-page Reader/Quality and complete Platform/native governance transfers; route_partition complete Verification transfer; prior other-author complete native29/external23 Source qualifications and clean pinned Terra code reviews reused exactly; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "MNT-008"
@@ -56337,6 +56387,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -56344,7 +56399,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/generated-documentation-map.json, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original MNT-008 independently passed: generated ports/endpoints/stores retain nine original surfaces and75 original store identities;52 source-qualified policy families and9 additional native instances carry machine-readable typed declarations/limits, constructor/caller/configuration boundaries, retention/capacity/cleanup/failure/retained-authority responsibilities and concrete Source locators. Native conditional Helm projection is explicitly distinguished from six original profiles and unresolved expressions. Maintainer guidance explains clean committed Source generation versus later canonical contract preparation and normal publication. Independent actual current Reader/Quality and complete121preservation passed; no gate or unrelated requirement awarded.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/generated-documentation-map.json, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original MNT-008 independently passed: generated ports/endpoints/stores retain nine original surfaces and75 original store identities;52 source-qualified policy families and9 additional native instances carry machine-readable typed declarations/limits, constructor/caller/configuration boundaries, retention/capacity/cleanup/failure/retained-authority responsibilities and concrete Source locators. Native conditional Helm projection is explicitly distinguished from six original profiles and unresolved expressions. Maintainer guidance explains clean committed Source generation versus later canonical contract preparation and normal publication. Independent actual current Reader/Quality and complete121preservation passed; no gate or unrelated requirement awarded.",
       "limits": [
         "Original MNT-008 only under AP09 acceptance contract sections1–3 and catalogue405. Not global A97-06/allAPI/internal-algorithm/store recovery completion, deployed upstream effective policy or arbitrary host/PVC/database discovery.",
         "Source declarations, symbolic expressions, nullish constructor defaults, configured caller values and conditional native policy-comparison fixtures remain distinct. Expiry/admission/compaction/domain retirement/backup pruning/PVC requests do not grant general deletion, successful backup/restore or live cleanup.",
@@ -56358,9 +56413,9 @@
     },
     {
       "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Existing independent whole_a91306_astra_final Source/whole original closeout and whole_language_reader_80786_fresh technical MNT006/original122 Reader/Quality; complete unchanged independent Source/P2 qualifications reused only at verified exact scope; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
+      "reviewer": "Existing independent whole_a91306_astra_final Source/whole original closeout and whole_language_reader_80786_fresh technical MNT006/original122 Reader/Quality; complete unchanged independent Source/P2 qualifications reused only at verified exact scope; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "MNT-006"
@@ -56793,6 +56848,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -56800,7 +56860,7 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original MNT-006 PASS under AP09 sections1–3: source-qualified generated active event/payload/version and actual producer/transformer/validator/consumer graph across all14 mechanisms, joined to activation, retained/unknown boundaries and complete maintenance/verification ownership. Original F4 names/positions-only deficiency is remedied. Independent Source and delivered technical Reader/Quality judgments compose with actual native parser-route drift tests and final seven publication checks; original122 preservation PASS at original limits. No unrelated gate or whole controlled-language award.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nWhole original MNT-006 PASS under AP09 sections1–3: source-qualified generated active event/payload/version and actual producer/transformer/validator/consumer graph across all14 mechanisms, joined to activation, retained/unknown boundaries and complete maintenance/verification ownership. Original F4 names/positions-only deficiency is remedied. Independent Source and delivered technical Reader/Quality judgments compose with actual native parser-route drift tests and final seven publication checks; original122 preservation PASS at original limits. No unrelated gate or whole controlled-language award.",
       "limits": [
         "No A911 gate or whole A913-06/QUA-002 controlled-language acceptance is granted. Strict Source-unexposed whole language Reader remains separate and pending.",
         "Static source contracts and local native tests do not prove live event delivery, external payloads, production deployment, replay/retention success or execution of quoted source definitions. Existing dated practical/runtime receipts remain unchanged.",
@@ -56813,9 +56873,9 @@
     },
     {
       "id": "MNT-005-common-source-bound-error-catalogue-20261030",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent Codex gpt-5.6-terra/high documentation content reviewer, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; original-topic Source/usability/quality and finite title correction; prior named Source qualifications reused at unchanged scope",
+      "reviewer": "Independent Codex gpt-5.6-terra/high documentation content reviewer, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; original-topic Source/usability/quality and finite title correction; prior named Source qualifications reused at unchanged scope; REF005 current diagnostic-reference affected-scope preservation by independent Codex content reviewer",
       "gateIds": [],
       "requirementIds": [
         "MNT-005"
@@ -57053,6 +57113,11 @@
           "command": "node scripts/docs-common-error-catalogue.mjs --check",
           "exitCode": 0,
           "observation": "Actual current source-digest/output comparison. Add/remove family and source/output drift controls separately preserved at their single renderer path; not universal new-source discovery."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual diagnostic-reference publication build at 464954006aada327194fc4a97cf159a271e6abe0; log /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Only later authority-observation wording is narrowed; actual page/code/check inputs remain exact. Current unchanged declaration binder rechecked."
         }
       ],
       "review": {
@@ -57060,13 +57125,328 @@
         "readerUsability": "PASS",
         "quality": "PASS"
       },
-      "summary": "Whole original MNT005 content deficiency F3 resolved under AP09 sections1–3 and Raven owner-priority20261030: generated common diagnostic catalogue across Foundation/plugins, Nova/projects, Worker/native, Prism/backup, platform and Helm, not Buster-only. Entries explain identity/construction, actual trigger/effect, retry/safe-action, retained evidence and consumer boundaries. Independent complete page/semantic review plus unchanged qualified Source scopes and concrete reader tasks found no material error; original content PASS explicitly reaffirmed after ten title/path labels were corrected. Actual seven publication commands pass. No new gate or whole controlled-language acceptance.",
+      "summary": "REF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/common-error-catalogue.json, docs/config/publication-example-claims.json, docs/site/reference/common-errors-foundation.md, docs/site/reference/common-errors-nova.md, docs/site/reference/common-errors-prism.md, docs/site/reference/common-errors-worker.md, docs/site/reference/common-errors.md, scripts/docs-common-error-catalogue.mjs. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nWhole original MNT005 content deficiency F3 resolved under AP09 sections1–3 and Raven owner-priority20261030: generated common diagnostic catalogue across Foundation/plugins, Nova/projects, Worker/native, Prism/backup, platform and Helm, not Buster-only. Entries explain identity/construction, actual trigger/effect, retry/safe-action, retained evidence and consumer boundaries. Independent complete page/semantic review plus unchanged qualified Source scopes and concrete reader tasks found no material error; original content PASS explicitly reaffirmed after ten title/path labels were corrected. Actual seven publication commands pass. No new gate or whole controlled-language acceptance.",
       "limits": [
         "Maintained source-bound families and representative owner/consumer links are not a finite vocabulary of arbitrary dependency messages, automatic universal source discovery, exhaustive call graph, or live execution/recovery proof.",
         "Diagnostic text fences are unexecuted source constructions; local render/check commands only maintain documentation. Runtime sources remain unchanged from3a2546e3.",
         "Historical Source/reader/native observations retain their exact bounds and exposure limits. Current independent topic-content review is not a fresh Source-unexposed whole A913 reader or new Astra-model execution.",
         "Only actual52 changed original PASS scopes were reconfirmed; all original limits, negative records and historical receipts remain intact. Preexisting broader environment-YAML/API/tree failures are retained, not waived or claimed passed.",
         "No gate, REF005, MNT011, whole language, global API/tree, production deployment or recovery acceptance is inferred from this original MNT005 closure."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
+      "author": "Nova /root sole integration writer",
+      "reviewer": "Independent Codex gpt-5.6-terra/high original REF005 Source/usability/quality/completeness reviewer, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; unchanged qualified Source/reader scopes reused at original limits",
+      "gateIds": [],
+      "requirementIds": [
+        "REF-005"
+      ],
+      "pages": [
+        "docs/site/reference/errors.md",
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/reference/common-errors.md",
+        "docs/site/reference/common-errors-foundation.md",
+        "docs/site/reference/common-errors-nova.md",
+        "docs/site/reference/common-errors-worker.md",
+        "docs/site/reference/common-errors-prism.md",
+        "docs/site/reference/common-errors-platform.md",
+        "docs/site/reference/common-errors-configuration.md"
+      ],
+      "sources": [
+        "charts/gitops/files/application-health.lua",
+        "charts/gitops/templates/applications.yaml",
+        "charts/kubeclaw/templates/NOTES.txt",
+        "charts/kubeclaw/templates/_demo-ready-client.tpl",
+        "charts/kubeclaw/templates/_helpers.tpl",
+        "charts/kubeclaw/templates/_registry-clients.tpl",
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+        "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+        "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/kubeclaw/templates/demo-ready-service.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/templates/rbac.yaml",
+        "charts/ops-pod/templates/network.yaml",
+        "charts/ops-pod/templates/rbac.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/prism/files/prism-backup.sh",
+        "charts/prism/templates/_helpers.tpl",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/prism/templates/backup.yaml",
+        "charts/prism/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/ingestion.yaml",
+        "charts/prism/templates/jobs.yaml",
+        "charts/prism/templates/postgresql.yaml",
+        "charts/prism/templates/workloads.yaml",
+        "cmd/buster-namespace-controller/demo-credentials.go",
+        "cmd/buster-namespace-controller/demo-product.go",
+        "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+        "cmd/buster-namespace-controller/demo-readiness-sources.go",
+        "cmd/buster-namespace-controller/demo-readiness.go",
+        "cmd/buster-namespace-controller/demo-retention.go",
+        "cmd/buster-namespace-controller/exposure-generation.go",
+        "cmd/buster-namespace-controller/main.go",
+        "contracts/agent-observability/v1/src/complexity.ts",
+        "contracts/agent-observability/v1/src/validation.ts",
+        "contracts/pipeline-observability/v1/go/fixturecheck/main.go",
+        "contracts/pipeline-observability/v1/go/types.go",
+        "contracts/pipeline-test-gate/v1/src/coverage-result.ts",
+        "contracts/pipeline-test-gate/v1/src/validation.ts",
+        "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+        "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+        "contracts/pipeline-worker-core/v1/src/validation.ts",
+        "contracts/prism/v1/src/complexity.ts",
+        "contracts/prism/v1/src/document-semantics.ts",
+        "contracts/prism/v1/src/index.ts",
+        "contracts/telemetry/v1/bundle_types.go",
+        "contracts/telemetry/v1/telemetry_types.go",
+        "docker/Dockerfile.namespace-controller",
+        "docs/config/common-error-catalogue.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "ops/pod/Dockerfile",
+        "ops/pod/bootstrap.py",
+        "ops/pod/kubectl-build/main.go",
+        "ops/pod/supervisor.py",
+        "ops/pod/verify.py",
+        "package.json",
+        "scripts/activate-native-worker-ax41.sh",
+        "scripts/align-spire-webhook-order.py",
+        "scripts/argocd-self-management.mjs",
+        "scripts/build-native-worker-nri.mjs",
+        "scripts/check-platform-adoption-live.py",
+        "scripts/check-runtime-adoption-live.py",
+        "scripts/cleanup-consolidated-branches.py",
+        "scripts/deploy-argocd.sh",
+        "scripts/deploy-ops-pod.sh",
+        "scripts/docs-common-error-catalogue.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/inspect-data-plane-mtls.py",
+        "scripts/install-native-worker-pools-stage.sh",
+        "scripts/repair-k3s-reservation-arguments.py",
+        "skills/buster/engine/test-gates/direct-command-runtime.ts",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+        "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+        "skills/common/plugin-runtime/foundation/isolation/session.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+        "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/digest.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/common/plugin-runtime/foundation/registry/errors.ts",
+        "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugin-runtime/sdk/src/artifact-json.ts",
+        "skills/common/plugin-runtime/sdk/src/review-subject.ts",
+        "skills/common/plugin-runtime/sdk/src/source-approval.ts",
+        "skills/common/plugin-runtime/sdk/src/source-revision.ts",
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "skills/common/plugins/artifact-store/src/adapter.ts",
+        "skills/common/plugins/command-runner/src/adapter.ts",
+        "skills/common/plugins/command-runner/src/execution.ts",
+        "skills/common/plugins/command-runner/src/process-group.ts",
+        "skills/common/plugins/command-runner/src/types.ts",
+        "skills/common/plugins/git-workspace/src/operations.ts",
+        "skills/common/plugins/git-workspace/src/review-source.ts",
+        "skills/common/plugins/git-workspace/src/runner.ts",
+        "skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+        "skills/common/plugins/network-http/src/adapter.ts",
+        "skills/common/plugins/notification-observer/src/observer.ts",
+        "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/src/config.ts",
+        "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+        "skills/common/plugins/operator-messaging/src/discord-receipt.ts",
+        "skills/common/plugins/operator-messaging/src/payload.ts",
+        "skills/common/plugins/operator-messaging/src/receiver.ts",
+        "skills/common/plugins/prompt-contract/src/index.ts",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/exchange.ts",
+        "skills/common/plugins/redis-transport/src/resp.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-response.ts",
+        "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+        "skills/common/plugins/state-store/src/adapter.ts",
+        "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "skills/common/plugins/telemetry-store/src/projection.ts",
+        "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "skills/common/plugins/wait-store/src/adapter.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/state/file-mutex.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/state/json-value.ts",
+        "skills/nova/core/state/plugins.ts",
+        "skills/nova/core/state/read-run-evidence.ts",
+        "skills/nova/core/test-gates/deadline.ts",
+        "skills/nova/core/test-gates/dispatch-operation.ts",
+        "skills/nova/core/test-gates/http-response.ts",
+        "skills/nova/core/test-gates/remote-dispatch.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/nova/core/test-gates/transport-error.ts",
+        "skills/nova/plugins/lint/src/engine/architecture-tools.ts",
+        "skills/nova/plugins/lint/src/engine/container-yaml-tools.ts",
+        "skills/nova/plugins/lint/src/engine/policy-validation.ts",
+        "skills/nova/plugins/lint/src/engine/report-contract.ts",
+        "skills/nova/plugins/lint/src/engine/report.ts",
+        "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+        "skills/nova/plugins/review/src/repository-audit-cache.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+        "skills/nova/plugins/review/src/review-content-cache.ts",
+        "skills/nova/plugins/review/src/review-context-candidates.ts",
+        "skills/nova/plugins/review/src/review-context-production.ts",
+        "skills/nova/plugins/review/src/review-governor-history.ts",
+        "skills/nova/plugins/review/src/review-governor.ts",
+        "skills/nova/plugins/review/src/review-phase-admission.ts",
+        "skills/nova/plugins/review/src/review-preparation.ts",
+        "skills/nova/plugins/review/src/review-repository.ts",
+        "skills/nova/plugins/review/src/review-runtime-attestation.ts",
+        "skills/nova/plugins/review/src/review-semantic-flow.ts",
+        "skills/nova/plugins/review/src/review-verifier.ts",
+        "skills/nova/plugins/review/src/stage.ts",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/coverage.ts",
+        "skills/nova/project/delivery-manifest.ts",
+        "skills/nova/project/demo.ts",
+        "skills/nova/project/legacy-import-cli.ts",
+        "skills/nova/project/legacy-import.ts",
+        "skills/nova/project/recovery.ts",
+        "skills/nova/project/review-semantics.ts",
+        "skills/nova/project/source.ts",
+        "skills/prism/control/worker-results.ts",
+        "skills/prism/engine/browser-capture.ts",
+        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/server/migrate.ts",
+        "skills/prism/server/product-controller.ts",
+        "skills/prism/server/product-decisions.ts",
+        "skills/prism/server/product-operator-page.ts",
+        "skills/prism/server/studio-request.ts",
+        "skills/prism/server/worker-operation.ts",
+        "skills/prism/server/worker-readiness.ts",
+        "skills/prism/storage/index.ts",
+        "skills/prism/storage/migrations/001_prism.sql",
+        "skills/prism/storage/migrations/002_engine_operation_results.sql",
+        "skills/prism/storage/migrations/003_worker_nonce.sql",
+        "skills/prism/storage/migrations/004_approval_warnings.sql",
+        "skills/prism/storage/migrations/005_direction_source.sql",
+        "skills/prism/storage/migrations/006_design_request.sql",
+        "skills/prism/storage/migrations/007_direction_evidence.sql",
+        "skills/prism/storage/migrations/008_document_request_binding.sql",
+        "skills/prism/storage/migrations/009_corpus_source_evidence.sql",
+        "skills/prism/storage/migrations/010_direction_unsourced_uniqueness.sql",
+        "skills/prism/storage/migrations/011_preference_wire_ids.sql",
+        "skills/prism/storage/migrations/012_preference_generation.sql",
+        "skills/prism/storage/migrations/013_design_round.sql",
+        "skills/prism/storage/migrations/014_agent_jobs.sql",
+        "skills/prism/storage/migrations/015_product_decisions.sql",
+        "skills/prism/storage/migrations/016_preference_legacy_insert_compatibility.sql",
+        "skills/prism/storage/migrations/017_native_operation_identity.sql",
+        "skills/prism/studio/app.tsx",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/local-runtime.ts",
+        "skills/worker/core/worker/log-decoder.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-attempt-recovery.ts",
+        "skills/worker/core/worker/native-journal-state.ts",
+        "skills/worker/core/worker/native-output-spool.ts",
+        "skills/worker/core/worker/native-process-control.ts",
+        "skills/worker/core/worker/native-process-launches.ts",
+        "skills/worker/core/worker/native-process-output.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/worker/core/worker/native-resource-scope.ts",
+        "skills/worker/core/worker/native-result.ts",
+        "skills/worker/core/worker/native-supervisor-authority.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "skills/worker/core/worker/native-worker-process.ts",
+        "skills/worker/core/worker/ownership-store.ts",
+        "skills/worker/core/worker/phase-deadline.ts",
+        "skills/worker/core/worker/resource-accounting.ts",
+        "skills/worker/core/worker/resource-reservations.ts",
+        "tools/native-worker-nri/main.go",
+        "tools/ops-mcp/hubble/main.go",
+        "tools/ops-mcp/src/kubernetes.mjs"
+      ],
+      "checks": [
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual command at publication source 464954006aada327194fc4a97cf159a271e6abe0; /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-1.log SHA256 214e1ffe6b004f0498f15574514bc6741b8dcd2a3696fe58eb9cfe7e98631f56. Later change only narrows two historical observation statements, not executable/pages/assets/check semantics."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Actual command at publication source 464954006aada327194fc4a97cf159a271e6abe0; /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-2.log SHA256 7b17e057ce2829535eae4f7365709f0d8097c5ca902c7aa2a960a8605dea08a9. Later change only narrows two historical observation statements, not executable/pages/assets/check semantics."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Actual command at publication source 464954006aada327194fc4a97cf159a271e6abe0; /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-3.log SHA256 57353980f71a2e130815b0c67dd5370d55f1cdbb60170fb962f1bec67d76c3b3. Later change only narrows two historical observation statements, not executable/pages/assets/check semantics."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "Actual command at publication source 464954006aada327194fc4a97cf159a271e6abe0; /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-4.log SHA256 70ea5fed86a9d9398fcb266b91257236cbfe2e8a017dad1beb04068eb338238f. Later change only narrows two historical observation statements, not executable/pages/assets/check semantics."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "Actual command at publication source 464954006aada327194fc4a97cf159a271e6abe0; /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-5.log SHA256 fbac463e3ffd4a2424c46578074051b9289d5696419d0e445f6e0eecdcb11c2f. Later change only narrows two historical observation statements, not executable/pages/assets/check semantics."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual command at publication source 464954006aada327194fc4a97cf159a271e6abe0; /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-6.log SHA256 8b94d232e8b80c2b705e9db825241f6a323a516c3957f74fa83c4551a77fa957. Later change only narrows two historical observation statements, not executable/pages/assets/check semantics."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "Actual command at publication source 464954006aada327194fc4a97cf159a271e6abe0; /home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-7.log SHA256 d3e46b389eea29418280024d4bd5b609538bc6ef5aface6bf14f962a4dcdb226. Later change only narrows two historical observation statements, not executable/pages/assets/check semantics."
+        },
+        {
+          "command": "node scripts/docs-common-error-catalogue.mjs --check",
+          "exitCode": 0,
+          "observation": "Actual current source-digest/output check. Renderer compatibility/source controls and corrected code P2 remain at stated scope; not every Source syntax a semantic acceptance or live execution."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Original REF005 PASS under controlling AP09 sections1–3 and owner usable-documentation policy: owned diagnostic codes, message/construction patterns, declared-only vocabulary and successful control outcomes are separated and source-linked with causes, side effects, safe next actions and retained-state limits. Common/worker, project compiler/CLI/recovery and canonical-state/evidence responsibilities now complement typed constructors and existing wrapper/HTTP/result routing. Independent whole-topic Source/usability/quality/completeness review found no material omission or unsafe instruction. Actual seven publication checks pass. No new gate or whole controlled-language award.",
+      "limits": [
+        "Supported owned source constructions and dynamic rules do not close arbitrary upstream/dependency messages, future caller input, all runtime outcomes or a universal whole-repository call graph. Source-observed constructions are not execution receipts.",
+        "MNT005 and earlier independent qualifications retain their original scopes; REF005 is an explicit separate original topic decision, not an automatic promotion from generated output.",
+        "No whole A913/controlled-language, global configuration/API/tree, production deployment, retry/rollback success or new Astra-model execution is claimed.",
+        "Actual publication source is 464954006aada327194fc4a97cf159a271e6abe0; subsequent two authority-responsibility strings only narrow a historical compatibility observation after an intentional hub-introduction edit. Pages, assets, code hashes and check inputs are exact; current original binder passes. Historical observations were not rewritten.",
+        "Only13 actually affected old PASS records were reconfirmed; all original limits, old receipts and negative records remain intact. Broader old YAML/API/tree failures remain unwaived."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -72830,13 +73210,21 @@
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/reference/errors.md",
       "catalogueOwner": "documentation automation",
-      "pageOwner": null,
+      "pageOwner": "documentation",
       "readerTask": "Alle Fehlercodes mit Ursache, Wirkung und Recovery",
-      "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
-      "contentKind": "not-in-current-map",
-      "generator": null,
-      "automatedChecks": [],
+      "sourceDependencies": [
+        "docs/config/common-error-catalogue.json",
+        "scripts/docs-common-error-catalogue.mjs",
+        "docs/config/publication-example-claims.json"
+      ],
+      "sourceVerification": "independent-original-REF005-source-reader-quality-completeness-PASS",
+      "contentKind": "authored",
+      "generator": "scripts/docs-common-error-catalogue.mjs",
+      "automatedChecks": [
+        "npm run docs:errors:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ],
       "acceptanceIds": [],
       "packageGateCandidates": [
         "A911-01",
@@ -72856,20 +73244,61 @@
       "requiredManualReview": [
         "source",
         "reader",
-        "quality",
-        "astra-final"
+        "quality"
       ],
-      "state": "not-accepted",
-      "evidence": [],
-      "reviews": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "completionRecord": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+          "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
+          "verdict": "PASS",
+          "scope": "Whole original REF005 only, no gate or whole language acceptance",
+          "contentReview": "/home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/actual-original-REF005-first-content-verdict.json",
+          "actualSeven": "/home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/current-REF005-publication-seven/actual-seven-results.json"
+        }
+      ],
+      "reviews": [
+        {
+          "agent": "Independent Codex gpt-5.6-terra/high original REF005 Source/usability/quality/completeness reviewer, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; unchanged qualified Source/reader scopes reused at original limits",
+          "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
+          "verdict": "PASS",
+          "role": "source",
+          "scope": "Independent coherent whole REF005 topic judgment per AP09section2, not one acceptance per syntax row.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/actual-original-REF005-first-content-verdict.json"
+        },
+        {
+          "agent": "Independent Codex gpt-5.6-terra/high original REF005 Source/usability/quality/completeness reviewer, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; unchanged qualified Source/reader scopes reused at original limits",
+          "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
+          "verdict": "PASS",
+          "role": "reader",
+          "scope": "Independent coherent whole REF005 topic judgment per AP09section2, not one acceptance per syntax row.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/actual-original-REF005-first-content-verdict.json"
+        },
+        {
+          "agent": "Independent Codex gpt-5.6-terra/high original REF005 Source/usability/quality/completeness reviewer, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; unchanged qualified Source/reader scopes reused at original limits",
+          "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
+          "verdict": "PASS",
+          "role": "quality",
+          "scope": "Independent coherent whole REF005 topic judgment per AP09section2, not one acceptance per syntax row.",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/ref005-exact-diagnostics-20261030/actual-original-REF005-first-content-verdict.json"
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L361",
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
-        "reason": "Added correctdynamicfamily but fullproduct emitter/wrapper/HTTP/result translation coverage missing.",
-        "campaign": "independent-correction-closeout-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "a4b8f52942645bdac4ca686d089f9a29861afb76",
+        "reason": "Original emitter/wrapper/HTTP/result coverage deficiency materially remedied; independent original Source/usability/quality/completeness decision and actual publication checks pass.",
+        "campaign": "REF005-exact-diagnostics20261030"
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+          "reason": "Added correctdynamicfamily but fullproduct emitter/wrapper/HTTP/result translation coverage missing.",
+          "campaign": "independent-correction-closeout-20261020"
+        }
+      ]
     },
     {
       "id": "REF-006",
