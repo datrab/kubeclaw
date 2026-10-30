@@ -79,7 +79,11 @@ function renderReceiverContract(receiver, key, fieldPath) {
 }
 
 export function upstreamApiReference(apiVersion, kind) {
-  return apiSchemaUpstreamReference(apiVersion, kind);
+  const reference = apiSchemaUpstreamReference(apiVersion, kind);
+  // Resolve the vendored Argo chart's v3.5.2 source tag to its immutable
+  // upstream commit. Other versions retain their own qualification boundary.
+  return reference.replace('https://github.com/argoproj/argo-cd/blob/v3.5.2/',
+    'https://github.com/argoproj/argo-cd/blob/e258ee23c3e52266d407572f4bcdfe7d9ed36cb5/');
 }
 
 const metadataAnchor = referenceId => `api-metadata-${createHash('sha256').update(referenceId).digest('hex').slice(0, 20)}`;
