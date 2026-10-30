@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-contract-reference.v1",
-  "sourceSetSha256": "b34eb7d9b7291ff5a8388dbad3bb6780360ada702272421fb765ac964ee2ddcd",
+  "sourceSetSha256": "134ab8809f50daa6316e46b336d95c7491227ae6c6990c7557cdc2e358708314",
   "families": [
     {
       "id": "canonical-lifecycle-and-domain",
@@ -144514,8 +144514,8 @@
     },
     {
       "path": "scripts/lib/docs-event-reference.mjs",
-      "sha256": "130c97f57efea515e83fa7ce20441e20ae267299fa66decbc5a196eb6cad3bc8",
-      "bytes": 10014
+      "sha256": "9e06d15781c2ed3865cf4ae95a029b7bb65ef9981c22ae6010945ae22037779d",
+      "bytes": 10246
     },
     {
       "path": "scripts/lib/docs-markdown-anchors.mjs",
@@ -145219,8 +145219,8 @@
     },
     {
       "path": "scripts/tests/docs-event-reference.test.mjs",
-      "sha256": "5cdd02865e43a087490623243705c9bc3856807f92cbd86695ebfc6339571b41",
-      "bytes": 5310
+      "sha256": "d5974bd2e4049166e9cef410d3df9369910d2ee5affa70fe335da1941049ff67",
+      "bytes": 5963
     },
     {
       "path": "scripts/tests/docs-markdown-anchors.test.mjs",
@@ -154525,5 +154525,5 @@
       "bytes": 3220
     }
   ],
-  "combinedSourceVectorSha256": "90a3f1143d82e1fb7ca3dbd0a6f8294156e136662e834a4735b87edd36539ce5"
+  "combinedSourceVectorSha256": "5661d13ec78039773feaabf8cf0640fe1c24febd9fa904f14e3d782db9e6dd69"
 }

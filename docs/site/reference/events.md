@@ -267,11 +267,11 @@ Syntax extraction does not prove live delivery or recovery.
 
 Source contracts and configured paths do not prove live delivery. Declaration, construction, validation and consumption are separate facts.
 
-Primary executable/delivered Source vector SHA-256: <code>b34eb7d9b7291ff5a8388dbad3bb6780360ada702272421fb765ac964ee2ddcd</code>.
+Primary executable/delivered Source vector SHA-256: <code>134ab8809f50daa6316e46b336d95c7491227ae6c6990c7557cdc2e358708314</code>.
 
-Combined primary and supplementary authority vector SHA-256: <code>90a3f1143d82e1fb7ca3dbd0a6f8294156e136662e834a4735b87edd36539ce5</code>.
+Combined primary and supplementary authority vector SHA-256: <code>5661d13ec78039773feaabf8cf0640fe1c24febd9fa904f14e3d782db9e6dd69</code>.
 
-Supplementary authority [<code>contracts/telemetry/v1/README.md</code>:1](../../../contracts/telemetry/v1/README.md#L1) — SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>.
+Supplementary authority [<code>contracts/telemetry/v1/README.md</code>:1](../../../contracts/telemetry/v1/README.md) — SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>.
 
 ### Delivered observer registrations
 
@@ -12352,8 +12352,8 @@ Version/discriminator (exact source syntax): <code>"telemetry&#95;envelope.v1"</
 
 | Role | Exact source | Qualification / condition |
 | --- | --- | --- |
-| retained | [<code>contracts/telemetry/v1/README.md</code>:3](../../../contracts/telemetry/v1/README.md#L3) (SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle. |
-| retained | [<code>contracts/telemetry/v1/README.md</code>:50](../../../contracts/telemetry/v1/README.md#L50) (SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle. |
+| retained | [<code>contracts/telemetry/v1/README.md</code>:3](../../../contracts/telemetry/v1/README.md) (SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle. |
+| retained | [<code>contracts/telemetry/v1/README.md</code>:50](../../../contracts/telemetry/v1/README.md) (SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle. |
 | retained | [<code>contracts/telemetry/v1/catalog.json</code>:19](../../../contracts/telemetry/v1/catalog.json#L19) (SHA-256 <code>0e87c64bf3dc06c60586d3d8b63e5f60ab15712bb915d745de44f325a94b4c5e</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle. |
 
 **Schema [<code>contracts/telemetry/v1/correlation&#95;identity.schema.json</code>:1](../../../contracts/telemetry/v1/correlation_identity.schema.json#L1)** — SHA-256 <code>f7db85b8371f21d543a29917f6c0e74a7fb4b2c7256f2757cabcdbc093238e81</code>
