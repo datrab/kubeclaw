@@ -11,7 +11,7 @@ spec:
   project: infra
   source:
     repoURL: https://github.com/datrab/kubeclaw.git
-    targetRevision: 7a0f35a20f5619d671109960abace162af7a4754
+    targetRevision: 94b0229730fabe16bb49282fe87d22be3bc5b521
     path: charts/ops-pod
     helm:
       releaseName: codex-ops
@@ -126,8 +126,8 @@ spec:
                   allContainers: true
                   timeoutSeconds: 30
                   maxOutputBytes: 65536
-        codexImage: ghcr.io/datrab/kubeclaw-codex-ops@sha256:22e2657cfb9bae1abeada6578cc7d6143202a5771be5887a59382c0f9a53cb75
-        mcpImage: ghcr.io/datrab/kubeclaw-ops-mcp@sha256:1eafb23ade6370d4be86431aa65b02987f0f56deea0071122ef937f4c222ed2a
+        codexImage: ghcr.io/datrab/kubeclaw-codex-ops@sha256:fcd5f5e6c707130d8a96c35ef7d421a6db49ab274d32930ae1fc6ad19851eca3
+        mcpImage: ghcr.io/datrab/kubeclaw-ops-mcp@sha256:60d0b2662f335c3f671870eccc1eacf953d741992e2c2b26f16c1cf9d0e00ca2
   destination:
     server: https://kubernetes.default.svc
     namespace: kubeclaw-ops
