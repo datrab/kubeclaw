@@ -115,12 +115,34 @@ an environment whose source/tool prerequisites have not been qualified.
 | Page metadata or evidence dependencies | `npm run docs:governance:generate` writes `docs/site/reference/generated-documentation-map.json` | `docs:governance:check` compares expected bytes and validates route metadata. Missing owner/evidence needs source metadata repair, not a map patch. |
 | Deployment/secret setup/Helm/workflow source facts | `npm run docs:inventory` writes its four inventories under `docs/generated/inventory` | `docs:inventory:check` compares those expected JSON bytes. This does not cover every runtime input. |
 | Platform ports, endpoints, stores and policy authorities | After committing the source change, `npm run docs:ap09:platform-inventory -- --revision <full-committed-revision>` writes the platform inventory and its generated reference | `npm run docs:ap09:platform-inventory:check` derives the facts again from the inventory's selected source revision. New store identities require an explicit qualified policy binding. |
-| Common diagnostic family or recovery meaning | Qualify the actual trigger, effect, consumer and recovery boundary before changing `docs/config/common-error-catalogue.json`. Run `npm run docs:errors:generate` to render its seven pages. | `npm run docs:errors:check` checks declared source digests and output drift. Representative sources are not an exhaustive call graph or automatic discovery of every new error. |
+| Common diagnostic family or recovery meaning | Qualify the actual trigger, effect, consumer and recovery boundary before changing `docs/config/common-error-catalogue.json`. Run `npm run docs:errors:generate` to render its seven pages. | `npm run docs:errors:check` first checks selected production-input membership and bytes, then declared source digests and output drift. A changed input stops for review; it is not automatic discovery or approval of a new error. |
 | Active event/payload source or semantic responsibility | Review the complete source-vector delta and affected producer, transformation, validation and consumer branches. Only after that qualification, update the binding registry's qualified source-vector hash and run `npm run docs:events:generate`. This writes `docs/generated/inventory/event-contracts.json` and only the marked section of `reference/events.md`. | `npm run docs:events:check` is read-only and fails on an unqualified source vector, missing/ambiguous bindings or changed output. Never repin a hash merely to clear failure. `npm run docs:events:test` exercises parser, binding, renderer and check-mode failures; it does not prove live delivery. |
 | Declared configuration source families | `npm run docs:inventory:config` writes values, schema, and runtime-input JSON inventories; then selected reference generation | `docs:inventory:config:check` rejects stale bytes and verifies external Helm authorities on its successful-current path. Full discovery may acquire tools/children; it is not just a JSON comparison. |
 | Source-derived reference sections | `npm run docs:generate` updates its owned reference outputs | `docs:generate:check` detects mismatch. Prepare the actual source revision and selected discovery route; do not suppress unsupported inputs. |
 | Plugin catalogue/capability/operator matrix | `npm run docs:publication:generate` writes catalogue/capability pages and the marked operator matrix | `docs:publication:check` first runs helper tests and then compares/checks publication inputs. It does not validate every product example or live effect. |
 | New/moved documentation inputs | `npm run docs:tree:generate` derives the tree inventory from classification, baseline, current inputs, and consumers | `docs:tree:check` rebuilds and compares the model. Its dependency/consumer analysis has prerequisites; do not infer a pure file read from its name. |
+
+### Common-error input drift
+
+The common-error check reports `CATALOGUE_INPUT_SURFACE_DRIFT` with `added`,
+`removed`, or `changed` and the affected path. Inspect that change before updating
+`docs/config/common-error-input-surface.json`. Its file list and SHA-256 values
+record the reviewed production inputs; they do not approve error meaning.
+
+The policy in `scripts/lib/docs-catalogue-input-surface.mjs` selects owned
+component, contract, chart and deployment inputs, package registrations and
+selected build/deployment scripts. It includes previously error-free files.
+Tests, fixtures, dependencies, build outputs and generated documentation are
+excluded. The policy and manifest state the exact finite boundary; a new external
+component or deployment route requires an explicit scope review.
+
+For an affected diagnostic, check its identity/carrier, trigger, effect, consumer
+and safe recovery. Update the catalogue meaning and declared source bindings only
+when needed. Refresh the input manifest from `catalogueInputSurface(root)` after
+that review, retain its policy, then render and run the normal check. An unrelated
+source change can conservatively stop this guard without adding a catalogue entry.
+Fingerprint refresh is not a substitute for source review, and passing the guard
+does not prove live execution, a complete call graph or every dependency message.
 
 > **Source — ownership records and generator selection**
 >
