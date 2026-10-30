@@ -283,6 +283,45 @@ dynamic registration or arbitrary embedded TS/JS schema expression. Pruned
 That does not show that a shipped example or test-derived public interface is
 irrelevant. Examine each such source to find the applicable sources.
 
+
+## Global schema-field drift
+
+The field-drift inventory records every owned regular `*.schema.json` outside
+build, dependency and temporary directories. It also binds current `plugin.json` and `openclaw.plugin.json`
+registration inputs, so a new inline schema or schema reference needs review.
+Use the [field index](../../../docs/generated/inventory/schema-field-drift.json)
+to find a source path, its status, declared property pointers and reader route.
+The [bindings](../../../docs/config/schema-field-bindings.json) contain the
+reviewed source identities and routing decisions.
+
+`current-declaration` means a current source declaration, not proof that a
+runtime selects or executes it. Fixture, retained and documentation-only records
+remain in the index with those statuses. In particular, retaining an old schema
+never makes its version valid for a current parser.
+
+Run `node scripts/docs-schema-fields.mjs --check` from the repository root.
+An input-drift error names the changed file and its reference route. An added
+file needs an explicit status and route; a removed file needs a reviewed removal.
+A registration-drift error requires inspecting the inline schema or changed
+registration. An output-drift error means the generated index does not match its
+qualified inputs. Normal publication runs the same check before its existing
+example and contract checks.
+
+After inspecting a source change, update only its qualified binding or
+registration SHA-256, status and route. Use `sha256sum` on the reviewed file,
+not a digest copied from an old run. Then run
+`node scripts/docs-schema-fields.mjs` to generate the field index and run its
+`--check` mode. A hash refresh is not source or content approval.
+
+Pointers identify every literal JSON `properties` member, including members
+inside definitions, arrays and composition branches. The inventory also records
+occurrences in embedded data objects; these are not automatically applicable
+runtime fields. Read the owning schema and validator for conditions, references,
+defaults and consumer behavior. This check neither validates JSON Schema nor
+resolves external references. Non-property rules remain source-visible and
+byte-guarded. Existing pipeline/stage TypeScript field-mutation controls cover
+their separate compiler authorities; they do not replace this JSON-schema check.
+
 ## Validate, diagnose, and change the right contract
 
 1. Identify the consuming caller and whether the value is configuration, input, result or a checkpoint.

@@ -4,6 +4,7 @@ import crypto from 'node:crypto';
 import fs from 'node:fs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
+import { checkSchemaFieldInventory } from './docs-schema-fields.mjs';
 import { publicationPages, publicationAssets } from './lib/docs-publication-assets.mjs';
 import { validatePublicationClaimContracts } from './lib/docs-publication-claim-contracts.mjs';
 import { bindPublicationExampleCoverage } from './lib/docs-publication-example-coverage.mjs';
@@ -40,6 +41,7 @@ const mandatoryInputs = {
 };
 
 export async function validatePublicationExamples(root) {
+  const schemaFieldDrift = checkSchemaFieldInventory(root);
   const site = path.join(root, 'docs/site');
   const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
   const pages = publicationPages(site, JSON.parse(read('docs/config/documentation-tree-classification.json')));
@@ -104,7 +106,7 @@ export async function validatePublicationExamples(root) {
     results.push({ id: check.id, inputs: check.inputs.map(ref => ({ ref, sha256: hash(input(ref)) })), result });
   }
   const joinedContracts = validatePublicationClaimContracts(declaration, sources, results);
-  return { joinedContracts, schemaVersion: 'kubeclaw-publication-example-results.v1', ok: true,
+  return { joinedContracts, schemaFieldDrift, schemaVersion: 'kubeclaw-publication-example-results.v1', ok: true,
     pages: pages.length, blocks: declaration.pages.reduce((count, page) => count + page.blocks.length, 0),
     assets: assets.length, results, liveDeploymentOrWholeDocumentationAcceptance: false };
 }
