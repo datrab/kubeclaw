@@ -5,12 +5,40 @@ import { promisify } from 'node:util';
 import { once } from 'node:events';
 import { setTimeout as delay } from 'node:timers/promises';
 import { loadAll } from 'js-yaml';
+import fs from 'node:fs/promises';
+import os from 'node:os';
+import path from 'node:path';
 
 const execute = promisify(execFile);
 async function render(release, chart, values, namespace = 'kubeclaw') {
   const { stdout } = await execute(process.env.HELM_BIN || 'helm', ['template', release, chart, '-n', namespace, '-f', values], { maxBuffer: 8 * 1024 * 1024 });
   return loadAll(stdout).filter(Boolean);
 }
+
+test('Prism redeployment preserves repaired login selection and installs the current model route', async () => {
+  const resources = await render('agent-prism', 'charts/kubeclaw', 'my-values/prism-agent-values.yaml');
+  const initialized = JSON.parse(resources.find(r => r.kind === 'ConfigMap' && r.data?.['openclaw.json']).data['openclaw.json']);
+  assert.equal(initialized.auth, undefined, 'new Prism installations must not force historical account identifiers');
+  assert.equal(initialized.agents.defaults.model.primary, 'openai/gpt-6.1-sol');
+  assert.deepEqual(initialized.agents.defaults.model.fallbacks, ['openai/gpt-6-astra']);
+  const deployment = resources.find(r => r.kind === 'Deployment' && r.metadata.name === 'agent-prism');
+  const shell = deployment.spec.template.spec.initContainers.flatMap(c => c.args ?? c.command ?? []).find(s => s.includes('const initializedConfigPath'));
+  const block = [...shell.matchAll(/node <<'NODE'\n([\s\S]*?)\nNODE/gu)].find(match => match[1].includes('const initializedConfigPath'))?.[1];
+  assert.ok(block, 'exercise the actual rendered persistent config migration');
+  const temporary = await fs.mkdtemp(path.join(os.tmpdir(), 'prism-login-regression-'));
+  try {
+    const configFile = path.join(temporary, 'persistent.json');
+    const initialFile = path.join(temporary, 'initialized.json');
+    const auth = { profiles: { 'openai:operator-login': { provider: 'openai', mode: 'oauth' } }, order: { openai: ['openai:operator-login'] } };
+    await fs.writeFile(configFile, JSON.stringify({ auth, agents: { defaults: { model: { primary: 'openai/retired' } } } }));
+    await fs.writeFile(initialFile, JSON.stringify(initialized));
+    const program = block.replace("'/config/openclaw.json'", JSON.stringify(configFile)).replace("'/init-config/openclaw.json'", JSON.stringify(initialFile));
+    await execute(process.execPath, ['-e', program]);
+    const migrated = JSON.parse(await fs.readFile(configFile, 'utf8'));
+    assert.deepEqual(migrated.auth, auth, 'rollout must not replace a working operator login with unavailable chart accounts');
+    assert.deepEqual(migrated.agents.defaults.model, initialized.agents.defaults.model);
+  } finally { await fs.rm(temporary, { recursive: true, force: true }); }
+});
 
 test('rendered bridge probes reach the original loopback server and fail when it stops', async () => {
   const resources = await render('agent-prism', 'charts/kubeclaw', 'my-values/prism-agent-values.yaml');

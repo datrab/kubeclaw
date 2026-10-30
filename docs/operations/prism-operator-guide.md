@@ -19,6 +19,12 @@ upgrades to roll Kubernetes resources back when an upgrade fails. It does not
 roll back committed database migrations or external Secret changes. Schema
 changes must preserve the previous application contract; destructive migrations
 and credential rotation require a separately reviewed transition and restore plan.
+Prism's provider login selection is operator-owned persistent OpenClaw state:
+the chart does not inject historical account identifiers or overwrite that
+selection on restart. New installations must provision their own usable login.
+The managed Prism model route is `openai/gpt-6.1-sol`, with
+`openai/gpt-6-astra` as fallback; redeployment must preserve a repaired login
+while refreshing that route.
 The [database transition guide](prism-database-transitions.md) defines the
 compatible migration contract, maintenance password transition, isolated restore
 procedure and deferred rollout-failure acceptance.

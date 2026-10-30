@@ -27,6 +27,8 @@ data:
         "lastRunCommand": "configure",
         "lastRunMode": "local"
       },
+      {{/* Prism logins are operator-owned persistent state, not a chart-managed account order. */}}
+      {{- if ne .Values.agentRole "prism" }}
       "auth": {
         "profiles": {
           "openai:d.trabucco@tutamail.com": {
@@ -46,6 +48,7 @@ data:
           ]
         }
       },
+      {{- end }}
       "acp": {
         "enabled": true,
         "backend": "acpx",
