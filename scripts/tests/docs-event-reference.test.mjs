@@ -59,3 +59,17 @@ test('recursive schema keyword projection preserves branch scope, open records, 
   assert(rows.some((row) => row.pointer === '/x-future-vocabulary/empty' && row.value === 'array (0 entries)'));
   assert(!rows.some((row) => row.pointer === '/required'));
 });
+
+test('standalone source remains complete fenced data through the actual reader, including fence-like source text', () => {
+  const expression = 'func logJSON(detail interface{}) {\n  // Literal content is handled here, not authored prose.\n  println(````<script>not executable</script>````)\n}';
+  const current = inventory('unknown');
+  current.families[0].goDeclarations = [{source,expression,meaning:'Lexical source only; no standalone program or execution claim.'}];
+  current.families[0].typeValues = [{name:'sourceValue',source,expression}];
+  const markdown = renderEventReference(current);
+  assert(markdown.includes('`````text\n' + expression + '\n`````'));
+  const rendered = renderReaderMarkdown(markdown, 'reference/events.md', new Map([['reference/events.md', '/reference/events.html']]), new Set(), target => 'https://example.test/source/' + target);
+  const codes = []; const text = node => node.nodeName === '#text' ? node.value : (node.childNodes ?? []).map(text).join('');
+  const visit = node => {if(node.tagName==='code')codes.push(text(node));assert.notEqual(node.tagName,'script');for(const child of node.childNodes??[])visit(child)};
+  visit(parse(rendered.html));
+  assert.equal(codes.filter(value => value === expression + '\n').length, 2);
+});

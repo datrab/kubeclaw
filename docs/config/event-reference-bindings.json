@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-reference-bindings.v1",
-  "qualifiedSourceVectorSha256": "8dec008437c5eb60a74192107b0e9d5f44e97d4dd5af16bd17e8cfd17d75edb1",
+  "qualifiedSourceVectorSha256": "b34eb7d9b7291ff5a8388dbad3bb6780360ada702272421fb765ac964ee2ddcd",
   "qualificationStatus": "WHOLE_SOURCE_CONTENT_AND_EXACT_MAINTENANCE_DELTA_QUALIFIED_CODE_PUBLICATION_READER_ACCEPTANCE_PENDING",
   "families": [
     {
@@ -2710,7 +2710,7 @@
     },
     {
       "id": "retained-declarations",
-      "boundary": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+      "boundary": "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
       "versionAuthorities": [
         {
           "kind": "schema-pointer",
@@ -2724,7 +2724,7 @@
           "role": "retained",
           "path": "contracts/telemetry/v1/README.md",
           "selector": "retained",
-          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
           "locations": [
             {
               "line": 3,
@@ -2740,7 +2740,7 @@
           "role": "retained",
           "path": "contracts/telemetry/v1/catalog.json",
           "selector": "runtime.log",
-          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
           "locations": [
             {
               "line": 19,
@@ -2863,7 +2863,7 @@
       ],
       "calls": [],
       "limits": [
-        "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+        "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
         "Do not extend retained-flat disposition to actual active runtime_log bundle, future projection mapping, or every file under telemetry."
       ]
     },
@@ -3094,7 +3094,7 @@
       "calls": [],
       "limits": [
         "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
-        "Parsed scripts/calls/objects are carrier evidence; no live HTTP operation was executed. Receipt version is not an emitted event version.",
+        "Parsed scripts/calls/objects are carrier evidence; we did not execute a live product HTTP operation. Receipt version is not an emitted event version.",
         "Zero carrier is not the reason for exclusion; actual output/control operations are. Child process behavior is a separate source responsibility.",
         "No bootstrap/credentials operation was run. External Hubble implementation is not falsely represented as an owned schema.",
         "These exact operations do not serialize/dispatch product event payloads; this is source-bound, not token-name exclusion.",

@@ -10595,7 +10595,7 @@
             "source": "contracts/telemetry/v1/catalog.json",
             "target": "docs/site/reference/events.md#generated-source-contract-reference",
             "owner": "documentation; named components own diagnostic and delivery semantics",
-            "factsSha256": "f08cc09fb69ae433cd328c58fb7557c52d537817fe156fd9e5a9d51393bfdb33"
+            "factsSha256": "b3bccbc7f6cc892fc61cb910e3f9b9b53bf48684a9625c5b621ee96036cf3c0c"
           },
           {
             "sourceId": "event-contract:contracts%2Ftelemetry%2Fv1%2Fcorrelation_identity.schema.json:retained-declarations:schema:0",
@@ -11358,14 +11358,14 @@
             "source": "contracts/telemetry/v1/README.md",
             "target": "docs/site/reference/events.md#generated-source-contract-reference",
             "owner": "documentation; named components own diagnostic and delivery semantics",
-            "factsSha256": "44213ada2007547ecdb2abcc2cd5e7c02d238fbec6ad6714890158b7019ea8ca"
+            "factsSha256": "73cb2f95449365f8ca497b01d2e19a77cef8b07bb685684d3384cc11c7337ab8"
           },
           {
             "sourceId": "event-contract:contracts%2Ftelemetry%2Fv1%2FREADME.md:retained-declarations:role:1",
             "source": "contracts/telemetry/v1/README.md",
             "target": "docs/site/reference/events.md#generated-source-contract-reference",
             "owner": "documentation; named components own diagnostic and delivery semantics",
-            "factsSha256": "ff0572f4f5559fca1feb1afd8a2aeb61d7685e48931568fcf7d03bf7f966dc2e"
+            "factsSha256": "47fc52f2d8c50bc08405ab13d14db0664aba09e1b39440cb25294f861e94d68f"
           },
           {
             "sourceId": "event-contract:gitops%2Fplatform%2Fbootstrap%2Falloy.yaml:configured-generic-log-receiver:role:0",

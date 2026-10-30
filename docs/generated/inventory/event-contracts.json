@@ -1,6 +1,6 @@
 {
   "schemaVersion": "event-contract-reference.v1",
-  "sourceSetSha256": "8dec008437c5eb60a74192107b0e9d5f44e97d4dd5af16bd17e8cfd17d75edb1",
+  "sourceSetSha256": "b34eb7d9b7291ff5a8388dbad3bb6780360ada702272421fb765ac964ee2ddcd",
   "families": [
     {
       "id": "canonical-lifecycle-and-domain",
@@ -104946,7 +104946,7 @@
     },
     {
       "id": "retained-declarations",
-      "boundary": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+      "boundary": "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
       "version": "\"telemetry_envelope.v1\"",
       "versions": [
         {
@@ -104958,7 +104958,7 @@
       "roles": [
         {
           "role": "retained",
-          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
           "selector": "retained",
           "source": {
             "path": "contracts/telemetry/v1/README.md",
@@ -104970,7 +104970,7 @@
         },
         {
           "role": "retained",
-          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
           "selector": "retained",
           "source": {
             "path": "contracts/telemetry/v1/README.md",
@@ -104982,7 +104982,7 @@
         },
         {
           "role": "retained",
-          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
           "selector": "runtime.log",
           "source": {
             "path": "contracts/telemetry/v1/catalog.json",
@@ -134000,7 +134000,7 @@
         }
       ],
       "limits": [
-        "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+        "A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime_log.v1 bundle.",
         "Do not extend retained-flat disposition to actual active runtime_log bundle, future projection mapping, or every file under telemetry.",
         "Complete selected JSON Schema documents and reference edges; runtime selection/activation is qualified separately."
       ]
@@ -137484,7 +137484,7 @@
       "schemaReferences": [],
       "limits": [
         "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
-        "Parsed scripts/calls/objects are carrier evidence; no live HTTP operation was executed. Receipt version is not an emitted event version.",
+        "Parsed scripts/calls/objects are carrier evidence; we did not execute a live product HTTP operation. Receipt version is not an emitted event version.",
         "Zero carrier is not the reason for exclusion; actual output/control operations are. Child process behavior is a separate source responsibility.",
         "No bootstrap/credentials operation was run. External Hubble implementation is not falsely represented as an owned schema.",
         "These exact operations do not serialize/dispatch product event payloads; this is source-bound, not token-name exclusion.",
@@ -144514,8 +144514,8 @@
     },
     {
       "path": "scripts/lib/docs-event-reference.mjs",
-      "sha256": "ca71e0e64c39a97fd92116f7c5b7d8800d09208e8288e778ddf39558b91003f0",
-      "bytes": 9601
+      "sha256": "130c97f57efea515e83fa7ce20441e20ae267299fa66decbc5a196eb6cad3bc8",
+      "bytes": 10014
     },
     {
       "path": "scripts/lib/docs-markdown-anchors.mjs",
@@ -145219,8 +145219,8 @@
     },
     {
       "path": "scripts/tests/docs-event-reference.test.mjs",
-      "sha256": "bdfd7773e485c5a9274c0db241a5b379aecfa08bfae79390644ecb61d84f4321",
-      "bytes": 4039
+      "sha256": "5cdd02865e43a087490623243705c9bc3856807f92cbd86695ebfc6339571b41",
+      "bytes": 5310
     },
     {
       "path": "scripts/tests/docs-markdown-anchors.test.mjs",
@@ -154525,5 +154525,5 @@
       "bytes": 3220
     }
   ],
-  "combinedSourceVectorSha256": "7df19cd3d25a828fbc3e63854fc2ab59614d7e6fd407021fbcdaf7e48362870b"
+  "combinedSourceVectorSha256": "90a3f1143d82e1fb7ca3dbd0a6f8294156e136662e834a4735b87edd36539ce5"
 }

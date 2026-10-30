@@ -259,18 +259,17 @@ update its exact authority and consumer explanation together. Use
 [Documentation maintenance](../extend/documentation-maintenance.md); existing
 name extraction does not generate this authored hub or prove every producer
 has an owner. The authored explanation above reports no audit, replay, live
-delivery or recovery execution. The marked section below is generated from
-source by `docs:events:generate`; syntax extraction does not prove live delivery
-or recovery.
+delivery or recovery execution. `docs:events:generate` derives the marked section below from source.
+Syntax extraction does not prove live delivery or recovery.
 
 <!-- BEGIN GENERATED EVENT CONTRACT REFERENCE -->
 ## Generated source contract reference
 
 Source contracts and configured paths do not prove live delivery. Declaration, construction, validation and consumption are separate facts.
 
-Primary executable/delivered Source vector SHA-256: <code>8dec008437c5eb60a74192107b0e9d5f44e97d4dd5af16bd17e8cfd17d75edb1</code>.
+Primary executable/delivered Source vector SHA-256: <code>b34eb7d9b7291ff5a8388dbad3bb6780360ada702272421fb765ac964ee2ddcd</code>.
 
-Combined primary and supplementary authority vector SHA-256: <code>7df19cd3d25a828fbc3e63854fc2ab59614d7e6fd407021fbcdaf7e48362870b</code>.
+Combined primary and supplementary authority vector SHA-256: <code>90a3f1143d82e1fb7ca3dbd0a6f8294156e136662e834a4735b87edd36539ce5</code>.
 
 Supplementary authority [<code>contracts/telemetry/v1/README.md</code>:1](../../../contracts/telemetry/v1/README.md#L1) — SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>.
 
@@ -4759,7 +4758,7 @@ Cooked-script span 3236–3328; construction candidate, not automatically an eve
 
 Boundary: This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.
 
-Boundary: Parsed scripts/calls/objects are carrier evidence; no live HTTP operation was executed. Receipt version is not an emitted event version.
+Boundary: Parsed scripts/calls/objects are carrier evidence; we did not execute a live product HTTP operation. Receipt version is not an emitted event version.
 
 Boundary: Zero carrier is not the reason for exclusion; actual output/control operations are. Child process behavior is a separate source responsibility.
 
@@ -7081,7 +7080,27 @@ Version/discriminator (exact source syntax): No common version asserted for this
 
 **Go construction / callback declaration** — [<code>tools/native-worker-nri/main.go</code>:93](../../../tools/native-worker-nri/main.go#L93) (SHA-256 <code>3d0c3149fc703f6c8e2fd3392b7f8e2e1bbd1df1b18215c2857cb2cddf417531</code>)
 
-<pre><code>func (p &#42;plugin) CreateContainer(&#95; context.Context, pod &#42;api.PodSandbox, container &#42;api.Container) (&#42;api.ContainerAdjustment, &#91;&#93;&#42;api.ContainerUpdate, error) {&#10;	role := pod.GetAnnotations()&#91;roleAnnotation&#93;&#10;	if role == "" {&#10;		return nil, nil, nil&#10;	}&#10;	selected, ok := p.config.Roles&#91;role&#93;&#10;	if !ok &#124;&#124; pod.GetNamespace() != selected.Namespace &#124;&#124; pod.GetAnnotations()&#91;policyAnnotation&#93; != selected.PolicyDigest {&#10;		return nil, nil, errors.New("NATIVE&#95;NRI&#95;SUPERVISOR&#95;SELECTION&#95;REJECTED")&#10;	}&#10;	if container.GetName() != selected.Container {&#10;		return nil, nil, nil&#10;	}&#10;	if pod.GetId() == "" &#124;&#124; pod.GetUid() == "" &#124;&#124; container.GetPodSandboxId() != pod.GetId() {&#10;		return nil, nil, errors.New("NATIVE&#95;NRI&#95;SANDBOX&#95;BINDING&#95;REQUIRED")&#10;	}&#10;	adjustment := &amp;api.ContainerAdjustment{}&#10;	adjustment.RemoveNamespace(&amp;api.LinuxNamespace{Type: "cgroup"})&#10;	return adjustment, nil, nil&#10;}</code></pre>
+```text
+func (p *plugin) CreateContainer(_ context.Context, pod *api.PodSandbox, container *api.Container) (*api.ContainerAdjustment, []*api.ContainerUpdate, error) {
+	role := pod.GetAnnotations()[roleAnnotation]
+	if role == "" {
+		return nil, nil, nil
+	}
+	selected, ok := p.config.Roles[role]
+	if !ok || pod.GetNamespace() != selected.Namespace || pod.GetAnnotations()[policyAnnotation] != selected.PolicyDigest {
+		return nil, nil, errors.New("NATIVE_NRI_SUPERVISOR_SELECTION_REJECTED")
+	}
+	if container.GetName() != selected.Container {
+		return nil, nil, nil
+	}
+	if pod.GetId() == "" || pod.GetUid() == "" || container.GetPodSandboxId() != pod.GetId() {
+		return nil, nil, errors.New("NATIVE_NRI_SANDBOX_BINDING_REQUIRED")
+	}
+	adjustment := &api.ContainerAdjustment{}
+	adjustment.RemoveNamespace(&api.LinuxNamespace{Type: "cgroup"})
+	return adjustment, nil, nil
+}
+```
 
 Complete balanced lexical Go declaration body; no invented payload type, validator, version or runtime activation.
 
@@ -8378,19 +8397,56 @@ Version/discriminator (exact source syntax): <code>1; 'openclaw-agent-event.v2'<
 
 **Referenced initializer <code>SUPPORTED&#95;HOOKS</code>** — [<code>skills/common/plugins/openclaw-agent-events/src/adapter.ts</code>:5](../../../skills/common/plugins/openclaw-agent-events/src/adapter.ts#L5) (SHA-256 <code>665d10a623f4e9e83dc50bc9a7c769aea0bec8658ab233f3a6d07a89338dd7c7</code>)
 
-<code>Object.freeze(&#91;&#10;  'agent&#95;end', 'llm&#95;input', 'llm&#95;output', 'subagent&#95;spawned', 'subagent&#95;delivery&#95;target', 'subagent&#95;ended',&#10;  'before&#95;tool&#95;call', 'after&#95;tool&#95;call', 'model&#95;call&#95;started',&#10;  'model&#95;call&#95;ended', 'session&#95;start', 'session&#95;end',&#10;&#93;)</code>
+```text
+Object.freeze([
+  'agent_end', 'llm_input', 'llm_output', 'subagent_spawned', 'subagent_delivery_target', 'subagent_ended',
+  'before_tool_call', 'after_tool_call', 'model_call_started',
+  'model_call_ended', 'session_start', 'session_end',
+])
+```
 
 This is source initializer syntax, not evaluated runtime data.
 
 **Referenced initializer <code>AGENT&#95;OBSERVABILITY&#95;INGRESS&#95;EVENT&#95;TYPES</code>** — [<code>contracts/agent-observability/v1/src/constants.ts</code>:14](../../../contracts/agent-observability/v1/src/constants.ts#L14) (SHA-256 <code>7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924</code>)
 
-<code>Object.freeze(&#91;&#10;  'openclaw.agent.ended',&#10;  'openclaw.llm.input',&#10;  'openclaw.llm.output',&#10;  'openclaw.subagent.spawned',&#10;  'openclaw.subagent.delivery&#95;target',&#10;  'openclaw.subagent.ended',&#10;  'openclaw.tool.started',&#10;  'openclaw.tool.finished',&#10;  'openclaw.model.started',&#10;  'openclaw.model.ended',&#10;  'openclaw.model.usage',&#10;  'openclaw.session.started',&#10;  'openclaw.session.ended',&#10;&#93; as const)</code>
+```text
+Object.freeze([
+  'openclaw.agent.ended',
+  'openclaw.llm.input',
+  'openclaw.llm.output',
+  'openclaw.subagent.spawned',
+  'openclaw.subagent.delivery_target',
+  'openclaw.subagent.ended',
+  'openclaw.tool.started',
+  'openclaw.tool.finished',
+  'openclaw.model.started',
+  'openclaw.model.ended',
+  'openclaw.model.usage',
+  'openclaw.session.started',
+  'openclaw.session.ended',
+] as const)
+```
 
 This is source initializer syntax, not evaluated runtime data.
 
 **Referenced initializer <code>AGENT&#95;OBSERVABILITY&#95;HOOKS</code>** — [<code>contracts/agent-observability/v1/src/constants.ts</code>:34](../../../contracts/agent-observability/v1/src/constants.ts#L34) (SHA-256 <code>7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924</code>)
 
-<code>Object.freeze(&#91;&#10;  'agent&#95;end',&#10;  'llm&#95;input',&#10;  'llm&#95;output',&#10;  'subagent&#95;spawned',&#10;  'subagent&#95;delivery&#95;target',&#10;  'subagent&#95;ended',&#10;  'before&#95;tool&#95;call',&#10;  'after&#95;tool&#95;call',&#10;  'model&#95;call&#95;started',&#10;  'model&#95;call&#95;ended',&#10;  'session&#95;start',&#10;  'session&#95;end',&#10;&#93; as const)</code>
+```text
+Object.freeze([
+  'agent_end',
+  'llm_input',
+  'llm_output',
+  'subagent_spawned',
+  'subagent_delivery_target',
+  'subagent_ended',
+  'before_tool_call',
+  'after_tool_call',
+  'model_call_started',
+  'model_call_ended',
+  'session_start',
+  'session_end',
+] as const)
+```
 
 This is source initializer syntax, not evaluated runtime data.
 
@@ -12290,15 +12346,15 @@ Boundary: Complete selected JSON Schema documents and reference edges; runtime s
 
 ### retained-declarations
 
-A retained schema/catalog/type is not an active runtime producer or consumer. runtime\_log.v1 bundle is handled separately.
+A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle.
 
 Version/discriminator (exact source syntax): <code>"telemetry&#95;envelope.v1"</code>
 
 | Role | Exact source | Qualification / condition |
 | --- | --- | --- |
-| retained | [<code>contracts/telemetry/v1/README.md</code>:3](../../../contracts/telemetry/v1/README.md#L3) (SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. runtime\_log.v1 bundle is handled separately. |
-| retained | [<code>contracts/telemetry/v1/README.md</code>:50](../../../contracts/telemetry/v1/README.md#L50) (SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. runtime\_log.v1 bundle is handled separately. |
-| retained | [<code>contracts/telemetry/v1/catalog.json</code>:19](../../../contracts/telemetry/v1/catalog.json#L19) (SHA-256 <code>0e87c64bf3dc06c60586d3d8b63e5f60ab15712bb915d745de44f325a94b4c5e</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. runtime\_log.v1 bundle is handled separately. |
+| retained | [<code>contracts/telemetry/v1/README.md</code>:3](../../../contracts/telemetry/v1/README.md#L3) (SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle. |
+| retained | [<code>contracts/telemetry/v1/README.md</code>:50](../../../contracts/telemetry/v1/README.md#L50) (SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle. |
+| retained | [<code>contracts/telemetry/v1/catalog.json</code>:19](../../../contracts/telemetry/v1/catalog.json#L19) (SHA-256 <code>0e87c64bf3dc06c60586d3d8b63e5f60ab15712bb915d745de44f325a94b4c5e</code>) | A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle. |
 
 **Schema [<code>contracts/telemetry/v1/correlation&#95;identity.schema.json</code>:1](../../../contracts/telemetry/v1/correlation_identity.schema.json#L1)** — SHA-256 <code>f7db85b8371f21d543a29917f6c0e74a7fb4b2c7256f2757cabcdbc093238e81</code>
 
@@ -29852,7 +29908,7 @@ Pointers retain their original schema scope. A required list in one conditional 
 | <code>/required/3</code> | <code>"observability"</code> |
 | <code>/type</code> | <code>"object"</code> |
 
-Boundary: A retained schema/catalog/type is not an active runtime producer or consumer. runtime\_log.v1 bundle is handled separately.
+Boundary: A retained schema/catalog/type is not an active runtime producer or consumer. See the separate runtime\_log.v1 bundle.
 
 Boundary: Do not extend retained-flat disposition to actual active runtime\_log bundle, future projection mapping, or every file under telemetry.
 
@@ -29919,7 +29975,25 @@ These are source-defined diagnostic writes; logOnce and failure/readiness condit
 
 **Go construction / callback declaration** — [<code>cmd/buster-namespace-controller/main.go</code>:2083](../../../cmd/buster-namespace-controller/main.go#L2083) (SHA-256 <code>c93bcc15f56bf6c5a9266c48835018b42589489846642bede2eb93851c4b6624</code>)
 
-<pre><code>func logJSON(level string, message string, detail interface{}) {&#10;	record := map&#91;string&#93;interface{}{&#10;		"ts":        time.Now().UTC().Format(time.RFC3339Nano),&#10;		"level":     level,&#10;		"component": "buster-namespace-controller",&#10;		"message":   message,&#10;	}&#10;	if detail != nil {&#10;		record&#91;"detail"&#93; = detail&#10;	}&#10;	data, err := json.Marshal(record)&#10;	if err != nil {&#10;		fmt.Println(&#96;{"level":"error","component":"buster-namespace-controller","message":"failed to marshal log"}&#96;)&#10;		return&#10;	}&#10;	fmt.Println(string(data))&#10;}</code></pre>
+```text
+func logJSON(level string, message string, detail interface{}) {
+	record := map[string]interface{}{
+		"ts":        time.Now().UTC().Format(time.RFC3339Nano),
+		"level":     level,
+		"component": "buster-namespace-controller",
+		"message":   message,
+	}
+	if detail != nil {
+		record["detail"] = detail
+	}
+	data, err := json.Marshal(record)
+	if err != nil {
+		fmt.Println(`{"level":"error","component":"buster-namespace-controller","message":"failed to marshal log"}`)
+		return
+	}
+	fmt.Println(string(data))
+}
+```
 
 Complete balanced lexical Go declaration body; no invented payload type, validator, version or runtime activation.
 

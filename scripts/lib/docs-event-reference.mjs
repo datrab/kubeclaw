@@ -3,6 +3,14 @@ const literal = (value) => `<code>${String(value).replaceAll('&', '&amp;')
   .replaceAll('<', '&lt;').replaceAll('>', '&gt;').replaceAll('|', '&#124;')
   .replaceAll('\r', '&#13;').replaceAll('\n', '&#10;')
   .replace(/[\\`*_\[\]]/gu, (character) => `&#${character.codePointAt(0)};`)}</code>`;
+// A complete standalone source snippet is code, not prose. Keep source bytes
+// visible without evaluating them or weakening the unchanged language checker.
+const sourceBlock = (value) => {
+  const text = String(value);
+  const runs = [...text.matchAll(/`+/gu)].map((match) => match[0].length);
+  const fence = '`'.repeat(Math.max(3, ...runs.map((length) => length + 1)));
+  return `${fence}text\n${text}\n${fence}`;
+};
 const prose = (value) => String(value).replaceAll('&', '&amp;').replaceAll('<', '&lt;')
   .replaceAll('>', '&gt;').replaceAll('|', '&#124;').replaceAll('\n', ' ')
   .replace(/[\\`*_\[\]]/gu, '\\$&');
@@ -74,7 +82,7 @@ export function renderEventReference(inventory) {
     }
     for (const value of family.typeValues ?? []) lines.push('',
       `**Referenced initializer ${literal(value.name)}** — ${anchor(value.source)}`, '',
-      literal(value.expression), '', 'This is source initializer syntax, not evaluated runtime data.');
+      sourceBlock(value.expression), '', 'This is source initializer syntax, not evaluated runtime data.');
     for (const call of family.selectedCalls ?? []) {
       lines.push('', `**${prose(call.role)} call ${literal(call.expression)}** — ${anchor(call.source)}`, '',
         prose(call.condition), '', '| Argument index | Exact expression |', '| --- | --- |');
@@ -82,7 +90,7 @@ export function renderEventReference(inventory) {
     }
     for (const declaration of family.goDeclarations ?? []) lines.push('',
       `**Go construction / callback declaration** — ${anchor(declaration.source)}`, '',
-      `<pre>${literal(declaration.expression)}</pre>`, '', prose(declaration.meaning));
+      sourceBlock(declaration.expression), '', prose(declaration.meaning));
     for (const script of family.embeddedScripts ?? []) {
       lines.push('', `**Embedded browser source** — ${anchor(script.origin)}`, '',
         prose(script.coordinateMeaning), '');
