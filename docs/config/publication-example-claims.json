@@ -43606,11 +43606,11 @@
     },
     {
       "path": "docs/site/reference/common-errors-platform.md",
-      "sha256": "8b9278f51ae190057e261f925dd8160aaf57370f4e5140e537818f8956a5d479",
+      "sha256": "cfd0a3ede00bfc5bc1fec16afc507294fac4f5e1e7705c88a4d23e77bfa0af7f",
       "owner": "documentation diagnostic catalogue",
       "claim": "Source-bound failure identity, trigger, effect, recovery and evidence routes; no universal retry.",
       "executionBoundary": "Reference source constructions are not executed. Only hub generation/check commands operate locally on documentation; no production remediation.",
-      "basis": "MNT005 maintained diagnostic catalogue. Existing qualified family source inputs and practical-catalogue-reader/successor support concrete diagnostic lookup. Diagnostic text/source constructions are not executed; arbitrary dependency details remain open. Two hub maintenance commands operate on local documentation only. No whole A913 language approval.\nOnly explicit Generator metadata added; diagnostic bodies, examples, procedures and previously assessed semantic responsibilities unchanged.",
+      "basis": "MNT005 maintained diagnostic catalogue. Existing qualified family source inputs and practical-catalogue-reader/successor support concrete diagnostic lookup. Diagnostic text/source constructions are not executed; arbitrary dependency details remain open. Two hub maintenance commands operate on local documentation only. No whole A913 language approval.\nOnly explicit Generator metadata added; diagnostic bodies, examples, procedures and previously assessed semantic responsibilities unchanged.\nA91306 current bounded first-dependent clarification: independently Source-approved expansion and definition of compare-and-swap (CAS) before dependent safety instructions in go-python:controller-startup-and-reconcile. Failure causes, diagnostic identities/source bindings, effects, retry and recovery duties remain unchanged. Actual native catalogue generation and drift check pass for187 families/seven pages. No live execution, fresh Reader or original whole acceptance is claimed by this binding update.",
       "checks": [
         "claim-contract"
       ],
@@ -43618,11 +43618,11 @@
       "prose": [
         {
           "ordinal": 1,
-          "sha256": "8b9278f51ae190057e261f925dd8160aaf57370f4e5140e537818f8956a5d479",
+          "sha256": "cfd0a3ede00bfc5bc1fec16afc507294fac4f5e1e7705c88a4d23e77bfa0af7f",
           "owner": "documentation diagnostic catalogue",
           "claim": "Source-bound failure identity, trigger, effect, recovery and evidence routes; no universal retry.",
           "executionBoundary": "Reference source constructions are not executed. Only hub generation/check commands operate locally on documentation; no production remediation.",
-          "basis": "MNT005 maintained diagnostic catalogue. Existing qualified family source inputs and practical-catalogue-reader/successor support concrete diagnostic lookup. Diagnostic text/source constructions are not executed; arbitrary dependency details remain open. Two hub maintenance commands operate on local documentation only. No whole A913 language approval.\nOnly explicit Generator metadata added; diagnostic bodies, examples, procedures and previously assessed semantic responsibilities unchanged.",
+          "basis": "MNT005 maintained diagnostic catalogue. Existing qualified family source inputs and practical-catalogue-reader/successor support concrete diagnostic lookup. Diagnostic text/source constructions are not executed; arbitrary dependency details remain open. Two hub maintenance commands operate on local documentation only. No whole A913 language approval.\nOnly explicit Generator metadata added; diagnostic bodies, examples, procedures and previously assessed semantic responsibilities unchanged.\nA91306 current bounded first-dependent clarification: independently Source-approved expansion and definition of compare-and-swap (CAS) before dependent safety instructions in go-python:controller-startup-and-reconcile. Failure causes, diagnostic identities/source bindings, effects, retry and recovery duties remain unchanged. Actual native catalogue generation and drift check pass for187 families/seven pages. No live execution, fresh Reader or original whole acceptance is claimed by this binding update.",
           "checks": [
             "claim-contract"
           ]
@@ -49363,8 +49363,8 @@
     },
     {
       "path": "docs/config/common-error-catalogue.json",
-      "sha256": "2bf8c66b692d64ab30a7670afa7b1d5ed80826b315b2e35c18920c268cfd80c6",
-      "responsibility": "Maintained Source-qualified diagnostic families and declared representative owner/consumer sources; authoring is not live execution or arbitrary dependency vocabulary closure.\nTen helper titles separate exact symbol from actual regular source path; all other entry fields unchanged.\nREF005 current Source-qualified exact diagnostic identity/source-line/carrier data and optional literal-safe lookup renderer. The earlier compatibility/control observation established byte-exact MNT005 output at its tested scope without optional identity fields. The later f384cb92 hub-introduction clarification intentionally changes wording; no new full-output byte equality is claimed. Invalid source/line controls and clean corrective P2 remain valid at their stated scope. Content approval separate from mechanical checks and not new runtime proof."
+      "sha256": "d2ce4bac9405d0833c4fe59f604a4cdf2804a94fc8996e5b41d6f48e3e1d70f5",
+      "responsibility": "Maintained Source-qualified diagnostic families and declared representative owner/consumer sources; authoring is not live execution or arbitrary dependency vocabulary closure.\nTen helper titles separate exact symbol from actual regular source path; all other entry fields unchanged.\nREF005 current Source-qualified exact diagnostic identity/source-line/carrier data and optional literal-safe lookup renderer. The earlier compatibility/control observation established byte-exact MNT005 output at its tested scope without optional identity fields. The later f384cb92 hub-introduction clarification intentionally changes wording; no new full-output byte equality is claimed. Invalid source/line controls and clean corrective P2 remain valid at their stated scope. Content approval separate from mechanical checks and not new runtime proof.\nA91306 current bounded first-dependent clarification: independently Source-approved expansion and definition of compare-and-swap (CAS) before dependent safety instructions in go-python:controller-startup-and-reconcile. Failure causes, diagnostic identities/source bindings, effects, retry and recovery duties remain unchanged. Actual native catalogue generation and drift check pass for187 families/seven pages. No live execution, fresh Reader or original whole acceptance is claimed by this binding update."
     },
     {
       "path": "scripts/docs-common-error-catalogue.mjs",

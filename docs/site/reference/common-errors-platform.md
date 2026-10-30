@@ -125,7 +125,7 @@ Search for the exact diagnostic or constructor. Each entry distinguishes its ide
 
 **Identity / construction:** Uncoded local errors and errors.Is ownership sentinel. apiError.statusCode+open message. Failed/ReconcileFailed status and logs
 
-**Trigger:** Actual startup prerequisites, validation/ownership/CAS rejection, Kubernetes request/response failure or reconciliation exception at named phase.
+**Trigger:** Startup prerequisites, validation or ownership checks, and compare-and-swap (CAS) rejection can stop the named phase. CAS commits a change only if the stored value matches the expected value. Kubernetes request or response failures and reconciliation exceptions can also stop that phase.
 
 **Effect:** Provisioning can patch lease, Namespace, quotas/network policies/RBAC/Secrets/exposure before a later failure. No transaction rollback. Cleanup fences state, verifies owner labels/leaseUID and CAS identities. delete wait may time out. Deletion reconciler may remove its finalizer after ownership-mismatch sentinel without deleting another owner's Namespace. Namespace/resource findings remain in the record data, not constructor exceptions.
 
