@@ -24,6 +24,7 @@ spec:
           cilium: false
         rbac:
           readAllNamespaces: true
+          execAllNonSystemNamespaces: true
           namespaces:
             - kubeclaw-ops
             - kubeclaw
@@ -37,7 +38,7 @@ spec:
             enabled: true
           clients:
             - id: codex
-              readOnly: true
+              readOnly: false
               readAllNamespaces: true
               tokenSecret: codex-ops-bearer
               namespace: kubeclaw-ops
@@ -66,7 +67,13 @@ spec:
                 - get_resource_inventory
                 - get_monitoring_metrics
                 - get_monitoring_alerts
-              exec: []
+                - exec_pod
+              exec:
+                - allNonSystemNamespaces: true
+                  allPods: true
+                  allContainers: true
+                  timeoutSeconds: 30
+                  maxOutputBytes: 65536
             - id: nova
               tokenSecret: nova-ops-bearer
               namespace: kubeclaw
