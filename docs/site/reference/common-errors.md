@@ -10,7 +10,7 @@ Generator: scripts/docs-common-error-catalogue.mjs
 
 <!-- BEGIN GENERATED: common error catalogue -->
 
-Use the exact code, constructor or message text to search this catalogue. Start with the first owning boundary, not the last wrapper error.
+Search an exact code or the fixed part of the owning message pattern. Values inside `${...}` are symbolic source substitutions. Start with the first owning boundary, not the last wrapper error.
 
 Current workspace-owned runtime and operator-facing failure families. Messages, typed codes, returned reasons, exit/status translations and control outcomes remain distinct. This is not a finite list of arbitrary dependency messages or every data-dependent detail. Documentation-tool internals and test-fixture assertions are not runtime failure families.
 
