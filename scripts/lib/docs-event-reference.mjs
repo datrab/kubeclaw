@@ -17,7 +17,10 @@ const prose = (value) => String(value).replaceAll('&', '&amp;').replaceAll('<', 
 const sourceLink = (file, line = 1) => {
   const encoded = file.split('/').map((part) => encodeURIComponent(part)
     .replace(/[!'()*]/gu, (character) => `%${character.codePointAt(0).toString(16).toUpperCase()}`)).join('/');
-  return `[${literal(file)}:${line}](../../../${encoded}#L${line})`;
+  // Markdown destinations use heading fragments, not source-line anchors.
+  // Retain the inspected line in the label and link to the complete source file.
+  const fragment = /\.(?:md|markdown)$/iu.test(file) ? '' : `#L${line}`;
+  return `[${literal(file)}:${line}](../../../${encoded}${fragment})`;
 };
 const anchor = (source) => `${sourceLink(source.path, source.line)} (SHA-256 ${literal(source.sourceSha256)})`;
 const roles = new Set(['producer', 'transformer', 'validator', 'consumer', 'declaration',

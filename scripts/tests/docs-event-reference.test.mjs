@@ -5,6 +5,15 @@ import { renderEventReference, replaceEventReference, schemaKeywordRows } from '
 import { renderReaderMarkdown } from '../docs-reader/renderer.mjs';
 
 const source = { path: 'skills/app/events.ts', line: 4, sourceSha256: 'a'.repeat(64) };
+test('Markdown source links retain inspected lines without inventing heading anchors', () => {
+  const data = inventory('unknown');
+  data.supportingSourceVector = [{ path: 'contracts/telemetry/v1/README.md', sha256: 'a'.repeat(64) }];
+  data.families[0].roles.push({ role: 'retained', source: { ...source, path: 'contracts/telemetry/v1/README.md', line: 50 }, condition: 'Retained source only.' });
+  const markdown = renderEventReference(data);
+  assert.match(markdown, /README\.md<\/code>:50\]\(\.\.\/\.\.\/\.\.\/contracts\/telemetry\/v1\/README\.md\)/u);
+  assert(!markdown.includes('README.md#L'));
+  assert(markdown.includes('events.ts#L4'));
+});
 function inventory(expression) {
   return { schemaVersion: 'event-contract-reference.v1', sourceSetSha256: 'b'.repeat(64), families: [{
     id: 'wire_boundary', boundary: 'Declared shape; delivery is conditional.', version: null,
