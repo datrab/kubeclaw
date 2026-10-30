@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 177,
+  "pageCount": 184,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -1819,6 +1819,146 @@
         "npm run docs:inventory:config:check",
         "npm run docs:generate:check",
         "npm run docs:drift:config:mutations",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/common-errors-configuration.md",
+      "route": "/reference/common-errors-configuration/",
+      "contentKind": "generated",
+      "status": "generated source-backed reference",
+      "audience": "operator, developer, maintainer",
+      "owner": "documentation automation",
+      "appliesTo": "current workspace-owned diagnostic families; source-bound descriptions, not execution evidence",
+      "lastVerified": "generation checks the declared source digests",
+      "sourceDependencies": [
+        "scripts/docs-common-error-catalogue.mjs",
+        "docs/config/common-error-catalogue.json"
+      ],
+      "checks": [
+        "npm run docs:errors:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/common-errors-foundation.md",
+      "route": "/reference/common-errors-foundation/",
+      "contentKind": "generated",
+      "status": "generated source-backed reference",
+      "audience": "operator, developer, maintainer",
+      "owner": "documentation automation",
+      "appliesTo": "current workspace-owned diagnostic families; source-bound descriptions, not execution evidence",
+      "lastVerified": "generation checks the declared source digests",
+      "sourceDependencies": [
+        "scripts/docs-common-error-catalogue.mjs",
+        "docs/config/common-error-catalogue.json"
+      ],
+      "checks": [
+        "npm run docs:errors:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/common-errors-nova.md",
+      "route": "/reference/common-errors-nova/",
+      "contentKind": "generated",
+      "status": "generated source-backed reference",
+      "audience": "operator, developer, maintainer",
+      "owner": "documentation automation",
+      "appliesTo": "current workspace-owned diagnostic families; source-bound descriptions, not execution evidence",
+      "lastVerified": "generation checks the declared source digests",
+      "sourceDependencies": [
+        "scripts/docs-common-error-catalogue.mjs",
+        "docs/config/common-error-catalogue.json"
+      ],
+      "checks": [
+        "npm run docs:errors:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/common-errors-platform.md",
+      "route": "/reference/common-errors-platform/",
+      "contentKind": "generated",
+      "status": "generated source-backed reference",
+      "audience": "operator, developer, maintainer",
+      "owner": "documentation automation",
+      "appliesTo": "current workspace-owned diagnostic families; source-bound descriptions, not execution evidence",
+      "lastVerified": "generation checks the declared source digests",
+      "sourceDependencies": [
+        "scripts/docs-common-error-catalogue.mjs",
+        "docs/config/common-error-catalogue.json"
+      ],
+      "checks": [
+        "npm run docs:errors:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/common-errors-prism.md",
+      "route": "/reference/common-errors-prism/",
+      "contentKind": "generated",
+      "status": "generated source-backed reference",
+      "audience": "operator, developer, maintainer",
+      "owner": "documentation automation",
+      "appliesTo": "current workspace-owned diagnostic families; source-bound descriptions, not execution evidence",
+      "lastVerified": "generation checks the declared source digests",
+      "sourceDependencies": [
+        "scripts/docs-common-error-catalogue.mjs",
+        "docs/config/common-error-catalogue.json"
+      ],
+      "checks": [
+        "npm run docs:errors:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/common-errors-worker.md",
+      "route": "/reference/common-errors-worker/",
+      "contentKind": "generated",
+      "status": "generated source-backed reference",
+      "audience": "operator, developer, maintainer",
+      "owner": "documentation automation",
+      "appliesTo": "current workspace-owned diagnostic families; source-bound descriptions, not execution evidence",
+      "lastVerified": "generation checks the declared source digests",
+      "sourceDependencies": [
+        "scripts/docs-common-error-catalogue.mjs",
+        "docs/config/common-error-catalogue.json"
+      ],
+      "checks": [
+        "npm run docs:errors:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/reference/common-errors.md",
+      "route": "/reference/common-errors/",
+      "contentKind": "generated",
+      "status": "generated source-backed reference",
+      "audience": "operator, developer, maintainer",
+      "owner": "documentation automation",
+      "appliesTo": "current workspace-owned diagnostic families; source-bound descriptions, not execution evidence",
+      "lastVerified": "generation checks the declared source digests",
+      "sourceDependencies": [
+        "scripts/docs-common-error-catalogue.mjs",
+        "docs/config/common-error-catalogue.json"
+      ],
+      "checks": [
+        "npm run docs:errors:check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"

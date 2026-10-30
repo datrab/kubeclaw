@@ -6,6 +6,7 @@ Owner: documentation automation
 Evidence: docs/config/common-error-catalogue.json; scripts/docs-common-error-catalogue.mjs
 Applies to: current workspace-owned diagnostic families; source-bound descriptions, not execution evidence
 Last verified: generation checks the declared source digests
+Generator: scripts/docs-common-error-catalogue.mjs
 
 <!-- BEGIN GENERATED: common error catalogue -->
 

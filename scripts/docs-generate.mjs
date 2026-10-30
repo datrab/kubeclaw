@@ -34,7 +34,7 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment'].includes(only)) {
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment', 'native-supervisor-environment'].includes(only)) {
   throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification or configuration');
 }
 if (only && argv.includes('--update-source-revision')) {
@@ -220,6 +220,17 @@ function stableWriteMap() {
   if (only === 'verification') return new Map([
     ['docs/site/reference/verification-commands.md', renderVerification(readJson('docs/generated/inventory/deploy-script.json'))],
   ]);
+  if (only === 'native-supervisor-environment') {
+    const target = 'docs/site/reference/environment-variables.md';
+    const rendered = renderEnvironment(readJson('docs/generated/inventory/deploy-script.json'),
+      readJson('docs/generated/inventory/secret-setup.json'), readJson('docs/generated/inventory/configuration-runtime-inputs.json'));
+    const selector = /^\| `KUBECLAW_NATIVE_SUPERVISOR_PID` \|.*$/gmu;
+    const rows = [...rendered.matchAll(selector)];
+    const current = fs.readFileSync(path.join(root, target), 'utf8');
+    if (rows.length !== 1 || [...current.matchAll(selector)].length !== 1) throw new Error('NATIVE_SUPERVISOR_ENVIRONMENT_ROW_CARDINALITY');
+    // Preserve all other retained snapshot rows, metadata and qualified meanings.
+    return new Map([[target, current.replace(selector, () => rows[0][0])]]);
+  }
   if (only === 'environment') return new Map([['docs/site/reference/environment-variables.md', renderEnvironment(
     readJson('docs/generated/inventory/deploy-script.json'), readJson('docs/generated/inventory/secret-setup.json'),
     readJson('docs/generated/inventory/configuration-runtime-inputs.json'))]]);
