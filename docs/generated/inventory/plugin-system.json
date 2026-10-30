@@ -10,7 +10,7 @@
     "testProviders": 19,
     "reportAdapters": 1,
     "registrations": 67,
-    "files": 1002
+    "files": 1003
   },
   "runtime": {
     "roots": [
@@ -1533,6 +1533,7 @@
         "skills/nova/plugins/prism-design/src/archive.ts",
         "skills/nova/plugins/prism-design/src/stage.ts",
         "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+        "skills/nova/plugins/prism-design/tests/notification.test.ts",
         "skills/nova/plugins/prism-design/tsconfig.json"
       ],
       "registrations": [
@@ -2984,6 +2985,7 @@
     "skills/nova/plugins/prism-design/src/archive.ts",
     "skills/nova/plugins/prism-design/src/stage.ts",
     "skills/nova/plugins/prism-design/tests/live-function.test.ts",
+    "skills/nova/plugins/prism-design/tests/notification.test.ts",
     "skills/nova/plugins/prism-design/tsconfig.json",
     "skills/nova/plugins/project-summary/README.md",
     "skills/nova/plugins/project-summary/package.json",
