@@ -22059,9 +22059,9 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root documentation author and implementation coordinator",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "verdict": "PASS",
       "gateIds": [],
       "requirementIds": [
@@ -22705,6 +22705,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "limits": [
@@ -24488,6 +24493,16 @@
         ],
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
         "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
@@ -39707,9 +39722,9 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
         "A912-01"
       ],
@@ -40172,6 +40187,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -41387,13 +41407,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
-      "reviewer": "/root/operator_acceptance; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; MNT011 current bounded maintenance/guard scope preservation by independent content reviewer; MNT010 current bounded maintenance/guard scope preservation by independent content reviewer; QUA004 current bounded maintenance/guard scope preservation by independent content reviewer",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
         "A912-05"
       ],
@@ -41582,6 +41612,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual reviewed coherent publication build at ce66ce71912fa6ab03f1671602d82ed9af799bc3; /home/node/.openclaw/workspace/operations/pr13/evidence/qua004-appropriate-evidence-20261030/current-QUA004-publication-seven/actual-1.log SHA256 0ce8dc5c14dd0b25f788e25d487665b201ad4ed4b75f2cafd6ce378e95dab757. Independent corrective Source/Reader/Quality transfer approved; original scopes retained."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -42188,7 +42223,17 @@
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
         }
-      ]
+      ],
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
+        "priorReviewer": "/root/operator_acceptance; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; MNT011 current bounded maintenance/guard scope preservation by independent content reviewer; MNT010 current bounded maintenance/guard scope preservation by independent content reviewer; QUA004 current bounded maintenance/guard scope preservation by independent content reviewer",
+        "changedDeclaredFiles": [
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
+      }
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
@@ -51955,7 +52000,7 @@
       ]
     },
     {
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -52369,6 +52414,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -52388,7 +52438,7 @@
       "openIssues": [],
       "verdict": "PASS",
       "id": "MNT-014-whole-native-publication-examples-20261027",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "summary": "QUA004 affected-scope preservation: docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md. Current change adds three genuinely current cleanup citation successors and the truthful nested-citation maintenance guidance and documents its limits. The three quoted Source bodies, all program code, generated projections, assets and original authority/execution/history limits remain unchanged. Current citation fidelity and the independent whole appropriate-evidence join are qualified at their proper scope. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision 1054e9b4dd07087545da9f7f5fc7f27592ea6d37.\n\nMNT010 affected-scope preservation: docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/schemas.md, scripts/docs-publication-examples.mjs. Current change adds all-owned JSON-schema source/registration admission plus recursive property-pointer inventory before unchanged publication actions and documents its limits. Earlier catalogue meanings and generated catalogue pages remain unchanged; the new schema field index is a bounded mechanical declaration inventory, not runtime/schema semantic approval. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision a237758ced20bce86b278b97f1568fd1b3f17572.\n\nMNT011 affected-scope preservation: docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md. Current change adds conservative owned-production input admission before unchanged diagnostic source/output duties and documents its limits. Actual catalogue meanings and all generated catalogue bytes remain unchanged. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision a4b8f52942645bdac4ca686d089f9a29861afb76.\n\nREF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nOriginal MNT-014/F7 complete executable/schema-validated publication example obligation: exhaustive authored discovery and failclosed normalcheck/build native input/contract/projection/syntax joins, including both full project factories; no selected-plugin/resume-only substitution and no mandatory live deployment.",
       "independentOriginalDecision": {
         "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt014-owner-policy-20261027/whole-original-mnt014-final/verdict.json",
@@ -52753,10 +52803,21 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -53170,6 +53231,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -53189,7 +53255,7 @@
       "openIssues": [],
       "verdict": "PASS",
       "id": "A99-11-whole-published-example-claims-20261027",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "summary": "QUA004 affected-scope preservation: docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md. Current change adds three genuinely current cleanup citation successors and the truthful nested-citation maintenance guidance and documents its limits. The three quoted Source bodies, all program code, generated projections, assets and original authority/execution/history limits remain unchanged. Current citation fidelity and the independent whole appropriate-evidence join are qualified at their proper scope. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision 1054e9b4dd07087545da9f7f5fc7f27592ea6d37.\n\nMNT010 affected-scope preservation: docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/schemas.md, scripts/docs-publication-examples.mjs. Current change adds all-owned JSON-schema source/registration admission plus recursive property-pointer inventory before unchanged publication actions and documents its limits. Earlier catalogue meanings and generated catalogue pages remain unchanged; the new schema field index is a bounded mechanical declaration inventory, not runtime/schema semantic approval. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision a237758ced20bce86b278b97f1568fd1b3f17572.\n\nMNT011 affected-scope preservation: docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md. Current change adds conservative owned-production input admission before unchanged diagnostic source/output duties and documents its limits. Actual catalogue meanings and all generated catalogue bytes remain unchanged. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision a4b8f52942645bdac4ca686d089f9a29861afb76.\n\nREF005 affected-scope preservation at a4b8f52942645bdac4ca686d089f9a29861afb76: docs/config/publication-example-claims.json. Current Source-qualified identity/carrier and recovery reference extends the old topic without removing original responsibilities. Historical checks/executions, original limits and unchanged Source scopes retain their original meaning; no fresh whole language/API/runtime claim. Prior reviewed Source revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/config/documentation-tree-classification.json, docs/config/publication-example-claims.json, docs/site/extend/documentation-maintenance.md, docs/site/reference/README.md, docs/site/reference/environment-variables.md, docs/site/reference/errors.md, docs/site/reference/generated-documentation-map.json, package.json, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nOriginal whole A99-11: all published examples discoverable and checked according to their actual claim; executable instructions retain toolchain, prerequisites, expected result, errors/effects/cleanup, and explanatory or unexecuted product paths are explicit. Separately adjudicated full original automatic-failure predicates; not an automatic promotion from MNT014.",
       "independentOriginalDecision": {
         "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt014-owner-policy-20261027/original-a9911-final/verdict.json",
@@ -53554,6 +53620,17 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
@@ -53678,9 +53755,9 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova documentation claim integration and sole shared-lease writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "QUA-005"
@@ -54073,6 +54150,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -54455,13 +54537,24 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova sole shared-lease documentation integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
         "A913-10"
       ],
@@ -55231,6 +55324,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -55465,13 +55563,24 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova sole shared-lease documentation integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "CFG-007"
@@ -55951,6 +56060,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -56099,6 +56213,16 @@
         ],
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
         "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
@@ -56629,9 +56753,9 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "MNT-015"
@@ -56841,6 +56965,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -56973,13 +57102,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer; registration only, no product or documentation changes",
-      "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "CFG-014"
@@ -57106,6 +57245,11 @@
           "command": "Complete unchanged-input and original116 control-scope continuity verification",
           "exitCode": 0,
           "observation": "Actual273 unique delivery input Gitobjects/physicalSHA and seven originalrawlog hashes current at57ae verified. All116 record canonical hashes captured; no old/new record delivery source is completionledger. Independent whole reviewer approved unchanged-control reuse, not counts-only semantic proof."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -57142,13 +57286,23 @@
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/openissues/history/previousReviewedRevision/revisionHistory and priorimpactprefix exact. HistoricalNOT_READY remainsNOT_READY. No new117award.",
           "qualificationDebt": "No currentglobalAPI/source-role/externalCIpurpose/SourceLock/profile/custody/live/human/runtime/controlledlanguage/fullQUA004grant. Originalfailures and historical17/24runs unchanged; newnativecases/versions remain distinct."
         }
-      ]
+      ],
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+        "priorReviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
+        "changedDeclaredFiles": [
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
+      }
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "CFG-013"
@@ -57423,6 +57577,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -57531,13 +57690,24 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "CFG-010"
@@ -57830,6 +58000,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -57931,13 +58106,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole product integration author and writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "CFG-012"
@@ -58185,6 +58370,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -58272,13 +58462,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole product integration author and writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "REF-016"
@@ -59453,6 +59653,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -59537,13 +59742,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "MNT-008"
@@ -60343,6 +60558,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -60384,13 +60604,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "MNT-006"
@@ -60913,6 +61143,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -60953,13 +61188,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "MNT-005-common-source-bound-error-catalogue-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "MNT-005"
@@ -61287,6 +61532,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -61330,13 +61580,25 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/common-error-catalogue.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/common-errors-platform.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "REF-005"
@@ -61714,6 +61976,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -61754,13 +62021,25 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/common-error-catalogue.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/common-errors-platform.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "MNT-011"
@@ -61903,6 +62182,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -61940,13 +62224,24 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/common-error-catalogue.json",
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "MNT-010"
@@ -62085,6 +62380,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -62122,13 +62422,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "QUA-004"
@@ -62469,6 +62779,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -62512,13 +62827,25 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/common-errors-platform.md",
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "QUA-001"
@@ -62927,6 +63254,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -62977,13 +63309,26 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/common-error-catalogue.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/common-errors-platform.md",
+          "docs/site/reference/configuration-precedence.md"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "MNT-004-whole-source-owned-cli-reference-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "MNT-004"
@@ -64240,6 +64585,11 @@
           "command": "node scripts/docs-check-refs.mjs",
           "exitCode": 0,
           "observation": "Actual final frozen publication at b17d880d755279d015078121a7ade061cac975c2; log /home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/final-pinned-source-refs.log. Static/rendered scope only, not live product execution."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -64273,13 +64623,23 @@
         "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
         "basis": "Independent original130 content preservation PASS: current Helm source meanings, exact15 literal key identities across28 occurrences, semantic page contracts, one-path metadata routing and actual native CLI successor. 855 old CLI sources exact, four changed qualified, two new source-only entries confer no invocation authority. Unrelated renderer branches and scopes retained. Original IDs, summaries, limits, source/page responsibilities, historical checks and negative decisions unchanged.",
         "historicalChecksRemainAtActualOriginalRevisions": true
+      },
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
       }
     },
     {
       "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
-      "revision": "b17d880d755279d015078121a7ade061cac975c2",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
       "author": "Nova /root sole integration writer",
-      "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
       "requirementIds": [
         "CFG-009",
@@ -64422,6 +64782,11 @@
           "command": "node scripts/docs-configuration-inventory.mjs --helm-values-only --check --out-dir /home/node/.openclaw/workspace/tmp/pr13-current-helm-values",
           "exitCode": 0,
           "observation": "Reused actual strict selected76 YAML drift/offline Helm success at unchanged relevant inputs and exact artifact SHA 85e0463ba92eead94091cef8f2e5ad14e5658ad485fa7c67b0a6abd8c6bfb841; not a new execution or live rollout."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
         }
       ],
       "review": {
@@ -64434,6 +64799,291 @@
         "Current checked-in source and render/admission contracts are not deployed effective values, image behavior, API admission, rollout, policy enforcement or live runtime success.",
         "Global programmatic API/environment/CI qualifications remain separate; external and unsupported receiving boundaries remain explicit. No other requirement, gate, A91306/QUA002 or blind-reader acceptance.",
         "Legacy astra-final is truthful non-author final integration under controlling AP09 sections1–4, not a newly executed Astra model. Historical failures and original checks remain historical."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "a91306Qua002ScopedPreservation": {
+        "priorRevision": "b17d880d755279d015078121a7ade061cac975c2",
+        "priorReviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution",
+        "changedDeclaredFiles": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+        "basis": "Independent prior131 preservation PASS: existing CAS meaning explained before dependency; existing environment fallback/rollout condition restored by escaping table delimiter. Narrow semantic page/prose/authority binding successor; complete contracts/blocks/anchors/native sources and other meanings unchanged. Original findings, roles, histories, limits and actual old execution scopes retained. Current Reader failure preserved with actual targeted successor, not relabeled.",
+        "historicalChecksRemainAtActualOriginalRevisions": true
+      }
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+      "author": "Nova /root retained sole integration writer",
+      "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+      "gateIds": [
+        "A913-06"
+      ],
+      "requirementIds": [
+        "QUA-002"
+      ],
+      "pages": [
+        "docs/site/README.md",
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/acceptance.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/implementation.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/extend/README.md",
+        "docs/site/extend/buster.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/extend/deep-guides/README.md",
+        "docs/site/extend/deep-guides/demo-handoff.md",
+        "docs/site/extend/deep-guides/reports.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/extend/effectful-plugin.md",
+        "docs/site/extend/first-plugin.md",
+        "docs/site/extend/host-and-engine.md",
+        "docs/site/extend/lint.md",
+        "docs/site/extend/nova.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/extend/platform/buster.md",
+        "docs/site/extend/platform/prism.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+        "docs/site/extend/testing.md",
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/README.md",
+        "docs/site/reference/api-object-updates.md",
+        "docs/site/reference/buster-error-codes.md",
+        "docs/site/reference/buster-namespace-lease.md",
+        "docs/site/reference/buster-provider-configuration.md",
+        "docs/site/reference/buster-runtime-configuration.md",
+        "docs/site/reference/buster-suites.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/cli.md",
+        "docs/site/reference/common-errors-configuration.md",
+        "docs/site/reference/common-errors-foundation.md",
+        "docs/site/reference/common-errors-nova.md",
+        "docs/site/reference/common-errors-platform.md",
+        "docs/site/reference/common-errors-prism.md",
+        "docs/site/reference/common-errors-worker.md",
+        "docs/site/reference/common-errors.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-compatibility.md",
+        "docs/site/reference/configuration-errors.md",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/configuration.md",
+        "docs/site/reference/contracts.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/documentation-site.md",
+        "docs/site/reference/endpoints.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/errors.md",
+        "docs/site/reference/events.md",
+        "docs/site/reference/glossary.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/host-and-prism-configuration.md",
+        "docs/site/reference/images-and-digests.md",
+        "docs/site/reference/lint-policy-generated.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/lint-rules.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/pipeline-definition.md",
+        "docs/site/reference/pipeline-json.md",
+        "docs/site/reference/pipeline-platform.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/project-pipeline-publication.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/schemas.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/reference/sdk.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/reference/service-routing.md",
+        "docs/site/reference/stores-and-retention.md",
+        "docs/site/reference/verification-commands.md",
+        "docs/site/reference/worker-profiles-and-roles.md",
+        "docs/site/reference/workflows.md",
+        "docs/site/status/acceptance.md",
+        "docs/site/status/current.md",
+        "docs/site/status/open-issues.md",
+        "docs/site/status/roadmap.md",
+        "docs/site/understand/README.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/buster-namespace-controller.md",
+        "docs/site/understand/buster.md",
+        "docs/site/understand/codex-integration.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/components-and-authority.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/deployment-and-trust.md",
+        "docs/site/understand/echo.md",
+        "docs/site/understand/forge.md",
+        "docs/site/understand/nova-core.md",
+        "docs/site/understand/openclaw.md",
+        "docs/site/understand/ops-mcp.md",
+        "docs/site/understand/pipeline-dependencies.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/understand/prism-data.md",
+        "docs/site/understand/prism-runtime.md",
+        "docs/site/understand/prism.md",
+        "docs/site/understand/request-state-recovery.md",
+        "docs/site/understand/request-to-result.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/understand/worker-core.md",
+        "docs/site/understand/worker-trust.md",
+        "docs/site/use/README.md",
+        "docs/site/use/capacity.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/install.md",
+        "docs/site/use/maintenance.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/quickstart.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/worker-trust.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/workflows/local-core.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/tailnet-exposure.md",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/worker-result-recovery.md"
+      ],
+      "sources": [
+        "docs/blueprint/07-documentation-quality-standard.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/config/common-error-catalogue.json",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/extend/examples/minimal-stage/package.json",
+        "docs/site/extend/examples/minimal-stage/plugin.json",
+        "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
+        "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
+        "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
+        "docs/site/extend/examples/minimal-stage/src/stage.js",
+        "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
+        "docs/site/extend/examples/observer-lifecycle/journey.mjs",
+        "docs/site/extend/examples/observer-lifecycle/plugin/package.json",
+        "docs/site/extend/examples/observer-lifecycle/plugin/plugin.json",
+        "docs/site/extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
+        "docs/site/extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
+        "docs/site/extend/examples/observer-lifecycle/plugin/src/observer.js",
+        "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "docs/site/use/workflows/examples/local-core.mjs",
+        "docs/site/use/workflows/examples/repair-retry.mjs",
+        "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+        "docs/site/use/workflows/examples/request-trace-success.json",
+        "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+        "docs/site/use/workflows/wait-resume/platform.template.json",
+        "docs/site/use/workflows/wait-resume/signal.template.json",
+        "scripts/check-ap09-acceptance-contract.mjs",
+        "scripts/docs-common-error-catalogue.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/lib/docs-publication-claim-contracts.mjs",
+        "scripts/lib/docs-publication-example-coverage.mjs"
+      ],
+      "checks": [
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-artifact.mjs /home/node/.openclaw/workspace/operations/pr13/reader-runs/current-language-a913-remedy/participant-input/publication",
+          "exitCode": 0,
+          "observation": "Actual corrected frozen delivery at bb94f93e2d0518e899fb0ede319f66a1020969c4; /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/corrected-check-artifact.log; static artifact/task scope, not runtime."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-search.mjs /home/node/.openclaw/workspace/operations/pr13/reader-runs/current-language-a913-remedy/participant-input/publication",
+          "exitCode": 0,
+          "observation": "Actual corrected frozen delivery at bb94f93e2d0518e899fb0ede319f66a1020969c4; /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/corrected-check-search.log; static artifact/task scope, not runtime."
+        },
+        {
+          "command": "Existing bindPublicationExampleCoverage + validatePublicationClaimContracts",
+          "exitCode": 0,
+          "observation": "Actual corrected current invocation:184 pages,28 assets,212 scopes,1081 source anchors. Exact contracts/blocks preserved; no native example or live execution inferred. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/actual-corrected-native-binding.json"
+        },
+        {
+          "command": "node scripts/docs-common-error-catalogue.mjs --check",
+          "exitCode": 0,
+          "observation": "Reused actual187-family/seven-page source-binding drift success at94b041b3. Catalogue source/output are byte-exact at corrected bb94f93e; later change is authored table escaping only. No rerun or live result claimed."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Original controlled-language review closes retained177-page/28-asset scope plus seven current catalogue pages. Qualified applicable53-rule method, dictionary/POS/sense, technical noun/verb and first-dependent contexts, maintained-owner corrections and resolved findings are joined through actual current material-delta Source review. Fresh Source-unexposed delivered Reader task review and reader-facing Quality pass after actual table-loss finding and targeted corrected-delivery retest. Prior131 accepted responsibilities preserved, including original122 subset; historical negatives retained. Independent original final integration PASS; no score/linter substitutes for editorial judgment.",
+      "limits": [
+        "Not formal ASD-STE100 certification, licensed-dictionary certification or a new all-word/per-token proof. Applicable method and actual qualified responsibilities are retained, not waived.",
+        "Fresh Reader navigation reaches184 pages; proportional cross-track task reading and reached public examples are explicitly recorded. Navigation/text capture is not close-reading every word or newly reviewing every28 asset. Unchanged qualified original scope/asset/parent/term facets are reused, not fabricated fresh runs.",
+        "Static comprehension, source fidelity and documentation checks are not fresh installation, live product recovery, deployment, enforcement or runtime success. Search-short-query precision remains an advisory with successful published workaround, not a concealed material failure.",
+        "Final integration is an actual independent non-author judgment under AP09 sections1–4, not a newly executed Astra-model run. Prior failed Reader and scoped Source decisions remain at their actual revisions."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -84741,8 +85391,15 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
-      "evidence": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "completionRecord": "A91306-QUA002-original-controlled-language-whole-20261030",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/core_complete_corrected_quality_fresh",
@@ -84801,6 +85458,38 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
           "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
           "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "agent": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+          "role": "source",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "scope": "Original language criterion; actual fresh delivered Reader separate from Source and truthful final integration, not new Astra-model execution",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
+        },
+        {
+          "agent": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+          "role": "reader",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "scope": "Original language criterion; actual fresh delivered Reader separate from Source and truthful final integration, not new Astra-model execution",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
+        },
+        {
+          "agent": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+          "role": "quality",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "scope": "Original language criterion; actual fresh delivered Reader separate from Source and truthful final integration, not new Astra-model execution",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
+        },
+        {
+          "agent": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+          "role": "astra-final",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "scope": "Original language criterion; actual fresh delivered Reader separate from Source and truthful final integration, not new Astra-model execution",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
         }
       ],
       "openFindingIds": [],
@@ -84813,13 +85502,23 @@
         "scope": "Remove only closed authored defect identities; do not set requirement accepted or waive wider/manual/execution/generated-content proof."
       },
       "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- QUA-002 — Kontrollierte technische Sprache: FAIL. SA PASS for inspected language policy/tool scope / RU FAIL / Q FAIL. Current declared project language rules have unresolved concrete findings, and no full integrated editorial review closes technical vocabulary and exceptions. Publication checker reports vague terms in maintenance, overlong capability/environment instructions and passive constructions in workflows/Prism. A regex/word-count checker is not formal ASD-STE100 proof; neither this review nor the pages claim certification. F4.",
-        "requiresAffectedRereview": true,
-        "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+        "verdict": "PASS",
+        "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+        "completionRecord": "A91306-QUA002-original-controlled-language-whole-20261030",
+        "reason": "Actual independent original whole scope/method/terms/resolved-findings and delivered Reader/Quality/final judgments pass; scoped current corrections and prior131 preservation qualified. No formal certification or linter-only acceptance.",
+        "campaign": "A91306-QUA002-current-original-20261030"
+      },
+      "closureDecisionHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- QUA-002 — Kontrollierte technische Sprache: FAIL. SA PASS for inspected language policy/tool scope / RU FAIL / Q FAIL. Current declared project language rules have unresolved concrete findings, and no full integrated editorial review closes technical vocabulary and exceptions. Publication checker reports vague terms in maintenance, overlong capability/environment instructions and passive constructions in workflows/Prism. A regex/word-count checker is not formal ASD-STE100 proof; neither this review nor the pages claim certification. F4.",
+          "requiresAffectedRereview": true,
+          "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ],
+      "completionRecord": "A91306-QUA002-original-controlled-language-whole-20261030"
     },
     {
       "id": "QUA-003",
@@ -89177,8 +89876,15 @@
       "id": "A913-06",
       "passCondition": "Controlled-Language-Review erfasst Scope, Methode, technische Begriffe und gelöste Befunde; kein Punkt behauptet formale ASD-STE100-Zertifizierung.",
       "automaticFailure": "Readability-Score oder kurzer Linter gilt als vollständige Sprachabnahme.",
-      "state": "not-accepted",
-      "evidence": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "completionRecord": "A91306-QUA002-original-controlled-language-whole-20261030",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "review": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/capacity_corrected_complete_quality_fresh",
@@ -89187,10 +89893,50 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-quality-fresh/REPORT.md",
           "reportSha256": "bf76347ad04773f927155d546ce6e20ab3ca5cb0ad0326d99dba9a598eb81429",
           "scopeLimit": "Complete current capacity Quality OPR009/QUA001005 and assigned A98 facets, plus page reasons/language facets A91306/07; no practical/fullgate/otherrole/global approval."
+        },
+        {
+          "agent": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+          "role": "source",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "scope": "Original language criterion; actual fresh delivered Reader separate from Source and truthful final integration, not new Astra-model execution",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
+        },
+        {
+          "agent": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+          "role": "reader",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "scope": "Original language criterion; actual fresh delivered Reader separate from Source and truthful final integration, not new Astra-model execution",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
+        },
+        {
+          "agent": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+          "role": "quality",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "scope": "Original language criterion; actual fresh delivered Reader separate from Source and truthful final integration, not new Astra-model execution",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
+        },
+        {
+          "agent": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
+          "role": "astra-final",
+          "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+          "verdict": "PASS",
+          "scope": "Original language criterion; actual fresh delivered Reader separate from Source and truthful final integration, not new Astra-model execution",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json"
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "bb94f93e2d0518e899fb0ede319f66a1020969c4",
+        "completionRecord": "A91306-QUA002-original-controlled-language-whole-20261030",
+        "reason": "Actual independent original whole scope/method/terms/resolved-findings and delivered Reader/Quality/final judgments pass; scoped current corrections and prior131 preservation qualified. No formal certification or linter-only acceptance.",
+        "campaign": "A91306-QUA002-current-original-20261030"
+      }
     },
     {
       "id": "A913-07",
