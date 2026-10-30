@@ -22,13 +22,16 @@ async function setup(){
  return {db,job,decision};
 }
 test('HTTP reconciliation accepts only Nova, verifies evidence and cannot replay a stale failure',async()=>{
- const {db,job,decision}=await setup();let evidenceAvailable=false;let reads=0;
- const server=createServer((request,response)=>{void handleAgentReconciliation(request,response,new URL(request.url!,'http://localhost'),{db,spiffeEnabled:true,trustedNovaId:'spiffe://test/nova',readBody:async req=>{const chunks=[];for await(const chunk of req)chunks.push(chunk);return JSON.parse(Buffer.concat(chunks).toString());},readArtifact:async()=>{reads++;if(!evidenceAvailable)throw Error('evidence missing');return new Uint8Array([1]);}}).catch(error=>{response.writeHead(422,{'content-type':'application/json'});response.end(JSON.stringify({error:String(error)}));});});
+ const {db,job,decision}=await setup();let evidenceAvailable=false;let reads=0;let evidenceWrites=0;
+ const server=createServer((request,response)=>{void handleAgentReconciliation(request,response,new URL(request.url!,'http://localhost'),{db,spiffeEnabled:true,trustedNovaId:'spiffe://test/nova',readBody:async req=>{const chunks=[];for await(const chunk of req)chunks.push(chunk);return JSON.parse(Buffer.concat(chunks).toString());},readArtifact:async()=>{reads++;if(!evidenceAvailable)throw Error('evidence missing');return new Uint8Array([1]);},writeArtifact:async bytes=>{evidenceWrites++;assert.equal(Buffer.from(bytes).toString(),'Verified gateway evidence');return {artifactId:decision.evidence[0]};}}).catch(error=>{response.writeHead(422,{'content-type':'application/json'});response.end(JSON.stringify({error:String(error)}));});});
  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));const base=`http://127.0.0.1:${(server.address() as {port:number}).port}/v1/pipeline/agent-jobs/${job.id}`;
  const post=(body:unknown,peer='spiffe://test/nova')=>fetch(base+'/reconcile',{method:'POST',headers:{'content-type':'application/json','x-forwarded-client-cert':`URI=${peer}`},body:JSON.stringify(body)});
  try{
+  const rights=await db.query<{allowed:boolean}>("SELECT has_table_privilege('prism_runtime','prism.agent_reconciliation','UPDATE') AS allowed");assert.equal(rights.rows[0]!.allowed,false);
   assert.equal((await post(decision,'spiffe://test/agent')).status,422);assert.equal(reads,0);
   assert.equal((await post(decision)).status,422);assert.equal((await agentJob(db,job.id)).state,'needs_nova');
+  const upload=await fetch(base+'/evidence',{method:'POST',headers:{'content-type':'application/json','x-forwarded-client-cert':'URI=spiffe://test/nova'},body:JSON.stringify({content:'Verified gateway evidence'})});
+  assert.equal(upload.status,200);assert.equal(evidenceWrites,1);
   evidenceAvailable=true;assert.equal((await post(decision)).status,200);
   assert.equal((await post(decision)).status,200);assert.equal((await db.query('SELECT decision_id FROM prism.agent_reconciliation')).rows.length,1);
   const next=await claimAgentJob(db,'new');assert.ok(next?.fence);assert.notEqual(next.fence,job.fence);

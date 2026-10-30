@@ -147,7 +147,7 @@ private runWorker(
       await pool.query("SELECT 1");
       return json(response, 200, { status: "ready" });
     }
-    if (await handleAgentReconciliation(request,response,url,{db:pool,spiffeEnabled,trustedNovaId:trustedNovaSpiffeId,readBody:body,readArtifact:id=>artifacts.get(id)})) return;
+    if (await handleAgentReconciliation(request,response,url,{db:pool,spiffeEnabled,trustedNovaId:trustedNovaSpiffeId,readBody:body,readArtifact:id=>artifacts.get(id),writeArtifact:bytes=>artifacts.put(bytes)})) return;
     if (await handleInternalArtifact(request, response, url, {
       artifacts, spiffeEnabled, workerSecret, trustedWorkerSpiffeId, trustedControlSpiffeId, trustedPrismAgentSpiffeId,
     })) return;

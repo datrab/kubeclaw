@@ -235,7 +235,9 @@ to the Prism agent bridge. The agent cannot authorize its own reconciliation.
 
 1. `GET /v1/pipeline/agent-jobs/{jobId}` reads the exact persisted attempt.
 2. Preserve the gateway/session investigation in the content-addressed Prism
-   artifact store. Evidence references must exist; their semantic interpretation
+   artifact store via `POST /v1/pipeline/agent-jobs/{jobId}/evidence` with
+   `{ "content": "sanitized investigation evidence" }` (maximum64KiB). The returned
+   content-addressed artifact ID is the evidence reference. Evidence references must exist; their semantic interpretation
    is the trusted operator's responsibility, not inferred from timeout.
 3. After establishing stopped execution and no effects, submit:
 
