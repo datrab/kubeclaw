@@ -38,5 +38,62 @@
     "overall_correctness": "patch is correct",
     "overall_explanation": "No actionable defects were identified in the supplied change bundle. Repository inspection was blocked by the execution environment, so bootstrap integration and existing policy compatibility could not be independently verified. No tests were run.",
     "overall_confidence": 0.68
+  },
+  "liveProbe": {
+    "state": "blocked",
+    "observations": [
+      {
+        "attempt": 1,
+        "time": "2026-10-30T22:28:29.872Z",
+        "exitCode": 6,
+        "ok": false,
+        "error": "curl: (6) Could not resolve host: nova-argocd-egress.kubeclaw.svc.cluster.local"
+      },
+      {
+        "attempt": 2,
+        "time": "2026-10-30T22:28:59.965Z",
+        "exitCode": 6,
+        "ok": false,
+        "error": "curl: (6) Could not resolve host: nova-argocd-egress.kubeclaw.svc.cluster.local"
+      },
+      {
+        "attempt": 3,
+        "time": "2026-10-30T22:29:30.006Z",
+        "exitCode": 6,
+        "ok": false,
+        "error": "curl: (6) Could not resolve host: nova-argocd-egress.kubeclaw.svc.cluster.local"
+      },
+      {
+        "attempt": 4,
+        "time": "2026-10-30T22:30:00.094Z",
+        "exitCode": 6,
+        "ok": false,
+        "error": "curl: (6) Could not resolve host: nova-argocd-egress.kubeclaw.svc.cluster.local"
+      },
+      {
+        "attempt": 5,
+        "time": "2026-10-30T22:30:30.212Z",
+        "exitCode": 6,
+        "ok": false,
+        "error": "curl: (6) Could not resolve host: nova-argocd-egress.kubeclaw.svc.cluster.local"
+      },
+      {
+        "attempt": 6,
+        "time": "2026-10-30T22:31:00.305Z",
+        "exitCode": 6,
+        "ok": false,
+        "error": "curl: (6) Could not resolve host: nova-argocd-egress.kubeclaw.svc.cluster.local"
+      },
+      {
+        "attempt": 7,
+        "time": "2026-10-30T22:31:30.316Z",
+        "exitCode": 6,
+        "ok": false,
+        "error": "curl: (6) Could not resolve host: nova-argocd-egress.kubeclaw.svc.cluster.local"
+      }
+    ],
+    "conclusion": "No HTTPS connection established: egress Service DNS name unresolved throughout seven probes. Cannot infer live Argo registration/sync or operator status without cluster observations.",
+    "nextObservation": "kubectl -n argocd get applications platform,nova-argocd-access -o wide",
+    "credentialsRequested": false
   }
 }
