@@ -71,7 +71,8 @@ test('CLI product excludes internal implementation proof without inventing proce
 test('package routes retain actual cwd, script body, lifecycle and unsupported boundaries',()=>{
  const m=structuredClone(model);m.manifestInterfaces=[{kind:'npm-script-declaration',manifest:'pkg/package.json',cwd:'pkg',name:'verify',command:'node check.mjs --check',lifecycle:[{name:'preverify',command:'node prepare.mjs'},{name:'verify',command:'node check.mjs --check'}],supportBoundary:'Private declaration, not operator support.'}];
  const text=renderCliDocumentationFacts(projectCliDocumentationFacts(m));
- for(const value of ['Declared package launch routes','pkg/package.json','/scripts/verify','node check.mjs --check','preverify','Private declaration, not operator support.'])assert.ok(text.includes(value),value);
+ for(const value of ['Declared package launch routes','pkg/package.json','/scripts/verify','preverify','Private declaration, not operator support.'])assert.ok(text.includes(value),value);
+ assert.equal(projectCliDocumentationFacts(m).manifestInterfaces[0].command,'node check.mjs --check');
 });
 
 import {stripFencedCodeAndComments} from '../lib/docs-markdown-anchors.mjs';
@@ -82,4 +83,21 @@ test('reader tier groups owned routes and literal comment markers survive the un
  assert.ok(rendered.includes('Supported and maintenance routes'));assert.ok(rendered.includes('render → nova / buster → image'));
  assert.ok(!rendered.includes('scopeIdentity'));assert.ok(!rendered.includes('startByte'));assert.ok(!rendered.includes('<!--literal'));
  const stripped=stripFencedCodeAndComments(rendered+'\nTAIL_PRESERVED');assert.ok(stripped.includes('TAIL_PRESERVED'));
+});
+
+import {markdownAnchorEntries} from '../lib/docs-markdown-anchors.mjs';
+test('actual shell and argparse schemas normalize without undefined joins or object coercion',()=>{
+ const m=structuredClone(model);m.sources[0].ownership.kind='supported';
+ m.sources[0].options=[{option:'--with-code',scope:'main',line:2}];m.sources[0].defaults=[{parameter:'UNRELATED_ENV',valueExpression:'wrong-for-option',line:3}];
+ m.sources[0].exits=[{kind:'return',valueExpression:{expression:'1',literal:'1'},statusBoundary:'Function return, not unconditional process exit.',line:4}];
+ let md=renderCliDocumentationFacts(projectCliDocumentationFacts(m));assert.match(md,/--with-code \| No separate literal default joined/);assert.ok(!md.includes('[object Object]'));assert.ok(md.includes('return: 1; Function return, not unconditional process exit.'));
+ m.sources[0].ownership.kind='delegated-receiver';m.sources[0].options=[{name:'--apply',kind:'argparse-declaration',parser:'p',scope:'main',line:2}];m.sources[0].defaults=[{kind:'argparse-action-default-policy',destination:'apply',parser:'p',scope:'main',valueExpression:'False',line:2}];
+ md=renderCliDocumentationFacts(projectCliDocumentationFacts(m));assert.ok(md.includes('--apply: False'));
+});
+test('literal backticks do not swallow actual navigation anchors and commands retain cwd-qualified declaration links',()=>{
+ const m=structuredClone(model);m.sources[0].ownership.kind='supported';m.sources[0].options=[{name:'--literal`',line:2}];
+ const second=structuredClone(m.sources[0]);second.path='scripts/second.mjs';second.options=[{name:'--other`',line:3}];m.sources.push(second);
+ m.manifestInterfaces=[{kind:'npm-script-declaration',manifest:'pkg/package.json',name:'test',cwd:'pkg',command:'node tests/relative.test.mts',lifecycle:[]}];
+ const md=renderCliDocumentationFacts(projectCliDocumentationFacts(m)),anchors=new Set(markdownAnchorEntries(md).map(x=>x.anchor));
+ assert.ok(anchors.has('cli-entry-0'));assert.ok(anchors.has('cli-entry-1'));assert.ok(!md.includes('node tests/relative.test.mts'));assert.ok(md.includes('/scripts/test'));assert.equal(projectCliDocumentationFacts(m).manifestInterfaces[0].command,'node tests/relative.test.mts');
 });
