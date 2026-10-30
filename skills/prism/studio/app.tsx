@@ -1,3 +1,4 @@
+import type { ProjectDesignStatus } from '../control/project-status.ts';
 import {savedRevision,pendingRevision,submitRevision,waitForRevision,type RevisionClient} from './agent-revision-client.ts';
 import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, type RoundClient, type StudioDirection } from "./design-round-client.ts";
 import React, { useEffect, useMemo, useRef, useState } from "react";
@@ -63,6 +64,7 @@ function App() {
   const [roundBusy,setRoundBusy]=useState(false);
   const [roundPending,setRoundPending]=useState(false);
   const [brief,setBrief]=useState<Record<string,unknown>|null>(null);
+  const [projectStatus,setProjectStatus]=useState<ProjectDesignStatus|null>(null);
   const [projects,setProjects]=useState<Array<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>>([]);
   const [revisions, setRevisions] = useState<
     Array<{ id: string; revision: number; createdAt: string }>
@@ -110,7 +112,18 @@ function App() {
       };
       setCsrf(sessionData.csrf);
       setUserId(sessionData.userId);
-      const id = new URLSearchParams(location.search).get("document");
+      const query = new URLSearchParams(location.search);
+      const id = query.get("document");
+      const pendingProject = query.get("project");
+      if (!id && pendingProject) {
+        const response = await fetch(`/v1/projects/${encodeURIComponent(pendingProject)}/status`);
+        if (!response.ok) throw new Error("Project status could not load");
+        const status = await response.json() as ProjectDesignStatus;
+        if (status.documentId) {
+          query.set("document",status.documentId);location.replace(`?${query.toString()}`);return;
+        }
+        setProjectStatus(status);return;
+      }
       if (!id) {
         const projectsResponse=await fetch("/v1/projects");
         if(projectsResponse.ok)setProjects(((await projectsResponse.json()) as {items:Array<{id:string;external_id:string;name:string;document_id:string|null;direction_count:number}>}).items);
@@ -502,7 +515,14 @@ function App() {
       <main className="studio">
         <section className="start-panel">
           <h1>Prism Studio</h1>
-          {projects.length === 0 ? (
+          {projectStatus ? (
+            <section aria-label="Project status">
+              <h2>{projectStatus.name}</h2>
+              <p role="status">{projectStatus.summary}</p>
+              <p>No design is available to open yet. Refresh checks the existing request; it does not start another design.</p>
+              <a href="?">Back to projects</a>
+            </section>
+          ) : projects.length === 0 ? (
             <>
               <p>No design requests yet.</p>
               <p>Projects appear here after Nova sends an architecture to Prism.</p>
@@ -512,14 +532,14 @@ function App() {
               <h2>Projects from Nova</h2>
               {projects.map((project) => (
                 <article key={project.id}>
-                  <strong>{project.name}</strong>
+                  <strong><a className="project-link" href={`?project=${encodeURIComponent(project.id)}${project.document_id ? `&document=${encodeURIComponent(project.document_id)}` : ""}`}>{project.name}</a></strong>
                   {project.document_id ? (
                     <>
                       <p>{project.direction_count} design directions</p>
                       <a href={`?project=${encodeURIComponent(project.id)}&document=${encodeURIComponent(project.document_id)}`}>Open designs</a>
                     </>
                   ) : (
-                    <p>Design generation pending.</p>
+                    <p>No designs yet. Open the project to see its status.</p>
                   )}
                 </article>
               ))}

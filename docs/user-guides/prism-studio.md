@@ -15,3 +15,12 @@ the validated Design Document and typed edit operations.
 Studio and Discord are two interfaces to the same logical Prism agent. Control,
 Studio, worker, and Envoy are supporting components, not additional agents. The
 worker renders and evaluates documents; it does not call an LLM.
+
+### Projects without a design yet
+
+Project names in the chooser are links even before a design exists. Open a
+project to distinguish waiting, active generation and a stopped attempt needing
+Nova's attention. Refresh reads the existing request; it never starts another
+design. Use **Back to projects** to return to the list. Once a design is present,
+the project link opens its document. Merely opening a project does not authorize
+reconciliation or retry.

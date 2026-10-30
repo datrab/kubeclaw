@@ -1,3 +1,4 @@
+import { projectDesignStatus } from '../control/project-status.ts';
 import { handleAgentReconciliation } from './agent-reconciliation-routes.ts';
 import { productAuthorityHandler } from './product-decisions.ts';
 import { assembleBaselineArchive, BASELINE_V2 } from '@kubeclaw/prism-contracts-v1/baseline-archive';
@@ -279,6 +280,8 @@ private runWorker(
       return json(response,200,{status:"updated",document:updated});
     }
     const actor = this.authenticated(request);
+    const projectStatus=/^\/v1\/projects\/([0-9a-f-]+)\/status$/.exec(url.pathname);
+    if(projectStatus && request.method==='GET')return json(response,200,await projectDesignStatus(pool,projectStatus[1]!));
     const agentStatus=/^\/v1\/agent-jobs\/([0-9a-f-]+)$/.exec(url.pathname);
     if(agentStatus && request.method==='GET')return json(response,200,agentReceipt(await agentJob(pool,agentStatus[1]!)));
     if (url.pathname === "/v1/projects" && request.method === "GET") {
