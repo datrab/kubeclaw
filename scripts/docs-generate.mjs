@@ -15,6 +15,7 @@ import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 import { schemaSemanticText } from './plugin-registration-dependencies.mjs';
 import { stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
 import { renderApiResourceReference, renderRejectedApiOutputProfiles, upstreamApiReference } from './docs-api-reference.mjs';
+import { discoverRejectedApiOutputProfiles } from './docs-api-output-discovery.mjs';
 import { generateSdkReference } from './docs-sdk-reference.mjs';
 import { readVerifiedRetainedLanguageBundle } from './lib/docs-retained-language-bundle.mjs';
 import { loadRetainedConfigurationSnapshot, assertRetainedPageDestinations, writeRetainedPage } from './lib/docs-retained-source.mjs';
@@ -503,7 +504,7 @@ ${generatedEnd()}
 
 function renderHelmValues(configurationValues, configurationSchemas, { inventoryPath = 'docs/generated/inventory/configuration-values.json', currentSelected = false } = {}) {
   const valueFiles = configurationValues.files;
-  const rejectedApiProfiles = renderRejectedApiOutputProfiles(configurationValues.rejectedApiOutputProfiles,(source,line)=>`[${literalText(source)}](${pinnedSourceUrl(source,line,line)})`,root);
+  const rejectedApiProfiles = renderRejectedApiOutputProfiles(currentSelected ? discoverRejectedApiOutputProfiles(root) : configurationValues.rejectedApiOutputProfiles,(source,line)=>`[${literalText(source)}](${pinnedSourceUrl(source,line,line)})`,root);
   const apiResourceSections = renderApiResourceReference(configurationValues.apiResources,
     (source, line) => `[${literalText(source)}](${pinnedSourceUrl(source, line, line)})`, configurationValues.apiMetadataReferences, root);
   const collectionSchemaKey = (schema) => JSON.stringify([schema.authority, schema.authoritySha256, schema.apiVersion, schema.kind, schema.resolvedPath]);
