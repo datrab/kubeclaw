@@ -1813,7 +1813,8 @@
       "sourceDependencies": [
         "scripts/docs-generate.mjs",
         "docs/generated/inventory/deploy-script.json",
-        "docs/generated/inventory/configuration-runtime-inputs.json"
+        "docs/generated/inventory/configuration-runtime-inputs.json",
+        "docs/generated/inventory/cli-surfaces.json"
       ],
       "checks": [
         "npm run docs:inventory:config:check",
@@ -20918,7 +20919,7 @@
             "source": ".github/workflows/docs-checks.yaml",
             "target": "docs/site/extend/documentation-maintenance.md#generate-only-owned-facts-then-check",
             "owner": "documentation",
-            "factsSha256": "0ab72d6c301923bc48a65530c9ba4fab24e2fc73dc8cec6e13a2a71ec79181c4"
+            "factsSha256": "130599212f43b69fa05aafaa4b65ba15bc46f2e092cb0a9547a9ea8f3f18b123"
           },
           {
             "sourceId": "workflow:.github%2Fworkflows%2Fdocs-native-retention.yaml:job:native-query",
