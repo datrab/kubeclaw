@@ -320,14 +320,21 @@
       "path": ".github/workflows/promote-runtime.yaml",
       "name": "Promote image release",
       "triggers": [
+        "pull_request",
         "workflow_dispatch"
       ],
-      "pathFilters": [],
+      "pathFilters": [
+        "releases/runtime-images.json",
+        "releases/runtime-code.json",
+        ".github/workflows/promote-runtime.yaml"
+      ],
       "schedules": [],
       "jobs": [
+        "verify-proposal",
         "prepare"
       ],
       "commandAndActionRefs": [
+        "node scripts/updates/verify-release-source.mjs",
         "npm ci --ignore-scripts --no-audit --no-fund",
         "uses: actions/checkout@d23441a48e516b6c34aea4fa41551a30e30af803",
         "uses: actions/create-github-app-token@fee1f7d63c2ff003460e3d139729b119787bc349",
