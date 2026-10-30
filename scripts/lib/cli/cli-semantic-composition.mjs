@@ -16,7 +16,7 @@ export function shareExpressions(model){
 export function expandExpressions(shared){
  const result=structuredClone(shared.data);for(const {path,id}of shared.references){if(!Object.hasOwn(shared.expressions,id))throw Error('Missing source expression '+id);if(hash(shared.expressions[id])!==id)throw Error('Source expression binding mismatch');let o=result;for(const k of path.slice(0,-1))o=o[k];if(o[path.at(-1)]!==null)throw Error('Reference target is not empty');o[path.at(-1)]=shared.expressions[id]}return result;
 }
-function range(f,row){if(f?.sourceRange){const r=row.sourceBindings?.find(r=>r.id===f.sourceRange);if(r)return {sourcePath:f.sourcePath??row.path,line:r.startLine,endLine:r.endLine,startByte:r.startByte,endByte:r.endByte,expression:r.exact}}return {sourcePath:f?.sourcePath??row.path,line:f?.line,endLine:f?.endLine,startByte:f?.startByte,endByte:f?.endByte,expression:f?.expression};}
+function range(f,row){if(f?.sourceRange){const r=row.sourceBindings?.find(r=>r.id===f.sourceRange);if(r)return {sourcePath:f.sourcePath??r.sourcePath??row.path,line:r.startLine,endLine:r.endLine,startByte:r.startByte,endByte:r.endByte,expression:r.exact}}return {sourcePath:f?.sourcePath??row.path,line:f?.line,endLine:f?.endLine,startByte:f?.startByte,endByte:f?.endByte,expression:f?.expression};}
 function boundary(o){return {kind:o?.kind??'unclassified',supportState:o?.supportState??'not established',statement:o?.boundary??'No invocation support inferred.',publicationRole:['source-only-unqualified','private-parser-helper','delegated-receiver'].includes(o?.kind)?'source declaration, not an independent supported invocation':o?.kind==='upstream-wrapper'?'wrapper-owned syntax only; upstream syntax belongs to its receiver':'retain declared ownership limits; no execution grant'};}
 export function composeCliReference(model,{repositoryURL='https://github.com/datrab/kubeclaw'}={}){
  if(!model?.sourceRevision||!Array.isArray(model.sources))throw Error('Source-bound native model required');
@@ -40,7 +40,7 @@ export function composeCliReference(model,{repositoryURL='https://github.com/dat
    'This reader is a navigable declaration index, not the missing independent complete command/caller/default/exit adjudication.'
   ]};
 }
-const esc=s=>String(s).replace(/[\\`*_{}\[\]<>|]/g,'\\$&').replace(/\r?\n/g,' ');
+const esc=s=>String(s).replaceAll('&','&amp;').replace(/[\\`*_{}\[\]<>|]/g,'\\$&').replace(/\r?\n/g,' ');
 const fence=s=>{const runs=String(s).match(/`+/g)||[];const ticks='`'.repeat(Math.max(3,...runs.map(x=>x.length+1)));return `${ticks}text\n${s}\n${ticks}`};
 function link(c,s,r){const p=(r.sourcePath??s.path).split('/').map(encodeURIComponent).join('/');return `${c.repositoryURL.replace(/\/$/,'')}/blob/${encodeURIComponent(c.sourceRevision)}/${p}${r.line?`#L${r.line}${r.endLine&&r.endLine!==r.line?`-L${r.endLine}`:''}`:''}`}
 function readable(v){const t=typeof v==='string'?v:JSON.stringify(v);return t.length<=240?t:'Exact value retained at this fact’s companion-native modelPath (not repeatedly inlined)'}
@@ -121,22 +121,31 @@ export function renderCliNativeSection(c){
  * Function bodies remain extraction inputs; their CLI-facing effects belong to
  * the fact arrays and typed contracts. This projection is not approval.
  */
+function documentationPayload(value, role='') {
+ if(Array.isArray(value))return value.map(x=>documentationPayload(x));
+ if(!value||typeof value!=='object')return value;
+ const physical=Number.isInteger(value.startByte)&&Number.isInteger(value.endByte);
+ return Object.fromEntries(Object.entries(value).filter(([key])=>!(role==='functionSource'&&physical&&key==='expression')).map(([key,child])=>[key,documentationPayload(child,key)]));
+}
 export function projectCliDocumentationFacts(model) {
  if (!model?.sourceRevision || !Array.isArray(model.sources)) throw Error('CLI_DOCUMENTATION_MODEL_REQUIRED');
+ const internalReturns=new Set(['source-function-return-completion','python-function-return-completion','go-return-completion']);
+ const invocationTraceKinds=new Set(['source-local-call-completion-binding','source-argv-call-binding']);
  const factualFamilies=['commands','subcommands','options','positionals','defaults','exits','branches','delegations','guards','unresolved','adapterLimits'];
- return structuredClone({
+ return documentationPayload({
   schemaVersion:'cli-documentation-facts.v1', sourceRevision:model.sourceRevision,
   authority:model.authority, acceptance:'NOT_ADJUDICATED',
   ownership:model.ownership, manifestInterfaces:model.manifestInterfaces, launchGraph:model.launchGraph,
   ownershipDeclarationSha256:model.ownershipDeclarationSha256, archivedDataDispositions:model.archivedDataDispositions, unresolved:model.unresolved,
   dependencyBindings:model.dependencyBindings, producerBindings:model.producerBindings,
-  tools:model.tools, typedContracts:model.typedContracts,
-  sources:model.sources.map(row=>({
+  tools:model.tools,
+  sources:model.sources.map((row,sourceIndex)=>({
    path:row.path, language:row.language, ownership:row.ownership, sourceBinding:row.sourceBinding, sourceBindings:row.sourceBindings??[],
-   ...Object.fromEntries(factualFamilies.map(key=>[key,row[key]??[]]))
+   ...Object.fromEntries(factualFamilies.map(key=>[key,key==='delegations'?(row[key]??[]).filter(f=>!invocationTraceKinds.has(f.kind)):key==='exits'?(row[key]??[]).filter(f=>!internalReturns.has(f.kind)&&!String(f.kind??'').endsWith('normal-completion-policy')&&f.kind!=='whole-shell-exit-boundary'):key==='adapterLimits'?[...(row[key]??[]),...(row.exits??[]).filter(f=>String(f.kind??'').endsWith('normal-completion-policy')||f.kind==='whole-shell-exit-boundary').map(f=>({kind:'language-policy-not-physical-declaration',policy:f}))]:row[key]??[]]))
   })),
   limits:['Source-derived declarations, not runtime execution. Symbolic defaults and conditional or delegated exits are not evaluated.',
-   'Unresolved selected receiver/factory shapes require qualification before publication; no count or projection grants acceptance.']
+   'Unresolved selected receiver/factory shapes require qualification before publication; no count or projection grants acceptance.',
+   'Local-call completion traces, internal function returns and compiler parameter-binding proof are extraction inputs, not CLI declarations or process exit codes. The maintained producers retain that analysis while generating this reference. Source locators, conditional CLI/default declarations and process/delegated completion rules remain in the product; no arbitrary helper return is labeled a process status.']
  });
 }
 
@@ -148,6 +157,15 @@ export function renderCliDocumentationFacts(product) {
   '', 'Values and defaults are source expressions unless explicitly literal. Conditions and caller-dependent exits remain conditional; an unknown status is not success. See the existing command guides for prerequisites and safe operating procedures.','',
   '### Entrypoints',''];
  for(let i=0;i<rows.length;i++)out.push(`- [${esc(rows[i].path)}](#cli-entry-${i}) — ${esc(rows[i].ownership?.kind??'unclassified')}`);
+ out.push('', '### Declared package launch routes', '',
+  'Run a package script from its listed working directory with npm run followed by the script name. Install dependencies and satisfy the owning guide first. A declaration does not make a private, fixture or historical command an operator-supported task. Lifecycle entries run in the stated order; the command text is the package declaration, not an inferred standalone invocation.', '',
+  '| Manifest and JSON property | Working directory | Script / entry | Declared command | Lifecycle | Boundary |',
+  '| --- | --- | --- | --- | --- | --- |');
+ for(const item of product.manifestInterfaces??[]){
+  const pointer=item.kind==='npm-script-declaration'?'/scripts/'+String(item.name).replaceAll('~','~0').replaceAll('/','~1'):'/bin';
+  const sourceURL=`https://github.com/datrab/kubeclaw/blob/${product.sourceRevision}/${item.manifest.split('/').map(encodeURIComponent).join('/')}`;
+  out.push(`| [${esc(item.manifest)}](${sourceURL}) ${esc(pointer)} | ${esc(item.cwd??'.')} | ${esc(item.name??item.kind)} | ${esc(item.command??item.target??JSON.stringify(item))} | ${esc(JSON.stringify(item.lifecycle??[]))} | ${esc(item.supportBoundary??'Declaration only; owning caller defines support.')} |`);
+ }
  const facts=['commands','subcommands','options','positionals','defaults','exits'];
  const provenance=new Set(['sourcePath','sourceRange','line','endLine','startByte','endByte','conditions','guards']);
  for(let i=0;i<rows.length;i++){
@@ -160,6 +178,7 @@ export function renderCliDocumentationFacts(product) {
    for(const fact of row[family]){
     const locator=range(fact,row);
     if(fact.sourceRange&&!row.sourceBindings.some(x=>x.id===fact.sourceRange))throw Error('CLI_DOCUMENTATION_SOURCE_RANGE_UNRESOLVED:'+row.path+':'+fact.sourceRange);
+    if(!Number.isInteger(locator.line)||locator.line<1)throw Error('CLI_DOCUMENTATION_PHYSICAL_LOCATOR_REQUIRED:'+row.path+':'+family);
     const behavior=Object.entries(fact).filter(([k])=>!provenance.has(k)).map(([k,v])=>`${esc(k.replace(/([a-z])([A-Z])/g,'$1 $2'))}: ${esc(typeof v==='string'?v:JSON.stringify(v))}`).join('<br>');
     const predicates=fact.conditions??fact.guards??[];
     out.push(`| ${behavior||esc(locator.expression??'Source declaration')} | ${predicates.length?esc(JSON.stringify(predicates)):'No additional predicate recorded; caller and ownership limits still apply.'} | [${esc(row.path)}${locator.line?':'+locator.line:''}](${link(context,row,locator)}) |`);

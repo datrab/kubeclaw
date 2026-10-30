@@ -76,6 +76,11 @@ jobs:
           JS
       - name: Install repository dependencies
         run: npm ci --ignore-scripts && npm ci --prefix scripts/docs-reader --ignore-scripts
+      - name: Check CLI extractor and literal rendering regressions
+        run: |
+          node --test scripts/tests/docs-cli-*.test.mjs
+          python3 scripts/tests/docs_cli_python_test.py
+          python3 scripts/tests/docs_cli_go_test.py
       - name: Install documentation diagram browser
         run: npx --no-install playwright install --with-deps chromium
       - name: Check reader publication and render HTML
@@ -168,6 +173,11 @@ jobs:
           version: "v3.22.0"
       - name: Install repository dependencies
         run: npm ci --ignore-scripts && npm ci --prefix scripts/docs-reader --ignore-scripts
+      - name: Check CLI extractor and literal rendering regressions
+        run: |
+          node --test scripts/tests/docs-cli-*.test.mjs
+          python3 scripts/tests/docs_cli_python_test.py
+          python3 scripts/tests/docs_cli_go_test.py
       - name: Check docs workflow trigger coverage
         run: node scripts/check-workflow-yaml.mjs .github/workflows/docs-checks.yaml && node --test tests/verification/contracts/workflow-trust-split.test.mjs
       - name: Check canonical open-issue register and generated view

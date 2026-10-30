@@ -45,3 +45,30 @@ test('documented facts show conditional defaults/exits and resolve source links'
  assert.ok(text.includes('scripts/a%20weird.sh#L1'));
  p.sources[0].sourceBindings=[];assert.throws(()=>renderCliDocumentationFacts(p),/SOURCE_RANGE_UNRESOLVED/);
 });
+
+test('implicit language policies are limits and unlocated declarations fail closed',()=>{
+ const m=structuredClone(model);m.sources[0].exits=[{kind:'python-module-normal-completion-policy',policy:'No blanket numeric exit.'},{kind:'whole-shell-exit-boundary',policy:'Caller controls status.'}];
+ const p=projectCliDocumentationFacts(m);assert.equal(p.sources[0].exits.length,0);assert.equal(p.sources[0].adapterLimits.length,2);
+ assert.ok(renderCliDocumentationFacts(p).includes('language-policy-not-physical-declaration'));
+ p.sources[0].exits.push({kind:'explicit-sys-exit',valueExpression:'5'});assert.throws(()=>renderCliDocumentationFacts(p),/PHYSICAL_LOCATOR_REQUIRED/);
+});
+const MarkdownIt=createRequire(new URL('../docs-reader/package.json',import.meta.url))('markdown-it');
+test('native Markdown tables preserve entities, pipes, backticks, angle brackets and escaped newline literals',()=>{
+ const m=structuredClone(model);m.sources[0].options=[{name:'--&copy;|`<literal>_value*',line:2,defaultExpression:JSON.stringify('first\nsecond')}];
+ const md=renderCliDocumentationFacts(projectCliDocumentationFacts(m)),html=new MarkdownIt({html:true,linkify:false,typographer:false}).render(md);
+ assert.ok(html.includes('--&amp;copy;|`&lt;literal&gt;_value*'));assert.ok(!html.includes('©'));assert.ok(html.includes('first\\nsecond'));
+});
+
+test('CLI product excludes internal implementation proof without inventing process statuses',()=>{
+ const m=structuredClone(model);m.sources[0].delegations=[{kind:'source-argv-call-binding',line:1,target:{expression:'function run(a) { return a; }'},boundCalleeCompletionSources:[{valueExpression:'a'}]},{kind:'python-subprocess-execution-result',line:2,childStatusExpression:'child.returncode'}];
+ m.sources[0].exits=[{kind:'source-function-return-completion',valueExpression:'{arbitrary: "internal data"}',line:3},{kind:'explicit-process-exit',valueExpression:'status',conditions:[{conditionExpression:'completed'}],line:4}];
+ m.typedContracts={sources:[{formalActualCalls:[{factPath:['sources','0','delegations','0']}]}]};
+ const p=projectCliDocumentationFacts(m);assert.equal(p.typedContracts,undefined);assert.equal(p.sources[0].delegations.length,1);assert.equal(p.sources[0].delegations[0].childStatusExpression,'child.returncode');
+ assert.deepEqual(p.sources[0].exits,[m.sources[0].exits[1]]);assert.equal(p.sources[0].exits[0].valueExpression,'status');assert.deepEqual(p.sources[0].sourceBindings,m.sources[0].sourceBindings);
+});
+
+test('package routes retain actual cwd, script body, lifecycle and unsupported boundaries',()=>{
+ const m=structuredClone(model);m.manifestInterfaces=[{kind:'npm-script-declaration',manifest:'pkg/package.json',cwd:'pkg',name:'verify',command:'node check.mjs --check',lifecycle:[{name:'preverify',command:'node prepare.mjs'},{name:'verify',command:'node check.mjs --check'}],supportBoundary:'Private declaration, not operator support.'}];
+ const text=renderCliDocumentationFacts(projectCliDocumentationFacts(m));
+ for(const value of ['Declared package launch routes','pkg/package.json','/scripts/verify','node check.mjs --check','preverify','Private declaration, not operator support.'])assert.ok(text.includes(value),value);
+});

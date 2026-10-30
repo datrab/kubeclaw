@@ -46,6 +46,7 @@ export async function generateNativeCliModel(root,{producerDirectory=path.join(r
    python:sources=>run('python3',['-I',path.join(producerDirectory,'python_cli_ast.py')],sources),
    go:sources=>run(binary,[],sources),
   });
+  for(const row of model.sources)if(row.unresolved?.some(f=>f.rule==='argparse-factory-receiver-unqualified'))throw Error('CLI_SELECTED_FACTORY_UNQUALIFIED:'+row.path);
   shellParser.verify();
   for(const b of producerBindings)if(readBoundSource(root,b.path,trackedFiles(root)).sha256!==b.sha256)throw Error('CLI_PRODUCER_CHANGED_DURING_GENERATION:'+b.path);
   // A generated-only commit must not invalidate unchanged Source. Pin to the
