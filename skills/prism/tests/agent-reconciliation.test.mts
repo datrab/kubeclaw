@@ -9,6 +9,7 @@ import {migrate,RevisionRepository} from '../storage/index.ts';
 import {startDesignRound} from '../control/design-generations.ts';
 import {enqueueAgentJob,claimAgentJob,finishAgentRun,agentJob} from '../control/agent-jobs.ts';
 import {reconcileAgentJob} from '../control/agent-reconciliation.ts';
+import {protectPrismReconciliationAudit} from '../server/database-roles.ts';
 import {handleAgentReconciliation} from '../server/agent-reconciliation-routes.ts';
 
 async function setup(){
@@ -27,6 +28,8 @@ test('HTTP reconciliation accepts only Nova, verifies evidence and cannot replay
  await new Promise<void>(resolve=>server.listen(0,'127.0.0.1',resolve));const base=`http://127.0.0.1:${(server.address() as {port:number}).port}/v1/pipeline/agent-jobs/${job.id}`;
  const post=(body:unknown,peer='spiffe://test/nova')=>fetch(base+'/reconcile',{method:'POST',headers:{'content-type':'application/json','x-forwarded-client-cert':`URI=${peer}`},body:JSON.stringify(body)});
  try{
+  await db.query('GRANT UPDATE, DELETE, TRUNCATE ON prism.agent_reconciliation TO prism_runtime');
+  await protectPrismReconciliationAudit(db as any);
   const rights=await db.query<{allowed:boolean}>("SELECT has_table_privilege('prism_runtime','prism.agent_reconciliation','UPDATE') AS allowed");assert.equal(rights.rows[0]!.allowed,false);
   assert.equal((await post(decision,'spiffe://test/agent')).status,422);assert.equal(reads,0);
   assert.equal((await post(decision)).status,422);assert.equal((await agentJob(db,job.id)).state,'needs_nova');

@@ -8,5 +8,6 @@ CREATE TABLE prism.agent_reconciliation (
   prior_attempt jsonb NOT NULL,
   created_at timestamptz NOT NULL DEFAULT clock_timestamp()
 );
+REVOKE UPDATE, DELETE, TRUNCATE ON prism.agent_reconciliation FROM prism_runtime;
 GRANT SELECT, INSERT ON prism.agent_reconciliation TO prism_runtime;
 GRANT SELECT ON prism.agent_reconciliation TO prism_readonly;
