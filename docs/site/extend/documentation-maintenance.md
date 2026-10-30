@@ -638,3 +638,13 @@ Do not use this dated upstream route to mark Source/Reader/Quality gates or
 runtime-source adoption complete. After actual source adoption, reconcile the
 page and generated inventories through their normal owning checks. Historical
 live observations keep their date and scope; they are not fresh health checks.
+
+## Maintain current claim citations
+
+When a page changes, check its current quotation copies in the claim contract,
+including anchors nested in prerequisites, expected results, errors, effects and
+cleanup. Qualify the affected quotations against the current parent text; do not
+update only the top-level anchors. The native `exactSourceAnchors` result counts
+top-level contract anchors, not these nested copies. Preserve the controlling
+obligation, execution limits and dated historical evidence when updating a
+current citation. A successful anchor count is not a Source-accuracy review.
