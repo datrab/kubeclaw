@@ -482,7 +482,11 @@ if (!checkOnly) {
 
 for (const [fileName, value] of generated) {
   const target = path.join(outDir, fileName);
-  const expected = stableJson(value);
+  // Keep the complete CLI facts readable by the existing publication source
+  // reader (64 MiB): whitespace is not part of this JSON data contract.
+  const expected = fileName === 'cli-surfaces.json'
+    ? `${JSON.stringify(value)}\n`
+    : stableJson(value);
   if (checkOnly) {
     const actual = fs.existsSync(target) ? fs.readFileSync(target, 'utf8') : null;
     if (actual !== expected) stale.push(path.relative(root, target));
