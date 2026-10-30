@@ -18,9 +18,9 @@ Current workspace-owned runtime and operator-facing failure families. Messages, 
 
 | Component | Diagnostic families |
 | --- | --- |
-| [Foundation, plugins and shared contracts](common-errors-foundation.md) | 22 |
-| [Nova projects and review](common-errors-nova.md) | 31 |
-| [Worker processes, resources and isolation](common-errors-worker.md) | 30 |
+| [Foundation, plugins and shared contracts](common-errors-foundation.md) | 31 |
+| [Nova projects and review](common-errors-nova.md) | 33 |
+| [Worker processes, resources and isolation](common-errors-worker.md) | 33 |
 | [Prism, storage, backup and browser operations](common-errors-prism.md) | 45 |
 | [Ops and platform services](common-errors-platform.md) | 23 |
 | [Helm rendering and configuration](common-errors-configuration.md) | 22 |

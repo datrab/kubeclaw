@@ -145,6 +145,19 @@ new ProductControllerError(response.statusCode, Buffer.concat(chunks))
 
 **Consumer / translation:** Controller code exists only for trimmed body matching `DEMO_PRODUCT_`&#91;A-Z_&#93;{1,100}. otherwise message status and codeundefined. Studio constructor status is argument1, code-named argument2 is message, no own code. handler status only for instance, otherwise500. destroys already-started responses and logs cause chain. Nonce unavailable is fixed message. internal DB diagnostics preserve allowed upstream SQLSTATE/system code or PG_&#42; fallback separately from public error. Actual worker-service uses503 for dependency/busy,422 otherwise.
 
+### Find a specific diagnostic
+
+A message and a code are different fields. Values below come from owning source constructions, not a closed dependency vocabulary. Source substitutions remain symbolic; use the family handling rules above.
+
+| Field | Diagnostic | Message pattern / condition | Owning source |
+| --- | --- | --- | --- |
+| <code>Error.message</code> | <code>PRISM&#95;STUDIO&#95;REQUEST&#95;TOO&#95;LARGE</code> | Use the family construction rule above. | [skills/prism/server/studio-request.ts:48](../../../skills/prism/server/studio-request.ts#L48) |
+| <code>Error.message</code> | <code>PRISM&#95;STUDIO&#95;PROXY&#95;NOT&#95;CONFIGURED</code> | Use the family construction rule above. | [skills/prism/server/studio-request.ts:81](../../../skills/prism/server/studio-request.ts#L81) |
+| <code>Error.message</code> | <code>PRISM&#95;STUDIO&#95;PATH&#95;ENCODING&#95;INVALID</code> | Use the family construction rule above. | [skills/prism/server/studio-request.ts:109](../../../skills/prism/server/studio-request.ts#L109) |
+| <code>Error.message</code> | <code>PRISM&#95;STUDIO&#95;PATH&#95;OUTSIDE&#95;ROOT</code> | Use the family construction rule above. | [skills/prism/server/studio-request.ts:111](../../../skills/prism/server/studio-request.ts#L111) |
+| <code>Error.message</code> | <code>PRISM&#95;STUDIO&#95;STATIC&#95;NOT&#95;FOUND</code> | Use the family construction rule above. | [skills/prism/server/studio-request.ts:120](../../../skills/prism/server/studio-request.ts#L120) |
+| <code>Error.message</code> | <code>PRISM&#95;STUDIO&#95;URL&#95;INVALID</code> | Use the family construction rule above. | [skills/prism/server/studio-request.ts:133](../../../skills/prism/server/studio-request.ts#L133) |
+
 **Representative source constructions (not executed by this reference):**
 
 ```text
