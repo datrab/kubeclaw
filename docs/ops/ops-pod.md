@@ -201,17 +201,16 @@ exact `tools` and explicit `exec` grants. `rbac.namespaces`, `execNamespaces` an
 Nova receives `test*` in addition to its existing scope; Ops can read every namespace. Matching ignores
 case and covers `test`, `testing`, `test-123` and future matching namespaces.
 Only the Ops/Codex client has `readAllNamespaces: true` and the `platform_cluster_state(resource=namespaces)`
-operation. Its reads include current and future namespaces. The chart default has an explicit
-`allNonSystemNamespaces` exec grant permits all regular containers outside
+operation. Its reads include current and future namespaces. The production override has an explicit
+`allNonSystemNamespaces` exec grant permitting all regular containers outside
 reserved `kube-*` namespaces, with 30-second and 65536-byte ceilings.
 Pods with system priority classes or numeric priority at least 2000000000
 are excluded even in other namespaces. `rbac.execAllNonSystemNamespaces: true`
 is the backend upper bound; disabling it also requires removing the broad client
-grant. Rebuild and promote the Ops MCP image before activating this policy.
-The pinned production values retain their existing narrow grants until that new
-image is selected. As part of that promotion, set
-`rbac.execAllNonSystemNamespaces: true` in
-`gitops/platform/values/codex-ops.yaml` and replace only Codex's `exec` list with:
+grant. The selected Ops release `7a0f35a20f5619d671109960abace162af7a4754`
+already supports this grant. Production sets `readOnly: false`, includes
+`exec_pod` in Codex's tool list, and sets `rbac.execAllNonSystemNamespaces: true`
+in `gitops/platform/values/codex-ops.yaml` with this Codex grant:
 
 ```yaml
 exec:
@@ -222,9 +221,9 @@ exec:
     maxOutputBytes: 65536
 ```
 
-Regenerate the Argo application with `node scripts/argocd-self-management.mjs`
-after selecting the new image receipt, then sync through the operator deployment
-path. Do not apply this grant to the previously selected image.
+Regenerate the Argo application with `node scripts/argocd-self-management.mjs`,
+then sync `codex-ops` through the operator deployment path. The child Application
+requires a manual sync; merging configuration alone does not activate exec.
 Nova and Buster do not inherit this global read permission. The observer
 role excludes Secrets and all mutation/exec rights. Disabling global observation
 reconciles its named ClusterRoleBinding to empty subjects without relying on prune.
@@ -767,8 +766,10 @@ credential at its source while other workloads still depend on it.
 
 ## Read-only resource diagnostics
 
-The default and production `codex` MCP principal has `readOnly: true`, an explicit
-read-tool allowlist and `exec: []`. The policy parser rejects exec tools or grants
+The chart default `codex` MCP principal has `readOnly: true`, an explicit
+read-tool allowlist and `exec: []`. Production explicitly overrides this with
+`readOnly: false`, `exec_pod`, and the workload-namespace grant described above.
+The policy parser rejects exec tools or grants
 for a read-only principal; tool authorization and exec authorization independently
 reject them too. Helm rejects an exec-enabled read-only client before deployment.
 Nova and Buster retain their separate grants. The shared MCP ServiceAccount still
@@ -813,9 +814,10 @@ its parser does not know the new tool names. The child Application intentionally
 has no automated sync. Refresh the connected MCP application's tool catalog after
 rollout. A source change or successful local test is not a live acceptance result.
 
-Live acceptance using the Codex credential must confirm that `tools/list` contains
-only read-only tools and no `exec_pod`; a direct `exec_pod` call is rejected even
-for a formerly granted test pod; filesystem/memory queries return current node
+Live acceptance using the production Codex credential must confirm that `tools/list`
+contains `exec_pod` and a harmless command such as `id` succeeds in the intended
+workload container. System namespaces and system-priority pods remain excluded.
+Filesystem/memory queries must return current node
 series; pod/PVC inventory and pagination work; and logs/events remain readable.
 Check that Nova/Buster still receive only their original tool/namespace scopes.
 Do not test write denial by sending a real Kubernetes mutation to production.

@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { parseAllDocuments } from 'yaml';
-import { parsePolicy, authorizeTool } from '../../../tools/ops-mcp/src/access-policy.mjs';
+import { parsePolicy, authorizeTool, authorizeExec } from '../../../tools/ops-mcp/src/access-policy.mjs';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const args = ['template', 'codex-ops', root + 'charts/ops-pod', '-n', 'kubeclaw-ops',
@@ -14,16 +14,25 @@ const docs = parseAllDocuments(execFileSync('helm', args, { encoding: 'utf8' }))
   assert.deepEqual(d.errors, []); return d.toJSON();
 }).filter(Boolean);
 
-test('production policy is read-only for Codex and uses only internal monitoring egress', () => {
+test('production Codex can exec in workload namespaces and retains internal monitoring egress', () => {
   const policy = docs.find(d => d.kind === 'ConfigMap' && d.data['policy.json']);
   const clients = parsePolicy(policy.data['policy.json'], ['kubeclaw-ops', 'kubeclaw', 'argocd', 'kube-system', 'tailscale', 'spire-server', 'spire-system'], ['test'], true, true);
   const codex = clients.find(c => c.id === 'codex');
-  assert.equal(codex.readOnly, true);
-  assert.deepEqual(codex.exec, []);
-  assert.ok(!codex.tools.includes('exec_pod'));
-  assert.throws(() => authorizeTool(codex, 'exec_pod', { namespace: 'test-demo' }, 'argocd'), /TOOL_FORBIDDEN/);
+  assert.equal(codex.readOnly, false);
+  assert.ok(codex.tools.includes('exec_pod'));
+  const pod = { spec: { containers: [{ name: 'kubeclaw' }] } };
+  for (const namespace of ['kubeclaw', 'paperless', 'future-workload']) {
+    const args = { namespace, container: 'kubeclaw', timeoutSeconds: 120, maxOutputBytes: 65536 };
+    assert.doesNotThrow(() => authorizeTool(codex, 'exec_pod', args, 'argocd'));
+    assert.equal(authorizeExec(codex, args, pod).timeoutSeconds, 30);
+  }
+  for (const namespace of ['kube-system', 'kube-public', 'kube-node-lease']) {
+    assert.throws(() => authorizeExec(codex, { namespace, container: 'kubeclaw' }, pod), /TARGET_FORBIDDEN/);
+  }
+  assert.throws(() => authorizeExec(codex, { namespace: 'kubeclaw', container: 'kubeclaw' },
+    { spec: { ...pod.spec, priorityClassName: 'system-node-critical' } }), /TARGET_FORBIDDEN/);
   for (const tool of ['get_resource_inventory', 'get_monitoring_metrics', 'get_monitoring_alerts']) assert.ok(codex.tools.includes(tool));
-  // Existing agent grants are independent and unchanged by Codex's read policy.
+  // Other agents retain their independent scopes.
   assert.ok(clients.find(c => c.id === 'nova').exec.length);
   assert.ok(clients.find(c => c.id === 'buster').exec.length);
   const mcp = docs.find(d => d.kind === 'Deployment' && d.metadata.name === 'codex-ops-mcp').spec.template.spec;
