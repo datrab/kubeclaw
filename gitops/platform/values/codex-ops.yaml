@@ -74,7 +74,9 @@ mcp:
         - get_pod
         - get_events
         - get_pod_logs
+        - get_hubble_flows
         - get_pod_metrics
+        - get_resource_inventory
         - exec_pod
       exec:
         - namespacePrefix: test
@@ -83,10 +85,8 @@ mcp:
           timeoutSeconds: 30
           maxOutputBytes: 65536
         - namespace: kubeclaw
-          podLabels:
-            app.kubernetes.io/instance: agent-buster
-          containers:
-            - buster-v2-runtime
+          allPods: true
+          allContainers: true
           timeoutSeconds: 30
           maxOutputBytes: 65536
     - id: buster

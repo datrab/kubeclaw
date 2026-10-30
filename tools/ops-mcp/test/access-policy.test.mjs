@@ -96,3 +96,27 @@ test('read-only identities reject exec at parsing and authorization, and global 
   }
   assert.throws(() => authorizeTool({ ...observer, readAllNamespaces: false }, 'get_resource_inventory', { resource: 'persistentvolumeclaims', namespace: 'other' }, 'argocd'), /NAMESPACE_FORBIDDEN/);
 });
+
+test('namespace-wide exact exec grants cover every regular container without matching adjacent namespaces', () => {
+  const namespaceGrant = { namespace: 'kubeclaw', allPods: true, allContainers: true, timeoutSeconds: 30, maxOutputBytes: 65536 };
+  const actor = { ...client('nova', '/token'), exec: [namespaceGrant] };
+  const parse = value => parsePolicy(JSON.stringify({ clients: [value] }), ['kubeclaw', 'argocd'])[0];
+  const parsed = parse(actor);
+  const pod = { spec: { containers: [{ name: 'kubeclaw' }, { name: 'worker-trust-proxy' }], initContainers: [{ name: 'init' }] } };
+  for (const container of ['kubeclaw', 'worker-trust-proxy']) {
+    const args = { namespace: 'kubeclaw', container, timeoutSeconds: 120, maxOutputBytes: 999999 };
+    assert.doesNotThrow(() => authorizeTool(parsed, 'exec_pod', args, 'argocd'));
+    assert.deepEqual(authorizeExec(parsed, args, pod), { ...args, timeoutSeconds: 30, maxOutputBytes: 65536 });
+  }
+  for (const namespace of ['kubeclaw-ops', 'kubeclaw-other', 'argocd', 'production']) {
+    assert.throws(() => authorizeExec(parsed, { namespace, container: 'kubeclaw' }, pod), /TARGET_FORBIDDEN/);
+  }
+  for (const container of ['missing', 'init']) {
+    assert.throws(() => authorizeExec(parsed, { namespace: 'kubeclaw', container }, pod), /TARGET_FORBIDDEN/);
+  }
+  for (const changed of [{ allPods: false }, { allContainers: false }, { allPods: 'true' },
+    { namespace: 'argocd' }, { namespacePrefix: 'test' }, { allNonSystemNamespaces: true },
+    { podLabels: {} }, { containers: ['kubeclaw'] }]) {
+    assert.throws(() => parse({ ...actor, exec: [{ ...namespaceGrant, ...changed }] }), /grant/);
+  }
+});

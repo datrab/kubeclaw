@@ -198,7 +198,8 @@ provisioning path and are not copied into Git.
 `tokenSecret`, client namespace/Pod selector, `namespaces`, `namespacePrefixes`,
 exact `tools` and explicit `exec` grants. `rbac.namespaces`, `execNamespaces` and
 `namespacePrefixes` cap scoped access; `rbac.readAllNamespaces` explicitly enables global observation. Buster receives only `test*` reads and exec;
-Nova receives `test*` in addition to its existing scope; Ops can read every namespace. Matching ignores
+Nova receives all regular-container exec targets in exactly `kubeclaw` and `test*`,
+plus namespace-scoped Hubble flows and resource inventory; Ops can read every namespace. Matching ignores
 case and covers `test`, `testing`, `test-123` and future matching namespaces.
 Only the Ops/Codex client has `readAllNamespaces: true` and the `platform_cluster_state(resource=namespaces)`
 operation. Its reads include current and future namespaces. The production override has an explicit
@@ -237,7 +238,11 @@ uses that agent's own identity; the central server supplies descriptions and
 schemas and enforces every call. The existing `coding` tool profile includes
 configured MCP servers. Session or agent tool denials still apply.
 Prefix exec grants explicitly permit all Pods/regular containers in `test*`;
-exact grants elsewhere keep their label/container restrictions.
+exact namespace grants can explicitly permit all Pods/regular containers with both
+`allPods: true` and `allContainers: true`, or retain label/container restrictions.
+The namespace-wide exact grant requires an MCP image built from the matching
+authorization source. Publish and promote that image before syncing the updated
+Nova policy; the previously selected image rejects this new grant format.
 
 OpenClaw directly launches a small stdio-to-HTTPS transport adapter with Node;
 an agent does not need its shell tool to discover or invoke these operations.

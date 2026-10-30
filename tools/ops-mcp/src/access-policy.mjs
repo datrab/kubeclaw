@@ -46,11 +46,14 @@ export function parsePolicy(text, allowedNamespaces, allowedPrefixes = [], readA
       const prefixGrant = grant.allNonSystemNamespaces === undefined && typeof grant.namespacePrefix === 'string' &&
         (client.namespacePrefixes ?? []).some(prefix => prefix.toLowerCase() === grant.namespacePrefix.toLowerCase()) &&
         grant.allPods === true && grant.allContainers === true && !grant.namespace && !grant.podLabels && !grant.containers;
+      const namespaceGrant = grant.allNonSystemNamespaces === undefined && !grant.namespacePrefix &&
+        client.namespaces.includes(grant.namespace) && grant.allPods === true && grant.allContainers === true &&
+        !grant.podLabels && !grant.containers;
       const exactGrant = grant.allNonSystemNamespaces === undefined && !grant.namespacePrefix && !grant.allPods && !grant.allContainers &&
         client.namespaces.includes(grant.namespace) && grant.podLabels && typeof grant.podLabels === 'object' && !Array.isArray(grant.podLabels) &&
         Object.keys(grant.podLabels).length > 0 && Object.entries(grant.podLabels).every(([k,v]) => typeof v === 'string' && k.length > 0 && v.length > 0) &&
         strings(grant.containers, x => dns.test(x)) && grant.containers.length > 0;
-      if ((!broadGrant && !prefixGrant && !exactGrant) || !positive(grant.timeoutSeconds, 120) || !positive(grant.maxOutputBytes, 65536)) throw new Error('Invalid Ops MCP exec grant');
+      if ((!broadGrant && !prefixGrant && !namespaceGrant && !exactGrant) || !positive(grant.timeoutSeconds, 120) || !positive(grant.maxOutputBytes, 65536)) throw new Error('Invalid Ops MCP exec grant');
     }
   }
   return value.clients;
@@ -108,8 +111,8 @@ export function authorizeExec(client, args, pod) {
     ? nonSystemNamespace(args.namespace) && !systemPod
     : grant.namespacePrefix
     ? namespaceAllowed(args.namespace, [], [grant.namespacePrefix]) && grant.allPods === true && grant.allContainers === true
-    : grant.namespace === args.namespace && grant.containers.includes(args.container) &&
-      Object.entries(grant.podLabels).every(([k, v]) => pod.metadata?.labels?.[k] === v));
+    : grant.namespace === args.namespace && (grant.allPods === true && grant.allContainers === true ||
+      grant.containers.includes(args.container) && Object.entries(grant.podLabels).every(([k, v]) => pod.metadata?.labels?.[k] === v)));
   if (!grant || !pod.spec?.containers?.some(c => c.name === args.container)) throw new Error('OPS_EXEC_TARGET_FORBIDDEN');
   return { ...args, timeoutSeconds: Math.min(args.timeoutSeconds, grant.timeoutSeconds),
     maxOutputBytes: Math.min(args.maxOutputBytes, grant.maxOutputBytes) };

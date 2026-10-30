@@ -4,7 +4,7 @@ import { execFileSync } from 'node:child_process';
 import { fileURLToPath } from 'node:url';
 import { readFileSync } from 'node:fs';
 import { parseAllDocuments, parse } from 'yaml';
-import { parsePolicy } from '../../../tools/ops-mcp/src/access-policy.mjs';
+import { parsePolicy, authorizeTool, authorizeExec } from '../../../tools/ops-mcp/src/access-policy.mjs';
 
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const resources = parseAllDocuments(execFileSync('helm', ['template', 'codex-ops', root + 'charts/ops-pod', '-n', 'kubeclaw-ops',
@@ -61,6 +61,21 @@ test('production Ops retains its platform read scopes and all clients receive te
   assert.ok(clients[0].tools.includes('list_argocd_applications'));
   assert.deepEqual(clients.find(c => c.id === 'buster').namespaces, []);
   assert.ok(clients.every(c => c.namespacePrefixes.includes('test')));
+  const nova = clients.find(c => c.id === 'nova');
+  const pod = { spec: { containers: [{ name: 'arbitrary-sidecar' }] } };
+  for (const namespace of ['kubeclaw', 'test', 'testing', 'test-future']) {
+    for (const tool of ['namespace_overview', 'get_pod', 'get_events', 'get_pod_logs', 'get_hubble_flows', 'get_pod_metrics', 'get_resource_inventory', 'exec_pod']) {
+      assert.doesNotThrow(() => authorizeTool(nova, tool, { namespace }, 'argocd'));
+    }
+    const args = { namespace, container: 'arbitrary-sidecar', timeoutSeconds: 120, maxOutputBytes: 999999 };
+    assert.deepEqual(authorizeExec(nova, args, pod), { ...args, timeoutSeconds: 30, maxOutputBytes: 65536 });
+  }
+  for (const namespace of ['kubeclaw-ops', 'kubeclaw-other', 'argocd', 'prod-test']) {
+    assert.throws(() => authorizeExec(nova, { namespace, container: 'arbitrary-sidecar' }, pod), /TARGET_FORBIDDEN/);
+  }
+  assert.throws(() => authorizeTool(nova, 'platform_cluster_state', { resource: 'namespaces' }, 'argocd'), /TOOL_FORBIDDEN/);
+  assert.throws(() => authorizeTool(nova, 'get_resource_inventory', { namespace: 'kubeclaw', resource: 'persistentvolumes' }, 'argocd'), /TOOL_FORBIDDEN/);
+
 });
 
 

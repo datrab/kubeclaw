@@ -157,12 +157,12 @@ remote process, so that this connection remains attached to the deployed service
 
 `mcp.clients` is the authorization source. Each client declares exact tool names,
 readable `namespaces`, dynamic `namespacePrefixes`, and explicit exec grants.
-Exact namespace grants require a nonempty Pod label selector and exact container
-names. Prefix exec grants explicitly set `namespacePrefix`, `allPods: true` and
+Exact namespace grants either require a nonempty Pod label selector and exact
+container names, or explicitly set both `allPods: true` and `allContainers: true`. Prefix exec grants explicitly set `namespacePrefix`, `allPods: true` and
 `allContainers: true`, with timeout and output ceilings. Empty `exec: []` denies
 exec. All calls check client scope before accessing Kubernetes. Buster has no
 exact namespaces and only the `test` prefix; Nova retains `kubeclaw` plus `test`; Ops reads all namespaces and has an explicit `allNonSystemNamespaces` exec
-grant for all regular containers. Nova retains its explicit exec targets plus `test`. Prefix matching ignores case; tool input is canonicalized
+grant for all regular containers. Nova can exec all regular containers in exactly `kubeclaw` and in `test*` namespaces. Prefix matching ignores case; tool input is canonicalized
 to Kubernetes' lowercase namespace names. `test`, `testing` and `test-build` match;
 `prod-test` and `contest` do not.
 
