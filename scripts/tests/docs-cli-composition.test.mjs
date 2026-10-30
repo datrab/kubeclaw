@@ -38,7 +38,7 @@ test('documentation facts retain precise local and foreign source-range bindings
 
 import {renderCliDocumentationFacts} from '../lib/cli/cli-semantic-composition.mjs';
 test('documented facts show conditional defaults/exits and resolve source links',()=>{
- const m=structuredClone(model);m.sources[0].options=[{name:'--file_*_name',nargs:'?',required:false,line:2}];
+ const m=structuredClone(model);m.sources[0].ownership.kind='supported';m.sources[0].options=[{name:'--file_*_name',nargs:'?',required:false,line:2}];
  const p=projectCliDocumentationFacts(m),text=renderCliDocumentationFacts(p);
  assert.ok(text.includes('--file\\_\\*\\_name'));assert.ok(text.includes('child\\_status'));
  assert.ok(text.includes('! child'));assert.ok(text.includes('Source-derived CLI reference'));
@@ -47,14 +47,15 @@ test('documented facts show conditional defaults/exits and resolve source links'
 });
 
 test('implicit language policies are limits and unlocated declarations fail closed',()=>{
- const m=structuredClone(model);m.sources[0].exits=[{kind:'python-module-normal-completion-policy',policy:'No blanket numeric exit.'},{kind:'whole-shell-exit-boundary',policy:'Caller controls status.'}];
+ const m=structuredClone(model);m.sources[0].ownership.kind='supported';m.sources[0].exits=[{kind:'python-module-normal-completion-policy',policy:'No blanket numeric exit.'},{kind:'whole-shell-exit-boundary',policy:'Caller controls status.'}];
  const p=projectCliDocumentationFacts(m);assert.equal(p.sources[0].exits.length,0);assert.equal(p.sources[0].adapterLimits.length,2);
- assert.ok(renderCliDocumentationFacts(p).includes('language-policy-not-physical-declaration'));
+ assert.ok(renderCliDocumentationFacts(p).includes('No blanket numeric exit.'));
  p.sources[0].exits.push({kind:'explicit-sys-exit',valueExpression:'5'});assert.throws(()=>renderCliDocumentationFacts(p),/PHYSICAL_LOCATOR_REQUIRED/);
 });
 const MarkdownIt=createRequire(new URL('../docs-reader/package.json',import.meta.url))('markdown-it');
 test('native Markdown tables preserve entities, pipes, backticks, angle brackets and escaped newline literals',()=>{
- const m=structuredClone(model);m.sources[0].options=[{name:'--&copy;|`<literal>_value*',line:2,defaultExpression:JSON.stringify('first\nsecond')}];
+ const m=structuredClone(model);m.sources[0].ownership.kind='supported';m.sources[0].options=[{name:'--&copy;|`<literal>_value*',line:2,defaultExpression:JSON.stringify('first\nsecond')}];
+ m.sources[0].defaults=[{optionName:m.sources[0].options[0].name,valueExpression:JSON.stringify('first\nsecond'),line:2}];
  const md=renderCliDocumentationFacts(projectCliDocumentationFacts(m)),html=new MarkdownIt({html:true,linkify:false,typographer:false}).render(md);
  assert.ok(html.includes('--&amp;copy;|`&lt;literal&gt;_value*'));assert.ok(!html.includes('©'));assert.ok(html.includes('first\\nsecond'));
 });
@@ -71,4 +72,14 @@ test('package routes retain actual cwd, script body, lifecycle and unsupported b
  const m=structuredClone(model);m.manifestInterfaces=[{kind:'npm-script-declaration',manifest:'pkg/package.json',cwd:'pkg',name:'verify',command:'node check.mjs --check',lifecycle:[{name:'preverify',command:'node prepare.mjs'},{name:'verify',command:'node check.mjs --check'}],supportBoundary:'Private declaration, not operator support.'}];
  const text=renderCliDocumentationFacts(projectCliDocumentationFacts(m));
  for(const value of ['Declared package launch routes','pkg/package.json','/scripts/verify','node check.mjs --check','preverify','Private declaration, not operator support.'])assert.ok(text.includes(value),value);
+});
+
+import {stripFencedCodeAndComments} from '../lib/docs-markdown-anchors.mjs';
+test('reader tier groups owned routes and literal comment markers survive the unchanged reference stripper',()=>{
+ const m=structuredClone(model);m.sources[0].ownership.kind='qualified-maintenance';m.sources[0].options=[{name:'<!--literal-->',line:2}];
+ m.sources[0].commands=[{name:'image',parentModes:[{patterns:['render']},{patterns:['nova','buster']}],line:3}];
+ const rendered=renderCliDocumentationFacts(projectCliDocumentationFacts(m));
+ assert.ok(rendered.includes('Supported and maintenance routes'));assert.ok(rendered.includes('render → nova / buster → image'));
+ assert.ok(!rendered.includes('scopeIdentity'));assert.ok(!rendered.includes('startByte'));assert.ok(!rendered.includes('<!--literal'));
+ const stripped=stripFencedCodeAndComments(rendered+'\nTAIL_PRESERVED');assert.ok(stripped.includes('TAIL_PRESERVED'));
 });
