@@ -29,6 +29,7 @@ Set `studio.publicUrl` to the actual user-facing HTTPS origin, not an internal
 Service hostname. Production Control and both Prism agent callers use
 `https://prism-studio.tail576648.ts.net` so generated deep links work on mobile
 through the existing Tailscale ingress.
+
 The [database transition guide](prism-database-transitions.md) defines the
 compatible migration contract, maintenance password transition, isolated restore
 procedure and deferred rollout-failure acceptance.
@@ -120,6 +121,26 @@ kubectl get deploy agent-prism prism-control prism-worker prism-studio -n kubecl
 kubectl exec -n kubeclaw deployment/agent-prism -c kubeclaw -- openclaw gateway status
 kubectl get deploy prism-worker -n kubeclaw -o yaml | grep -q PRISM_PROVIDER && echo "unexpected provider credential"
 ```
+
+## Review and edit a design
+
+A project without a committed design opens its generation status, not an empty
+editor. Refresh observes the same request; it never starts a second generation.
+Once a document exists, open it on desktop or mobile. Use Preview to see the
+rendered design and select an element directly. The desktop inspector and mobile
+**Edit elements** sheet expose the same element list, free-text field and save
+operation. Drag a row's handle to reorder within its group, or use **Move up** /
+**Move down** with touch or keyboard. Edits save a canonical revision and survive
+reload; conflicts retain the draft and do not claim success. The Edit canvas
+also retains Puck's drag-and-drop support without a second set of editor panels.
+Expand **Component and field tools** for the existing component palette and typed
+node fields. Document metadata has no fake editable page-title field: changes
+must correspond to supported, persisted document operations.
+
+Use **Ask Prism** (mobile: **Prism**) to send feedback about the current design.
+If delivery is interrupted, the editor keeps the original request and exposes
+**Reconcile existing change** after reload. This collects/retries that identity,
+not a new feedback job. A new request is available after the retained one settles.
 
 ## Remove workloads
 

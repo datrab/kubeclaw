@@ -689,8 +689,8 @@ for (const [label, source] of [
 }
 assert.match(values, /primary:\s*"openai\/gpt-5\.6-sol"[\s\S]*fallbacks:[\s\S]*"openai\/gpt-5\.5"/,
   'chart defaults must use GPT-5.6 Sol with GPT-5.5 fallback');
-assert.match(prismAgentValues, /primary:\s*openai\/gpt-5\.6-sol[\s\S]*fallbacks:\s*\[openai\/gpt-5\.5\]/,
-  'Prism must use the same OpenAI model policy as every other agent');
+assert.match(prismAgentValues, /primary:\s*openai\/gpt-6\.1-sol[\s\S]*fallbacks:\s*\[openai\/gpt-6-astra\]/,
+  'Prism must retain its repaired managed OpenAI route across redeployment');
 assert.doesNotMatch(
   gatewayConfig,
   /"codex":\s*\{\}/,

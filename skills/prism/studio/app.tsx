@@ -18,6 +18,8 @@ import { loadPreviewAssets, type PreviewAssets } from "./preview-assets.ts";
 import { previewDocument } from "./preview.ts";
 import { config } from "./puck-config.tsx";
 import { studioFlows, previewActionTarget, previewSelection } from "./flows.ts";
+import { ElementEditor } from './element-editor.tsx';
+import { elements } from './element-operations.ts';
 
 
 function App() {
@@ -38,6 +40,7 @@ function App() {
   const [csrf, setCsrf] = useState("");
   const [userId, setUserId] = useState("");
   const [failure, setFailure] = useState("");
+  const [actionError, setActionError] = useState("");
   const [approvalMessage, setApprovalMessage] = useState("");
   const [quality, setQuality] = useState<{
     status: string;
@@ -49,7 +52,7 @@ function App() {
     }>;
   } | null>(null);
   const [acceptedWarnings, setAcceptedWarnings] = useState<string[]>([]);
-  const [viewport, setViewport] = useState<Viewport>("wide");
+  const [viewport, setViewport] = useState<Viewport>(() => matchMedia('(max-width: 800px)').matches ? 'compact' : 'wide');
   const [viewId, setViewId] = useState("home");
   const [viewState, setViewState] = useState("default");
   const [instruction, setInstruction] = useState("");
@@ -75,7 +78,7 @@ function App() {
   const [mode, setMode] = useState<"edit" | "preview">("edit");
   const previewRef=useRef<HTMLIFrameElement>(null);
   const [selectedNodeId,setSelectedNodeId]=useState<string|null>(null);
-  const selectedNode=useMemo(()=>{if(!document||!selectedNodeId)return undefined;const visit=(node:PrismNode):PrismNode|undefined=>node.id===selectedNodeId?node:node.children?.map(visit).find(Boolean);return visit(document.views[viewId]?.root as PrismNode);},[document,selectedNodeId,viewId]);
+  const selectedNode=useMemo(()=>document ? elements(document,viewId).find(item=>item.node.id===selectedNodeId)?.node : undefined,[document,selectedNodeId,viewId]);
   useEffect(()=>{
     const root=document?.views[viewId]?.root as PrismNode|undefined;
     if(!root){setSelectedNodeId(null);return;}
@@ -136,7 +139,7 @@ function App() {
       );
       const revisionClient:RevisionClient={documentId:id,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
       const revision=savedRevision(revisionClient);
-      if(revision){setRevisionPending(true);setInstruction(revision.input.instruction);setFailure("An existing Prism revision request is retained. Reconcile it before proposing another change.");}
+      if(revision){setRevisionPending(true);setInstruction(revision.input.instruction);}
       const projectId = new URLSearchParams(location.search).get("project");
       if (projectId) {
         const client:RoundClient={projectId,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
@@ -197,6 +200,7 @@ function App() {
   };
   const propose = async () => {
     if (!document || (!instruction.trim() && !revisionPending)) return;
+    setActionError("");
     const id = new URLSearchParams(location.search).get("document");
     if (!id) throw new Error("Document ID is missing");
     const client:RevisionClient={documentId:id,userId,csrf,origin:location.origin,storage:sessionStorage};
@@ -453,22 +457,6 @@ function App() {
     setAcceptedWarnings([]);
     return body.specialistResult.values;
   };
-  const updateTitle = () => {
-    if (!document) return;
-    const current = document;
-    const title = selectedNode;
-    if (!title) return;
-    void commit({
-      type: "node.props.set",
-      baseRevision: current.meta.revision,
-      nodeId: title.id,
-      props: {
-        ...(title.type==="button"
-          ? {label:String(title.props?.label??"Action")==="Action"?"Continue":"Action"}
-          : {content:String(title.props?.content??"")==="Services"?"Deployments":"Services"}),
-      },
-    }).catch((error) => setFailure(String(error)));
-  };
   const insert = () => {
     if (!document) return;
     const current = document;
@@ -486,20 +474,7 @@ function App() {
           action: "preview-action",
         },
       },
-    }).catch((error) => setFailure(String(error)));
-  };
-  const move = () => {
-    if (!document) return;
-    const current = document;
-    const last = current.views[viewId]?.root.children?.at(-1);
-    if (!last) return;
-    void commit({
-      type: "node.move",
-      baseRevision: current.meta.revision,
-      nodeId: last.id,
-      parentId: current.views[viewId]?.root.id ?? `${viewId}-root`,
-      index: 0,
-    }).catch((error) => setFailure(String(error)));
+    }).catch((error) => setActionError(String(error)));
   };
   if (failure)
     return (
@@ -573,7 +548,7 @@ function App() {
           </button>
           <button
             onClick={() =>
-              void evaluateDesign().catch((error) => setFailure(String(error)))
+              void evaluateDesign().catch((error) => setActionError(String(error)))
             }
           >
             Check design
@@ -581,7 +556,7 @@ function App() {
           <button
             className="approve"
             onClick={() =>
-              void approve().catch((error) => setFailure(String(error)))
+              void approve().catch((error) => setActionError(String(error)))
             }
           >
             Approve
@@ -642,16 +617,16 @@ function App() {
                   disabled={direction.state === "selected"}
                   onClick={() =>
                     void selectDirection(direction.id).catch((error) =>
-                      setFailure(String(error)),
+                      setActionError(String(error)),
                     )
                   }
                 >
                   {direction.state === "selected" ? "Selected" : "Choose"}
                 </button>
-                <button disabled={direction.state !== "proposed"} onClick={()=>void recordDirectionFeedback(direction.id,"rejected").catch((error)=>setFailure(String(error)))}>Reject</button>
-                <button onClick={()=>void recordDirectionFeedback(direction.id,"liked").catch((error)=>setFailure(String(error)))}>More like this</button>
-                <button onClick={()=>void recordDirectionFeedback(direction.id,"disliked").catch((error)=>setFailure(String(error)))}>Less like this</button>
-                <button onClick={()=>void recordDirectionFeedback(direction.id,"preserved").catch((error)=>setFailure(String(error)))}>Keep this detail</button>
+                <button disabled={direction.state !== "proposed"} onClick={()=>void recordDirectionFeedback(direction.id,"rejected").catch((error)=>setActionError(String(error)))}>Reject</button>
+                <button onClick={()=>void recordDirectionFeedback(direction.id,"liked").catch((error)=>setActionError(String(error)))}>More like this</button>
+                <button onClick={()=>void recordDirectionFeedback(direction.id,"disliked").catch((error)=>setActionError(String(error)))}>Less like this</button>
+                <button onClick={()=>void recordDirectionFeedback(direction.id,"preserved").catch((error)=>setActionError(String(error)))}>Keep this detail</button>
               </article>
             ))}
           </>
@@ -701,6 +676,8 @@ function App() {
         ))}
       </aside>
       <section className="workspace">
+        {actionError && <p role="alert">{actionError}</p>}
+        {revisionPending && <p role="status">Your existing feedback is retained. Reconcile it before sending another request.</p>}
         <div className="workspace-label">
           <span>{viewport}</span>
           <span>{mode}</span>
@@ -714,7 +691,7 @@ function App() {
                 const operation = puckChangeToOperation(document, next, viewId);
                 if (operation)
                   void commit(operation).catch((error) =>
-                    setFailure(String(error)),
+                    setActionError(String(error)),
                   );
               }}
               onPublish={() => undefined}
@@ -737,7 +714,12 @@ function App() {
                 edit: true,
                 insert: true,
               }}
-            />
+            >
+              <div className="design-canvas">
+                <details className="layout-tools"><summary>Component and field tools</summary><div className="layout-tools-content"><Puck.Components /><Puck.Fields /></div></details>
+                <Puck.Preview />
+              </div>
+            </Puck>
           ) : (
             <>
             {previewAssetError && <p role="alert">Preview asset failed: {previewAssetError}</p>}
@@ -760,31 +742,13 @@ function App() {
         <p className="quiet">
           {selectedNode?"Edit this typed Design Document node.":"Select an element in Preview mode."}
         </p>
-        <label>
-          Content
-          <input
-            value={String(
-              selectedNode?.props?.content??selectedNode?.props?.label??"",
-            )}
-            readOnly
-          />
-        </label>
-        <button
-          onClick={updateTitle}
-          disabled={!selectedNode}
-        >
-          Edit text
-        </button>
+        <ElementEditor design={document} viewId={viewId} selectedId={selectedNodeId} onSelect={setSelectedNodeId} onCommit={commit} />
         <button onClick={insert}>Insert action</button>
-        <button
-          onClick={move}
-          disabled={(document.views[viewId]?.root.children?.length ?? 0) < 2}
-        >
-          Move last to top
-        </button>
         <hr />
         <p className="eyebrow">Ask Prism</p>
         <textarea
+          aria-label="Prism instruction"
+          disabled={working || revisionPending}
           value={instruction}
           onChange={(event) => setInstruction(event.target.value)}
           placeholder="Describe the change you want…"
@@ -793,7 +757,7 @@ function App() {
           className="primary"
           disabled={working || (!instruction.trim() && !revisionPending)}
           onClick={() =>
-            void propose().catch((error) => setFailure(String(error)))
+            void propose().catch((error) => setActionError(String(error)))
           }
         >
           {working ? "Working…" : revisionPending ? "Reconcile existing change" : "Propose change"}
@@ -818,7 +782,7 @@ function App() {
               key={event.eventId}
               onClick={() =>
                 void retractPreference(event.eventId).catch((error) =>
-                  setFailure(String(error)),
+                  setActionError(String(error)),
                 )
               }
             >
@@ -833,7 +797,7 @@ function App() {
               disabled={index === 0}
               onClick={() =>
                 void restoreRevision(revision.id).catch((error) =>
-                  setFailure(String(error)),
+                  setActionError(String(error)),
                 )
               }
             >
@@ -849,7 +813,7 @@ function App() {
           Navigate
         </button>
         <button onClick={() => setPanel(panel === "insert" ? null : "insert")}>
-          Insert
+          Edit elements
         </button>
         <button onClick={() => setPanel(panel === "prism" ? null : "prism")}>
           Prism
@@ -864,11 +828,14 @@ function App() {
             {panel === "navigate"
               ? "Screens and flows"
               : panel === "insert"
-                ? "Insert component"
+                ? "Edit elements"
                 : "Ask Prism"}
           </h2>
           {panel === "insert" && (
-            <button onClick={insert}>Insert action</button>
+            <>
+              <ElementEditor design={document} viewId={viewId} selectedId={selectedNodeId} onSelect={setSelectedNodeId} onCommit={commit} />
+              <button onClick={insert}>Insert action</button>
+            </>
           )}
           {panel === "navigate" &&
             Object.entries(document.views).map(([id, view]) => (
@@ -884,8 +851,11 @@ function App() {
             ))}
           {panel === "prism" && (
             <>
+              {actionError && <p role="alert">{actionError}</p>}
+              {revisionPending && <p role="status">Your existing feedback is retained. Reconcile it before sending another request.</p>}
               <textarea
                 aria-label="Prism instruction"
+                disabled={working || revisionPending}
                 value={instruction}
                 onChange={(event) => setInstruction(event.target.value)}
                 placeholder="Describe the change you want…"
@@ -894,7 +864,7 @@ function App() {
                 className="primary"
                 disabled={working || (!instruction.trim() && !revisionPending)}
                 onClick={() =>
-                  void propose().catch((error) => setFailure(String(error)))
+                  void propose().catch((error) => setActionError(String(error)))
                 }
               >
                 {revisionPending ? "Reconcile existing change" : "Propose change"}

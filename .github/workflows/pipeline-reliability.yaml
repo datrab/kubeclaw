@@ -133,7 +133,9 @@ jobs:
         run: npm test --prefix skills/buster/plugins/${{ matrix.provider }}
       - name: Verify production Prism navigation on a touch viewport
         if: matrix.provider == 'playwright'
-        run: npm run test:studio-remediation --prefix skills/prism
+        run: |
+          npm run test:studio-remediation --prefix skills/prism
+          npm run test:studio --prefix skills/prism
 
   security-reliability:
     runs-on: ubuntu-latest
