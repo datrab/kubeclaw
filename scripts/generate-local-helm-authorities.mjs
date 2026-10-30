@@ -243,13 +243,10 @@ const currentRuntimeProofs = (proofs, field) => (proofs ?? []).map(proof => {
   const lines = fs.readFileSync(path.join(root, proof.path), 'utf8').split('\n');
   const sourceLine = lines[proof.line - 1];
   assert(typeof sourceLine === 'string', `LOCAL_HELM_RUNTIME_PROOF_SOURCE_DRIFT: ${proof.path}:${proof.line}`);
-  if (proof.sourceLineSha256) {
-    assert.equal(digest(sourceLine), proof.sourceLineSha256,
-      `LOCAL_HELM_RUNTIME_PROOF_SOURCE_DRIFT: ${proof.path}:${proof.line}`);
-  } else {
-    assert(typeof proof.environment === 'string' && sourceLine.includes(proof.environment),
-      `LOCAL_HELM_RUNTIME_PROOF_SOURCE_DRIFT: ${proof.path}:${proof.line}; qualify its current reader`);
-  }
+  assert(typeof proof.sourceLineSha256 === 'string' && /^[a-f0-9]{64}$/u.test(proof.sourceLineSha256),
+    `LOCAL_HELM_RUNTIME_PROOF_QUALIFICATION_REQUIRED: ${proof.path}:${proof.line}; qualify its current reader before values-only reuse`);
+  assert.equal(digest(sourceLine), proof.sourceLineSha256,
+    `LOCAL_HELM_RUNTIME_PROOF_SOURCE_DRIFT: ${proof.path}:${proof.line}`);
   return {...proof, sourceLineSha256: digest(sourceLine)};
 });
 const helmControlFrames = (lines, targetLine, sourceLine) => {
