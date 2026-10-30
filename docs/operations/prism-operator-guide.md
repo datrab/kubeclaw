@@ -268,3 +268,10 @@ This does not reopen a terminal Nova pipeline. Use its separately authenticated
 `reopenBlockedPipelineV2` administrative-reopen API after resolving ambiguous
 effects. A normal approval wait still uses the typed approval signal. Never
 rewrite either ledger or silently replace a blocked project/session.
+
+Pipeline dispatch of the same active architecture resumes its existing round,
+even when Nova's transport attempt/idempotency key changes. It does not create
+another external design action. The persisted preference subject must match;
+explicit Studio requests for a new round still require their parent/document
+revision. A blocked job still requires the reconciliation above before dispatch
+can return a usable receipt.

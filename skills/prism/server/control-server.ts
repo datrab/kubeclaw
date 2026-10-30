@@ -226,7 +226,7 @@ private runWorker(
         await requestClient.query("INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request,status) VALUES($1,$2,$3,$4,$5,$6::jsonb,'active') ON CONFLICT(project_id,architecture_revision) DO UPDATE SET architecture_artifact_id=excluded.architecture_artifact_id,architecture_digest=excluded.architecture_digest,request=excluded.request,status='active'",[randomUUID(),project.rows[0]!.id,designRequest.architecture.artifactId,designRequest.architecture.contentDigest,designRequest.architecture.revision,JSON.stringify(designRequest)]);
       });
       if (!designRequest.approvalId){
-        const preferences=await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision});
+        const preferences=await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision},{resumeActive:true});
         const agent=await admitDesignAgent(pool,`${trustedControlSpiffeId}/prism/main/v2`,projectKey,preferences);
         return json(response,202,{result:{status:'waiting',projectId:project.rows[0]!.id},preferences,agent});
       }

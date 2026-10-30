@@ -19,7 +19,7 @@ async function sourceRevision(db: Queryable, input: DesignRoundStart, active: Ac
   return row.rows[0].id;
 }
 
-export async function startDesignRound(db: Database, input: DesignRoundStart) {
+export async function startDesignRound(db: Database, input: DesignRoundStart, options: {resumeActive?:boolean} = {}) {
   if (!input.startKey || input.startKey.length > 240) throw new Error('design round idempotency key is required');
   return inTransaction(db, async connection => {
     const project = await connection.query<{id: string}>("SELECT id FROM prism.project WHERE external_id=$1 FOR UPDATE",[input.projectId]);
@@ -33,6 +33,11 @@ export async function startDesignRound(db: Database, input: DesignRoundStart) {
     const rows = await connection.query<ActiveRequest>("SELECT id,architecture_digest,architecture_revision,current_round_id,request FROM prism.design_request WHERE project_id=$1 AND status='active' ORDER BY architecture_revision DESC LIMIT 1",[projectId]);
     const active = rows.rows[0];
     if (!active || active.architecture_digest !== input.architectureDigest || Number(active.architecture_revision) !== input.architectureRevision) throw new Error('design round active architecture has changed');
+    // Pipeline recovery changes transport attempt identity, not design intent.
+    // Only initial pipeline dispatch opts in; explicit Studio rounds retain CAS.
+    if (options.resumeActive && active.current_round_id && !input.parentRoundId && !input.documentId) {
+      return activePipelineRound(connection,active.current_round_id,input.subjectId);
+    }
     if ((input.parentRoundId ?? null) !== active.current_round_id) throw new Error('design round parent has changed');
     const revisionId = await sourceRevision(connection,input,active);
     const feedback = await connection.query<{content: unknown}>("SELECT e.content FROM prism.preference_event e WHERE e.project_id=$1 AND e.consent_scope='project' AND e.content->'target'->>'directionId' IN (SELECT dir.id::text FROM prism.direction dir JOIN prism.design_document d ON d.id=dir.source_document_id WHERE d.design_request_id=$2 AND d.design_round_id IS NOT DISTINCT FROM $3::uuid) ORDER BY e.occurred_at,e.wire_event_id",[projectId,active.id,active.current_round_id]);
@@ -80,4 +85,11 @@ export function assertArchitectureTransition(previous: {architecture_revision:nu
     assertSameArchitectureRequest(previous.request,current);
   }
   if(current.approvalId && current.architecture.contentDigest!==previous.architecture_digest)throw new Error('approval cannot activate a different architecture');
+}
+
+async function activePipelineRound(connection:Queryable,id:string,subjectId:string|null) {
+  const rows=await connection.query<{id:string;request:Record<string,unknown>;snapshot:{subjectId:string|null};snapshot_digest:string;result:unknown}>("SELECT r.id,r.request,g.snapshot,g.snapshot_digest,r.result FROM prism.design_round r JOIN prism.preference_generation g ON g.id=r.id WHERE r.id=$1",[id]);
+  const round=rows.rows[0];
+  if (!round || round.snapshot.subjectId !== subjectId) throw new Error('pipeline resume preference subject conflicts with active round');
+  return {generationId:round.id,snapshotDigest:round.snapshot_digest,snapshot:round.snapshot,request:round.request,result:round.result};
 }

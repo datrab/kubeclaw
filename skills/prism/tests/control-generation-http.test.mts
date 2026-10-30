@@ -105,3 +105,15 @@ test('PATH-T02-002 diagnostic: original stale tool callback makes no successor m
     assert.equal((await context.api(`/v1/agent/jobs/${first.id}`,undefined,headers)).value.job.result,null);
   }finally{await context.close();}
 });
+
+test('pipeline retry with a fresh transport key resumes the admitted round instead of creating another design action',async()=>{
+ const context=await setup();try{
+  const initial=await context.dispatch('pipeline-retry',1);
+  const retry=await context.api('/v1/dispatch',{request:initial.preferences.request},{...headers,'idempotency-key':'new-nova-attempt'});
+  assert.equal(retry.status,202,JSON.stringify(retry.value));
+  assert.equal(retry.value.preferences.generationId,initial.preferences.generationId);
+  assert.equal(retry.value.agent.jobId,initial.agent.jobId);
+  assert.equal((await context.db().query('SELECT id FROM prism.agent_job')).rows.length,1);
+  assert.equal((await context.db().query('SELECT id FROM prism.design_round')).rows.length,1);
+ }finally{await context.close();}
+});
