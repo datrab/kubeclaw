@@ -84,7 +84,7 @@ mcp:
       podLabels: {app.kubernetes.io/instance: agent-nova}
       namespaces: [kubeclaw]
       namespacePrefixes: [test]
-      tools: [namespace_overview, get_pod, get_events, get_pod_logs, get_pod_metrics, exec_pod]
+      tools: [namespace_overview, get_pod, get_events, get_pod_logs, get_hubble_flows, get_pod_metrics, get_resource_inventory, exec_pod]
       exec:
         - namespacePrefix: test
           allPods: true
@@ -92,8 +92,8 @@ mcp:
           timeoutSeconds: 30
           maxOutputBytes: 65536
         - namespace: kubeclaw
-          podLabels: {app.kubernetes.io/instance: agent-buster}
-          containers: [buster-v2-runtime]
+          allPods: true
+          allContainers: true
           timeoutSeconds: 30
           maxOutputBytes: 65536
     - id: buster
