@@ -138,7 +138,7 @@ const environmentContract = ({ purpose, acceptedForm, defaultBehavior, emptyBeha
 });
 
 const ENVIRONMENT_CONTRACTS = new Map(Object.entries({
-  BUNDLE_TMP_ROOT: environmentContract({ purpose: 'Carries the chart init script\'s fixed `/tmp/code-bundle` work directory across one shell-to-Node process boundary while the downloaded code bundle is validated.', acceptedForm: 'The internal fixed path `/tmp/code-bundle`; this is not an operator or external runtime input.', defaultBehavior: 'The init script assigns `/tmp/code-bundle` before bundle download and passes that value only to the validation Node process.', emptyBehavior: 'No supported empty state exists: the shell assignment at `deployment.yaml:944` fixes the value before the child-process export at line 1023.', invalidBehavior: 'Changing or removing the internal assignment can make archive extraction and Node validation use different directories, which stops code-bundle initialization.', precedence: 'The local shell assignment at `deployment.yaml:944` is the only producer. The command-local export at line 1023 passes it to the Node reader at line 1027; no values field, Pod environment entry, or external setting participates.', impact: 'The value joins the shell extraction directory to the Node validator\'s `extracted` path for this init-container execution only.', failure: 'The code-bundle init step fails before the workload starts when the archive and validator do not use the same temporary directory.', required: 'internal and fixed when code-bundle initialization runs' }),
+  BUNDLE_TMP_ROOT: environmentContract({ purpose: 'Carries the chart init script\'s fixed `/tmp/code-bundle` work directory across one shell-to-Node process boundary while the downloaded code bundle is validated.', acceptedForm: 'The internal fixed path `/tmp/code-bundle`; this is not an operator or external runtime input.', defaultBehavior: 'The init script assigns `/tmp/code-bundle` before bundle download and passes that value only to the validation Node process.', emptyBehavior: 'No supported empty state exists: the shell assignment at `deployment.yaml:1016` fixes the value before the child-process export at line 1095.', invalidBehavior: 'Changing or removing the internal assignment can make archive extraction and Node validation use different directories, which stops code-bundle initialization.', precedence: 'The local shell assignment at `deployment.yaml:1016` is the only producer. The command-local export at line 1095 passes it to the Node reader at line 1099; no values field, Pod environment entry, or external setting participates.', impact: 'The value joins the shell extraction directory to the Node validator\'s `extracted` path for this init-container execution only.', failure: 'The code-bundle init step fails before the workload starts when the archive and validator do not use the same temporary directory.', required: 'internal and fixed when code-bundle initialization runs' }),
   AGENT_HELM_TIMEOUT: environmentContract({ purpose: 'Limits how long Helm can wait for a Nova or Buster release operation.', acceptedForm: 'A Helm duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'Helm rejects an invalid duration or ends the release when the duration expires.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `45m`.', impact: 'A shorter value stops a slow agent release sooner. A longer value delays rollback and failure reporting.', failure: 'The atomic Helm operation fails and rolls back when the wait limit expires.' }),
   AGENT_ROLLOUT_TIMEOUT: environmentContract({ purpose: 'Limits each Kubernetes rollout-status wait for Nova and Buster workloads.', acceptedForm: 'A kubectl duration such as `45m`.', defaultBehavior: 'Uses `45m`.', emptyBehavior: 'An empty value is absent and selects `45m`.', invalidBehavior: 'kubectl rejects an invalid duration or reports a rollout timeout.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `45m`.', impact: 'This value changes only the observation deadline; it does not change the workload progress deadline.', failure: 'The deploy command stops when a required rollout does not become ready in time.' }),
   ALLOW_PARTIAL_INFRA: environmentContract({ purpose: 'Changes selected infrastructure rollout failures from fatal errors to warnings.', acceptedForm: 'Case-insensitive `1`, `true`, `yes`, `on`, or `enabled`; `0`, `false`, `no`, `off`, or `disabled`.', defaultBehavior: 'Uses `false` and fails closed.', emptyBehavior: 'An empty value is absent and selects `false`.', invalidBehavior: 'Case-insensitive `1`, `true`, `yes`, `on`, or `enabled` enables partial progress; other values keep fail-closed behavior.', precedence: 'A non-empty process value wins; otherwise the deploy script uses `false`.', impact: 'When true, deployment can continue after an infrastructure component fails readiness.', failure: 'The command can finish with incomplete infrastructure; operators must inspect warnings and component status before using the platform.' }),
@@ -9577,12 +9577,15 @@ function buildRuntimeInputInventory(yamlInventory, { nativeSupervisorOnly = fals
       entry.closureCondition = 'Add an exact source-backed reader or external boundary contract, including its owning configuration, default, empty and invalid behavior, required condition, precedence, change effect and failure.';
     }
     if (entry.name === 'BUNDLE_TMP_ROOT') {
-      entry.producers = [{ path: 'charts/kubeclaw/templates/deployment.yaml', line: 944, access: 'internal-shell-assignment', value: '/tmp/code-bundle' }];
+      const bundleSourceLines = read('charts/kubeclaw/templates/deployment.yaml').split('\n');
+      assert.equal(bundleSourceLines[1015].trim(), 'BUNDLE_TMP_ROOT="/tmp/code-bundle"', 'quality gate: BUNDLE_TMP_ROOT fixed assignment changed');
+      assert.equal(bundleSourceLines[1094].trim(), `BUNDLE_TMP_ROOT="$BUNDLE_TMP_ROOT" node <<'NODE'`, 'quality gate: BUNDLE_TMP_ROOT command-local export changed');
+      entry.producers = [{ path: 'charts/kubeclaw/templates/deployment.yaml', line: 1016, access: 'internal-shell-assignment', value: '/tmp/code-bundle' }];
       entry.direction = 'internal shell assignment passed to one child Node process; not operator-authored or externally configurable';
-      entry.meaningEvidence = 'charts/kubeclaw/templates/deployment.yaml:944';
+      entry.meaningEvidence = 'charts/kubeclaw/templates/deployment.yaml:1016';
       entry.precedence = [
-        { order: 1, source: 'fixed internal shell assignment', condition: 'code-bundle initialization is enabled', value: '/tmp/code-bundle', evidence: 'charts/kubeclaw/templates/deployment.yaml:944' },
-        { order: 2, source: 'command-local child-process export', condition: 'the validator Node process starts', evidence: 'charts/kubeclaw/templates/deployment.yaml:1023' },
+        { order: 1, source: 'fixed internal shell assignment', condition: 'code-bundle initialization is enabled', value: '/tmp/code-bundle', evidence: 'charts/kubeclaw/templates/deployment.yaml:1016' },
+        { order: 2, source: 'command-local child-process export', condition: 'the validator Node process starts', evidence: 'charts/kubeclaw/templates/deployment.yaml:1095' },
       ];
     }
   }
@@ -9640,7 +9643,7 @@ function buildRuntimeInputInventory(yamlInventory, { nativeSupervisorOnly = fals
         assert(contract[field].trim(), `quality gate: ${name} contract has an empty ${field}`);
       }
       assert(contract.evidence?.length, `quality gate: ${name} contract lacks downstream implementation evidence`);
-      assert.equal(entry.meaningStatus, 'authored-consumer-specific-contract',
+      assert(['authored-consumer-specific-contract', 'authored-consumer-specific-contracts'].includes(entry.meaningStatus),
         `quality gate: ${name} still publishes a generic transport description`);
       assert.doesNotMatch(`${entry.meaning} ${entry.defaultBehavior} ${entry.failureMeaning}`,
         /owning producer or runtime|external authority/iu,
@@ -9687,7 +9690,9 @@ function buildRuntimeInputInventory(yamlInventory, { nativeSupervisorOnly = fals
     requireSensitivity('BUSTER_READY_TLS_KEY', 'secret-file-path');
     requireSensitivity('GOOGLE_APPLICATION_CREDENTIALS', 'secret-file-path');
     requireSensitivity('BUSTER_PRODUCT_VERIFY_KEY', 'public-verification-material');
-    requireSensitivity('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY', 'public-verification-material');
+    // The selected Buster profile supplies this verification input through
+    // secretKeyRef: payload provenance outranks its public-key name.
+    requireSensitivity('BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY', 'secret-value');
     requireSensitivity('BUSTER_READY_TLS_CERT', 'public-verification-file-path');
     requireSensitivity('TAILSCALE_OAUTH_CLIENT_ID', 'identity-reference');
     requireSensitivity('PRISM_E2E_USER', 'identity-reference');
@@ -9730,12 +9735,12 @@ function buildRuntimeInputInventory(yamlInventory, { nativeSupervisorOnly = fals
       'quality gate: an internal shell-to-Node environment edge was misclassified as an operator-authored input');
     assert.equal(bundleTemporaryRoot.setDirectly, false,
       'quality gate: an internal shell-to-Node environment edge became directly settable');
-    assert.deepEqual(bundleTemporaryRoot.producers, [{ path: 'charts/kubeclaw/templates/deployment.yaml', line: 944, access: 'internal-shell-assignment', value: '/tmp/code-bundle' }],
+    assert.deepEqual(bundleTemporaryRoot.producers, [{ path: 'charts/kubeclaw/templates/deployment.yaml', line: 1016, access: 'internal-shell-assignment', value: '/tmp/code-bundle' }],
       'quality gate: BUNDLE_TMP_ROOT lost its fixed internal producer');
-    assert(bundleTemporaryRoot.precedence.some((step) => step.evidence === 'charts/kubeclaw/templates/deployment.yaml:1023'),
+    assert(bundleTemporaryRoot.precedence.some((step) => step.evidence === 'charts/kubeclaw/templates/deployment.yaml:1095'),
       'quality gate: BUNDLE_TMP_ROOT lost its command-local shell-to-Node export');
     assert(bundleTemporaryRoot.readers.some((reader) => reader.path === 'charts/kubeclaw/templates/deployment.yaml'
-      && reader.line === 1027 && reader.access === 'embedded-node-process-env'),
+      && reader.line === 1099 && reader.access === 'embedded-node-process-env'),
     'quality gate: BUNDLE_TMP_ROOT lost its exact embedded Node reader');
     assert.equal(bundleTemporaryRoot.acceptedForm, 'The internal fixed path `/tmp/code-bundle`; this is not an operator or external runtime input.',
       'quality gate: BUNDLE_TMP_ROOT was presented as externally configurable');

@@ -6,8 +6,9 @@ import path from 'node:path';
 import vm from 'node:vm';
 import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
+import { nativeSupervisorEnvironmentProducer } from '../lib/docs-owned-process-environment.mjs';
 import { shellHeredocCustody, shellCommandAcquisitions } from '../docs-shell-source-custody.mjs';
-import { helmEnvironmentHelperProjectionPlans } from '../docs-helm-environment-projections.mjs';
+import { helmEnvironmentHelperProjectionPlans, helmGatewayCommandProjection } from '../docs-helm-environment-projections.mjs';
 import ts from 'typescript';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings,
   externalProducerContract, assertRuntimeConsumerContract } from '../docs-runtime-consumer-contracts.mjs';
@@ -23,7 +24,7 @@ function declaration(name) {
   assert.ok(end > start);
   return source.slice(start, end);
 }
-const sandbox = { read:file=>fs.readFileSync(path.join(root,file),'utf8'), helmEnvironmentHelperProjectionPlans, shellHeredocCustody, shellCommandAcquisitions, crypto, assert, Buffer, spawnSync, process, path, console, YAML, ts, fs, root,
+const sandbox = { nativeSupervisorEnvironmentProducer, read:file=>fs.readFileSync(path.join(root,file),'utf8'), helmEnvironmentHelperProjectionPlans, helmGatewayCommandProjection, shellHeredocCustody, shellCommandAcquisitions, crypto, assert, Buffer, spawnSync, process, path, console, YAML, ts, fs, root,
   runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings,
   externalProducerContract, assertRuntimeConsumerContract,
   ENVIRONMENT_CONTRACTS: new Map(), ENVIRONMENT_CONSUMER_CONTRACTS: new Map(),
@@ -313,6 +314,9 @@ test('Python exception handlers include intermediate key states rather than fina
 
 test('producer qualification cannot borrow a same-name reader from another process', () => {
   const sourceByPath={
+    // Coverage also requires the real owned native-launcher receiver. Keep it
+    // present so this fixture reaches its intended wrong-process rejection.
+    'skills/worker/core/worker/native-worker-launcher.c':fs.readFileSync(path.join(root,'skills/worker/core/worker/native-worker-launcher.c'),'utf8'),
     'scripts/host.mjs':'console.log(process.env.TMPDIR)\n',
     'charts/unqualified.yaml':'apiVersion: v1\nkind: Pod\nspec:\n  containers:\n    - name: unrelated\n      env:\n        - name: TMPDIR\n          value: /cache\n',
   };
@@ -911,6 +915,13 @@ test('inventory admission regression: final grouped sensitivity retains actual h
   const credentials=Array.from(sandbox.environmentProducerOccurrences(file,fs.readFileSync(path.join(root,file),'utf8')))
     .filter(row=>['KUBECLAW_REGISTRY_USERNAME','KUBECLAW_REGISTRY_PASSWORD'].includes(row.name));
   assert.equal(credentials.length,2); assert.ok(credentials.every(row=>row.secretProvenance));
+  const attestation=Array.from(sandbox.environmentProducerOccurrences('my-values/buster-values.yaml',fs.readFileSync(path.join(root,'my-values/buster-values.yaml'),'utf8')))
+    .filter(row=>row.name==='BUSTER_SOURCE_ATTESTATION_PUBLIC_KEY');
+  assert.equal(attestation.length,1); assert.equal(attestation[0].secretProvenance,true);
+  credentials.push(...attestation);
+  const literalPublicKey=grouping([{name:attestation[0].name,path:'scripts/public.sh',line:1,kind:'node-process-env'}])[0];
+  assert.equal(literalPublicKey.sensitivityClass,'public-verification-material');
+  assert.equal(literalPublicKey.sensitive,false);
   const publicRows=['PGUSER','REDIS_USERNAME','PUBLIC_USERNAME'].map(name=>({name,path:'scripts/public.sh',line:1,kind:'node-process-env'}));
   const laterPublic=credentials.map(row=>({name:row.name,path:'scripts/public.sh',line:2,kind:'node-process-env'}));
   for(const occurrences of [[...credentials,...laterPublic,...publicRows],[...laterPublic,...publicRows,...credentials]]) {

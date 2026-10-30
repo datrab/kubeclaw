@@ -576,7 +576,7 @@ const reviewedProducerScopes = {
   "s6": {
     "process": "init-setup container explicit inline init command",
     "assembly": [],
-    "transport": "The init-setup container receives AGENT_ROLE. It does not execute the same-name startup-doctor or Gateway health reader; writing a later health script or an environment Secret reference is not reading this input."
+    "transport": "The init-setup command reads AGENT_ROLE to select Buster and Prism plugin branches. It is not a general role validator and does not establish the separate Gateway health reader. The init process observes replacement environment on its next run, not through a reload watcher."
   },
   "s7": {
     "process": "init-setup container explicit inline init command",
@@ -667,7 +667,7 @@ const reviewedProducerScopes = {
       "docker/Dockerfile.prism-worker",
       "docker/Dockerfile.prism-studio"
     ],
-    "receiver": "skills/prism/server/control-config.ts (Control); skills/prism/server/worker-config.ts (worker); Studio loader delivery unproved",
+    "receiver": "skills/prism/server/control-config.ts (Control); skills/prism/server/worker-config.ts (worker); skills/prism/server/studio-config.ts (Studio)",
     "receivingProcesses": [
       {
         "process": "Prism control",
@@ -681,8 +681,8 @@ const reviewedProducerScopes = {
       },
       {
         "process": "Prism studio",
-        "receiver": null,
-        "boundary": "transport only; default recipe omits imported configuration/request modules"
+        "receiver": "skills/prism/server/studio-config.ts",
+        "boundary": "checked-in loader and complete server-directory source recipe; deployed execution not proved"
       }
     ]
   },
@@ -732,7 +732,8 @@ const reviewedProducerScopes = {
     "assembly": [
       "docker/Dockerfile.prism-studio"
     ],
-    "transport": "The Studio container receives this input in the selected Studio branch. Its image recipe copies studio.ts but not its imported studio-config.ts/studio-request.ts modules. The standalone checked-in loader semantics are documented separately; this recipe does not establish delivered loader execution."
+    "receiver": "skills/prism/server/studio-config.ts through server/studio.ts",
+    "evidence": [{ "path": "docker/Dockerfile.prism-studio", "line": 14, "endLine": 22 }, { "path": "skills/prism/server/studio-config.ts", "line": 8, "endLine": 17 }]
   },
   "s29": {
     "process": "Prism worker container branch(es)",
@@ -1038,7 +1039,7 @@ const reviewedHelperProducerScopes = {
   "registryHelper": {
     "process": "caller-selected extraContainers entry named buster-v2-runtime",
     "assembly": [],
-    "transport": "The registry helper appends this input to the caller-selected values container after validation. Its image and command remain configurable; this receipt does not establish a Buster entrypoint or Node reader from the container name.",
+    "transport": "The registry helper appends this input to the caller-selected values container after validation. Its image and command remain configurable; this receipt does not establish a Buster entrypoint or Node reader from the container name. NODE_EXTRA_CA_CERTS is emitted only with registry CA configuration and remains Node-runtime transport: registry-client-config.mjs reads nodeCaFile from JSON, not this environment name. No named first-party reader or reload is established.",
     "evidence": [
       {
         "path": "charts/kubeclaw/templates/_registry-clients.tpl",
@@ -1052,6 +1053,80 @@ const reviewedHelperProducerScopes = {
       }
     ]
   },
+  "registryBusterProfile": {
+  "process": "caller-selected buster-v2-runtime; maintained Buster profile receiver only under its selected image/entrypoint",
+  "assembly": [
+    "docker/Dockerfile.buster-runtime"
+  ],
+  "transport": "The generic helper transports this input to a caller-selected container; arbitrary image/command overrides have no first-party reader proof. With the maintained my-values/buster-values.yaml profile selecting the checked-in Buster recipe and its default entrypoint, docker/buster-runtime-entrypoint.sh requires nonempty KUBECLAW_REGISTRY_CONFIG and invokes scripts/registry-client-config.mjs. That parser validates the registry-clients.v1 endpoint/transport/trust contract and dynamically resolves KUBECLAW_REGISTRY_USERNAME and KUBECLAW_REGISTRY_PASSWORD; missing or empty HTTPS credentials fail startup under set -eu. The mutable image tag is not deployed-content proof; no live registry success or credential reload is established.",
+  "evidence": [
+    {
+      "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+      "line": 1,
+      "endLine": 52
+    },
+    {
+      "path": "my-values/buster-values.yaml",
+      "line": 86,
+      "endLine": 90
+    },
+    {
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "line": 11,
+      "endLine": 16
+    },
+    {
+      "path": "scripts/registry-client-config.mjs",
+      "line": 1,
+      "endLine": 119
+    }
+  ],
+  "receiver": "docker/buster-runtime-entrypoint.sh; scripts/registry-client-config.mjs (maintained Buster profile/default entrypoint only)",
+  "receivingProcesses": [
+    {
+      "process": "arbitrary caller-selected extra container",
+      "receiver": null,
+      "boundary": "generic helper transport only; no image or command reader inferred from container name"
+    },
+    {
+      "process": "maintained my-values/buster-values.yaml profile with checked-in Buster image recipe and default entrypoint",
+      "receiver": "docker/buster-runtime-entrypoint.sh; scripts/registry-client-config.mjs",
+      "boundary": "conditional checked-in profile-to-parser source assembly; arbitrary overrides, deployed bytes, live registry and credential reload unproved"
+    }
+  ],
+  "contracts": {
+    "KUBECLAW_REGISTRY_CONFIG": {
+      "acceptedForm": "For the maintained Buster profile/default entrypoint: registry-clients.v1 JSON with validated endpoint, transport, trust and explicit credential environment names. Arbitrary helper callers remain transport-only.",
+      "defaultBehavior": "The maintained entrypoint requires nonempty KUBECLAW_REGISTRY_CONFIG; there is no runtime default. The generic helper establishes no receiving default.",
+      "emptyBehavior": "The maintained entrypoint rejects an empty configuration before invoking the parser. Empty interpretation in arbitrary helper callers is unproved.",
+      "invalidBehavior": "For the maintained profile, malformed JSON, unsupported schema, endpoint/transport/trust/auth mismatch or unusable credential configuration fails the startup parser. Generic caller validation beyond the helper is unproved.",
+      "precedence": "The selected helper render supplies the environment. Only when the maintained profile and default entrypoint execute does its JSON contract select the credential names; arbitrary image/command overrides do not inherit that reader proof.",
+      "impact": "The maintained entrypoint captures configuration and credentials on startup for private generated BuildKit/runtime configuration. No in-process credential reload, deployed-image identity or external registry success is established.",
+      "failure": "The maintained entrypoint uses set -eu: required configuration or parser failure prevents normal startup. Kubernetes Secret delivery and live authentication remain external outcomes. Arbitrary helper callers retain only declaration/transport failure boundaries.",
+      "boundary": "generic helper transport plus conditional maintained Buster profile-to-entrypoint/parser source qualification; not deployed execution"
+    },
+    "KUBECLAW_REGISTRY_USERNAME": {
+      "acceptedForm": "For the maintained Buster profile/default entrypoint: a nonempty credential selected by the registry-clients.v1 HTTPS authentication names. HTTP-lab is anonymous. Arbitrary helper callers remain transport-only.",
+      "defaultBehavior": "HTTPS authentication has no credential default; HTTP-lab does not send credentials. The generic helper establishes no receiving default.",
+      "emptyBehavior": "The maintained parser rejects a missing or empty HTTPS username or password. Empty interpretation in arbitrary helper callers is unproved.",
+      "invalidBehavior": "For the maintained profile, malformed JSON, unsupported schema, endpoint/transport/trust/auth mismatch or unusable credential configuration fails the startup parser. Generic caller validation beyond the helper is unproved.",
+      "precedence": "The selected helper render supplies the environment. Only when the maintained profile and default entrypoint execute does its JSON contract select the credential names; arbitrary image/command overrides do not inherit that reader proof.",
+      "impact": "The maintained entrypoint captures configuration and credentials on startup for private generated BuildKit/runtime configuration. No in-process credential reload, deployed-image identity or external registry success is established.",
+      "failure": "The maintained entrypoint uses set -eu: required configuration or parser failure prevents normal startup. Kubernetes Secret delivery and live authentication remain external outcomes. Arbitrary helper callers retain only declaration/transport failure boundaries.",
+      "boundary": "generic helper transport plus conditional maintained Buster profile-to-entrypoint/parser source qualification; not deployed execution"
+    },
+    "KUBECLAW_REGISTRY_PASSWORD": {
+      "acceptedForm": "For the maintained Buster profile/default entrypoint: a nonempty credential selected by the registry-clients.v1 HTTPS authentication names. HTTP-lab is anonymous. Arbitrary helper callers remain transport-only.",
+      "defaultBehavior": "HTTPS authentication has no credential default; HTTP-lab does not send credentials. The generic helper establishes no receiving default.",
+      "emptyBehavior": "The maintained parser rejects a missing or empty HTTPS username or password. Empty interpretation in arbitrary helper callers is unproved.",
+      "invalidBehavior": "For the maintained profile, malformed JSON, unsupported schema, endpoint/transport/trust/auth mismatch or unusable credential configuration fails the startup parser. Generic caller validation beyond the helper is unproved.",
+      "precedence": "The selected helper render supplies the environment. Only when the maintained profile and default entrypoint execute does its JSON contract select the credential names; arbitrary image/command overrides do not inherit that reader proof.",
+      "impact": "The maintained entrypoint captures configuration and credentials on startup for private generated BuildKit/runtime configuration. No in-process credential reload, deployed-image identity or external registry success is established.",
+      "failure": "The maintained entrypoint uses set -eu: required configuration or parser failure prevents normal startup. Kubernetes Secret delivery and live authentication remain external outcomes. Arbitrary helper callers retain only declaration/transport failure boundaries.",
+      "boundary": "generic helper transport plus conditional maintained Buster profile-to-entrypoint/parser source qualification; not deployed execution"
+    }
+  }
+},
   "productHelper": {
     "process": "Prism Control container with product decisions enabled",
     "assembly": [
@@ -1138,6 +1213,210 @@ for (const [identity, scope] of [
 }
 
 
+// Current source-qualified successor: init22, demo4, registry4, backup11, product8.
+// Custody identities are copied from actual native acquisition, not model digests.
+for (const [identity, scope] of [
+  [
+    "HOME:charts/kubeclaw/templates/deployment.yaml:a11d007d1e1b80dbf06f63713a505455674587c0ac1622a567b1cb6b6a266284",
+    "s5"
+  ],
+  [
+    "TMPDIR:charts/kubeclaw/templates/deployment.yaml:1ecd218226d2a7e2787dc1cf85cad8c7221b2e7309c3a27523633c57b78a4ae8",
+    "s5"
+  ],
+  [
+    "XDG_CACHE_HOME:charts/kubeclaw/templates/deployment.yaml:4972d55f6e76a267b67bfbd67dbab74ef6811d315aa4bef548fa1769821977fc",
+    "s5"
+  ],
+  [
+    "INIT_RUN_AS_ROOT:charts/kubeclaw/templates/deployment.yaml:18867cf82f2a17def7453e5627c27acdcfd570c2fba39ee026efaccfc78bdc65",
+    "s5"
+  ],
+  [
+    "INIT_SSH_HOME:charts/kubeclaw/templates/deployment.yaml:180fafeef6ee41f33bec1d435591c97917371cebfb95f985c20a71b630828aeb",
+    "s5"
+  ],
+  [
+    "AGENT_NAME:charts/kubeclaw/templates/deployment.yaml:7e592ed908414ca5ffdc18dd84b24ba486b3c2679ef4230d79d94321e3d5f114",
+    "s5"
+  ],
+  [
+    "AGENT_ROLE:charts/kubeclaw/templates/deployment.yaml:b65c674f8d6132a48338b6f3eea9142b539409b008eeda7bc5f732893b9a1fd6",
+    "s6"
+  ],
+  [
+    "GIT_REPO_URL:charts/kubeclaw/templates/deployment.yaml:461aa9f6ad5adbfd698d8fba98963e2221d7a9c5d2e8669e290d7f561af62db1",
+    "s5"
+  ],
+  [
+    "OVERRIDE_WORKSPACE:charts/kubeclaw/templates/deployment.yaml:e0d8a5ecacfea064eee1227ccf1d9ad8d548dfa959d30598e98fe921d35ce9f1",
+    "s5"
+  ],
+  [
+    "OVERRIDE_SWARM_CONFIG:charts/kubeclaw/templates/deployment.yaml:56ef9d7a5d80c66053b81d53fe76f11f4f8bdd83293a2acb318e31edae1cc945",
+    "s5"
+  ],
+  [
+    "CODE_BUNDLE_ENABLED:charts/kubeclaw/templates/deployment.yaml:786477e1e1442d0ffc87a52c848e44edb0224da5f3bac86420ea863452d005d4",
+    "s5"
+  ],
+  [
+    "CODE_BUNDLE_ARCHIVE_URL:charts/kubeclaw/templates/deployment.yaml:cfc35cf3ef84bf7b3b981692ac626760581d89e3acfe6836da245a307944841c",
+    "s5"
+  ],
+  [
+    "CODE_BUNDLE_SHA256:charts/kubeclaw/templates/deployment.yaml:2044533a55deb7e23486d83ae630e4d54b26a3ffb4ca448947f8bffb04a3d30e",
+    "s5"
+  ],
+  [
+    "CODE_BUNDLE_EXPECTED_COMMIT:charts/kubeclaw/templates/deployment.yaml:f7ada1fa853c1ece269e71e4d83c93fd7d531840a0007b6a3492aa39b9902564",
+    "s5"
+  ],
+  [
+    "CODE_BUNDLE_CONTRACT_VERSION:charts/kubeclaw/templates/deployment.yaml:2c1314a24a3da1366d1004f88818ea4a5051007c521cbbe55d23ea1b5f6e2691",
+    "s5"
+  ],
+  [
+    "CODE_BUNDLE_ARCHIVE_PATH:charts/kubeclaw/templates/deployment.yaml:fef27832f7a1e287eb0a1eb72755a8fbffac898bfd200ad43b5be89393d6f4d2",
+    "s5"
+  ],
+  [
+    "CODE_BUNDLE_AUTH_TOKEN:charts/kubeclaw/templates/deployment.yaml:a29766f50bcf121da4d1a841c41ea1c8854b6c37e0a8e5d9c87b8491dad27ca5",
+    "s5"
+  ],
+  [
+    "CODE_BUNDLE_AUTH_TOKEN:charts/kubeclaw/templates/deployment.yaml:fecde96ba7f26c373c5a1c464b601026d5724259c2a291a803dcc2bfb803b4f7",
+    "s5"
+  ],
+  [
+    "LITELLM_API_KEY:charts/kubeclaw/templates/deployment.yaml:2f9cb80e961d7686a0490dc10aab42a9da8babc8073f6bb28527a5795c1dac4a",
+    "s7"
+  ],
+  [
+    "DISCORD_TOKEN:charts/kubeclaw/templates/deployment.yaml:36439ab3397c26ffe703902b2a4946df72e0d2e3ff8c39cb4f516a143a26bae0",
+    "s5"
+  ],
+  [
+    "STITCH_API_KEY:charts/kubeclaw/templates/deployment.yaml:eba48ac9edef1f4f14d412ee01f4f5961e015cd8cc89fb481c12c593e008f287",
+    "s5"
+  ],
+  [
+    "DISCORD_WEBHOOK:charts/kubeclaw/templates/deployment.yaml:c962b153ddaa604d815007f5cb3244b08f87525357170f7e84eb187ec5018caa",
+    "s5"
+  ],
+  [
+    "KUBECLAW_DEMO_READY_ENDPOINT:charts/kubeclaw/templates/deployment.yaml:ea066ee86810528a841fe411221aadfcf248ca09ee041ed1e7c1ba9abb49a7a5",
+    "demoHelper"
+  ],
+  [
+    "KUBECLAW_DEMO_READY_AUDIENCE:charts/kubeclaw/templates/deployment.yaml:b3e93356517d841a0afa4c6c1cbf701642a8572d5bd0ea32e02be75bbfe81eeb",
+    "demoHelper"
+  ],
+  [
+    "KUBECLAW_DEMO_READY_TOKEN_PATH:charts/kubeclaw/templates/deployment.yaml:9869c294980e05bd24b1f22b62f7b6922d57a171c61895fd2cae096dfa2d0e67",
+    "demoHelper"
+  ],
+  [
+    "KUBECLAW_DEMO_READY_CA_PATH:charts/kubeclaw/templates/deployment.yaml:7026b9c5acce8621cdab66b6c16041fb73cce9e7719dc18ddb7e3104160c2245",
+    "demoHelper"
+  ],
+  [
+    "KUBECLAW_REGISTRY_CONFIG:charts/kubeclaw/templates/deployment.yaml:88d6cca25803cbd7e583633526ecd637b868ce542a845f06067814da0541ddb6",
+    "registryBusterProfile"
+  ],
+  [
+    "KUBECLAW_REGISTRY_USERNAME:charts/kubeclaw/templates/deployment.yaml:39c1299b6dddbdb70170eca8c2527cf26020a375f7d588eb7b6f919c1759933c",
+    "registryBusterProfile"
+  ],
+  [
+    "KUBECLAW_REGISTRY_PASSWORD:charts/kubeclaw/templates/deployment.yaml:dddead67be065aa04431d46aa9175f4bbe6cda56f0e3a30c38a96c568af3b213",
+    "registryBusterProfile"
+  ],
+  [
+    "NODE_EXTRA_CA_CERTS:charts/kubeclaw/templates/deployment.yaml:34d431734d54e39ef2dcda7b4b20023723ff99eae3dd578e2d4149668adbbf18",
+    "registryHelper"
+  ],
+  [
+    "BACKUP_ROOT:charts/prism/templates/backup.yaml:5d60f8d033ab2560ed012c2a9c90bcef013eaf248a5f51ebc63c1a954fdcf494",
+    "s16"
+  ],
+  [
+    "BACKUP_MAXIMUM_BYTES:charts/prism/templates/backup.yaml:ff2223fb0d92a7b4b7ecac18ca024bb774be2ae50e6b30c60594b78811f904d2",
+    "s16"
+  ],
+  [
+    "BACKUP_MAXIMUM_RETAINED_BYTES:charts/prism/templates/backup.yaml:581dad53074ff7197646b7d589186f9548941d8ee6809308b3abb38a2df1458c",
+    "s16"
+  ],
+  [
+    "BACKUP_MAXIMUM_DURATION_SECONDS:charts/prism/templates/backup.yaml:780746bd6cc80b741826c45fe150b41673cd7b84b7c1332dbafaf2132c7db404",
+    "s16"
+  ],
+  [
+    "ARTIFACT_ROOT:charts/prism/templates/backup.yaml:8da2a3b0fd348dedfd556625c47b94417c589aed647d5ce8ff58c853ba4a4526",
+    "s17"
+  ],
+  [
+    "PRISM_BACKUP_IMAGE:charts/prism/templates/backup.yaml:1664a309d60141a6809011c4eaab408f898bf8aafd1a759fa5d3a6f6d981d18a",
+    "s17"
+  ],
+  [
+    "PGCONNECT_TIMEOUT:charts/prism/templates/backup.yaml:57cea8c9bad71ecfda9a4940d678f49645a6461bc63cb22fc05b1fecd6f541ff",
+    "s18"
+  ],
+  [
+    "PGHOST:charts/prism/templates/backup.yaml:7415014303fbaba5e7bf8e01927e5f45aa4bf5c2c43b5a70299aa3900fde4fc2",
+    "s18"
+  ],
+  [
+    "PGDATABASE:charts/prism/templates/backup.yaml:e372e4ae6b9277364da11259d0eaf8869e367027a1f3dba29d89e4a709067097",
+    "s18"
+  ],
+  [
+    "PGUSER:charts/prism/templates/backup.yaml:63d2dab6dfc9cb634be268e6a3057c472a45ca970a397c49352960203818eb11",
+    "s18"
+  ],
+  [
+    "PGPASSWORD:charts/prism/templates/backup.yaml:70e6c4ecb581fcc606738f6b064da93065e7d28ba596e89f0ca4d0dc15eaf94d",
+    "s18"
+  ],
+  [
+    "PRISM_PRODUCT_DECISIONS_ENABLED:charts/prism/templates/workloads.yaml:97150d78b6b3f900c0a94225745ef58ddde41f57588a820c15ea0ed2a4e44d50",
+    "productHelper"
+  ],
+  [
+    "PRISM_PRODUCT_ISSUER:charts/prism/templates/workloads.yaml:4725c70ffb92da01d11fc3d84ab4926498e086dd086b2e6d71c4624f64e59848",
+    "productHelper"
+  ],
+  [
+    "PRISM_PRODUCT_OPERATORS:charts/prism/templates/workloads.yaml:db7683a77d2cffc087e881738e75ef8f011d0ef1f07725ba297a6ee0066eb5d2",
+    "productHelper"
+  ],
+  [
+    "PRISM_PRODUCT_ORIGIN:charts/prism/templates/workloads.yaml:7c740d92ea5f6e37656c0ca7b053d6c2047619ef051f1a5dfade5fa5f7464bbe",
+    "productHelper"
+  ],
+  [
+    "PRISM_PRODUCT_PRIVATE_KEY_FILE:charts/prism/templates/workloads.yaml:822dad7870100e034116977576dbe803266a8eb27508c50e90efe6c2784b071c",
+    "productHelper"
+  ],
+  [
+    "PRISM_PRODUCT_CONTROLLER_URL:charts/prism/templates/workloads.yaml:9cc725a97ff691de949e035e52954fc05babd6a380ad3cc6b932623332ff2ae3",
+    "productHelper"
+  ],
+  [
+    "PRISM_PRODUCT_CONTROLLER_CA_FILE:charts/prism/templates/workloads.yaml:83316077c7b8943e86d23bd25b837d898c9473cd5ee7c3303dbf964674a210ec",
+    "productHelper"
+  ],
+  [
+    "PRISM_PRODUCT_CONTROLLER_TOKEN_FILE:charts/prism/templates/workloads.yaml:7abfadf1bfd5c0b3fe0a23ba40d06276d6acf659d589a73f98d30b54d25b03d9",
+    "productHelper"
+  ]
+]) {
+  reviewedProducerCustody.set(identity, reviewedProducerScopes[scope] ?? reviewedHelperProducerScopes[scope]);
+  qualifiedProducerBindings.add(identity.slice(0, identity.lastIndexOf(':')));
+}
+
 // These are source-assembly receipts, not image-content or execution receipts.
 // Only launch/COPY/stage/work-directory and executable build instructions are compared.
 // A changed first-party recipe must be inspected, not accepted by its filename.
@@ -1165,7 +1444,7 @@ const reviewedImageAssembly = new Map([
   ],
   [
     "docker/Dockerfile.prism-studio",
-    "10f4674bc569c79f8b0dedd5bff3486521577a0bdf00fd8cf889ddca898dc9e7"
+    "e29ca4f24f3ece9d08fa4b71403d38acc1900a8b74eccbf7d2c64d7f63ae1533"
   ],
   [
     "docker/Dockerfile.prism-worker",
@@ -1173,7 +1452,7 @@ const reviewedImageAssembly = new Map([
   ],
   [
     "ops/pod/Dockerfile",
-    "e276d37ecd381af09190930523825794a3eca00db98140d5fce698f2c606ba02"
+    "bd4bfe3bbaedcea41672dc92886317ee94e3c23f90bad31cb1bde85c4702a19f"
   ],
   [
     "tools/ops-mcp/Dockerfile",
@@ -1193,7 +1472,7 @@ const reviewedImageRecipeBytes = new Map([
   ],
   [
     "docker/Dockerfile.prism-agent",
-    "5af3027e1d22301277450f994b85cc09094b72860078d7eb616be7c2f889b38b"
+    "250e0f00b301e415ba6e92642d6bd501313b000f2ca288d9865a74d0cfd41792"
   ],
   [
     "docker/Dockerfile.prism-control",
@@ -1205,19 +1484,19 @@ const reviewedImageRecipeBytes = new Map([
   ],
   [
     "docker/Dockerfile.prism-studio",
-    "a41321b9004c262b8c6ea63c04d61f0f39720ceee86afc8eb7165a1053b245d7"
+    "23cad6d5c43ef93ecd26c7be2698ff0351533c489ff9abcde0cfdc184c1793d3"
   ],
   [
     "docker/Dockerfile.prism-worker",
-    "d976f597b5d66a64c4d983a88dbf4ef64efe509ec20fb790a255b2c550fd27c2"
+    "1637229ea33938f262561323c2ab6aea0c6d1e5adcf76c42fb135f29875c9033"
   ],
   [
     "ops/pod/Dockerfile",
-    "d55888e701ea0798c7c2a109f17977cc615442828e010f56e4f17871f6483eb0"
+    "0b3567215fe9bbd7a282aec80699019dc05abfe652dcad20c9b528365f8464b9"
   ],
   [
     "tools/ops-mcp/Dockerfile",
-    "bfb97ef41bdd945c49e42db5d87ef878a0b8894bc9af32418027a956ce852e41"
+    "cd30a47448ac65be1e85addebe7600c3a3edff3337cfa0c64c18d533359937e5"
   ]
 ]);
 
@@ -1275,9 +1554,10 @@ export function externalProducerContract(name, source, declaration) {
     ? scopedTransportContract(name, source, declaration, scope.transport)
     : producerBoundaryContract(name, source, declaration);
   if (!contract) return null;
+  if (scope.contracts?.[name]) contract = { ...contract, ...scope.contracts[name] };
   if (scope.receiver) contract = { ...contract,
     owner: scope.receiver,
-    purpose: `Transports ${name} to ${scope.process}. Exact receiving authority: ${scope.receiver}. Receiving-source parsing/defaults belong to its separate contract; source assembly alone does not prove deployed image content or successful execution.`,
+    purpose: `${contract.purpose} Exact receiving authority for ${scope.process}: ${scope.receiver}. Source assembly alone does not prove deployed image content or successful execution.`,
   };
   const selectedBranches = [...declaration.custody.guards, ...(declaration.custody.helperProjection?.branch.guards ?? [])].map(guard => `${guard.directive} ${guard.expression}${guard.branch ? ` (${guard.branch})` : ''}`).join('; ') || 'unconditional source declaration';
   return { ...contract,
@@ -1400,3 +1680,20 @@ contracts.get(`DISCORD_WEBHOOK:${chart}`).evidence = [
   { path: chart, line: 627, endLine: 633 },
   { path: chart, line: 673, endLine: 674 },
 ];
+
+// Current exact reader gaps reported by the ordinary runtime inventory.
+// Each command keeps its own optional/required selector and child-process boundary.
+add("scripts/check-runtime-adoption-live.py", "KUBE_CONTEXT", "Adds --context to every kubectl get and server-side dry-run invocation when nonempty.", "A nonempty context string accepted by kubectl; this Python source does not parse or validate context names.", "Absent or empty omits --context, leaving kubectl to resolve its own current-context/configuration behavior.", "Treated exactly as absent.", "kubectl returns a nonzero result; the script records the relevant read failure or dry-run failure and exits 1.", "A truthy process environment value is the only explicit override; there is no CLI context argument or source fallback.", "Changes the cluster target of Secret/StatefulSet reads and server dry-run.", "No resources are applied; the script reports failure and exits 1. It does not prove authorization, target identity, scheduling, ownership transfer, or runtime health.", "Operator-selected kubectl context for the read-only adoption diagnostic.", "Optional source selector.", "checked-in command source; external host/tool outcomes not established");
+contracts.get("KUBE_CONTEXT:scripts/check-runtime-adoption-live.py").evidence = [{"path": "scripts/check-runtime-adoption-live.py", "line": 20, "endLine": 25}, {"path": "scripts/check-runtime-adoption-live.py", "line": 27, "endLine": 65}];
+add("scripts/configure-prism-job-cleanup.sh", "KUBE_CONTEXT", "Adds --context to the kubectl command array when nonempty.", "A nonempty string accepted by kubectl; shell source performs no context-name validation.", "Absent or empty uses kubectl's current-context/configuration behavior.", "Treated as absent by ${KUBE_CONTEXT:-} and the -z test.", "A kubectl context/connection/authorization failure terminates the strict shell command.", "Only the process environment can add the explicit context flag.", "Changes where the three named CronJobs are queried and patched.", "A missing CronJob is safely skipped; a command failure stops the script. The script changes only history limits, not backup files or running Jobs.", "Operator-selected kubectl context for the Prism CronJob-history maintenance command.", "Optional source selector.", "checked-in command source; external host/tool outcomes not established");
+contracts.get("KUBE_CONTEXT:scripts/configure-prism-job-cleanup.sh").evidence = [{"path": "scripts/configure-prism-job-cleanup.sh", "line": 4, "endLine": 16}];
+add("scripts/install/register-runtime-argo.mjs", "KUBE_CONTEXT", "Selects the kubectl target used to inspect existing Argo objects and server-dry-run or apply the rendered registration documents.", "A nonempty string passed as kubectl --context; source does not validate Kubernetes-context syntax.", "None.", "Rejected with KUBE_CONTEXT_REQUIRED.", "kubectl failures are caught, reduced to REGISTRATION_COMMAND_FAILED:<status> where applicable, and set process exit code 1.", "The exact environment value is the sole context source.", "Changes the target cluster for registration inspection and the requested API operation.", "Check performs a server dry-run only; apply may request registration but neither path proves workload adoption or health.", "Explicit Controlnode target context for reviewed Argo registration.", "Required.", "checked-in command source; external host/tool outcomes not established");
+contracts.get("KUBE_CONTEXT:scripts/install/register-runtime-argo.mjs").evidence = [{"path": "scripts/install/register-runtime-argo.mjs", "line": 10, "endLine": 18}, {"path": "scripts/install/register-runtime-argo.mjs", "line": 27, "endLine": 54}];
+add("scripts/prepare-nova-archviewer-auth.sh", "KUBE_CONTEXT", "Adds --context to the Secret existence/read/create operations.", "A nonempty string accepted by kubectl; no shell-level validation is performed.", "Absent or empty uses kubectl's current-context/configuration behavior.", "Treated as absent.", "A kubectl failure stops the strict shell script.", "Only the process environment can select an explicit context.", "Changes the cluster in which the named Secret is retained or created.", "Existing nonempty credentials are retained; noninteractive creation is refused; command failure does not establish Secret creation or credential usability.", "Operator-selected Controlnode kubectl context for the Archviewer Secret prerequisite.", "Optional source selector.", "checked-in command source; external host/tool outcomes not established");
+contracts.get("KUBE_CONTEXT:scripts/prepare-nova-archviewer-auth.sh").evidence = [{"path": "scripts/prepare-nova-archviewer-auth.sh", "line": 4, "endLine": 18}, {"path": "scripts/prepare-nova-archviewer-auth.sh", "line": 20, "endLine": 28}];
+add("scripts/docs-publication-embedded-yaml.mjs", "PATH", "Is passed unchanged in an explicit child environment when spawnSync starts kubeconform.", "Host PATH syntax and executable resolution are owned by the operating system/process launcher, not this documentation validator.", "The source supplies process.env.PATH without an authored fallback; it does not define the launcher behavior when that value is absent.", "Forwarded as supplied; this source does not define an empty-PATH fallback.", "A launch failure is retained as result.error and causes assert.ifError to fail; a launched kubeconform validation failure is separately asserted by status/output.", "The inherited Node process value is forwarded unchanged; HOME/LANG are explicitly replaced for this child.", "Can affect lookup of kubeconform only.", "This validates three materialized documentation specimens only; it proves neither cluster admission nor workload execution.", "Host executable lookup environment supplied to the kubeconform child.", "External host-tool prerequisite, not an operator configuration setting.", "checked-in command source; external host/tool outcomes not established");
+contracts.get("PATH:scripts/docs-publication-embedded-yaml.mjs").evidence = [{"path": "scripts/docs-publication-embedded-yaml.mjs", "line": 14, "endLine": 23}, {"path": "scripts/docs-publication-embedded-yaml.mjs", "line": 41, "endLine": 65}];
+add("scripts/docs-publication-example-assets.mjs", "PATH", "Is included in the child environment for process.execPath --check.", "Host PATH semantics; the outer Node executable is selected by process.execPath, not PATH.", "No source fallback.", "Forwarded unchanged; no wrapper-level interpretation is defined.", "The syntax-check child launch or nonzero status causes execFileSync to throw.", "The inherited process value is forwarded unchanged; LANG/TZ are explicitly set.", "Does not select the outer Node executable and does not qualify behavior of arbitrary checked assets.", "Only syntax/asset validation fails; this is not product runtime execution.", "Inherited environment forwarded to the Node syntax-check child.", "External host-child environment boundary.", "checked-in command source; external host/tool outcomes not established");
+contracts.get("PATH:scripts/docs-publication-example-assets.mjs").evidence = [{"path": "scripts/docs-publication-example-assets.mjs", "line": 8, "endLine": 23}];
+add("scripts/docs-publication-sdk-examples.mjs", "PATH", "Is supplied to the child while the wrapper executes the exact hashed SDK codec example through process.execPath.", "Host PATH semantics; process.execPath, rather than PATH, selects the Node executable for this wrapper.", "No source fallback.", "Forwarded unchanged; the wrapper does not define its interpretation.", "Launch or child failure makes execFileSync fail and cleanup still executes.", "The inherited value is forwarded unchanged; LANG/TZ are explicitly set.", "May affect only child-environment behavior not otherwise read by this wrapper.", "This is bounded codec-example execution, not a runtime capability/service assertion.", "Inherited environment forwarded to the bounded canonical SDK-program child.", "External host-child environment boundary.", "checked-in command source; external host/tool outcomes not established");
+contracts.get("PATH:scripts/docs-publication-sdk-examples.mjs").evidence = [{"path": "scripts/docs-publication-sdk-examples.mjs", "line": 67, "endLine": 85}];
