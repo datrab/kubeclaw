@@ -66,8 +66,12 @@ export function validateHelmKeyTemplates(markdown) {
     ...[[], ['adapter'], ['port'], ['proxyPort'], ['scheme']].map(tail => ['capabilityProviders', 'buster', 'capabilities', 'test.plan.execute', ...tail]),
     ...[[], ['adapter'], ['authentication'], ['port'], ['proxyPort']].map(tail => ['capabilityProviders', 'prism', 'capabilities', 'runtime.dispatch', ...tail]),
   ];
-  assert.equal(options.length, paths.length, 'Helm option-template responsibility changed');
-  return { keys: validateHelmOptionTemplates(options.map((option, index) => ({ option, expectedPath: paths[index] }))),
+  // The same key can occur in several selected overlays/release profiles.
+  // Preserve every original key identity, not a historical occurrence count.
+  const uniqueOptions = [...new Set(options)];
+  assert.equal(uniqueOptions.length, paths.length, 'Helm option-template responsibility changed');
+  return { keys: validateHelmOptionTemplates(uniqueOptions.map((option, index) => ({ option, expectedPath: paths[index] }))),
+    occurrences: options.length,
     productValueSchemaOrDeployment: false };
 }
 
