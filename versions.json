@@ -1,8 +1,8 @@
 {
   "schemaVersion": 1,
   "openclaw": {
-    "version": "2026.10.5",
-    "digest": "sha256:f40d1e66fd14d8c5b49c832f4100f83b53fdc01f5108f7db11de38fd0ee6dbe5"
+    "version": "2026.10.9",
+    "digest": "sha256:1a2a3ce113e435039dbeac5ae261759bb4759908563d91c81059e896b38c5d98"
   },
   "codex": {
     "version": "0.162.0"

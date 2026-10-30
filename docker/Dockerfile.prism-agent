@@ -2,7 +2,7 @@
 # Prism's OpenClaw design agent. Rendering and previews run in the separate
 # Prism services; this image contains no Nova verification toolchain.
 
-ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.10.5@sha256:f40d1e66fd14d8c5b49c832f4100f83b53fdc01f5108f7db11de38fd0ee6dbe5
+ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.10.9@sha256:1a2a3ce113e435039dbeac5ae261759bb4759908563d91c81059e896b38c5d98
 
 # hadolint ignore=DL3006
 FROM ${OPENCLAW_BASE} AS gateway-assets
@@ -29,7 +29,7 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 /tmp/skills/common/plugins/openclaw-agent-observer/dist \
 /out/extensions/kubeclaw-agent-observer/
 
-ARG OPENCLAW_PLUGIN_VERSION=2026.10.5
+ARG OPENCLAW_PLUGIN_VERSION=2026.10.9
 ARG TARGETARCH
 
 RUN set -eux; \
