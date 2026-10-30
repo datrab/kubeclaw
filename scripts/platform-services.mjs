@@ -65,5 +65,19 @@ export function platformServices(versions, repository) {
       syncPolicy: { syncOptions: ['FailOnSharedResource=true'] },
     },
   };
-  return [identity, storage, ...applications, litellm];
+  const novaArgoAccess = {
+    apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',
+    metadata: {name: 'nova-argocd-access', namespace: 'argocd'},
+    spec: {
+      project: 'infra',
+      source: {repoURL: repository, targetRevision: 'main', path: 'gitops/platform/nova-argocd-access', directory: {include: 'resources.yaml'}},
+      destination: {server, namespace: 'kubeclaw'},
+      // This new, narrowly scoped network path is explicitly authorized for auto-setup.
+      syncPolicy: {automated: {prune: false, selfHeal: true, allowEmpty: false},
+        syncOptions: ['FailOnSharedResource=true', 'RespectIgnoreDifferences=true']},
+      // Only the operator's CNAME target is mutable; keep target annotation and ports reviewed.
+      ignoreDifferences: [{group: '', kind: 'Service', name: 'nova-argocd-egress', namespace: 'kubeclaw', jsonPointers: ['/spec/externalName']}],
+    },
+  };
+  return [identity, storage, ...applications, litellm, novaArgoAccess];
 }
