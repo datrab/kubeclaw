@@ -4,7 +4,7 @@
   "completionRecords": [
     {
       "id": "A911-03-REF-007-20261020",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 automation capability author",
       "reviewer": "/root/review_a91103",
       "gateIds": [
@@ -387,7 +387,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_ready_foundations (01a157c4-a915-7bd0-9f54-0de78011b9b7)",
       "gateIds": [],
@@ -1226,7 +1226,7 @@
     },
     {
       "id": "AP09.2-ready-topics-20261020",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_events (01a157c4-8ec4-7273-b286-baaaae1e8176)",
       "gateIds": [],
@@ -1593,7 +1593,7 @@
     },
     {
       "id": "AP09.4-ready-prism-topics-20261020",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_a91103 (01a157bb-c870-79c0-917a-0e2191dd73cc)",
       "gateIds": [],
@@ -1765,7 +1765,7 @@
     },
     {
       "id": "AP09.5-ready-buster-core-change-20261020",
-      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "/root/review_a91103 (01a157bb-c870-79c0-917a-0e2191dd73cc)",
       "gateIds": [],
@@ -1811,7 +1811,7 @@
     },
     {
       "id": "AP09.3-ready-worker-topics-20261020",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -2077,7 +2077,7 @@
     },
     {
       "id": "AP09.7-ready-platform-topics-20261020",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -2554,7 +2554,7 @@
     },
     {
       "id": "AP09.7-ready-data-topics-20261020",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -3016,7 +3016,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -3994,7 +3994,7 @@
     },
     {
       "id": "AP09-reader-operators-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [
@@ -4832,7 +4832,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [
@@ -5748,7 +5748,7 @@
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_worker_ready",
       "gateIds": [],
@@ -6274,7 +6274,7 @@
     },
     {
       "id": "AP09-reviewed-reference-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_platform_ready",
       "gateIds": [],
@@ -7079,7 +7079,7 @@
     },
     {
       "id": "AP09-reviewed-maintenance-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -7980,7 +7980,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "cf5c16633502a4919fd0fa2be25dea3fa20bf657",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication",
       "gateIds": [
@@ -8739,7 +8739,7 @@
     },
     {
       "id": "AP09-closeout-runtime-20261020",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -9238,7 +9238,7 @@
     },
     {
       "id": "AP09-closeout-config-reference-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_config_reference",
       "gateIds": [],
@@ -9950,7 +9950,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_developer_maintenance",
       "gateIds": [],
@@ -10945,7 +10945,7 @@
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
-      "revision": "55496fa427f536fb9ad6c1a833a4da38dce4839f",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/close_runtime_docs",
       "gateIds": [],
@@ -11038,7 +11038,7 @@
     },
     {
       "id": "AP09-first-project-example-20261020",
-      "revision": "650d56431da4b7e4a123096c9157ad54828c6fe6",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -11362,7 +11362,7 @@
     },
     {
       "id": "AP09-buster-lease-reference-20261020",
-      "revision": "68fcb6f675044e0ca078c50d25d1d16ad90f6ac3",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project",
       "gateIds": [],
@@ -11573,7 +11573,7 @@
     },
     {
       "id": "AP09-complete-public-cli-20261020",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "/root/review_example_publication",
       "reviewer": "/root/review_example_publication/review_cli_complete",
       "gateIds": [],
@@ -12046,7 +12046,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -12366,7 +12366,7 @@
     },
     {
       "id": "AP09-confidential-adapter-lifecycle-20261021",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -12785,7 +12785,7 @@
     },
     {
       "id": "AP09-contributor-baselines-and-migrations-20261021",
-      "revision": "cf5c16633502a4919fd0fa2be25dea3fa20bf657",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [],
@@ -12971,7 +12971,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "650d56431da4b7e4a123096c9157ad54828c6fe6",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -13400,7 +13400,7 @@
     },
     {
       "id": "AP09-communication-complete-contracts-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root communication correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21; successive complete-topic audits and final native identity closure",
       "gateIds": [],
@@ -13627,7 +13627,7 @@
     },
     {
       "id": "AP09-private-routes-complete-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root private route correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 whole private-route content and retained readiness follow-up",
       "gateIds": [],
@@ -13848,7 +13848,7 @@
     },
     {
       "id": "AP09-complete-state-content-20261021",
-      "revision": "37e852bd3f482ab2c9c740cef184c0d45c659293",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 state-final-review",
       "gateIds": [],
@@ -14238,7 +14238,7 @@
     },
     {
       "id": "AP09-decision-record-content-20261021",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-ready-review",
       "gateIds": [],
@@ -14605,7 +14605,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 maintenance-ready-review",
       "gateIds": [],
@@ -16368,7 +16368,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 platform-final-review",
       "gateIds": [],
@@ -17165,7 +17165,7 @@
     },
     {
       "id": "AP09-registry-data-path-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root authored guide and selected registry profile correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 remaining-surfaces and registry-profiles-final",
       "gateIds": [],
@@ -17434,7 +17434,7 @@
     },
     {
       "id": "AP09-studio-complete-journey-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root authored guide and selected registry profile correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 remaining-surfaces and registry-profiles-final",
       "gateIds": [],
@@ -17637,7 +17637,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "a095ae7930581e6f7c3d6616ba7258d7e95abb6d",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations",
       "gateIds": [],
@@ -18603,7 +18603,7 @@
     },
     {
       "id": "AP09-litellm-complete-data-contract-20261021",
-      "revision": "37e852bd3f482ab2c9c740cef184c0d45c659293",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -18961,7 +18961,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -19825,7 +19825,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up",
       "gateIds": [],
@@ -20724,7 +20724,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout",
       "verdict": "PASS",
@@ -23045,7 +23045,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up",
       "verdict": "PASS",
@@ -24228,7 +24228,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records",
       "verdict": "PASS",
@@ -25386,7 +25386,7 @@
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "cf5c16633502a4919fd0fa2be25dea3fa20bf657",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose",
       "verdict": "PASS",
@@ -25882,7 +25882,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords",
       "verdict": "PASS",
@@ -26950,7 +26950,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
       "verdict": "PASS",
@@ -28109,7 +28109,7 @@
     },
     {
       "id": "AP09-complete-source-backed-diagrams-20261021",
-      "revision": "cf5c16633502a4919fd0fa2be25dea3fa20bf657",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root documentation author and coordinator",
       "reviewer": "Independent Codex diagram_services whole-topic review coordinating independent source reviews; no content authorship",
       "gateIds": [
@@ -28702,7 +28702,7 @@
     },
     {
       "id": "AP09-whole-platform-discovery-and-drift-20261021",
-      "revision": "f603d9ef485caf1a351cbf0de3efce4db7fe922d",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -28926,7 +28926,7 @@
     },
     {
       "id": "AP09-whole-store-contract-20261021",
-      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -29202,7 +29202,7 @@
     },
     {
       "id": "AP09-whole-trust-and-spiffe-contract-20261021",
-      "revision": "a095ae7930581e6f7c3d6616ba7258d7e95abb6d",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -29375,7 +29375,7 @@
     },
     {
       "id": "AP09-whole-dependency-decision-traces-20261021",
-      "revision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -29644,7 +29644,7 @@
     },
     {
       "id": "AP09-whole-upgrade-and-retirement-20261021",
-      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -29780,7 +29780,7 @@
     },
     {
       "id": "AP09-whole-studio-demo-journey-20261021",
-      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -29897,7 +29897,7 @@
     },
     {
       "id": "AP09-complete-event-producer-consumer-catalogue-20261021",
-      "revision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [],
@@ -30136,7 +30136,7 @@
     },
     {
       "id": "A99-02-whole-content-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -30323,7 +30323,7 @@
     },
     {
       "id": "A99-03-whole-content-20261021",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -30495,7 +30495,7 @@
     },
     {
       "id": "A99-04-whole-content-20261021",
-      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -30742,7 +30742,7 @@
     },
     {
       "id": "A99-05-whole-content-20261021",
-      "revision": "01b46a3baf1114c07ab84f8e900033ea3b052cbc",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -30866,7 +30866,7 @@
     },
     {
       "id": "A910-01-whole-content-20261021",
-      "revision": "cf5c16633502a4919fd0fa2be25dea3fa20bf657",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -30992,7 +30992,7 @@
     },
     {
       "id": "A910-11-whole-content-20261021",
-      "revision": "cf5c16633502a4919fd0fa2be25dea3fa20bf657",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -31142,7 +31142,7 @@
     },
     {
       "id": "A99-01-whole-recursive-input-content-20261021",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation contributors; parent lint-wording correction",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -31532,7 +31532,7 @@
     },
     {
       "id": "AP09-whole-current-communication-union-20261021-d477",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -31928,7 +31928,7 @@
     },
     {
       "id": "AP09-whole-current-telemetry-union-20261021-d477",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -32241,7 +32241,7 @@
     },
     {
       "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
-      "revision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors and correction coordinator; /root/operator_acceptance for399d bounded corrections",
       "reviewer": "/root/operator_acceptance (remaining whole-topic Source and semantic Reader review); /root (independent399d corrections, finite source-pin repair and d477 HTTP-package corrections)",
       "gateIds": [
@@ -32881,7 +32881,7 @@
     },
     {
       "id": "AP09-reference-network-paths-80178-20261021",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors; /root/operator_acceptance for separately independently reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance (whole remaining reference topic); /root (independent399d and d477 authored corrections), /root/custody_review (unchanged Worker/package constituent scope)",
       "gateIds": [],
@@ -33392,7 +33392,7 @@
     },
     {
       "id": "AP09-reference-event-payloads-80178-20261021",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors; /root/operator_acceptance for separately independently reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance (whole remaining reference topic); /root (independent399d and d477 authored corrections), /root/custody_review (unchanged Worker/package constituent scope)",
       "gateIds": [
@@ -33722,7 +33722,7 @@
     },
     {
       "id": "AP09-reference-stores-retention-80178-20261021",
-      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation authors; /root/operator_acceptance for separately independently reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance (whole remaining reference topic); /root (independent399d and d477 authored corrections), /root/custody_review (unchanged Worker/package constituent scope)",
       "gateIds": [],
@@ -33990,7 +33990,7 @@
       ]
     },
     {
-      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -34157,7 +34157,7 @@
       }
     },
     {
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -34579,7 +34579,7 @@
       ]
     },
     {
-      "revision": "a095ae7930581e6f7c3d6616ba7258d7e95abb6d",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -34863,7 +34863,7 @@
       }
     },
     {
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -35266,7 +35266,7 @@
     },
     {
       "id": "A99-07-representative-buster-workflow-content-20261021",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "existing Buster workflow authors; package citation repair independently reviewed by root",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -35580,7 +35580,7 @@
     },
     {
       "id": "REF010-current-contract-directions-20261021",
-      "revision": "7ef16585ba04eba3628cead304be85307436f091",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "/root/operator_acceptance; existing contract topic authors",
       "reviewer": "/root independent Source/Reader/quality",
       "gateIds": [],
@@ -36370,7 +36370,7 @@
     },
     {
       "id": "A99-08-complete-supported-failure-journey-union-20261021",
-      "revision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Documentation topic authors and integration coordinator",
       "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
       "gateIds": [
@@ -36780,7 +36780,7 @@
     },
     {
       "id": "A912-03-supported-redirect-paths-20261021",
-      "revision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "operator_acceptance original implementation; root coherent F1/F2 correction",
       "reviewer": "workflow_acceptance independent full affected-topic Source/semantic Reader/quality review",
       "gateIds": [
@@ -37173,7 +37173,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "/root/custody_review; independent of metadata author",
       "gateIds": [
@@ -37799,7 +37799,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -39368,7 +39368,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "cf5c16633502a4919fd0fa2be25dea3fa20bf657",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "/root/operator_acceptance",
       "gateIds": [
@@ -40149,7 +40149,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -41426,7 +41426,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -42481,7 +42481,7 @@
     },
     {
       "id": "A910-04-whole-sdk-export-semantics-20261022",
-      "revision": "68fcb6f675044e0ca078c50d25d1d16ad90f6ac3",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "/root/operator_acceptance; own quickstart delta independently reviewed by /root",
       "gateIds": [
@@ -42651,7 +42651,7 @@
     },
     {
       "id": "A910-06-whole-justified-classification-20261022",
-      "revision": "a095ae7930581e6f7c3d6616ba7258d7e95abb6d",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Original classifier maintainer; inclusive policy correction by /root/custody_review; original index output by maintained owner",
       "reviewer": "/root/operator_acceptance; corrected153judgments supplied by exact separate workflow nonauthor Source review",
       "gateIds": [
@@ -43856,7 +43856,7 @@
     },
     {
       "id": "A910-07-08-09-12-OPL001-whole-487f4e00-20261022",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Original canonical-guide authors and named eleven-guide correction authors; exact provenance in frozen proof union",
       "reviewer": "/root/source_closeout (Source); /root/reader_closeout (Reader); /root/quality_closeout (Quality); /root combines independent decisions",
       "gateIds": [
@@ -44476,7 +44476,7 @@
     },
     {
       "id": "PUB008-current-reader-build-ci-20261023",
-      "revision": "22199bd979faf468e83dfb3b5b4a8c58ae041280",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Existing canonical publication authors; Nova coordinated unchanged-source checks and adoption",
       "reviewer": "Independent Codex gpt-5.6-terra/high thread 01a16a57-38f2-76d1-bed3-b85a518192f1; pinned topical review",
       "gateIds": [],
@@ -44729,7 +44729,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a autoreview Codex gpt-5.6-terra high P2 whole-A91014 topic reviewer",
       "gateIds": [
@@ -45460,7 +45460,7 @@
     },
     {
       "id": "AP09-whole-extension-guides-A91013-20261023",
-      "revision": "cf5c16633502a4919fd0fa2be25dea3fa20bf657",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 whole-extension source/content/closure reviewer",
       "gateIds": [
@@ -45850,7 +45850,7 @@
     },
     {
       "id": "pr13-a91005-complete-package-capture-20261024",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova PR13 documentation coordinator",
       "reviewer": "Independent pinned Codex gpt-5.6-terra/high/P2 complete semantic contract and output reviewers",
       "gateIds": [
@@ -46163,7 +46163,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 A911-06 gate-decision reviewer",
       "gateIds": [
@@ -46676,7 +46676,7 @@
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Terra/high/P2 original A99-13 reviewer",
       "gateIds": [
@@ -47005,7 +47005,7 @@
     },
     {
       "id": "A913-09-compact-current-closeout-20261025",
-      "revision": "57a3d9486e0fdf1615a18f062b148e8151929db4",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 original A913-09 report and adoption reviewer",
       "gateIds": [
@@ -47077,7 +47077,7 @@
     },
     {
       "id": "A913-12-complete-live-dispositions-20261025",
-      "revision": "57a3d9486e0fdf1615a18f062b148e8151929db4",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "PR13 documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 complete original A91312 reviewer",
       "gateIds": [
@@ -47449,7 +47449,7 @@
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Pinned fe588b1a6267eb47f785d0c748db9f6f3e9a3b4f Codex gpt-5.6-terra/high/P2 independent lint/common and whole original A910-10 adjudication",
       "gateIds": [
@@ -48155,7 +48155,7 @@
     },
     {
       "id": "QUA-006-fresh-independent-technical-reader-20261027",
-      "revision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 original criterion adjudicator; fresh native model Reader /root/fresh_technical_reader",
       "gateIds": [],
@@ -48330,7 +48330,7 @@
     },
     {
       "id": "A911-01-whole-ten-family-discovery-declarations-20261027",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova documentation declaration implementation and closure coordinator",
       "reviewer": "Fresh native complementary original Source assessor plus independent pinned fe588b1a Codex Terra/high/P2 complete Schema/Config/CLI and whole-original adjudication",
       "gateIds": [
@@ -48894,7 +48894,7 @@
     },
     {
       "id": "A913-07-whole-significant-decision-fields-20261027",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova documentation condition implementation and integration",
       "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 whole-original adjudicator; bounded current Source/Reader/Quality assessors and exact reusable prior field reviews",
       "gateIds": [
@@ -49083,7 +49083,7 @@
       ]
     },
     {
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -49755,7 +49755,7 @@
       ]
     },
     {
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -50428,7 +50428,7 @@
     },
     {
       "id": "QUA-003-whole-significant-decision-rationale-20261027",
-      "revision": "b6834b7e38ce4e1ef71ea64c574d5f8558302fbf",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova documentation rationale integration and sole shared-lease writer",
       "reviewer": "Independent /root/whole_criterion_selection whole original QUA003 Source/semanticReader/Quality adjudicator, qualified complete original decision field assessors",
       "gateIds": [],
@@ -50548,7 +50548,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent /root/fresh_technical_reader original whole QUA005 Source/semanticReader/Quality adjudicator, qualified complete cross-author content assessors",
       "gateIds": [],
@@ -51200,7 +51200,7 @@
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality assessor; fresh /root/a91310_clean_operator_restore_reader original Operator02 participant; qualified cross-author topic peers",
       "gateIds": [
@@ -52085,7 +52085,7 @@
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/whole_criterion_selection original Source/semanticReader/Quality adjudicator, with independent /root/language_projection_architecture authored-family Source/codeQuality and actual delivery/preservation peers",
       "gateIds": [],
@@ -52599,7 +52599,7 @@
     },
     {
       "id": "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent /root/mnt014_operator_prism_classification whole original Source/semanticReader/Quality adjudicator plus independent architecture/native owner and maintained-binding peers",
       "gateIds": [],
@@ -53074,7 +53074,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator; separate /root/fresh_technical_reader original115 preservation",
       "gateIds": [],
@@ -53302,7 +53302,7 @@
     },
     {
       "id": "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
-      "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root sole integration writer; registration only, no product or documentation changes",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality adjudicator with independent /root/language_projection_architecture pinned-upstream semantic responsibility",
       "gateIds": [],
@@ -53471,7 +53471,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent /root/whole_criterion_selection whole-original Source/Reader/Quality and original117 preservation; host/Helm/Secret source responsibility composed from /root/language_projection_architecture, whose wording proposal is independently adjudicated by the whole reviewer",
       "gateIds": [],
@@ -53743,7 +53743,7 @@
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
       "reviewer": "Independent /root/whole_criterion_selection whole original Source/semanticReader/Quality, finite current native/projection/delivered/governance/maintained-source qualification and complete original118 preservation; pinned Terra/high P2 independently clean",
       "gateIds": [],
@@ -54018,7 +54018,7 @@
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent /root/language_projection_architecture whole original Source/semanticReader/Quality and actual native delivery; /root/whole_criterion_selection complete Go/Ops, code/default/map/maintained-source and original119 final preservation; pinned Terra/high P2 clean",
       "gateIds": [],
@@ -54238,7 +54238,7 @@
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent native /root/ref016_canonical_owner_review whole original Source/Reader/Quality; /root/language_projection_architecture bounded independent source/package/claim scopes and original120 preservation; pinned Terra/high/P2 code reviews clean",
       "gateIds": [],
@@ -55375,7 +55375,7 @@
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "d56196d89e1d29524f0e4ae0d3bc323d9dc92cfb",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent native original_closeout whole original Source/Reader/Quality and121preservation; platform_transfer current two-page Reader/Quality and complete Platform/native governance transfers; route_partition complete Verification transfer; prior other-author complete native29/external23 Source qualifications and clean pinned Terra code reviews reused exactly",
       "gateIds": [],
@@ -56097,6 +56097,456 @@
         "Prior material failures, helper/context/runtime failures, three oversized fulltransfer contexts, two-page Reader/Quality NOT_READY and first normal governance-stale publication failure remain historical. Current semantic transfer and successful native publication remedy only their actual changed current obligations; no historical receipt rewrite.",
         "Native code tests/mutations, independent exact source partition judgments and actual native output/Chromium are separate observations. No document product command, cluster/deployment/provider/backup/cleanup, human screenreader or hosted site executed by this acceptance.",
         "Every121prior record retains original summary/checks/reviews/failures/limits/history and impact prefix. Only reviewed affected revision and one semantic impact appended; unaffected records entire exact. No new unrelated reader study or award inferred from commit/hash."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "author": "Nova /root sole integration writer",
+      "reviewer": "Existing independent whole_a91306_astra_final Source/whole original closeout and whole_language_reader_80786_fresh technical MNT006/original122 Reader/Quality; complete unchanged independent Source/P2 qualifications reused only at verified exact scope",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-006"
+      ],
+      "pages": [
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/reference/events.md",
+        "docs/site/reference/verification-commands.md"
+      ],
+      "sources": [
+        "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+        "cmd/buster-namespace-controller/main.go",
+        "contracts/agent-observability/v1/package.json",
+        "contracts/agent-observability/v1/src/constants.ts",
+        "contracts/agent-observability/v1/src/index.ts",
+        "contracts/agent-observability/v1/src/routing.ts",
+        "contracts/agent-observability/v1/src/types.ts",
+        "contracts/agent-observability/v1/src/validation.ts",
+        "contracts/delivery-manifest/v3/package.json",
+        "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+        "contracts/delivery-manifest/v3/src/index.ts",
+        "contracts/pipeline-observability/v1/package.json",
+        "contracts/pipeline-observability/v1/schemas/pipeline-observability.v1.schema.json",
+        "contracts/pipeline-observability/v1/src/canonical-json.ts",
+        "contracts/pipeline-observability/v1/src/index.ts",
+        "contracts/pipeline-observability/v1/src/types.ts",
+        "contracts/pipeline-observability/v1/src/validation.ts",
+        "contracts/pipeline-test-gate/v1/package.json",
+        "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/src/gate-decision.ts",
+        "contracts/pipeline-test-gate/v1/src/index.ts",
+        "contracts/pipeline-worker-core/v1/package.json",
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+        "contracts/pipeline-worker-core/v1/src/index.ts",
+        "contracts/pipeline-worker-core/v1/src/types.ts",
+        "contracts/prism/v1/package.json",
+        "contracts/prism/v1/schemas/prism-v1.schema.json",
+        "contracts/prism/v1/src/baseline-archive.ts",
+        "contracts/prism/v1/src/digest.ts",
+        "contracts/prism/v1/src/index.ts",
+        "contracts/telemetry/v1/README.md",
+        "contracts/telemetry/v1/bundle-types.ts",
+        "contracts/telemetry/v1/bundle/runtime_log.v1.schema.json",
+        "contracts/telemetry/v1/catalog.json",
+        "contracts/telemetry/v1/correlation_identity.schema.json",
+        "contracts/telemetry/v1/envelope.schema.json",
+        "contracts/telemetry/v1/events/agent.delivery.target.schema.json",
+        "contracts/telemetry/v1/events/agent.ended.schema.json",
+        "contracts/telemetry/v1/events/agent.killed.schema.json",
+        "contracts/telemetry/v1/events/agent.llm.input.summary.schema.json",
+        "contracts/telemetry/v1/events/agent.llm.output.summary.schema.json",
+        "contracts/telemetry/v1/events/agent.model.ended.schema.json",
+        "contracts/telemetry/v1/events/agent.model.started.schema.json",
+        "contracts/telemetry/v1/events/agent.progress.schema.json",
+        "contracts/telemetry/v1/events/agent.session.ended.schema.json",
+        "contracts/telemetry/v1/events/agent.session.started.schema.json",
+        "contracts/telemetry/v1/events/agent.spawn.requested.schema.json",
+        "contracts/telemetry/v1/events/agent.spawned.schema.json",
+        "contracts/telemetry/v1/events/agent.tool.finished.schema.json",
+        "contracts/telemetry/v1/events/agent.tool.started.schema.json",
+        "contracts/telemetry/v1/events/agent.transcript.schema.json",
+        "contracts/telemetry/v1/events/approval.requested.schema.json",
+        "contracts/telemetry/v1/events/approval.resolved.schema.json",
+        "contracts/telemetry/v1/events/artifact.published.schema.json",
+        "contracts/telemetry/v1/events/budget.exceeded.schema.json",
+        "contracts/telemetry/v1/events/budget.warning.schema.json",
+        "contracts/telemetry/v1/events/command.accepted.schema.json",
+        "contracts/telemetry/v1/events/command.completed.schema.json",
+        "contracts/telemetry/v1/events/command.rejected.schema.json",
+        "contracts/telemetry/v1/events/command.requested.schema.json",
+        "contracts/telemetry/v1/events/cost.update.schema.json",
+        "contracts/telemetry/v1/events/error.escalation.schema.json",
+        "contracts/telemetry/v1/events/evaluation.fact.schema.json",
+        "contracts/telemetry/v1/events/gate.started.schema.json",
+        "contracts/telemetry/v1/events/gate.verdict.schema.json",
+        "contracts/telemetry/v1/events/git.evidence.schema.json",
+        "contracts/telemetry/v1/events/infrastructure.evidence.schema.json",
+        "contracts/telemetry/v1/events/lifecycle.snapshot.schema.json",
+        "contracts/telemetry/v1/events/lifecycle.transition.schema.json",
+        "contracts/telemetry/v1/events/module.started.schema.json",
+        "contracts/telemetry/v1/events/module.status_changed.schema.json",
+        "contracts/telemetry/v1/events/observability.degraded.schema.json",
+        "contracts/telemetry/v1/events/observability.restored.schema.json",
+        "contracts/telemetry/v1/events/phase.completed.schema.json",
+        "contracts/telemetry/v1/events/phase.started.schema.json",
+        "contracts/telemetry/v1/events/pipeline.completed.schema.json",
+        "contracts/telemetry/v1/events/pipeline.halted.schema.json",
+        "contracts/telemetry/v1/events/pipeline.started.schema.json",
+        "contracts/telemetry/v1/events/plugin.event.schema.json",
+        "contracts/telemetry/v1/events/producer.health.schema.json",
+        "contracts/telemetry/v1/events/quality.evidence.schema.json",
+        "contracts/telemetry/v1/events/rate_limit.detected.schema.json",
+        "contracts/telemetry/v1/events/retry.exhausted.schema.json",
+        "contracts/telemetry/v1/events/retry.scheduled.schema.json",
+        "contracts/telemetry/v1/events/runtime.log.schema.json",
+        "contracts/telemetry/v1/events/summary.completed.schema.json",
+        "contracts/telemetry/v1/events/summary.started.schema.json",
+        "contracts/telemetry/v1/events/system.io_warning.schema.json",
+        "contracts/telemetry/v1/events/terminal.closure.schema.json",
+        "contracts/telemetry/v1/payloads/agent.delivery.target.schema.json",
+        "contracts/telemetry/v1/payloads/agent.ended.schema.json",
+        "contracts/telemetry/v1/payloads/agent.killed.schema.json",
+        "contracts/telemetry/v1/payloads/agent.llm.input.summary.schema.json",
+        "contracts/telemetry/v1/payloads/agent.llm.output.summary.schema.json",
+        "contracts/telemetry/v1/payloads/agent.model.ended.schema.json",
+        "contracts/telemetry/v1/payloads/agent.model.started.schema.json",
+        "contracts/telemetry/v1/payloads/agent.progress.schema.json",
+        "contracts/telemetry/v1/payloads/agent.session.ended.schema.json",
+        "contracts/telemetry/v1/payloads/agent.session.started.schema.json",
+        "contracts/telemetry/v1/payloads/agent.spawn.requested.schema.json",
+        "contracts/telemetry/v1/payloads/agent.spawned.schema.json",
+        "contracts/telemetry/v1/payloads/agent.tool.finished.schema.json",
+        "contracts/telemetry/v1/payloads/agent.tool.started.schema.json",
+        "contracts/telemetry/v1/payloads/agent.transcript.schema.json",
+        "contracts/telemetry/v1/payloads/approval.requested.schema.json",
+        "contracts/telemetry/v1/payloads/approval.resolved.schema.json",
+        "contracts/telemetry/v1/payloads/artifact.published.schema.json",
+        "contracts/telemetry/v1/payloads/budget.exceeded.schema.json",
+        "contracts/telemetry/v1/payloads/budget.warning.schema.json",
+        "contracts/telemetry/v1/payloads/command.accepted.schema.json",
+        "contracts/telemetry/v1/payloads/command.completed.schema.json",
+        "contracts/telemetry/v1/payloads/command.rejected.schema.json",
+        "contracts/telemetry/v1/payloads/command.requested.schema.json",
+        "contracts/telemetry/v1/payloads/cost.update.schema.json",
+        "contracts/telemetry/v1/payloads/error.escalation.schema.json",
+        "contracts/telemetry/v1/payloads/evaluation.fact.schema.json",
+        "contracts/telemetry/v1/payloads/gate.started.schema.json",
+        "contracts/telemetry/v1/payloads/gate.verdict.schema.json",
+        "contracts/telemetry/v1/payloads/git.evidence.schema.json",
+        "contracts/telemetry/v1/payloads/infrastructure.evidence.schema.json",
+        "contracts/telemetry/v1/payloads/lifecycle.snapshot.schema.json",
+        "contracts/telemetry/v1/payloads/lifecycle.transition.schema.json",
+        "contracts/telemetry/v1/payloads/module.started.schema.json",
+        "contracts/telemetry/v1/payloads/module.status_changed.schema.json",
+        "contracts/telemetry/v1/payloads/observability.degraded.schema.json",
+        "contracts/telemetry/v1/payloads/observability.restored.schema.json",
+        "contracts/telemetry/v1/payloads/phase.completed.schema.json",
+        "contracts/telemetry/v1/payloads/phase.started.schema.json",
+        "contracts/telemetry/v1/payloads/pipeline.completed.schema.json",
+        "contracts/telemetry/v1/payloads/pipeline.halted.schema.json",
+        "contracts/telemetry/v1/payloads/pipeline.started.schema.json",
+        "contracts/telemetry/v1/payloads/plugin.event.schema.json",
+        "contracts/telemetry/v1/payloads/producer.health.schema.json",
+        "contracts/telemetry/v1/payloads/quality.evidence.schema.json",
+        "contracts/telemetry/v1/payloads/rate_limit.detected.schema.json",
+        "contracts/telemetry/v1/payloads/retry.exhausted.schema.json",
+        "contracts/telemetry/v1/payloads/retry.scheduled.schema.json",
+        "contracts/telemetry/v1/payloads/runtime.log.schema.json",
+        "contracts/telemetry/v1/payloads/summary.completed.schema.json",
+        "contracts/telemetry/v1/payloads/summary.started.schema.json",
+        "contracts/telemetry/v1/payloads/system.io_warning.schema.json",
+        "contracts/telemetry/v1/payloads/terminal.closure.schema.json",
+        "docs/blueprint/verification-command-guidance.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/event-reference-bindings.json",
+        "docs/config/publication-example-claims.json",
+        "docs/generated/inventory/event-contracts.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "gitops/platform/bootstrap/alloy.yaml",
+        "gitops/platform/values/alloy.yaml",
+        "gitops/platform/values/loki.yaml",
+        "ops/pod/bootstrap.py",
+        "ops/pod/supervisor.py",
+        "ops/pod/verify.py",
+        "package.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
+        "scripts/docs-event-contracts.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/lib/docs-event-contracts.mjs",
+        "scripts/lib/docs-event-reference-collector.mjs",
+        "scripts/lib/docs-event-reference.mjs",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-event-contracts-cli.test.mjs",
+        "scripts/tests/docs-event-contracts.test.mjs",
+        "scripts/tests/docs-event-native-regression.test.mjs",
+        "scripts/tests/docs-event-reference-collector.test.mjs",
+        "scripts/tests/docs-event-reference.test.mjs",
+        "skills/buster/engine/package.json",
+        "skills/buster/engine/remote-plan-cli.ts",
+        "skills/buster/engine/src/index.ts",
+        "skills/buster/engine/test-gates/buildkit-readiness.ts",
+        "skills/buster/engine/test-gates/provider-child.mjs",
+        "skills/buster/engine/test-gates/provider-loader.ts",
+        "skills/buster/engine/test-gates/report-adapter-child.mjs",
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/buster/plugins/api-flow/plugin.json",
+        "skills/buster/plugins/axe/plugin.json",
+        "skills/buster/plugins/container-build/plugin.json",
+        "skills/buster/plugins/coverage-budget/plugin.json",
+        "skills/buster/plugins/demo-auth-smoke/plugin.json",
+        "skills/buster/plugins/direct-command/plugin.json",
+        "skills/buster/plugins/http/plugin.json",
+        "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "skills/buster/plugins/kubernetes-fixture/plugin.json",
+        "skills/buster/plugins/lighthouse/plugin.json",
+        "skills/buster/plugins/openapi/plugin.json",
+        "skills/buster/plugins/playwright/plugin.json",
+        "skills/buster/plugins/security-providers/plugin.json",
+        "skills/buster/plugins/size-budget/plugin.json",
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "skills/buster/plugins/visual/plugin.json",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+        "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+        "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+        "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+        "skills/common/plugin-runtime/foundation/isolation/session.ts",
+        "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+        "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+        "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+        "skills/common/plugin-runtime/foundation/package.json",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/sdk/package.json",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugin-runtime/sdk/src/testing/index.ts",
+        "skills/common/plugins/agent-observability/plugin.json",
+        "skills/common/plugins/agent-observability/src/observers.ts",
+        "skills/common/plugins/artifact-store/plugin.json",
+        "skills/common/plugins/artifact-store/src/adapter.ts",
+        "skills/common/plugins/command-runner/package.json",
+        "skills/common/plugins/command-runner/plugin.json",
+        "skills/common/plugins/command-runner/src/adapter.ts",
+        "skills/common/plugins/command-runner/src/runner.ts",
+        "skills/common/plugins/git-workspace/plugin.json",
+        "skills/common/plugins/git-workspace/src/adapter.ts",
+        "skills/common/plugins/network-http/plugin.json",
+        "skills/common/plugins/network-http/src/adapter.ts",
+        "skills/common/plugins/notification-observer/plugin.json",
+        "skills/common/plugins/notification-observer/src/observer.ts",
+        "skills/common/plugins/openclaw-agent-events/plugin.json",
+        "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/operator-messaging/plugin.json",
+        "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+        "skills/common/plugins/prompt-contract/package.json",
+        "skills/common/plugins/prompt-contract/src/index.ts",
+        "skills/common/plugins/redis-transport/plugin.json",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "skills/common/plugins/runtime-dispatch/plugin.json",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+        "skills/common/plugins/secret-resolver/plugin.json",
+        "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "skills/common/plugins/state-store/plugin.json",
+        "skills/common/plugins/state-store/src/adapter.ts",
+        "skills/common/plugins/telemetry-observer/plugin.json",
+        "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "skills/common/plugins/telemetry-store/plugin.json",
+        "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "skills/common/plugins/transport-publisher/plugin.json",
+        "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "skills/common/plugins/wait-store/plugin.json",
+        "skills/common/plugins/wait-store/src/adapter.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/execution/artifact-checkpoints.ts",
+        "skills/nova/core/execution/context.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/pipeline-loop.ts",
+        "skills/nova/core/execution/run-decisions.ts",
+        "skills/nova/core/execution/run-root.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/lifecycle/recovery.ts",
+        "skills/nova/core/observability/reconciler.ts",
+        "skills/nova/core/package.json",
+        "skills/nova/core/src/index.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "skills/nova/plugins/architecture-validator/plugin.json",
+        "skills/nova/plugins/blueprint-sync/plugin.json",
+        "skills/nova/plugins/buster-quality-gate/plugin.json",
+        "skills/nova/plugins/case-study/plugin.json",
+        "skills/nova/plugins/delivery-lint/plugin.json",
+        "skills/nova/plugins/demo-handoff/plugin.json",
+        "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "skills/nova/plugins/human-approval/plugin.json",
+        "skills/nova/plugins/implementation-agent/plugin.json",
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/nova/plugins/lint/src/adapter.ts",
+        "skills/nova/plugins/pipeline-review/plugin.json",
+        "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "skills/nova/plugins/preflight-contract/plugin.json",
+        "skills/nova/plugins/prism-design/plugin.json",
+        "skills/nova/plugins/project-summary/plugin.json",
+        "skills/nova/plugins/remote-test-gate/plugin.json",
+        "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "skills/nova/plugins/repository-adapter/plugin.json",
+        "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "skills/nova/plugins/review/plugin.json",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/package.json",
+        "skills/prism/control/direction-decisions.ts",
+        "skills/prism/control/preference-snapshot.ts",
+        "skills/prism/control/preferences.ts",
+        "skills/prism/domain/index.ts",
+        "skills/prism/package.json",
+        "skills/prism/preferences/index.ts",
+        "skills/prism/renderer/index.ts",
+        "skills/prism/runtime.ts",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/server/ingestion.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/product-decisions.ts",
+        "skills/prism/server/product-operator-page.ts",
+        "skills/prism/server/studio-request.ts",
+        "skills/prism/server/worker-readiness.ts",
+        "skills/prism/server/worker.ts",
+        "skills/prism/storage/migrations/001_prism.sql",
+        "skills/prism/storage/migrations/011_preference_wire_ids.sql",
+        "skills/prism/storage/migrations/012_preference_generation.sql",
+        "skills/prism/storage/migrations/015_product_decisions.sql",
+        "skills/prism/storage/migrations/016_preference_legacy_insert_compatibility.sql",
+        "skills/prism/studio/app.tsx",
+        "skills/prism/studio/flows.ts",
+        "skills/prism/studio/preview.ts",
+        "skills/worker/core/package.json",
+        "skills/worker/core/src/index.ts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "skills/worker/core/worker/native-resource-observation.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "tools/native-worker-nri/main.go",
+        "tools/ops-mcp/hubble/main.go",
+        "tools/ops-mcp/src/hubble.mjs",
+        "tools/ops-mcp/src/server.mjs"
+      ],
+      "checks": [
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual final7f6d publication command; log SHA256 5e288a163abf9f7c567bd3763bcdb2cde3b7a6ef1f16d74c474129752850f00c. No product/runtime success inferred."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+          "exitCode": 0,
+          "observation": "Actual final7f6d publication command; log SHA256 afbb3ae54ae30c5a0daa9d50d1748c8c25c785158dedc40dab2b973ac018f195. No product/runtime success inferred."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-search.mjs",
+          "exitCode": 0,
+          "observation": "Actual final7f6d publication command; log SHA256 84e38e9ee3de3edc92441e790519db16fe51b18ce827956379ebe1cf45d17ff8. No product/runtime success inferred."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs",
+          "exitCode": 0,
+          "observation": "Actual final7f6d publication command; log SHA256 1fc6d971c52be8d1a44ca052f423a2add59859e6eefb05cb7f9e43c4403c966b. No product/runtime success inferred."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs",
+          "exitCode": 0,
+          "observation": "Actual final7f6d publication command; log SHA256 534a49fd859d7717239a8a8cde153fc3f058339da3ae843c3d2128d6bdc571ef. No product/runtime success inferred."
+        },
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
+          "exitCode": 0,
+          "observation": "Actual final7f6d publication command; log SHA256 306c2a7279307e42effa2d099b2ccf07db7669d840054fbd649f045949259e6e. No product/runtime success inferred."
+        },
+        {
+          "command": "node scripts/docs-check-refs.mjs",
+          "exitCode": 0,
+          "observation": "Actual final7f6d publication command; log SHA256 7900d35db4e23334fb7716bb4a0f3792042959fa728dfd995e888e39d8c8e600. No product/runtime success inferred."
+        },
+        {
+          "command": "node scripts/docs-retained-language-projection.mjs --editorial-revision 9af1ad3f20ab83fc529080b00c042e8a840e5020 --semantic-owner-revision 9af1ad3f20ab83fc529080b00c042e8a840e5020 --output /home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/helm-condition-current-semantic-bundle.json",
+          "exitCode": 0,
+          "observation": "Actual supported semantic-bundle-generate at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Both explicit editorial and semantic owner revisions supplied; no V1/null-context substitution."
+        },
+        {
+          "command": "node scripts/docs-retained-language-projection.mjs --editorial-revision 9af1ad3f20ab83fc529080b00c042e8a840e5020 --semantic-owner-revision 9af1ad3f20ab83fc529080b00c042e8a840e5020 --output /home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/helm-condition-current-semantic-bundle.json --check",
+          "exitCode": 0,
+          "observation": "Actual supported semantic-bundle-check at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Both explicit editorial and semantic owner revisions supplied; no V1/null-context substitution."
+        },
+        {
+          "command": "node scripts/docs-generate.mjs --revision 9af1ad3f20ab83fc529080b00c042e8a840e5020 --only retained-configuration-language --retained-language-bundle /home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/helm-condition-current-semantic-bundle.json",
+          "exitCode": 0,
+          "observation": "Actual supported retained-generate at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Both explicit editorial and semantic owner revisions supplied; no V1/null-context substitution."
+        },
+        {
+          "command": "node scripts/docs-generate.mjs --revision 9af1ad3f20ab83fc529080b00c042e8a840e5020 --only retained-configuration-language --retained-language-bundle /home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/helm-condition-current-semantic-bundle.json --check",
+          "exitCode": 0,
+          "observation": "Actual supported retained-check at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Both explicit editorial and semantic owner revisions supplied; no V1/null-context substitution."
+        },
+        {
+          "command": "node scripts/docs-event-contracts.mjs",
+          "exitCode": 0,
+          "observation": "Actual supported events-generate at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Qualified exact current outputs/bindings retained."
+        },
+        {
+          "command": "node scripts/docs-event-contracts.mjs --check",
+          "exitCode": 0,
+          "observation": "Actual supported events-check at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Qualified exact current outputs/bindings retained."
+        },
+        {
+          "command": "node scripts/docs-generate.mjs --only verification --revision 9af1ad3f20ab83fc529080b00c042e8a840e5020",
+          "exitCode": 0,
+          "observation": "Actual supported verification-generate at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Qualified exact current outputs/bindings retained."
+        },
+        {
+          "command": "node scripts/docs-generate.mjs --only verification --revision 9af1ad3f20ab83fc529080b00c042e8a840e5020 --check",
+          "exitCode": 0,
+          "observation": "Actual supported verification-check at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Qualified exact current outputs/bindings retained."
+        },
+        {
+          "command": "node scripts/docs-governance.mjs",
+          "exitCode": 0,
+          "observation": "Actual supported governance-generate at9af1ad3f Source; unchanged qualified owner and committed7f6d generated output. Qualified exact current outputs/bindings retained."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Whole original MNT-006 PASS under AP09 sections1–3: source-qualified generated active event/payload/version and actual producer/transformer/validator/consumer graph across all14 mechanisms, joined to activation, retained/unknown boundaries and complete maintenance/verification ownership. Original F4 names/positions-only deficiency is remedied. Independent Source and delivered technical Reader/Quality judgments compose with actual native parser-route drift tests and final seven publication checks; original122 preservation PASS at original limits. No unrelated gate or whole controlled-language award.",
+      "limits": [
+        "No A911 gate or whole A913-06/QUA-002 controlled-language acceptance is granted. Strict Source-unexposed whole language Reader remains separate and pending.",
+        "Static source contracts and local native tests do not prove live event delivery, external payloads, production deployment, replay/retention success or execution of quoted source definitions. Existing dated practical/runtime receipts remain unchanged.",
+        "Universal primary source-vector identity guard is a stop requiring semantic qualification, not automatic repinning or a new independent approval of every unrelated physical source file. Complete actual semantic role/declaration/schema/activation/call responsibilities are joined by original Source qualification.",
+        "Known original tree175 and two nestedPrism baseline failures remain explicitly preserved; this point does not award global tree/API/zero-write/native-host or unrelated criteria.",
+        "Reader judgment uses whole14 task/role boundaries, current changed contexts and exact valid prior facets; no fresh execution of historical procedures, every initializer body, every asset, human persona or screenreader study. Original122 negative76 and all historical receipt limits remain unchanged."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -73530,13 +73980,30 @@
       "workPackage": "AP09.11",
       "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
       "catalogueOwner": "documentation automation",
-      "pageOwner": null,
+      "pageOwner": "documentation",
       "readerTask": "Generierte Events und Payloads",
-      "sourceDependencies": [],
-      "sourceVerification": "pending-current-claim-inspection",
-      "contentKind": "not-in-current-map",
-      "generator": null,
-      "automatedChecks": [],
+      "sourceDependencies": [
+        "package.json",
+        "docs/blueprint/verification-command-guidance.json",
+        "docs/config/event-reference-bindings.json",
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-event-contracts.mjs",
+        "scripts/lib/docs-event-contracts.mjs",
+        "scripts/lib/docs-event-reference-collector.mjs",
+        "scripts/lib/docs-event-reference.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/lib/docs-source-surface-map.mjs"
+      ],
+      "sourceVerification": "independent-whole-original-MNT006-source-reader-quality-final-7f6d",
+      "contentKind": "authored",
+      "generator": "scripts/docs-event-contracts.mjs",
+      "automatedChecks": [
+        "npm run docs:events:check",
+        "npm run docs:events:test",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ],
       "acceptanceIds": [],
       "packageGateCandidates": [
         "A911-01",
@@ -73559,17 +74026,62 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
-      "evidence": [],
-      "reviews": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "completionRecord": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+          "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "verdict": "PASS",
+          "scope": "Whole original MNT-006 only; prior F4/history and original122 limits preserved",
+          "wholeOriginal": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/independent-MNT006-whole-original-final-verdict-7f6d.json",
+          "actualSeven": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/current-publication-seven-helm-condition/actual-seven-results.json",
+          "original122Preservation": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/independent-MNT006-whole-original-final-verdict-7f6d.json"
+        }
+      ],
+      "reviews": [
+        {
+          "agent": "Existing independent whole_a91306_astra_final Source/whole original closeout and whole_language_reader_80786_fresh technical MNT006/original122 Reader/Quality; complete unchanged independent Source/P2 qualifications reused only at verified exact scope",
+          "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "verdict": "PASS",
+          "role": "source",
+          "scope": "Whole original MNT-006 under original AP09 sections1–3; source/reader/quality/final responsibilities explicit in independent final judgment",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/independent-MNT006-whole-original-final-verdict-7f6d.json"
+        },
+        {
+          "agent": "Existing independent whole_a91306_astra_final Source/whole original closeout and whole_language_reader_80786_fresh technical MNT006/original122 Reader/Quality; complete unchanged independent Source/P2 qualifications reused only at verified exact scope",
+          "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "verdict": "PASS",
+          "role": "reader",
+          "scope": "Whole original MNT-006 under original AP09 sections1–3; source/reader/quality/final responsibilities explicit in independent final judgment",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/independent-MNT006-whole-original-final-verdict-7f6d.json"
+        },
+        {
+          "agent": "Existing independent whole_a91306_astra_final Source/whole original closeout and whole_language_reader_80786_fresh technical MNT006/original122 Reader/Quality; complete unchanged independent Source/P2 qualifications reused only at verified exact scope",
+          "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "verdict": "PASS",
+          "role": "quality",
+          "scope": "Whole original MNT-006 under original AP09 sections1–3; source/reader/quality/final responsibilities explicit in independent final judgment",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/independent-MNT006-whole-original-final-verdict-7f6d.json"
+        },
+        {
+          "agent": "Existing independent whole_a91306_astra_final Source/whole original closeout and whole_language_reader_80786_fresh technical MNT006/original122 Reader/Quality; complete unchanged independent Source/P2 qualifications reused only at verified exact scope",
+          "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "verdict": "PASS",
+          "role": "astra-final",
+          "scope": "Whole original MNT-006 under original AP09 sections1–3; source/reader/quality/final responsibilities explicit in independent final judgment",
+          "evidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/mnt006-whole-path-20261029/independent-MNT006-whole-original-final-verdict-7f6d.json"
+        }
+      ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L403",
-      "closureDecision": {
-        "verdict": "FAIL",
-        "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
-        "reason": "- MNT-006 — Generierte Events und Payloads — FAIL. Canonical: docs/site/extend/documentation-maintenance.md. FAIL F4: platform event extractor emits names/source positions from enum/hooks/host constants only; no generated active payload/version/producer-consumer contract graph.",
-        "campaign": "independent-ready-topics-20261020"
-      }
+      "closureHistory": [
+        {
+          "verdict": "FAIL",
+          "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+          "reason": "- MNT-006 — Generierte Events und Payloads — FAIL. Canonical: docs/site/extend/documentation-maintenance.md. FAIL F4: platform event extractor emits names/source positions from enum/hooks/host constants only; no generated active payload/version/producer-consumer contract graph.",
+          "campaign": "independent-ready-topics-20261020"
+        }
+      ]
     },
     {
       "id": "MNT-007",
