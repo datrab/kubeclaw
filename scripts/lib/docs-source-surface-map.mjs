@@ -104,6 +104,19 @@ export function buildSourceSurfaceMap(root, pages, read = file => JSON.parse(fs.
     }
   }
   {
+    const file = inventory('event-contracts'), data = read(file);
+    const add = domain('event-contract', file, 'scripts/docs-event-contracts.mjs', ['npm run docs:events:check'],
+      'Identify the payload/version authority, then follow its qualified producer, transformation, validation and consumer conditions before changing or replaying a record.',
+      'Source-qualified event mechanisms, dependent payload declarations, schema authorities and actual selected call relationships. Configuration and declarations do not prove live delivery; external payloads remain explicitly limited.');
+    const target = `${reference('events')}#generated-source-contract-reference`;
+    for (const family of data.families) {
+      for (const [index, role] of family.roles.entries()) add([family.id, 'role', index], role.source.path, target, role);
+      for (const [index, declaration] of family.declarations.entries()) add([family.id, 'declaration', index], declaration.path, target, declaration);
+      for (const [index, schema] of family.schemas.entries()) add([family.id, 'schema', index], schema.path, target, schema);
+      for (const [index, call] of family.selectedCalls.entries()) add([family.id, 'call', index], call.source.path, target, call);
+    }
+  }
+  {
     const file = inventory('platform-surfaces'), data = read(file), bindings = read('docs/config/platform-surface-map.json');
     const add = domain('platform', file, 'scripts/docs-platform-surface-inventory.mjs',
       ['npm run docs:ap09:platform-inventory:check', 'npm run docs:ap09:platform-drift:mutations'],

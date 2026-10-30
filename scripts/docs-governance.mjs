@@ -58,6 +58,7 @@ function checksFor(page) {
   if (configurationPages.has(page) || generatedReferencePages.has(page)) {
     checks.unshift('npm run docs:inventory:config:check', 'npm run docs:generate:check', 'npm run docs:drift:config:mutations');
   }
+  if (page === 'docs/site/reference/events.md') checks.unshift('npm run docs:events:check');
   if (page === platformInventoryPage) {
     checks.unshift('npm run docs:ap09:platform-inventory:check', 'npm run docs:ap09:platform-drift:mutations');
   }

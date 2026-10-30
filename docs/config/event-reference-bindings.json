@@ -1,0 +1,3129 @@
+{
+  "schemaVersion": "event-reference-bindings.v1",
+  "qualifiedSourceVectorSha256": "8dec008437c5eb60a74192107b0e9d5f44e97d4dd5af16bd17e8cfd17d75edb1",
+  "qualificationStatus": "WHOLE_SOURCE_CONTENT_AND_EXACT_MAINTENANCE_DELTA_QUALIFIED_CODE_PUBLICATION_READER_ACCEPTANCE_PENDING",
+  "families": [
+    {
+      "id": "canonical-lifecycle-and-domain",
+      "boundary": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+      "versionAuthorities": [
+        {
+          "kind": "type-member",
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "name": "LifecycleEvent",
+          "member": "schemaVersion",
+          "label": "LifecycleEvent"
+        },
+        {
+          "kind": "type-member",
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "name": "PluginDomainEvent",
+          "member": "schemaVersion",
+          "label": "PluginDomainEvent"
+        },
+        {
+          "kind": "type-member",
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "name": "ObserverDelivery",
+          "member": "schemaVersion",
+          "label": "ObserverDelivery"
+        },
+        {
+          "kind": "type-member",
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "name": "ObserverCheckpoint",
+          "member": "schemaVersion",
+          "label": "ObserverCheckpoint"
+        },
+        {
+          "kind": "type-member",
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "name": "ObserverDeliveryRecord",
+          "member": "schemaVersion",
+          "label": "delivery attempt history"
+        },
+        {
+          "kind": "constructor-field",
+          "path": "skills/nova/core/telemetry/audit.ts",
+          "enclosingSelector": "export function readPipelineAudit",
+          "field": "schemaVersion",
+          "label": "audit projection"
+        }
+      ],
+      "roles": [
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "selector": "effectAppender",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 53,
+              "occurrence": 0
+            },
+            {
+              "line": 76,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "selector": "schemaVersion: 'lifecycle-event.v2'",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 119,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/engine-admin.ts",
+          "selector": "schemaVersion: 'lifecycle-event.v2'",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 144,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/runner.ts",
+          "selector": "schemaVersion: 'lifecycle-event.v2'",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 63,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "selector": "schemaVersion: 'plugin-domain-event.v2'",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 95,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/nova/core/execution/context.ts",
+          "selector": "emit",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 60,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "selector": "schemaVersion: 'plugin-domain-event.v2'",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 39,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "selector": "subscriptions.includes",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 84,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/nova/core/telemetry/observer-recovery.ts",
+          "selector": "assertCheckpointEvent",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 43,
+              "occurrence": 0
+            },
+            {
+              "line": 52,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/runner.ts",
+          "selector": "const append =",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 62,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "selector": "#recordRunStart",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 21,
+              "occurrence": 0
+            },
+            {
+              "line": 46,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/run-decisions.ts",
+          "selector": "#handlers()",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 36,
+              "occurrence": 0
+            },
+            {
+              "line": 41,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/run-decisions.ts",
+          "selector": "this.#append('stage.waiting'",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 77,
+              "occurrence": 0
+            },
+            {
+              "line": 100,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "selector": "#recordResult",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 46,
+              "occurrence": 0
+            },
+            {
+              "line": 49,
+              "occurrence": 0
+            },
+            {
+              "line": 137,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/artifact-checkpoints.ts",
+          "selector": "this.#append('artifact.created'",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 112,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/engine-admin.ts",
+          "selector": "#appendOnce",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 53,
+              "occurrence": 0
+            },
+            {
+              "line": 113,
+              "occurrence": 0
+            },
+            {
+              "line": 114,
+              "occurrence": 0
+            },
+            {
+              "line": 123,
+              "occurrence": 0
+            },
+            {
+              "line": 132,
+              "occurrence": 0
+            },
+            {
+              "line": 142,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "selector": "function recordWaitResolution",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 116,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "selector": "function auditResult",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 62,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "selector": "const delivery:",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 26,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "validator",
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "selector": "validateReferencedValue",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+          "locations": [
+            {
+              "line": 55,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "selector": "function enabledRegistrations",
+          "locations": [
+            {
+              "line": 44,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Select configured registration IDs; presence in a delivered manifest alone does not activate it."
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+          "selector": "export async function activateRegistry",
+          "locations": [
+            {
+              "line": 103,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Load configured/granted modules and providers; no installed/live provider inferred."
+        },
+        {
+          "role": "consumer",
+          "path": "skills/nova/core/lifecycle/recovery.ts",
+          "selector": "export function recoverStageStates",
+          "locations": [
+            {
+              "line": 18,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Replay canonical stage event records, preserving run/attempt state."
+        },
+        {
+          "role": "consumer",
+          "path": "skills/nova/core/lifecycle/recovery.ts",
+          "selector": "export function recoverWaitCreation",
+          "locations": [
+            {
+              "line": 39,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Recover wait state from the actual available canonical records; retain the wait.created documentation contradiction."
+        },
+        {
+          "role": "transformer",
+          "path": "skills/nova/core/telemetry/audit.ts",
+          "selector": "export function readPipelineAudit",
+          "locations": [
+            {
+              "line": 15,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Project hash-verified journal records into redacted pipeline-audit.v1; no new canonical event. Journal acquisition has its existing side-effect boundary."
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "selector": "#recordDelivery(",
+          "locations": [
+            {
+              "line": 43,
+              "occurrence": 0
+            },
+            {
+              "line": 101,
+              "occurrence": 0
+            },
+            {
+              "line": 102,
+              "occurrence": 0
+            },
+            {
+              "line": 103,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Record delivery attempts; this is not another canonical domain event."
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "selector": "#commitCheckpoint(",
+          "locations": [
+            {
+              "line": 51,
+              "occurrence": 0
+            },
+            {
+              "line": 90,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Advance observer/run checkpoint only under its consistency rules."
+        }
+      ],
+      "types": [
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "name": "LifecycleEvent"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "name": "PluginDomainEvent"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "name": "ObserverDelivery"
+        },
+        {
+          "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+          "name": "ObserverCheckpoint"
+        },
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "name": "ObserverDeliveryRecord"
+        }
+      ],
+      "constructorSources": [
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/nova/core/execution/artifact-checkpoints.ts",
+        "skills/nova/core/execution/context.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/engine-run.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/pipeline-loop.ts",
+        "skills/nova/core/execution/run-decisions.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/execution/stage-executor.ts",
+        "skills/nova/core/lifecycle/recovery.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/telemetry/observer-recovery.ts",
+        "skills/nova/core/telemetry/observers.ts"
+      ],
+      "schemas": [
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json"
+      ],
+      "calls": [
+        {
+          "path": "skills/nova/core/execution/artifact-checkpoints.ts",
+          "expression": "this.#append",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/engine-admin.ts",
+          "expression": "context.events.appendSequenced",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "expression": "events.appendSequenced",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/engine-run.ts",
+          "expression": "append",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "expression": "events.appendSequenced",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/engine-runtime.ts",
+          "expression": "append",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/pipeline-loop.ts",
+          "expression": "this.#services.append",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/run-decisions.ts",
+          "expression": "this.#append",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/runner.ts",
+          "expression": "this.#options.journal.appendSequenced",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "expression": "this.#options.append",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/execution/stage-executor.ts",
+          "expression": "this.#options.journal.appendSequenced",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/telemetry/observer-delivery.ts",
+          "expression": "options.events.appendSequenced",
+          "role": "source-bound payload/transport operation",
+          "condition": "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission."
+        },
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "expression": "this.#options.deliveries.append",
+          "role": "supporting-record",
+          "condition": "Delivery/checkpoint persistence; not canonical emission."
+        },
+        {
+          "path": "skills/nova/core/telemetry/observers.ts",
+          "expression": "append",
+          "role": "supporting-record",
+          "condition": "Delivery/checkpoint persistence; not canonical emission."
+        }
+      ],
+      "limits": [
+        "The runner or recovery/admin path must be invoked; domain emission requires the configured registration/grant. Declared literals are not evidence of emission.",
+        "Declared LifecycleEvent union is not proof every literal is emitted; open plugin domain strings are not a closed vocabulary. Configured/granted activation is not live execution. Must join actual payload constructors and caller arguments.",
+        "run.waiting, run.paused, wait.created are declared literals but no production Nova constructor was found in the inspected appender closure. Do not label them emitted merely because of union/manifest subscription membership.",
+        "Do not count every bookkeeping record as a new emitted domain event.",
+        "The state README refers to canonical wait.created, while the inspected current writer closure has no wait.created constructor. Preserve this source/documentation contradiction; do not infer that the declared name was emitted."
+      ]
+    },
+    {
+      "id": "normalized-openclaw-and-host-ingress",
+      "boundary": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+      "versionAuthorities": [
+        {
+          "kind": "type-member",
+          "path": "contracts/agent-observability/v1/src/types.ts",
+          "name": "AgentObservabilityIngressEventV1",
+          "member": "v",
+          "label": "AgentObservabilityIngressEventV1"
+        },
+        {
+          "kind": "constructor-field",
+          "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+          "enclosingSelector": "function projectEvent",
+          "field": "schemaVersion",
+          "label": "function projectEvent"
+        }
+      ],
+      "roles": [
+        {
+          "role": "declaration",
+          "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+          "selector": "SUPPORTED_HOOKS",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+          "locations": [
+            {
+              "line": 5,
+              "occurrence": 0
+            },
+            {
+              "line": 10,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+          "selector": "context.emit",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+          "locations": [
+            {
+              "line": 78,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+          "selector": "registerOpenClawAgentObserver",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+          "locations": [
+            {
+              "line": 241,
+              "occurrence": 0
+            },
+            {
+              "line": 312,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+          "selector": "subscribeModelUsageDiagnostics",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+          "locations": [
+            {
+              "line": 30,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
+          "selector": "normalizeAgentEvent",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+          "locations": [
+            {
+              "line": 107,
+              "occurrence": 0
+            },
+            {
+              "line": 161,
+              "occurrence": 0
+            },
+            {
+              "line": 163,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "selector": "enqueue(",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+          "locations": [
+            {
+              "line": 122,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "contracts/agent-observability/v1/src/routing.ts",
+          "selector": "selectAgentObservabilityStreamKey",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+          "locations": [
+            {
+              "line": 25,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "selector": "writeDeadLetter",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+          "locations": [
+            {
+              "line": 223,
+              "occurrence": 0
+            },
+            {
+              "line": 240,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts",
+          "selector": "export function normalizePayload",
+          "locations": [
+            {
+              "line": 190,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Project the selected raw hook into its local declared payload; no external raw-field completeness."
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts",
+          "selector": "export function modelUsagePayload",
+          "locations": [
+            {
+              "line": 54,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Project model usage diagnostics into the host ingress payload."
+        },
+        {
+          "role": "validator",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
+          "selector": "assertAgentObservabilityIngressEvent(ingressEvent)",
+          "locations": [
+            {
+              "line": 141,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate the normalized ingress record before delivery."
+        },
+        {
+          "role": "validator",
+          "path": "contracts/agent-observability/v1/src/validation.ts",
+          "selector": "export function validateAgentObservabilityIngressEvent",
+          "locations": [
+            {
+              "line": 225,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate envelope, hook/type relation, bounded JSON and event-specific payload fields."
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+          "selector": "export function syncContract",
+          "locations": [
+            {
+              "line": 18,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Canonical contract Source is copied to the generated host import tree; no generated output substitutes for canonical input. This reference does not execute the sync."
+        },
+        {
+          "role": "consumer",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "selector": "private async writeItem",
+          "locations": [
+            {
+              "line": 201,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Write selected control/payload stream data with configured retry behavior."
+        }
+      ],
+      "types": [
+        {
+          "path": "contracts/agent-observability/v1/src/types.ts",
+          "name": "AgentObservabilityIngressEventV1"
+        },
+        {
+          "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+          "name": "SUPPORTED_HOOKS",
+          "value": true
+        }
+      ],
+      "constructorSources": [
+        "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+        "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/hook-normalizers.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/hook-payloads.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts"
+      ],
+      "schemas": [],
+      "calls": [
+        {
+          "path": "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+          "expression": "context.emit",
+          "role": "source-bound payload/transport operation",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted."
+        },
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+          "expression": "this.writer.enqueue",
+          "role": "source-bound payload/transport operation",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted."
+        },
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+          "expression": "this.logger.warn",
+          "role": "source-bound payload/transport operation",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted."
+        },
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "expression": "this.logger.warn",
+          "role": "source-bound payload/transport operation",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted."
+        },
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "expression": "this.writeDeadLetter",
+          "role": "source-bound payload/transport operation",
+          "condition": "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted."
+        }
+      ],
+      "limits": [
+        "Only configured hooks/providers with valid normalized identity enter this path; host installation and external raw payload completeness are not asserted.",
+        "External raw hook payload authority stays unknown; preserve redaction and observed-field projection.",
+        "Separate raw external interfaces, normalized types, validation, routing and downstream unknowns. No claim all hooks are available in installed host.",
+        "No invented version/schema or downstream consumer; retry/drop behavior is part of this edge."
+      ]
+    },
+    {
+      "id": "telemetry-projection-and-transports",
+      "boundary": "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes.",
+      "versionAuthorities": [
+        {
+          "kind": "constructor-field",
+          "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+          "enclosingSelector": "export function telemetryEnvelope",
+          "field": "schemaVersion",
+          "label": "export function telemetryEnvelope"
+        },
+        {
+          "kind": "constructor-field",
+          "path": "skills/common/plugins/agent-observability/src/observers.ts",
+          "enclosingSelector": "export function projectAgentEvent",
+          "field": "schemaVersion",
+          "label": "export function projectAgentEvent"
+        }
+      ],
+      "roles": [
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+          "selector": "telemetry-envelope.v2",
+          "condition": "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes.",
+          "locations": [
+            {
+              "line": 9,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/agent-observability/src/observers.ts",
+          "selector": "agent-observability-event.v2",
+          "condition": "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes.",
+          "locations": [
+            {
+              "line": 8,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/common/plugins/telemetry-store/src/adapter.ts",
+          "selector": "telemetry.emit",
+          "condition": "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes.",
+          "locations": [
+            {
+              "line": 24,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/common/plugins/redis-transport/src/adapter.ts",
+          "selector": "activateTelemetry",
+          "condition": "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes.",
+          "locations": [
+            {
+              "line": 91,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/redis-transport/src/stream-identity.ts",
+          "selector": "encodeURIComponent",
+          "condition": "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes.",
+          "locations": [
+            {
+              "line": 5,
+              "occurrence": 0
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "constructorSources": [
+        "skills/common/plugins/agent-observability/src/observers.ts",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/redis-transport/src/stream-identity.ts",
+        "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "skills/common/plugins/telemetry-store/src/adapter.ts"
+      ],
+      "schemas": [],
+      "calls": [
+        {
+          "path": "skills/common/plugins/agent-observability/src/observers.ts",
+          "expression": "context.invoke",
+          "role": "source-bound payload/transport operation",
+          "condition": "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes."
+        },
+        {
+          "path": "skills/common/plugins/telemetry-observer/src/observer.ts",
+          "expression": "context.invoke",
+          "role": "source-bound payload/transport operation",
+          "condition": "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes."
+        }
+      ],
+      "limits": [
+        "A matching manifest subscription and configured provider are required. File/Redis telemetry and artifact storage are distinct capability routes.",
+        "Use manifests and configured provider bindings; do not assert both transports execute or infer an external stream reader."
+      ]
+    },
+    {
+      "id": "durable-pipeline-observability",
+      "boundary": "Record production, admission, replay and durable state are separate operations; a stored state record is not another event emission.",
+      "versionAuthorities": [
+        {
+          "kind": "type-member",
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ProducerRecordV1",
+          "member": "schemaVersion",
+          "label": "ProducerRecordV1"
+        },
+        {
+          "kind": "type-member",
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "AdmissionAcknowledgementV1",
+          "member": "schemaVersion",
+          "label": "AdmissionAcknowledgementV1"
+        },
+        {
+          "kind": "type-member",
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ReplayRangeV1",
+          "member": "schemaVersion",
+          "label": "ReplayRangeV1"
+        },
+        {
+          "kind": "type-member",
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ProducerGapReportV1",
+          "member": "schemaVersion",
+          "label": "ProducerGapReportV1"
+        },
+        {
+          "kind": "type-member",
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ProducerClosureV1",
+          "member": "schemaVersion",
+          "label": "ProducerClosureV1"
+        },
+        {
+          "kind": "type-member",
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ObservabilityCompletenessV1",
+          "member": "schemaVersion",
+          "label": "ObservabilityCompletenessV1"
+        }
+      ],
+      "roles": [
+        {
+          "role": "producer",
+          "path": "skills/buster/engine/test-gates/runner.ts",
+          "selector": "recordType: \"attempt.completed\"",
+          "condition": "Record production, admission, replay and durable state are separate operations; a stored state record is not another event emission.",
+          "locations": [
+            {
+              "line": 1804,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "declaration",
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "selector": "ProducerRecordV1",
+          "condition": "Record production, admission, replay and durable state are separate operations; a stored state record is not another event emission.",
+          "locations": [
+            {
+              "line": 4,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "selector": "ProducerRecordV1",
+          "condition": "Record production, admission, replay and durable state are separate operations; a stored state record is not another event emission.",
+          "locations": [
+            {
+              "line": 14,
+              "occurrence": 0
+            },
+            {
+              "line": 19,
+              "occurrence": 0
+            },
+            {
+              "line": 30,
+              "occurrence": 0
+            },
+            {
+              "line": 36,
+              "occurrence": 0
+            },
+            {
+              "line": 274,
+              "occurrence": 0
+            },
+            {
+              "line": 353,
+              "occurrence": 0
+            },
+            {
+              "line": 353,
+              "occurrence": 1
+            },
+            {
+              "line": 354,
+              "occurrence": 0
+            },
+            {
+              "line": 358,
+              "occurrence": 0
+            },
+            {
+              "line": 359,
+              "occurrence": 0
+            },
+            {
+              "line": 364,
+              "occurrence": 0
+            },
+            {
+              "line": 580,
+              "occurrence": 0
+            },
+            {
+              "line": 585,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+          "selector": "DurableRecord",
+          "condition": "Record production, admission, replay and durable state are separate operations; a stored state record is not another event emission.",
+          "locations": [
+            {
+              "line": 5,
+              "occurrence": 0
+            },
+            {
+              "line": 16,
+              "occurrence": 0
+            },
+            {
+              "line": 18,
+              "occurrence": 0
+            },
+            {
+              "line": 35,
+              "occurrence": 0
+            },
+            {
+              "line": 46,
+              "occurrence": 0
+            },
+            {
+              "line": 68,
+              "occurrence": 0
+            },
+            {
+              "line": 74,
+              "occurrence": 0
+            },
+            {
+              "line": 74,
+              "occurrence": 1
+            },
+            {
+              "line": 82,
+              "occurrence": 0
+            },
+            {
+              "line": 102,
+              "occurrence": 0
+            },
+            {
+              "line": 121,
+              "occurrence": 0
+            },
+            {
+              "line": 121,
+              "occurrence": 1
+            },
+            {
+              "line": 127,
+              "occurrence": 0
+            },
+            {
+              "line": 133,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "selector": "async admit(",
+          "locations": [
+            {
+              "line": 673,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Admit validated producer bytes with canonical cursor and immutable identity/digest checks."
+        },
+        {
+          "role": "consumer",
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "selector": "async acknowledge(",
+          "locations": [
+            {
+              "line": 400,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Acknowledge outbox delivery; admission and outbox are separate durable responsibilities."
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+          "selector": "async evaluateCompleteness(",
+          "locations": [
+            {
+              "line": 645,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Evaluate required closures, missing ranges and attributed unresolved items; state is not live transport completeness."
+        },
+        {
+          "role": "validator",
+          "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+          "selector": "export function assertCompletionIntent",
+          "locations": [
+            {
+              "line": 11,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate replayed completion intent and closure/evidence relationships."
+        },
+        {
+          "role": "validator",
+          "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+          "selector": "export function assertAdmissionReplay",
+          "locations": [
+            {
+              "line": 92,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate recovered admission state and record identities before reuse."
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+          "selector": "export async function buildClawDeckObservationView",
+          "locations": [
+            {
+              "line": 39,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Export admission/attempt/completeness projection; export alone is not proof of a bound external reader."
+        },
+        {
+          "role": "consumer",
+          "path": "skills/nova/core/observability/reconciler.ts",
+          "selector": "export class NovaObservabilityReconciler",
+          "locations": [
+            {
+              "line": 105,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Consume observability evidence in Nova reconciliation; preserve gate-class and replay rules."
+        },
+        {
+          "role": "validator",
+          "path": "contracts/pipeline-observability/v1/src/validation.ts",
+          "selector": "export function validatePipelineObservabilityContract",
+          "locations": [
+            {
+              "line": 29,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Apply JSON Schema plus digest/range/completeness relation checks."
+        },
+        {
+          "role": "validator",
+          "path": "contracts/pipeline-observability/v1/src/validation.ts",
+          "selector": "export function decodePipelineObservabilityContract",
+          "locations": [
+            {
+              "line": 30,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Decode canonical UTF-8 wire bytes and validate the selected contract."
+        }
+      ],
+      "types": [
+        {
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ProducerRecordV1"
+        },
+        {
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "AdmissionAcknowledgementV1"
+        },
+        {
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ReplayRangeV1"
+        },
+        {
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ProducerGapReportV1"
+        },
+        {
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ProducerClosureV1"
+        },
+        {
+          "path": "contracts/pipeline-observability/v1/src/types.ts",
+          "name": "ObservabilityCompletenessV1"
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+          "name": "ClawDeckObservationView"
+        }
+      ],
+      "constructorSources": [
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+        "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+        "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+        "skills/nova/core/observability/reconciler.ts"
+      ],
+      "schemas": [
+        "contracts/pipeline-observability/v1/schemas/pipeline-observability.v1.schema.json"
+      ],
+      "calls": [
+        {
+          "path": "skills/buster/engine/test-gates/runner.ts",
+          "expression": "this.#durableAttemptStore.resumeCompletion",
+          "role": "producer",
+          "condition": "Resume the durable worker completion into the admission/closure path."
+        },
+        {
+          "path": "skills/buster/engine/test-gates/runner.ts",
+          "expression": "this.#durableAttemptStore.storeResult",
+          "role": "producer",
+          "condition": "Persist the worker result associated with this producer completion."
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "expression": "outbox.acknowledge",
+          "role": "consumer",
+          "condition": "Apply admission acknowledgement to pending outbox records."
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "expression": "validatePipelineObservabilityContract",
+          "role": "validator",
+          "condition": "Validate selected producer/ack/replay contracts under their actual definition arguments."
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+          "expression": "admission.admitAndRead",
+          "role": "consumer",
+          "condition": "Admit completion producer bytes and use the resulting immutable records."
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+          "expression": "validatePipelineObservabilityContract",
+          "role": "validator",
+          "condition": "Check closure/completeness relations, not a new domain event."
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+          "expression": "options.admissionStore.admittedTailSnapshot",
+          "role": "consumer",
+          "condition": "Read admitted records for the exported observation view."
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/observability/clawdeck-view.ts",
+          "expression": "options.attemptStore.evaluateCompleteness",
+          "role": "transformer",
+          "condition": "Join actual closure and admission completeness into the view."
+        },
+        {
+          "path": "skills/nova/core/observability/reconciler.ts",
+          "expression": "this.#attempts.evaluateCompleteness",
+          "role": "consumer",
+          "condition": "Evaluate admitted required closures for the current reconciliation."
+        },
+        {
+          "path": "skills/nova/core/observability/reconciler.ts",
+          "expression": "this.#attempts.resumeCompletion",
+          "role": "consumer",
+          "condition": "Resume an authorized pending completion with its original record identity."
+        }
+      ],
+      "limits": [
+        "Record production, admission, replay and durable state are separate operations; a stored state record is not another event emission.",
+        "Do not equate entire declared recordType vocabulary with shipped constructor coverage; durable store retirement records are bookkeeping."
+      ]
+    },
+    {
+      "id": "worker-progress-and-log",
+      "boundary": "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate.",
+      "versionAuthorities": [
+        {
+          "kind": "type-member",
+          "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+          "name": "AttemptProgressEventV1",
+          "member": "schemaVersion",
+          "label": "AttemptProgressEventV1"
+        },
+        {
+          "kind": "type-member",
+          "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+          "name": "WorkerLogPartV1",
+          "member": "schemaVersion",
+          "label": "WorkerLogPartV1"
+        }
+      ],
+      "roles": [
+        {
+          "role": "declaration",
+          "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+          "selector": "AttemptProgressEventV1",
+          "condition": "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate.",
+          "locations": [
+            {
+              "line": 156,
+              "occurrence": 0
+            },
+            {
+              "line": 255,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "declaration",
+          "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+          "selector": "WorkerLogPartV1",
+          "condition": "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate.",
+          "locations": [
+            {
+              "line": 171,
+              "occurrence": 0
+            },
+            {
+              "line": 255,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "selector": "this.#options.onProgress(event)",
+          "condition": "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate.",
+          "locations": [
+            {
+              "line": 609,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "selector": "this.#options.onLogPart?.(part)",
+          "condition": "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate.",
+          "locations": [
+            {
+              "line": 346,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/server/native-worker-host.ts",
+          "selector": "storeFullLog",
+          "condition": "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate.",
+          "locations": [
+            {
+              "line": 27,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/buster/engine/test-gates/provider-child.mjs",
+          "selector": "kind: 'log'",
+          "condition": "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate.",
+          "locations": [
+            {
+              "line": 64,
+              "occurrence": 0
+            },
+            {
+              "line": 107,
+              "occurrence": 0
+            },
+            {
+              "line": 109,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/buster/engine/test-gates/report-adapter-child.mjs",
+          "selector": "const result = await adapt",
+          "condition": "Report-adapter command/result IPC, not a log producer.",
+          "locations": [
+            {
+              "line": 27,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/buster/engine/test-gates/provider-loader.ts",
+          "selector": "if (message.kind === 'log'",
+          "locations": [
+            {
+              "line": 281,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Receive provider log IPC and forward stream/message to the parent context log; not a new canonical event."
+        },
+        {
+          "role": "validator",
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "selector": "validatePipelineWorkerCoreContract('workerLogPart'",
+          "locations": [
+            {
+              "line": 343,
+              "occurrence": 0
+            },
+            {
+              "line": 488,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate ordinary and final worker log parts before optional callbacks."
+        },
+        {
+          "role": "validator",
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "selector": "validatePipelineWorkerCoreContract('attemptProgressEvent'",
+          "locations": [
+            {
+              "line": 607,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate progress record before callback; callback failures remain best effort."
+        },
+        {
+          "role": "producer",
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "selector": "this.#options.onLogPart(finalPart)",
+          "locations": [
+            {
+              "line": 490,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Deliver final part only when a callback is supplied. No shipped callback binding was found."
+        }
+      ],
+      "types": [
+        {
+          "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+          "name": "AttemptProgressEventV1"
+        },
+        {
+          "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+          "name": "WorkerLogPartV1"
+        }
+      ],
+      "constructorSources": [
+        "skills/buster/engine/test-gates/provider-child.mjs",
+        "skills/buster/engine/test-gates/provider-loader.ts",
+        "skills/buster/engine/test-gates/report-adapter-child.mjs",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/worker/core/worker/attempt-executor.ts"
+      ],
+      "schemas": [
+        "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json"
+      ],
+      "calls": [
+        {
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "expression": "this.#options.onLogPart",
+          "role": "source-bound payload/transport operation",
+          "condition": "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate."
+        },
+        {
+          "path": "skills/buster/engine/test-gates/provider-loader.ts",
+          "expression": "this.#context?.log",
+          "role": "consumer",
+          "condition": "Forward raw child stderr data chunks to the optional context log; this is not parsed log-message IPC.",
+          "locations": [
+            {
+              "line": 181,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "path": "skills/buster/engine/test-gates/provider-loader.ts",
+          "expression": "this.#context?.log",
+          "role": "consumer",
+          "condition": "Forward parsed message.kind=log IPC with its stream and base64 decoding when selected.",
+          "locations": [
+            {
+              "line": 282,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "path": "skills/worker/core/worker/attempt-executor.ts",
+          "expression": "this.#options.onProgress",
+          "role": "producer",
+          "condition": "Best-effort optional progress callback after validation; no network receiver asserted."
+        }
+      ],
+      "limits": [
+        "Progress/log callbacks are optional and best effort. No shipped callback binding or network delivery is asserted; terminal result/full log authority is separate.",
+        "No shipped onProgress/onLogPart callback binding was found in the product search; do not invent network delivery or consumer.",
+        "Distinct from isolation domain-event RPC. Encoding, boundaries and parent transform need their actual source edges."
+      ]
+    },
+    {
+      "id": "isolation-context-event-rpc",
+      "boundary": "Only the child event RPC forwards this domain payload. Capability/result/error RPCs remain commands and responses.",
+      "versionAuthorities": [
+        null
+      ],
+      "roles": [
+        {
+          "role": "producer",
+          "path": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+          "selector": "rpc('event'",
+          "condition": "Only the child event RPC forwards this domain payload. Capability/result/error RPCs remain commands and responses.",
+          "locations": [
+            {
+              "line": 66,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+          "selector": "context.emit",
+          "condition": "Only the child event RPC forwards this domain payload. Capability/result/error RPCs remain commands and responses.",
+          "locations": [
+            {
+              "line": 117,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "validator",
+          "path": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+          "selector": "JSON",
+          "condition": "Only the child event RPC forwards this domain payload. Capability/result/error RPCs remain commands and responses.",
+          "locations": [
+            {
+              "line": 24,
+              "occurrence": 0
+            },
+            {
+              "line": 25,
+              "occurrence": 0
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "constructorSources": [
+        "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+        "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+        "skills/common/plugin-runtime/foundation/isolation/session.ts"
+      ],
+      "schemas": [],
+      "calls": [
+        {
+          "path": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+          "expression": "rpc",
+          "role": "supporting-command",
+          "condition": "Send capability command/request RPC, not a domain event.",
+          "locations": [
+            {
+              "line": 63,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/isolation/child.mjs",
+          "expression": "rpc",
+          "role": "producer",
+          "condition": "Forward event RPC with type, identity and payload to the parent authorization path.",
+          "locations": [
+            {
+              "line": 66,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+          "expression": "this.#input.context.emit",
+          "role": "source-bound payload/transport operation",
+          "condition": "Only the child event RPC forwards this domain payload. Capability/result/error RPCs remain commands and responses."
+        }
+      ],
+      "limits": [
+        "Only the child event RPC forwards this domain payload. Capability/result/error RPCs remain commands and responses.",
+        "Framing/size checks are not a schema version. Preserve underlying context authorization and identity checks; do not call process signal handlers product events."
+      ]
+    },
+    {
+      "id": "notification-and-publication-effects",
+      "boundary": "The observer transforms an existing delivery into a notification/effect request; delivery reservations, failures and receipts are bookkeeping, not canonical events.",
+      "versionAuthorities": [
+        null
+      ],
+      "roles": [
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "selector": "preview.artifact.available",
+          "condition": "The observer transforms an existing delivery into a notification/effect request; delivery reservations, failures and receipts are bookkeeping, not canonical events.",
+          "locations": [
+            {
+              "line": 151,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+          "selector": "async function deliver",
+          "condition": "The observer transforms an existing delivery into a notification/effect request; delivery reservations, failures and receipts are bookkeeping, not canonical events.",
+          "locations": [
+            {
+              "line": 35,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+          "selector": "schemaVersion",
+          "condition": "The observer transforms an existing delivery into a notification/effect request; delivery reservations, failures and receipts are bookkeeping, not canonical events.",
+          "locations": [
+            {
+              "line": 13,
+              "occurrence": 0
+            },
+            {
+              "line": 24,
+              "occurrence": 0
+            },
+            {
+              "line": 36,
+              "occurrence": 0
+            },
+            {
+              "line": 37,
+              "occurrence": 0
+            },
+            {
+              "line": 48,
+              "occurrence": 0
+            },
+            {
+              "line": 54,
+              "occurrence": 0
+            },
+            {
+              "line": 56,
+              "occurrence": 0
+            },
+            {
+              "line": 61,
+              "occurrence": 0
+            },
+            {
+              "line": 79,
+              "occurrence": 0
+            },
+            {
+              "line": 97,
+              "occurrence": 0
+            },
+            {
+              "line": 109,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+          "selector": "schemaVersion",
+          "condition": "Construct or read back persisted publication request, reservation, receipt and failure bookkeeping; these records are not canonical domain emissions.",
+          "locations": [
+            {
+              "line": 190,
+              "occurrence": 0
+            },
+            {
+              "line": 223,
+              "occurrence": 0
+            },
+            {
+              "line": 240,
+              "occurrence": 0
+            },
+            {
+              "line": 245,
+              "occurrence": 0
+            },
+            {
+              "line": 248,
+              "occurrence": 0
+            },
+            {
+              "line": 287,
+              "occurrence": 0
+            },
+            {
+              "line": 300,
+              "occurrence": 0
+            },
+            {
+              "line": 315,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "selector": "export function lifecycleNotification",
+          "locations": [
+            {
+              "line": 117,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Transform supported lifecycle delivery into a notification payload; preserve preview as separate transformation."
+        },
+        {
+          "role": "producer",
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "selector": "context.invoke('operator.request'",
+          "locations": [
+            {
+              "line": 168,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Issue notification effect request, not a new canonical event."
+        },
+        {
+          "role": "validator",
+          "path": "skills/common/plugins/operator-messaging/src/adapter.ts",
+          "selector": "parsePayload(request.payload",
+          "locations": [
+            {
+              "line": 37,
+              "occurrence": 0
+            },
+            {
+              "line": 97,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate notification payload in its actual adapter invocation path."
+        },
+        {
+          "role": "consumer",
+          "path": "skills/common/plugins/transport-publisher/src/adapter.ts",
+          "selector": "async invoke({ request, signal, confidential, fence })",
+          "locations": [
+            {
+              "line": 207,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Consume transport.publish/publish requests after fence, capability, target-resource, cancellation and payload-size checks; persist idempotent delivery bookkeeping and invoke the configured target."
+        }
+      ],
+      "types": [],
+      "constructorSources": [
+        "skills/common/plugins/notification-observer/src/observer.ts",
+        "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/src/delivery-records.ts",
+        "skills/common/plugins/transport-publisher/src/adapter.ts"
+      ],
+      "schemas": [],
+      "calls": [
+        {
+          "path": "skills/common/plugins/notification-observer/src/observer.ts",
+          "expression": "context.invoke",
+          "role": "producer",
+          "condition": "Send notification to selected operator.request provider with original delivery identity."
+        }
+      ],
+      "limits": [
+        "The observer transforms an existing delivery into a notification/effect request; delivery reservations, failures and receipts are bookkeeping, not canonical events.",
+        "Notification type field does not make preview.artifact.available a new canonical domain emission. HTTP target implementation/actual delivery outside local source stays unknown."
+      ]
+    },
+    {
+      "id": "prism-preference-projections",
+      "boundary": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+      "versionAuthorities": [
+        {
+          "kind": "type-member",
+          "path": "skills/prism/preferences/index.ts",
+          "name": "PreferenceEvent",
+          "member": "schema",
+          "label": "PreferenceEvent"
+        }
+      ],
+      "roles": [
+        {
+          "role": "producer",
+          "path": "skills/prism/studio/app.tsx",
+          "selector": "prism.preference-event.v1",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 253,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/prism/control/direction-decisions.ts",
+          "selector": "prism.preference-event.v1",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 57,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/prism/control/preferences.ts",
+          "selector": "insertPreference",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 9,
+              "occurrence": 0
+            },
+            {
+              "line": 26,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "skills/prism/control/preference-snapshot.ts",
+          "selector": "export async function createPreferenceGeneration",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 15,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "declaration",
+          "path": "skills/prism/preferences/index.ts",
+          "selector": "prism.preference-event.v1",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 11,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/storage/migrations/001_prism.sql",
+          "selector": "CREATE TABLE IF NOT EXISTS prism.preference_event",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 58,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/storage/migrations/011_preference_wire_ids.sql",
+          "selector": "wire_event_id",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 1,
+              "occurrence": 0
+            },
+            {
+              "line": 2,
+              "occurrence": 0
+            },
+            {
+              "line": 3,
+              "occurrence": 0
+            },
+            {
+              "line": 4,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/storage/migrations/016_preference_legacy_insert_compatibility.sql",
+          "selector": "wire_event_id",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 2,
+              "occurrence": 0
+            },
+            {
+              "line": 7,
+              "occurrence": 0
+            },
+            {
+              "line": 8,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/storage/migrations/012_preference_generation.sql",
+          "selector": "CREATE TABLE prism.preference_generation",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 7,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/control/preference-snapshot.ts",
+          "selector": "preference_generation",
+          "condition": "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+          "locations": [
+            {
+              "line": 28,
+              "occurrence": 0
+            },
+            {
+              "line": 34,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/prism/server/control-server.ts",
+          "selector": "if (url.pathname === \"/v1/preferences\" && request.method === \"POST\")",
+          "locations": [
+            {
+              "line": 894,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate body, bind event user to authenticated session, require retraction target, then persist."
+        },
+        {
+          "role": "consumer",
+          "path": "skills/prism/server/control-server.ts",
+          "selector": "if (url.pathname === \"/v1/preferences\" && request.method === \"GET\")",
+          "locations": [
+            {
+              "line": 906,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Read user/project events and return the preference profile projection."
+        },
+        {
+          "role": "validator",
+          "path": "skills/prism/preferences/index.ts",
+          "selector": "validatePrism<PreferenceEvent>",
+          "locations": [
+            {
+              "line": 48,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Validate source events before uniqueness/deduplication and projection."
+        },
+        {
+          "role": "transformer",
+          "path": "skills/prism/preferences/index.ts",
+          "selector": "export function projectPreferences",
+          "locations": [
+            {
+              "line": 76,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Reduce actual accepted/retracted preference events into the learned profile."
+        },
+        {
+          "role": "consumer",
+          "path": "skills/prism/control/preference-snapshot.ts",
+          "selector": "export async function preferenceEvents",
+          "locations": [
+            {
+              "line": 5,
+              "occurrence": 0
+            }
+          ],
+          "condition": "Read persisted preference events for the current user/project."
+        }
+      ],
+      "types": [
+        {
+          "path": "skills/prism/preferences/index.ts",
+          "name": "PreferenceEvent"
+        }
+      ],
+      "constructorSources": [
+        "skills/prism/control/direction-decisions.ts",
+        "skills/prism/control/preference-snapshot.ts",
+        "skills/prism/control/preferences.ts",
+        "skills/prism/preferences/index.ts",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/studio/app.tsx"
+      ],
+      "schemas": [
+        "contracts/prism/v1/schemas/prism-v1.schema.json"
+      ],
+      "calls": [
+        {
+          "path": "skills/prism/server/control-server.ts",
+          "expression": "recordPreference",
+          "role": "consumer",
+          "condition": "Persist validated preference for the authenticated actor."
+        },
+        {
+          "path": "skills/prism/server/control-server.ts",
+          "expression": "projectPreferences",
+          "role": "transformer",
+          "condition": "Return learned preference profile in the actual GET response."
+        }
+      ],
+      "limits": [
+        "UI/HTTP or internal direction decisions create preference records. Validation, SQL identity handling and persistent projections remain separate responsibilities.",
+        "SQL is an actual persistence transform, not excluded as maintenance. HTTP producer and internal transaction producer remain distinct.",
+        "SQL zero carriers do not exempt the projection relationship."
+      ]
+    },
+    {
+      "id": "prism-preview-browser-protocols",
+      "boundary": "The iframe sends these messages; the parent checks the iframe window and validates payload before changing preview selection/action state.",
+      "versionAuthorities": [
+        {
+          "kind": "embedded-field",
+          "path": "skills/prism/studio/preview.ts",
+          "field": "schema",
+          "callExpression": "parent.postMessage",
+          "label": "iframe message schemas"
+        }
+      ],
+      "roles": [
+        {
+          "role": "producer",
+          "path": "skills/prism/studio/preview.ts",
+          "selector": "parent.postMessage({schema:'prism.selection.v1'",
+          "condition": "The iframe sends these messages; the parent checks the iframe window and validates payload before changing preview selection/action state.",
+          "locations": [
+            {
+              "line": 30,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "producer",
+          "path": "skills/prism/studio/preview.ts",
+          "selector": "parent.postMessage({schema:'prism.action.v1'",
+          "condition": "The iframe sends these messages; the parent checks the iframe window and validates payload before changing preview selection/action state.",
+          "locations": [
+            {
+              "line": 30,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/prism/studio/app.tsx",
+          "selector": "event.source",
+          "condition": "The iframe sends these messages; the parent checks the iframe window and validates payload before changing preview selection/action state.",
+          "locations": [
+            {
+              "line": 88,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/prism/studio/flows.ts",
+          "selector": "previewSelection",
+          "condition": "The iframe sends these messages; the parent checks the iframe window and validates payload before changing preview selection/action state.",
+          "locations": [
+            {
+              "line": 37,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "skills/prism/studio/flows.ts",
+          "selector": "previewActionTarget",
+          "condition": "The iframe sends these messages; the parent checks the iframe window and validates payload before changing preview selection/action state.",
+          "locations": [
+            {
+              "line": 41,
+              "occurrence": 0
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "constructorSources": [
+        "skills/prism/studio/app.tsx",
+        "skills/prism/studio/flows.ts",
+        "skills/prism/studio/preview.ts"
+      ],
+      "schemas": [],
+      "calls": [],
+      "limits": [
+        "The iframe sends these messages; the parent checks the iframe window and validates payload before changing preview selection/action state.",
+        "Actual shipped browser protocols, not generic DOM event exclusion. Producer file has zero v3 census candidate rows; constructor walker cannot see embedded script automatically. Source uses target * and source check, not claimed origin check."
+      ],
+      "embeddedSources": [
+        "skills/prism/studio/preview.ts"
+      ]
+    },
+    {
+      "id": "structured-runtime-diagnostics",
+      "boundary": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+      "versionAuthorities": [
+        {
+          "kind": "type-member",
+          "path": "contracts/telemetry/v1/bundle-types.ts",
+          "name": "RuntimeLogV1",
+          "member": "schema_version",
+          "label": "RuntimeLogV1"
+        }
+      ],
+      "roles": [
+        {
+          "role": "diagnostic",
+          "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+          "selector": "buster.dependency-readiness",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 38,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "skills/prism/server/worker-readiness.ts",
+          "selector": "prism_nonce_dependency_failure",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 54,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "skills/prism/server/studio-request.ts",
+          "selector": "PRISM_STUDIO_REQUEST_FAILED",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 34,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "skills/prism/server/ingestion.ts",
+          "selector": "PRISM_INGESTION_REQUEST_FAILED",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 87,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "skills/prism/server/worker.ts",
+          "selector": "prism_native_worker",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 54,
+              "occurrence": 0
+            },
+            {
+              "line": 56,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+          "selector": "schema_version:'runtime_log.v1'",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 233,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "selector": "schema_version:'runtime_log.v1'",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 284,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "declaration",
+          "path": "contracts/telemetry/v1/bundle/runtime_log.v1.schema.json",
+          "selector": "runtime_log.v1",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 2,
+              "occurrence": 0
+            },
+            {
+              "line": 51,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "declaration",
+          "path": "contracts/telemetry/v1/bundle-types.ts",
+          "selector": "export type RuntimeLogV1",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 22,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "cmd/buster-namespace-controller/main.go",
+          "selector": "func logJSON(",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 2083,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "cmd/buster-namespace-controller/main.go",
+          "selector": "logJSON(\"info\"",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 113,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "cmd/buster-namespace-controller/main.go",
+          "selector": "logJSON(\"error\"",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 126,
+              "occurrence": 0
+            },
+            {
+              "line": 229,
+              "occurrence": 0
+            },
+            {
+              "line": 244,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "diagnostic",
+          "path": "cmd/buster-namespace-controller/demo-readiness-lifecycle.go",
+          "selector": "logJSON(",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+          "locations": [
+            {
+              "line": 48,
+              "occurrence": 0
+            }
+          ]
+        }
+      ],
+      "types": [
+        {
+          "path": "contracts/telemetry/v1/bundle-types.ts",
+          "name": "RuntimeLogV1"
+        }
+      ],
+      "constructorSources": [
+        "skills/buster/engine/test-gates/buildkit-readiness.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/prism/server/ingestion.ts",
+        "skills/prism/server/studio-request.ts",
+        "skills/prism/server/worker-readiness.ts",
+        "skills/prism/server/worker.ts"
+      ],
+      "schemas": [
+        "contracts/telemetry/v1/bundle/runtime_log.v1.schema.json"
+      ],
+      "calls": [
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+          "expression": "this.logger.warn",
+          "role": "source-bound payload/transport operation",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator."
+        },
+        {
+          "path": "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+          "expression": "this.logger.warn",
+          "role": "source-bound payload/transport operation",
+          "condition": "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator."
+        }
+      ],
+      "limits": [
+        "These are source-defined diagnostic writes; logOnce and failure/readiness conditions apply. Most have no schema version or schema validator.",
+        "No invented schema version or dedicated event consumer. Emitted stderr and configured generic log collection are separate roles.",
+        "A matching declaration is not runtime schema-validation proof. Do not declare this active bundle record inactive because flat53 are retained.",
+        "Both Go files have zero structural carriers. This source-bound role must remain explicit. No schema validator or log-specific consumer identified; generic configured Alloy transport is not proof of live delivery."
+      ],
+      "goDeclarations": [
+        {
+          "path": "cmd/buster-namespace-controller/main.go",
+          "selector": "func logJSON("
+        }
+      ]
+    },
+    {
+      "id": "external-event-consumption",
+      "boundary": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+      "versionAuthorities": [
+        null
+      ],
+      "roles": [
+        {
+          "role": "transformer",
+          "path": "tools/ops-mcp/src/hubble.mjs",
+          "selector": "export function classify",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 17,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "tools/ops-mcp/src/hubble.mjs",
+          "selector": "const processLine",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 51,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "tools/ops-mcp/src/hubble.mjs",
+          "selector": "historicalCompleteness",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 108,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "tools/ops-mcp/src/server.mjs",
+          "selector": "function hubbleFlowSummary",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 171,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "tools/ops-mcp/src/server.mjs",
+          "selector": "'get_hubble_flows'",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 465,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "tools/ops-mcp/src/server.mjs",
+          "selector": "function eventSummary",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 80,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "tools/ops-mcp/src/server.mjs",
+          "selector": "recentEvents",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 107,
+              "occurrence": 0
+            },
+            {
+              "line": 397,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "transformer",
+          "path": "tools/ops-mcp/src/server.mjs",
+          "selector": "'get_events'",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 380,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "tools/native-worker-nri/main.go",
+          "selector": "func (p *plugin) CreateContainer",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 93,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "tools/native-worker-nri/main.go",
+          "selector": "return 0, nil",
+          "condition": "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+          "locations": [
+            {
+              "line": 90,
+              "occurrence": 0
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "constructorSources": [
+        "tools/ops-mcp/src/hubble.mjs",
+        "tools/ops-mcp/src/server.mjs"
+      ],
+      "schemas": [],
+      "calls": [],
+      "limits": [
+        "Only the local adapter/projection/callback is shipped here. Upstream producer schemas and live completeness are not reconstructed.",
+        "External Hubble payload is not owned Kubeclaw schema. Warnings, truncation, retention and unknown completeness must survive graph rendering; no lossless cursor.",
+        "Do not invent local Kubernetes event publisher or substitute tool JSONRPC transport for event payload semantics.",
+        "External SDK subscription/event payload authority remains external. api.EventMask alone is neither exemption nor event production proof."
+      ],
+      "goDeclarations": [
+        {
+          "path": "tools/native-worker-nri/main.go",
+          "selector": "func (p *plugin) CreateContainer"
+        }
+      ]
+    },
+    {
+      "id": "configured-generic-log-receiver",
+      "boundary": "The shipped deployment configuration connects CRI pod logs to Loki; no schema-specific validation or observed live transport is asserted.",
+      "versionAuthorities": [
+        null
+      ],
+      "roles": [
+        {
+          "role": "supporting-record",
+          "path": "gitops/platform/bootstrap/alloy.yaml",
+          "selector": "values/alloy.yaml",
+          "condition": "The shipped deployment configuration connects CRI pod logs to Loki; no schema-specific validation or observed live transport is asserted.",
+          "locations": [
+            {
+              "line": 19,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "gitops/platform/values/alloy.yaml",
+          "selector": "stage.cri",
+          "condition": "The shipped deployment configuration connects CRI pod logs to Loki; no schema-specific validation or observed live transport is asserted.",
+          "locations": [
+            {
+              "line": 44,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "gitops/platform/values/alloy.yaml",
+          "selector": "loki.source.file",
+          "condition": "The shipped deployment configuration connects CRI pod logs to Loki; no schema-specific validation or observed live transport is asserted.",
+          "locations": [
+            {
+              "line": 116,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "consumer",
+          "path": "gitops/platform/values/alloy.yaml",
+          "selector": "loki.write",
+          "condition": "The shipped deployment configuration connects CRI pod logs to Loki; no schema-specific validation or observed live transport is asserted.",
+          "locations": [
+            {
+              "line": 42,
+              "occurrence": 0
+            },
+            {
+              "line": 126,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "gitops/platform/values/loki.yaml",
+          "selector": "retention_period",
+          "condition": "The shipped deployment configuration connects CRI pod logs to Loki; no schema-specific validation or observed live transport is asserted.",
+          "locations": [
+            {
+              "line": 8,
+              "occurrence": 0
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "constructorSources": [],
+      "schemas": [],
+      "calls": [],
+      "limits": [
+        "The shipped deployment configuration connects CRI pod logs to Loki; no schema-specific validation or observed live transport is asserted.",
+        "Not a runtime_log-specific validator or proven live delivery/retention. Original other/maintenance classifications cannot exempt this configured receiver."
+      ]
+    },
+    {
+      "id": "retained-declarations",
+      "boundary": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+      "versionAuthorities": [
+        {
+          "kind": "schema-pointer",
+          "path": "contracts/telemetry/v1/envelope.schema.json",
+          "pointer": "/properties/schema_version/const",
+          "label": "retained flat envelope"
+        }
+      ],
+      "roles": [
+        {
+          "role": "retained",
+          "path": "contracts/telemetry/v1/README.md",
+          "selector": "retained",
+          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+          "locations": [
+            {
+              "line": 3,
+              "occurrence": 0
+            },
+            {
+              "line": 50,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "retained",
+          "path": "contracts/telemetry/v1/catalog.json",
+          "selector": "runtime.log",
+          "condition": "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+          "locations": [
+            {
+              "line": 19,
+              "occurrence": 0
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "constructorSources": [],
+      "schemas": [
+        "contracts/telemetry/v1/correlation_identity.schema.json",
+        "contracts/telemetry/v1/envelope.schema.json",
+        "contracts/telemetry/v1/events/agent.delivery.target.schema.json",
+        "contracts/telemetry/v1/events/agent.ended.schema.json",
+        "contracts/telemetry/v1/events/agent.killed.schema.json",
+        "contracts/telemetry/v1/events/agent.llm.input.summary.schema.json",
+        "contracts/telemetry/v1/events/agent.llm.output.summary.schema.json",
+        "contracts/telemetry/v1/events/agent.model.ended.schema.json",
+        "contracts/telemetry/v1/events/agent.model.started.schema.json",
+        "contracts/telemetry/v1/events/agent.progress.schema.json",
+        "contracts/telemetry/v1/events/agent.session.ended.schema.json",
+        "contracts/telemetry/v1/events/agent.session.started.schema.json",
+        "contracts/telemetry/v1/events/agent.spawn.requested.schema.json",
+        "contracts/telemetry/v1/events/agent.spawned.schema.json",
+        "contracts/telemetry/v1/events/agent.tool.finished.schema.json",
+        "contracts/telemetry/v1/events/agent.tool.started.schema.json",
+        "contracts/telemetry/v1/events/agent.transcript.schema.json",
+        "contracts/telemetry/v1/events/approval.requested.schema.json",
+        "contracts/telemetry/v1/events/approval.resolved.schema.json",
+        "contracts/telemetry/v1/events/artifact.published.schema.json",
+        "contracts/telemetry/v1/events/budget.exceeded.schema.json",
+        "contracts/telemetry/v1/events/budget.warning.schema.json",
+        "contracts/telemetry/v1/events/command.accepted.schema.json",
+        "contracts/telemetry/v1/events/command.completed.schema.json",
+        "contracts/telemetry/v1/events/command.rejected.schema.json",
+        "contracts/telemetry/v1/events/command.requested.schema.json",
+        "contracts/telemetry/v1/events/cost.update.schema.json",
+        "contracts/telemetry/v1/events/error.escalation.schema.json",
+        "contracts/telemetry/v1/events/evaluation.fact.schema.json",
+        "contracts/telemetry/v1/events/gate.started.schema.json",
+        "contracts/telemetry/v1/events/gate.verdict.schema.json",
+        "contracts/telemetry/v1/events/git.evidence.schema.json",
+        "contracts/telemetry/v1/events/infrastructure.evidence.schema.json",
+        "contracts/telemetry/v1/events/lifecycle.snapshot.schema.json",
+        "contracts/telemetry/v1/events/lifecycle.transition.schema.json",
+        "contracts/telemetry/v1/events/module.started.schema.json",
+        "contracts/telemetry/v1/events/module.status_changed.schema.json",
+        "contracts/telemetry/v1/events/observability.degraded.schema.json",
+        "contracts/telemetry/v1/events/observability.restored.schema.json",
+        "contracts/telemetry/v1/events/phase.completed.schema.json",
+        "contracts/telemetry/v1/events/phase.started.schema.json",
+        "contracts/telemetry/v1/events/pipeline.completed.schema.json",
+        "contracts/telemetry/v1/events/pipeline.halted.schema.json",
+        "contracts/telemetry/v1/events/pipeline.started.schema.json",
+        "contracts/telemetry/v1/events/plugin.event.schema.json",
+        "contracts/telemetry/v1/events/producer.health.schema.json",
+        "contracts/telemetry/v1/events/quality.evidence.schema.json",
+        "contracts/telemetry/v1/events/rate_limit.detected.schema.json",
+        "contracts/telemetry/v1/events/retry.exhausted.schema.json",
+        "contracts/telemetry/v1/events/retry.scheduled.schema.json",
+        "contracts/telemetry/v1/events/runtime.log.schema.json",
+        "contracts/telemetry/v1/events/summary.completed.schema.json",
+        "contracts/telemetry/v1/events/summary.started.schema.json",
+        "contracts/telemetry/v1/events/system.io_warning.schema.json",
+        "contracts/telemetry/v1/events/terminal.closure.schema.json",
+        "contracts/telemetry/v1/payloads/agent.delivery.target.schema.json",
+        "contracts/telemetry/v1/payloads/agent.ended.schema.json",
+        "contracts/telemetry/v1/payloads/agent.killed.schema.json",
+        "contracts/telemetry/v1/payloads/agent.llm.input.summary.schema.json",
+        "contracts/telemetry/v1/payloads/agent.llm.output.summary.schema.json",
+        "contracts/telemetry/v1/payloads/agent.model.ended.schema.json",
+        "contracts/telemetry/v1/payloads/agent.model.started.schema.json",
+        "contracts/telemetry/v1/payloads/agent.progress.schema.json",
+        "contracts/telemetry/v1/payloads/agent.session.ended.schema.json",
+        "contracts/telemetry/v1/payloads/agent.session.started.schema.json",
+        "contracts/telemetry/v1/payloads/agent.spawn.requested.schema.json",
+        "contracts/telemetry/v1/payloads/agent.spawned.schema.json",
+        "contracts/telemetry/v1/payloads/agent.tool.finished.schema.json",
+        "contracts/telemetry/v1/payloads/agent.tool.started.schema.json",
+        "contracts/telemetry/v1/payloads/agent.transcript.schema.json",
+        "contracts/telemetry/v1/payloads/approval.requested.schema.json",
+        "contracts/telemetry/v1/payloads/approval.resolved.schema.json",
+        "contracts/telemetry/v1/payloads/artifact.published.schema.json",
+        "contracts/telemetry/v1/payloads/budget.exceeded.schema.json",
+        "contracts/telemetry/v1/payloads/budget.warning.schema.json",
+        "contracts/telemetry/v1/payloads/command.accepted.schema.json",
+        "contracts/telemetry/v1/payloads/command.completed.schema.json",
+        "contracts/telemetry/v1/payloads/command.rejected.schema.json",
+        "contracts/telemetry/v1/payloads/command.requested.schema.json",
+        "contracts/telemetry/v1/payloads/cost.update.schema.json",
+        "contracts/telemetry/v1/payloads/error.escalation.schema.json",
+        "contracts/telemetry/v1/payloads/evaluation.fact.schema.json",
+        "contracts/telemetry/v1/payloads/gate.started.schema.json",
+        "contracts/telemetry/v1/payloads/gate.verdict.schema.json",
+        "contracts/telemetry/v1/payloads/git.evidence.schema.json",
+        "contracts/telemetry/v1/payloads/infrastructure.evidence.schema.json",
+        "contracts/telemetry/v1/payloads/lifecycle.snapshot.schema.json",
+        "contracts/telemetry/v1/payloads/lifecycle.transition.schema.json",
+        "contracts/telemetry/v1/payloads/module.started.schema.json",
+        "contracts/telemetry/v1/payloads/module.status_changed.schema.json",
+        "contracts/telemetry/v1/payloads/observability.degraded.schema.json",
+        "contracts/telemetry/v1/payloads/observability.restored.schema.json",
+        "contracts/telemetry/v1/payloads/phase.completed.schema.json",
+        "contracts/telemetry/v1/payloads/phase.started.schema.json",
+        "contracts/telemetry/v1/payloads/pipeline.completed.schema.json",
+        "contracts/telemetry/v1/payloads/pipeline.halted.schema.json",
+        "contracts/telemetry/v1/payloads/pipeline.started.schema.json",
+        "contracts/telemetry/v1/payloads/plugin.event.schema.json",
+        "contracts/telemetry/v1/payloads/producer.health.schema.json",
+        "contracts/telemetry/v1/payloads/quality.evidence.schema.json",
+        "contracts/telemetry/v1/payloads/rate_limit.detected.schema.json",
+        "contracts/telemetry/v1/payloads/retry.exhausted.schema.json",
+        "contracts/telemetry/v1/payloads/retry.scheduled.schema.json",
+        "contracts/telemetry/v1/payloads/runtime.log.schema.json",
+        "contracts/telemetry/v1/payloads/summary.completed.schema.json",
+        "contracts/telemetry/v1/payloads/summary.started.schema.json",
+        "contracts/telemetry/v1/payloads/system.io_warning.schema.json",
+        "contracts/telemetry/v1/payloads/terminal.closure.schema.json"
+      ],
+      "calls": [],
+      "limits": [
+        "A retained schema/catalog/type is not an active runtime producer or consumer. runtime_log.v1 bundle is handled separately.",
+        "Do not extend retained-flat disposition to actual active runtime_log bundle, future projection mapping, or every file under telemetry."
+      ]
+    },
+    {
+      "id": "command-state-tool-and-platform-support",
+      "boundary": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+      "versionAuthorities": [
+        null
+      ],
+      "roles": [
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/server/product-operator-page.ts",
+          "selector": "async function api(",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 4,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/server/product-operator-page.ts",
+          "selector": "el('decide').onclick",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 10,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/server/product-decisions.ts",
+          "selector": "authorizedProductRoute",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 48,
+              "occurrence": 0
+            },
+            {
+              "line": 85,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/server/product-decisions.ts",
+          "selector": "receiptFor",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 9,
+              "occurrence": 0
+            },
+            {
+              "line": 27,
+              "occurrence": 0
+            },
+            {
+              "line": 34,
+              "occurrence": 0
+            },
+            {
+              "line": 35,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/prism/storage/migrations/015_product_decisions.sql",
+          "selector": "CREATE TABLE prism.product_decision",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 2,
+              "occurrence": 0
+            },
+            {
+              "line": 11,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/worker/core/worker/native-worker-launcher.c",
+          "selector": "static void fail",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 17,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/worker/core/worker/native-worker-launcher.c",
+          "selector": "execv(",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 83,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "ops/pod/bootstrap.py",
+          "selector": "def discover()",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 33,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "ops/pod/bootstrap.py",
+          "selector": "def setup_secrets()",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 56,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "tools/ops-mcp/hubble/main.go",
+          "selector": "cmd.Execute()",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 14,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "ops/pod/supervisor.py",
+          "selector": "threading.Event",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 17,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/common/plugin-runtime/foundation/isolation/sandbox.c",
+          "selector": "DENY_SYSCALL(perf_event_open)",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 163,
+              "occurrence": 0
+            },
+            {
+              "line": 202,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/worker/core/worker/native-resource-observation.ts",
+          "selector": "memory.events",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 64,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+          "selector": "cgroup.events",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 33,
+              "occurrence": 0
+            },
+            {
+              "line": 49,
+              "occurrence": 0
+            }
+          ]
+        },
+        {
+          "role": "supporting-record",
+          "path": "ops/pod/verify.py",
+          "selector": "data:",
+          "condition": "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+          "locations": [
+            {
+              "line": 17,
+              "occurrence": 0
+            }
+          ]
+        }
+      ],
+      "types": [],
+      "constructorSources": [
+        "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+        "skills/prism/server/product-decisions.ts",
+        "skills/prism/server/product-operator-page.ts",
+        "skills/worker/core/worker/native-resource-observation.ts"
+      ],
+      "schemas": [],
+      "calls": [],
+      "limits": [
+        "This is a command/query, state, platform synchronization or verification boundary; no new event bus/version is inferred from its name.",
+        "Parsed scripts/calls/objects are carrier evidence; no live HTTP operation was executed. Receipt version is not an emitted event version.",
+        "Zero carrier is not the reason for exclusion; actual output/control operations are. Child process behavior is a separate source responsibility.",
+        "No bootstrap/credentials operation was run. External Hubble implementation is not falsely represented as an owned schema.",
+        "These exact operations do not serialize/dispatch product event payloads; this is source-bound, not token-name exclusion.",
+        "Verifier execution not performed; transport framing is not its own product event payload family. No broad exclusion of all SSE endpoints."
+      ],
+      "embeddedSources": [
+        "skills/prism/server/product-operator-page.ts"
+      ]
+    }
+  ],
+  "supportingInputs": [
+    {
+      "path": "contracts/telemetry/v1/README.md",
+      "sha256": "557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892",
+      "bytes": 3220
+    }
+  ],
+  "activation": {
+    "roleManifests": [
+      "packaging/runtime/roles/nova.json",
+      "packaging/runtime/roles/buster.json",
+      "packaging/runtime/roles/prism.json"
+    ],
+    "pluginCatalogRoots": [
+      "skills/common/plugins",
+      "skills/nova/plugins",
+      "skills/buster/plugins",
+      "skills/prism/plugins"
+    ],
+    "authority": "scripts/build-runtime-role-bundle.mjs pluginCatalog and roleManifest.plugins; delivery only, not live activation"
+  }
+}

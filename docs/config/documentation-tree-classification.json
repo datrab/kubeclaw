@@ -35897,6 +35897,22 @@
       "originalPath": "docs/blueprint/store-policy-guidance.json",
       "expectedPath": "docs/blueprint/store-policy-guidance.json",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/config/event-reference-bindings.json",
+      "class": "internal-documentation-input",
+      "purpose": "Source-qualified event mechanism/role/condition and payload-authority bindings consumed by scripts/docs-event-contracts.mjs; maintained documentation-generator input, not runtime configuration, execution receipt or acceptance state.",
+      "originalPath": "docs/config/event-reference-bindings.json",
+      "expectedPath": "docs/config/event-reference-bindings.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/generated/inventory/event-contracts.json",
+      "class": "internal-documentation-input",
+      "purpose": "Native generated event/payload source-contract inventory from scripts/docs-event-contracts.mjs, consumed by scripts/lib/docs-source-surface-map.mjs for canonical reader ownership; private generator/check support, not reader documentation or live delivery evidence.",
+      "originalPath": "docs/generated/inventory/event-contracts.json",
+      "expectedPath": "docs/generated/inventory/event-contracts.json",
+      "introducedAfterBaseline": true
     }
   ]
 }
