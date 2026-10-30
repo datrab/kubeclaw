@@ -1,3 +1,5 @@
+import { projectDesignStatus } from '../control/project-status.ts';
+import { handleAgentReconciliation } from './agent-reconciliation-routes.ts';
 import { productAuthorityHandler } from './product-decisions.ts';
 import { assembleBaselineArchive, BASELINE_V2 } from '@kubeclaw/prism-contracts-v1/baseline-archive';
 import { handleAgentJobs } from './agent-job-routes.ts';
@@ -146,6 +148,7 @@ private runWorker(
       await pool.query("SELECT 1");
       return json(response, 200, { status: "ready" });
     }
+    if (await handleAgentReconciliation(request,response,url,{db:pool,spiffeEnabled,trustedNovaId:trustedNovaSpiffeId,readBody:body,readArtifact:id=>artifacts.get(id),writeArtifact:bytes=>artifacts.put(bytes)})) return;
     if (await handleInternalArtifact(request, response, url, {
       artifacts, spiffeEnabled, workerSecret, trustedWorkerSpiffeId, trustedControlSpiffeId, trustedPrismAgentSpiffeId,
     })) return;
@@ -224,7 +227,7 @@ private runWorker(
         await requestClient.query("INSERT INTO prism.design_request(id,project_id,architecture_artifact_id,architecture_digest,architecture_revision,request,status) VALUES($1,$2,$3,$4,$5,$6::jsonb,'active') ON CONFLICT(project_id,architecture_revision) DO UPDATE SET architecture_artifact_id=excluded.architecture_artifact_id,architecture_digest=excluded.architecture_digest,request=excluded.request,status='active'",[randomUUID(),project.rows[0]!.id,designRequest.architecture.artifactId,designRequest.architecture.contentDigest,designRequest.architecture.revision,JSON.stringify(designRequest)]);
       });
       if (!designRequest.approvalId){
-        const preferences=await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision});
+        const preferences=await startDesignRound(pool,{projectId:projectKey,subjectId:preferenceSubjectId,startKey:`dispatch:${key}`,architectureDigest:designRequest.architecture.contentDigest,architectureRevision:designRequest.architecture.revision},{resumeActive:true});
         const agent=await admitDesignAgent(pool,`${trustedControlSpiffeId}/prism/main/v2`,projectKey,preferences);
         return json(response,202,{result:{status:'waiting',projectId:project.rows[0]!.id},preferences,agent});
       }
@@ -277,6 +280,8 @@ private runWorker(
       return json(response,200,{status:"updated",document:updated});
     }
     const actor = this.authenticated(request);
+    const projectStatus=/^\/v1\/projects\/([0-9a-f-]+)\/status$/.exec(url.pathname);
+    if(projectStatus && request.method==='GET')return json(response,200,await projectDesignStatus(pool,projectStatus[1]!));
     const agentStatus=/^\/v1\/agent-jobs\/([0-9a-f-]+)$/.exec(url.pathname);
     if(agentStatus && request.method==='GET')return json(response,200,agentReceipt(await agentJob(pool,agentStatus[1]!)));
     if (url.pathname === "/v1/projects" && request.method === "GET") {

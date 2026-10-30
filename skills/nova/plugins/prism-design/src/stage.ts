@@ -25,7 +25,7 @@ export async function execute(input:Input,context:PluginInvocationContext):Promi
 
       const created=await context.invoke("signal.wait",{operation:"create",resource:{type:"signal.wait",canonicalId:waitId},payload:{kind:"signal",signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt,request:{projectId:input.projectId}}});
       const wait=waitFrom(created,{issuerId:settings.issuerId,expiresAt,projectId:input.projectId});
-      await context.invoke("operator.request",{operation:"publish",resource:{type:"operator.target",canonicalId:settings.target},payload:{type:"prism.approval.requested",projectId:input.projectId,waitId:wait.waitId,architectureDigest:input.architectureArtifact.contentDigest,signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt}});
+      await context.invoke("operator.request",{operation:"publish",resource:{type:"operator.target",canonicalId:settings.target},payload:{type:"prism.approval.requested",projectId:input.projectId,waitId:wait.waitId,artifact:{architectureDigest:input.architectureArtifact.contentDigest},signalType:"prism.approval.resolved",authorizedIssuer:{type:"operator",id:settings.issuerId},expiresAt}});
       return {schemaVersion:"stage-result.v2",outcome:"wait",reason:{code:"prism_design.approval_pending",message:"Waiting for an approved Prism Baseline Bundle."},artifacts:[],wait};
     }
     const imported=verifyBaselineArchive(result,approved.bundleDigest,input.projectId);

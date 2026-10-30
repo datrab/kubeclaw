@@ -6,7 +6,7 @@ import { inTransaction, type Database, type Queryable } from '../storage/index.t
 import { agentSessionKey } from '../server/agent-session.ts';
 
 export type AgentJob = Record<string,unknown> & {
-  id:string; project_id:string; operation:'design-set'|'revise'; session_key:string;
+  id:string; attempt_number:number; project_id:string; operation:'design-set'|'revise'; session_key:string;
   request_digest:string; request:Record<string,unknown>; state:'accepted'|'running'|'completed'|'needs_nova'|'superseded';
   attempt_envelope:WorkerAttemptEnvelopeV2|null; fence:string|null; result:unknown; result_digest:string|null;
 };

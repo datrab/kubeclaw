@@ -8,7 +8,7 @@ function unavailable(unit:'milliseconds'|'bytes'|'processes') {
 }
 
 /** This is the local launcher profile, not the remote gateway/model engine or deterministic Prism engine. */
-export async function agentAttempt(job:{id:string;fence:string;expires_at:string|Date;request_digest:string;request:Record<string,unknown>},runnerId:string):Promise<WorkerAttemptEnvelopeV2> {
+export async function agentAttempt(job:{attempt_number?:number;id:string;fence:string;expires_at:string|Date;request_digest:string;request:Record<string,unknown>},runnerId:string):Promise<WorkerAttemptEnvelopeV2> {
   const files=['agent-process.ts','agent-attempt.ts','agent-job-runner.mjs','agent-prompt.mjs','preference-prompt.mjs'];
   const content=await Promise.all(files.map(async file=>({file,digest:sha256Text(await readFile(new URL(file,import.meta.url),'utf8'))})));
   const unsignedProfile={schemaVersion:'worker-profile.v2' as const,profileId:'prism-openclaw-launcher-v2',workerType:'prism-agent',coreContractId:'kubeclaw.pipeline-worker-core@2',
@@ -20,7 +20,7 @@ export async function agentAttempt(job:{id:string;fence:string;expires_at:string
   const expiresAt=new Date(job.expires_at).toISOString();const now=new Date().toISOString();
   const unsigned={schemaVersion:'worker-attempt-envelope.v2' as const,protocolVersion:'worker-protocol.v1' as const,
     pipelineRunId:`prism-${job.id}`,moduleId:null,gateId:null,planId:`prism-${job.id}`,nodeId:'openclaw-agent',executionId:job.id,
-    attemptId:job.fence,attemptNumber:1,claim:{schemaVersion:'attempt-claim.v1' as const,claimId:job.fence,attemptId:job.fence,generation:1,workerId:runnerId,claimedAt:now,expiresAt},profile,packages:[],grantedCapabilities:[...profile.capabilities],
+    attemptId:job.fence,attemptNumber:job.attempt_number ?? 1,claim:{schemaVersion:'attempt-claim.v1' as const,claimId:job.fence,attemptId:job.fence,generation:job.attempt_number ?? 1,workerId:runnerId,claimedAt:now,expiresAt},profile,packages:[],grantedCapabilities:[...profile.capabilities],
     limits:{timeoutMs:900_000,cleanupTimeoutMs:10_000,logBytes:1_048_576,resultBytes:1_048_576,evidenceBytes:2_097_152,evidenceFiles:2},
     resourceBudgets:{schemaVersion:'worker-resource-budgets.v1' as const,cpuTimeMs:{state:'unrequested' as const},maximumMemoryBytes:{state:'unrequested' as const},maximumProcesses:{state:'unrequested' as const}},
     inputs:[],operation:{contractId:'kubeclaw.prism-agent-launcher@1',inputSchemaId:'prism-agent-job.v1',inputSchemaDigest:sha256Digest({type:'object',required:['jobId','requestDigest','request']}),values:{jobId:job.id,requestDigest:job.request_digest,request:job.request as JsonValue}},

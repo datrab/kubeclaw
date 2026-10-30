@@ -105,3 +105,29 @@ test('PATH-T02-002 diagnostic: original stale tool callback makes no successor m
     assert.equal((await context.api(`/v1/agent/jobs/${first.id}`,undefined,headers)).value.job.result,null);
   }finally{await context.close();}
 });
+
+test('pipeline retry with a fresh transport key resumes the admitted round instead of creating another design action',async()=>{
+ const context=await setup();try{
+  const initial=await context.dispatch('pipeline-retry',1);
+  const retry=await context.api('/v1/dispatch',{request:initial.preferences.request},{...headers,'idempotency-key':'new-nova-attempt'});
+  assert.equal(retry.status,202,JSON.stringify(retry.value));
+  assert.equal(retry.value.preferences.generationId,initial.preferences.generationId);
+  assert.equal(retry.value.agent.jobId,initial.agent.jobId);
+  assert.equal((await context.db().query('SELECT id FROM prism.agent_job')).rows.length,1);
+  assert.equal((await context.db().query('SELECT id FROM prism.design_round')).rows.length,1);
+ }finally{await context.close();}
+});
+
+test('authenticated project status exposes stopped generation without requiring a design document',async()=>{
+ const context=await setup();try{
+  const admission=await context.dispatch('pending-status',1);const id=admission.result.projectId;
+  assert.equal((await context.api(`/v1/projects/${id}/status`)).status,422);
+  const operator=await context.session();
+  const waiting=await context.api(`/v1/projects/${id}/status`,undefined,operator.headers);
+  assert.equal(waiting.status,200);assert.equal(waiting.value.state,'accepted');assert.equal(waiting.value.documentId,null);
+  const job=await context.claim();
+  await context.api(`/v1/agent/jobs/${job.id}/finish`,{fence:job.fence,outcome:{state:'errored',error:'model auth unavailable'}},headers);
+  const stopped=await context.api(`/v1/projects/${id}/status`,undefined,operator.headers);
+  assert.equal(stopped.status,200);assert.equal(stopped.value.state,'needs_nova');assert.match(stopped.value.summary,/stopped/);
+ }finally{await context.close();}
+});
