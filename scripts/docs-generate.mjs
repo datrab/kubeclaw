@@ -505,7 +505,9 @@ ${generatedEnd()}
 function renderHelmValues(configurationValues, configurationSchemas, { inventoryPath = 'docs/generated/inventory/configuration-values.json', currentSelected = false } = {}) {
   const valueFiles = configurationValues.files;
   const rejectedApiProfiles = renderRejectedApiOutputProfiles(currentSelected ? discoverRejectedApiOutputProfiles(root) : configurationValues.rejectedApiOutputProfiles,(source,line)=>`[${literalText(source)}](${pinnedSourceUrl(source,line,line)})`,root);
-  const apiResourceSections = renderApiResourceReference(configurationValues.apiResources,
+  // The selected values artifact qualifies YAML inputs, not the global census
+  // of programmatic API producers. Keep that separate publication boundary intact.
+  const apiResourceSections = currentSelected ? null : renderApiResourceReference(configurationValues.apiResources,
     (source, line) => `[${literalText(source)}](${pinnedSourceUrl(source, line, line)})`, configurationValues.apiMetadataReferences, root);
   const collectionSchemaKey = (schema) => JSON.stringify([schema.authority, schema.authoritySha256, schema.apiVersion, schema.kind, schema.resolvedPath]);
   const collectionSchemaAnchor = (schema) => `api-collection-${createHash('sha256').update(collectionSchemaKey(schema)).digest('hex').slice(0, 16)}`;
@@ -706,11 +708,15 @@ ${fieldSections}
 
 ${rejectedApiProfiles}
 
-## Product API Field Reference
+${currentSelected ? `## API Scope
+
+This current reference covers the checked-in Helm and GitOps values listed above. It does not regenerate or qualify the separate inventory of programmatic API producers. For a selected value's receiving API, use its field explanation, pinned authority and collection contract below.
+` : `## Product API Field Reference
 
 This reference separates JSON decoding, API rules and the component that uses each field. Read the operation and related conditions before changing a value. List items and map values have their own field entries; their empty and null behavior can differ from the enclosing collection.
 
 ${apiResourceSections}
+`}
 
 ## Kubernetes API Collection Contracts
 
