@@ -9,6 +9,9 @@ RUN npm ci --include=dev --ignore-scripts --no-audit --no-fund \
 
 FROM ${NODE_BASE}
 USER root
+# These services execute Node directly; package managers are build-only tools.
+RUN rm -rf /usr/local/lib/node_modules /opt/yarn-* \
+ && rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg
 WORKDIR /app/prism
 COPY --from=build /build/skills/prism/dist-studio /app/prism/dist-studio
 COPY --from=build /build/skills/prism/server /app/prism/server

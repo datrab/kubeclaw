@@ -14,6 +14,10 @@ normale Deployments nicht mehr erforderlich.
 3. Nach erfolgreichem Lauf waehlt `Publish production deployment` die
    verifizierten Artefakte automatisch aus und schreibt Auswahl, fertige
    Kubernetes-Manifeste und Argo-Applications nach `main`.
+   Der Publisher ist fuer alle Runtime-Rollen freigeschaltet: Buster, Prism
+   (einschliesslich Studio) und Nova. Auch Prism-Releases benoetigen damit
+   keine manuelle Auswahl oder einen manuellen Argo-Sync. Herkunftspruefung
+   und Image-Scan bleiben vor jeder Veroeffentlichung verpflichtend.
 4. Argo synchronisiert die betroffenen Anwendungen. Bei byte-identischen
    Manifesten bleibt der bisherige unveraenderliche Anwendungspfad erhalten.
 

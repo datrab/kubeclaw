@@ -20,10 +20,12 @@ jobs:
     permissions:
       contents: write
       actions: read
+      packages: read
     env:
       GITHUB_TOKEN: ${{ github.token }}
-      # Current delivery authorization excludes Nova and Prism.
-      RUNTIME_PUBLICATION_SCOPE: buster
+      # Publish verified releases for Buster, Prism and Nova; unchanged roles
+      # retain their immutable application paths.
+      RUNTIME_PUBLICATION_SCOPE: all
       SOURCE_RUN_ID: ${{ github.event.workflow_run.id }}
       SOURCE_RUN_ATTEMPT: ${{ github.event.workflow_run.run_attempt }}
     steps:
@@ -47,10 +49,14 @@ jobs:
           GITOPS_RETAINED_BASELINE: ${{ steps.selection.outputs.retained_baseline }}
           BUNDLE_DIRECTORY: ${{ steps.selection.outputs.directory }}
           EXPORT_COMMAND: ${{ steps.selection.outputs.export_command }}
+          TRIVY_USERNAME: ${{ github.actor }}
+          TRIVY_PASSWORD: ${{ github.token }}
         run: |
           set -euo pipefail
           GITOPS_RETAINED_BASELINE= node scripts/updates/verify-release-source.mjs
           node scripts/updates/materialize-release.mjs --family=runtime
+          mapfile -t images < <(jq -r '.images[]' releases/runtime-images.json)
+          bash scripts/scan-runtime-images.sh "${images[@]}"
           case "$EXPORT_COMMAND" in export|export-buster) ;; *) exit 1 ;; esac
           node scripts/gitops-continuous.mjs "$EXPORT_COMMAND" "$BUNDLE_DIRECTORY"
           git config user.name 'github-actions[bot]'
