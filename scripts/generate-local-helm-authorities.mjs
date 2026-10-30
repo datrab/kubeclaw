@@ -15,6 +15,7 @@ import { apiFieldSchemaAuthority } from './docs-api-schema-authorities.mjs';
 
 const root = process.cwd();
 const checkOnly = process.argv.includes('--check');
+const helmValuesOnly = process.argv.includes('--helm-values-only');
 const outputPath = path.join(root, 'scripts/docs-local-helm-field-authorities.json');
 if (!fs.existsSync(outputPath)) throw new Error('exact local Helm authority registry is missing');
 const approvedRegistry = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
@@ -25,11 +26,13 @@ const candidate = spawnSync(process.execPath, [
   '--out-dir', candidateDirectory,
   '--allow-semantic-gaps',
   '--allow-local-helm-authority-maintenance',
+  ...(helmValuesOnly ? ['--helm-values-only'] : []),
 ], { cwd: root, encoding: 'utf8' });
 if (candidate.status !== 0) throw new Error(`candidate local Helm inventory failed\n${candidate.stdout}\n${candidate.stderr}`);
-const inventoryPath = path.join(candidateDirectory, 'configuration-values.json');
+const inventoryPath = path.join(candidateDirectory, helmValuesOnly ? 'configuration-helm-values.json' : 'configuration-values.json');
 const inventory = JSON.parse(fs.readFileSync(inventoryPath, 'utf8'));
-const runtimeInventory = JSON.parse(fs.readFileSync(path.join(candidateDirectory, 'configuration-runtime-inputs.json'), 'utf8'));
+const runtimeInventory = helmValuesOnly ? null
+  : JSON.parse(fs.readFileSync(path.join(candidateDirectory, 'configuration-runtime-inputs.json'), 'utf8'));
 const digest = (text) => crypto.createHash('sha256').update(text).digest('hex');
 const sourceDigest = (relative) => digest(fs.readFileSync(path.join(root, relative)));
 const local = inventory.files.flatMap((file) => file.documents.flatMap((document) => document.fields
@@ -222,6 +225,7 @@ const environmentEntry = (field) => {
   return entry && typeof entry.name === 'string' ? entry : null;
 };
 const runtimeEnvironmentContract = (field) => {
+  if (!runtimeInventory) return null; // No claim of renewed global runtime discovery.
   const entry = environmentEntry(field);
   if (!entry) return null;
   const contract = runtimeInventory.environment.find((item) => item.name === entry.name);
@@ -230,6 +234,24 @@ const runtimeEnvironmentContract = (field) => {
     && consumer.access !== 'kubernetes-env');
   return { entry, contract, runtimeReaders };
 };
+const currentRuntimeProofs = (proofs, field) => (proofs ?? []).map(proof => {
+  if (proof.kind === 'selected-image-runtime-boundary') return {
+    path: field.sourcePath, line: field.sourceLine, kind: proof.kind,
+    environment: environmentEntry(field)?.name ?? proof.environment,
+    authority: 'The selected chart transports this value into its declared container. This values-only maintenance reuses its qualified field contract; it makes no new global source-reader discovery or runtime-parsing claim.',
+  };
+  const lines = fs.readFileSync(path.join(root, proof.path), 'utf8').split('\n');
+  const sourceLine = lines[proof.line - 1];
+  assert(typeof sourceLine === 'string', `LOCAL_HELM_RUNTIME_PROOF_SOURCE_DRIFT: ${proof.path}:${proof.line}`);
+  if (proof.sourceLineSha256) {
+    assert.equal(digest(sourceLine), proof.sourceLineSha256,
+      `LOCAL_HELM_RUNTIME_PROOF_SOURCE_DRIFT: ${proof.path}:${proof.line}`);
+  } else {
+    assert(typeof proof.environment === 'string' && sourceLine.includes(proof.environment),
+      `LOCAL_HELM_RUNTIME_PROOF_SOURCE_DRIFT: ${proof.path}:${proof.line}; qualify its current reader`);
+  }
+  return {...proof, sourceLineSha256: digest(sourceLine)};
+});
 const helmControlFrames = (lines, targetLine, sourceLine) => {
   const frames = [];
   const applyTokens = (line, lineNumber, limit = line.length) => {
@@ -818,6 +840,7 @@ const data = {
   semanticPolicy: 'Evidence and selected baselines are refreshed automatically. Purpose, accepted values, empty behavior, impact, and failure text must exist as an explicit field contract before this command runs.',
   charts: {},
   files: {},
+  ...(helmValuesOnly ? { generationScope: 'Current selected Helm/YAML inputs only. Runtime proof reuse is line-verified and retains its qualified limits; no renewed global API-output or environment discovery.' } : {}),
 };
 for (const field of local) {
   const chartRoot = chartRootFor(field.sourcePath);
@@ -828,8 +851,9 @@ for (const field of local) {
   // the semantic source.  The generated registry always writes the quoted key,
   // so normal check mode cannot keep or recreate the ambiguous form.
   const profile = helmProfileBinding(field.sourcePath);
-  const localApproved = collectionContract(field) ?? approvedRegistry.files?.[field.sourcePath]?.fields?.[field.path];
-  const inherited = !localApproved && profile && [profile.semanticSource, `${chartRoot}/values.yaml`]
+  const ownRecord = approvedRegistry.files?.[field.sourcePath]?.fields?.[field.path];
+  const collection = collectionContract(field);
+  const inherited = !ownRecord && profile && [profile.semanticSource, `${chartRoot}/values.yaml`]
     .map(source => ({ source, declaration: approvedRegistry.files?.[source] }))
     .find(({ declaration }) => declaration?.chartRoot === chartRoot && declaration.fields?.[field.path]);
   if (inherited) {
@@ -843,7 +867,9 @@ for (const field of local) {
       }
     }
   }
-  const approved = localApproved ?? inherited?.declaration.fields[field.path] ?? null;
+  const existingProofs = ownRecord?.runtimeConsumerProof
+    ?? inherited?.declaration.fields[field.path]?.runtimeConsumerProof ?? [];
+  const approved = collection ?? ownRecord ?? inherited?.declaration.fields[field.path] ?? null;
   if (!approved) {
     throw new Error(`LOCAL_HELM_AUTHORITY_REQUIRED: ${field.sourcePath}#${field.path} has a render binding but no explicitly maintained semantic contract`);
   }
@@ -922,7 +948,7 @@ for (const field of local) {
         kind: 'selected-image-runtime-boundary',
         environment: environment.entry.name,
         authority: 'The repository proves injection but contains no non-Kubernetes reader. The selected container image owns parsing and validation.',
-      }]) : [],
+      }]) : helmValuesOnly ? currentRuntimeProofs(existingProofs, field) : [],
     consumerProof: field.consumers.map((consumer) => templateEvidence({
       ...consumer,
       sourcePath: field.sourcePath,

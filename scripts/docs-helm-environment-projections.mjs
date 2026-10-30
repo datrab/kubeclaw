@@ -8,6 +8,48 @@ import crypto from 'node:crypto';
 import assert from 'node:assert/strict';
 import YAML from 'yaml';
 
+// One source-shaped container command, not a general Helm evaluator. The
+// selected image owns this upstream program; no repository Node reader is
+// invented from its path or from a user's replacement argv.
+export function helmGatewayCommandProjection({file, text, sourceRoot, required = false}) {
+  if (file !== 'charts/kubeclaw/templates/deployment.yaml') return null;
+  const expression = 'command: {{- toYaml .Values.gateway.command | nindent 12 }}';
+  if (!text.includes('.Values.gateway.command')) {
+    assert(!required, 'HELM_GATEWAY_COMMAND_PROJECTION_SOURCE_DRIFT: gateway command removed');
+    return null;
+  }
+  assert.equal(text.split('.Values.gateway.command').length - 1, 1,
+    'HELM_GATEWAY_COMMAND_PROJECTION_SOURCE_DRIFT: command acquisition is not unique');
+  const offset = text.indexOf(expression);
+  assert(offset >= 0, 'HELM_GATEWAY_COMMAND_PROJECTION_SOURCE_DRIFT: command expression changed');
+  const frameStart = text.lastIndexOf('- name: kubeclaw', offset);
+  const frame = text.slice(frameStart, offset);
+  assert(frameStart >= 0 && /^- name: kubeclaw\n\s+image: \{\{ include "kubeclaw.image" \.Values.image \| quote \}\}\n\s+imagePullPolicy: \{\{ \.Values.image.pullPolicy \}\}\n\s+$/u.test(frame),
+    'HELM_GATEWAY_COMMAND_PROJECTION_SOURCE_DRIFT: selected container/image changed');
+  const valuesPath = 'charts/kubeclaw/values.yaml';
+  const valuesText = fs.readFileSync(path.join(sourceRoot, valuesPath), 'utf8');
+  const values = YAML.parseDocument(valuesText);
+  assert.equal(values.errors.length, 0, 'HELM_GATEWAY_COMMAND_PROJECTION_VALUES_INVALID');
+  const node = values.getIn(['gateway', 'command'], true);
+  const argv = node?.toJSON();
+  assert.deepEqual(argv, ['node', '/app/openclaw.mjs', 'gateway', '--bind', 'lan', '--port', '18789'],
+    'HELM_GATEWAY_COMMAND_PROJECTION_DEFAULT_DRIFT: qualify the new default argv');
+  const hash = bytes => crypto.createHash('sha256').update(bytes).digest('hex');
+  return {
+    kind: 'helm-gateway-container-command/default-v1', file,
+    commandKeyOffset: offset,
+    offsetUnit: 'UTF-16 code units in the unmodified parsed source text',
+    template: {line: text.slice(0, offset).split('\n').length, expression,
+      sourceSha256: hash(text), expressionSha256: hash(expression)},
+    valuesAuthority: {path: valuesPath, field: '$.gateway.command',
+      line: valuesText.slice(0, node.range[0]).split('\n').length, sourceSha256: hash(valuesText)},
+    defaultArgv: argv,
+    defaultCondition: 'Applies when merged values retain the shipped gateway.command list; later Helm values can replace that list.',
+    programBoundary: 'The selected gateway image owns /app/openclaw.mjs. This is a default process route, not acquisition of a checked-in Node source reader or runtime execution.',
+    overrideBoundary: 'A later replacement command is custom container argv. Preserve its receiver/precedence, but infer no Node interpreter or source reader from this template expression.',
+  };
+}
+
 const RECIPES = {
   "kubeclaw.demoReadyClientValidate": {
     "path": "charts/kubeclaw/templates/_demo-ready-client.tpl",

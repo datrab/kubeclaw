@@ -3,7 +3,7 @@
 const release = (role, chartRoot, overlayEnvironment) => Object.freeze({
   chartRoot, role, kind: 'generated-release-base',
   semanticSource: `my-values/${role}-values.yaml`,
-  producer: {path: 'scripts/updates/materialize-release.mjs', line: 38,
+  producer: {path: 'scripts/updates/materialize-release.mjs', line: 32, endLine: 51,
     authority: 'The selected release materializer reads the corresponding my-values profile, replaces selected image/code-bundle authorities, and writes this generated values base; operators do not edit it.'},
   selector: {path: 'scripts/deploy.sh', line: role === 'prism' ? 101 : role === 'prism-agent' ? 103 : 1290,
     authority: `The ${role} deploy/export path selects this release base before the optional ${overlayEnvironment} values file and later generated overrides.`},
@@ -12,7 +12,7 @@ const release = (role, chartRoot, overlayEnvironment) => Object.freeze({
 const production = (role, chartRoot, overlayEnvironment) => Object.freeze({
   chartRoot, role, kind: 'production-values-overlay',
   semanticSource: `my-values/${role}-values.yaml`,
-  producer: {path: 'gitops/production/config.json', line: 6,
+  producer: {path: 'gitops/production/config.json', line: {buster: 7, nova: 8, prism: 9}[role],
     authority: 'The checked-in production config selects this overlay; it is authored values, not a generated release base.'},
   selector: {path: 'scripts/gitops-continuous.mjs', line: 78,
     authority: `exportContinuousBundle resolves this configured overlay into ${overlayEnvironment} for bundle export; scripts/deploy.sh applies it after the selected ${role} release base, before generated overrides.`},

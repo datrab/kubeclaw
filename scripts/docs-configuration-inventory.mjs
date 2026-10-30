@@ -14,7 +14,7 @@ import ts from 'typescript';
 import { nativeSupervisorEnvironmentProducer } from './lib/docs-owned-process-environment.mjs';
 import YAML from 'yaml';
 import { shellHeredocCustody, shellCommandAcquisitions } from './docs-shell-source-custody.mjs';
-import { helmEnvironmentHelperProjectionPlans } from './docs-helm-environment-projections.mjs';
+import { helmEnvironmentHelperProjectionPlans, helmGatewayCommandProjection } from './docs-helm-environment-projections.mjs';
 import Ajv2020 from 'ajv/dist/2020.js';
 import addFormats from 'ajv-formats';
 import { assertYamlAuthorityRegistry, yamlAuthorityFile, yamlAuthorityPaths, yamlFieldAuthority } from './docs-yaml-field-authorities.mjs';
@@ -58,6 +58,7 @@ const outputDirectory = path.resolve(
 );
 
 const SOURCE_ROOTS = ['charts', 'examples', 'gitops', 'my-values', 'releases/values'];
+const acquiredContainerCommandRoutes = new Map();
 const RUNTIME_SCAN_ROOTS = ['scripts', 'my-values', 'charts', 'gitops', 'skills', 'docker', 'ops', 'tools', 'cmd', 'packaging', 'contracts/agent-observability/v1/src'];
 const TEXT_EXTENSIONS = new Set(['.js', '.mjs', '.cjs', '.ts', '.mts', '.cts', '.sh', '.py', '.go', '.c', '.h', '.yaml', '.yml']);
 const EXCLUDED_SEGMENTS = new Set(['node_modules', 'dist', 'build', 'coverage', '.git', 'tests', 'test', 'fixtures']);
@@ -1059,7 +1060,7 @@ function helmValueLeafCatalog() {
     }
     if (tokens.length) leaves.add(yamlFieldPath(tokens, { root: false }));
   };
-  for (const sourcePath of yamlSources().filter((item) => ['helm-values', 'helm-overlay', 'helm-example'].includes(yamlClass(item)))) {
+  for (const sourcePath of yamlSources().filter((item) => helmProfileBinding(item) || ['helm-values', 'helm-overlay', 'helm-example'].includes(yamlClass(item)))) {
     const chart = sourceChart(sourcePath);
     const leaves = result.get(chart) ?? new Set();
     for (const document of YAML.parseAllDocuments(read(sourcePath), { prettyErrors: false })) {
@@ -1959,8 +1960,13 @@ function yamlSemantics(context, exactPath, valueType) {
   if (extraContainerIndex !== undefined) {
     const selectedName = context.documentValue?.extraContainers?.[Number(extraContainerIndex)]?.name;
     if (selectedName === 'buster-v2-runtime') {
-      linkedHelmConsumers = linkedHelmConsumers.filter((consumer) => !(consumer.path === 'charts/kubeclaw/templates/deployment.yaml'
-        && consumer.line === 1527));
+      linkedHelmConsumers = linkedHelmConsumers.filter((consumer) => {
+        if (consumer.path !== 'charts/kubeclaw/templates/deployment.yaml'
+          || consumer.templateExpression !== '- {{ toYaml . | nindent 10 | trim }}') return true;
+        const sourceLines = read(consumer.path).split('\n');
+        return !(sourceLines[consumer.line - 2]?.trim() === '{{- else }}'
+          && sourceLines[consumer.line - 3]?.trim() === '- {{ include "kubeclaw.registryContainer" (dict "root" $ "container" .) | nindent 10 | trim }}');
+      });
     } else if (selectedName) {
       linkedHelmConsumers = linkedHelmConsumers.filter((consumer) => consumer.path !== 'charts/kubeclaw/templates/_registry-clients.tpl');
     }
@@ -2011,17 +2017,19 @@ function yamlSemantics(context, exactPath, valueType) {
     const conditionalSignal = matches.some((item) => item.conditionalSignal);
     const required = requiredSignal ? 'required' : conditionalSignal ? 'conditional' : 'optional';
     const overlay = context.sourceClass !== 'helm-values';
+    const profile = helmProfileBinding(context.sourcePath);
     return {
       required,
       requiredReason: requiredSignal ? 'A linked template uses Helm required/fail validation.' : conditionalSignal ? 'A linked template condition or default controls consumption.' : 'A linked template consumes the value without a required/fail assertion.',
-      defaultKind: overlay ? 'authored-override' : 'chart-default',
+      defaultKind: profile?.kind === 'generated-release-base' ? 'generated-release-selection'
+        : overlay ? 'authored-override' : 'chart-default',
       constraints: [...new Set(matches.flatMap((item) => item.constraints))],
       runtimeOwner: `Helm release rendered from ${context.chartRoot}`,
       consumers: [...new Map(matches.map((item) => [`${item.path}:${item.line}`, item])).values()],
-      precedence: overlay
+      precedence: profile ? [profile.precedence, `${profile.selector.path}:${profile.selector.line} ${profile.selector.authority}`, 'linked template rendering'] : overlay
         ? [`${context.chartRoot}/values.yaml chart default`, `${context.sourcePath} override`, 'later Helm -f/--set input when supplied', 'linked template rendering']
         : [`${context.sourcePath} chart default`, 'later Helm -f/--set input when supplied', 'linked template rendering'],
-      effectiveValueProof: `${context.sourcePath} -> ${matches[0].path}:${matches[0].line}`,
+      effectiveValueProof: `${context.sourcePath}${profile ? ` -> ${profile.selector.path}:${profile.selector.line}` : ''} -> ${matches[0].path}:${matches[0].line}`,
       changeImpact: 'Changes each linked rendered template field when this source wins Helm precedence.',
       failureMeaning: requiredSignal ? 'A missing or invalid value stops Helm rendering.' : 'A rejected render stops deployment; an accepted change can alter workload behavior or readiness.',
       blockerOwner: null,
@@ -2788,9 +2796,14 @@ function completeYamlCollection(row, context, value, fields) {
 // must not inherit another version's runtime claims merely because kind names
 // and field paths match.
 
-function buildApiResourceInventory(files) {
+function buildApiResourceInventory(files, { selectedYamlOnly = false } = {}) {
   const resources = new Map();
-  for (const context of discoverProductApiContexts(root)) {
+  const contexts = selectedYamlOnly
+    ? files.flatMap(file => file.documents.filter(document => document.resource)
+      .map(document => ({ apiVersion: document.resource.apiVersion, kind: document.resource.kind,
+        path: file.path, document: document.index, sourceDigest: file.sourceDigest })))
+    : discoverProductApiContexts(root);
+  for (const context of contexts) {
     const { apiVersion, kind, ...sourceContext } = context;
     const key = `${apiVersion}/${kind}`;
     if (!resources.has(key)) resources.set(key, { apiVersion, kind, sourceContexts: [] });
@@ -2804,7 +2817,7 @@ function buildApiResourceInventory(files) {
     });
 }
 
-function buildYamlInventory() {
+function buildYamlInventory({ selectedYamlOnly = false } = {}) {
   assertYamlAuthorityRegistry(root);
   if (!allowLocalHelmAuthorityMaintenance) assertLocalHelmAuthorityRegistry(root);
   const consumerMap = chartConsumers();
@@ -2869,7 +2882,11 @@ function buildYamlInventory() {
       };}),
     };
   });
-  const apiResources = buildApiResourceInventory(files);
+  const apiResources = buildApiResourceInventory(files, { selectedYamlOnly });
+  const gatewayCommandRoute = selectedYamlOnly ? helmGatewayCommandProjection({
+    file: 'charts/kubeclaw/templates/deployment.yaml',
+    text: read('charts/kubeclaw/templates/deployment.yaml'), sourceRoot: root, required: true,
+  }) : null;
   const allFields = files.flatMap((file) => file.documents.flatMap((document) => document.fields));
   for (const file of files) {
     const actualPaths = new Set(file.documents.flatMap((document) => document.fields)
@@ -2896,8 +2913,33 @@ function buildYamlInventory() {
         `CONFIG_YAML_DOTTED_KEY_FLATTENED: ${field.path} does not preserve literal key ${token}`);
     }
   }
-  assert.equal(dottedKeyLeaves.length, 112,
-    'CONFIG_YAML_DOTTED_KEY_COVERAGE: the checked-in dotted-key leaf set changed; inspect and classify every new or removed leaf');
+  // Compare complete identities with the actual selected YAML, not a historical
+  // fixed count. Replacing one dotted key with another must not pass either.
+  const expectedDottedPaths = [], actualDottedPaths = [];
+  const collectDotted = (value, tokens, prefix) => {
+    if (Array.isArray(value)) {
+      value.forEach((child, index) => collectDotted(child, [...tokens, index], prefix));
+    } else if (value !== null && typeof value === 'object') {
+      for (const [key, child] of Object.entries(value)) collectDotted(child, [...tokens, key], prefix);
+    } else if (tokens.some(token => typeof token === 'string' && token.includes('.'))) {
+      expectedDottedPaths.push(prefix + yamlFieldPath(tokens));
+    }
+  };
+  for (const file of files) {
+    const sourceDocuments = YAML.parseAllDocuments(read(file.path), {prettyErrors: false});
+    for (const document of file.documents) {
+      const prefix = `${file.path}#${document.index}:`;
+      collectDotted(sourceDocuments[document.index].toJS(), [], prefix);
+      for (const field of document.fields) {
+        if (!['object', 'array'].includes(field.type)
+          && yamlFieldPathTokens(field.path).some(token => typeof token === 'string' && token.includes('.'))) {
+          actualDottedPaths.push(prefix + field.path);
+        }
+      }
+    }
+  }
+  assert.deepEqual(actualDottedPaths.sort(), expectedDottedPaths.sort(),
+    'CONFIG_YAML_DOTTED_KEY_COVERAGE: selected-source literal key identity was omitted, added or flattened');
   for (const [sourcePath, exactPath] of [
     ['my-values/infra/argocd-values.yaml', '$.configs.cm["application.resourceTrackingMethod"]'],
     ['my-values/infra/argocd-values.yaml', '$.configs.params["server.insecure"]'],
@@ -2925,6 +2967,18 @@ function buildYamlInventory() {
   'CONFIG_GITOPS_OPS_CILIUM_PARENT_GATE: the parent-child truth table is missing');
   const busterFields = files.find((file) => file.path === 'my-values/buster-values.yaml')
     ?.documents.flatMap((document) => document.fields) ?? [];
+  const deploymentLines = read('charts/kubeclaw/templates/deployment.yaml').split('\n');
+  const registryLines = read('charts/kubeclaw/templates/_registry-clients.tpl').split('\n');
+  const registryCall = '- {{ include "kubeclaw.registryContainer" (dict "root" $ "container" .) | nindent 10 | trim }}';
+  const registryCallSites = deploymentLines.flatMap((line, index) => line.trim() === registryCall ? [index] : []);
+  assert.equal(registryCallSites.length, 1, 'CONFIG_BUSTER_REGISTRY_HELPER_CONSUMER: exact caller changed');
+  const registryCallIndex = registryCallSites[0];
+  assert.equal(deploymentLines[registryCallIndex - 2].trim(), '{{- range .Values.extraContainers }}');
+  assert.equal(deploymentLines[registryCallIndex - 1].trim(), '{{- if eq .name "buster-v2-runtime" }}');
+  assert.equal(deploymentLines[registryCallIndex + 1].trim(), '{{- else }}');
+  assert.equal(deploymentLines[registryCallIndex + 2].trim(), '- {{ toYaml . | nindent 10 | trim }}');
+  const registrySerializers = registryLines.flatMap((line, index) => line.trim() === '{{- toYaml $container -}}' ? [index + 1] : []);
+  assert.equal(registrySerializers.length, 1, 'CONFIG_BUSTER_REGISTRY_HELPER_CONSUMER: exact serializer changed');
   for (const fieldPath of [
     '$.extraContainers[0].securityContext.allowPrivilegeEscalation',
     '$.extraContainers[0].securityContext.privileged',
@@ -2933,11 +2987,12 @@ function buildYamlInventory() {
   ]) {
     const field = busterFields.find((item) => item.path === fieldPath);
     assert(field?.consumers.some((consumer) => consumer.path === 'charts/kubeclaw/templates/_registry-clients.tpl'
-      && consumer.line === 51 && consumer.helperCallProof?.path === 'charts/kubeclaw/templates/deployment.yaml'
-      && consumer.helperCallProof?.line === 1525),
+      && consumer.line === registrySerializers[0] && consumer.helperCallProof?.path === 'charts/kubeclaw/templates/deployment.yaml'
+      && consumer.helperCallProof?.helper === 'kubeclaw.registryContainer'
+      && consumer.helperCallProof?.line === registryCallIndex + 1),
     `CONFIG_BUSTER_REGISTRY_HELPER_CONSUMER: ${fieldPath} lacks its exact helper serialization path`);
     assert(!field.consumers.some((consumer) => consumer.path === 'charts/kubeclaw/templates/deployment.yaml'
-      && consumer.line === 1527),
+      && consumer.line === registryCallIndex + 3),
     `CONFIG_BUSTER_REGISTRY_HELPER_BRANCH: ${fieldPath} incorrectly cites the non-Buster else branch`);
   }
   const apiLeafFields = leafFields.filter((field) => field.meaning.status.startsWith('deployment-'));
@@ -2962,7 +3017,12 @@ function buildYamlInventory() {
   const authoredAuthorityStatuses = new Set([
     'embedded-payload-authority', 'external-chart-authority', 'external-chart-collection-authority', 'implementation-authority', 'local-helm-field-authority',
   ]);
-  let authoredAuthorityEvidenceCount = 0;
+  const authoredAuthorityEvidenceIdentities = [];
+  const expectedAuthoredAuthorityIdentities = files.flatMap(file => file.documents.flatMap(document => document.fields
+    .filter(field => !['object', 'array'].includes(field.type)
+      && !['inactive-profile', 'unused-field'].includes(field.meaning.status)
+      && (yamlFieldAuthority(file.path, field.path) || localHelmFieldAuthority(file.path, field.path)))
+    .map(field => `${file.path}#${document.index}:${field.path}`)));
   for (const file of files) for (const document of file.documents) {
     for (const field of document.fields.filter((item) => authoredAuthorityStatuses.has(item.meaning.status))) {
       assert(field.sourceLine >= 1 && field.meaning.evidence.includes(`${file.path}:${field.sourceLine}`),
@@ -2984,11 +3044,11 @@ function buildYamlInventory() {
       `CONFIG_YAML_SEMANTIC_CONTRACT_RANGE_MISSING: ${file.path}#${field.path}`);
       assert.equal(sha256(authorityLines.slice(contractEvidence.line - 1, contractEvidence.endLine).join('\n')), contractEvidence.sourceRangeSha256,
         `CONFIG_YAML_SEMANTIC_CONTRACT_RANGE_DRIFT: ${file.path}#${field.path}`);
-      if (!['object', 'array'].includes(field.type)) authoredAuthorityEvidenceCount += 1;
+      if (!['object', 'array'].includes(field.type)) authoredAuthorityEvidenceIdentities.push(`${file.path}#${document.index}:${field.path}`);
     }
   }
-  assert.equal(authoredAuthorityEvidenceCount, 1223,
-    'CONFIG_YAML_SEMANTIC_AUTHORITY_COVERAGE: all 418 authored YAML and 805 local Helm authorities need exact semantic source ranges');
+  assert.deepEqual(authoredAuthorityEvidenceIdentities.sort(), expectedAuthoredAuthorityIdentities.sort(),
+    'CONFIG_YAML_SEMANTIC_AUTHORITY_COVERAGE: current registered input identities must all retain exact semantic source ranges');
   assert.equal(apiLeafFields.length, leafFields.filter((field) => field.meaning.sourceLine !== undefined).length,
     'CONFIG_YAML_API_LEAF_LINE_DRIFT: every and only API leaves must carry an exact semantic source line');
   const unknownLeafConsumers = leafFields.filter((field) => field.consumers.some((consumer) => consumer === 'unknown')).length;
@@ -3031,6 +3091,10 @@ function buildYamlInventory() {
     generatedBy: 'scripts/docs-configuration-inventory.mjs',
     discovery: {
       roots: SOURCE_ROOTS,
+      ...(selectedYamlOnly ? {
+        scope: 'Complete selected Helm/YAML input family; executable program-output API and global environment discovery remain separate existing modes, not approved here.',
+        gatewayCommandRoute,
+      } : {}),
       apiProductScope: productScopeLimits,
       rule: 'all YAML below examples, gitops, my-values, and releases/values; chart root values.yaml and ci-values.yaml',
       apiOutputProducers: [...new Set(apiResources.flatMap(resource=>resource.sourceContexts.map(context=>context.producer??'authored-yaml')))].sort(),
@@ -3038,7 +3102,7 @@ function buildYamlInventory() {
     },
     files,
     apiResources,
-    rejectedApiOutputProfiles: discoverRejectedApiOutputProfiles(root),
+    rejectedApiOutputProfiles: selectedYamlOnly ? [] : discoverRejectedApiOutputProfiles(root),
     apiMetadataReferences: productMetadataReferences(apiResources),
     totals: {
       files: files.length,
@@ -7699,6 +7763,7 @@ function nodeShellPrograms(file, text, selectedScripts = new Set(), sourcePositi
 function acquiredNodeEnvironmentReads(file, text, kind = null) {
   const programs = [];
   if (['.yaml', '.yml'].includes(path.extname(file))) {
+    const gatewayCommand = helmGatewayCommandProjection({file, text, sourceRoot: root});
     const masked = text.replace(/\{\{[\s\S]*?\}\}/gu, value => value.replace(/[^\n]/gu, ' '));
     const documents = YAML.parseAllDocuments(masked, { keepSourceTokens: true, uniqueKeys: false });
     const shellBodies = []; const selectedScripts = new Set();
@@ -7739,6 +7804,10 @@ function acquiredNodeEnvironmentReads(file, text, kind = null) {
       if (node !== document.contents && owner !== 'exec' && !container) return;
       const command = node.items.find(pair => pair.key?.value === 'command');
       if (!command) return;
+      if (gatewayCommand && command.key.range?.[0] === gatewayCommand.commandKeyOffset) {
+        acquiredContainerCommandRoutes.set(file, gatewayCommand);
+        return; // Default image-owned route recorded above; not an empty-reader claim.
+      }
       const args = node.items.find(pair => pair.key?.value === 'args');
       const items = YAML.isSeq(command.value) ? [...command.value.items, ...(YAML.isSeq(args?.value) ? args.value.items : [])] : [command.value];
       const values = items.map(item => item?.value);
@@ -9748,6 +9817,7 @@ function buildRuntimeInputInventory(yamlInventory, { nativeSupervisorOnly = fals
     secrets: secrets.sort((a, b) => a.path.localeCompare(b.path) || String(a.name).localeCompare(String(b.name)) || String(a.key ?? '').localeCompare(String(b.key ?? ''))),
     derivedValues: derivedValues.sort((a, b) => a.name.localeCompare(b.name) || a.path.localeCompare(b.path)),
     configurationConsumerSources,
+    containerCommandRoutes: [...acquiredContainerCommandRoutes.values()],
     precedenceRules: {
       helm: [
         'chart values.yaml supplies the base value',
@@ -10208,6 +10278,9 @@ if (argv.includes('--describe-discovery')) {
 }
 
 export function buildConfigurationInventories() {
+  if (argv.includes('--helm-values-only')) return new Map([
+    ['configuration-helm-values.json', buildYamlInventory({ selectedYamlOnly: true })],
+  ]);
   if (argv.includes('--runtime-only')) return new Map([['configuration-runtime-inputs.json', buildRuntimeInputInventory({ files: [] })]]);
   if (argv.includes('--schemas-only')) return new Map([['configuration-schemas.json', buildSchemaInventory()]]);
   const yaml = buildYamlInventory();
