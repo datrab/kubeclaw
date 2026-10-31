@@ -711,9 +711,11 @@ function App() {
 
         {quality && (
           <section aria-label="Design quality">
-            <h2>Prototyp-Prüfung: {quality.status==='ready'?'keine offenen Hinweise':quality.status==='blocked'?'Fehler beheben':'Hinweise prüfen'}</h2><p>Prüft Funktionen und Aufbau, nicht deinen gestalterischen Geschmack. Häkchen bestätigen nur, dass du den jeweiligen Hinweis geprüft hast.</p>
+            <h2>Prototyp-Prüfung: {quality.status==='ready'?'keine offenen Hinweise':quality.status==='blocked'?'Fehler beheben':'Hinweise prüfen'}</h2><p>Prüft Funktionen und Aufbau, nicht deinen gestalterischen Geschmack. Mit „Als geprüft markieren“ bestätigst du nur, dass du einen Hinweis gelesen hast. Das repariert keine Funktion und bestätigt nicht den Entwurf.</p>
+            {quality.findings.some(finding=>finding.level==='review') && <p role="status">{quality.findings.filter(finding=>finding.level==='review'&&acceptedWarnings.includes(finding.id)).length} von {quality.findings.filter(finding=>finding.level==='review').length} Hinweisen als geprüft markiert. Nur für diese Prüfung; keine Designauswahl und keine Vorliebe gespeichert.</p>}
+            {quality.findings.length>0 && <p>Fehlende Aktionen kannst du im Prism-Chat mit dem Design-Agenten klären. Nach einer Änderung erneut „Prototyp prüfen“ wählen — erst dann wird neu geprüft, ob der Hinweis behoben ist.</p>}
             {quality.findings.length === 0 ? (
-              <p>No findings.</p>
+              <p>Keine Hinweise.</p>
             ) : (
               quality.findings.map((finding) => (
                 <label key={finding.id}>
@@ -732,7 +734,7 @@ function App() {
                       )
                     }
                   />
-                  <strong>{finding.level==='review'?'Bitte prüfen':finding.level==='blocking'?'Fehler':'Hinweis'}</strong> {finding.message==='An interactive action is not connected to a flow.'?'Für dieses Bedienelement ist noch keine Aktion oder Navigation hinterlegt.':finding.message}
+                  <strong>{finding.level==='review'?(acceptedWarnings.includes(finding.id)?'Geprüft — nicht behoben':'Als geprüft markieren'):finding.level==='blocking'?'Fehler':'Hinweis'}</strong> {finding.message==='An interactive action is not connected to a flow.'?'Für dieses Bedienelement ist noch keine Aktion oder Navigation hinterlegt.':finding.message}
                   {finding.target ? ` · ${findingTarget(finding.target)}` : ""}
                 </label>
               ))

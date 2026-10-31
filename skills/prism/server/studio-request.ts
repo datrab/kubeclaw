@@ -126,6 +126,7 @@ async function staticFile(url: URL, response: ServerResponse, options: StudioOpt
     throw error;
   }
   try {
+    response.setHeader('cache-control', 'no-cache');
     response.setHeader('content-type', types[extname(file)] ?? 'application/octet-stream');
     response.setHeader('content-security-policy', studioContentSecurityPolicy);
     await pipeline(handle.createReadStream(), response);

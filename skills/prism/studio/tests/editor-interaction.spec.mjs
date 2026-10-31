@@ -9,11 +9,11 @@ import fixture from '../../../../contracts/prism/v1/fixtures/minimal-web.json' w
 import { applyOperation } from '../../domain/index.ts';
 
 // Actual production App + canonical operations. API fixtures do not prove live ingress/model execution.
-let server, origin, document, operations, feedback, rejectSave, failFeedback;
+let server, origin, document, operations, feedback, rejectSave, failFeedback, qualityFindings;
 function reset() {
   document = structuredClone(fixture);
   document.views.home.root.children.push(...['alpha','beta','gamma'].map(id => ({ id, type:'text', props:{content:id[0].toUpperCase()+id.slice(1)} })));
-  operations=[]; feedback=[]; rejectSave=false; failFeedback=false;
+  qualityFindings=[]; operations=[]; feedback=[]; rejectSave=false; failFeedback=false;
 }
 test.beforeAll(async()=>{
   const bundle=fileURLToPath(new URL('../../dist-studio/',import.meta.url));
@@ -34,7 +34,7 @@ test.beforeAll(async()=>{
         if(rejectSave){reply(409,{error:'Revision conflict'});return;}
         try{document=applyOperation(document,input);operations.push(input);reply(200,document);}catch(error){reply(409,{error:error.message});}return;
       }
-      if(input.operation==='evaluate'){reply(200,{specialistResult:{values:{status:'passed',findings:[]}}});return;}
+      if(input.operation==='evaluate'){reply(200,{specialistResult:{values:{status:'passed',findings:qualityFindings}}});return;}
       feedback.push(input);
       if(failFeedback){failFeedback=false;reply(503,{error:'Feedback connection interrupted'});return;}
       document=applyOperation(document,{type:'node.props.set',baseRevision:input.baseRevision,nodeId:'title',props:{content:'Reviewed layout'}});
@@ -72,6 +72,25 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
       await page.mouse.move(from.x,from.y);await page.mouse.down();await page.mouse.move(to.x,to.y,{steps:8});await page.mouse.up();
     }
   }
+  test('review checkboxes acknowledge a finding without repairing or selecting a design',async({page})=>{
+    qualityFindings=[{id:'missing-action',level:'review',message:'An interactive action is not connected to a flow.',target:'alpha'}];
+    const writes=[];page.on('request',request=>{if(request.method()==='POST')writes.push(new URL(request.url()).pathname);});
+    await page.goto(`${origin}/?project=project&document=demo&mode=edit`);
+    await page.getByRole('button',{name:'Prototyp prüfen',exact:true}).click();
+    const report=page.locator('.workspace').getByRole('region',{name:'Design quality'});
+    await expect(report.getByRole('status')).toContainText('0 von 1');
+    await report.getByRole('checkbox').check();
+    await expect(report.getByRole('status')).toContainText('1 von 1');
+    await expect(report).toContainText('Geprüft — nicht behoben');
+    await expect(report).toContainText('Für dieses Bedienelement ist noch keine Aktion');
+    expect(writes).toEqual(['/v1/session','/v1/documents/demo/engine']);
+    await report.getByRole('checkbox').uncheck();
+    await expect(report.getByRole('status')).toContainText('0 von 1');
+    await report.getByRole('checkbox').check();
+    await page.getByRole('button',{name:'Prototyp prüfen',exact:true}).click();
+    await expect(report.getByRole('checkbox')).not.toBeChecked();
+    await expect(report.getByRole('status')).toContainText('0 von 1');
+  });
   test('project brief stays secondary and viewport controls resize both editing and preview canvases',async({page})=>{
     const alltag=structuredClone(document.views.home);
     const focus=structuredClone(alltag);focus.title='Tagesfokus';focus.root.children[0].props.content='Fokusansicht';

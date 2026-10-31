@@ -55,6 +55,7 @@ test('actual Studio survives refused Control and malformed URL with explicit res
   assert.equal(failed.status, 502);
   const error = await failed.json();
   assert.equal(error.error.message, 'PRISM_STUDIO_UPSTREAM_FAILED');
+  const html=await fetch(app.url); assert.equal(html.headers.get('cache-control'),'no-cache');
   assert.match(JSON.stringify(error), /ECONNREFUSED/u);
   await app.healthy();
   const malformed = await fetch(`${app.url}/%E0%A4%A`);
