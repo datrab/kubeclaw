@@ -4,8 +4,34 @@ import test from 'node:test';
 import yaml from 'js-yaml';
 import {platformServices} from '../../../scripts/platform-services.mjs';
 import {requestHouseholdSync} from '../../../gitops/platform/familyclaw-initialization/argo-sync.mjs';
+import {ensureRuntimeConfiguration} from '../../../gitops/platform/familyclaw-initialization/runtime-configuration.mjs';
 
 const resources = yaml.loadAll(fs.readFileSync('gitops/platform/familyclaw-initialization/resources.yaml', 'utf8'));
+test('API configuration upgrade preserves the immutable seed and original configuration and refuses drift', () => {
+  const source = {metadata: {labels: {'app.kubernetes.io/managed-by': 'familyclaw-initializer'}},
+    data: {'core.json': JSON.stringify({instance: {householdId: 'test-household'}, paperless: {endpoint: 'http://paperless/'}}),
+      'agent.json': '{"private-principal":"unchanged"}', 'http.json': '{"private-origin":"unchanged"}'}};
+  const before = JSON.stringify(source);
+  let projection;
+  let creates = 0;
+  const client = {
+    get(kind, name) {
+      assert.equal(kind, 'ConfigMap');
+      return name === 'familyclaw-configuration' ? structuredClone(source) : projection;
+    },
+    create(value) {creates++; projection = structuredClone(value); return true;},
+  };
+  const normalize = value => value.replace(/\/$/u, '') + '/api/';
+  assert.equal(ensureRuntimeConfiguration(client, normalize).runtimeConfigurationCreated, true);
+  assert.equal(JSON.parse(projection.data['core.json']).paperless.endpoint, 'http://paperless/api/');
+  assert.equal(projection.data['agent.json'], source.data['agent.json']);
+  assert.equal(JSON.stringify(source), before);
+  assert.equal(ensureRuntimeConfiguration(client, normalize).runtimeConfigurationPreserved, true);
+  assert.equal(creates, 1);
+  projection.data['core.json'] = '{}';
+  assert.throws(() => ensureRuntimeConfiguration(client, normalize), /refusing overwrite/u);
+  assert.equal(creates, 1);
+});
 test('a superseded in-progress sync is terminated before requesting the fixed revision without prune', async () => {
   const patches = [];
   let reads = 0;

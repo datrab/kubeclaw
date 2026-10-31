@@ -8,3 +8,4 @@ configMapGenerator:
     files:
       - run.mjs
       - argo-sync.mjs
+      - runtime-configuration.mjs
