@@ -1,5 +1,13 @@
 # FamilyClaw Argo registration
 
+The first live rollout was verified on 31 October 2026: Argo `Synced/Healthy`,
+Core/database/Firefly/OpenClaw each ready with zero container restarts, migration
+completed, all four claims bound. Core authenticated to the existing Paperless
+installation and passed MCP search, exact-revision document read and original
+PDF retrieval. Native OpenClaw `mcp probe familyclaw` registered all four tools.
+See [the sanitized live checks](familyclaw-deployment-checks-20261031.json).
+Model/subscription login and optional private channels remain onboarding tasks.
+
 `gitops/production/household-applications.yaml` maintains the separate FamilyClaw
 AppProject and manual Application. The Application reads `datrab/Familyclaw`,
 branch `main`, path `deploy/helm/family-stack` directly. The operator configures

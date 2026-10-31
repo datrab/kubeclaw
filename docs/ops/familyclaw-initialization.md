@@ -28,6 +28,17 @@ Document Added workflow for future document view access. Existing owners,
 documents, permissions and workflows are preserved. The function also generates
 database TLS bound to the household DNS name.
 
+After assigning access to the existing collection, rebuild the Paperless search
+index under its service user so the new view grants are reflected in search:
+
+```bash
+s6-setuidgid paperless python3 manage.py document_index reindex --no-progress-bar --heap-size-mb 128
+```
+
+Run this inside the existing Paperless container from its application directory,
+retain logs privately, and check completion before testing document search. Do
+not run indexing as root or use `--recreate` for this permission update.
+
 The helper emits only counts and an AES-GCM/RSA-OAEP encrypted envelope. Transfer
 that ciphertext to the waiting Job using the authorized pod exec path; write a
 temporary file then rename it atomically to `envelope.json`. No plaintext token,
