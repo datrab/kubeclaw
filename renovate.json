@@ -590,6 +590,45 @@
         "\"litellmProduction\": \\{\\s*\"image\": \"(?<depName>[^\"@]+?):(?<currentValue>[^\"@]+)@(?<currentDigest>sha256:[a-f0-9]{64})\""
       ],
       "datasourceTemplate": "docker"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"BUILDKIT_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "moby/buildkit",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"ROOTLESSKIT_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "rootless-containers/rootlesskit",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
+    },
+    {
+      "customType": "regex",
+      "managerFilePatterns": [
+        "/^versions\\.json$/"
+      ],
+      "matchStrings": [
+        "\"RUNC_VERSION\": \"(?<currentValue>[0-9][^\"\\n]*)\""
+      ],
+      "depNameTemplate": "opencontainers/runc",
+      "datasourceTemplate": "github-releases",
+      "extractVersionTemplate": "^v?(?<version>.+)$",
+      "versioningTemplate": "semver"
     }
   ],
   "timezone": "Etc/UTC",
