@@ -1,0 +1,13 @@
+{
+  "start": "2026-10-31T22:47:00.822125+00:00",
+  "end": "2026-10-31T22:48:04.251041+00:00",
+  "elapsedSeconds": 63.42894968402106,
+  "exitCode": 0,
+  "argv": [
+    "node",
+    "scripts/check-ap09-acceptance-contract.mjs"
+  ],
+  "sourceRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+  "newGates": [],
+  "newRequirements": []
+}

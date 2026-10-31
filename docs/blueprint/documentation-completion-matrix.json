@@ -387,7 +387,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -640,6 +640,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -1343,7 +1348,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09.2-ready-topics-20261020",
@@ -3137,7 +3151,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -3392,6 +3406,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -4232,7 +4251,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-reader-operators-20261020",
@@ -4737,7 +4765,7 @@
     },
     {
       "id": "AP09-reader-workflows-20261020",
-      "revision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -4816,6 +4844,11 @@
           "command": "Actual original node scripts/docs-publication.mjs build and four native docs-reader checks: artifact, search, source-links, source-previews (Reader34087521)",
           "exitCode": 0,
           "observation": "Operate adds a narrower cluster-diagnostic route and independent recovery. Accepted wait/signal/worker/Buster workflow semantics remain; no missing executed worked exercise becomes passed. Current build177pages,241outputdigests,40885localtargets; search177pages/12questions;435Sourceboxes/2000exactexcerpts. All authored pages/shared renderer outputs unchanged6250→3408; exact2scripts-tree pageRecordbindings checked. Refs/governance6250 and bounded prior browser observations reused, not relabelled fresh. Prior summary/limits/checks remain historical where superseded; no wider original-scope promotion."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -5070,11 +5103,20 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
+      },
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -5402,6 +5444,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -6124,7 +6171,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-reviewed-configuration-20261020",
@@ -14299,7 +14355,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -14405,6 +14461,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -14620,7 +14681,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-ops-mcp-complete-contract-20261021",
@@ -15975,7 +16045,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -16454,6 +16524,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -17587,7 +17662,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-specialists-whole-gate-20261021",
@@ -19353,7 +19437,7 @@
     },
     {
       "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root documentation coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 plugin-mechanisms whole original MNT obligations; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [],
@@ -19965,6 +20049,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -20320,7 +20409,16 @@
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite aggregate31 Source/Reader/Quality preservation; original summary/limits/historical checks and accepted membership unchanged."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-litellm-complete-data-contract-20261021",
@@ -21698,7 +21796,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -22099,6 +22197,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -22731,11 +22834,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "verdict": "PASS",
@@ -23411,6 +23523,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "limits": [
@@ -25254,7 +25371,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-search-reader-gate-20261021",
@@ -27781,7 +27907,7 @@
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "verdict": "PASS",
@@ -27897,6 +28023,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "limits": [
@@ -28278,7 +28409,16 @@
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
         }
       ],
-      "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab"
+      "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
@@ -36922,7 +37062,7 @@
       }
     },
     {
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -37016,6 +37156,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "summary": "Whole supported operator plugin task now follows exact roots/trust/package identities,provider/grant/config selection,compile admission versus readiness and actual result,stopped-writer preservation before audit,drain,exclusive same-ID replacement roots,old pinned bytes/state and surface-specific removal limits. Reuses independently accepted OPL002/003/004;fresh existing maintained activation/removal path supports concrete local behavior without claiming general install/remove CLI.",
@@ -37227,7 +37372,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "revision": "a1f1a55a2325ffb85822f2e9c02255e58373e8ce",
@@ -40028,7 +40182,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -40216,6 +40370,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -40772,11 +40931,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -41271,6 +41439,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -42545,7 +42718,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
@@ -43391,7 +43573,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -43905,6 +44087,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -44827,11 +45014,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -45271,6 +45467,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -46021,7 +46222,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A910-04-whole-sdk-export-semantics-20261022",
@@ -48325,7 +48535,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -48632,6 +48842,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -49224,11 +49439,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-whole-extension-guides-A91013-20261023",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra high P2 whole-extension source/content/closure reviewer",
       "gateIds": [
@@ -49412,6 +49636,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -49628,7 +49857,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "pr13-a91005-complete-package-capture-20261024",
@@ -50690,7 +50928,7 @@
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -50874,6 +51112,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -51187,7 +51430,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A913-09-compact-current-closeout-20261025",
@@ -51635,7 +51887,7 @@
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -52056,6 +52308,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -52488,7 +52745,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "QUA-006-fresh-independent-technical-reader-20261027",
@@ -53622,7 +53888,7 @@
       ]
     },
     {
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -54066,6 +54332,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -54517,10 +54788,19 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -54964,6 +55244,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -55415,7 +55700,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "QUA-003-whole-significant-decision-rationale-20261027",
@@ -55553,7 +55847,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -55978,6 +56272,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -56427,11 +56726,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -57238,6 +57546,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -57546,11 +57859,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -58057,6 +58379,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -58265,7 +58592,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
@@ -58856,7 +59192,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -59088,6 +59424,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -59271,7 +59612,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
@@ -59473,7 +59823,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -59760,6 +60110,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -59905,11 +60260,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -60229,6 +60593,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -60389,11 +60758,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -60663,6 +61041,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -60802,11 +61185,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -62013,6 +62405,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -62163,11 +62560,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -62984,6 +63390,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -63068,11 +63479,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63612,6 +64032,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -63695,11 +64120,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "MNT-005-common-source-bound-error-catalogue-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64059,6 +64493,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -64170,11 +64609,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64569,6 +65017,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -64654,11 +65107,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64818,6 +65280,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -64899,11 +65366,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65064,6 +65540,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -65151,11 +65632,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65528,6 +66018,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -65639,11 +66134,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66089,6 +66593,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -66215,11 +66724,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "MNT-004-whole-source-owned-cli-reference-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -67513,6 +68031,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -67619,11 +68142,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -67793,6 +68325,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -67866,11 +68403,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A91306-QUA002-original-controlled-language-whole-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova /root retained sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
       "gateIds": [
@@ -68151,6 +68697,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -68222,11 +68773,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A911-05-whole-owned-diagnostic-reference-20261030",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "Nova sole integration owner; existing diagnostic documentation authors",
       "reviewer": "Independent Codex gpt-5.6-terra/high whole original A911-05 content assessor, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; nonauthor, bounded qualified REF005/MNT005 reuse",
       "gateIds": [
@@ -68505,6 +69065,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -68554,7 +69119,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "CFG011-REF012-whole-complete-environment-secrets-20261030",
@@ -68666,7 +69240,7 @@
     },
     {
       "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/ref003_fresh_reader",
       "gateIds": [],
@@ -68810,6 +69384,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -68859,7 +69438,16 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "REF004-whole-supported-schemas-constraints-defaults-20261031",
@@ -68964,7 +69552,7 @@
     },
     {
       "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/mnt003_fresh_reader",
       "gateIds": [],
@@ -69119,6 +69707,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -69154,11 +69747,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent restricted practical Reader /root/gov_mnt_practical_reader",
       "gateIds": [],
@@ -69213,6 +69815,11 @@
           "command": "Restricted practical Reader required publication baseline, selected generated-summary mutation, mechanical refusal, documented owner restoration and final checks",
           "exitCode": 0,
           "observation": "Actual full terminal participant evidence only. Existing copied dependencies and canonical ignored contract generation, NOT fresh installation or live product execution."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -69246,11 +69853,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
       "gateIds": [
@@ -69288,6 +69904,11 @@
           "command": "node scripts/docs-governance.mjs --check",
           "exitCode": 0,
           "observation": "Actual current d9cbce88 command: documentation governance passed (184 pages mapped). Existing applicable original source/orphan/inverse/Reader evidence is independently adjudicated in the original-gate decision, not relabelled as fresh execution."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -69313,11 +69934,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -70037,6 +70667,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual complete current d9cbce88 build. Complete independent topic/content judgments and affected correction checks are separately reused at their original scopes, not relabelled as a fresh full content review."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -70060,11 +70695,20 @@
           "companionEvidence": "docs/blueprint/acceptance-evidence/qua010-finite-controls-config-and-metadata-consolidation-20261031/qua010-governance-map-publication-companion-20261031.json",
           "scope": "Exact independently qualified code, event/schema hash custody, native CLI/assignment/map successor and sole map asset hash. Original Source/Reader/Quality and all limits retained verbatim. Actual normal supported comparison, generation, governance and current publication evidence; no standalone CLI --check replay, fresh historical reader/runtime exercise, default global API success or blanket new review."
         }
-      ]
+      ],
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -70731,6 +71375,11 @@
           "command": "node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check --out-dir /home/node/.openclaw/workspace/tmp/qua010-config-prospective-current-20261031",
           "exitCode": 0,
           "observation": "Actual same maintained Source and selected YAML/schema/runtime composition baseline0 and exact restoration0, expected stale byte refusal1, plus actual four root outputs byte-equal to tested outputs. Receipt captures commands/timings/hashes; completed scratch was removed. Default global API failure and earlier native negatives retained; not relabelled as default-global success."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -70744,11 +71393,20 @@
         "Earlier failed default global API acquisition, controller/fixture failures, original review limits and failed publication companion attempt remain retained. Native CLI model generated by actual maintained producer with exact locked tools and byte-joined output, not falsely labelled a fresh standalone CLI --check."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native non-author /root/qua010_execution_path",
       "gateIds": [
@@ -70857,6 +71515,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual full clean 5390bc45224b9cff0205f499e6b4f82690a42bbb publication build; prior failed46.38s map-asset companion build retained, not rewritten."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -70869,11 +71532,20 @@
         "Prior independently reviewed258accepted/3NOT_READY metadata finding snapshot retained in its report; one separately evidenced original QUA-010 PASS changes current totals to259accepted/2NOT_READY. Gate bookkeeping is not a global all-gates or operational acceptance."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "QUA010-A9814-A91111-A91308-original-maintainability-and-distinct-drift-path-join-20261031",
-      "revision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author documentation and native-helper final reviewer /root/qua010_execution_path",
       "gateIds": [
@@ -70936,6 +71608,11 @@
           "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
           "exitCode": 0,
           "observation": "Actual current5390 coherent artifact check0 in32.39s. Earlier wrong wrapper subcommand failure retained, not a failed artifact relabelled."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
         }
       ],
       "review": {
@@ -70950,7 +71627,16 @@
         "No independent human screenreader/operator participant acceptance or AP10 parity/deletion approval. PUB-007 and QUA-007 remain unmet."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "scopePreservationPluginLifecycle20261031": {
+        "previousReviewedRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
+        "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+        "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "QUA007-independent-actual-operator-six-facets-20261031",
@@ -116450,5 +117136,14 @@
     "currentNativeResults": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/current-native-results.json",
     "nextAction": "Complete reviewed finite top-level script output-purpose correction in isolated worktree, retaining raw UNKNOWN and unexecuted API/runtime boundaries.",
     "additionalHistoricalReaderRecordReview": "docs/blueprint/acceptance-evidence/source-doc-join-20261022/additional-four-reader-preservation.json"
+  },
+  "pluginLifecycleSourceCheckpoint20261031": {
+    "sourceRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+    "evidence": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
+    "preservedExistingRecords": 49,
+    "newAcceptedGates": [],
+    "newAcceptedRequirements": [],
+    "freshPluginTask": "Still open; publicSource prerequisite failed before publication. No retroactive PASS.",
+    "artifactSourceNotFinalMetadataCommit": true
   }
 }

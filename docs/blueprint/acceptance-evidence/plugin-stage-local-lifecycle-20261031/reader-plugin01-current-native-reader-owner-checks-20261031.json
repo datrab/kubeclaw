@@ -1,0 +1,58 @@
+{
+  "sourceRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+  "scope": "Standard owning checks of genuinely new currentartifact; not unchanged source/topic review or new runtime/human acceptance",
+  "results": [
+    {
+      "name": "source-links",
+      "start": "2026-10-31T22:41:31.709888+00:00",
+      "end": "2026-10-31T22:46:06.992803+00:00",
+      "elapsedSeconds": 275.28294140996877,
+      "exitCode": 0,
+      "argv": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-source-links.mjs"
+      ]
+    },
+    {
+      "name": "source-previews",
+      "start": "2026-10-31T22:41:31.710057+00:00",
+      "end": "2026-10-31T22:42:12.760461+00:00",
+      "elapsedSeconds": 41.050423541106284,
+      "exitCode": 0,
+      "argv": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-source-previews.mjs"
+      ]
+    },
+    {
+      "name": "search",
+      "start": "2026-10-31T22:42:12.760515+00:00",
+      "end": "2026-10-31T22:42:32.241140+00:00",
+      "elapsedSeconds": 19.480645979987457,
+      "exitCode": 0,
+      "argv": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-search.mjs"
+      ]
+    },
+    {
+      "name": "diagrams",
+      "start": "2026-10-31T22:42:32.241197+00:00",
+      "end": "2026-10-31T22:42:54.489961+00:00",
+      "elapsedSeconds": 22.24878375302069,
+      "exitCode": 0,
+      "argv": [
+        "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+        "node",
+        "--max-old-space-size=4096",
+        "scripts/docs-reader/check-diagrams.mjs"
+      ]
+    }
+  ]
+}

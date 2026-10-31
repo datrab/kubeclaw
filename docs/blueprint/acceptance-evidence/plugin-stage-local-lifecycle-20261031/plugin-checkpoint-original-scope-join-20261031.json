@@ -1,0 +1,361 @@
+{
+  "status": "INDEPENDENT_ORIGINAL_SCOPE_PRESERVATION_JOIN_CONDITIONAL_CURRENT_DELIVERY",
+  "scope": "Read-only finite existing PASS preservation join, not authoring, new participant, whole-corpus review, new acceptance or fresh execution. Root alone integrates.",
+  "source": {
+    "local": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+    "remoteBaseline": "1b77a655",
+    "guideSha256": "31ce4e5bb6f05d51eff25bae63c2052e72540f8adafec46efc03c1bae697652b",
+    "claimsSha256": "e2e9217c75e738b369ff8f4e9631f09fb262ce809600ae489ea0c95c0bc5ebb4"
+  },
+  "decision": "Yes: semantic Source/Reader/Quality originals may be retained at their exact accepted scope after remaining actual current delivery and original checker conditions below. No genuinely failed original semantic criterion identified in these 49 selected records. This is not a terminal current-artifact PASS.",
+  "selection": {
+    "priorIndependentlyAssessed": 31,
+    "additionalSharedAggregateOnly": 13,
+    "additionalMapFieldOnly": 5,
+    "total": 49,
+    "records": [
+      {
+        "id": "AP09-reader-workflows-20261020",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-reader-developers-20261020",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-install-maintenance-project-entry-20261021",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-documentation-agent-maintenance-20261021",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-complete-developer-reader-contracts-20261021",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-complete-static-reader-search-20261021",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-complete-static-offline-fallback-20261021",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-publication-positive-scope-7ef16585",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A910-03-whole-command-prerequisite-contract-20261022",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-whole-extension-drift-A91014-20261023",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09-whole-extension-guides-A91013-20261023",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A99-13-original-seven-dimension-drift-20261025",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "MNT-014-whole-native-publication-examples-20261027",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A99-11-whole-published-example-claims-20261027",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+        "class": "additional13_unchanged_own_pages_and_contracts",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entire own pages byte-equal and other-page/contract/authority data deep-equal; shared declaration reference is not changed own semantics."
+      },
+      {
+        "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+        "class": "prior31_semantic_scope",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Reuse existing independent original-scope judgments and exact limits; material guide/helper/binding/four-seal/map responsibility adjudicated once in this join."
+      },
+      {
+        "id": "AP09.1-ready-topics-20261020",
+        "class": "additional5_map_date_only",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Entry/authority/product explanation/decision/status responsibilities do not change when only first-plugin local-verification date changes. Old historical NOT_READY limits remain verbatim; no global map award inferred."
+      },
+      {
+        "id": "Reviewed-corrections-20261020",
+        "class": "additional5_map_date_only",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Seven corrected retry/error/lint/freshness findings retain meanings; date accurately reports current stage checks, leaves observer 2026-10-26 unchanged, and is not universal metadata/runtime freshness."
+      },
+      {
+        "id": "A912-11-deterministic-page-records-20261022",
+        "class": "additional5_map_date_only",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Original exact-input two-build/419-output determinism result remains historical. Single generated metadata field and asset seal change neither publisher algorithm nor original declared-binding meaning; current normal build/artifact binding still required, not a fabricated second build or new future-input determinism proof."
+      },
+      {
+        "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+        "class": "additional5_map_date_only",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "261 identities/status/owner/check/review relationships unchanged. Prior all184-page-records-unchanged sentence remains a historical comparison at its original candidate; do not repeat it as current whole-map equality. Current consistency checker must confirm appended preservation bookkeeping."
+      },
+      {
+        "id": "QUA010-A9814-A91111-A91308-original-maintainability-and-distinct-drift-path-join-20261031",
+        "class": "additional5_map_date_only",
+        "decision": "PRESERVE_ORIGINAL_SOURCE_READER_QUALITY_SCOPE_CONDITIONAL_CURRENT_DELIVERY",
+        "basis": "Actual five-kind catches, distinct parser/common-comparator routes and restorations are unchanged historical evidence; verification-date metadata creates no new parser/runtime/hosted-CI responsibility and does not require rerunning unchanged artificial mutations."
+      }
+    ]
+  },
+  "materialResponsibilityDecision": {
+    "guideAndHelper": "Existing independently qualified three code paths and guard controls establish bounded local in-memory same-ID replacement/rollback/denial/disable/removal and four journals, not live deployment or general upgrade. Immutable helper a9 pin precedes dependency installation. Complete current guide reviews are clean; v3 failfast P2 remains valid historical failure repaired by v4 set -e. Root actual exact-fence positive0 and invalid-manifest1/no-npm establish current contract-before-activation behavior, not fresh actor acceptance.",
+    "claimsAndBindings": "Reuse complete current page/contract records, exact embedded JS binding and ordinal15->16 responsibility proof; whole JSON/deep and serialized-byte roundtrip establishes complement, not semantic truth by hash. Correct failfast shell behavior separately established. All unrelated own-page/contract meanings retained.",
+    "mapAndSeals": "Actual qualified map5748->ad7 whole4.6MB comparison changes ONLY /pages/18/lastVerified; all other bytes/parsed values and product mapping equal. Stage date reports actual local checks; observer date unchanged. Asset prior basis retained verbatim. Older native0a8 seal was already stale before5748: renewal is unchanged-role custody over independently qualified actual baseline, NOT a false one-pointer0a8->ad7 proof. Four physical seals add no API/runtime/import authority."
+  },
+  "remainingActualConditions": [
+    {
+      "condition": "Finish actual normal publication build at reviewed coherent current Source and record terminal outcome; no running process treated as0.",
+      "owner": "root",
+      "status": "pending at task handoff (79491)"
+    },
+    {
+      "condition": "Actual canonical current artifact checker and bounded affected first-plugin rendered/browser delivery observation must confirm current recipe/pin/anchors/code and current map/asset bindings; append real observations only.",
+      "owner": "root",
+      "status": "pending; historical rendered evidence not relabelled fresh"
+    },
+    {
+      "condition": "Unchanged original acceptance/completion-register checker and applicable owning governance/current claims checks must pass after root appends exact revision/impact/check evidence; preserve original summary/limits/requirements/gates/checks/review history verbatim.",
+      "owner": "root",
+      "status": "pending final coherent integration; structural success is not substituted for semantic decision"
+    }
+  ],
+  "publicationOrder": {
+    "approvedInPrinciple": "After those actual finite checks and preservation adoption, publish the reviewed coherent docs/Source ancestor checkpoint and verify exact remote availability. No fresh Plugin PASS is claimed or required to publish this prerequisite.",
+    "why": "Third fresh public clone genuinely failed checkout128 because a9 was not public. A local clone or fake availability is not remediation. Exact public Source availability is a technical prerequisite for the next genuinely fresh task, not permission to rewrite that failure.",
+    "freshTask": "Still open; first/second/third failures retained. Second actual runtime facets reusable only as qualified facets, not whole-case PASS because contract-before-activation was missing. New independent actor must actually complete the public recipe afterward."
+  },
+  "unchangedExclusions": [
+    "No new acceptance IDs/gates/requirements or receipt rewrites; no fresh original Reader case promoted.",
+    "Failed default global API/default generator and parked A91112 refusal remain failed/blocked; refused registry not read or reacquired.",
+    "PUB-007, QUA-007, human AT/contrast, production/operator and AP10 are not awarded. Earlier record-specific historical NOT_READY limits remain at their stated revisions.",
+    "A912-11 historical two-build evidence is not transferred into a new two-build result; A913-01 earlier whole-page equality is not asserted for current changed map."
+  ],
+  "evidenceReused": [
+    "reader-plugin01-original-scope-preservation-proposal-20261031.json",
+    "reader-plugin01-exact-affected-scope-selection-20261031.json",
+    "reader-plugin01-publication-claim-companion-proposal-v4-failfast-20261031.json",
+    "reader-plugin01-map-date-asset-companion-proposal-20261031.json",
+    "reader-plugin01-v4-complete-scoped-data-roundtrip-projection-20261031.json",
+    "reader-plugin01-map-date-complete-asset-roundtrip-projection-20261031.json",
+    "reader-plugin01-actual-governance-map-delta-20261031.json",
+    "reader-plugin01-remedy-final-pinned-review-20261031.json",
+    "reader-plugin01-v4-failfast-pinned-review-20261031.json",
+    "reader-plugin01-map-date-pinned-review-20261031.json",
+    "reader-plugin01-actual-failfast-positive-20261031.json",
+    "reader-plugin01-actual-failfast-negative-20261031.json"
+  ],
+  "actions": "Read existing finite proof summaries/projections/reviews and five complete original summaries/limits; no main/runtime/matrix mutations, tests/reruns, children, registry read or remote action. Only this external report written."
+}

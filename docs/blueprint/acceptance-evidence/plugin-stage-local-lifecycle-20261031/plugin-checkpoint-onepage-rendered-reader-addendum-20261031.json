@@ -1,0 +1,47 @@
+{
+  "status": "PASS_BOUNDED_ACTUAL_RENDERED_CONTENT_READER_INSPECTION",
+  "parentJoin": "plugin-checkpoint-original-scope-join-20261031.json",
+  "artifact": {
+    "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/.tmp/docs-publication/extend/first-plugin.html",
+    "sha256": "1a5eb72be1b68ff22d425efc14420823026d16f49ff2e1cddd68280d02409500",
+    "footerSource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+    "buildTerminal": "Root reports actual79491 exit0,184pages,321.2538seconds; this addendum reads its actual output, does not rerun build."
+  },
+  "method": "Non-author source-exposed practical content lookup on actual published HTML: read complete visible text/code/table content extracted with HTMLParser excluding script/style, plus targeted actual href inspection. One affected page only. Not a fresh participant, browser layout/screenshot/AT observation or executed recipe. No raw Markdown-equality criterion applied to intentional publication metadata transformations.",
+  "findings": [],
+  "observations": [
+    {
+      "facet": "Source selection and prerequisite order",
+      "result": "PASS",
+      "actual": "Visible Prerequisites names full a9f9902dc853a352c17f303e69c896080a1b4d8c, disposable branch BEFORE dependencies, git rev-parse exact match, Node24, canonical locked install. Prepare link resolves relatively to developer-handbook.html#prepare-a-clean-checkout. Separate observer91c40217 selection remains later in its own companion."
+    },
+    {
+      "facet": "Failfast and actual contract responsibilities",
+      "result": "PASS",
+      "actual": "First visible command block begins set -e, then status/Node and canonical parsePluginManifest/validateReferencedSchema. Manifest empty-ID negative requires REGISTRY_MANIFEST_INVALID. Valid config/input and both result branches precede explicit invalid-value REGISTRY_RESULT_INVALID assertions. Package behavior command follows contract and precedes native activation command; explanatory paragraph states this order and no activation by contract command."
+    },
+    {
+      "facet": "New lifecycle task usability",
+      "result": "PASS",
+      "actual": "Visible5a points back to prerequisite Source rather than historical Evidence revision. Same package/registration/stage identities and2.0.0 replacement, exclusive roots/new fact/different snapshot, original rollback snapshot+fact, exact unrequested state.read grant denial before activation, empty-root stage disablement and post-terminal removal/missing-owner are explained. Exact expected output block includes undeclaredGrant/grantRestored/packageVersion/successFact/rollback/disabled/replacementRemoval/retainedRunJournals4. Save complete output before private cleanup; nonzero remains failed step, no error substitution."
+    },
+    {
+      "facet": "Visible limits and recovery",
+      "result": "PASS",
+      "actual": "Scope excludes project compilation/submission/transport/service/deployment/end-to-end. Stage journal explicitly in-memory, persistent locking/recovery excluded. New case explicitly not deployed update/persistent recovery/arbitrary upgrade/operator command. Cleanup exact owned paths, role reversal and nonterminal released-byte retention remain readable. Observer persistent checkpoint proof has separate host/version/change/restore/output limits; no observer re-verification inferred."
+    },
+    {
+      "facet": "Metadata transformation and navigation",
+      "result": "PASS",
+      "actual": "Native Page scope and sources header visibly retains historical Evidence revision bcf032f241b432bf920baa9ee5f727947921447d, explicit applicability, stage2026-10-31 and observer2026-10-26 dates. New5a explicitly explains historical-vs-new pin, preventing header from being mistaken for executable helper selection. Footer identifies documentation Source d7504972985d. Headings and On this page list retain prerequisite/procedure/verification/failure/recovery/observer organization."
+    }
+  ],
+  "effectOn49Join": "Discharges only its bounded one-page current rendered content/Reader-usability inspection condition. Original49 semantic judgments remain preserved at exact limits; no original checks/summary/receipts modified. Root must attach actual canonical artifact/browser/checker terminal results separately.",
+  "stillPendingNotInferred": [
+    "Canonicalartifact80961 outcome not observed here.",
+    "Affectedbrowser77016 outcome not observed here; this HTML content inspection makes no browser geometry/interaction/network claim.",
+    "Final unchanged original acceptance/completion checker and coherent register integration not observed here.",
+    "Public Source exact availability and next fresh Plugin actor still uncompleted here."
+  ],
+  "actions": "Only actual one-page HTML read and separate external addendum write; no repo/runtime/matrix mutations, tests/replays/new guards, remote action or receipt rewrite."
+}

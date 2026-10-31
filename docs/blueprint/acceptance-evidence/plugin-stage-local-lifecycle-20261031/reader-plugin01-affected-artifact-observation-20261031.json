@@ -1,0 +1,48 @@
+{
+  "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+  "observations": [
+    {
+      "width": 320,
+      "layout": {
+        "viewport": 320,
+        "documentWidth": 320,
+        "bodyWidth": 320
+      },
+      "prerequisiteCodeExact": true,
+      "skipToMainByKeyboard": true,
+      "commandReachedByTab": true,
+      "tabs": 5,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 34
+          }
+        ],
+        "passes": 16
+      },
+      "newCaseSearchHit": 1
+    },
+    {
+      "width": 1440,
+      "layout": {
+        "viewport": 1440,
+        "documentWidth": 1440,
+        "bodyWidth": 1440
+      },
+      "prerequisiteCodeExact": true,
+      "skipToMainByKeyboard": true,
+      "commandReachedByTab": true,
+      "tabs": 5,
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 21
+      },
+      "newCaseSearchHit": 1
+    }
+  ],
+  "pass": true,
+  "limits": "Coordinator two-width affected-page layout, literal command fidelity, real keyboard navigation and automated WCAG subset only. Axe incompletes remain. Not human, screenreader, complete contrast or fresh original task acceptance."
+}

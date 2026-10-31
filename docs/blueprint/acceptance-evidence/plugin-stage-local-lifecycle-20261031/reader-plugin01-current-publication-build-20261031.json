@@ -1,0 +1,17 @@
+{
+  "startedAt": "2026-10-31T22:33:14.486351+00:00",
+  "sourceRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "supportedYieldingProcess": true,
+  "noOuter300sKill": true,
+  "pid": 321447,
+  "endedAt": "2026-10-31T22:38:35.740312+00:00",
+  "elapsedSeconds": 321.2537581900833,
+  "exitCode": 0
+}

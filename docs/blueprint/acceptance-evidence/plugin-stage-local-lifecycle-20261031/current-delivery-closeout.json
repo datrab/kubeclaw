@@ -1,0 +1,269 @@
+{
+  "at": "2026-10-31T22:47:00.590031+00:00",
+  "sourceRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+  "decision": "49 independent original scoped Source/Reader/Quality judgments retained; actual current delivery conditions satisfied. Original checker is separate and pending until actual terminal receipt. Zero new original acceptance.",
+  "records": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-reader-workflows-20261020",
+      "previousRevision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-reader-developers-20261020",
+      "previousRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "previousRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-complete-plugin-maintenance-mechanisms-20261021",
+      "previousRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "previousRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "previousRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "previousRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A912-11-deterministic-page-records-20261022",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A910-03-whole-command-prerequisite-contract-20261022",
+      "previousRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-whole-extension-drift-A91014-20261023",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "AP09-whole-extension-guides-A91013-20261023",
+      "previousRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A99-13-original-seven-dimension-drift-20261025",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT-014-whole-native-publication-examples-20261027",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A99-11-whole-published-example-claims-20261027",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    },
+    {
+      "id": "QUA010-A9814-A91111-A91308-original-maintainability-and-distinct-drift-path-join-20261031",
+      "previousRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+      "currentRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7"
+    }
+  ],
+  "currentActualResults": {
+    "buildExitCode": 0,
+    "pages": 184,
+    "buildSeconds": 321.2537581900833,
+    "canonicalArtifactExitCode": 0,
+    "standardReaderOwners": {
+      "source-links": 0,
+      "source-previews": 0,
+      "search": 0,
+      "diagrams": 0
+    },
+    "affectedBrowserPass": true,
+    "mobileContrastIncompleteNodes": 34,
+    "independentRenderedReader": "PASS actualcontent; nofreshactor"
+  },
+  "originalEvidencePreservation": "Every original summary/limits/author/reviewer/review/pages/sources/gate/requirement/verdict/openissues unchanged; oldchecks retained exactly, one actualcurrentdelivery check appended; unselected95records exact; allrequirements/gates exact.",
+  "remaining": "New originalfresh Plugin task onlyafter coherentpublishedSource a9; all3failures retained. No PUB007/AT/contrast/AP10 or defaultglobal generator award."
+}
