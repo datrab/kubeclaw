@@ -1,0 +1,9 @@
+{
+  "name": "kubeclaw-runtime-npm",
+  "version": "1.0.0",
+  "private": true,
+  "dependencies": {
+    "npm": "12.2.1",
+    "undici": "6.29.1"
+  }
+}

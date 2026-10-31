@@ -16,6 +16,13 @@ FROM ${BUILDKIT_BASE} AS buildkit
 FROM ${BUSTER_NODE_BASE} AS toolchain
 
 USER root
+# Buster invokes npm for user projects; replace the base image's vulnerable
+# bundled CLI with a separately integrity-locked upstream distribution.
+COPY docker/npm-tools/ /opt/kubeclaw-npm/
+RUN sh /opt/kubeclaw-npm/install.sh \
+    && rm -rf /usr/local/lib/node_modules/npm \
+    && ln -s /opt/kubeclaw-npm/node_modules/npm /usr/local/lib/node_modules/npm \
+    && npm --version
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG DEBIAN_SNAPSHOT=20261025T000000Z
 ARG TARGETARCH

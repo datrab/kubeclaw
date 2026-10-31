@@ -7,6 +7,8 @@
 !docker/Dockerfile.prism-agent
 !docker/nova-tools/
 !docker/nova-tools/**
+!docker/npm-tools/
+!docker/npm-tools/**
 !docker/python-tools/
 !docker/python-tools/**
 !docker/go-tools/

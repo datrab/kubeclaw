@@ -50,6 +50,8 @@ ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 RUN rm -f /etc/apt/sources.list \
  && node ./node_modules/playwright/cli.js install --with-deps chromium \
  && test -d /ms-playwright \
+ && rm -rf /usr/local/lib/node_modules /opt/yarn-* \
+ && rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg \
  && chown -R node:node /app/prism /ms-playwright
 USER node
 ENV NODE_ENV=production PORT=8080
