@@ -84333,7 +84333,7 @@
           "failure": "Qualification stops with DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED on child or custody failure.",
           "impact": "Changes the local compiler/runner used for the finite documentation adapter check; it does not grant an output-role exemption.",
           "invalidBehavior": "A missing executable, failed Go adapter, malformed receipt or receipt mismatch rejects documentation-tool qualification.",
-          "line": 11717,
+          "line": 11723,
           "owner": "scripts/docs-api-documentation-role-custody.mjs",
           "owningSurface": "scripts/docs-api-documentation-role-custody.mjs:native Go custody runner",
           "path": "scripts/docs-api-documentation-role-custody.mjs",
@@ -84363,7 +84363,7 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 11717,
+          "line": 11723,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
@@ -84383,7 +84383,7 @@
       "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
       "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
       "meaning": "The meaning of KUBECLAW_DOCS_GO_BINARY differs by receiving process. Use the contract attached to the exact consumer source.",
-      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:11717",
+      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:11723",
       "meaningStatus": "authored-consumer-specific-contracts",
       "name": "KUBECLAW_DOCS_GO_BINARY",
       "precedence": [
@@ -84400,7 +84400,7 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 11717,
+          "line": 11723,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
@@ -133533,7 +133533,7 @@
           "failure": "Qualification stops with DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED.",
           "impact": "Prevents the reviewed native caller acquisition from silently using additional Node loader/options authority.",
           "invalidBehavior": "Any non-empty text rejects acquisition, including whitespace.",
-          "line": 32586,
+          "line": 32592,
           "owner": "scripts/docs-api-documentation-role-custody.mjs",
           "owningSurface": "scripts/docs-api-documentation-role-custody.mjs:assertNativeNpmPosixAuthority",
           "path": "scripts/docs-api-documentation-role-custody.mjs",
@@ -133742,7 +133742,7 @@
         },
         {
           "access": "node-process-env",
-          "line": 32586,
+          "line": 32592,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         }
       ],
@@ -133752,7 +133752,7 @@
       "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
       "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
       "meaning": "The meaning of NODE_OPTIONS differs by receiving process. Use the contract attached to the exact consumer source.",
-      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32586",
+      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32592",
       "meaningStatus": "authored-consumer-specific-contracts",
       "name": "NODE_OPTIONS",
       "precedence": [
@@ -133894,7 +133894,7 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 32586,
+          "line": 32592,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         }
       ],
@@ -135367,7 +135367,7 @@
           "failure": "Qualification stops with DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED or a filesystem error.",
           "impact": "Rejects an active npm caller identity outside the narrowly reviewed command location.",
           "invalidBehavior": "A non-empty missing path or different real path rejects; filesystem errors can also stop qualification.",
-          "line": 32590,
+          "line": 32596,
           "owner": "scripts/docs-api-documentation-role-custody.mjs",
           "owningSurface": "scripts/docs-api-documentation-role-custody.mjs:assertNativeNpmPosixAuthority",
           "path": "scripts/docs-api-documentation-role-custody.mjs",
@@ -135379,7 +135379,7 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 32590,
+          "line": 32596,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         }
       ],
@@ -135389,7 +135389,7 @@
       "failureMeaning": "Qualification stops with DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED or a filesystem error.",
       "invalidBehavior": "A non-empty missing path or different real path rejects; filesystem errors can also stop qualification.",
       "meaning": "Checks an optional active npm caller executable identity independently of PATH acquisition. Owner: `scripts/docs-api-documentation-role-custody.mjs`. Owning setting: `scripts/docs-api-documentation-role-custody.mjs` — assertNativeNpmPosixAuthority. Boundary: development native caller authority.",
-      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32590",
+      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32596",
       "meaningStatus": "authored-consumer-specific-contract",
       "name": "npm_execpath",
       "precedence": [
@@ -135406,7 +135406,7 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 32590,
+          "line": 32596,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         }
       ],
@@ -142701,7 +142701,7 @@
           "failure": "Qualification stops with DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED when identity or required configuration fails.",
           "impact": "Changes which local command identities are checked and which npm executable reads the required configuration.",
           "invalidBehavior": "Unavailable executables or first regular candidates with different real paths reject. This guard does not prove executable behavior or version.",
-          "line": 32587,
+          "line": 32593,
           "owner": "scripts/docs-api-documentation-role-custody.mjs",
           "owningSurface": "scripts/docs-api-documentation-role-custody.mjs:assertNativeNpmPosixAuthority",
           "path": "scripts/docs-api-documentation-role-custody.mjs",
@@ -142898,12 +142898,12 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 32587,
+          "line": 32593,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 32591,
+          "line": 32597,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
@@ -142983,7 +142983,7 @@
       "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
       "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
       "meaning": "The meaning of PATH differs by receiving process. Use the contract attached to the exact consumer source.",
-      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32587",
+      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32593",
       "meaningStatus": "authored-consumer-specific-contracts",
       "name": "PATH",
       "precedence": [
@@ -143000,12 +143000,12 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 32587,
+          "line": 32593,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 32591,
+          "line": 32597,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {

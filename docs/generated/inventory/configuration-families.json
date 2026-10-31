@@ -181796,7 +181796,7 @@
       "sensitivity": "ordinary-value",
       "setting": "KUBECLAW_DOCS_GO_BINARY",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
+      "sourceSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -183252,7 +183252,7 @@
       "sensitivity": "ordinary-value",
       "setting": "NODE_OPTIONS",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
+      "sourceSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f"
     },
     {
       "consumer": "charts/kubeclaw/templates/deployment.yaml",
@@ -183448,7 +183448,7 @@
       "sensitivity": "ordinary-value",
       "setting": "npm_execpath",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
+      "sourceSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f"
     },
     {
       "consumer": "charts/kubeclaw/templates/deployment.yaml",
@@ -184260,7 +184260,7 @@
       "sensitivity": "ordinary-value",
       "setting": "PATH",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
+      "sourceSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -188628,7 +188628,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--check",
       "source": "scripts/docs-governance.mjs",
-      "sourceSha256": "65f6e4e1aef6e9350b7cf677b42646bad92a631f819611ebbad22be37b3bf04b"
+      "sourceSha256": "c5cba3a94ec31afac44d3f54b2210b64e0fe50d16c596b8c2d14f546638c62f7"
     },
     {
       "consumer": "scripts/docs-inventory.mjs",
@@ -402733,7 +402733,7 @@
           "sensitivity": "ordinary-value",
           "setting": "KUBECLAW_DOCS_GO_BINARY",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
+          "sourceSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402747,7 +402747,7 @@
           "sensitivity": "ordinary-value",
           "setting": "NODE_OPTIONS",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
+          "sourceSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402761,7 +402761,7 @@
           "sensitivity": "ordinary-value",
           "setting": "npm_execpath",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
+          "sourceSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402775,7 +402775,7 @@
           "sensitivity": "ordinary-value",
           "setting": "PATH",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
+          "sourceSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f"
         }
       ]
     },
@@ -404062,7 +404062,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--check",
           "source": "scripts/docs-governance.mjs",
-          "sourceSha256": "65f6e4e1aef6e9350b7cf677b42646bad92a631f819611ebbad22be37b3bf04b"
+          "sourceSha256": "c5cba3a94ec31afac44d3f54b2210b64e0fe50d16c596b8c2d14f546638c62f7"
         }
       ]
     },
