@@ -1,6 +1,7 @@
 import {useEffect,useRef,useState} from 'react';
-type Turn={job_id:string;message:string;reply:string|null;state:string;created_at?:string};
-const pending=(turn:Turn)=>['accepted','running'].includes(turn.state);
+type Turn={job_id:string;message:string;reply:string|null;state:string;created_at?:string;design_job_id?:string|null;design_state?:string|null};
+const blocked=(turn:Turn)=>turn.state==='needs_nova'||turn.design_state==='needs_nova';
+const pending=(turn:Turn)=>['accepted','running'].includes(turn.state)||['accepted','running'].includes(turn.design_state??'');
 export function StudioChat({documentId,title,userId,csrf,busy,onCompleted,onPreference}:{documentId:string;title:string;userId:string;csrf:string;busy:boolean;onCompleted:()=>Promise<void>;onPreference:(turn:Turn)=>Promise<void>}){
  const [turns,setTurns]=useState<Turn[]>([]),[text,setText]=useState(''),[sending,setSending]=useState(false),[error,setError]=useState(''),[notice,setNotice]=useState('');
  const identity=JSON.stringify([userId,documentId]);
@@ -20,14 +21,14 @@ export function StudioChat({documentId,title,userId,csrf,busy,onCompleted,onPref
     const items=value.items as Turn[];
     // A GET begun before POST acknowledgement must not erase the accepted turn.
     setTurns(previous=>[...items,...previous.filter(turn=>pending(turn)&&!items.some(item=>item.job_id===turn.job_id))]);
-    for(const turn of items)if(turn.state==='completed'&&!completed.current.has(turn.job_id)){await onCompleted();completed.current.add(turn.job_id);}
+    for(const turn of items)if(turn.state==='completed'&&(!turn.design_job_id||turn.design_state==='completed')&&!completed.current.has(turn.job_id)){await onCompleted();completed.current.add(turn.job_id);}
     timer=setTimeout(()=>void load(),items.some(pending)?2000:5000);
    }catch(e){if(!disposed){setError(String(e));timer=setTimeout(()=>void load(),5000);}}
   };void load();
   return()=>{disposed=true;if(timer)clearTimeout(timer);};
  },[identity]);
  const send=async()=>{
-  if(busy||sending||turns.some(pending)||(!text.trim()&&!uncertain.current))return;
+  if(busy||sending||turns.some(turn=>pending(turn)||blocked(turn))||(!text.trim()&&!uncertain.current))return;
   const turn=uncertain.current??{key:crypto.randomUUID(),message:text.trim()};
   uncertain.current=turn;sessionStorage.setItem(storageKey,JSON.stringify(turn));setSending(true);setError('');
   const sentIdentity=identity;
@@ -47,12 +48,13 @@ export function StudioChat({documentId,title,userId,csrf,busy,onCompleted,onPref
    {!turns.length&&<p>Was möchtest du mit Prism besprechen?</p>}
    {turns.map(turn=><article key={turn.job_id}>
     <p><strong>Du</strong><br/>{turn.message}</p>
-    {turn.reply?<p><strong>Prism</strong><br/>{turn.reply}</p>:<p role="status">{turn.state==='accepted'?'Nachricht wartet auf Prism…':turn.state==='running'?'Prism antwortet…':turn.state==='needs_nova'?'Die Antwort ist noch ungeklärt. Die Nachricht wird nicht erneut gestartet.':turn.state==='superseded'?'Der Entwurf wurde inzwischen geändert. Bitte sende eine neue Nachricht zum aktuellen Stand.':'Antwort wird geladen…'}</p>}
+    {turn.reply?<p><strong>Prism</strong><br/>{turn.reply}</p>:<p role="status">{turn.state==='accepted'?'Nachricht wartet auf Prism…':turn.state==='running'?'Prism antwortet…':turn.state==='needs_nova'?'Die Ausführung ist fehlgeschlagen oder ungeklärt und blockiert weitere Nachrichten dieser Session. Nova muss den Auftrag prüfen; bitte nicht erneut senden.':turn.state==='superseded'?'Der Entwurf wurde inzwischen geändert. Bitte sende eine neue Nachricht zum aktuellen Stand.':'Antwort wird geladen…'}</p>}
+    {turn.design_job_id&&<p role="status">{turn.design_state==='completed'?'Drei neue Entwürfe sind bereit.':turn.design_state==='accepted'||turn.design_state==='running'?'Drei neue Entwürfe werden erstellt…': 'Die neuen Entwürfe benötigen eine technische Prüfung. Nicht erneut beauftragen.'}</p>}
     <button disabled={!turn.created_at} onClick={()=>void onPreference(turn).then(()=>setNotice('Als Vorliebe für dieses Projekt gespeichert.')).catch(e=>setError(String(e)))}>Als Vorliebe speichern</button>
    </article>)}
   </div>
   {error&&<p role="alert">{error}</p>}{notice&&<p role="status">{notice}</p>}
   <label>Nachricht an Prism<textarea aria-label="Nachricht an Prism" maxLength={12000} value={text} disabled={busy||sending||Boolean(uncertain.current)} onChange={event=>setText(event.target.value)} placeholder="Frage stellen oder eine Änderung beschreiben…"/></label>
-  <button className="primary" disabled={busy||sending||turns.some(pending)||(!text.trim()&&!uncertain.current)} onClick={()=>void send()}>{sending?'Wird gesendet…':uncertain.current?'Dieselbe Nachricht erneut senden':'Nachricht senden'}</button>
+  <button className="primary" disabled={busy||sending||turns.some(turn=>pending(turn)||blocked(turn))||(!text.trim()&&!uncertain.current)} onClick={()=>void send()}>{sending?'Wird gesendet…':uncertain.current?'Dieselbe Nachricht erneut senden':'Nachricht senden'}</button>
  </section>;
 }

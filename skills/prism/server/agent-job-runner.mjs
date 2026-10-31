@@ -19,14 +19,18 @@ export class AgentJobRunner {
   runnerId=`prism-bridge-${randomUUID()}`;
   stopping=new AbortController();
   active;
-  constructor(controlUrl){this.controlUrl=controlUrl;}
+  constructor(controlUrl,gatewayReady=async()=>{try{return (await fetch('http://127.0.0.1:18789/readyz',{signal:AbortSignal.timeout(2000)})).ok;}catch{return false;}}){this.controlUrl=controlUrl;this.gatewayReady=gatewayReady;}
   async tick(){
     if(this.active || this.stopping.signal.aborted)return;
     this.active=this.runOne();
     try{await this.active;}finally{this.active=undefined;}
   }
   async runOne(){
-    const {job}=await controlRequest(this.controlUrl,'/v1/agent/jobs/claim',{runnerId:this.runnerId},AbortSignal.timeout(10_000));
+    // Do not claim durable work while the colocated Gateway is still starting or draining.
+    if(!await this.gatewayReady() || this.stopping.signal.aborted)return;
+    this.launcherProfile ??= agentAttempt({id:randomUUID(),fence:randomUUID(),expires_at:new Date(Date.now()+900000),request_digest:'sha256:'+'0'.repeat(64),request:{}},this.runnerId).then(envelope=>envelope.profile.profileDigest);
+    const profileDigest=await this.launcherProfile;
+    const {job}=await controlRequest(this.controlUrl,'/v1/agent/jobs/claim',{runnerId:this.runnerId,profileDigest},AbortSignal.timeout(10_000));
     if(!job)return;
     // Once this claim is durable, any uncertainty is NeedsNova. Never replay a failed launch.
     let outcome,reply;const stdout=[];let stdoutBytes=0;

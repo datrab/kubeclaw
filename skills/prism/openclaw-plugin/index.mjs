@@ -21,6 +21,12 @@ async function post(path, payload, config) {
 
 export default function register(api) {
   api.registerTool({
+    name:'prism_request_design_set',
+    description:'When the user asks for three new visual proposals or variants in Studio chat, queue three real designs based on the current chat target and user message. Not a prose brainstorm. No preference or approval is stored. Use only the current chat jobId/fence; then tell the user the designs are being generated.',
+    parameters:{type:'object',additionalProperties:false,required:['jobId','fence'],properties:{jobId:{type:'string',format:'uuid'},fence:{type:'string',format:'uuid'}}},
+    async execute(_id,params,context){return textResult(await post('/v1/agent/chat-design-set',params,context?.config));}
+  });
+  api.registerTool({
     name: "prism_create_design_set",
     description: "Persist exactly three materially distinct, complete Prism design documents for one project. This tool must be called once for every new Nova architecture request.",
     parameters: {

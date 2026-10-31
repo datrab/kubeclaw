@@ -36,7 +36,7 @@ export async function agentJob(db:Queryable,id:string):Promise<AgentJob> {
 }
 
 /** Only accepted work can cross the external-action boundary. Running work is never requeued. */
-export async function claimAgentJob(db:Database,runnerId:string) {
+export async function claimAgentJob(db:Database,runnerId:string,launcherProfileDigest?:string) {
   if(!runnerId || runnerId.length>160)throw new Error('agent runner identity is required');
   return inTransaction(db,async connection=>{
     await connection.query("SELECT pg_advisory_xact_lock(hashtextextended('prism-agent-admission',0))");
@@ -48,6 +48,7 @@ export async function claimAgentJob(db:Database,runnerId:string) {
     const deadline=await connection.query<{expires_at:Date|string}>("SELECT clock_timestamp()+interval '16 minutes' AS expires_at");
     const expiresAt=deadline.rows[0]!.expires_at;
     const envelope=await agentAttempt({...source,fence,expires_at:expiresAt},runnerId);
+    if(launcherProfileDigest!==undefined&&launcherProfileDigest!==envelope.profile.profileDigest)return null;
     const claimed=await connection.query<AgentJob>("UPDATE prism.agent_job SET state='running',fence=$2,runner_id=$3,expires_at=$4,attempt_envelope=$5::jsonb,updated_at=clock_timestamp() WHERE id=$1 AND state='accepted' RETURNING *",[source.id,fence,runnerId,expiresAt,JSON.stringify(envelope)]);
     return claimed.rows[0]!;
   });

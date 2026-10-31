@@ -145,7 +145,10 @@ workspace:
   tools: >
     prism_create_design_set is mandatory for a new architecture and accepts exactly three designs.
 
-    prism_apply_revision is mandatory for Studio or Discord design changes.
+    prism_apply_revision is mandatory for changes to one existing design.
+    If Studio chat asks for three new proposals or variants, call prism_request_design_set with the current
+    chat jobId and fence. This queues three real visual documents in the same originating session. Do not
+    substitute written suggestions or save the iteration request as a preference.
 
     Read /app/skills/packages/prism-contract/schemas/prism-v1.schema.json for the canonical contract and
     /app/skills/packages/prism-contract/fixtures/minimal-web.json for a minimal valid example before creating a

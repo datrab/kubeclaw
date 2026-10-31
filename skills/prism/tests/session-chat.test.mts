@@ -7,7 +7,7 @@ import fixture from '../../../contracts/prism/v1/fixtures/minimal-web.json' with
 import {migrate,RevisionRepository} from '../storage/index.ts';
 import {startDesignRound} from '../control/design-generations.ts';
 import {enqueueAgentJob,claimAgentJob,finishAgentRun} from '../control/agent-jobs.ts';
-import {startChat,chatHistory} from '../control/agent-chat.ts';
+import {startChat,chatHistory,requestChatDesignSet} from '../control/agent-chat.ts';
 import {WorkerAttemptExecutor} from '@kubeclaw/worker-core';
 import {AgentProcess} from '../server/agent-process.ts';
 import {chatReply} from '../server/chat-reply.mjs';
@@ -58,4 +58,22 @@ test('chat reply parsing accepts real CLI envelope and rejects diagnostics; prom
  assert.throws(()=>chatReply(JSON.stringify({error:'failed'})),/no bounded chat reply/);
  const prompt=agentPrompt({id:'turn-id',fence:'fence',operation:'chat',request:{projectId:'p',documentId:'d',expectedRevision:2,instruction:'Why this font?',document:{}}});
  assert.match(prompt,/NOT preference evidence/);assert.match(prompt,/target document: d/);assert.match(prompt,/For questions\/discussion, only answer/);
+});
+
+test('chat variants are fenced, idempotent, serialized in the exact origin session and do not record preference events',async()=>{
+ const {db,documentId}=await setup();try{
+  const turn=await startChat(db,documentId,'user','variants-1','Mach drei luftigere visuelle Entwürfe');
+  const job=(await claimAgentJob(db,'chat-runner'))!;
+  await assert.rejects(requestChatDesignSet(db,turn.jobId,randomUUID()),/fence conflict/);
+  const child=await requestChatDesignSet(db,turn.jobId,job.fence!) as {jobId:string};
+  assert.deepEqual(await requestChatDesignSet(db,turn.jobId,job.fence!),child);
+  assert.equal(await claimAgentJob(db,'other-runner'),null,'child cannot overlap its chat parent');
+  const queued=(await db.query<{session_key:string;request:any}>('SELECT session_key,request FROM prism.agent_job WHERE id=$1',[child.jobId])).rows[0]!;
+  assert.equal(queued.session_key,'exact-original-design-session');assert.equal(queued.request.iteration.instruction,'Mach drei luftigere visuelle Entwürfe');
+  assert.equal((await db.query<{count:number}>('SELECT count(*)::int AS count FROM prism.preference_event')).rows[0]!.count,0);
+  const receipt=await new WorkerAttemptExecutor({envelope:job.attempt_envelope!,operation:new AgentProcess(process.execPath,['-e','process.exitCode=0']),retainLogs:false}).execute();
+  await finishAgentRun(db,job.id,job.fence!,receipt as any,'Drei Varianten werden erstellt.');
+  const next=(await claimAgentJob(db,'design-runner'))!;assert.equal(next.id,child.jobId);assert.equal(next.session_key,job.session_key);
+  const history=await chatHistory(db,documentId,'user');assert.equal(history.items[0]!.design_job_id,child.jobId);assert.equal(history.items[0]!.design_state,'running');
+ }finally{await db.close();}
 });

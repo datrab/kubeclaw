@@ -346,6 +346,8 @@ function App() {
   };
   const refreshChatDocument = async () => {
     const id=new URLSearchParams(location.search).get('document');if(!id)return;
+    const project=new URLSearchParams(location.search).get('project');
+    if(project){const response=await fetch(`/v1/projects/${encodeURIComponent(project)}/directions`);if(!response.ok)throw new Error('Neue Entwürfe konnten nicht geladen werden.');const value=await response.json();if(new URLSearchParams(location.search).get('document')!==id)return;if(value.items?.length){setDirections(value.items);if(!value.items.some((item:{source_document_id:string})=>item.source_document_id===id)){await previewDirection(value.items[0]);return;}}}
     const r=await fetch(`/v1/documents/${encodeURIComponent(id)}`);if(!r.ok)throw new Error('Aktueller Entwurf konnte nicht geladen werden.');
     // viewId and viewState are derived above with existence checks, including renamed/removed views.
     const value=await r.json();if(new URLSearchParams(location.search).get('document')===id){setDocument(value.document);setQuality(null);}

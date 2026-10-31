@@ -1,3 +1,4 @@
+import {agentAttempt} from '../server/agent-attempt.ts';
 import {WorkerAttemptExecutor,workerAttemptResultDigest} from '@kubeclaw/worker-core';
 import {AgentProcess} from '../server/agent-process.ts';
 import type {AgentJob} from '../control/agent-jobs.ts';
@@ -27,9 +28,12 @@ test('actual HTTP job routes authenticate before claim, persist one fence and re
  try{
   const forbidden=await post('/v1/agent/jobs/claim',{runnerId:'not-agent'},'spiffe://test/project');assert.equal(forbidden.status,422);assert.match(await forbidden.text(),/FORBIDDEN/);
   assert.equal((await agentJob(db,queued.id)).state,'accepted');
-  const first=await post('/v1/agent/jobs/claim',{runnerId:'boot-one'});assert.equal(first.status,200);
+  const profile=(await agentAttempt({id:crypto.randomUUID(),fence:crypto.randomUUID(),expires_at:new Date(Date.now()+900000),request_digest:'sha256:'+'0'.repeat(64),request:{}},'boot-one')).profile.profileDigest;
+  const old=await post('/v1/agent/jobs/claim',{runnerId:'old-runner'});assert.equal((await old.json() as {job:unknown}).job,null);
+  const wrong=await post('/v1/agent/jobs/claim',{runnerId:'wrong-version',profileDigest:'sha256:'+'f'.repeat(64)});assert.equal((await wrong.json() as {job:unknown}).job,null);
+  const first=await post('/v1/agent/jobs/claim',{runnerId:'boot-one',profileDigest:profile});assert.equal(first.status,200);
   const claimed=(await first.json() as {job:AgentJob}).job;assert.equal(claimed.id,queued.id);
-  const second=await post('/v1/agent/jobs/claim',{runnerId:'boot-two'});assert.equal((await second.json() as {job:unknown}).job,null);
+  const second=await post('/v1/agent/jobs/claim',{runnerId:'boot-two',profileDigest:profile});assert.equal((await second.json() as {job:unknown}).job,null);
   const stale=await post(`/v1/agent/jobs/${queued.id}/finish`,{fence:randomUUID(),outcome:{state:'completed'}});assert.equal(stale.status,422);assert.match(await stale.text(),/fence conflict/);
   assert.ok(claimed.fence);assert.ok(claimed.attempt_envelope);
   const designs=['one','two','three'].map(key=>{const document=structuredClone(fixture) as PrismDocument;document.meta.projectId='http-project';return {key,title:key,summary:key,document};});

@@ -10,8 +10,8 @@ export async function handleAgentJobs(request:IncomingMessage,response:ServerRes
   authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([options.trustedAgentId]));
   let result:unknown;
   if(url.pathname==='/v1/agent/jobs/claim' && request.method==='POST'){
-    const input=await options.readBody(request) as {runnerId:string};
-    result={job:await claimAgentJob(options.db,input.runnerId)};
+    const input=await options.readBody(request) as {runnerId:string;profileDigest?:string};
+    result={job:typeof input.profileDigest==='string'?await claimAgentJob(options.db,input.runnerId,input.profileDigest):null};
   }else{
     const match=/^\/v1\/agent\/jobs\/([0-9a-f-]+)(\/finish)?$/u.exec(url.pathname);
     if(!match)throw new Error('unknown agent job route');

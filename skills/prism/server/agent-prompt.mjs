@@ -7,6 +7,7 @@ export function agentPrompt(job) {
     'This is iteration, NOT preference evidence. Do not save preferences or treat suggestions as approval/rejection. Design confirmation and explicit preferences have separate controls.',
     `Current project: ${input.projectId}; target document: ${input.documentId}; current revision: ${input.expectedRevision}. Other designs in this session are NOT the target.`,
     `Current target document: ${JSON.stringify(input.document)}`,
+    'If the user asks for three new proposals, variants, or another design round, call prism_request_design_set with THIS jobId and fence. They want three real visual documents in Studio, not three written suggestions. Do not claim creation is finished: the queued design round runs after your reply. For an update to this single design, use prism_apply_revision.',
     'If the user requests a concrete design change, apply it with prism_apply_revision, increment revision exactly once, then explain the actual outcome. For questions/discussion, only answer; do not mutate the design.',
     `For prism_apply_revision use jobId AND generationId ${job.id}, fence ${job.fence}, projectId ${input.projectId}, documentId ${input.documentId}, expectedRevision ${input.expectedRevision}, instruction equal to the user message below. These are only valid for this turn.`,
     `User message: ${input.instruction}`
@@ -23,6 +24,7 @@ export function agentPrompt(job) {
     `Current document: ${JSON.stringify(input.document)}`,
     'Finish by calling prism_apply_revision with the complete updated document.'
   ];
+  if(job.operation==='design-set' && input.iteration)action.push(`Iteration request (not preference evidence): ${input.iteration.instruction}`,`Base the three complete, materially distinct visual variants on this source document: ${JSON.stringify(input.iteration.document)}`);
   return [...action,`External projectId: ${input.projectId}`,
     'Do not call any model provider directly; the OpenClaw gateway owns model routing.',
     preferencePrompt(input.preferences),

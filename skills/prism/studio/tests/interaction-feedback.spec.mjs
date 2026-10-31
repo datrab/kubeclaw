@@ -7,7 +7,7 @@ import { resolve, extname, sep } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import fixture from '../../../../contracts/prism/v1/fixtures/minimal-web.json' with {type:'json'};
 // Actual production App/CSP with controlled API states; not live model/ingress proof.
-let server,origin,documents,mutations,polls,complete,failJob,holdPreview,releasePreview,jobDocument,chatTurns,holdChatHistory,releaseChatHistory,preferenceBodies,renameChatView;
+let activeDirections,server,origin,documents,mutations,polls,complete,failJob,holdPreview,releasePreview,jobDocument,chatTurns,holdChatHistory,releaseChatHistory,preferenceBodies,renameChatView;
 const names=['Herdfeuer','Wochenwerk','Nachtlotse'];
 const directions=names.map((title,index)=>({id:`direction-${index}`,title,summary:`Different layout ${index+1}`,state:'proposed',source_document_id:`doc-${index}`}));
 const pending={operation:'generate',baseRevision:1,input:{instruction:'Make the first third pink',mode:'refine'},idempotencyKey:'original-key',jobId:'same-job'};
@@ -19,7 +19,7 @@ test.beforeAll(async()=>{
   if(request.method==='POST' && pathname!=='/v1/session')mutations.push(pathname);
   let data;
   if(pathname==='/v1/session')data={csrf:'fixture',userId:'operator'};
-  else if(pathname==='/v1/projects/project/directions')data={items:directions};
+  else if(pathname==='/v1/projects/project/directions')data={items:activeDirections};
   else if(pathname==='/v1/projects/project/brief')data={request:{title:'Comparison'}};
   else if(pathname.endsWith('/chat')){
    if(request.method==='POST'){const chunks=[];for await(const chunk of request)chunks.push(chunk);const input=JSON.parse(Buffer.concat(chunks).toString());chatTurns.push({job_id:'chat-job',message:input.message,reply:null,state:'running',created_at:'2026-10-31T20:00:00Z'});data={jobId:'chat-job'};}
@@ -39,7 +39,7 @@ test.beforeAll(async()=>{
  })().catch(error=>response.destroy(error));});
  server.listen(0,'127.0.0.1');await once(server,'listening');origin=`http://127.0.0.1:${server.address().port}`;
 });
-test.beforeEach(()=>{renameChatView=false;holdChatHistory=false;releaseChatHistory=undefined;preferenceBodies=[];chatTurns=[];jobDocument=0;polls=0;complete=false;failJob=false;holdPreview=false;releasePreview=undefined;mutations=[];documents=names.map((name,index)=>{const d=structuredClone(fixture);d.meta.title=name;d.meta.documentId=`design-${index}`;d.views.home.root.children[0].props.content=`Layout ${index+1}`;return d;});});
+test.beforeEach(()=>{activeDirections=directions;renameChatView=false;holdChatHistory=false;releaseChatHistory=undefined;preferenceBodies=[];chatTurns=[];jobDocument=0;polls=0;complete=false;failJob=false;holdPreview=false;releasePreview=undefined;mutations=[];documents=names.map((name,index)=>{const d=structuredClone(fixture);d.meta.title=name;d.meta.documentId=`design-${index}`;d.views.home.root.children[0].props.content=`Layout ${index+1}`;return d;});});
 test.afterAll(async()=>{server.closeAllConnections();await new Promise(resolve=>server.close(resolve));});
 for(const width of [390,1440])test(`all three actual layouts are reachable without selecting one at ${width}px`,async({page})=>{
  await page.setViewportSize({width,height:844});await page.goto(`${origin}/?project=project&document=doc-0`);
@@ -110,4 +110,24 @@ test('a history response started before POST cannot erase an acknowledged runnin
  await expect(chat.getByRole('log')).toContainText('Discuss the typography');holdChatHistory=false;releaseChatHistory();
  await expect(chat.getByRole('log')).toContainText('Discuss the typography');await chat.getByLabel('Nachricht an Prism').fill('Another message');
  await expect(chat.getByRole('button',{name:'Nachricht senden',exact:true})).toBeDisabled();expect(mutations).toEqual(['/v1/documents/doc-0/chat']);
+});
+
+test('phone chat waits for real variants and automatically displays the completed successor set',async({page})=>{
+ chatTurns=[{job_id:'variant-chat',message:'Mach drei luftigere Vorschläge',reply:'Drei neue Entwürfe werden erstellt.',state:'completed',design_job_id:'variant-round',design_state:'running',created_at:'2026-10-31T20:00:00Z'}];
+ await page.setViewportSize({width:390,height:844});await page.goto(`${origin}/?project=project&document=doc-0`);
+ await page.getByRole('button',{name:'Prism',exact:true}).click();const chat=page.locator('.sheet .studio-chat');
+ await expect(chat).toContainText('Drei neue Entwürfe werden erstellt…');
+ await expect(chat.getByRole('button',{name:'Nachricht senden',exact:true})).toBeDisabled();
+ await expect(page.getByRole('tab',{name:'Herdfeuer'})).toBeVisible();
+ activeDirections=['Offener Nachtlotse','Ruhiges Editorial','Leichte Übersicht'].map((title,index)=>{const d=structuredClone(documents[index]);d.meta.title=title;d.views.home.root.children[0].props.content=title;documents.push(d);return {id:`new-${index}`,title,state:'proposed',source_document_id:`doc-${index+3}`};});
+ chatTurns[0].design_state='completed';
+ await expect(page.getByRole('tab',{name:'Offener Nachtlotse'})).toHaveAttribute('aria-selected','true',{timeout:15000});
+ await expect(page.frameLocator('iframe.plain-preview').getByRole('heading',{name:'Offener Nachtlotse'})).toBeVisible();
+ expect(mutations).toEqual([]);
+});
+
+test('an unresolved turn cannot accumulate another submitted request in its blocked session',async({page})=>{
+ chatTurns=[{job_id:'unresolved',message:'Already sent',reply:null,state:'needs_nova',created_at:'2026-10-31T20:00:00Z'}];
+ await page.setViewportSize({width:390,height:844});await page.goto(`${origin}/?project=project&document=doc-0`);await page.getByRole('button',{name:'Prism',exact:true}).click();const chat=page.locator('.sheet .studio-chat');
+ await expect(chat).toContainText('blockiert weitere Nachrichten dieser Session');await chat.getByLabel('Nachricht an Prism').fill('Do not duplicate this request');await expect(chat.getByRole('button',{name:'Nachricht senden',exact:true})).toBeDisabled();expect(mutations).toEqual([]);
 });

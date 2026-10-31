@@ -1,4 +1,4 @@
-import {startChat,chatHistory} from '../control/agent-chat.ts';
+import {startChat,chatHistory,requestChatDesignSet} from '../control/agent-chat.ts';
 import { projectDesignStatus } from '../control/project-status.ts';
 import { handleAgentReconciliation } from './agent-reconciliation-routes.ts';
 import { productAuthorityHandler } from './product-decisions.ts';
@@ -244,6 +244,12 @@ private runWorker(
       });
     }
     if(await handleAgentJobs(request,response,url,{db:pool,spiffeEnabled,trustedAgentId:trustedPrismAgentSpiffeId,readBody:body}))return;
+    if (url.pathname === '/v1/agent/chat-design-set' && request.method === 'POST') {
+      if (!spiffeEnabled) throw new Error('Prism agent tools require SPIFFE worker trust');
+      authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));
+      const input=await body(request) as {jobId:string;fence:string};
+      return json(response,202,await requestChatDesignSet(pool,input.jobId,input.fence));
+    }
     if (url.pathname === "/v1/agent/design-sets" && request.method === "POST") {
       if (!spiffeEnabled) throw new Error("Prism agent tools require SPIFFE worker trust");
       authorizeProxiedSpiffePeer(request.headers,request.socket.remoteAddress,new Set([trustedPrismAgentSpiffeId]));

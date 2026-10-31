@@ -7,6 +7,7 @@ export type DesignRoundStart = {
   projectId: string; subjectId: string | null; startKey: string;
   architectureDigest: string; architectureRevision: number;
   parentRoundId?: string; documentId?: string; expectedRevision?: number;
+  iterationInstruction?: string;
 };
 type ActiveRequest = {id: string; architecture_digest: string; architecture_revision: number | string; current_round_id: string | null; request: Record<string,unknown>};
 const hash = (value: unknown) => createHash('sha256').update(JSON.stringify(value)).digest('hex');
@@ -21,7 +22,11 @@ async function sourceRevision(db: Queryable, input: DesignRoundStart, active: Ac
 
 export async function startDesignRound(db: Database, input: DesignRoundStart, options: {resumeActive?:boolean} = {}) {
   if (!input.startKey || input.startKey.length > 240) throw new Error('design round idempotency key is required');
-  return inTransaction(db, async connection => {
+  return inTransaction(db, connection=>startDesignRoundInTransaction(connection,input,options));
+}
+
+export async function startDesignRoundInTransaction(connection:Queryable,input:DesignRoundStart,options:{resumeActive?:boolean}={}) {
+    if (!input.startKey || input.startKey.length > 240) throw new Error('design round idempotency key is required');
     const project = await connection.query<{id: string}>("SELECT id FROM prism.project WHERE external_id=$1 FOR UPDATE",[input.projectId]);
     if (!project.rows[0]) throw new Error('design round project is not available');
     const projectId = project.rows[0].id; const startDigest = hash(input);
@@ -45,7 +50,6 @@ export async function startDesignRound(db: Database, input: DesignRoundStart, op
     await connection.query("INSERT INTO prism.design_round(id,project_id,design_request_id,architecture_digest,architecture_revision,parent_round_id,source_document_id,source_revision_id,start_key,start_digest,feedback,request) VALUES($1,$2,$3,$4,$5,$6,$7,$8,$9,$10,$11::jsonb,$12::jsonb)",[snapshot.generationId,projectId,active.id,active.architecture_digest,active.architecture_revision,active.current_round_id,input.documentId ?? null,revisionId,input.startKey,startDigest,JSON.stringify(feedback.rows.map(row=>row.content)),JSON.stringify(active.request)]);
     await connection.query("UPDATE prism.design_request SET current_round_id=$2 WHERE id=$1",[active.id,snapshot.generationId]);
     return {...snapshot,request:active.request};
-  });
 }
 
 export async function boundDesignRound(connection: Queryable, projectId: string, generationId: string, resultDigest: string) {
