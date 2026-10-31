@@ -1,0 +1,163 @@
+{
+  "collectedAt": "2026-10-31 07:00:47 UTC",
+  "pod": {
+    "name": "agent-prism-66f976fb46-dxf82",
+    "ready": true,
+    "restarts": 0,
+    "containers": [
+      {
+        "name": "kubeclaw",
+        "ready": true,
+        "restarts": 0,
+        "state": {
+          "running": {
+            "startedAt": "2026-10-31T06:56:06Z"
+          }
+        },
+        "lastState": {}
+      },
+      {
+        "name": "prism-agent-bridge",
+        "ready": true,
+        "restarts": 0,
+        "state": {
+          "running": {
+            "startedAt": "2026-10-31T06:56:07Z"
+          }
+        },
+        "lastState": {}
+      },
+      {
+        "name": "worker-trust-proxy",
+        "ready": true,
+        "restarts": 0,
+        "state": {
+          "running": {
+            "startedAt": "2026-10-31T06:56:07Z"
+          }
+        },
+        "lastState": {}
+      }
+    ],
+    "resources": [
+      {
+        "name": "kubeclaw",
+        "resources": {
+          "limits": {
+            "cpu": "2",
+            "memory": "8Gi"
+          },
+          "requests": {
+            "cpu": "500m",
+            "memory": "2Gi"
+          }
+        }
+      },
+      {
+        "name": "prism-agent-bridge",
+        "resources": {
+          "limits": {
+            "cpu": "500m",
+            "memory": "512Mi"
+          },
+          "requests": {
+            "cpu": "50m",
+            "memory": "128Mi"
+          }
+        }
+      },
+      {
+        "name": "worker-trust-proxy",
+        "resources": {
+          "limits": {
+            "cpu": "500m",
+            "memory": "256Mi"
+          },
+          "requests": {
+            "cpu": "50m",
+            "memory": "64Mi"
+          }
+        }
+      }
+    ]
+  },
+  "applications": [
+    {
+      "name": "kubeclaw",
+      "namespace": "argocd",
+      "creationTimestamp": "2026-09-18T10:04:06Z",
+      "project": "kubeclaw-bootstrap",
+      "destinationNamespace": "argocd",
+      "sync": "Synced",
+      "revision": "19452f085f4e85c9b4faf39966c97fd048fb89fc",
+      "health": "Progressing",
+      "healthMessage": null,
+      "operationPhase": "Succeeded",
+      "operationMessage": "successfully synced (all tasks run)"
+    },
+    {
+      "name": "kubeclaw-prism",
+      "namespace": "argocd",
+      "creationTimestamp": "2026-09-18T10:04:05Z",
+      "project": "kubeclaw",
+      "destinationNamespace": "kubeclaw",
+      "sync": "Synced",
+      "revision": "19452f085f4e85c9b4faf39966c97fd048fb89fc",
+      "health": "Healthy",
+      "healthMessage": null,
+      "operationPhase": "Succeeded",
+      "operationMessage": "successfully synced (all tasks run)"
+    },
+    {
+      "name": "kubeclaw-prism-control-access",
+      "namespace": "argocd",
+      "creationTimestamp": "2026-10-31T06:42:38Z",
+      "project": "kubeclaw",
+      "destinationNamespace": "kubeclaw",
+      "sync": "Synced",
+      "revision": "19452f085f4e85c9b4faf39966c97fd048fb89fc",
+      "health": "Healthy",
+      "healthMessage": null,
+      "operationPhase": "Succeeded",
+      "operationMessage": "successfully synced (all tasks run)"
+    }
+  ],
+  "memory": {
+    "namespace": "kubeclaw",
+    "pod": "agent-prism-66f976fb46-dxf82",
+    "timestamp": "2026-10-31T07:00:35Z",
+    "window": "12.638s",
+    "containers": [
+      {
+        "name": "kubeclaw",
+        "usage": {
+          "cpu": "1135383684n",
+          "memory": "1789964Ki"
+        }
+      },
+      {
+        "name": "prism-agent-bridge",
+        "usage": {
+          "cpu": "112884367n",
+          "memory": "68204Ki"
+        }
+      },
+      {
+        "name": "worker-trust-proxy",
+        "usage": {
+          "cpu": "2818509n",
+          "memory": "19580Ki"
+        }
+      }
+    ]
+  },
+  "controlHealthVerified": "Nova loopback28081 HTTP200 after scoped NetworkPolicy, original-job GET succeeded; no mTLS weakening.",
+  "originalJob": {
+    "id": "ab9bdaf6-ad72-44ed-8c86-f09b967e5540",
+    "attempt": 2,
+    "state": "needs_nova",
+    "result": null,
+    "activeSessionRecovery": true
+  },
+  "review": "10 network/generation tests;4 memory/selection tests passed. Autoreview helper unavailable: codex executable not installed; manual review only."
+}

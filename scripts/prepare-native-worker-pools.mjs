@@ -104,6 +104,10 @@ function prepare(policy) {
     if (existing.has(role)) continue;
     const directory = `${root}/${role}`;
     fs.mkdirSync(directory);
+    // The unprivileged Prism host must traverse its pool to read its own scope
+    // counters. UMask=0077 otherwise silently removes these search bits.
+    // Existing pools remain operator-maintained; no admission-time chmod.
+    if (role === 'prism') fs.chmodSync(directory, 0o711);
     for (const [file, value] of Object.entries(controls(pool))) fs.writeFileSync(`${directory}/${file}`, value);
     fs.writeFileSync(`${directory}/cgroup.subtree_control`, required.map(controller => `+${controller}`).join(' '));
     verifyExisting(role, pool);
