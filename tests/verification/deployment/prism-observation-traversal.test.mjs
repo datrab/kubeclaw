@@ -1,10 +1,15 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import {requirePrismObservationRepair, prismObservationRoot} from '../../../scripts/repair-prism-observation-traversal.mjs';
+import {requirePrismObservationRepair, prismObservationRoot, filesystemForDescriptor} from '../../../scripts/repair-prism-observation-traversal.mjs';
 const facts = {uid: 0, path: prismObservationRoot, realpath: prismObservationRoot, filesystem: 0x63677270,
   owner: 0, group: 0, mode: 0o700, populated: 'populated 0', children: 0, processes: '',
   controlsRootOnlyWritable: true, controllers: ['cpu', 'memory', 'pids']};
+test('Linux descriptor inspection uses supported Node filesystem APIs', {skip: process.platform !== 'linux'}, () => {
+  const fd = fs.openSync('.', fs.constants.O_RDONLY | fs.constants.O_DIRECTORY);
+  try { assert.equal(filesystemForDescriptor(fd), fs.statfsSync('.').type); }
+  finally { fs.closeSync(fd); }
+});
 test('only the exact drained root-owned Prism pool is eligible; repair is idempotent', () => {
   assert.equal(requirePrismObservationRepair(facts), true);
   assert.equal(requirePrismObservationRepair({...facts, mode: 0o711}), false);

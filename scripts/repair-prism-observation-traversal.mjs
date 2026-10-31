@@ -3,6 +3,8 @@ import {pathToFileURL} from 'node:url';
 
 export const prismObservationRoot = '/sys/fs/cgroup/kubeclaw.slice/kubeclaw-native-pools.service/prism';
 
+export const filesystemForDescriptor = fd => fs.statfsSync(`/proc/self/fd/${fd}`).type;
+
 export function requirePrismObservationRepair(facts) {
   if (facts.uid !== 0 || facts.path !== prismObservationRoot || facts.realpath !== facts.path
     || facts.filesystem !== 0x63677270 || facts.owner !== 0 || facts.group !== 0
@@ -25,7 +27,7 @@ export function repairPrismObservationTraversal() {
     const before = Object.fromEntries(files.map(name => [name, read(name)]));
     const facts = {
       uid: process.getuid(), path: root, realpath: fs.realpathSync(root),
-      filesystem: fs.fstatfsSync(fd).type, owner: stat.uid, group: stat.gid, mode: stat.mode & 0o777,
+      filesystem: filesystemForDescriptor(fd), owner: stat.uid, group: stat.gid, mode: stat.mode & 0o777,
       populated: read('cgroup.events').split('\n').find(line => line.startsWith('populated ')),
       children: fs.readdirSync(root, {withFileTypes: true}).filter(x => x.isDirectory()).length,
       processes: read('cgroup.procs'), controllers: before['cgroup.subtree_control'].split(/\s+/u),
