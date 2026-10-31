@@ -1,0 +1,30 @@
+[
+  {
+    "name": "reviewedCommonErrorMarkdownOutput",
+    "source": "scripts/docs-common-error-catalogue.mjs",
+    "expected": "90f6d9b9db8a40ad1f56df494e0bdbeb1fcfe4cbc5498b440653673942cec0b0",
+    "actual": "90f6d9b9db8a40ad1f56df494e0bdbeb1fcfe4cbc5498b440653673942cec0b0",
+    "unchanged": true
+  },
+  {
+    "name": "reviewedEventContractDocumentationOutput",
+    "source": "scripts/docs-event-contracts.mjs",
+    "expected": "2ae525f9af7ac12b7e06fba9e55a8f57ccf5cda25033cd7c7c2084c2971a68a2",
+    "actual": "2ae525f9af7ac12b7e06fba9e55a8f57ccf5cda25033cd7c7c2084c2971a68a2",
+    "unchanged": true
+  },
+  {
+    "name": "reviewedPublicationYamlValidationInputs",
+    "source": "scripts/docs-publication-embedded-yaml.mjs",
+    "expected": "79dea1473f089d01718925c668685976c1dabfca5a056e851b15795089fcdf0b",
+    "actual": "79dea1473f089d01718925c668685976c1dabfca5a056e851b15795089fcdf0b",
+    "unchanged": true
+  },
+  {
+    "name": "reviewedPublicationNativeValidation",
+    "source": "scripts/docs-publication-example-native.mjs",
+    "expected": "bf226417f8311315304773b9d4f158955489a1d323f2f1ff85b122c26905857c",
+    "actual": "bf226417f8311315304773b9d4f158955489a1d323f2f1ff85b122c26905857c",
+    "unchanged": true
+  }
+]

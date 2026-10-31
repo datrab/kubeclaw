@@ -1,0 +1,164 @@
+```json
+{
+  "revision": "23e19f457aa263d6c96c531d2cccbcffa283e306",
+  "decision": "NOT_READY",
+  "astraModelExecution": false,
+  "sourceAccuracy": {
+    "status": "PASS_AT_ORIGINAL_BOUNDED_SOURCE_SCOPE",
+    "basis": [
+      "The static 84-SUR assignment manifest retains 44,768 typed identities across 30 typed families and 54 explicitly bounded manual-only routes.",
+      "Typed relations retain source, authority/boundary, canonical target, owner, generator/check, and inverse mapping; static controls reject retained-identity reassignment, selected-input substitution, and unrelated manual inventory use.",
+      "Manual routes remain named review routes only, not invented runtime, freshness, or semantic-source proof.",
+      "The corrected 454 instruction hosts preserve the prior 451 hosts and add only the three previously accepted MNT-003 procedures; parser scope remains parse-only."
+    ],
+    "limits": [
+      "No global ToolSource, Python 3.14, runtime, provider, deployment, or default-global-API success is inferred.",
+      "Source accuracy does not itself establish reader usability, publication-boundary quality, or final integration."
+    ]
+  },
+  "reader": {
+    "status": "NOT_READY",
+    "observed": [
+      "The restricted practical reader successfully performed bounded governance/lookup interpretation under its allowed inputs.",
+      "Its first practical route stopped at the generic docs:generate:check source-lock mismatch and owned scratch condition; mutation and restoration were not completed.",
+      "The later published route correctly limits governance generation/checking to governance-owned outputs and does not waive the ordinary source-lock route."
+    ],
+    "limits": [
+      "No completed practical mutation/restoration exercise is evidenced.",
+      "The reader is restricted and is not Source, Quality, runtime, or deployment evidence."
+    ]
+  },
+  "quality": {
+    "status": "NOT_READY",
+    "materialFinding": {
+      "id": "SITE_BOUNDARY_RECONCILIATION_REQUIRED",
+      "evidence": "reader-route-site-boundary-check.log",
+      "exitCode": 1,
+      "findingCount": 752,
+      "inputCount": 19,
+      "materialGroups": {
+        "generatedDocumentationMapProvenance": 217,
+        "cliReference": 177,
+        "verificationCommands": 201,
+        "remainingReaderPagesAndInternalDocumentationLinks": 157
+      },
+      "meaning": "The selected current publication chain cannot be represented as complete or practically reader-safe while the existing site-boundary control rejects its generated provenance and real reader/documentation links."
+    },
+    "successfulButInsufficientChecks": [
+      "final-assembly-governance-check.log",
+      "final-assembly-supported-publication-check.log",
+      "final-assembly-reference-check.log",
+      "publication-final-native-configuration-check.log",
+      "publication-final-hub-check.log",
+      "final-stable-61c0-native-cli-check.log",
+      "current-454-instruction-and-receiver-controls.log"
+    ]
+  },
+  "requirements": {
+    "GOV-002": {
+      "criterion": "Vollständiges Inventar aller dokumentationspflichtigen Produktoberflächen.",
+      "source": "PASS_AT_BOUNDED_INVENTORY_SCOPE",
+      "reader": "NOT_READY",
+      "quality": "NOT_READY",
+      "finalIntegration": "NOT_READY",
+      "originalWholeVerdict": "NOT_READY",
+      "reason": "The static 84-family surface inventory and its typed/manual route distinction support the source inventory model, but the failed site-boundary control and incomplete practical reader exercise prevent a whole-product-surface usability/integration award."
+    },
+    "MNT-001": {
+      "criterion": "Eine mechanische Quelle der Wahrheit je Produktfakt.",
+      "source": "PASS_AT_BOUNDED_MECHANICAL_AUTHORITY_SCOPE",
+      "reader": "NOT_READY",
+      "quality": "NOT_READY",
+      "finalIntegration": "NOT_READY",
+      "originalWholeVerdict": "NOT_READY",
+      "reason": "The manifest and matrix establish the bounded authority relation for admitted mechanical facts without promoting manual routes into fact authority. The unresolved boundary failures prevent final confirmation that the corresponding published authority presentation remains usable and coherently integrated."
+    },
+    "MNT-009": {
+      "criterion": "Vollständige Source-to-Doc-Abdeckungsmatrix.",
+      "source": "PASS_AT_BOUNDED_MATRIX_SCOPE",
+      "reader": "NOT_READY",
+      "quality": "NOT_READY",
+      "finalIntegration": "NOT_READY",
+      "originalWholeVerdict": "NOT_READY",
+      "reason": "Forward/inverse source-to-doc relations and policy lookup are supported for the declared inventory, but the generated map itself contributes 217 unresolved site-boundary findings. The matrix therefore cannot receive a final quality/integration award."
+    }
+  },
+  "affectedAcceptedRecordPreservation": {
+    "status": "NOT_READY",
+    "reason": "No individual semantic regression is established from the bounded source review, but preservation cannot be finalized while the current site-boundary check fails and the practical reader completion/restoration evidence is absent.",
+    "coveredOriginalRecordIds": [
+      "AP09.1-ready-topics-20261020",
+      "Reviewed-corrections-20261020",
+      "AP09-reader-developers-20261020",
+      "AP09-reviewed-configuration-20261020",
+      "AP09-reviewed-maintenance-20261020",
+      "AP09-reviewed-publication-navigation-20261020",
+      "AP09-closeout-config-reference-20261020",
+      "AP09-closeout-developer-maintenance-20261020",
+      "AP09-buster-lease-reference-20261020",
+      "AP09-complete-public-cli-20261020",
+      "AP09-documentation-agent-maintenance-20261021",
+      "AP09-complete-platform-change-content-20261021",
+      "AP09-complete-publication-reference-navigation-20261021",
+      "AP09-complete-developer-reader-contracts-20261021",
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-search-reader-gate-20261021",
+      "AP09-rendered-source-bounds-gate-20261021",
+      "AP09-complete-same-source-code-preview-20261021",
+      "AP09-complete-responsive-reader-layout-20261021",
+      "A912-11-deterministic-page-records-20261022",
+      "AP09-publication-positive-scope-7ef16585",
+      "A912-05-whole-source-excerpt-callouts-20261022",
+      "A98-02-13-whole-operator-procedure-contract-20261022",
+      "A910-03-whole-command-prerequisite-contract-20261022",
+      "AP09-whole-extension-drift-A91014-20261023",
+      "pr13-a91005-complete-package-capture-20261024",
+      "A99-13-original-seven-dimension-drift-20261025",
+      "A910-10-whole-supported-extension-lifecycle-20261026",
+      "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "MNT-005-common-source-bound-error-catalogue-20261030",
+      "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "MNT-004-whole-source-owned-cli-reference-20261030",
+      "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "A911-05-whole-owned-diagnostic-reference-20261030",
+      "CFG011-REF012-whole-complete-environment-secrets-20261030",
+      "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "MNT003-whole-generated-configuration-defaults-maintenance-20261031"
+    ]
+  },
+  "oneFiniteNecessarySuccessor": {
+    "name": "fixed-site-boundary-reconciliation",
+    "scope": "Only the 19 already-reported site-boundary inputs and their 752 existing findings.",
+    "requiredShape": [
+      "Use the existing boundary mechanism to give each reported finding a fail-closed disposition: generated machine-provenance field, source-authority/data reference, valid reader navigation, or a concrete content/link correction.",
+      "Do not suppress generated-documentation-map provenance wholesale; retain provenance while classifying it as machine data rather than reader prose.",
+      "Do not waive source locks or delete real reader/documentation links merely to make the check pass.",
+      "Run the corrected bounded practical-reader route through its mutation/restoration outcome, then rerun the existing site-boundary control."
+    ],
+    "successCondition": "The existing boundary check is terminal-pass with no undisposed findings, and the restricted practical-reader workflow has an actual completed restoration result."
+  },
+  "retainedLimits": [
+    "REF-003, REF-004, MNT-003, CFG011/REF012, A911-05 and other closed topic decisions are not reopened.",
+    "No default-global-API, runtime, provider, deployment, browser, generic ToolSource, or native Python 3.14 award is implied.",
+    "Historical invalid/cancelled/wrong-invocation, stale-claim, source-lock, and publication-observer negatives remain retained.",
+    "No gate, registration, push, or other requirement award is authorized by this verdict."
+  ]
+}
+```

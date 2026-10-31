@@ -1,0 +1,2697 @@
+[
+  {
+    "name": "reviewedCliStaticAstProtocols",
+    "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+    "pins": [
+      {
+        "path": "scripts/lib/cli/cli-native-driver.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-inventory.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/cli/typed-cli-ast.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/cli/cli-semantic-composition.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/cli/cli-source-model.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "package-lock.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "versions.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-api-python-output-adapter.py",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-api-python-ast-v1.py",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-api-go-output-role-adapter.go",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/cli/python_cli_ast.py",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/cli/go_cli_ast.go",
+        "matches": true,
+        "physical": true
+      }
+    ],
+    "factsDigestUnchanged": null
+  },
+  {
+    "name": "reviewedCommonErrorMarkdownOutput",
+    "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+    "pins": [
+      {
+        "path": "scripts/docs-common-error-catalogue.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/docs-catalogue-input-surface.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/config/common-error-catalogue.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/config/common-error-input-surface.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "package.json",
+        "matches": true,
+        "physical": true
+      }
+    ],
+    "factsDigestUnchanged": "90f6d9b9db8a40ad1f56df494e0bdbeb1fcfe4cbc5498b440653673942cec0b0"
+  },
+  {
+    "name": "reviewedEventContractDocumentationOutput",
+    "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+    "pins": [
+      {
+        "path": "scripts/docs-event-contracts.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/docs-event-contracts.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/docs-event-reference-collector.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/docs-event-reference.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/config/event-reference-bindings.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/events.md",
+        "matches": true,
+        "physical": true
+      }
+    ],
+    "factsDigestUnchanged": "2ae525f9af7ac12b7e06fba9e55a8f57ccf5cda25033cd7c7c2084c2971a68a2"
+  },
+  {
+    "name": "reviewedPublicationYamlValidationInputs",
+    "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+    "pins": [
+      {
+        "path": "scripts/docs-publication-embedded-yaml.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/docs-publication-example-coverage.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-publication-examples.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/config/publication-example-claims.json",
+        "matches": false,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/diagnose.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/install.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "versions.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-api-authority-lock.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/vendor/api-authorities/483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446.json.gz",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/vendor/api-authorities/62c6de8f358da125b94468d39187edb1cea157d79503fdc50ccec8a6aaa79a76.yaml.gz",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "package.json",
+        "matches": true,
+        "physical": true
+      }
+    ],
+    "factsDigestUnchanged": "79dea1473f089d01718925c668685976c1dabfca5a056e851b15795089fcdf0b"
+  },
+  {
+    "name": "reviewedPublicationNativeValidation",
+    "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+    "pins": [
+      {
+        "path": "charts/kubeclaw/Chart.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/.semgrep.yml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/.tflint.hcl",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/.yamllint.yml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/eslint.config.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/jscpd-tests.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/jscpd.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/knip.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/lint-baseline.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/lint-policy.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/swarm.config.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/reset-managed-plugin-projects.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/files/restore-managed-plugin-config.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/NOTES.txt",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/_demo-ready-client.tpl",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/_helpers.tpl",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/archviewer.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/configmap-workspace.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/demo-ready-service.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/deployment.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/pvc.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/rbac.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/secret.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/service-extra-nodeports.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/service.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/templates/serviceaccount.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/kubeclaw/values.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/Chart.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/ci-values.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/files/prism-backup.sh",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/_helpers.tpl",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/_product-decisions.tpl",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/backup-storage-check.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/backup.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/configmap-worker-trust.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/ingestion.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/jobs.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/networkpolicy.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/postgresql.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/product-decisions-networkpolicy.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/serviceaccounts.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/services.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/templates/workloads.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/values.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "charts/prism/values.yaml",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/delivery-manifest/v3/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/delivery-manifest/v3/src/index.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-observability/v1/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-observability/v1/src/canonical-json.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-observability/v1/src/index.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-observability/v1/src/types.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-observability/v1/src/validation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/a11y-config.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/api-flow-config.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/api-suite.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/browser-profiles.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/e2e-playwright.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/e2e-result-cypress.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/http.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/kubernetes-fixture.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/lighthouse-performance-config.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/lighthouse-settings.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/openapi-config.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/security-config.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/size-budget-growth.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/size-budget-tar.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/tailscale-exposure.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/unit-suite-blocking.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/unit-suite-with-coverage.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/visual-baselines.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/examples/visual-config.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/schemas/lighthouse-settings.v1.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/coverage-expectation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/coverage-result.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/coverage.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/digest.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/gate-decision.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/index.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/remote.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/types.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/validation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/a11y.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/api.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/container-build.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/e2e.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/http.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/kubernetes-fixture.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/perf.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/security.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/size-budget.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/tailscale-exposure.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/unit.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/suites/visual.v1.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/index.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/prism/v1/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/prism/v1/schemas/prism-v1.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/prism/v1/src/baseline-archive.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/prism/v1/src/complexity.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/prism/v1/src/document-semantics.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/prism/v1/src/index.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/prism/v1/src/node-catalog.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "contracts/prism/v1/src/validators.generated.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/config/publication-example-claims.json",
+        "matches": false,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/src/stage.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/observer-lifecycle/journey.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/observer-lifecycle/plugin/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/observer-lifecycle/plugin/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/observer-lifecycle/plugin/src/observer.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+        "matches": false,
+        "physical": true
+      },
+      {
+        "path": "docs/site/extend/first-plugin.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/buster-runtime-configuration.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/capabilities.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/configuration-precedence.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/documentation-route-registry.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/generated-documentation-map.json",
+        "matches": false,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/helm-values.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/host-and-prism-configuration.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/nova-project.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/pipeline-definition.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/pipeline-json.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/pipeline-platform.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/reference/project-pipeline-publication.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/operate.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/prism-studio.md",
+        "matches": false,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/compiled-project.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/first-project.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/local-core.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/repair-retry.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/examples/request-trace-success.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "docs/site/use/workflows/wait-resume/signal.template.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-publication-example-assets.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-publication-example-native.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-publication-example-projections.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-publication-examples.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/docs-publication.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/lib/docs-publication-example-coverage.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "scripts/tests/docs-publication-examples.test.mjs",
+        "matches": false,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/artifacts.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/composite-capability-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/dependency-process.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/exposure-handoff.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/fixture-authority.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/generated-demo-credentials.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/process-input.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/production.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/provider-loader.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/report-finalizer.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/runner.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/engine/test-gates/trivy-database.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/README.buster.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/api-flow/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/axe/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/axe/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/axe/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/axe/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/container-build/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/container-build/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/container-build/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/container-build/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/container-build/tests/deadline.test.mts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/container-build/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/container-build/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/coverage-budget/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/coverage-budget/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/coverage-budget/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/coverage-budget/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/demo-auth-smoke/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/demo-auth-smoke/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/demo-auth-smoke/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/direct-command/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/direct-command/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/direct-command/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/direct-command/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/direct-command/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/direct-command/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/http/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/http/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/http/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/http/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/http/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/http/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/junit-report-adapter/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/kubernetes-fixture/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/kubernetes-fixture/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/kubernetes-fixture/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/lighthouse/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/lighthouse/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/lighthouse/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/lighthouse/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/src/schema-support.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/tests/remediation.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/openapi/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/tests/fixture/playwright.config.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/playwright/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/src/common.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/src/dependency.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/src/headers.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/src/image.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/security-providers/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/size-budget/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/size-budget/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/size-budget/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/size-budget/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/size-budget/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/tailscale-exposure/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/tailscale-exposure/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/tailscale-exposure/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/README.md",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/plugin.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/src/browser-identity.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/buster/plugins/visual/tsconfig.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/errors.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/frozen-map.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/frozen-set.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/artifact-json.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/review-cache-profile.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/runtime-workspace.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/source-approval.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/source-preflight.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/source-revision.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugins/command-runner/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/cgroup.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/execution.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/process-facts.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/process-group.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/runner.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugins/command-runner/src/types.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/common/plugins/operator-messaging/src/receiver.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/contracts.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/coordinator.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/dependency-identity.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/dependency-journal.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/durable-invocation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/identity.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/journal.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/locks.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/memory-locks.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/effects/resource-acquisition.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/adapter-invocation-phase.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/adapter-startup.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/adapter-support.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/adapters.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/artifact-checkpoints.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/authorization.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/context.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/effect-recovery.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/engine-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/engine-snapshots.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/graph-build.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/graph-repair-budget.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/graph.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/lease.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/pipeline-loop.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/run-decisions.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/runner.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/execution/stage-executor.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/lifecycle/reducer.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/lifecycle/remediation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/lifecycle/repair-budget.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/lifecycle/repair-projection.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/lifecycle/wait-request.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/state/file-mutex.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/state/journal.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/state/json-value.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/telemetry/observer-delivery.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/telemetry/observer-recovery.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/telemetry/observers.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/test-gates/pipeline.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/test-gates/resolver.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/core/test-gates/types.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/plugins/human-approval/src/approval.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/plugins/prism-design/src/architecture.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/plugins/prism-design/src/archive.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/plugins/prism-design/src/stage.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/project/compiler.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/project/coverage.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/project/delivery-manifest.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/project/demo.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/project/review-semantics.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/nova/project/source.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/prism/studio/dev-fixture.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/package.json",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/src/index.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/attempt-executor.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/digest.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/local-runtime.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/log-decoder.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-executor.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-journal.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-control-channel.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-journal-state.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-node-identity.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-output-spool.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-pool-policy.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-process-cancellation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-process-control.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-process-launches.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-process-output.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-resource-accounting.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-resource-observation.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-resource-pool.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-resource-scope.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-result.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-runtime-identity.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-supervisor-authority.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-worker-ownership.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/native-worker-process.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/ownership-state.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/ownership-store.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/phase-deadline.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/resource-accounting.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/resource-reservations.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/resource-result-fields.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "skills/worker/core/worker/trust.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "tests/verification/e2e/support/optional-absence.ts",
+        "matches": true,
+        "physical": true
+      },
+      {
+        "path": "tests/verification/e2e/support/platform-config.ts",
+        "matches": true,
+        "physical": true
+      }
+    ],
+    "factsDigestUnchanged": "bf226417f8311315304773b9d4f158955489a1d323f2f1ff85b122c26905857c"
+  }
+]

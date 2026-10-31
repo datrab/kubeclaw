@@ -1,0 +1,150 @@
+{
+  "at": "2026-10-31T17:01:49.594443+00:00",
+  "fixture": "/home/node/.openclaw/workspace/tmp/pr13-boundary-command-controls-zwx78s6u",
+  "copiedDeclaredFiles": 2132,
+  "results": [
+    {
+      "case": "exact-current-owner-baseline",
+      "exitCode": 0,
+      "expectedPass": true,
+      "stdout": "",
+      "stderr": ""
+    },
+    {
+      "case": "docs:errors:generate:absent",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15\n    throw new Error(`verification guidance ${label} identities differ from the native owner`);\n          ^\n\nError: verification guidance npm identities differ from the native owner\n    at sameIdentities (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15:11)\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:30:3)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:generate:renamed",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15\n    throw new Error(`verification guidance ${label} identities differ from the native owner`);\n          ^\n\nError: verification guidance npm identities differ from the native owner\n    at sameIdentities (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15:11)\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:30:3)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:generate:duplicate",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15\n    throw new Error(`verification guidance ${label} identities differ from the native owner`);\n          ^\n\nError: verification guidance npm identities differ from the native owner\n    at sameIdentities (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15:11)\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:30:3)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:generate:wrong-command",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:51\n        throw new Error(`verification guidance npm:${row.id} command changed`);\n              ^\n\nError: verification guidance npm:docs:errors:generate command changed\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:51:15)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:generate:missing-source",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:54\n        throw new Error(`verification guidance ${family}:${row.id} lacks sources`);\n              ^\n\nError: verification guidance npm:docs:errors:generate lacks sources\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:54:15)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:generate:stale-source",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:89\n          throw new Error(`verification guidance source changed: ${source.path}; requalify its command meanings`);\n                ^\n\nError: verification guidance source changed: package.json; requalify its command meanings\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:89:17)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:generate:missing-duty",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:47\n          throw new Error(`verification guidance ${family}:${row.id} lacks ${field}`);\n                ^\n\nError: verification guidance npm:docs:errors:generate lacks effects\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:47:17)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:check:absent",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15\n    throw new Error(`verification guidance ${label} identities differ from the native owner`);\n          ^\n\nError: verification guidance npm identities differ from the native owner\n    at sameIdentities (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15:11)\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:30:3)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:check:renamed",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15\n    throw new Error(`verification guidance ${label} identities differ from the native owner`);\n          ^\n\nError: verification guidance npm identities differ from the native owner\n    at sameIdentities (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15:11)\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:30:3)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:check:duplicate",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15\n    throw new Error(`verification guidance ${label} identities differ from the native owner`);\n          ^\n\nError: verification guidance npm identities differ from the native owner\n    at sameIdentities (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:15:11)\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:30:3)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:check:wrong-command",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:51\n        throw new Error(`verification guidance npm:${row.id} command changed`);\n              ^\n\nError: verification guidance npm:docs:errors:check command changed\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:51:15)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:check:missing-source",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:54\n        throw new Error(`verification guidance ${family}:${row.id} lacks sources`);\n              ^\n\nError: verification guidance npm:docs:errors:check lacks sources\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:54:15)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:check:stale-source",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:89\n          throw new Error(`verification guidance source changed: ${source.path}; requalify its command meanings`);\n                ^\n\nError: verification guidance source changed: package.json; requalify its command meanings\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:89:17)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "docs:errors:check:missing-duty",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:47\n          throw new Error(`verification guidance ${family}:${row.id} lacks ${field}`);\n                ^\n\nError: verification guidance npm:docs:errors:check lacks effects\n    at loadVerificationGuidance (file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-verification-reference.mjs:47:17)\n    at file:///home/node/.openclaw/workspace/[eval1]:1:161\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:223:26\n    at async ModuleLoader.executeModuleJob (node:internal/modules/esm/loader:220:20)\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "existing-error-check-baseline",
+      "exitCode": 0,
+      "expectedPass": true,
+      "stdout": "{\"check\":true,\"families\":187,\"pages\":7,\"sourceBindingsChecked\":true}\n",
+      "stderr": ""
+    },
+    {
+      "case": "existing-error-check-refuses-stale-without-writes",
+      "exitCode": 1,
+      "expectedPass": false,
+      "stdout": "",
+      "stderr": "file:///home/node/.openclaw/workspace/tmp/pr13-boundary-command-controls-zwx78s6u/scripts/docs-common-error-catalogue.mjs:81\n  if (check) { if (!fs.existsSync(path.join(root, name)) || read(name).toString('utf8') !== content) throw new Error(`CATALOGUE_OUTPUT_DRIFT:${name}`); }\n                                                                                                           ^\n\nError: CATALOGUE_OUTPUT_DRIFT:docs/site/reference/common-errors.md\n    at file:///home/node/.openclaw/workspace/tmp/pr13-boundary-command-controls-zwx78s6u/scripts/docs-common-error-catalogue.mjs:81:108\n    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)\n    at async node:internal/modules/esm/loader:647:26\n    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)\n\nNode.js v24.22.1\n"
+    },
+    {
+      "case": "existing-error-writer-restores-seven-owned-outputs",
+      "exitCode": 0,
+      "expectedPass": true,
+      "stdout": "{\"check\":false,\"families\":187,\"pages\":7,\"sourceBindingsChecked\":true}\n",
+      "stderr": ""
+    },
+    {
+      "case": "existing-error-check-restored",
+      "exitCode": 0,
+      "expectedPass": true,
+      "stdout": "{\"check\":true,\"families\":187,\"pages\":7,\"sourceBindingsChecked\":true}\n",
+      "stderr": ""
+    }
+  ],
+  "sevenOutputHashesRestored": {
+    "docs/site/reference/common-errors.md": "68d2f0e54277fdd7005622ea6e61b2d2a5654a78c0decbc8cfd01155719a73f8",
+    "docs/site/reference/common-errors-foundation.md": "035707aff2e75d832c6386ec19e8ffa382730b53afb95cf565d5e3ec7320d53d",
+    "docs/site/reference/common-errors-nova.md": "34a5ec941293dceb884ec3c2b92a08ebfe1291e852f5649895ca1dec2fb257bc",
+    "docs/site/reference/common-errors-worker.md": "e8c5d6c1df362d83aabfd17bd49568caf492151d68b7d7cd0cf13e780744cf68",
+    "docs/site/reference/common-errors-prism.md": "952266bf046cd680a809d529e4a8433274ac3f97416b7e85b55682d0f6a2698a",
+    "docs/site/reference/common-errors-platform.md": "cfd0a3ede00bfc5bc1fec16afc507294fac4f5e1e7705c88a4d23e77bfa0af7f",
+    "docs/site/reference/common-errors-configuration.md": "0605db2a590209f73d6831495dddca2c7cf1ba5ebf734f405f28b163e8280934"
+  },
+  "source": "Exact existing declared sources/input-surface files, not a new scanner or product execution. Loader structural controls; actual unchanged writer/check modes prove effect separation. Not full native generation, Reader or original award."
+}

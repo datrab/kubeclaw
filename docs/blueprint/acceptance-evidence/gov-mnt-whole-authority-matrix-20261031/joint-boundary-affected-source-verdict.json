@@ -1,0 +1,110 @@
+```json
+{
+  "report": "joint-boundary-affected-source-verdict.json",
+  "revision": "3a55f4ada58fb8bb670715533ec4d46402c2db14",
+  "scope": "Existing site-reader boundary classifier, its 19 reported inputs, and the existing verification-owner binding delta only.",
+  "overall": "NOT_READY_FOR_BINDING_SUCCESSOR",
+  "structuralBoundary": {
+    "verdict": "PASS_AT_AFFECTED_SCOPE",
+    "basis": [
+      "The classifier distinguishes typed JSON leaf roles from unknown or reader-prose fields; it does not exempt generated JSON bodies wholesale.",
+      "It separately preserves checks for prose, keys, command registration, immutable 40-hex source citations, ordinary navigation, German text, H1s, and unknown fields.",
+      "The fixtures reject malformed identities, mixed source vectors, arbitrary AP-like prose, unregistered command suffixes, review bookkeeping, and prose hidden in generated-looking content.",
+      "A source-only package manifest reference is treated as declaration data, not as product authority or completion metadata."
+    ],
+    "limits": [
+      "No source lock is waived.",
+      "No product API, runtime, deployment, or generic generated-content exemption is granted.",
+      "This is a classifier/source-boundary judgment, not a terminal publication or Reader result."
+    ]
+  },
+  "contentCorrections": {
+    "verdict": "PASS_AT_AFFECTED_SCOPE",
+    "meaning": [
+      "The verification-guidance changes rename internal labels without changing command IDs, arguments, the seven required responsibility fields, conditional applicability, execution limits, or original duties.",
+      "Decision/status edits explicitly label immutable links as source authority or historical command-result citations; they do not alter decision alternatives, dates, runtime claims, or old C020 evidence.",
+      "The Helm wording remains an unused-value prerequisite/removal condition and does not create a deployment or runtime task.",
+      "The 19 corrected anchors are dispositioned rather than removed; the original platform/default/path and no-runtime limits remain."
+    ],
+    "materialFinding": null
+  },
+  "existingVerificationBindingDelta": {
+    "verdict": "SUPPORTED_FINITE_SUCCESSOR_REQUIRED",
+    "observed": {
+      "physicalInputs": 14,
+      "declaredBindingsAffected": 467,
+      "missingCommands": [
+        {
+          "id": "docs:errors:generate",
+          "command": "node scripts/docs-common-error-catalogue.mjs"
+        },
+        {
+          "id": "docs:errors:check",
+          "command": "node scripts/docs-common-error-catalogue.mjs --check"
+        }
+      ],
+      "removedCommands": []
+    },
+    "meaning": "The current verification owner correctly rejects guidance whose npm identity set omits two already-existing accepted error-catalogue commands. This is a current owner-binding gap, not a new command authority.",
+    "requiredSuccessor": {
+      "shape": "Add exactly two existing npm guidance rows for docs:errors:generate and docs:errors:check.",
+      "requiredFields": [
+        "id",
+        "command",
+        "purpose",
+        "scope",
+        "environment",
+        "effects",
+        "expected",
+        "owner",
+        "changeToCheck",
+        "source bindings"
+      ],
+      "sourceBasis": [
+        "package.json exact existing script declarations",
+        "scripts/docs-common-error-catalogue.mjs",
+        "the accepted MNT-005, MNT-011, REF-005, and A911-05 bounded catalogue/diagnostic scopes"
+      ],
+      "requiredLimits": [
+        "Generate remains the existing catalogue writer only; it does not create runtime, product, deployment, or generic command authority.",
+        "Check remains the existing read-only freshness comparison only.",
+        "The successor must retain source SHA/physical-path binding, exact command equality, seven-field validation, and owner identity equality."
+      ]
+    }
+  },
+  "fourteenPhysicalInputDispositions": {
+    "package.json": "Current script declarations preserve all existing command meanings; the only new receiving-owner duty is the two explicit docs:errors rows.",
+    "docs/blueprint/verification-command-guidance.json": "Current changed prose is descriptive only; exact command identities and seven responsibility fields remain the authority contract.",
+    "docs/site/extend/documentation-maintenance.md": "Existing command routes remain the same; renamed reader-facing descriptions do not alter their command or effect semantics.",
+    "docs/site/extend/testing.md": "Source-only-reading wording preserves the no-execution boundary.",
+    "docs/site/reference/cli.md": "Existing CLI source/citation scope is retained; no CLI ownership expansion is supported.",
+    "docs/site/use/prism-studio.md": "The citation wording preserves the existing no-live-Studio boundary.",
+    ".github/workflows/docs-checks.yaml": "Existing caller identity remains bounded; no workflow capability change is supported.",
+    "scripts/docs-configuration-inventory.mjs": "Previously qualified configuration inventory semantics are reused at their existing limits.",
+    "scripts/docs-generate-core.mjs": "Existing renderer role is unchanged outside current qualified generated-reference scope.",
+    "scripts/docs-generate.mjs": "Existing generation and source-lock semantics remain required; no global route waiver is supported.",
+    "scripts/docs-governance.mjs": "Current governance owner semantics include error-page freshness routing and require the two admitted commands to be represented in guidance.",
+    "scripts/docs-inventory.mjs": "Existing CLI inventory role is reused only at its qualified scope.",
+    "scripts/generate-local-helm-authorities.mjs": "Existing Helm authority role is reused without Helm execution, deployment, or runtime expansion.",
+    "scripts/tests/api-output-node-entry-custody.test.mjs and scripts/tests/docs-publication-examples.test.mjs": "Existing custody/parser test roles remain bounded; no new caller, parser factory, or publication authority is admitted."
+  },
+  "existingCheckerBindings": {
+    "docs:site-boundary:check": "Requires current checker semantic binding; this review supplies its bounded Source basis.",
+    "docs:publish-check": "Requires current checker semantic binding; no new publication authority is supplied.",
+    "verify:product": "Requires current checker semantic binding; no product execution or runtime result is supplied.",
+    "disposition": "These three bindings may advance only through the same maintained verification-owner derivation after the two error-command rows are added."
+  },
+  "meaningfulControlsRequiredForSuccessor": [
+    "Exact npm identity equality must fail when either error command is absent, renamed, duplicated, or substituted.",
+    "Each new row must fail on changed command text, missing source binding, stale source identity, missing responsibility field, or changed writer/check effect boundary.",
+    "The structural boundary controls must retain rejection of prose disguised as machine data, forged source citations, unregistered AP-like commands, and non-reader navigation.",
+    "The ordinary verification reference generation/check must use a full committed revision after the maintained owner derives current bindings."
+  ],
+  "notClaimed": [
+    "No native generation, governance output, publication output, Reader exercise, or original GOV-002/MNT-001/MNT-009 acceptance is claimed.",
+    "No global ToolSource, Python 3.14, default-global-API, deployment, Helm, provider, or runtime result is implied.",
+    "The prior 752-finding boundary failure and all prior failed, cancelled, stale, or wrong-invocation evidence remain retained."
+  ],
+  "nextFiniteAction": "Implement only the two exact existing docs:errors verification-guidance rows with full source-bound fields, derive the existing fourteen-input verification binding successor through the maintained owner, review that candidate, then run the normal committed-revision verification generation/check before any governance/publication or original-whole decision."
+}
+```

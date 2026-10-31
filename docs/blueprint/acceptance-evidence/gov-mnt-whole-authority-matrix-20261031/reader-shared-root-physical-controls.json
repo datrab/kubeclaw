@@ -1,0 +1,194 @@
+{
+  "cases": [
+    {
+      "name": "cli physical positive",
+      "passed": true
+    },
+    {
+      "name": "fixture physical positive",
+      "passed": true
+    },
+    {
+      "name": "parser physical positive",
+      "passed": true
+    },
+    {
+      "name": "cli refuses relative",
+      "passed": true
+    },
+    {
+      "name": "fixture refuses relative",
+      "passed": true
+    },
+    {
+      "name": "parser refuses relative",
+      "passed": true
+    },
+    {
+      "name": "cli refuses /home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/../pr13-gov-mnt-practical-reader-61c0a550",
+      "passed": true
+    },
+    {
+      "name": "fixture refuses /home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/../pr13-gov-mnt-practical-reader-61c0a550",
+      "passed": true
+    },
+    {
+      "name": "parser refuses /home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/../pr13-gov-mnt-practical-reader-61c0a550",
+      "passed": true
+    },
+    {
+      "name": "cli refuses /home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550-unlisted",
+      "passed": true
+    },
+    {
+      "name": "fixture refuses /home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550-unlisted",
+      "passed": true
+    },
+    {
+      "name": "parser refuses /home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550-unlisted",
+      "passed": true
+    },
+    {
+      "name": "cli refuses cwd mismatch",
+      "passed": true
+    },
+    {
+      "name": "fixture refuses cwd mismatch",
+      "passed": true
+    },
+    {
+      "name": "cli changed scripts/lib/cli/cli-native-driver.mjs",
+      "passed": true
+    },
+    {
+      "name": "cli missing scripts/lib/cli/cli-native-driver.mjs",
+      "passed": true
+    },
+    {
+      "name": "cli symlink scripts/lib/cli/cli-native-driver.mjs",
+      "passed": true
+    },
+    {
+      "name": "cli changed scripts/docs-inventory.mjs",
+      "passed": true
+    },
+    {
+      "name": "cli missing scripts/docs-inventory.mjs",
+      "passed": true
+    },
+    {
+      "name": "cli symlink scripts/docs-inventory.mjs",
+      "passed": true
+    },
+    {
+      "name": "fixture changed scripts/tests/docs-cli-typed.test.mjs",
+      "passed": true
+    },
+    {
+      "name": "fixture missing scripts/tests/docs-cli-typed.test.mjs",
+      "passed": true
+    },
+    {
+      "name": "fixture symlink scripts/tests/docs-cli-typed.test.mjs",
+      "passed": true
+    },
+    {
+      "name": "parser changed scripts/lib/docs-publication-example-coverage.mjs",
+      "passed": true
+    },
+    {
+      "name": "parser missing scripts/lib/docs-publication-example-coverage.mjs",
+      "passed": true
+    },
+    {
+      "name": "parser symlink scripts/lib/docs-publication-example-coverage.mjs",
+      "passed": true
+    },
+    {
+      "name": "parser changed scripts/docs-reader/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "parser missing scripts/docs-reader/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "parser symlink scripts/docs-reader/renderer.mjs",
+      "passed": true
+    },
+    {
+      "name": "parser changed scripts/docs-reader/package.json",
+      "passed": true
+    },
+    {
+      "name": "parser missing scripts/docs-reader/package.json",
+      "passed": true
+    },
+    {
+      "name": "parser symlink scripts/docs-reader/package.json",
+      "passed": true
+    },
+    {
+      "name": "parser changed scripts/docs-reader/package-lock.json",
+      "passed": true
+    },
+    {
+      "name": "parser missing scripts/docs-reader/package-lock.json",
+      "passed": true
+    },
+    {
+      "name": "parser symlink scripts/docs-reader/package-lock.json",
+      "passed": true
+    },
+    {
+      "name": "parser changed scripts/docs-reader/node_modules/.package-lock.json",
+      "passed": true
+    },
+    {
+      "name": "parser missing scripts/docs-reader/node_modules/.package-lock.json",
+      "passed": true
+    },
+    {
+      "name": "parser symlink scripts/docs-reader/node_modules/.package-lock.json",
+      "passed": true
+    },
+    {
+      "name": "parser changed scripts/docs-reader/node_modules/markdown-it/package.json",
+      "passed": true
+    },
+    {
+      "name": "parser missing scripts/docs-reader/node_modules/markdown-it/package.json",
+      "passed": true
+    },
+    {
+      "name": "parser symlink scripts/docs-reader/node_modules/markdown-it/package.json",
+      "passed": true
+    },
+    {
+      "name": "parser changed scripts/docs-reader/node_modules/markdown-it/dist/markdown-it.cjs.js",
+      "passed": true
+    },
+    {
+      "name": "parser missing scripts/docs-reader/node_modules/markdown-it/dist/markdown-it.cjs.js",
+      "passed": true
+    },
+    {
+      "name": "parser symlink scripts/docs-reader/node_modules/markdown-it/dist/markdown-it.cjs.js",
+      "passed": true
+    },
+    {
+      "name": "cli restored",
+      "passed": true
+    },
+    {
+      "name": "fixture restored",
+      "passed": true
+    },
+    {
+      "name": "parser restored",
+      "passed": true
+    }
+  ],
+  "passed": 47,
+  "restored": true
+}

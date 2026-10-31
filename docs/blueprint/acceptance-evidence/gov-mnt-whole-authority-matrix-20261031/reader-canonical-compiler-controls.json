@@ -1,0 +1,86 @@
+{
+  "cases": [
+    {
+      "name": "exact fourth-root discoverSdkSurface",
+      "passed": true
+    },
+    {
+      "name": "exact fourth-root generateSdkReference",
+      "passed": true
+    },
+    {
+      "name": "refuse root relative",
+      "passed": true
+    },
+    {
+      "name": "refuse root /home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/../pr13-gov-mnt-practical-reader-61c0a550",
+      "passed": true
+    },
+    {
+      "name": "refuse root /home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550-unlisted",
+      "passed": true
+    },
+    {
+      "name": "refuse symlink root",
+      "passed": true
+    },
+    {
+      "name": "refuse changed package.json",
+      "passed": true
+    },
+    {
+      "name": "refuse changed package-lock.json",
+      "passed": true
+    },
+    {
+      "name": "refuse changed node_modules/.package-lock.json",
+      "passed": true
+    },
+    {
+      "name": "refuse changed node_modules/typescript/package.json",
+      "passed": true
+    },
+    {
+      "name": "refuse changed node_modules/typescript/lib/typescript.js",
+      "passed": true
+    },
+    {
+      "name": "refuse added node_modules/typescript/unqualified-control.txt",
+      "passed": true
+    },
+    {
+      "name": "refuse added node_modules/typescript/lib/package.json",
+      "passed": true
+    },
+    {
+      "name": "refuse removed member",
+      "passed": true
+    },
+    {
+      "name": "refuse symlink member",
+      "passed": true
+    },
+    {
+      "name": "refuse runtime capability discoverSdkSurface",
+      "passed": true
+    },
+    {
+      "name": "restored exact discoverSdkSurface",
+      "passed": true
+    },
+    {
+      "name": "refuse runtime capability generateSdkReference",
+      "passed": true
+    },
+    {
+      "name": "restored exact generateSdkReference",
+      "passed": true
+    }
+  ],
+  "passed": 19,
+  "owners": [
+    "discoverSdkSurface",
+    "generateSdkReference"
+  ],
+  "restored": true
+}

@@ -1,0 +1,119 @@
+```json
+{
+  "report": "reader-terminal-profile-successor-verdict.json",
+  "revision": "7193486a19eca12902ced015d6dddf0cbe7ec21d",
+  "scope": "Sixth restricted-Reader publication baseline; five already-existing fixed-root profiles and their finite stale inputs.",
+  "verdict": "SUPPORTED_COHERENT_PROFILE_AND_INPUT_SUCCESSOR_REQUIRED",
+  "observedBaseline": {
+    "command": "npm run docs:publication:check",
+    "result": "53 tests, 47 pass, 6 fail, 0 skipped",
+    "mutation": "not attempted",
+    "firstFailure": "API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: canonical root/cwd",
+    "secondMaterialFailure": "DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: bound input docs/config/publication-example-claims.json",
+    "limits": "No publication, Reader completion, mutation/restoration, Source/Quality, or original-requirement award follows."
+  },
+  "sixFailuresConsolidated": {
+    "nativeProfileRootCause": {
+      "failedTests": [
+        "four actual callers ten raw slots and API-shaped private chart remain validation-only",
+        "exact caller bodies operations paths tools and no-start boundary cannot be borrowed",
+        "native graph all four edges aliases root physical identities and slot mutations fail closed"
+      ],
+      "meaning": "All three stop first at the unchanged literal native-profile root/cwd predicate; the latter two therefore cannot reach their intended fixed-input or graph refusal assertion."
+    },
+    "publicationChildClaimRootCause": {
+      "failedTests": [
+        "exact physical normal publication route seeds only the child for analysis",
+        "an unselected parent alternate caller incoming import and alias cannot inherit seed",
+        "physical symlinks and stale acquired context refuse while unrelated roots receive no seed"
+      ],
+      "meaning": "All three stop first at the stale publication-example-claims input pin; they do not establish failure of their intended child/alias/symlink protections."
+    }
+  },
+  "profileInputDisposition": {
+    "alreadyExactAtReaderRoot": [
+      "reviewedCliStaticAstProtocols: all fixed inputs match.",
+      "reviewedCommonErrorMarkdownOutput: all fixed inputs match and its facts digest is unchanged.",
+      "reviewedEventContractDocumentationOutput: all fixed inputs match and its facts digest is unchanged."
+    ],
+    "currentMismatches": {
+      "reviewedPublicationYamlValidationInputs": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "reviewedPublicationNativeValidation": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/use/prism-studio.md",
+        "scripts/tests/docs-publication-examples.test.mjs"
+      ],
+      "publicationExampleChildPurpose": [
+        "docs/config/publication-example-claims.json"
+      ]
+    },
+    "meaningDisposition": [
+      {
+        "input": "docs/config/publication-example-claims.json",
+        "meaning": "The already-qualified current claim corrections retain all obligation anchors and replace stale counterparts with current bounded authority/citation counterparts. It remains claim data, not a product authority, runtime result, or publication bypass."
+      },
+      {
+        "input": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+        "meaning": "The current wording retains the existing change/proof procedure and changes no product execution or runtime authority."
+      },
+      {
+        "input": "docs/site/reference/generated-documentation-map.json",
+        "meaning": "Current provenance/matrix output remains generated relation data, not a product-fact emitter or semantic qualification substitute."
+      },
+      {
+        "input": "docs/site/use/prism-studio.md",
+        "meaning": "The current citation wording preserves the no-live-Studio and no-runtime-result boundary."
+      },
+      {
+        "input": "scripts/tests/docs-publication-examples.test.mjs",
+        "meaning": "The current test/harness scope preserves the existing parser and publication receiver boundaries; it grants no helper, product, or public-entry authority."
+      }
+    ]
+  },
+  "completeRootPropagation": {
+    "directDispatch": "Already corrected at the two specialized dispatch points for the publication parser and typed CLI fixture; no additional dispatch exception is supported.",
+    "remainingExistingProfiles": [
+      "CLI static AST protocol",
+      "common-error Markdown output",
+      "event-contract documentation output",
+      "embedded-YAML validation input",
+      "publication native validation"
+    ],
+    "supportedRule": "Each profile may recognize only the one explicit practical Reader root, only after its complete profile-specific current physical input vector, caller/graph constraints, and canonical cwd/realpath checks pass.",
+    "notSupported": [
+      "A generic root list, root prefix, symlink, path alias, cwd-only admission, or arbitrary copied checkout.",
+      "Changing profile caller vectors, directory rosters, raw descriptors, native facts, package routes, parser factories, or runtime-acquisition limits.",
+      "Reusing a profile receipt when any of its own fixed inputs differs."
+    ]
+  },
+  "necessarySuccessor": {
+    "directProfileFields": [
+      "One current claims pin in publicationExampleChildPurpose.",
+      "One current claims pin in reviewedPublicationYamlValidationInputs.",
+      "Five current pins in reviewedPublicationNativeValidation: claims, Nova lifecycle fixture, generated documentation map, Prism Studio page, and publication examples test."
+    ],
+    "rootFields": "Use the already-qualified exact Reader-root selector in each of the five reached profile root/cwd guards; do not alter other root recipes.",
+    "derivationRule": "Run the maintained profile/native-fact derivation after these seven pin changes. Only API-derived fields demonstrably dependent on these inputs may change; no manual factsDigest, caller, roster, role, source, or graph refresh is authorized.",
+    "sourceBasis": "The five current inputs reuse their previously qualified bounded publication-observer, MNT-003 instruction, site-boundary, map, fixture, and citation meanings. This is not a new family/source audit."
+  },
+  "requiredControls": [
+    "Positive: the exact Reader root reaches all five profiles only with complete current profile-specific pins and canonical cwd/realpath.",
+    "Negative: each of the seven prior pin values, a changed current pin, missing input, symlink, hardlink where forbidden, or stale acquired context refuses.",
+    "Negative: publication child still rejects alternate parent/importer, alias, callback, public package entry, malformed result, partial result, and stale claims.",
+    "Negative: native validation still rejects changed four caller edges, selected roster, path/tool/argv/mode/result guards, source body, API-shaped fixture promotion, and start/recover/provider behavior.",
+    "Negative: YAML validation retains schema-versus-Kubernetes-specimen distinction, source/caller/authority bindings, corrupt-input refusal, and cleanup-attempt limits.",
+    "Retain all prior root, compiler, parser, CLI, common-error, event, and native profile refusals.",
+    "After independent affected review, rerun the unchanged full npm run docs:publication:check; a profile-only test subset cannot substitute for the Reader baseline."
+  ],
+  "remainingLimits": [
+    "The five profiles remain source-bound documentation/validation roles only; no Helm, Kubernetes, provider, runtime, deployment, product-emission, or generic loader authority is added.",
+    "Copied dependencies are not a fresh-install claim.",
+    "All six Reader stops and every prior negative remain retained.",
+    "GOV-002, MNT-001, and MNT-009 remain NOT_READY."
+  ]
+}
+```

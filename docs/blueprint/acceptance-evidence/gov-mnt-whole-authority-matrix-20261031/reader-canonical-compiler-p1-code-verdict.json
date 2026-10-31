@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The fourth root is admitted only by exact absolute-path and realpath identity, uses the documented five physical input hashes, and retains the required forbidden TypeScript metadata path. Existing root selection and capability checks remain unchanged.",
+  "overall_confidence": 0.96
+}

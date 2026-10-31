@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The added selector admits only the specified absolute Reader checkout when its canonical realpath is identical, and it is used solely to route the two already-specialized parser and typed-fixture graph cases. Existing recovery-root routing and all downstream capability validation remain unchanged.",
+  "overall_confidence": 0.93
+}

@@ -1,0 +1,51 @@
+{
+  "findings": [
+    {
+      "title": "[P1] Make registered-command masking cover the backtick fixture",
+      "body": "The new self-test always fails before scanning any site files. `maskRegisteredCommands` only accepts a registered name when it is inside a JSON-style double-quoted string, but the added `registered command` fixture supplies the registered command inside Markdown backticks. It therefore leaves `ap09` visible, `findViolations` reports a work-package label, and `assertNegativeFixtures()` throws on every invocation.",
+      "priority": "P1",
+      "confidence": 0.99,
+      "category": "bug",
+      "code_location": {
+        "file_path": "scripts/check-site-reader-boundary.mjs",
+        "line": 131
+      }
+    },
+    {
+      "title": "[P2] Reject malformed typed identities rather than treating them as machine data",
+      "body": "The identity classifier accepts any lowercase prefix and any non-whitespace payload. For example, `{ \"normalizedIdentity\": \"x:AP09.7\" }` is classified as a machine leaf and bypasses the pre-existing work-package-label check, although it is not a validated typed identity. Restrict this to the actual identity grammar/types (and validate the payload structure) so malformed leaves remain subject to prose checks.",
+      "priority": "P2",
+      "confidence": 0.96,
+      "category": "regression",
+      "code_location": {
+        "file_path": "scripts/check-site-reader-boundary.mjs",
+        "line": 121
+      }
+    },
+    {
+      "title": "[P2] Do not classify arbitrary \u201csource \u2026\u201d labels as citations",
+      "body": "The citation-label pattern accepts any label beginning with `source` followed by a space or colon. Thus `[source: read the guide](https://github.com/datrab/kubeclaw/blob/<40-hex>/docs/review/guide.md)` is treated as machine provenance and bypasses the outside-site navigation rejection, despite being reader-facing navigation. Limit the exception to the exact approved source-citation labels/data/declaration forms.",
+      "priority": "P2",
+      "confidence": 0.94,
+      "category": "regression",
+      "code_location": {
+        "file_path": "scripts/check-site-reader-boundary.mjs",
+        "line": 175
+      }
+    },
+    {
+      "title": "[P2] Continue checking bare pinned documentation URLs",
+      "body": "The old check rejected every pinned GitHub URL targeting `docs/` outside `docs/site`. The replacement only iterates Markdown link syntax, while `withoutExternalUrls` removes bare URLs from the prose scan. A bare/autolinked immutable URL to `docs/review/...` is therefore no longer rejected even though Markdown renderers expose it as reader navigation. Preserve validation for bare URLs or explicitly classify them fail-closed.",
+      "priority": "P2",
+      "confidence": 0.99,
+      "category": "regression",
+      "code_location": {
+        "file_path": "scripts/check-site-reader-boundary.mjs",
+        "line": 354
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The boundary checker cannot start because its new backtick command fixture contradicts its masking implementation. It also introduces fail-open classifications for malformed identity fields and reader-facing pinned documentation navigation.",
+  "overall_confidence": 0.99
+}

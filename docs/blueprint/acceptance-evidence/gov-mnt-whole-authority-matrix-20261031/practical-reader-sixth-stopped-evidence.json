@@ -1,0 +1,188 @@
+{
+  "attempt": 6,
+  "candidate": "7193486a19eca12902ced015d6dddf0cbe7ec21d",
+  "previousStops": [
+    {
+      "candidate": "61c0a5505010950bc40d5d58f4a2b3c0158a4421",
+      "command": "npm run docs:generate:check",
+      "exit": 1,
+      "diagnostic": "source revision mismatch",
+      "mutationRestoration": "incomplete, not attempted"
+    },
+    {
+      "candidate": "23e19f457aa263d6c96c531d2cccbcffa283e306",
+      "command": "npm run docs:site-boundary:check",
+      "exit": 1,
+      "diagnostic": "outside-reader pinned link and other boundary findings",
+      "mutationRestoration": "incomplete, not attempted"
+    },
+    {
+      "candidate": "c16fa780a09422bd467a1ec2173970fa14ac44be",
+      "command": "npm run docs:publication:check",
+      "exit": 1,
+      "diagnostic": "root compiler resolution: canonical dependency root",
+      "mutationRestoration": "incomplete, not attempted"
+    },
+    {
+      "candidate": "31230b34e2eaea4cb7bbd3dc709221f69a349b70",
+      "command": "npm run docs:publication:check",
+      "exit": 1,
+      "diagnostic": "CLI compiler purpose: canonical recovery root/cwd",
+      "mutationRestoration": "incomplete, not attempted"
+    },
+    {
+      "candidate": "da5f591bbabe3aea7c6b2d283833828b5ca3fc2e",
+      "command": "npm run docs:publication:check",
+      "exit": 1,
+      "diagnostic": "unsupported createRequire factory base; expected exact import.meta.url",
+      "mutationRestoration": "incomplete, not attempted"
+    }
+  ],
+  "retainedNavigationSelection": {
+    "record": {
+      "normalizedIdentity": "platform:helm%3Afixture%2Fbuster-runtime-registry:dependencySignals:Deployment%2Fkubeclaw%2Fagent-buster%23buster-v2-runtime%20-%3E%20registry-local%20%5BKUBECLAW_REGISTRY_CONFIG%3D%7B%22dockerHubMirror%22%3A%7B%22caSecretKey%22%3A%22ca.crt%22%2C%22caSecretName%22%3A%22%22%2C%22endpoint%22%3A%22%22%2C%22nodeCaFile%22%3A%22%22%2C%22transport%22%3A%22%22%7D%2C%22registry%22%3A%7B%22authSecretName%22%3A%22%22%2C%22caSec%E2%80%A6%20%5B375%20chars%20sha256%3Afd1ca4fba975%5D%5D:helm%3Abuster:Deployment%2Fkubeclaw%2Fagent-buster%23buster-v2-runtime:render-fixture:",
+      "surFamily": "SUR-DEP-08",
+      "sourceAuthority": "helm:fixture/buster-runtime-registry",
+      "canonicalTarget": "docs/site/understand/platform-and-operations.md#runtime-dependency-contracts",
+      "owner": "platform architecture and operations",
+      "factsSha256": "45c7ba94121e782ced39efe09d2481f5dfc2e64bfc6c802e79111b064f7e53d4",
+      "policyRef": "a8785231bbbcedfb106bc08f6a5d18d33109c4ce033c21d0c78a91530fc8777a"
+    },
+    "policy": {
+      "recordKind": "source-bound-fact",
+      "primaryMechanicalAuthority": true,
+      "inventory": "docs/generated/inventory/platform-surfaces.json",
+      "generator": "scripts/docs-platform-surface-inventory.mjs",
+      "checks": [
+        "npm run docs:ap09:platform-inventory:check",
+        "npm run docs:ap09:platform-drift:mutations"
+      ],
+      "consumerBoundary": "{\"consumer\":\"Deployment/kubeclaw/agent-buster#buster-v2-runtime\",\"classification\":\"render-fixture:environment-signal\",\"activationState\":\"fixture-only\",\"activationCondition\":\"the inventory supplies a render-only Buster registry value because the checked-in profile leaves this optional client contract unresolved\",\"scope\":\"This scope includes only the nine platform inventory groups. Names can be the same in different sources. Source-qualified occurrences keep their source identities.\"}",
+      "scopeLimit": "This scope includes only the nine platform inventory groups. Names can be the same in different sources. Source-qualified occurrences keep their source identities.",
+      "classification": "fixture-only",
+      "classificationBasis": "{\"consumer\":\"Deployment/kubeclaw/agent-buster#buster-v2-runtime\",\"classification\":\"render-fixture:environment-signal\",\"activationState\":\"fixture-only\",\"activationCondition\":\"the inventory supplies a render-only Buster registry value because the checked-in profile leaves this optional client contract unresolved\",\"scope\":\"This scope includes only the nine platform inventory groups. Names can be the same in different sources. Source-qualified occurrences keep their source identities.\"}",
+      "authorityKind": "native-render-fixture"
+    },
+    "family": {
+      "id": "SUR-COM-01",
+      "title": "Nova dispatch to Buster, Prism, Forge, and Echo",
+      "canonicalTarget": "docs/site/understand/communication.md#complete-connection-matrix",
+      "owner": "runtime and platform maintainers",
+      "authorityAvailability": {
+        "disposition": "no-admitted-typed-inventory-for-high-level-surface",
+        "typedIdentities": [],
+        "selectedInventories": [
+          "docs/generated/inventory/event-contracts.json",
+          "docs/generated/inventory/platform-surfaces.json"
+        ],
+        "reason": "SUR-COM-01 (Nova dispatch to Buster, Prism, Forge, and Echo): the named admitted inventories cover selected declarations/relations, not this entire high-level lifecycle or behavior. No typed identity is assigned to this whole surface by those finite adapters; the canonical guide's named source/consumer review remains mandatory. This is not a repository-wide absence or source-completeness assertion."
+      }
+    },
+    "reverse": {
+      "target": "docs/site/understand/platform-and-operations.md#runtime-dependency-contracts",
+      "count": 480,
+      "includes": true
+    },
+    "page": {
+      "page": "docs/site/product-surfaces.md",
+      "route": "/product-surfaces/",
+      "contentKind": "authored-with-generated-region",
+      "status": "source-derived identity relations with explicit manual-review and declaration limits",
+      "audience": "reader, operator, plugin author, maintainer, documentation owner",
+      "owner": "documentation architecture",
+      "appliesTo": "current repository product and platform surfaces",
+      "lastVerified": "relation model refreshed 2026-10-31; generation does not requalify family-guide depth labels or runtime readiness",
+      "sourceDependencies": [
+        "scripts/docs-governance.mjs",
+        "package.json",
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles",
+        "skills/common/plugin-runtime",
+        "skills/nova",
+        "skills/worker",
+        "skills/buster",
+        "skills/prism",
+        "contracts",
+        "charts",
+        "scripts"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    }
+  },
+  "retainedValidChecks": [
+    {
+      "command": "npm run docs:governance:check",
+      "exit": 0,
+      "stdout": "documentation governance passed (184 pages mapped)\n",
+      "stderr": "npm notice run docs:governance:check\nnpm notice run node scripts/docs-governance.mjs --check\n"
+    },
+    {
+      "command": "npm run docs:check:refs",
+      "exit": 0,
+      "stdout": "docs reference check passed (10927 local links, 4776 local anchors, 12702 repository path refs, 49152 pinned source links)\n",
+      "stderr": "npm notice run docs:check:refs\nnpm notice run node scripts/docs-check-refs.mjs\n"
+    },
+    {
+      "command": "npm run docs:site-boundary:check",
+      "exit": 0,
+      "stdout": "Reader-site boundary check passed.\n",
+      "stderr": "npm notice run docs:site-boundary:check\nnpm notice run node scripts/check-site-reader-boundary.mjs\n"
+    }
+  ],
+  "fullRawCurrentTerminalOutput": [
+    {
+      "command": "git rev-parse HEAD",
+      "exit": 0,
+      "stdout": "7193486a19eca12902ced015d6dddf0cbe7ec21d\n",
+      "stderr": ""
+    },
+    {
+      "command": "git status --short",
+      "exit": 0,
+      "stdout": "?? .reader-tmp/\n",
+      "stderr": ""
+    },
+    {
+      "command": "npm run docs:publication:check",
+      "exit": 1,
+      "stdout": "✔ published reader links retain exact runnable input and example dependency bytes (10.38813ms)\n✔ an internal record under the reader root cannot silently enter or disappear from publication (1.227492ms)\n✔ unapproved artifacts inside extend/examples/minimal-stage stop publication (1.366315ms)\n✔ unapproved artifacts inside extend/examples/observer-lifecycle stop publication (1.490459ms)\n✔ unapproved artifacts inside use/workflows/examples stop publication (2.077824ms)\n✔ unapproved artifacts inside use/workflows/wait-resume stop publication (1.272933ms)\n✔ an allowed-looking symlink cannot publish data outside the reader tree (1.005676ms)\n✔ publication includes exactly the registered canonical reader pages (1.286973ms)\n✔ missing and noncanonical reader pages stop publication (0.757959ms)\n✔ invalid classification cannot broaden the publication boundary (0.720499ms)\n✔ positive manifest preserves registered exact HTML paths and refuses unapproved input (1.398536ms)\n✔ positive manifest cannot launder a registered Markdown symlink (0.597526ms)\n✔ the complete maintained observer example publishes byte-exactly without adjacent private artifacts (4.712433ms)\n✔ an explicitly allowed observer entrypoint cannot launder an outside symlink (2.046873ms)\n(node:1345638) Warning: Keys with collection values will be stringified due to JS Object restrictions: \"{ .Values | toJson | quote }\". Set mapAsMap: true to use object keys.\n(Use `node --trace-warnings ...` to show where the warning was created)\n✔ configuration composition retains all three existing builders and a complete typed family/inverse relation (681.177484ms)\n✔ new removed or reordered YAML schema runtime selections fail before native builders (119.945574ms)\n✔ a map member reclassification missing family or missing inverse cannot alter the sealed receipt (10.580154ms)\n✔ changed physical source alias hardlink and missing actual inverse receiver refuse before builders (25.41912ms)\n✔ native builder refusals and missing active field inverse contracts remain terminal (884.460791ms)\n✔ inverse data and hub never copy a raw field value or promote global API success (1328.693244ms)\n✔ reader can route platform provider pair host policy environment and lint to their owners and changes (797.841722ms)\n✔ renderer rejects a lost family owner or inverse edge rather than presenting a complete lookup (1511.246612ms)\n✔ native hub entry rejects movable refs short IDs and noncommit objects before output (3517.734049ms)\n✖ four actual callers ten raw slots and API-shaped private chart remain validation-only (4.298721ms)\n✖ exact caller bodies operations paths tools and no-start boundary cannot be borrowed (2.007303ms)\n✖ native graph all four edges aliases root physical identities and slot mutations fail closed (2.283829ms)\n✔ actual private-chart body fake Helm and filesystem preserve API shape and cleanup attempt only (8.943033ms)\n✔ actual overlay source fake Helm verifies four ordered renders Prism negative branch and version only (7.462684ms)\n✔ actual Buster construction and Prism blocked path never start recover or invoke (3.374308ms)\n✖ exact physical normal publication route seeds only the child for analysis (55.85688ms)\n✔ changed executable path argv cwd limits mode root and result guard are refused (3.273735ms)\n✔ child self-main root callback and direct package/export changes refuse purpose (190.852245ms)\n✖ an unselected parent alternate caller incoming import and alias cannot inherit seed (109.852251ms)\n✖ physical symlinks and stale acquired context refuse while unrelated roots receive no seed (217.442604ms)\n✔ actual parent receipt gate rejects failures malformed partial false and wrong-ID results (387.293854ms)\n✔ prompt library workspace commands retain real receiver and old verification bytes through the native syntax owner (41801.416151ms)\n✔ new inline/prose instructions cannot inherit a prior code-only classification (3.123111ms)\n✔ refreshing the whole-page hash cannot admit new plain or inline instructions (3.675766ms)\n✔ a recorded prose region cannot be exempted or attached to an unrelated action (1.083719ms)\n✔ refreshing a page hash alone cannot admit changed or additional code (1.274263ms)\n✔ claims cannot reference missing native owners or silently omit selected assets (1.043237ms)\n✔ source authority symlinks cannot reuse repository-local hash declarations (1.112309ms)\n✔ actual SDK governed values reach native schemas, including field domains (184.893658ms)\n✔ invalid SDK attempt identity is rejected by its actual native contract (72.142662ms)\n✔ a source-only SDK literal is never evaluated as arbitrary JavaScript (69.132434ms)\n✔ an altered canonical SDK program is refused before any scratch or execution (0.39798ms)\n✔ wait example discovery respects declared trust separately from installation (1038.714656ms)\n✔ authored procedure duties and truthful native-result linkage fail closed (1.639993ms)\n✔ actual project factories ignore caller Git templates, hooks and executable path (1492.366699ms)\n✔ workflow examples use the real readonly inventory and exact native table/pipeline projection (1825.599446ms)\n✔ shared fixture guidance reaches the same canonical procedure from the operator matrix (5.275527ms)\n✔ anchors, images, titles and multiple links retain their original meanings (0.36163ms)\n✔ source citations, external routes and executable examples remain byte-identical (0.327948ms)\nℹ tests 53\nℹ suites 0\nℹ pass 47\nℹ fail 6\nℹ cancelled 0\nℹ skipped 0\nℹ todo 0\nℹ duration_ms 83421.520987\n\n✖ failing tests:\n\ntest at scripts/tests/api-output-publication-native-custody.test.mjs:32:1\n✖ four actual callers ten raw slots and API-shaped private chart remain validation-only (4.298721ms)\n  AssertionError [ERR_ASSERTION]: API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: canonical root/cwd\n      at fail (evalmachine.<anonymous>:2567:28)\n      at Object.checkedPublicationNativeValidation [as acquire] (evalmachine.<anonymous>:2568:77)\n      at Object.acquire (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:28:50)\n      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:33:25)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n      at Test.postRun (node:internal/test_runner/test:1542:19)\n      at Test.run (node:internal/test_runner/test:1467:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: undefined,\n    expected: undefined,\n    operator: 'fail',\n    diff: 'simple'\n  }\n\ntest at scripts/tests/api-output-publication-native-custody.test.mjs:39:1\n✖ exact caller bodies operations paths tools and no-start boundary cannot be borrowed (2.007303ms)\n  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /fixed source\\/input/. Input:\n  \n  'AssertionError [ERR_ASSERTION]: API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: canonical root/cwd'\n  \n      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:41:84)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n      at Test.postRun (node:internal/test_runner/test:1542:19)\n      at Test.run (node:internal/test_runner/test:1467:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: AssertionError [ERR_ASSERTION]: API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: canonical root/cwd\n        at fail (evalmachine.<anonymous>:2567:28)\n        at Object.checkedPublicationNativeValidation [as acquire] (evalmachine.<anonymous>:2568:77)\n        at Object.acquire (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:28:50)\n        at file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:41:174\n        at getActual (node:assert:611:5)\n        at strict.throws (node:assert:759:24)\n        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:41:84)\n        at Test.runInAsyncScope (node:async_hooks:227:14)\n        at Test.run (node:internal/test_runner/test:1402:25)\n        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),\n    expected: /fixed source\\/input/,\n    operator: 'throws',\n    diff: 'simple'\n  }\n\ntest at scripts/tests/api-output-publication-native-custody.test.mjs:47:1\n✖ native graph all four edges aliases root physical identities and slot mutations fail closed (2.283829ms)\n  AssertionError [ERR_ASSERTION]: The input did not match the regular expression /four caller edges/. Input:\n  \n  'AssertionError [ERR_ASSERTION]: API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: canonical root/cwd'\n  \n      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:48:198)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n      at Test.postRun (node:internal/test_runner/test:1542:19)\n      at Test.run (node:internal/test_runner/test:1467:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: true,\n    code: 'ERR_ASSERTION',\n    actual: AssertionError [ERR_ASSERTION]: API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: canonical root/cwd\n        at fail (evalmachine.<anonymous>:2567:28)\n        at Object.checkedPublicationNativeValidation [as acquire] (evalmachine.<anonymous>:2568:77)\n        at Object.acquire (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:28:50)\n        at file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:48:252\n        at getActual (node:assert:611:5)\n        at strict.throws (node:assert:759:24)\n        at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-native-custody.test.mjs:48:198)\n        at Test.runInAsyncScope (node:async_hooks:227:14)\n        at Test.run (node:internal/test_runner/test:1402:25)\n        at Test.processPendingSubtests (node:internal/test_runner/test:974:18),\n    expected: /four caller edges/,\n    operator: 'throws',\n    diff: 'simple'\n  }\n\ntest at scripts/tests/api-output-publication-child-custody.test.mjs:7:1\n✖ exact physical normal publication route seeds only the child for analysis (55.85688ms)\n  AssertionError [ERR_ASSERTION]: DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: bound input docs/config/publication-example-claims.json\n      at fail (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/docs-documentation-owner-purpose-custody.mjs:571:67)\n      at qualifyPublicationExampleChildInputs (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/docs-documentation-owner-purpose-custody.mjs:572:108)\n      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-child-custody.test.mjs:7:101)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n      at Test.postRun (node:internal/test_runner/test:1542:19)\n      at Test.run (node:internal/test_runner/test:1467:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: undefined,\n    expected: undefined,\n    operator: 'fail',\n    diff: 'simple'\n  }\n\ntest at scripts/tests/api-output-publication-child-custody.test.mjs:10:1\n✖ an unselected parent alternate caller incoming import and alias cannot inherit seed (109.852251ms)\n  AssertionError [ERR_ASSERTION]: DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: bound input docs/config/publication-example-claims.json\n      at fail (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/docs-documentation-owner-purpose-custody.mjs:571:67)\n      at qualifyPublicationExampleChildInputs (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/docs-documentation-owner-purpose-custody.mjs:572:108)\n      at assertPublicationExampleChildPurpose (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/docs-documentation-owner-purpose-custody.mjs:589:14)\n      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-child-custody.test.mjs:10:109)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n      at Test.postRun (node:internal/test_runner/test:1542:19)\n      at Test.run (node:internal/test_runner/test:1467:12)\n      at async Test.processPendingSubtests (node:internal/test_runner/test:974:7) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: undefined,\n    expected: undefined,\n    operator: 'fail',\n    diff: 'simple'\n  }\n\ntest at scripts/tests/api-output-publication-child-custody.test.mjs:11:1\n✖ physical symlinks and stale acquired context refuse while unrelated roots receive no seed (217.442604ms)\n  AssertionError [ERR_ASSERTION]: DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: bound input docs/config/publication-example-claims.json\n      at fail (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/docs-documentation-owner-purpose-custody.mjs:571:67)\n      at qualifyPublicationExampleChildInputs (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/docs-documentation-owner-purpose-custody.mjs:572:108)\n      at assertPublicationExampleChildPurpose (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/docs-documentation-owner-purpose-custody.mjs:589:14)\n      at file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-child-custody.test.mjs:11:129\n      at fixture (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-child-custody.test.mjs:6:254)\n      at TestContext.<anonymous> (file:///home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550/scripts/tests/api-output-publication-child-custody.test.mjs:11:102)\n      at Test.runInAsyncScope (node:async_hooks:227:14)\n      at Test.run (node:internal/test_runner/test:1402:25)\n      at Test.processPendingSubtests (node:internal/test_runner/test:974:18)\n      at Test.postRun (node:internal/test_runner/test:1542:19) {\n    generatedMessage: false,\n    code: 'ERR_ASSERTION',\n    actual: undefined,\n    expected: undefined,\n    operator: 'fail',\n    diff: 'simple'\n  }\n",
+      "stderr": "npm notice run docs:publication:check\nnpm notice run npm run docs:publication:test && node scripts/docs-publication.mjs check\nnpm notice run docs:publication:test\nnpm notice run node --test scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs scripts/tests/docs-publication-examples.test.mjs\n"
+    }
+  ],
+  "fullRawFinalTerminalOutput": [
+    {
+      "command": "git rev-parse HEAD",
+      "exit": 0,
+      "stdout": "7193486a19eca12902ced015d6dddf0cbe7ec21d\n",
+      "stderr": ""
+    },
+    {
+      "command": "git status --short",
+      "exit": 0,
+      "stdout": "?? .reader-tmp/\n",
+      "stderr": ""
+    },
+    {
+      "command": "git diff --exit-code -- docs/site/product-surfaces.md docs/site/reference/generated-documentation-map.json",
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    }
+  ],
+  "diagnosticRead": {
+    "command": "node reads own .reader-tmp/attempt6-baseline.json, prints failing-tests section and counts",
+    "exit": 0
+  },
+  "firstFailedRequired": "npm run docs:publication:check",
+  "result": "53 tests,47 pass,6 fail,0 skipped",
+  "firstFailure": "API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: canonical root/cwd",
+  "additionalFailure": "DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: bound input docs/config/publication-example-claims.json",
+  "mutationRestoration": "incomplete, not attempted because required baseline failed",
+  "assistance": "Coordinator supplied candidate/environment qualification and explicitly instructed reuse of bounded prior navigation/checks and retry only publication. No implementation, internal reports/evidence/reviews/history, network or other-agent help; parent received status only.",
+  "environment": "Existing physical copied dependencies, no install/fresh-bootstrap claim; TMPDIR=$PWD/.reader-tmp",
+  "scope": "Reader only, no Source/Quality/rendering/fresh-install/whole-gate award"
+}

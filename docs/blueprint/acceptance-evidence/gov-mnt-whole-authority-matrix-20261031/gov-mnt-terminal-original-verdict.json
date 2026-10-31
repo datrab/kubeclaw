@@ -1,0 +1,149 @@
+```json
+{
+  "report": "gov-mnt-terminal-original-verdict.json",
+  "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+  "originalWholeVerdict": "PASS",
+  "astraModelExecution": false,
+  "requirements": {
+    "GOV-002": {
+      "source": "PASS",
+      "reader": "PASS_AT_RESTRICTED_SCOPE",
+      "quality": "PASS",
+      "finalIntegration": "PASS",
+      "verdict": "PASS",
+      "basis": "The fixed 84-family surface roster, 30 typed routes, and 54 explicitly bounded manual routes provide the required documentation-obligated inventory without treating manual routes as runtime or semantic qualification."
+    },
+    "MNT-001": {
+      "source": "PASS",
+      "reader": "PASS_AT_RESTRICTED_SCOPE",
+      "quality": "PASS",
+      "finalIntegration": "PASS",
+      "verdict": "PASS",
+      "basis": "The matrix supplies one declared mechanical authority per admitted fact, with source, owner, generator/check, target, and inverse route. Manual routes remain descriptive and cannot substitute for available typed fact authority."
+    },
+    "MNT-009": {
+      "source": "PASS",
+      "reader": "PASS_AT_RESTRICTED_SCOPE",
+      "quality": "PASS",
+      "finalIntegration": "PASS",
+      "verdict": "PASS",
+      "basis": "The forward and inverse matrix replaces the prior metadata-only routing defect. Typed relations are source-bound; named manual routes are visibly limited rather than presented as generated or runtime evidence."
+    }
+  },
+  "readerEvidence": {
+    "verdict": "PASS_AT_STATED_RESTRICTED_SCOPE",
+    "finalAttempt": "eighth attempt on the immutable candidate",
+    "observed": [
+      "Publication baseline passed: 53 tests, 0 failures/skips, 184 pages, 51 plugins.",
+      "A controlled marked-summary mutation was refused by the owner check.",
+      "The owner generator restored both governed outputs byte-exactly.",
+      "Final governance, reference, site-boundary, and publication checks passed.",
+      "Tracked-tree restoration was verified."
+    ],
+    "limits": [
+      "Reader scope was limited to permitted docs, generated inventories, static manifest, identity, and status material.",
+      "No Source, implementation, runtime, browser, provider, deployment, or fresh-install conclusion is inferred."
+    ],
+    "historicalStopsRetained": 7
+  },
+  "qualityEvidence": {
+    "verdict": "PASS_AT_ORIGINAL_SCOPE",
+    "basis": [
+      "Current site-boundary, governance, reference, configuration-reference, hub, verification, CLI, and supported-publication checks are positive at their stated producer-input bounds.",
+      "The prior 752-boundary failure, stale-output failures, incorrect invocation failures, compiler-root stops, and incomplete Reader attempts remain historical negative evidence; none was rewritten as a pass.",
+      "Preparation-stage publication success was treated as environment preparation, distinct from the Reader's own final baseline."
+    ]
+  },
+  "affectedAcceptedRecordPreservation": {
+    "verdict": "PASS",
+    "scope": "69 existing accepted records; preservation only, not new awards or a 69-record re-audit.",
+    "recordIds": [
+      "AP09.1-ready-topics-20261020",
+      "Reviewed-corrections-20261020",
+      "AP09-reader-developers-20261020",
+      "AP09-reviewed-configuration-20261020",
+      "AP09-reviewed-maintenance-20261020",
+      "AP09-reviewed-publication-navigation-20261020",
+      "AP09-closeout-config-reference-20261020",
+      "AP09-closeout-developer-maintenance-20261020",
+      "AP09-buster-lease-reference-20261020",
+      "AP09-complete-public-cli-20261020",
+      "AP09-install-maintenance-project-entry-20261021",
+      "AP09-complete-state-content-20261021",
+      "AP09-decision-record-content-20261021",
+      "AP09-documentation-agent-maintenance-20261021",
+      "AP09-complete-platform-change-content-20261021",
+      "AP09-studio-complete-journey-20261021",
+      "AP09-litellm-complete-data-contract-20261021",
+      "AP09-complete-publication-reference-navigation-20261021",
+      "AP09-complete-developer-reader-contracts-20261021",
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-search-reader-gate-20261021",
+      "AP09-rendered-source-bounds-gate-20261021",
+      "AP09-complete-same-source-code-preview-20261021",
+      "AP09-complete-responsive-reader-layout-20261021",
+      "AP09-whole-upgrade-and-retirement-20261021",
+      "AP09-whole-studio-demo-journey-20261021",
+      "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "A99-10-whole-workflow-compatibility-content-20261021",
+      "A912-11-deterministic-page-records-20261022",
+      "AP09-publication-positive-scope-7ef16585",
+      "A912-05-whole-source-excerpt-callouts-20261022",
+      "A98-02-13-whole-operator-procedure-contract-20261022",
+      "A910-03-whole-command-prerequisite-contract-20261022",
+      "AP09-whole-extension-drift-A91014-20261023",
+      "AP09-whole-extension-guides-A91013-20261023",
+      "pr13-a91005-complete-package-capture-20261024",
+      "A911-06-authored-surface-bindings-20261025",
+      "A99-13-original-seven-dimension-drift-20261025",
+      "A910-10-whole-supported-extension-lifecycle-20261026",
+      "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "A913-07-whole-significant-decision-fields-20261027",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-003-whole-significant-decision-rationale-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
+      "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
+      "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "MNT-005-common-source-bound-error-catalogue-20261030",
+      "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "MNT-004-whole-source-owned-cli-reference-20261030",
+      "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "A911-05-whole-owned-diagnostic-reference-20261030",
+      "CFG011-REF012-whole-complete-environment-secrets-20261030",
+      "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "MNT003-whole-generated-configuration-defaults-maintenance-20261031"
+    ]
+  },
+  "retainedLimits": [
+    "No default-global-API success is claimed.",
+    "No global ToolSource, native Python 3.14, browser, provider, Helm-live, deployment, or runtime-execution success is claimed.",
+    "Manual surface routes are not promoted to semantic, runtime, or freshness proof.",
+    "All prior failed Reader attempts and native/control negatives remain retained."
+  ],
+  "materialFindings": [],
+  "registrationRecommendation": {
+    "authorizedOriginalAwardsOnly": [
+      "GOV-002",
+      "MNT-001",
+      "MNT-009"
+    ],
+    "newGate": false,
+    "registrationPerformed": false
+  }
+}
+```

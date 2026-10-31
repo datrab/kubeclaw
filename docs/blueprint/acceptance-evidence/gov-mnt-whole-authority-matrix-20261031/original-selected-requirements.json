@@ -1,0 +1,146 @@
+[
+  {
+    "id": "GOV-002",
+    "title": "Vollst\u00e4ndiges Inventar aller dokumentationspflichtigen Produktoberfl\u00e4chen",
+    "workPackage": "AP09.1",
+    "canonicalTarget": "docs/site/product-surfaces.md",
+    "catalogueOwner": "documentation architecture",
+    "pageOwner": "documentation architecture",
+    "readerTask": "Vollst\u00e4ndiges Inventar aller dokumentationspflichtigen Produktoberfl\u00e4chen",
+    "sourceDependencies": [
+      "package.json",
+      "packaging/runtime/package-ownership.json",
+      "packaging/runtime/roles",
+      "skills/common/plugin-runtime",
+      "skills/nova",
+      "skills/worker",
+      "skills/buster",
+      "skills/prism",
+      "contracts",
+      "charts",
+      "scripts"
+    ],
+    "sourceVerification": "pending-current-claim-inspection",
+    "contentKind": "authored",
+    "generator": null,
+    "automatedChecks": [
+      "npm run docs:governance:check",
+      "npm run docs:publication:check",
+      "npm run docs:check:refs"
+    ],
+    "acceptanceIds": [],
+    "packageGateCandidates": [],
+    "acceptanceMappingState": "pending-individual-mapping",
+    "requiredManualReview": [
+      "source",
+      "reader",
+      "quality",
+      "astra-final"
+    ],
+    "state": "not-accepted",
+    "evidence": [],
+    "reviews": [],
+    "openFindingIds": [],
+    "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L95",
+    "closureDecision": {
+      "verdict": "NOT_READY",
+      "revision": "9370d16410bb7f7aeeb66e11d18403764074eeae",
+      "reason": "Exhaustive public surface reconciliation not established by family map review.",
+      "campaign": "independent-ready-topics-20261020"
+    }
+  },
+  {
+    "id": "MNT-001",
+    "title": "Eine Quelle der Wahrheit je mechanischem Fakt",
+    "workPackage": "AP09.11",
+    "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+    "catalogueOwner": "documentation automation",
+    "pageOwner": null,
+    "readerTask": "Eine Quelle der Wahrheit je mechanischem Fakt",
+    "sourceDependencies": [],
+    "sourceVerification": "pending-current-claim-inspection",
+    "contentKind": "not-in-current-map",
+    "generator": null,
+    "automatedChecks": [],
+    "acceptanceIds": [],
+    "packageGateCandidates": [
+      "A911-01",
+      "A911-02",
+      "A911-03",
+      "A911-04",
+      "A911-05",
+      "A911-06",
+      "A911-07",
+      "A911-08",
+      "A911-09",
+      "A911-10",
+      "A911-11",
+      "A911-12"
+    ],
+    "acceptanceMappingState": "pending-individual-mapping",
+    "requiredManualReview": [
+      "source",
+      "reader",
+      "quality",
+      "astra-final"
+    ],
+    "state": "not-accepted",
+    "evidence": [],
+    "reviews": [],
+    "openFindingIds": [],
+    "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L398",
+    "closureDecision": {
+      "verdict": "NOT_READY",
+      "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+      "reason": "- MNT-001 \u2014 Eine Quelle der Wahrheit je mechanischem Fakt \u2014 NOT_READY. Canonical: docs/site/extend/documentation-maintenance.md. NOT_READY: source authority and generator-owned output rules are clear, but one mechanical authority for every product family was not independently established. Partial inventories or one example cannot close this whole claim.",
+      "campaign": "independent-ready-topics-20261020"
+    }
+  },
+  {
+    "id": "MNT-009",
+    "title": "Source-to-Doc-Abdeckungsmatrix",
+    "workPackage": "AP09.11",
+    "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+    "catalogueOwner": "documentation automation",
+    "pageOwner": null,
+    "readerTask": "Source-to-Doc-Abdeckungsmatrix",
+    "sourceDependencies": [],
+    "sourceVerification": "pending-current-claim-inspection",
+    "contentKind": "not-in-current-map",
+    "generator": null,
+    "automatedChecks": [],
+    "acceptanceIds": [],
+    "packageGateCandidates": [
+      "A911-01",
+      "A911-02",
+      "A911-03",
+      "A911-04",
+      "A911-05",
+      "A911-06",
+      "A911-07",
+      "A911-08",
+      "A911-09",
+      "A911-10",
+      "A911-11",
+      "A911-12"
+    ],
+    "acceptanceMappingState": "pending-individual-mapping",
+    "requiredManualReview": [
+      "source",
+      "reader",
+      "quality",
+      "astra-final"
+    ],
+    "state": "not-accepted",
+    "evidence": [],
+    "reviews": [],
+    "openFindingIds": [],
+    "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L406",
+    "closureDecision": {
+      "verdict": "FAIL",
+      "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+      "reason": "- MNT-009 \u2014 Source-to-Doc-Abdeckungsmatrix \u2014 FAIL. Canonical: docs/site/extend/documentation-maintenance.md. FAIL F1/F6: page metadata map is not a complete discovered-public-surface map. The platform submap is real but bounded; current generated platform page has wrong content kind and missing generator/check routing.",
+      "campaign": "independent-ready-topics-20261020"
+    }
+  }
+]

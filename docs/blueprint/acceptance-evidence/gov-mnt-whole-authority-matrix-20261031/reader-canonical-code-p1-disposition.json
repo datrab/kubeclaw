@@ -1,0 +1,6 @@
+{
+  "finding": "Selected fourth root absent[]",
+  "actual": "Original verifier ALSO unconditionally checks recipe.foundation.absent and entire membership; unexpected lib/package.json already refused in actual controls. No observed acceptance bypass.",
+  "remedy": "Explicitly duplicate exact existing foundation absent path in fourth-root record for direct selected-input clarity; no altered existing foundation/capability.",
+  "negativeRetained": true
+}

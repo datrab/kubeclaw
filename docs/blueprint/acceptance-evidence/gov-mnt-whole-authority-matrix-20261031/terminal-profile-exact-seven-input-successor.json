@@ -1,0 +1,44 @@
+[
+  {
+    "profile": "reviewedPublicationYamlValidationInputs",
+    "path": "docs/config/publication-example-claims.json",
+    "before": "8f83c70619ea13af7423175f8ecd6cd5e8cac7d672ba8a4774d23e813d87139f",
+    "after": "b1bac949ca1e9b4ac442afb1b86de2b9e6f129bfed6ab9f9c0ebaf1b79c7ed12"
+  },
+  {
+    "profile": "reviewedPublicationNativeValidation",
+    "path": "docs/config/publication-example-claims.json",
+    "before": "8f83c70619ea13af7423175f8ecd6cd5e8cac7d672ba8a4774d23e813d87139f",
+    "after": "b1bac949ca1e9b4ac442afb1b86de2b9e6f129bfed6ab9f9c0ebaf1b79c7ed12"
+  },
+  {
+    "profile": "reviewedPublicationNativeValidation",
+    "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+    "before": "5c180f77204e94677376d6aa0e286c4f6109fcb45480098d5c4d6e68b5bdcc26",
+    "after": "9120b99b49a473e6a98b1c3e8c1f5b48f276dcb831de23c22c52e31b06515f2b"
+  },
+  {
+    "profile": "reviewedPublicationNativeValidation",
+    "path": "docs/site/reference/generated-documentation-map.json",
+    "before": "a0f5e47a4d8620e717d1a02d8a114d46400dec04dd4cf44ff7101ae966aa6673",
+    "after": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223"
+  },
+  {
+    "profile": "reviewedPublicationNativeValidation",
+    "path": "docs/site/use/prism-studio.md",
+    "before": "292e32670549f7740e762a0f1da39aaf87f3d576fcd23d5f7595c606ea8d7f6a",
+    "after": "0fe8346293c9e20e88e102b03cf2ac9792973416d10c940d7e957ac22e970066"
+  },
+  {
+    "profile": "reviewedPublicationNativeValidation",
+    "path": "scripts/tests/docs-publication-examples.test.mjs",
+    "before": "91072953045370980097bb0a051d7b5d4035922910d45084db8b0c4c81ada693",
+    "after": "6fc070c113689b96fa1e7ef672b139fa6ab066143c7fd7bcaafc6b34e0fdfb87"
+  },
+  {
+    "profile": "publicationExampleChildPurpose",
+    "path": "docs/config/publication-example-claims.json",
+    "before": "8f83c70619ea13af7423175f8ecd6cd5e8cac7d672ba8a4774d23e813d87139f",
+    "after": "b1bac949ca1e9b4ac442afb1b86de2b9e6f129bfed6ab9f9c0ebaf1b79c7ed12"
+  }
+]

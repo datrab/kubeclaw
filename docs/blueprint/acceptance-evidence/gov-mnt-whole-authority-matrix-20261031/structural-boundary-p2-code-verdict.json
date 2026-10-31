@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The change fixes the malformed identity, citation-label, and bare/autolink handling gaps while preserving the existing command masking behavior and fail-closed fixture coverage.",
+  "overall_confidence": 0.97
+}

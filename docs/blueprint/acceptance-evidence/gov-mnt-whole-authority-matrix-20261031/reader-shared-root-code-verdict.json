@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The change adds one exact, canonical Reader-root selector and applies it only to the existing CLI compiler, typed-fixture seed, and publication-parser root checks. Existing canonical-path, cwd, physical-input, pin, and delegated capability validations remain in place; the supplied controls support the intended bounded propagation.",
+  "overall_confidence": 0.93
+}

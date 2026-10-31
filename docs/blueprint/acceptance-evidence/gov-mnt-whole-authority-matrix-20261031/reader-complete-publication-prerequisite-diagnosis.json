@@ -1,0 +1,56 @@
+{
+  "candidate": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+  "recurringCause": "Incomplete isolated-checkout preparation: copied npm directories supplied installed modules but not ignored package-owned contract copies. Also earlier Root check was direct publication stage, while npm public baseline includes53helper tests; these are distinct observations. All earlier root/profile/negative evidence retained.",
+  "finiteCompleteRemedy": {
+    "alreadyQualified": "Node24, physical locked existing root+reader dependencies, exact physical compiler/parser/root-purpose prerequisites;53helpertestsPASS at thiscandidate",
+    "missingOwner": "skills/common/plugins/openclaw-agent-observer/scripts/sync-contract.mjs",
+    "documentedCommand": "npm run sync-contract --prefix skills/common/plugins/openclaw-agent-observer",
+    "actualEquivalentOwnerInvocation": "npm run sync-contract --workspace @kubeclaw/openclaw-agent-observer",
+    "canonicalInput": "contracts/agent-observability/v1/src",
+    "ownedIgnoredOutput": "skills/common/plugins/openclaw-agent-observer/src/generated/agent-observability",
+    "matrixOwner": "npm run docs:publication:generate (existing marked operator matrix in docs/site/use/plugins.md)",
+    "matrixRule": "Do not regenerate readerbaseline to conceal staleness. First complete owning package preparation and compare normalpublication; if actualmatrix still differs collect bounded native matrixdelta before any successor.",
+    "exitCondition": "Unchanged normal publicpublication baseline terminalPASS with allrequired53helpers retained, no trackedchanges; then actual selectedmutation/refusal/documentedownerrestore and byteequality/finalchecks."
+  },
+  "physicalContractManifest": [
+    {
+      "path": "complexity.ts",
+      "sha256": "cc1e3f8a9beaaec2d56cb04533a681b7569e2ac8a457694248249380624d6d60",
+      "physical": true
+    },
+    {
+      "path": "constants.ts",
+      "sha256": "7362261fe21d18e7acdf32b266f938a740e1106a4642579e7a1b203cb8b97924",
+      "physical": true
+    },
+    {
+      "path": "index.ts",
+      "sha256": "53701c60777f686a2f9da25235ad02e755e820714ca8621de795bf1a5376acb3",
+      "physical": true
+    },
+    {
+      "path": "mapping.ts",
+      "sha256": "76dcb599813722b108f9f0a918c60899c019ece2484b10587b628bf72f055592",
+      "physical": true
+    },
+    {
+      "path": "routing.ts",
+      "sha256": "ef7851b00d9c32b46d890ca4210f4afee6fa0ecc9796fab417b6b2c705af571d",
+      "physical": true
+    },
+    {
+      "path": "types.ts",
+      "sha256": "f1b3a0dff514d59f62a8448649c444b4eb6116de6d85500bc3aa6671ea63eb96",
+      "physical": true
+    },
+    {
+      "path": "validation.ts",
+      "sha256": "2e8b7c17d7deeb0cc87e4bd2b05dc8e9712372de161e7c1eeb7cc5270ad6697e",
+      "physical": true
+    }
+  ],
+  "exactCanonicalCopy": true,
+  "freshInstallClaimed": false,
+  "phaseBoundary": "Preserve clean source-first platform observation separately; generatedcopies are additional source candidates only for later publication phase. Do not rerun sourcefirst and conflate inputs.",
+  "otherMissingInputs": "Full attempt7 publication diagnostics name only this contract import family plus operator-matrix staleness; full normalpublicationstage control now checks all inputs together, not file-by-file retries."
+}
