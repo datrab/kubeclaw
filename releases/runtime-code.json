@@ -1,22 +1,27 @@
 {
   "schemaVersion": 1,
-  "commit": "37c9d0075a1f172895da55d4ebd351cd6e5006f7",
-  "sourceRunId": 41222330849,
+  "commit": "2f4b32cdbd5fb04b71c0f8a5469dddf547bceaf5",
+  "sourceRunId": 41227505980,
   "sourceRunAttempt": 1,
   "bundles": {
     "nova": {
       "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-41222330849-1/nova-37c9d0075a1f172895da55d4ebd351cd6e5006f7.tgz",
       "sha256": "5fcd49cb20b6faed9f394739e6c96bb5499affd45345a4aea0631136912312a7",
-      "contractVersion": "v2"
+      "contractVersion": "v2",
+      "source": {
+        "commit": "37c9d0075a1f172895da55d4ebd351cd6e5006f7",
+        "sourceRunId": 41222330849,
+        "sourceRunAttempt": 1
+      }
     },
     "buster": {
-      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-41222330849-1/buster-37c9d0075a1f172895da55d4ebd351cd6e5006f7.tgz",
-      "sha256": "2dbd2cbd610381a745116823751449c5344dcb84e552552ae189adc2a28199df",
+      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-41227505980-1/buster-2f4b32cdbd5fb04b71c0f8a5469dddf547bceaf5.tgz",
+      "sha256": "58a496e6de6b22fd4e41be748b2389b449c18afda26b1fbbfbeee12cbe2726ae",
       "contractVersion": "v2"
     },
     "prism": {
-      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-41222330849-1/prism-37c9d0075a1f172895da55d4ebd351cd6e5006f7.tgz",
-      "sha256": "e88e5460de65b4625b1cc8382cbffddb14b7b71b8d05aee4d3c7affdfa4a790f",
+      "url": "https://github.com/datrab/kubeclaw/releases/download/code-bundles-41227505980-1/prism-2f4b32cdbd5fb04b71c0f8a5469dddf547bceaf5.tgz",
+      "sha256": "809707079efb7d3c945e55da1bc591332ab126fcb4abcb50bfece9fbf1fa4918",
       "contractVersion": "v2"
     }
   }
