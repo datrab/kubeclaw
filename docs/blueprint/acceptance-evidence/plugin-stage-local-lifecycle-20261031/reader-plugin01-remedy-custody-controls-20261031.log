@@ -1,0 +1,20 @@
+✔ three exact metadata slots and a distinct program-fixture slot qualify without runtime authority (63.1638ms)
+✔ warm receipt revalidation rejects changed checker/caller writes a resource instead (2.864343ms)
+✔ warm receipt revalidation rejects changed replacement manifest emits API data (2.182936ms)
+✔ warm receipt revalidation rejects changed replacement version (2.144315ms)
+✔ warm receipt revalidation rejects changed replacement destination (2.203477ms)
+✔ warm receipt revalidation rejects program fixture changed to an API emitter (2.37211ms)
+✔ warm receipt revalidation rejects same-byte program fixture redirected through alias (2.3806ms)
+✔ warm receipt revalidation rejects resource-shaped plugin fixture (2.251627ms)
+✔ warm receipt revalidation rejects resource-shaped package fixture (2.324599ms)
+✔ warm receipt revalidation rejects changed ownership consumer interprets a different key (2.245288ms)
+✔ warm receipt revalidation rejects same-byte consumer redirected through an alias (2.33072ms)
+✔ selected source snapshot cannot borrow current physical-source custody (1.58859ms)
+ℹ tests 12
+ℹ suites 0
+ℹ pass 12
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 414.941974

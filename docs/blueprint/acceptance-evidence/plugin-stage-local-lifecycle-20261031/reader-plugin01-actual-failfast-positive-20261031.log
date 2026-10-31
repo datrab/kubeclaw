@@ -1,0 +1,22 @@
+ M docs/config/publication-example-claims.json
+ M docs/site/extend/first-plugin.md
+ M scripts/docs-api-output-discovery.mjs
+ M scripts/docs-documentation-owner-purpose-custody.mjs
+ M scripts/lib/docs-publication-instruction-bindings.mjs
+v24.22.1
+Package manifest, config, input and both result contracts passed; invalid values rejected.
+npm notice run test
+npm notice run node --test tests/stage.test.mjs
+✔ returns a decision fact to the caller (1.275279ms)
+✔ returns an intentional terminal failure (0.166775ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 55.449206
+npm notice run docs:extensions:minimal-plugin:check
+npm notice run node scripts/check-ap08-minimal-plugin.mjs
+{"ok":true,"journey":"ap08-minimal-pipeline-plugin","packageTest":"passed","roleOmission":"rejected","roleInclusion":"passed","activatedStages":1,"successFact":"Hello, KubeClaw!","intentionalFailure":"failed","invalidInput":"rejected","undeclaredGrant":"REGISTRY_CAPABILITY_UNREQUESTED","grantRestored":true,"replacement":{"packageId":"example.greeting","registrationId":"example.greeting:say","packageVersion":"2.0.0","activatedStages":1,"baselineSnapshotDigest":"sha256:bfd27d6450123863c993f115cf5f902d207db7210432f84f5f83c00aeaafb341","replacementSnapshotDigest":"sha256:3e4d06a76cf099c4805a9a347c1bbc3de40e002e0884dfd9c516a973bde0e07d","successFact":"Hello-v2, KubeClaw!"},"rollback":"original-snapshot-and-behavior","disabled":"package-and-stage-absent","replacementRemoval":"stage-owner-missing","removal":"stage-owner-missing","retainedRunJournals":4,"persistenceBoundary":"in-memory journal; persistent recovery requires separate checks"}
