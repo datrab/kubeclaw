@@ -289,7 +289,7 @@ assert.match(
 );
 assert.match(
   prismStudioDockerfile,
-  /USER node[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/tests\/studio-service\.test\.mts\s*\\\n\s*node --test \/app\/prism\/tests\/studio-service\.test\.mts/,
+  /USER 1000:1000[\s\S]*RUN --mount=type=bind,source=skills\/prism\/tests\/studio-service\.test\.mts,target=\/app\/prism\/tests\/studio-service\.test\.mts\s*\\\n\s*\["\/nodejs\/bin\/node", "--test", "\/app\/prism\/tests\/studio-service\.test\.mts"\]/,
   'the final Studio image must pass HTTP regression tests as its runtime user',
 );
 

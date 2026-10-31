@@ -61,7 +61,8 @@
     "OPS_NPM_BRACE_VERSION": "5.0.12",
     "OPS_NPM_HTTP_CACHE_VERSION": "4.3.0",
     "OPS_NPM_UNDICI_VERSION": "6.29.1",
-    "OPS_NPM_IP_VERSION": "10.3.1"
+    "OPS_NPM_IP_VERSION": "10.3.1",
+    "STUDIO_RUNTIME_BASE": "gcr.io/distroless/nodejs24-debian13:nonroot@sha256:a6c34457f6da4295807e051411c7783739c65b997a324fed14e4fa292615ae91"
   },
   "imageOverrides": {
     "buster-runtime": {
