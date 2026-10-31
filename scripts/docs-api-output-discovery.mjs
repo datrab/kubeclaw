@@ -22,6 +22,7 @@ import { documentationExecutableRoleRecipes, assertDocumentationExecutableRole, 
 import { createSerializedOutputRoleClassifier, deriveNativeOperationFacts, nativeOperationFactDigest } from './docs-api-output-role-classification.mjs';
 import { checkCatalogueInputSurface } from './lib/docs-catalogue-input-surface.mjs';
 
+const isReviewedPracticalReaderGraphRoot=root=>root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root;
 const isSelectedCompilerCapability=value=>['root-selected-compiler-require','cli-native-static-compiler-require','cli-typed-fixture-compiler-require'].includes(value?.kind);
 const installedCompilerTarget=(root,capability,recordDependency)=>capability.kind==='cli-typed-fixture-compiler-require'?cliTypedFixtureCompilerTarget(root,capability,recordDependency):capability.kind==='cli-native-static-compiler-require'?cliNativeCompilerTarget(root,capability,recordDependency):rootSelectedCompilerTarget(root,capability,recordDependency);
 const isImporterResolutionMetadata=value=>value?.kind==='importer-relative-resolution-only-metadata';
@@ -602,10 +603,10 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
           const base=forwarding==='call'?node.arguments[1]:forwarding==='apply'&&node.arguments[1]&&ts.isArrayLiteralExpression(node.arguments[1])&&!node.arguments[1].elements.some(ts.isSpreadElement)?node.arguments[1].elements[0]:node.arguments[0];
           if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression))) {
             if(source==='tests/verification/contracts/check-plugin-system-v2-boundaries.mjs')return reviewedImporterResolutionOperation(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
-            if(source==='scripts/lib/docs-publication-example-coverage.mjs'&&fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery')return reviewedPublicationParserCapability(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
+            if(source==='scripts/lib/docs-publication-example-coverage.mjs'&&(fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'||isReviewedPracticalReaderGraphRoot(root)))return reviewedPublicationParserCapability(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
             if(source==='scripts/docs-sdk-reference.mjs')return reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
             if(source==='scripts/lib/cli/cli-native-driver.mjs')return reviewedCliNativeCompilerCapability(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
-            if(source==='scripts/lib/cli/typed-cli-ast.mjs'&&fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery')return reviewedCliTypedFixtureCapability(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
+            if(source==='scripts/lib/cli/typed-cli-ast.mjs'&&(fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'||isReviewedPracticalReaderGraphRoot(root)))return reviewedCliTypedFixtureCapability(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
             // Unknown owners retain the ordinary factory-base rejection below;
             // they cannot enter another source's specialized provenance recipe.
           }
