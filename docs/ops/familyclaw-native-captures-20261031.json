@@ -1,0 +1,540 @@
+{
+  "collectedAt": "2026-10-31 07:17:24 UTC",
+  "scope": "Actual selected Prism documents, revision1, default state; native Control-to-worker capture, unmodified production renderer, compact390px and wide1440px. Not a live Samsung/Tailscale or interaction test.",
+  "total": 30,
+  "completed": 30,
+  "results": [
+    {
+      "key": "herdfeuer",
+      "view": "alltag",
+      "viewport": "compact",
+      "status": "completed",
+      "screenshot": true,
+      "artifactId": "artifact:sha256:c7a0c3e3b769a954ea47a1c35764c3a17366b75f90f88cb26a7885d0ea5076f2",
+      "findings": [
+        "interactive-6-touch-target-too-small"
+      ]
+    },
+    {
+      "key": "herdfeuer",
+      "view": "alltag",
+      "viewport": "wide",
+      "status": "completed",
+      "screenshot": true,
+      "artifactId": "artifact:sha256:4bc54835c7e01d74e18fa997bf619eed444cc92f768d053e0453b9b24595b93c",
+      "findings": [
+        "interactive-6-touch-target-too-small"
+      ]
+    },
+    {
+      "key": "herdfeuer",
+      "view": "tagesfokus",
+      "viewport": "compact",
+      "status": "completed",
+      "screenshot": true,
+      "artifactId": "artifact:sha256:05512263a5b6d4bfa9d9099ee00ca5d1d3d06c5e3ee4a4547355e6c174fcffc3",
+      "findings": []
+    },
+    {
+      "key": "herdfeuer",
+      "view": "tagesfokus",
+      "viewport": "wide",
+      "status": "completed",
+      "screenshot": true,
+      "artifactId": "artifact:sha256:815021452ee65f5eac71fec3d006531b2a005de705420d8a15584102d6fcb766",
+      "findings": []
+    },
+    {
+      "key": "herdfeuer",
+      "view": "wochenplanung",
+      "viewport": "compact",
+      "status": "completed",
+      "screenshot": true,
+      "artifactId": "artifact:sha256:df5d9d210ed4a769225754fff0a2f1038650946b4d133404504faa3d5d460793",
+      "findings": []
+    },
+    {
+      "key": "herdfeuer",
+      "id": "6e3c6d97-a09d-458a-96f6-2c20f02cffca",
+      "view": "wochenplanung",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-herdfeuer-wochenplanung-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:b8fccdb2205e76f7ba42d8380fabd642be0ccbe5c68249e570aca4914280e003",
+      "bytes": 167187,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "herdfeuer",
+      "id": "6e3c6d97-a09d-458a-96f6-2c20f02cffca",
+      "view": "dokumentenmappe",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-herdfeuer-dokumentenmappe-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:5a3d52ff3dc2447c789fd4cc30ae7c62560a1e1f4eed86909ca869c27dc2b6d1",
+      "bytes": 146468,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "herdfeuer",
+      "id": "6e3c6d97-a09d-458a-96f6-2c20f02cffca",
+      "view": "dokumentenmappe",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-herdfeuer-dokumentenmappe-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:5322255affc7abe76af1ce3b3b357bba2fa0a6a6211bd37ade88a8959fecc0cd",
+      "bytes": 159608,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "herdfeuer",
+      "id": "6e3c6d97-a09d-458a-96f6-2c20f02cffca",
+      "view": "finanzblick",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-herdfeuer-finanzblick-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:f78c6fa0e69c672a8f83ba972fa99651b4e721388e39247a8c8d4545150161ac",
+      "bytes": 170434,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "herdfeuer",
+      "id": "6e3c6d97-a09d-458a-96f6-2c20f02cffca",
+      "view": "finanzblick",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-herdfeuer-finanzblick-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:ae44811b92485f9f4be887089b895c463ec8681656a460816bf27b89b6ad44cf",
+      "bytes": 178474,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "alltag",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-alltag-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:04dbac2221d9a17d06d5ab19eef344e25eafb825e624eb2f17d886cc2007de99",
+      "bytes": 124061,
+      "screenshot": true,
+      "findings": [
+        "interactive-6-touch-target-too-small"
+      ],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "alltag",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-alltag-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:d72f8d655bb7a39fdb34445b38e03de8a0ec5568f5049b84fe16a5abca677e84",
+      "bytes": 137077,
+      "screenshot": true,
+      "findings": [
+        "interactive-6-touch-target-too-small"
+      ],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "tagesfokus",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-tagesfokus-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:bbd38a7f59dceea82718c2d4278b2ee8bd32d0b2078c19e0a88420a15ddcfeec",
+      "bytes": 114752,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "tagesfokus",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-tagesfokus-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:883e9e333fc36d487a4b4218ddc845debdf3b4196dc018ce6eda39fe3357d35c",
+      "bytes": 128004,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "wochenplanung",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-wochenplanung-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:d46a86feb71ca36b16c0458d80e4b66eabeba4725a1f107b632022d49257568c",
+      "bytes": 179600,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "wochenplanung",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-wochenplanung-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:911eebe269852afe1951fb6463ee03f5e6243be45f36279ccbafdd34354ef928",
+      "bytes": 181436,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "dokumentenmappe",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-dokumentenmappe-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:7fe26c46433f0b73dcd3f5287596de41abfe5a4d2607269c8d705a72a82bcde1",
+      "bytes": 142210,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "dokumentenmappe",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-dokumentenmappe-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:26bc189c88f2f77ba28168f997d28ce6e8607f14b5094c691b1a3570b35a6a91",
+      "bytes": 155794,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "finanzblick",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-finanzblick-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:b81f00c2136fd64a23ad63533c61f6b1d0f255ce0db2d3f3813c7cf5797c6c02",
+      "bytes": 164496,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "nachtlotse",
+      "id": "179dd8ea-e050-46fc-b63f-86fa9df65009",
+      "view": "finanzblick",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-nachtlotse-finanzblick-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:03fe84060436c72da6e7b8a857160f383a291878532e5a68e893c3bcf0d2d125",
+      "bytes": 180376,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "alltag",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-alltag-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:ebca89f2a3f4d1d1e022b45d8791509340c5886a1fad0f555b37b0def9271d13",
+      "bytes": 120543,
+      "screenshot": true,
+      "findings": [
+        "interactive-6-touch-target-too-small"
+      ],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "alltag",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-alltag-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:db11f18e2c3d860f70f739914318195f11e9d54ab172458764c2fd6e2a3c62cc",
+      "bytes": 127619,
+      "screenshot": true,
+      "findings": [
+        "interactive-6-touch-target-too-small"
+      ],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "tagesfokus",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-tagesfokus-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:1df040c6a6ae0606529b8c5af101f68c79331699b2f4e08ea57fbe5a3af50791",
+      "bytes": 110464,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "tagesfokus",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-tagesfokus-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:4fa38ffc58ba905ab0516bde1dbacf543397d4c98be16458cd88ba0ff61e18a1",
+      "bytes": 116984,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "wochenplanung",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-wochenplanung-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:c2e9d1efe6d1a4b504aaedba07ee3a4264ed4188e8a2970edc04204e3b4df4f0",
+      "bytes": 174453,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "wochenplanung",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-wochenplanung-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:c59d42b0173a610232663e2bdb8d12640956a86c33d1af8073710ade000eb178",
+      "bytes": 158025,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "dokumentenmappe",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-dokumentenmappe-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:d52d99bee37dc6305d03f9813d46335326de6ac4f0a0c0d8974edb05298a5c7b",
+      "bytes": 138844,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "dokumentenmappe",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-dokumentenmappe-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:82639bd792e3555c3e80c28fecd4eb731e388afd959aa5d141fc37061e310c73",
+      "bytes": 144836,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "finanzblick",
+      "viewport": "compact",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-finanzblick-compact-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:44bb8c1ecb97c2f2b9d80723aa55e276cde12d096cd5bf8a3cea47a1dd2475f8",
+      "bytes": 161402,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    },
+    {
+      "key": "wochenwerk",
+      "id": "4925ac66-6b7a-475e-a446-18b941fb0a19",
+      "view": "finanzblick",
+      "viewport": "wide",
+      "idempotencyKey": "familyclaw-acceptance-wochenwerk-finanzblick-wide-20261031",
+      "status": "completed",
+      "artifactId": "artifact:sha256:33f3bb8510ecb4904f9395d3e29b675fcdaca30088f5419749bd5220768219eb",
+      "bytes": 166022,
+      "screenshot": true,
+      "findings": [],
+      "renderer": {
+        "name": "chromium",
+        "version": "151.0.7922.34",
+        "locale": "en-US",
+        "timezone": "UTC",
+        "motion": "reduced"
+      }
+    }
+  ]
+}
