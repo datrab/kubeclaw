@@ -18,12 +18,13 @@ spec:
     namespace: argocd
   syncPolicy:
     automated:
-      prune: false
+      prune: true
       selfHeal: true
       allowEmpty: false
     syncOptions:
       - FailOnSharedResource=true
       - RespectIgnoreDifferences=true
+      - PruneLast=true
   ignoreDifferences:
     - group: ''
       kind: Secret

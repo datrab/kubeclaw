@@ -73,6 +73,9 @@ test('GitOps regeneration preserves generated key data and leaves household work
   const app = platformServices(versions, 'https://github.com/datrab/kubeclaw.git').find(x => x.metadata.name === 'familyclaw-repository');
   assert.deepEqual(app.spec.ignoreDifferences, [{group: '', kind: 'Secret', name: 'familyclaw-repository', namespace: 'argocd', jsonPointers: ['/data']}]);
   assert.ok(app.spec.syncPolicy.syncOptions.includes('RespectIgnoreDifferences=true'));
+  assert.equal(app.spec.syncPolicy.automated.prune, true);
+  assert.ok(app.spec.syncPolicy.syncOptions.includes('PruneLast=true'));
+  assert.equal(resources[0].metadata.annotations['argocd.argoproj.io/sync-options'], 'Prune=false,Delete=false');
   const household = yaml.loadAll(fs.readFileSync('gitops/production/household-applications.yaml', 'utf8'));
   const workload = household.find(x => x.kind === 'Application');
   assert.equal(workload.spec.source.repoURL, repository);
