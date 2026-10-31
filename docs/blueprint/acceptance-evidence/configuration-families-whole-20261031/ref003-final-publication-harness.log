@@ -1,0 +1,46 @@
+(node:844159) Warning: Keys with collection values will be stringified due to JS Object restrictions: "{ .Values | toJson | quote }". Set mapAsMap: true to use object keys.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ configuration composition retains all three existing builders and a complete typed family/inverse relation (653.810756ms)
+✔ new removed or reordered YAML schema runtime selections fail before native builders (114.707192ms)
+✔ a map member reclassification missing family or missing inverse cannot alter the sealed receipt (12.223635ms)
+✔ changed physical source alias hardlink and missing actual inverse receiver refuse before builders (27.865808ms)
+✔ native builder refusals and missing active field inverse contracts remain terminal (884.625216ms)
+✔ inverse data and hub never copy a raw field value or promote global API success (1170.005301ms)
+✔ reader can route platform provider pair host policy environment and lint to their owners and changes (756.269382ms)
+✔ renderer rejects a lost family owner or inverse edge rather than presenting a complete lookup (1787.715817ms)
+✔ native hub entry rejects movable refs short IDs and noncommit objects before output (8951.64551ms)
+✔ four actual callers ten raw slots and API-shaped private chart remain validation-only (12127.617683ms)
+✔ exact caller bodies operations paths tools and no-start boundary cannot be borrowed (5308.65963ms)
+✔ native graph all four edges aliases root physical identities and slot mutations fail closed (30356.234898ms)
+✔ actual private-chart body fake Helm and filesystem preserve API shape and cleanup attempt only (7.804541ms)
+✔ actual overlay source fake Helm verifies four ordered renders Prism negative branch and version only (5.737388ms)
+✔ actual Buster construction and Prism blocked path never start recover or invoke (2.770251ms)
+✔ exact physical normal publication route seeds only the child for analysis (453.090525ms)
+✔ changed executable path argv cwd limits mode root and result guard are refused (2.684079ms)
+✔ child self-main root callback and direct package/export changes refuse purpose (219.721902ms)
+✔ an unselected parent alternate caller incoming import and alias cannot inherit seed (826.832308ms)
+✔ physical symlinks and stale acquired context refuse while unrelated roots receive no seed (231.2953ms)
+✔ actual parent receipt gate rejects failures malformed partial false and wrong-ID results (347.238042ms)
+✔ prompt library workspace commands retain real receiver and old verification bytes through the native syntax owner (40148.807065ms)
+✔ new inline/prose instructions cannot inherit a prior code-only classification (2.999197ms)
+✔ refreshing the whole-page hash cannot admit new plain or inline instructions (7.972525ms)
+✔ a recorded prose region cannot be exempted or attached to an unrelated action (1.298204ms)
+✔ refreshing a page hash alone cannot admit changed or additional code (1.383505ms)
+✔ claims cannot reference missing native owners or silently omit selected assets (1.16752ms)
+✔ source authority symlinks cannot reuse repository-local hash declarations (0.921134ms)
+✔ actual SDK governed values reach native schemas, including field domains (166.113972ms)
+✔ invalid SDK attempt identity is rejected by its actual native contract (70.77675ms)
+✔ a source-only SDK literal is never evaluated as arbitrary JavaScript (62.124548ms)
+✔ an altered canonical SDK program is refused before any scratch or execution (0.659317ms)
+✔ wait example discovery respects declared trust separately from installation (1191.565201ms)
+✔ authored procedure duties and truthful native-result linkage fail closed (1.736745ms)
+✔ actual project factories ignore caller Git templates, hooks and executable path (1505.151385ms)
+✔ workflow examples use the real readonly inventory and exact native table/pipeline projection (1819.008805ms)
+ℹ tests 36
+ℹ suites 0
+ℹ pass 36
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 136017.877746

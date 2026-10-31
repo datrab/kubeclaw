@@ -1,0 +1,4 @@
+docs reference check failed:
+- docs/site/reference/environment-variables.md pinned source range L12-L14 is outside 5be36e11c830c8312e0ca0c13deed17a6ccab1a4:my-values/infra/litellm-values.yaml (1-13)
+
+Intentional exclusions: docs/archive/**, docs/_legacy-source/**, fenced code blocks, external URLs, globs, placeholders, and generated example data are not treated as source-path claims.

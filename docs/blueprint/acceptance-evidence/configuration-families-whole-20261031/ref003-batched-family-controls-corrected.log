@@ -1,0 +1,17 @@
+✔ configuration composition retains all three existing builders and a complete typed family/inverse relation (645.614569ms)
+✔ new removed or reordered YAML schema runtime selections fail before native builders (139.103635ms)
+✔ a map member reclassification missing family or missing inverse cannot alter the sealed receipt (12.268198ms)
+✔ changed physical source alias hardlink and missing actual inverse receiver refuse before builders (28.671903ms)
+✔ native builder refusals and missing active field inverse contracts remain terminal (729.326267ms)
+✔ inverse data and hub never copy a raw field value or promote global API success (1217.124496ms)
+✔ reader can route platform provider pair host policy environment and lint to their owners and changes (975.029232ms)
+✔ renderer rejects a lost family owner or inverse edge rather than presenting a complete lookup (1519.812636ms)
+✔ native hub entry rejects movable refs short IDs and noncommit objects before output (3207.869399ms)
+ℹ tests 9
+ℹ suites 0
+ℹ pass 9
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8992.711054
