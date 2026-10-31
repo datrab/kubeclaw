@@ -31639,5 +31639,772 @@
     "skills/nova/plugins/repository-adapter/plugin.json": "91fe75d56133722d51c62bb2b06f729cdf3ee35735f471857fb324aab34501bd",
     "skills/nova/plugins/review/plugin.json": "5ced42bfc8ca0851739ed6bbd668085345dea0e1caa391c5f1520e7f919be8f1",
     "skills/prism/openclaw-plugin/openclaw.plugin.json": "1cf3f06268870973f2d7131cf64d469e516a62bf4b5f3a9d5b6d6a1c9bdd0588"
+  },
+  "authorityCoverage": {
+    "schemaVersion": "schema-authority-coverage.v1",
+    "verifiedDate": "2026-10-31",
+    "reusedCoverageBasis": "Existing Source-qualified registered configuration, Event, named registration/manual/generated, Worker/CRD/chart and embedded authority routes at published e3f1cafc; no runtime activation claim.",
+    "coveredCurrentSchemaPaths": [
+      "charts/prism/values.schema.json",
+      "contracts/pipeline-observability/v1/schemas/pipeline-observability.v1.schema.json",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v1.schema.json",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v2.schema.json",
+      "contracts/pipeline-worker-core/v1/schemas/pipeline-worker-core.v3.schema.json",
+      "contracts/prism/v1/schemas/prism-v1.schema.json",
+      "contracts/telemetry/v1/bundle/runtime_log.v1.schema.json",
+      "skills/buster/plugins/api-flow/schemas/config.schema.json",
+      "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+      "skills/buster/plugins/axe/schemas/config.schema.json",
+      "skills/buster/plugins/container-build/schemas/config.schema.json",
+      "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+      "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+      "skills/buster/plugins/direct-command/schemas/config.schema.json",
+      "skills/buster/plugins/http/schemas/config.schema.json",
+      "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+      "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+      "skills/buster/plugins/openapi/schemas/config.schema.json",
+      "skills/buster/plugins/playwright/schemas/config.schema.json",
+      "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+      "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+      "skills/buster/plugins/security-providers/schemas/image.schema.json",
+      "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+      "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+      "skills/buster/plugins/size-budget/schemas/config.schema.json",
+      "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+      "skills/buster/plugins/visual/schemas/config.schema.json",
+      "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+      "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+      "skills/common/plugins/agent-observability/schemas/checkpoint.schema.json",
+      "skills/common/plugins/agent-observability/schemas/config.schema.json",
+      "skills/common/plugins/artifact-store/schemas/config.schema.json",
+      "skills/common/plugins/command-runner/schemas/config.schema.json",
+      "skills/common/plugins/git-workspace/schemas/config.schema.json",
+      "skills/common/plugins/network-http/schemas/config.schema.json",
+      "skills/common/plugins/notification-observer/schemas/checkpoint.schema.json",
+      "skills/common/plugins/notification-observer/schemas/config.schema.json",
+      "skills/common/plugins/openclaw-agent-events/schemas/config.schema.json",
+      "skills/common/plugins/operator-messaging/schemas/config.schema.json",
+      "skills/common/plugins/operator-messaging/schemas/payload.schema.json",
+      "skills/common/plugins/redis-transport/schemas/config.schema.json",
+      "skills/common/plugins/runtime-dispatch/schemas/config.schema.json",
+      "skills/common/plugins/runtime-dispatch/schemas/openclaw-config.schema.json",
+      "skills/common/plugins/secret-resolver/schemas/config.schema.json",
+      "skills/common/plugins/state-store/schemas/config.schema.json",
+      "skills/common/plugins/telemetry-observer/schemas/checkpoint.schema.json",
+      "skills/common/plugins/telemetry-observer/schemas/config.schema.json",
+      "skills/common/plugins/telemetry-store/schemas/config.schema.json",
+      "skills/common/plugins/transport-publisher/schemas/config.schema.json",
+      "skills/common/plugins/transport-publisher/schemas/publish.schema.json",
+      "skills/common/plugins/transport-publisher/schemas/receipt.schema.json",
+      "skills/common/plugins/wait-store/schemas/config.schema.json",
+      "skills/nova/plugins/architecture-validator/schemas/config.schema.json",
+      "skills/nova/plugins/architecture-validator/schemas/input.schema.json",
+      "skills/nova/plugins/architecture-validator/schemas/result.schema.json",
+      "skills/nova/plugins/blueprint-sync/schemas/config.schema.json",
+      "skills/nova/plugins/blueprint-sync/schemas/input.schema.json",
+      "skills/nova/plugins/blueprint-sync/schemas/result.schema.json",
+      "skills/nova/plugins/buster-quality-gate/schemas/config.schema.json",
+      "skills/nova/plugins/buster-quality-gate/schemas/input.schema.json",
+      "skills/nova/plugins/buster-quality-gate/schemas/result.schema.json",
+      "skills/nova/plugins/case-study/schemas/config.schema.json",
+      "skills/nova/plugins/case-study/schemas/input.schema.json",
+      "skills/nova/plugins/case-study/schemas/result.schema.json",
+      "skills/nova/plugins/delivery-lint/schemas/config.schema.json",
+      "skills/nova/plugins/delivery-lint/schemas/input.schema.json",
+      "skills/nova/plugins/delivery-lint/schemas/result.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/adapter.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/candidate.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/delivery.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/empty.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/ready.schema.json",
+      "skills/nova/plugins/demo-handoff/schemas/result.schema.json",
+      "skills/nova/plugins/human-approval/schemas/architecture-input.schema.json",
+      "skills/nova/plugins/human-approval/schemas/config.schema.json",
+      "skills/nova/plugins/human-approval/schemas/input.schema.json",
+      "skills/nova/plugins/human-approval/schemas/result.schema.json",
+      "skills/nova/plugins/implementation-agent/schemas/config.schema.json",
+      "skills/nova/plugins/implementation-agent/schemas/input.schema.json",
+      "skills/nova/plugins/implementation-agent/schemas/result.schema.json",
+      "skills/nova/plugins/lint/schemas/adapter-config.schema.json",
+      "skills/nova/plugins/lint/schemas/config.schema.json",
+      "skills/nova/plugins/lint/schemas/input.schema.json",
+      "skills/nova/plugins/lint/schemas/result.schema.json",
+      "skills/nova/plugins/pipeline-review/schemas/config.schema.json",
+      "skills/nova/plugins/pipeline-review/schemas/evidence-config.schema.json",
+      "skills/nova/plugins/pipeline-review/schemas/input.schema.json",
+      "skills/nova/plugins/pipeline-review/schemas/result.schema.json",
+      "skills/nova/plugins/preflight-contract/schemas/config.schema.json",
+      "skills/nova/plugins/preflight-contract/schemas/input.schema.json",
+      "skills/nova/plugins/preflight-contract/schemas/result.schema.json",
+      "skills/nova/plugins/preflight-contract/schemas/source-input.schema.json",
+      "skills/nova/plugins/prism-design/schemas/config.schema.json",
+      "skills/nova/plugins/prism-design/schemas/input.schema.json",
+      "skills/nova/plugins/prism-design/schemas/result.schema.json",
+      "skills/nova/plugins/project-summary/schemas/config.schema.json",
+      "skills/nova/plugins/project-summary/schemas/input.schema.json",
+      "skills/nova/plugins/project-summary/schemas/result.schema.json",
+      "skills/nova/plugins/remote-test-gate/schemas/config.schema.json",
+      "skills/nova/plugins/remote-test-gate/schemas/evidence-config.schema.json",
+      "skills/nova/plugins/repository-adapter/schemas/config.schema.json",
+      "skills/nova/plugins/review/schemas/config.schema.json",
+      "skills/nova/plugins/review/schemas/echo-review-verification.v1.schema.json",
+      "skills/nova/plugins/review/schemas/input.schema.json",
+      "skills/nova/plugins/review/schemas/repository-audit-config.schema.json",
+      "skills/nova/plugins/review/schemas/repository-audit-input.schema.json",
+      "skills/nova/plugins/review/schemas/repository-revalidation-input.schema.json",
+      "skills/nova/plugins/review/schemas/result.schema.json",
+      "skills/nova/plugins/review/schemas/review-bundle.v1.schema.json",
+      "skills/nova/plugins/review/schemas/review-bundle.v2.schema.json",
+      "skills/nova/plugins/review/schemas/review-policy.v2.schema.json",
+      "skills/nova/plugins/review/schemas/review-report.v2.schema.json",
+      "skills/nova/plugins/review/schemas/review-report.v3.schema.json"
+    ],
+    "inputs": [
+      {
+        "path": "contracts/delivery-manifest/v3/package.json",
+        "sha256": "9aca27855f2ebe49f7bdebc16b1e19f40d9f9d3d0c8bdd48f21b1bd26f34887f"
+      },
+      {
+        "path": "contracts/delivery-manifest/v3/src/index.ts",
+        "sha256": "5293ab3d5813e814487011bd80cad516bc3d1f5faec1181c86675505fa8ba294"
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/package.json",
+        "sha256": "234fe885078a92ec896b1f32675a20c3bbbe427cfdb1e3fd684932cc6291d48f"
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/coverage-result.ts",
+        "sha256": "654b5a308de7de6e07eae48f8061ff826d746e2f577b77494788ceab08ce6052"
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/coverage.ts",
+        "sha256": "bd5a20ccbefab393453dc9072ceb72343ee40741776909007d3a084578b0855d"
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/remote.ts",
+        "sha256": "7f02db208c0728dabdcf51604e149f97b018666019e51b8e2853338e9f7bf9b8"
+      },
+      {
+        "path": "contracts/pipeline-test-gate/v1/src/validation.ts",
+        "sha256": "0932fe19bc79f5dba2a63842cf7892ac6ae0ea6885ed2efb36ac4f2e70b4b69a"
+      },
+      {
+        "path": "contracts/prism/v1/package.json",
+        "sha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f"
+      },
+      {
+        "path": "contracts/prism/v1/schemas/baseline-v2.schema.json",
+        "sha256": "b6b0493e68e7b31b5b1e504adde4a230fe0ae59843d410961acdefea6bf0e3ea"
+      },
+      {
+        "path": "contracts/prism/v1/schemas/engine-requests.v1.json",
+        "sha256": "e35e0074cd79026a02b297fd3c6cdeeff1a115ea6a83957e396aa42572aa3f42"
+      },
+      {
+        "path": "contracts/prism/v1/schemas/engine-results.v1.json",
+        "sha256": "1e24e32119ac95f6162968d4f57fa63fe1aafdf1457c0610d7df81d6dacd80b6"
+      },
+      {
+        "path": "contracts/prism/v1/schemas/prism-v1.schema.json",
+        "sha256": "7e8e248ffbc3753ee462d8e4f1d8de98499c02df94f07f0bcfc28367886bf99b"
+      },
+      {
+        "path": "contracts/prism/v1/scripts/generate-validators.mjs",
+        "sha256": "3aa33ba91680dd24360d299c99b6eccdb1a35aae5ef175e4caf2b6a8a9b5bfd1"
+      },
+      {
+        "path": "contracts/prism/v1/src/complexity.ts",
+        "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df"
+      },
+      {
+        "path": "contracts/prism/v1/src/index.ts",
+        "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18"
+      },
+      {
+        "path": "contracts/prism/v1/src/validators.generated.mjs",
+        "sha256": "26e790a95b065b5b77538f501863a09a90f2ccd67e1c76cf617c8fff2dc09f41"
+      },
+      {
+        "path": "contracts/telemetry/v1/README.md",
+        "sha256": "557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892"
+      },
+      {
+        "path": "contracts/telemetry/v1/bundle-types.ts",
+        "sha256": "c635c9c3c5514d56f9b28eb818b7d3661a40980d71202e00e8710c13d1bcf8a6"
+      },
+      {
+        "path": "contracts/telemetry/v1/contract-manifest.json",
+        "sha256": "bd449d1306776271ac3eaed5cb2d599b4998a2943cdb2dbe298f99459a76121b"
+      },
+      {
+        "path": "scripts/generate-telemetry-contracts.mjs",
+        "sha256": "71f894da41b2bda7462f785f2c0adbab863e4037a91dd649cd968f02547c5a0c"
+      },
+      {
+        "path": "skills/buster/plugins/axe/src/provider.js",
+        "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+      },
+      {
+        "path": "skills/buster/plugins/lighthouse/src/provider.js",
+        "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5"
+      },
+      {
+        "path": "skills/buster/plugins/playwright/src/provider.js",
+        "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8"
+      },
+      {
+        "path": "skills/buster/plugins/visual/src/browser-identity.js",
+        "sha256": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3"
+      },
+      {
+        "path": "skills/buster/plugins/visual/src/provider.js",
+        "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1"
+      }
+    ],
+    "records": [
+      {
+        "schema": "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json",
+        "schemaSha256": "6a991c53bfafbcc0509e1e01acc68eb16abe23ffedfdcf49cdc04be61d488c9a",
+        "family": "delivery-manifest-v3",
+        "schemaPointer": "",
+        "schemaId": "https://kubeclaw.dev/contracts/delivery-manifest.v3.schema.json",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "manual-contract-parser",
+        "consumers": [
+          {
+            "source": "contracts/delivery-manifest/v3/src/index.ts",
+            "symbols": [
+              "createDeliveryManifestV3",
+              "parseDeliveryManifestV3",
+              "assertDeliveryManifestForRead"
+            ]
+          }
+        ],
+        "defaultBehavior": "No schema defaults. Manual validation requires the closed shape; create computes digest and returns an immutable clone, not missing configuration defaults.",
+        "constraintBoundary": "Exported Draft2020-12 schema declaration is separate from manual recursive closed-shape, IDs, coverage, evidence ownership/multiplicity and digest validation; the manual path does not load this JSON schema or establish exact schema/parser parity.",
+        "selectionAndFailureBoundary": "Read gate has an explicit delivery-manifest.v2 compatibility branch; it does not migrate v2 or make the v3 JSON schema a runtime loader.",
+        "authorityInputs": [
+          "contracts/delivery-manifest/v3/src/index.ts",
+          "contracts/delivery-manifest/v3/package.json"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json",
+        "schemaSha256": "64403da87f9401086dddcaee5ce7ab499fe07170e1d7eae005a485422a866a39",
+        "family": "pipeline-test-gate-contract",
+        "schemaPointer": "",
+        "schemaId": "https://kubeclaw.dev/contracts/pipeline-test-gate/browser-profiles.v1.schema.json",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "manual-provider-profiles",
+        "consumers": [
+          {
+            "source": "skills/buster/plugins/axe/src/provider.js",
+            "symbols": [
+              "readProfiles"
+            ]
+          },
+          {
+            "source": "skills/buster/plugins/visual/src/provider.js",
+            "symbols": [
+              "profiles"
+            ]
+          }
+        ],
+        "defaultBehavior": "No schema defaults. Axe copies built-in desktop/mobile profiles and defaults the selected names to those two when config.profiles is omitted; custom names overlay that map. Visual requires an explicit profile document.",
+        "constraintBoundary": "The named provider manually checks its selected version, keys, values and relationships. The standalone JSON schema remains a declaration; full recursive schema/manual-reader equivalence and browser execution are not established.",
+        "selectionAndFailureBoundary": "These manual readers check their own version/keys/shape; no full recursive JSON-schema parity is claimed.",
+        "authorityInputs": [
+          "contracts/pipeline-test-gate/v1/src/validation.ts",
+          "skills/buster/plugins/axe/src/provider.js",
+          "skills/buster/plugins/lighthouse/src/provider.js",
+          "skills/buster/plugins/visual/src/provider.js",
+          "skills/buster/plugins/playwright/src/provider.js"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+        "schemaSha256": "fec4bcd487eb09590dee3c6d6228d6088963c5476747c8731db4d3a53a114637",
+        "family": "pipeline-test-gate-contract",
+        "schemaPointer": "",
+        "schemaId": "https://kubeclaw.dev/contracts/pipeline-test-gate/e2e-result.v1.schema.json",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "ajv-provider-details",
+        "consumers": [
+          {
+            "source": "contracts/pipeline-test-gate/v1/src/validation.ts",
+            "symbols": [
+              "validateE2eProviderDetails"
+            ]
+          }
+        ],
+        "defaultBehavior": "No schema defaults. AJV is constructed with allErrors/strict and without useDefaults; validation supplies no default-insertion contract.",
+        "constraintBoundary": "Direct AJV Draft2020-12 selected-definition or e2e schema validation, followed by the named manual semantic checks. A schema reference, constructed provider result or test fixture does not prove provider execution.",
+        "selectionAndFailureBoundary": "Selected $defs validation is followed by definition-specific semantic checks; e2e details also require schema identity/digest and consistent unique case counts.",
+        "authorityInputs": [
+          "contracts/pipeline-test-gate/v1/src/validation.ts",
+          "skills/buster/plugins/axe/src/provider.js",
+          "skills/buster/plugins/lighthouse/src/provider.js",
+          "skills/buster/plugins/visual/src/provider.js",
+          "skills/buster/plugins/playwright/src/provider.js"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/pipeline-test-gate/v1/schemas/lighthouse-settings.v1.schema.json",
+        "schemaSha256": "2cf38765e6ec83870f92204613330a0cce235d0925c8b3e6995950f972d93c96",
+        "family": "pipeline-test-gate-contract",
+        "schemaPointer": "",
+        "schemaId": null,
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "manual-provider-settings",
+        "consumers": [
+          {
+            "source": "skills/buster/plugins/lighthouse/src/provider.js",
+            "symbols": [
+              "settings"
+            ]
+          }
+        ],
+        "defaultBehavior": "No schema defaults. Selected profile must exist; no budget is selected when config.budget is omitted (null). A named budget must exist.",
+        "constraintBoundary": "The named provider manually checks its selected version, keys, values and relationships. The standalone JSON schema remains a declaration; full recursive schema/manual-reader equivalence and browser execution are not established.",
+        "selectionAndFailureBoundary": "Manual version, closed-key, numeric and selected-profile/budget checks; not a JSON-schema loader or execution result.",
+        "authorityInputs": [
+          "contracts/pipeline-test-gate/v1/src/validation.ts",
+          "skills/buster/plugins/axe/src/provider.js",
+          "skills/buster/plugins/lighthouse/src/provider.js",
+          "skills/buster/plugins/visual/src/provider.js",
+          "skills/buster/plugins/playwright/src/provider.js"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+        "schemaSha256": "e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df",
+        "family": "pipeline-test-gate-contract",
+        "schemaPointer": "",
+        "schemaId": "https://kubeclaw.dev/contracts/pipeline-test-gate/v1/schema.json",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "ajv-selected-definition",
+        "consumers": [
+          {
+            "source": "contracts/pipeline-test-gate/v1/src/validation.ts",
+            "symbols": [
+              "checkPipelineTestGateContract",
+              "validatePipelineTestGateContract"
+            ]
+          }
+        ],
+        "defaultBehavior": "No schema defaults. AJV is constructed with allErrors/strict and without useDefaults; validation supplies no default-insertion contract.",
+        "constraintBoundary": "Direct AJV Draft2020-12 selected-definition or e2e schema validation, followed by the named manual semantic checks. A schema reference, constructed provider result or test fixture does not prove provider execution.",
+        "selectionAndFailureBoundary": "Selected $defs validation is followed by definition-specific semantic checks; e2e details also require schema identity/digest and consistent unique case counts.",
+        "authorityInputs": [
+          "contracts/pipeline-test-gate/v1/src/validation.ts",
+          "skills/buster/plugins/axe/src/provider.js",
+          "skills/buster/plugins/lighthouse/src/provider.js",
+          "skills/buster/plugins/visual/src/provider.js",
+          "skills/buster/plugins/playwright/src/provider.js",
+          "contracts/pipeline-test-gate/v1/src/coverage.ts",
+          "contracts/pipeline-test-gate/v1/src/coverage-result.ts",
+          "contracts/pipeline-test-gate/v1/src/remote.ts"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json",
+        "schemaSha256": "6e3b24ecebee45556a69a26b04e24503ce2ba75ddc5ddf35878defc89c9a65e4",
+        "family": "pipeline-test-gate-contract",
+        "schemaPointer": "",
+        "schemaId": "https://kubeclaw.dev/contracts/pipeline-test-gate/visual-baselines.v2.schema.json",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "manual-provider-baselines",
+        "consumers": [
+          {
+            "source": "skills/buster/plugins/visual/src/provider.js",
+            "symbols": [
+              "manifest"
+            ]
+          },
+          {
+            "source": "skills/buster/plugins/visual/src/browser-identity.js",
+            "symbols": [
+              "assertBaselineVersion",
+              "assertBrowserVersion",
+              "assertBaselineBrowserVersion"
+            ]
+          }
+        ],
+        "defaultBehavior": "No schema defaults. The manual reader computes the baseline bundle digest from sorted entry digests when absent and rejects a supplied mismatch; this is not AJV default insertion.",
+        "constraintBoundary": "The named provider manually checks its selected version, keys, values and relationships. The standalone JSON schema remains a declaration; full recursive schema/manual-reader equivalence and browser execution are not established.",
+        "selectionAndFailureBoundary": "Reader also checks selected profile/browser identity, canonical baseline files, PNG/budget limits and byte digests; no screenshot or browser execution is proved.",
+        "authorityInputs": [
+          "contracts/pipeline-test-gate/v1/src/validation.ts",
+          "skills/buster/plugins/axe/src/provider.js",
+          "skills/buster/plugins/lighthouse/src/provider.js",
+          "skills/buster/plugins/visual/src/provider.js",
+          "skills/buster/plugins/playwright/src/provider.js"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/prism/v1/schemas/baseline-v2.schema.json",
+        "schemaSha256": "b6b0493e68e7b31b5b1e504adde4a230fe0ae59843d410961acdefea6bf0e3ea",
+        "family": "prism-contract-baseline",
+        "schemaPointer": "",
+        "schemaId": "https://kubeclaw.dev/contracts/prism/baseline-v2.schema.json",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "generated-validator-dispatch",
+        "consumers": [
+          {
+            "source": "contracts/prism/v1/src/index.ts",
+            "symbols": [
+              "validatePrism"
+            ]
+          },
+          {
+            "source": "contracts/prism/v1/src/validators.generated.mjs",
+            "symbols": [
+              "validateBaselineManifestV2"
+            ]
+          }
+        ],
+        "defaultBehavior": "No schema defaults. The generator constructs AJV without useDefaults; selected validation returns the supplied value, not a resolved/default-populated configuration.",
+        "constraintBoundary": "Baseline schema is a named input to standalone-validator generation; runtime dispatch uses the checked-in generated validator after complexity checks. Full recursive JSON-schema enforcement belongs to that validator, not to a TypeScript shape or mere schema filename.",
+        "selectionAndFailureBoundary": "validatePrism selects validateBaselineManifestV2 only for name baselineManifest and value.schema prism.baseline-bundle.v2; other values use the original map validator. Complexity checks precede selection. Generation/parity or Prism deployment was not run.",
+        "authorityInputs": [
+          "contracts/prism/v1/scripts/generate-validators.mjs",
+          "contracts/prism/v1/src/validators.generated.mjs",
+          "contracts/prism/v1/src/index.ts",
+          "contracts/prism/v1/schemas/prism-v1.schema.json",
+          "contracts/prism/v1/schemas/baseline-v2.schema.json",
+          "contracts/prism/v1/schemas/engine-requests.v1.json",
+          "contracts/prism/v1/schemas/engine-results.v1.json"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/artifact_published.v1.schema.json",
+        "schemaSha256": "a7149c080b40334d9fe3ebf7eef3bd1ef762fbd907c29cf8f39308c2415e039f",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "artifact_published.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/composed_prompt.v1.schema.json",
+        "schemaSha256": "8e79ef4ce605652e945cac6d775fd1e63c8355c7c53360e5d8fc83faac40a18b",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "composed_prompt.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/evaluation_fact.v1.schema.json",
+        "schemaSha256": "9f861fae4b452846f95c24ecaf8a4aab72836eea3b489fa58b324c34a7ee21d4",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "evaluation_fact.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/expected_source_facts.v1.schema.json",
+        "schemaSha256": "adac333f20835ab3b577de8bf58cf1f854f60ff793aeb92007cebe49e469d7b7",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "expected_source_facts.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/pipeline_command_evidence.v1.schema.json",
+        "schemaSha256": "9656fe68444c76d8a55fbb2ddea9e0c7ce920f3a2ebe0a6f78828fc02a251dab",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "pipeline_command_evidence.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/pipeline_command_request.v1.schema.json",
+        "schemaSha256": "d82a5dc733ca231a1787f50beaecb3f5f3bbe3450f996c1846989cd57e946309",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "pipeline_command_request.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/pipeline_evidence_export.v1.schema.json",
+        "schemaSha256": "d4812a40c9e391c446bab7dc1a36c459f176b82880510aee7219fa85e6fd940d",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "pipeline_evidence_export.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/pipeline_lifecycle_event.v1.schema.json",
+        "schemaSha256": "87d7dabd2b9a42453d7df22c63b3c077399ced84cc8c582efe9e58b7fe64c269",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "pipeline_lifecycle_event.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/pipeline_lifecycle_read_models.v1.schema.json",
+        "schemaSha256": "672c9957cb70a9c5416c5c158d38601671ecda81285af39a621a59d01402473a",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "pipeline_lifecycle_read_models.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/producer_health_snapshot.v1.schema.json",
+        "schemaSha256": "0683aadcc42939299af6376a5acd092c8cfa91167fb50b4a30ee65c65cf4ed02",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "producer_health_snapshot.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/quarantined_payload.v1.schema.json",
+        "schemaSha256": "2f483599b0add0b8a3eb76a94140b0ec30faf69a3fe6bef968c28f4c5cfa9f93",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "quarantined_payload.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/run_archive_manifest.v1.schema.json",
+        "schemaSha256": "bad5592033656ba589a4db875dd9e4097b7058aaec8189eb598342491e02f936",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "run_archive_manifest.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/run_catalog_entry.v1.schema.json",
+        "schemaSha256": "a6ba06799013ca2fe1fe2e731e5ab15d69b7c2f74457ba070b9fb936d149bc20",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "run_catalog_entry.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/run_manifest.v1.schema.json",
+        "schemaSha256": "84d4bb6ad40b302c0b041f44821170e30bc75fb454432a177ac6bf2d22182bcf",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "run_manifest.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      },
+      {
+        "schema": "contracts/telemetry/v1/bundle/terminal_closure.v1.schema.json",
+        "schemaSha256": "e5714987b84fcc47fcfec52d0f06b9d3fd0f1bfb6280fb25d5e023e8c071e718",
+        "family": "telemetry-bundle-contracts",
+        "schemaPointer": "",
+        "schemaId": "terminal_closure.v1",
+        "dialect": "https://json-schema.org/draft/2020-12/schema",
+        "readerKind": "declaration-only",
+        "consumers": [],
+        "defaultBehavior": "No default annotations in this schema. Declaration does not apply defaults or prove a runtime reader.",
+        "constraintBoundary": "Draft2020-12 document and generated type/manifest declaration only. References/branches/constraints remain in the exact schema source. No proved current runtime schema reader or default insertion; this retained v1 asset is not the active v2 telemetry runtime.",
+        "selectionAndFailureBoundary": "No runtime fallback established by this declaration.",
+        "authorityInputs": [
+          "contracts/telemetry/v1/contract-manifest.json",
+          "contracts/telemetry/v1/bundle-types.ts",
+          "contracts/telemetry/v1/README.md",
+          "scripts/generate-telemetry-contracts.mjs"
+        ],
+        "runtimeValidationObserved": false,
+        "deploymentOrDeliveryObserved": false
+      }
+    ]
   }
 }
