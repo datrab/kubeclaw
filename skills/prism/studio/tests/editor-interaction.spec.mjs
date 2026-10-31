@@ -70,10 +70,17 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
     }
   }
   test('project brief stays secondary and viewport controls resize both editing and preview canvases',async({page})=>{
+    const alltag=structuredClone(document.views.home);
+    const focus=structuredClone(alltag);focus.title='Tagesfokus';focus.root.children[0].props.content='Fokusansicht';
+    document.views={alltag,tagesfokus:focus};
     await page.goto(`${origin}/?project=project&document=demo`);
+    await expect(page.frameLocator('.design-canvas iframe').getByRole('heading',{name:'Deployments',exact:true})).toBeVisible();
     await expect(page.locator('.brief')).toBeVisible();
     expect(await page.locator('.brief').evaluate(el=>el.open)).toBe(false);
     await expect(page.locator('.design-canvas')).toBeInViewport();
+    if(mobile)await page.getByRole('button',{name:'Navigate',exact:true}).tap();
+    await page.locator(mobile?'.sheet':'.navigator').getByRole('button',{name:mobile?'Tagesfokus':'Tagesfokus 1 states',exact:true}).click();
+    await expect(page.frameLocator('.design-canvas iframe').getByRole('heading',{name:'Fokusansicht',exact:true})).toBeVisible();
     for(const mode of ['edit','preview']){
       if(mode==='preview')await page.getByRole('button',{name:'Preview',exact:true}).click();
       for(const [value,width] of [['compact',390],['regular',768],['wide',1280]]){

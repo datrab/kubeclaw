@@ -686,7 +686,7 @@ function App() {
         <div className={`device device-${viewport}`}>
           {mode === "edit" ? (
             <Puck
-              key={`${document.meta.documentId}-${viewport}`}
+              key={`${document.meta.documentId}-${viewId}-${viewport}`}
               config={config}
               data={data}
               onChange={(next) => {
@@ -845,6 +845,7 @@ function App() {
                 key={id}
                 onClick={() => {
                   setViewId(id);
+                  setViewState(view.initialState ?? "default");
                   setPanel(null);
                 }}
               >
