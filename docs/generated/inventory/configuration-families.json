@@ -181796,7 +181796,7 @@
       "sensitivity": "ordinary-value",
       "setting": "KUBECLAW_DOCS_GO_BINARY",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2"
+      "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -183252,7 +183252,7 @@
       "sensitivity": "ordinary-value",
       "setting": "NODE_OPTIONS",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2"
+      "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
     },
     {
       "consumer": "charts/kubeclaw/templates/deployment.yaml",
@@ -183448,7 +183448,7 @@
       "sensitivity": "ordinary-value",
       "setting": "npm_execpath",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2"
+      "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
     },
     {
       "consumer": "charts/kubeclaw/templates/deployment.yaml",
@@ -184260,7 +184260,7 @@
       "sensitivity": "ordinary-value",
       "setting": "PATH",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2"
+      "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402733,7 +402733,7 @@
           "sensitivity": "ordinary-value",
           "setting": "KUBECLAW_DOCS_GO_BINARY",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2"
+          "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402747,7 +402747,7 @@
           "sensitivity": "ordinary-value",
           "setting": "NODE_OPTIONS",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2"
+          "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402761,7 +402761,7 @@
           "sensitivity": "ordinary-value",
           "setting": "npm_execpath",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2"
+          "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402775,7 +402775,7 @@
           "sensitivity": "ordinary-value",
           "setting": "PATH",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2"
+          "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
         }
       ]
     },

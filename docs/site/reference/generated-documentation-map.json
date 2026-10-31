@@ -63032,7 +63032,7 @@
       "schemaVersion": "source-authority-matrix.v1",
       "assignmentManifest": {
         "path": "docs/config/source-authority-family-assignments.json",
-        "sha256": "c316059ce284565b1d57b8805f14302fbfb0fabee26305d1fc67d89014d01328"
+        "sha256": "5cc7bf6fa0e5b01f1b9138ddda41135659aa483ae100dd2c862d12f9ca91f349"
       },
       "authority": "Relations between explicitly admitted inventory identities and reader/review ownership. Owning freshness checks and independent semantic qualification remain required.",
       "families": [
@@ -85915,12 +85915,18 @@
               "cli-declaration:scripts%2Fcheck-sdk-contract-mutation-constructors.mjs:exits:result.error:run:794:2",
               "cli-declaration:scripts%2Fcheck-sdk-contract-mutation-constructors.mjs:exits:result.signal:run:772:1",
               "cli-declaration:scripts%2Fcheck-sdk-contract-mutation-constructors.mjs:exits:result.signal:run:810:3",
-              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20negative%20fixture%20was%20not%20detected%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:8975:0",
-              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20crypto%20encoding%20token%20for%20German%20prose')%3B:assertNegativeFixtures:9327:1",
-              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20registered%20command%20for%20a%20work-package%20label')%3B:assertNegativeFixtures:9751:3",
-              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20an%20external%20API%20URL%20for%20a%20superseded%20repository%20path')%3B:assertNegativeFixtures:9561:2",
-              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20command%20exception%20admitted%20unregistered%20command%20or%20work-package%20prose')%3B:assertNegativeFixtures:10094:4",
-              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20duplicate-H1%20fixture%20was%20not%20detected')%3B:assertNegativeFixtures:10516:5",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20Markdown%20role%20fixture%20failed%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:25698:7",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20negative%20fixture%20was%20not%20detected%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:20684:0",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20structural%20fixture%20failed%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:24318:5",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20bare%2Fautolink%20navigation%20fixture%20failed')%3B:assertNegativeFixtures:25891:8",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20crypto%20encoding%20token%20for%20German%20prose')%3B:assertNegativeFixtures:21036:1",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20registered%20command%20for%20a%20work-package%20label')%3B:assertNegativeFixtures:21460:3",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20an%20external%20API%20URL%20for%20a%20superseded%20repository%20path')%3B:assertNegativeFixtures:21270:2",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20citation%20exemption%20leaked%20to%20a%20second%20bare%20URL')%3B:assertNegativeFixtures:26203:9",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20command%20exception%20admitted%20unregistered%20command%20or%20work-package%20prose')%3B:assertNegativeFixtures:21803:4",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20duplicate-H1%20fixture%20was%20not%20detected')%3B:assertNegativeFixtures:26983:11",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20literal%20source-link%20label%20fixture%20failed')%3B:assertNegativeFixtures:26600:10",
+              "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20source%20citation%2Fnavigation%20distinction%20failed')%3B:assertNegativeFixtures:24826:6",
               "cli-declaration:scripts%2Fcheck-suite-migration-workflow.mjs:exits:result.status:checkCutover:15038:0",
               "cli-declaration:scripts%2Fcheck-suite-migration-workflow.mjs:exits:throw%20new%20Error(%60%24%7Brelative%7D%3A%20missing%20suite%20section%20%24%7Bmarker%7D%60)%3B:documentText:16745:1",
               "cli-declaration:scripts%2Fcheck-workflow-drift-mutations.mjs:exits:result.error:run:1009:2",
@@ -126691,64 +126697,124 @@
           "policyRef": "c81b20a5b6f733e24a6235595ac058bafb5e98fa71563099eff6f34a26bbca1d"
         },
         {
-          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20crypto%20encoding%20token%20for%20German%20prose')%3B:assertNegativeFixtures:9327:1",
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20bare%2Fautolink%20navigation%20fixture%20failed')%3B:assertNegativeFixtures:25891:8",
           "surFamily": "SUR-API-01",
           "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "73419254e99f864276aff523a1f85503e241cea02b6a17bdccafefb31b9323d5",
-          "sourceBindingSha256": "8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5",
-          "policyRef": "5272e935b67e95b3ac80d98139f4f2dd2a911187e5e4474df12c177ad4995b07"
+          "factsSha256": "534b3eb01cd2c9727d4db3fb842a2c56b25ba005c69c6d2b19507a48bef366cf",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
         },
         {
-          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20registered%20command%20for%20a%20work-package%20label')%3B:assertNegativeFixtures:9751:3",
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20crypto%20encoding%20token%20for%20German%20prose')%3B:assertNegativeFixtures:21036:1",
           "surFamily": "SUR-API-01",
           "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "48c6e59047c16b024e7acfb7db8b43d7ea42b77a608cc4bbe6eded6e31e013f5",
-          "sourceBindingSha256": "8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5",
-          "policyRef": "5272e935b67e95b3ac80d98139f4f2dd2a911187e5e4474df12c177ad4995b07"
+          "factsSha256": "6ce8ddd0d591453f43a6fd0afd693b996e5a27c89c0599885835069c1b2354df",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
         },
         {
-          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20an%20external%20API%20URL%20for%20a%20superseded%20repository%20path')%3B:assertNegativeFixtures:9561:2",
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20registered%20command%20for%20a%20work-package%20label')%3B:assertNegativeFixtures:21460:3",
           "surFamily": "SUR-API-01",
           "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "ca4d7e46d8883029658d7c951f3e35959bafa8c8d1c76d18fc75921b2a62c68d",
-          "sourceBindingSha256": "8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5",
-          "policyRef": "5272e935b67e95b3ac80d98139f4f2dd2a911187e5e4474df12c177ad4995b07"
+          "factsSha256": "a0f37f973efb9e6732562179ed2e74c1ccc8da751e4b15034b5e4aa71b662918",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
         },
         {
-          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20command%20exception%20admitted%20unregistered%20command%20or%20work-package%20prose')%3B:assertNegativeFixtures:10094:4",
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20an%20external%20API%20URL%20for%20a%20superseded%20repository%20path')%3B:assertNegativeFixtures:21270:2",
           "surFamily": "SUR-API-01",
           "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "3ad04db425a4102166ffaec61719bd64fd332e4c0b7906ad9b141a99148b8c0f",
-          "sourceBindingSha256": "8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5",
-          "policyRef": "5272e935b67e95b3ac80d98139f4f2dd2a911187e5e4474df12c177ad4995b07"
+          "factsSha256": "133284248dfebde46ad6f957a210c83ca6d84b7e09ed1b6d6a55341e8cfdba77",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
         },
         {
-          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20duplicate-H1%20fixture%20was%20not%20detected')%3B:assertNegativeFixtures:10516:5",
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20citation%20exemption%20leaked%20to%20a%20second%20bare%20URL')%3B:assertNegativeFixtures:26203:9",
           "surFamily": "SUR-API-01",
           "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "d3055b68844e4c2ed9a6fa1df14a503e43b33ba9fb136920cca0f38e2167d2d8",
-          "sourceBindingSha256": "8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5",
-          "policyRef": "5272e935b67e95b3ac80d98139f4f2dd2a911187e5e4474df12c177ad4995b07"
+          "factsSha256": "630c3b451832cc4571ea8a60e8817df82790fca225cf69c5b6801f8b7c72c4d2",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
         },
         {
-          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20negative%20fixture%20was%20not%20detected%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:8975:0",
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20command%20exception%20admitted%20unregistered%20command%20or%20work-package%20prose')%3B:assertNegativeFixtures:21803:4",
           "surFamily": "SUR-API-01",
           "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "c2a09e6c40032e96ad69c540b1223e6e0609f5ac984a431b2f9f6055cae25979",
-          "sourceBindingSha256": "8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5",
-          "policyRef": "5272e935b67e95b3ac80d98139f4f2dd2a911187e5e4474df12c177ad4995b07"
+          "factsSha256": "cac73ddd82e75095edcc16877d7b386c3a02847b95ae375993664ec388ffc3d9",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
+        },
+        {
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20duplicate-H1%20fixture%20was%20not%20detected')%3B:assertNegativeFixtures:26983:11",
+          "surFamily": "SUR-API-01",
+          "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
+          "canonicalTarget": "docs/site/reference/cli.md",
+          "owner": "platform-operations",
+          "factsSha256": "f0c05aa9312074e011235bbcb0feb0568a37e4e55140e1b94f1f9b0c9f43c89c",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
+        },
+        {
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20literal%20source-link%20label%20fixture%20failed')%3B:assertNegativeFixtures:26600:10",
+          "surFamily": "SUR-API-01",
+          "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
+          "canonicalTarget": "docs/site/reference/cli.md",
+          "owner": "platform-operations",
+          "factsSha256": "2f92f66ad0746c370f8fc5a20a2466d43a9db7a4866426e089bfc685b4427669",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
+        },
+        {
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20source%20citation%2Fnavigation%20distinction%20failed')%3B:assertNegativeFixtures:24826:6",
+          "surFamily": "SUR-API-01",
+          "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
+          "canonicalTarget": "docs/site/reference/cli.md",
+          "owner": "platform-operations",
+          "factsSha256": "2835a8909331932eb09ad7b616d936695105b7a45baf190b1f02f9942551e0ae",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
+        },
+        {
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20Markdown%20role%20fixture%20failed%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:25698:7",
+          "surFamily": "SUR-API-01",
+          "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
+          "canonicalTarget": "docs/site/reference/cli.md",
+          "owner": "platform-operations",
+          "factsSha256": "decd3477375de0bc97b8702c1050f88b3aa6064a5995b1fc3efe56833db91b71",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
+        },
+        {
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20negative%20fixture%20was%20not%20detected%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:20684:0",
+          "surFamily": "SUR-API-01",
+          "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
+          "canonicalTarget": "docs/site/reference/cli.md",
+          "owner": "platform-operations",
+          "factsSha256": "59d014ade634648d11b049f7d419ce0028bac05ba31ce498c6484738983d6196",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
+        },
+        {
+          "normalizedIdentity": "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20structural%20fixture%20failed%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:24318:5",
+          "surFamily": "SUR-API-01",
+          "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
+          "canonicalTarget": "docs/site/reference/cli.md",
+          "owner": "platform-operations",
+          "factsSha256": "a02f7faab8c342e2ed9f1be675732288651fbae3b9f47711eafcb3cee18ee7a1",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fcheck-suite-migration-workflow.mjs:exits:result.status:checkCutover:15038:0",
@@ -184467,8 +184533,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "b0771fa95191d582215053cc4d8bcc866be4bddc0574b7b4a49675951a34818c",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:bytes.match(%2F%5B%5E%5Cn%5D*%5Cn%7C%5B%5E%5Cn%5D%2B%24%2Fgu)%3F%3F%5B%5D:assertRootHarnessClosure:1285107:3",
@@ -184477,8 +184543,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "830b5a41a388fcda91d61504856e5e78101d8c640f629ee5119c2c5ede114597",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:fs.existsSync(file)%3Fpath.relative(root%2Cfs.realpathSync(file)).replaceAll(path.sep%2C'%2F')%3Anull:assertDocumentationExecutableRole:512780:1",
@@ -184487,8 +184553,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "b79375f4ee35d81ba3084b1357f04c20cae755d406d04a974df7732db5497464",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:path.dirname(directory):assertNativeNpmPosixAuthority:1287594:4",
@@ -184497,8 +184563,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "a419d85d52a474d18117afd9be087ac68840e58a0f5f984c7f39b0bbf13d8e9c",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:root%3D%3D%3DreviewedRecoveryCompilerInput.root%3FreviewedRecoveryCompilerInput%3Aroot%3D%3D%3DreviewedIsolatedCompilerInput.root%3FreviewedIsolatedCompilerInput%3Arecipe.foundation:verifyRootCompilerFoundation:463663:0",
@@ -184507,8 +184573,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "2ce15a9ad0082150e31f3065a88575edbc08c09e900322219565c7762f717647",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:source.endsWith('.py')%3F%5Bnew%20URL('.%2Fdocs-api-python-ast-v1.py'%2Cimport.meta.url).pathname%2C'--stdin-custody'%2Csource%5D%3A%5B'run'%2Cnew%20URL('.%2Fdocs-api-go-output-role-adapter.go'%2Cimport.meta.url).pathname%2C'--documentation-custody'%2Cpath.join(root%2Csource)%5D:assertDocumentationExecutableRole:513550:2",
@@ -184517,8 +184583,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "acaf3fdb3fb7373d5c2b7bf7295c24c82b9453be680ef0716200445773010c61",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:capture.status:expandReviewedNodePackageGlob:1294862:5",
@@ -184527,8 +184593,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "75b36c021616fb95628b42f4857084d98c281c97acb950c5fa72f93164d7af5c",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:config.status:assertNativeNpmPosixAuthority:1288279:4",
@@ -184537,8 +184603,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "9b0aed68242aa18b5e11395c2bbe359e0c50f68105ec1e1c3dca3c4b9834b952",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:receipt.error:assertDocumentationExecutableRole:514034:3",
@@ -184547,8 +184613,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "5a1873bcde220ee48de127de909960b07e7cf46f5c6763f8572393655b418d98",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:receipt.status:assertDocumentationExecutableRole:513937:2",
@@ -184557,8 +184623,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "ae8d1efe5777935c0f1eb52b41b3449ddf39aaadd077c594210835221d0b78a7",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:throw%20error%3B:verifyRootCompilerFoundation:464006:0",
@@ -184567,8 +184633,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "f516c22d1feecafed2abb44935dba9623ea41568da669d62faa1e39abec0d131",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:throw%20error%3B:verifyRootCompilerFoundation:465355:1",
@@ -184577,8 +184643,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "8d11960d05c7e92a3dd5a60b62addcf41058327049b7c93d69d2cd36951cf117",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-go-output-role-adapter.go:exits:defer%20delete(resolvingParameters%2C%20id.Obj):main:16152:5",
@@ -216546,9 +216612,9 @@
           "sourceAuthority": "scripts/check-site-reader-boundary.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "b662b59ee8843284f8acf460cbdd30b19f939e83c938b7e35d9abb75478c5de9",
-          "sourceBindingSha256": "8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5",
-          "policyRef": "5272e935b67e95b3ac80d98139f4f2dd2a911187e5e4474df12c177ad4995b07"
+          "factsSha256": "6014a06c348c61e99608ea82ee631b4bcde74a74d9bc5322e4b54cafcc732aa9",
+          "sourceBindingSha256": "af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e",
+          "policyRef": "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40"
         },
         {
           "normalizedIdentity": "cli-source-declaration:scripts%2Fcheck-suite-migration-workflow.mjs",
@@ -216686,9 +216752,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "72cfb2ba3a60efab6f2a9c61f3f73c20884b4ae498c5164fa91bd469b85d2cbe",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
-          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
+          "factsSha256": "5989232d259fc3dbc01942a2680d6f8c147f539c51d724a3487cc473aca00fae",
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+          "policyRef": "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10"
         },
         {
           "normalizedIdentity": "cli-source-declaration:scripts%2Fdocs-api-go-output-role-adapter.go",
@@ -216716,7 +216782,7 @@
           "sourceAuthority": "scripts/docs-api-output-discovery.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "b70e7e7e465d6629f2f7963ad00a045cb089364d7e0740eb3c67f77b0cde46e7",
+          "factsSha256": "7c8a56918f0a94a3ad8b1c4aec2b1657fd7c02eae5e4138a17a343be614fce3b",
           "sourceBindingSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2",
           "policyRef": "647b57160a845d548cb1b9163b88874f421badd5a310371ba1cbf03734b08c1a"
         },
@@ -218126,7 +218192,7 @@
           "sourceAuthority": "scripts/tests/api-output-cli-compiler-custody.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "e9895936f67eb1722430df511a107f37183c86f3a45ee99286f50fa70a2c592c",
+          "factsSha256": "b1d9e51ba6a5b59ab2b99218630fd3486909ba92cf6f76955e037a910a956e4a",
           "sourceBindingSha256": "3fc77590a07f9fe892930a850d6937a6d92eb13f0b3b82b2d6d641c5f5232c91",
           "policyRef": "fb02c6cd1c088f7ffc44ebdd3ddc1efbdcad369ffef9440210db3fe85d66dc12"
         },
@@ -218136,7 +218202,7 @@
           "sourceAuthority": "scripts/tests/api-output-cli-fixture-compiler-custody.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "cc164c8df27d2bcd793a5972a2c6ed83492b4a5b9e155614df9523a8218d2bd8",
+          "factsSha256": "6187d9d5075e33b1acc3d0b1c3648af924c5e9a01cb534e21d8e6227a76bb468",
           "sourceBindingSha256": "f09a6119ab98f79813f11f328200993323d24c81e40948723733e7efc21c524c",
           "policyRef": "081612e50f2e36ca1e30ccd303bd6dc6368803d119efcd97c9b035e1cd47def5"
         },
@@ -218196,7 +218262,7 @@
           "sourceAuthority": "scripts/tests/api-output-publication-parser-custody.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "b6b5b1f75ad729b096f3506009378853e2c42e7b320c374096a0f1b632aaa7b7",
+          "factsSha256": "1f2ba9b540982da8dd4361521f8c4a28fe765b1b4e0f1fd1592ec3541a9dec3d",
           "sourceBindingSha256": "3de5e39f506f3cf5b715d7c2cf88f848b84c86c3b507eae370ab4579e35df2ce",
           "policyRef": "a79ed14c38cf8a9ec585cc5df2c113ada107bc76d0d9ef03ed4c1664b80c128a"
         },
@@ -218226,7 +218292,7 @@
           "sourceAuthority": "scripts/tests/api-reference.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "ba4001fda274ba94f4deb867f210f982ef58cc2053da0c22f8b6ad17abb2def2",
+          "factsSha256": "38b576a08c647ebf1da5a4e4ad4d2998e0fcfa634aa31de7ededd06dc0645fa0",
           "sourceBindingSha256": "683a5290709af2a4d7faf7cdf2bad97ac760fab70ddc5aa59ff2a03bd5f0833a",
           "policyRef": "df8b7afe88b25a91db802a676d610101740ea431d94c5d18ea2f59e71d5c1d14"
         },
@@ -218256,7 +218322,7 @@
           "sourceAuthority": "scripts/tests/docs-api-top-level-script-purpose.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "8bffa2ae8d69db86d84213ec87b500e1547006a3e9a5f6685496c8617e6918fb",
+          "factsSha256": "db92abf5b1f7eeb15d9cf67ec82522ac056ddd248ca5bf346296dc5a23947849",
           "sourceBindingSha256": "5f82b5c4121a9a045fdebb0fd6167705237ca48f2e5c9e8ce069d951ad9a7bf0",
           "policyRef": "1f8a58a5b1d1e9bce7cbaac4c950f21d5ccd911a97f1daf04e85e9e65af70995"
         },
@@ -233354,8 +233420,8 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/configuration.md",
           "owner": "documentation; each named consumer owns its setting semantics",
-          "factsSha256": "e134d919fc92589279871aa55f17692618c8288fba698ced4a560d93f9a66dd5",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "factsSha256": "155bab3ad68fc0f8e9574683336aa95f5474494b579cf9580fb7b52a1460ec47",
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
           "policyRef": "0b7d769ed07a32af75a3366c3262339eff70bbf0b0f8e5a529cde49019839532"
         },
         {
@@ -428181,9 +428247,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/environment-variables.md",
           "owner": "platform-operations",
-          "factsSha256": "e4f57a3cb92a242e0388d6f929f568a70008fc5c395ee072e36a2ae5ce7b29dc",
+          "factsSha256": "2bfc85d3dc4e47566c6b06c7e70b6a133d47a0319c5c3ffae31683ffd8f7997c",
           "primaryIdentity": "configuration-source-boundary:scripts%2Fdocs-api-documentation-role-custody.mjs",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
           "policyRef": "e38679b4631a51139d64f0f6180f945679a0289aae376d91c5491a59e28c8847"
         },
         {
@@ -428192,9 +428258,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/environment-variables.md",
           "owner": "platform-operations",
-          "factsSha256": "36de858d01217a292c6bbe2f540cbefacab68c46cd61c90656a6a7693809aff5",
+          "factsSha256": "d1d62bfd61dfc4798a825b01c4d98be22787635ba9a5044514babea10cbfc874",
           "primaryIdentity": "configuration-source-boundary:scripts%2Fdocs-api-documentation-role-custody.mjs",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
           "policyRef": "e38679b4631a51139d64f0f6180f945679a0289aae376d91c5491a59e28c8847"
         },
         {
@@ -428203,9 +428269,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/environment-variables.md",
           "owner": "platform-operations",
-          "factsSha256": "4aed7fa78182114f4f23b6a71affee0ba5bc9371e715bb6e80c8d1d37aa62346",
+          "factsSha256": "dffc4fdcc86a256610ad7f1cbb313593ae0f4e431225f8700c3f1b4394f14e81",
           "primaryIdentity": "configuration-source-boundary:scripts%2Fdocs-api-documentation-role-custody.mjs",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
           "policyRef": "e38679b4631a51139d64f0f6180f945679a0289aae376d91c5491a59e28c8847"
         },
         {
@@ -428214,9 +428280,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/environment-variables.md",
           "owner": "platform-operations",
-          "factsSha256": "d0c3727c2b15f0309e64520bf6986c3509f63b7c53e15d7cdf724b3e3c54de86",
+          "factsSha256": "486a72e50f25ed1b0e53d574d62cd380f47f426e911874efd09e0063362be00e",
           "primaryIdentity": "configuration-source-boundary:scripts%2Fdocs-api-documentation-role-custody.mjs",
-          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "sourceBindingSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
           "policyRef": "e38679b4631a51139d64f0f6180f945679a0289aae376d91c5491a59e28c8847"
         },
         {
@@ -567662,12 +567728,18 @@
             "cli-declaration:scripts%2Fcheck-sdk-contract-mutation-constructors.mjs:exits:result.error:run:794:2",
             "cli-declaration:scripts%2Fcheck-sdk-contract-mutation-constructors.mjs:exits:result.signal:run:772:1",
             "cli-declaration:scripts%2Fcheck-sdk-contract-mutation-constructors.mjs:exits:result.signal:run:810:3",
-            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20negative%20fixture%20was%20not%20detected%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:8975:0",
-            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20crypto%20encoding%20token%20for%20German%20prose')%3B:assertNegativeFixtures:9327:1",
-            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20registered%20command%20for%20a%20work-package%20label')%3B:assertNegativeFixtures:9751:3",
-            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20an%20external%20API%20URL%20for%20a%20superseded%20repository%20path')%3B:assertNegativeFixtures:9561:2",
-            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20command%20exception%20admitted%20unregistered%20command%20or%20work-package%20prose')%3B:assertNegativeFixtures:10094:4",
-            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20duplicate-H1%20fixture%20was%20not%20detected')%3B:assertNegativeFixtures:10516:5",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20Markdown%20role%20fixture%20failed%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:25698:7",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20negative%20fixture%20was%20not%20detected%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:20684:0",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error(%60Reader-boundary%20structural%20fixture%20failed%3A%20%24%7Bname%7D%60)%3B:assertNegativeFixtures:24318:5",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20bare%2Fautolink%20navigation%20fixture%20failed')%3B:assertNegativeFixtures:25891:8",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20crypto%20encoding%20token%20for%20German%20prose')%3B:assertNegativeFixtures:21036:1",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20a%20registered%20command%20for%20a%20work-package%20label')%3B:assertNegativeFixtures:21460:3",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20check%20mistook%20an%20external%20API%20URL%20for%20a%20superseded%20repository%20path')%3B:assertNegativeFixtures:21270:2",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20citation%20exemption%20leaked%20to%20a%20second%20bare%20URL')%3B:assertNegativeFixtures:26203:9",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20command%20exception%20admitted%20unregistered%20command%20or%20work-package%20prose')%3B:assertNegativeFixtures:21803:4",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20duplicate-H1%20fixture%20was%20not%20detected')%3B:assertNegativeFixtures:26983:11",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20literal%20source-link%20label%20fixture%20failed')%3B:assertNegativeFixtures:26600:10",
+            "cli-declaration:scripts%2Fcheck-site-reader-boundary.mjs:exits:throw%20new%20Error('Reader-boundary%20source%20citation%2Fnavigation%20distinction%20failed')%3B:assertNegativeFixtures:24826:6",
             "cli-declaration:scripts%2Fcheck-suite-migration-workflow.mjs:exits:result.status:checkCutover:15038:0",
             "cli-declaration:scripts%2Fcheck-suite-migration-workflow.mjs:exits:throw%20new%20Error(%60%24%7Brelative%7D%3A%20missing%20suite%20section%20%24%7Bmarker%7D%60)%3B:documentText:16745:1",
             "cli-declaration:scripts%2Fcheck-workflow-drift-mutations.mjs:exits:result.error:run:1009:2",
@@ -623565,19 +623637,6 @@
           "classificationBasis": "docs/generated/inventory/platform-surfaces.json: This scope includes only the nine platform inventory groups. Names can be the same in different sources. Source-qualified occurrences keep their source identities.",
           "authorityKind": "physical-source"
         },
-        "5272e935b67e95b3ac80d98139f4f2dd2a911187e5e4474df12c177ad4995b07": {
-          "recordKind": "source-bound-fact",
-          "primaryMechanicalAuthority": true,
-          "inventory": "docs/generated/inventory/cli-surfaces.json",
-          "generator": "scripts/docs-inventory.mjs --cli",
-          "checks": [
-            "node scripts/docs-inventory.mjs --cli --check"
-          ],
-          "consumerBoundary": "Actual declared first-party launch; Source model is not proof of successful invocation.",
-          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
-          "classification": "supported",
-          "classificationBasis": "{\"source\":\"scripts/check-site-reader-boundary.mjs\",\"kind\":\"supported\",\"supportState\":\"supported\",\"boundary\":\"Actual declared first-party launch; Source model is not proof of successful invocation.\",\"sha256\":\"8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5\",\"gitObject\":\"31f88822b93f86247213910625b8f3125ef111e6\",\"mode\":\"100644\"}"
-        },
         "529b099402fe96131782e4d4134eb758de4fbf51aeb567f518a28149eff2ec74": {
           "recordKind": "source-bound-fact",
           "primaryMechanicalAuthority": true,
@@ -625158,6 +625217,19 @@
           "classification": "inventory-scoped-declaration-or-source-relation",
           "classificationBasis": "docs/generated/inventory/platform-surfaces.json: This scope includes only the nine platform inventory groups. Names can be the same in different sources. Source-qualified occurrences keep their source identities.",
           "authorityKind": "physical-source"
+        },
+        "5c49c903f1999f94722a46538c45e240f415a10b3ad76c48a185c470273a5a40": {
+          "recordKind": "source-bound-fact",
+          "primaryMechanicalAuthority": true,
+          "inventory": "docs/generated/inventory/cli-surfaces.json",
+          "generator": "scripts/docs-inventory.mjs --cli",
+          "checks": [
+            "node scripts/docs-inventory.mjs --cli --check"
+          ],
+          "consumerBoundary": "Actual declared first-party launch; Source model is not proof of successful invocation.",
+          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
+          "classification": "supported",
+          "classificationBasis": "{\"source\":\"scripts/check-site-reader-boundary.mjs\",\"kind\":\"supported\",\"supportState\":\"supported\",\"boundary\":\"Actual declared first-party launch; Source model is not proof of successful invocation.\",\"sha256\":\"af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e\",\"gitObject\":\"5993f79108568260d3d84f29bbea3148264fba62\",\"mode\":\"100644\"}"
         },
         "5c877e860b5048b1a06a22e1350b34373f703c6024004aaeb8a9d50c6606ef67": {
           "recordKind": "source-bound-fact",
@@ -635634,19 +635706,6 @@
           "scopeLimit": "Ordered qualified projection, not a unique JSON-schema branch pointer. Repeated/conditional views remain distinct. Read the owning schema/consumer reference for applicability and defaults; no effective value or execution is inferred.",
           "classification": "qualified-ordered-configuration-view",
           "classificationBasis": "Existing qualified family process-environment; native ordered projection position is part of the identity, not semantic qualification by itself."
-        },
-        "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9": {
-          "recordKind": "source-bound-fact",
-          "primaryMechanicalAuthority": true,
-          "inventory": "docs/generated/inventory/cli-surfaces.json",
-          "generator": "scripts/docs-inventory.mjs --cli",
-          "checks": [
-            "node scripts/docs-inventory.mjs --cli --check"
-          ],
-          "consumerBoundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.",
-          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
-          "classification": "delegated-receiver",
-          "classificationBasis": "{\"source\":\"scripts/docs-api-documentation-role-custody.mjs\",\"kind\":\"delegated-receiver\",\"supportState\":\"delegated-receiver\",\"boundary\":\"Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.\",\"sha256\":\"435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2\",\"gitObject\":\"654964dac14fabeb72db4df0a5dd9c1b3d2edf14\",\"mode\":\"100644\"}"
         },
         "a600a63f61c9238faf03b8d808d47343c400f771e242b7a4edd4d076ea65517f": {
           "recordKind": "source-bound-fact",
@@ -649155,6 +649214,19 @@
           "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
           "classification": "source-only-unqualified",
           "classificationBasis": "{\"source\":\"skills/common/plugins/openclaw-agent-events/tests/package-boundary.test.mjs\",\"kind\":\"source-only-unqualified\",\"supportState\":\"not established\",\"boundary\":\"New native entry/parser candidate. Read-only source declaration, not supported invocation or execution authority.\",\"sha256\":\"5ab9de678f8b3b52b8418642fdb050614d2a2c4d25c33c91948c072cb21f71bb\",\"gitObject\":\"08ee4bdc0fb81b3206432dc7c47dc6dca2964d49\",\"mode\":\"100644\"}"
+        },
+        "fbed5909cd9e77154bb2671697e9f12473a67cc58538da7760bb405fa2ca2c10": {
+          "recordKind": "source-bound-fact",
+          "primaryMechanicalAuthority": true,
+          "inventory": "docs/generated/inventory/cli-surfaces.json",
+          "generator": "scripts/docs-inventory.mjs --cli",
+          "checks": [
+            "node scripts/docs-inventory.mjs --cli --check"
+          ],
+          "consumerBoundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.",
+          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
+          "classification": "delegated-receiver",
+          "classificationBasis": "{\"source\":\"scripts/docs-api-documentation-role-custody.mjs\",\"kind\":\"delegated-receiver\",\"supportState\":\"delegated-receiver\",\"boundary\":\"Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.\",\"sha256\":\"dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e\",\"gitObject\":\"f74140924171f5b4d4221900b8db4a42669d8394\",\"mode\":\"100644\"}"
         },
         "fbfd5c84f4721c922c9a1ca32cb77c23b89415f097578975b72bb253fecc5f33": {
           "recordKind": "projection-reference",

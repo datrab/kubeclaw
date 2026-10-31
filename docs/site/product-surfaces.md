@@ -178,7 +178,7 @@ For the reverse direction, find a canonical page/anchor in `inverse` and follow 
 | CTL | 7 | 18 | 0 | 7 |
 | SPC | 6 | 4 | 4 | 6 |
 | CFG | 8 | 5208 | 15559 | 8 |
-| API | 11 | 22704 | 435 | 11 |
+| API | 11 | 22710 | 435 | 11 |
 | COM | 4 | 0 | 0 | 4 |
 | DAT | 6 | 0 | 0 | 6 |
 | TEL | 3 | 0 | 0 | 3 |
