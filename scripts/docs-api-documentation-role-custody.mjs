@@ -10822,7 +10822,7 @@ export function rootSelectedCompilerTarget(root,capability,recordDependency=()=>
 }
 function verifyRootCompilerFoundation(root,capability,recordDependency) {
  const recipe=reviewedRootSelectedCompilerRecipe,fail=detail=>assert.fail(`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: root compiler resolution: ${detail}`);
- if(typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root,reviewedRecoveryCompilerInput.root].includes(root))||fs.realpathSync(root)!==root)fail('canonical dependency root');
+ if(typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root,reviewedRecoveryCompilerInput.root,reviewedPracticalReaderCompilerInput.root].includes(root))||fs.realpathSync(root)!==root)fail('canonical dependency root');
  const foundationInputFacts=new Map();
  const recordFact=fact=>{recordDependency(fact.path);foundationInputFacts.set(fact.path,fact);};
  const fileFact=selected=>{
@@ -10831,7 +10831,7 @@ function verifyRootCompilerFoundation(root,capability,recordDependency) {
   const sha256=syntaxSha256(fs.readFileSync(file));
   recordFact({path:selected,kind:'file',canonical:file,sha256});return sha256;
  };
- const selectedInput=root===reviewedRecoveryCompilerInput.root?reviewedRecoveryCompilerInput:root===reviewedIsolatedCompilerInput.root?reviewedIsolatedCompilerInput:recipe.foundation;
+ const selectedInput=root===reviewedPracticalReaderCompilerInput.root?reviewedPracticalReaderCompilerInput:root===reviewedRecoveryCompilerInput.root?reviewedRecoveryCompilerInput:root===reviewedIsolatedCompilerInput.root?reviewedIsolatedCompilerInput:recipe.foundation;
  for(const absent of selectedInput.absent??[]){
   const file=path.join(root,absent);let present=false;
   try{fs.lstatSync(file);present=true;}catch(error){if(error.code!=='ENOENT')throw error;}
@@ -10904,6 +10904,37 @@ const reviewedRecoveryCompilerInput=frozenRecipes({
   ],
   "absent": [],
   "scope": "Finite recovery scanner input; exact existing TypeScript 5.9.3 package membership unchanged. The locked npm ci --include=dev installation supplies an exact pinned hidden installation lock; its metadata is an input fact, not an import authority. No runtime acquisition, source acceptance or AP acceptance."
+});
+
+// Finite physical Reader checkout input; no arbitrary-root or compiler authority grant.
+const reviewedPracticalReaderCompilerInput=frozenRecipes({
+  "root": "/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550",
+  "pins": [
+    {
+      "path": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe"
+    },
+    {
+      "path": "node_modules/.package-lock.json",
+      "sha256": "5de787895573574c33b442fa83a469c616269de39ed7941662031b5b6d638474"
+    },
+    {
+      "path": "node_modules/typescript/package.json",
+      "sha256": "822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6"
+    },
+    {
+      "path": "node_modules/typescript/lib/typescript.js",
+      "sha256": "3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675"
+    }
+  ],
+  "absent": [
+    "node_modules/typescript/lib/package.json"
+  ],
+  "scope": "Exact isolated practical Reader existing-dependency input; all five physical pins and the entire existing TypeScript 5.9.3 member/directory/absence catalog apply. No fresh-install claim, compiler capability, runtime acquisition, product acceptance or documentation acceptance."
 });
 
 // Exact isolated CI input successor; compiler source/profile and finite physical membership unchanged.
