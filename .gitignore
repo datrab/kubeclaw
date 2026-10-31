@@ -48,3 +48,6 @@ skills/common/plugin-runtime/foundation/isolation/plugin-sandbox
 
 # Ansible (if using infrastructure layer)
 *.retry
+
+# Public generated compiler/tool pins, not runtime secrets.
+!/docker/runtime-binaries/versions.env

@@ -91,3 +91,8 @@ contracts/agent-observability/v1/dist/
 **/*.sops.yaml.dec
 secrets.yml.dec
 keys.txt
+
+# Locked source builds and public generated version pins.
+!docker/runtime-binaries/
+!docker/runtime-binaries/**
+!docker/runtime-binaries/versions.env

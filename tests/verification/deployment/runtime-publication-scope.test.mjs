@@ -31,7 +31,10 @@ test('unrelated image/code/provenance changes retain full publication', () => {
     next.code.bundles[role].sha256 = 'changed';
     assert.equal(runtimePublicationCommand(prior, next, true), 'export');
     const provenance = structuredClone(prior);
-    delete provenance.code.bundles[role].source;
+    // Legacy receipts inherit the global producer; deleting an absent source
+    // is not a provenance change. Exercise a genuinely different producer.
+    provenance.code.bundles[role].source = { commit: 'a'.repeat(40),
+      sourceRunId: prior.code.sourceRunId, sourceRunAttempt: prior.code.sourceRunAttempt };
     assert.equal(runtimePublicationCommand(prior, provenance, true), 'export');
   }
 });

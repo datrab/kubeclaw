@@ -16,7 +16,7 @@ export function toolchainKey(root, role, platform = 'linux/amd64') {
   const inputs = ['.dockerignore'];
   for (const line of prefix.replace(/\\\n/g, ' ').split('\n')) {
     if (!/^\s*(?:COPY|ADD)\s/i.test(line)) continue;
-    if (/^COPY --from=buildkit /u.test(line)) continue; // pinned FROM is in prefix
+    if (/^COPY --from=(?:buildkit|runtime-binaries) /u.test(line)) continue; // pinned FROM and its inputs are in prefix
     if (!/^COPY [\w./ -]+$/u.test(line)) throw new Error(`Unsupported toolchain input: ${line}`);
     inputs.push(...line.trim().split(/\s+/u).slice(1, -1));
   }

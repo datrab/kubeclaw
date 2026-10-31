@@ -9,6 +9,14 @@ ARG OPENCLAW_BASE=ghcr.io/openclaw/openclaw:2026.10.9@sha256:1a2a3ce113e435039db
 
 ARG KUBECLAW_TOOLCHAIN=toolchain
 # hadolint ignore=DL3006
+ARG RUNTIME_GO_BASE=golang:1.27.3-bookworm@sha256:d9b6a1beb9474adc2a1ce842573639b44b2a0dd49b6669f51d3821baf9ec37c9
+FROM ${RUNTIME_GO_BASE} AS runtime-binaries
+ARG TARGETARCH
+WORKDIR /src
+COPY docker/runtime-binaries/ /src/
+RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
+    sh /src/build.sh helm shfmt kubeconform kubectl tflint trivy
+
 FROM ${OPENCLAW_BASE} AS toolchain
 
 # Root is the declared Nova/Forge/Echo runtime mode.
@@ -95,17 +103,17 @@ RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/common.txt \
 # Pinned Go toolchain and Go-native analyzers.
 
 ARG TARGETARCH
-ARG GO_SHA256_AMD64=ccfe7ae822d2c2f41f4fe7c956199967a4dac22d0ee0d2b2bfdb440aab3b20c5
-ARG GO_SHA256_ARM64=3f4227ce7b206a513e794f1393adb473a07b46e94d18bd15d1c684bbb7319797
-ARG SHFMT_SHA256_AMD64=fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1
-ARG SHFMT_SHA256_ARM64=32d92acaa5cd8abb29fc49dac123dc412442d5713967819d8af2c29f1b3857c7
-ARG TERRAFORM_SHA256_AMD64=73bbb8f5188ad75d4fb853fd100ae4d7e146ef7af7db18776109642fdb7759d2
-ARG TERRAFORM_SHA256_ARM64=7a9e92105ede978cf9049a2fbe53dfe67c6a8da4b4d7f613d89e7dd7c63ec40d
-ARG TFLINT_SHA256_AMD64=cca9d13e2e1d7a2c627af60ff899a3c9b74212899416aeb96ec764d2ef954537
-ARG TFLINT_SHA256_ARM64=560da89aacf59389d4eb029730dd5b109b7288096c32f2726a0d9e783a5ea8eb
-ARG TRIVY_SHA256_AMD64=2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a
-ARG TRIVY_SHA256_ARM64=b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5
-ARG GO_VERSION=1.26.10
+ARG GO_SHA256_AMD64=65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40
+ARG GO_SHA256_ARM64=a06e99309dbcbdca1a8ccd2282c3ee146e55930886e26b4f1193269587165f49
+ARG SHFMT_SHA256_AMD64=76e77641faa025814b77f153b29796b8e6fa2fca03e0c76a691608b86c7ea7bf
+ARG SHFMT_SHA256_ARM64=5f2db09dae91fca848f7adbdd014632e921a383863a2ad7e0450ad3aba0c6489
+ARG TERRAFORM_SHA256_AMD64=4638628058e71a55212b1c563712eac03b902128f40740f3dc8174df12135061
+ARG TERRAFORM_SHA256_ARM64=988e950a1c23058093b0e66ab2d5fb53fc18345ecfbd5871acf51dbac9325edd
+ARG TFLINT_SHA256_AMD64=d4c545ed2e29d6338604b586f34f544f380f70f243aa72f7b484713835eaec61
+ARG TFLINT_SHA256_ARM64=843017c47a98be1de4d88fa038daa293770fe25cd01656c4f08b2e30d1d3b3a0
+ARG TRIVY_SHA256_AMD64=c7cbe3137fb8a48a17574bede3dd6beb16742d1e9772929940fc90082c39d9c0
+ARG TRIVY_SHA256_ARM64=e174dff2a6dba5e3ae41f8d0537a6324405bd08132497340304c6b20e0f16a1f
+ARG GO_VERSION=1.27.3
 ARG STATICCHECK_VERSION=2026.2.2
 ARG GOVULNCHECK_VERSION=v1.9.0
 ARG GOCYCLO_VERSION=v0.6.0
@@ -146,28 +154,36 @@ WORKDIR /app
 # Pinned, checksum-verified binary tools for amd64 and arm64.
 
 ARG HADOLINT_VERSION=2.12.0
-ARG KUBECONFORM_VERSION=0.6.4
-ARG KUBECTL_VERSION=1.35.6
-ARG KUBERNETES_JSON_SCHEMA_COMMIT=c8f4e61c63bc529749125ac566bccc6986e08d45
-ARG HELM_VERSION=3.18.4
-ARG HELM_SHA256_AMD64=f8180838c23d7c7d797b208861fecb591d9ce1690d8704ed1e4cb8e2add966c1
-ARG HELM_SHA256_ARM64=c0a45e67eef0c7416a8a8c9e9d5d2d30d70e4f4d3f7bea5de28241fffa8f3b89
+ARG KUBECONFORM_VERSION=0.8.0
+ARG KUBECTL_VERSION=1.35.10
+ARG KUBERNETES_JSON_SCHEMA_COMMIT=47163ead3738a996c3e30be9691bb37b8071d9d3
+ARG HELM_VERSION=3.22.1
+ARG HELM_SHA256_AMD64=896cf63684a42a723d61c980369d6e588330927deb13676ca0d85006dd6da0ea
+ARG HELM_SHA256_ARM64=4c29e286b279d170fa048ddfc3e4e83dcd069ca9c52102766ba672d7149e694d
 ARG HADOLINT_SHA256_AMD64=56de6d5e5ec427e17b74fa48d51271c7fc0d61244bf5c90e828aab8362d55010
 ARG HADOLINT_SHA256_ARM64=5798551bf19f33951881f15eb238f90aef023f11e7ec7e9f4c37961cb87c5df6
-ARG KUBECONFORM_SHA256_AMD64=2b4ebeaa4d5ac4843cf8f7b7e66a8874252b6b71bc7cbfc4ef1cbf85acec7c07
-ARG KUBECONFORM_SHA256_ARM64=582a8a3eb3c33feb065928728ddac6e544c4f0b1234fd78fc1e4c4175a422b22
-ARG KUBECTL_SHA256_AMD64=5d11e2ba01ea68ffd053f56e27738e2b4330013ee67f7e46c6da6c585d3c9926
-ARG KUBECTL_SHA256_ARM64=c0f97f31c9ddc22d4951d543a1a7125a9af4b31e895ad4aa99899c4ba2a6ff0b
-ARG SHFMT_VERSION=3.13.1
-ARG TERRAFORM_VERSION=1.15.7
-ARG TFLINT_VERSION=0.64.0
-ARG TRIVY_VERSION=0.74.0
+ARG KUBECONFORM_SHA256_AMD64=9bc2bffbf71f261128533edaf912153948b7ff238f9a531ae6d34466ec287883
+ARG KUBECONFORM_SHA256_ARM64=1f53fc8e81258197a35e8603054162a5af1de8c5af13746c71ab680d9534ed87
+ARG KUBECTL_SHA256_AMD64=c49a28f1f4efc4d475ed05f47f2ce8e563bf7bef69ed77fe1b924ea6d83b6327
+ARG KUBECTL_SHA256_ARM64=283f1be6a46b3695b625e25030106b8ffe18bd0d3a900f5b65c259ca407f04f5
+ARG SHFMT_VERSION=3.14.1
+ARG TERRAFORM_VERSION=1.17.1
+ARG TFLINT_VERSION=0.65.0
+ARG TRIVY_VERSION=0.76.1
+
+# Rebuild the locked upstream source with patched transitive modules/compiler.
+COPY --from=runtime-binaries /out/helm /usr/local/bin/helm
+COPY --from=runtime-binaries /out/shfmt /usr/local/bin/shfmt
+COPY --from=runtime-binaries /out/kubeconform /usr/local/bin/kubeconform
+COPY --from=runtime-binaries /out/kubectl /usr/local/bin/kubectl
+COPY --from=runtime-binaries /out/tflint /usr/local/bin/tflint
+COPY --from=runtime-binaries /out/trivy /usr/local/bin/trivy
 
 RUN set -eux; \
 arch="${TARGETARCH:-$(dpkg --print-architecture)}"; \
 case "$arch" in \
-amd64) hadolint_arch="x86_64"; shfmt_sha="${SHFMT_SHA256_AMD64}"; terraform_sha="${TERRAFORM_SHA256_AMD64}"; tflint_sha="${TFLINT_SHA256_AMD64}"; trivy_arch="64bit"; trivy_sha="${TRIVY_SHA256_AMD64}"; hadolint_sha="${HADOLINT_SHA256_AMD64}"; helm_sha="${HELM_SHA256_AMD64}"; kubeconform_sha="${KUBECONFORM_SHA256_AMD64}"; kubectl_sha="${KUBECTL_SHA256_AMD64}" ;; \
-arm64) hadolint_arch="arm64"; shfmt_sha="${SHFMT_SHA256_ARM64}"; terraform_sha="${TERRAFORM_SHA256_ARM64}"; tflint_sha="${TFLINT_SHA256_ARM64}"; trivy_arch="ARM64"; trivy_sha="${TRIVY_SHA256_ARM64}"; hadolint_sha="${HADOLINT_SHA256_ARM64}"; helm_sha="${HELM_SHA256_ARM64}"; kubeconform_sha="${KUBECONFORM_SHA256_ARM64}"; kubectl_sha="${KUBECTL_SHA256_ARM64}" ;; \
+amd64) hadolint_arch="x86_64"; hadolint_sha="${HADOLINT_SHA256_AMD64}"; terraform_sha="${TERRAFORM_SHA256_AMD64}" ;; \
+arm64) hadolint_arch="arm64"; hadolint_sha="${HADOLINT_SHA256_ARM64}"; terraform_sha="${TERRAFORM_SHA256_ARM64}" ;; \
 *) echo "Unsupported architecture: $arch" >&2; exit 1 ;; \
 esac; \
 tmp="$(mktemp -d)"; \
@@ -175,37 +191,11 @@ hadolint_file="hadolint-Linux-${hadolint_arch}"; \
 curl -fsSL "https://github.com/hadolint/hadolint/releases/download/v${HADOLINT_VERSION}/${hadolint_file}" -o "$tmp/$hadolint_file"; \
 printf '%s  %s\n' "$hadolint_sha" "$tmp/$hadolint_file" | sha256sum -c -; \
 install -m 0755 "$tmp/$hadolint_file" /usr/local/bin/hadolint; \
-shfmt_file="shfmt_v${SHFMT_VERSION}_linux_${arch}"; \
-curl -fsSL "https://github.com/mvdan/sh/releases/download/v${SHFMT_VERSION}/${shfmt_file}" -o "$tmp/$shfmt_file"; \
-printf '%s  %s\n' "$shfmt_sha" "$tmp/$shfmt_file" | sha256sum -c -; \
-install -m 0755 "$tmp/$shfmt_file" /usr/local/bin/shfmt; \
 terraform_archive="terraform_${TERRAFORM_VERSION}_linux_${arch}.zip"; \
 curl -fsSL "https://releases.hashicorp.com/terraform/${TERRAFORM_VERSION}/${terraform_archive}" -o "$tmp/$terraform_archive"; \
 printf '%s  %s\n' "$terraform_sha" "$tmp/$terraform_archive" | sha256sum -c -; \
 unzip -q "$tmp/$terraform_archive" -d "$tmp/terraform"; \
 install -m 0755 "$tmp/terraform/terraform" /usr/local/bin/terraform; \
-tflint_archive="tflint_linux_${arch}.zip"; \
-curl -fsSL "https://github.com/terraform-linters/tflint/releases/download/v${TFLINT_VERSION}/${tflint_archive}" -o "$tmp/$tflint_archive"; \
-printf '%s  %s\n' "$tflint_sha" "$tmp/$tflint_archive" | sha256sum -c -; \
-unzip -q "$tmp/$tflint_archive" -d "$tmp/tflint"; \
-install -m 0755 "$tmp/tflint/tflint" /usr/local/bin/tflint; \
-trivy_archive="trivy_${TRIVY_VERSION}_Linux-${trivy_arch}.tar.gz"; \
-curl -fsSL "https://github.com/aquasecurity/trivy/releases/download/v${TRIVY_VERSION}/${trivy_archive}" -o "$tmp/$trivy_archive"; \
-printf '%s  %s\n' "$trivy_sha" "$tmp/$trivy_archive" | sha256sum -c -; \
-tar -xzf "$tmp/$trivy_archive" -C /usr/local/bin trivy; \
-kubeconform_archive="kubeconform-linux-${arch}.tar.gz"; \
-curl -fsSL "https://github.com/yannh/kubeconform/releases/download/v${KUBECONFORM_VERSION}/${kubeconform_archive}" -o "$tmp/$kubeconform_archive"; \
-printf '%s  %s\n' "$kubeconform_sha" "$tmp/$kubeconform_archive" | sha256sum -c -; \
-tar -xzf "$tmp/$kubeconform_archive" -C /usr/local/bin kubeconform; \
-kubectl_file="kubectl-${arch}"; \
-curl -fsSL "https://dl.k8s.io/release/v${KUBECTL_VERSION}/bin/linux/${arch}/kubectl" -o "$tmp/$kubectl_file"; \
-printf '%s  %s\n' "$kubectl_sha" "$tmp/$kubectl_file" | sha256sum -c -; \
-install -m 0755 "$tmp/$kubectl_file" /usr/local/bin/kubectl; \
-helm_archive="helm-v${HELM_VERSION}-linux-${arch}.tar.gz"; \
-curl -fsSL "https://get.helm.sh/${helm_archive}" -o "$tmp/$helm_archive"; \
-printf '%s  %s\n' "$helm_sha" "$tmp/$helm_archive" | sha256sum -c -; \
-tar -xzf "$tmp/$helm_archive" -C "$tmp"; \
-install -m 0755 "$tmp/linux-${arch}/helm" /usr/local/bin/helm; \
 rm -rf "$tmp"; \
 hadolint --version; \
 shfmt --version; \
@@ -215,6 +205,7 @@ trivy --version; \
 kubeconform -v; \
 kubectl version --client=true; \
 helm version --short
+
 
 # The experimental manifest-lint replacement must never fetch validation
 # schemas while a pipeline runs. The image contains one exact, strict schema

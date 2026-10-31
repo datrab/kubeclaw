@@ -7,9 +7,9 @@ const workspace = ['package.json', 'package-lock.json', 'tsconfig.base.json', 'c
 // Include source used by build/acceptance stages as well as the final image.
 // COPY . in Prism stages installs workspaces; all workspace manifests affect npm ci.
 const inputs = {
-  nova: [...observer, 'docker/nova-tools/', 'docker/python-tools/common.txt', 'docker/python-tools/semgrep-nova.txt', 'docker/go-tools/'],
+  nova: ['docker/runtime-binaries/', ...observer, 'docker/nova-tools/', 'docker/python-tools/common.txt', 'docker/python-tools/semgrep-nova.txt', 'docker/go-tools/'],
   'buster-gateway': [...observer, 'docker/openclaw-tools/'],
-  'buster-runtime': ['package.json', 'package-lock.json', 'contracts/', 'skills/', 'scripts/build-plugin-sandbox.mjs', 'scripts/registry-client-config.mjs', 'docker/python-tools/buster.txt', 'docker/buster-runtime-entrypoint.sh', 'tests/verification/contracts/check-pipeline-container-build-production.mts', 'tests/verification/contracts/check-pipeline-container-build-recovery.mts'],
+  'buster-runtime': ['docker/runtime-binaries/', 'package.json', 'package-lock.json', 'contracts/', 'skills/', 'scripts/build-plugin-sandbox.mjs', 'scripts/registry-client-config.mjs', 'docker/python-tools/buster.txt', 'docker/buster-runtime-entrypoint.sh', 'tests/verification/contracts/check-pipeline-container-build-production.mts', 'tests/verification/contracts/check-pipeline-container-build-recovery.mts'],
   'namespace-controller': ['go.mod', 'go.sum', 'cmd/buster-namespace-controller/'],
   archviewer: ['docker/archviewer.nginx.conf'],
   'prism-agent': [...observer, ...workspace, 'docker/openclaw-tools/'],

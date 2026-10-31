@@ -170,6 +170,9 @@ export function versionOutputs(root) {
     `BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE="${'${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-'}${manifest.imageOverrides?.['buster-runtime']?.BUILDKIT_BASE ?? args.BUILDKIT_BASE}}"`);
   bindInfrastructureVersions(manifest, replaceOne);
   bindApplicationVersions(manifest, args, replaceOne);
+  outputs.set('docker/runtime-binaries/versions.env', '# Generated from versions.json; run npm run versions:sync.\n'
+    + ['GO_VERSION', 'HELM_VERSION', 'SHFMT_VERSION', 'KUBECONFORM_VERSION', 'KUBECTL_VERSION', 'TFLINT_VERSION', 'TRIVY_VERSION']
+      .map(key => `${key}=${args[key]}\n`).join(''));
   bindRuntimeToolInputs(manifest, args, outputs);
   return outputs;
 }

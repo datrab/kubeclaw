@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-readonly TRIVY_VERSION="0.74.0"
-readonly TRIVY_AMD64_SHA256="2ae6fe3ee734b7fdf11335663e18c75ea12dccc76062f09f164a3b0f8be4371a"
-readonly TRIVY_ARM64_SHA256="b94ce1976bbf3c15b514b605ee88be7c6d94a29be2302847ff01cb794d47aad5"
+readonly TRIVY_VERSION="0.76.1"
+readonly TRIVY_AMD64_SHA256="c7cbe3137fb8a48a17574bede3dd6beb16742d1e9772929940fc90082c39d9c0"
+readonly TRIVY_ARM64_SHA256="e174dff2a6dba5e3ae41f8d0537a6324405bd08132497340304c6b20e0f16a1f"
 
 usage() {
   cat <<'EOF'
