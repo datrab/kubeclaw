@@ -9047,7 +9047,7 @@
     },
     {
       "path": "docs/site/reference/configuration.md",
-      "sha256": "effec3124b1cb7e66c50d634d649f98f838ce5d0491f6879dc19d80058d6df6c",
+      "sha256": "46219ce885cdfd136c1fbeeaa4e1205829e3cabb25ccfc75d221950cb43a98b2",
       "owner": "authored reference/decision and diagnostic guidance",
       "claim": "authored reference/decision and diagnostic guidance",
       "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -9059,7 +9059,7 @@
       "prose": [
         {
           "ordinal": 1,
-          "sha256": "effec3124b1cb7e66c50d634d649f98f838ce5d0491f6879dc19d80058d6df6c",
+          "sha256": "46219ce885cdfd136c1fbeeaa4e1205829e3cabb25ccfc75d221950cb43a98b2",
           "owner": "authored reference/decision and diagnostic guidance",
           "claim": "authored reference/decision and diagnostic guidance",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
@@ -44400,7 +44400,7 @@
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
-      "sha256": "86d32a3b0a65af26fbe61d0fedd9fb10d3bd71ea0b4d335526ae31ff18d3eb97",
+      "sha256": "82fb707fa29eeb6163dadd73798bfd92acbb6f394807b251050706a84edb577b",
       "owner": "publication metadata",
       "claim": "generated ownership/route data, not teaching runtime examples",
       "executionBoundary": "retain actual governance/route native owner checks; exclude only on explicit producer/consumer/purpose, not extension or parseability",
@@ -49206,12 +49206,12 @@
     {
       "path": "scripts/docs-publication-examples.mjs",
       "sha256": "b55c0e9addce76c121f4f5aedd5863493d581dca0a0d90be69a420b7b942c262",
-      "responsibility": "Exact native validator/source dependency for the authored publication assertion; identity binding is not independent source accuracy or execution proof. Bounded reviewed wait/resume custody correction only: complete original instruction responsibilities and literal embedded programs retained, three additional shell responsibilities included; exact shifted template/program identities and maintained census451. No parsing/refusal exclusion or operational execution grant.\nMNT010 current original schema-field drift successor: all owned regular *.schema.json member paths and bytes, recursive literal properties-member JSON pointers/subtree digests, explicit fixture/retained/documentation/current-declaration status, qualified reader routes and current plugin.json/openclaw.plugin.json registration identities. Existing TS compiler field controls remain distinct and unchanged. Publication runs this read-only schema-field equality/admission check before every original native action; none is waived. Current declaration/file presence is not runtime activation. Literal property-key occurrences, including data-object contexts, do not validate JSON Schema, resolve references, apply defaults or approve consumers/whole API/config/language semantics. Refresh only after scoped source review. Existing original responsibilities and limits retained.\nCurrent finite MNT003 instruction successor: retain all original451 hosts and their exact old bodies/roles; add the three already source-qualified owned configuration/schema generation/check blocks (454 hosts total). The receiver, parse-only shell checks, embedded programs, no-command-execution boundary and original native dispatcher/Source duties remain. This candidate does not grant production or original GOV002/MNT001/MNT009 acceptance."
+      "responsibility": "Exact native validator/source dependency for the authored publication assertion; identity binding is not independent source accuracy or execution proof. Bounded reviewed wait/resume custody correction only: complete original instruction responsibilities and literal embedded programs retained, three additional shell responsibilities included; exact shifted template/program identities and maintained census451. No parsing/refusal exclusion or operational execution grant.\nMNT010 current original schema-field drift successor: all owned regular *.schema.json member paths and bytes, recursive literal properties-member JSON pointers/subtree digests, explicit fixture/retained/documentation/current-declaration status, qualified reader routes and current plugin.json/openclaw.plugin.json registration identities. Existing TS compiler field controls remain distinct and unchanged. Publication runs this read-only schema-field equality/admission check before every original native action; none is waived. Current declaration/file presence is not runtime activation. Literal property-key occurrences, including data-object contexts, do not validate JSON Schema, resolve references, apply defaults or approve consumers/whole API/config/language semantics. Refresh only after scoped source review. Existing original responsibilities and limits retained.\nCurrent finite MNT003 instruction successor retains all original451 hosts and exact old bodies/roles, plus three qualified owned generation/check blocks (454 total). Parse-only/no-command-execution, all original native dispatcher/Source duties, callers and installed factory boundaries remain. Not original GOV002/MNT001/MNT009 acceptance."
     },
     {
       "path": "scripts/docs-publication-instruction-syntax.mjs",
       "sha256": "4f91df3bcbd66cc0d2894f2d5bfb43cff97b22a66f8afa91b3866fcccd03a9d4",
-      "responsibility": "Exact native validator/source dependency for the authored publication assertion; identity binding is not independent source accuracy or execution proof. Bounded reviewed wait/resume custody correction only: complete original instruction responsibilities and literal embedded programs retained, three additional shell responsibilities included; exact shifted template/program identities and maintained census451. No parsing/refusal exclusion or operational execution grant.\nCurrent finite MNT003 instruction successor: retain all original451 hosts and their exact old bodies/roles; add the three already source-qualified owned configuration/schema generation/check blocks (454 hosts total). The receiver, parse-only shell checks, embedded programs, no-command-execution boundary and original native dispatcher/Source duties remain. This candidate does not grant production or original GOV002/MNT001/MNT009 acceptance."
+      "responsibility": "Exact native validator/source dependency for the authored publication assertion; identity binding is not independent source accuracy or execution proof. Bounded reviewed wait/resume custody correction only: complete original instruction responsibilities and literal embedded programs retained, three additional shell responsibilities included; exact shifted template/program identities and maintained census451. No parsing/refusal exclusion or operational execution grant.\nCurrent finite MNT003 instruction successor retains all original451 hosts and exact old bodies/roles, plus three qualified owned generation/check blocks (454 total). Parse-only/no-command-execution, all original native dispatcher/Source duties, callers and installed factory boundaries remain. Not original GOV002/MNT001/MNT009 acceptance."
     },
     {
       "path": "scripts/docs-publication-retention-assertion.mjs",
@@ -59175,7 +59175,7 @@
         "anchors": [
           {
             "ref": "docs/site/reference/configuration.md",
-            "exactExcerpt": "# Configuration\n\nStatus: generated checked-in configuration reference; consumer boundaries below\nAudience: operator, project author, plugin author, maintainer\nOwner: documentation; each named consumer owns its setting semantics\nEvidence: docs/generated/inventory/configuration-families.json; docs/config/configuration-family-map.json; scripts/docs-configuration-inventory.mjs\nApplies to: current selected configuration families, source contracts and inverse-consumer routes\nLast verified: 2026-10-31; guarded source inventory, not a deployment or live-reload observation\nSource snapshot: `1d4b2f9cd65bc52280e214ac9e3de142760e571e`",
+            "exactExcerpt": "# Configuration\n\nStatus: generated checked-in configuration reference; consumer boundaries below\nAudience: operator, project author, plugin author, maintainer\nOwner: documentation; each named consumer owns its setting semantics\nEvidence: docs/generated/inventory/configuration-families.json; docs/config/configuration-family-map.json; scripts/docs-configuration-inventory.mjs\nApplies to: current selected configuration families, source contracts and inverse-consumer routes\nLast verified: 2026-10-31; guarded source inventory, not a deployment or live-reload observation\nSource snapshot: `dea397103b5769a5526bda8b4a0d95f7ed1e0f68`",
             "occurrences": 1
           }
         ]
@@ -59235,7 +59235,7 @@
         },
         {
           "ref": "docs/site/reference/configuration.md",
-          "exactExcerpt": "# Configuration\n\nStatus: generated checked-in configuration reference; consumer boundaries below\nAudience: operator, project author, plugin author, maintainer\nOwner: documentation; each named consumer owns its setting semantics\nEvidence: docs/generated/inventory/configuration-families.json; docs/config/configuration-family-map.json; scripts/docs-configuration-inventory.mjs\nApplies to: current selected configuration families, source contracts and inverse-consumer routes\nLast verified: 2026-10-31; guarded source inventory, not a deployment or live-reload observation\nSource snapshot: `1d4b2f9cd65bc52280e214ac9e3de142760e571e`",
+          "exactExcerpt": "# Configuration\n\nStatus: generated checked-in configuration reference; consumer boundaries below\nAudience: operator, project author, plugin author, maintainer\nOwner: documentation; each named consumer owns its setting semantics\nEvidence: docs/generated/inventory/configuration-families.json; docs/config/configuration-family-map.json; scripts/docs-configuration-inventory.mjs\nApplies to: current selected configuration families, source contracts and inverse-consumer routes\nLast verified: 2026-10-31; guarded source inventory, not a deployment or live-reload observation\nSource snapshot: `dea397103b5769a5526bda8b4a0d95f7ed1e0f68`",
           "occurrences": 1
         }
       ]

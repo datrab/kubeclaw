@@ -2099,7 +2099,7 @@
       ],
       "checks": [
         "node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check",
-        "node scripts/docs-generate.mjs --only configuration-hub --revision fb348d735d170470899b4bb54169ad79280b644d --check",
+        "node scripts/docs-generate.mjs --only configuration-hub --revision dea397103b5769a5526bda8b4a0d95f7ed1e0f68 --check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
@@ -184467,8 +184467,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "b0771fa95191d582215053cc4d8bcc866be4bddc0574b7b4a49675951a34818c",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:bytes.match(%2F%5B%5E%5Cn%5D*%5Cn%7C%5B%5E%5Cn%5D%2B%24%2Fgu)%3F%3F%5B%5D:assertRootHarnessClosure:1285107:3",
@@ -184477,8 +184477,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "830b5a41a388fcda91d61504856e5e78101d8c640f629ee5119c2c5ede114597",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:fs.existsSync(file)%3Fpath.relative(root%2Cfs.realpathSync(file)).replaceAll(path.sep%2C'%2F')%3Anull:assertDocumentationExecutableRole:512780:1",
@@ -184487,8 +184487,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "b79375f4ee35d81ba3084b1357f04c20cae755d406d04a974df7732db5497464",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:path.dirname(directory):assertNativeNpmPosixAuthority:1287594:4",
@@ -184497,8 +184497,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "a419d85d52a474d18117afd9be087ac68840e58a0f5f984c7f39b0bbf13d8e9c",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:root%3D%3D%3DreviewedRecoveryCompilerInput.root%3FreviewedRecoveryCompilerInput%3Aroot%3D%3D%3DreviewedIsolatedCompilerInput.root%3FreviewedIsolatedCompilerInput%3Arecipe.foundation:verifyRootCompilerFoundation:463663:0",
@@ -184507,8 +184507,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "2ce15a9ad0082150e31f3065a88575edbc08c09e900322219565c7762f717647",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:source.endsWith('.py')%3F%5Bnew%20URL('.%2Fdocs-api-python-ast-v1.py'%2Cimport.meta.url).pathname%2C'--stdin-custody'%2Csource%5D%3A%5B'run'%2Cnew%20URL('.%2Fdocs-api-go-output-role-adapter.go'%2Cimport.meta.url).pathname%2C'--documentation-custody'%2Cpath.join(root%2Csource)%5D:assertDocumentationExecutableRole:513550:2",
@@ -184517,8 +184517,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "acaf3fdb3fb7373d5c2b7bf7295c24c82b9453be680ef0716200445773010c61",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:capture.status:expandReviewedNodePackageGlob:1294862:5",
@@ -184527,8 +184527,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "75b36c021616fb95628b42f4857084d98c281c97acb950c5fa72f93164d7af5c",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:config.status:assertNativeNpmPosixAuthority:1288279:4",
@@ -184537,8 +184537,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "9b0aed68242aa18b5e11395c2bbe359e0c50f68105ec1e1c3dca3c4b9834b952",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:receipt.error:assertDocumentationExecutableRole:514034:3",
@@ -184547,8 +184547,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "5a1873bcde220ee48de127de909960b07e7cf46f5c6763f8572393655b418d98",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:receipt.status:assertDocumentationExecutableRole:513937:2",
@@ -184557,8 +184557,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "ae8d1efe5777935c0f1eb52b41b3449ddf39aaadd077c594210835221d0b78a7",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:throw%20error%3B:verifyRootCompilerFoundation:464006:0",
@@ -184567,8 +184567,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "f516c22d1feecafed2abb44935dba9623ea41568da669d62faa1e39abec0d131",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:throw%20error%3B:verifyRootCompilerFoundation:465355:1",
@@ -184577,8 +184577,8 @@
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
           "factsSha256": "8d11960d05c7e92a3dd5a60b62addcf41058327049b7c93d69d2cd36951cf117",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-declaration:scripts%2Fdocs-api-go-output-role-adapter.go:exits:defer%20delete(resolvingParameters%2C%20id.Obj):main:16152:5",
@@ -216686,9 +216686,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "1efab033f005ecce8fb747a1a1af9c2615bef37f8a703abfb407fe9540478766",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
-          "policyRef": "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8"
+          "factsSha256": "72cfb2ba3a60efab6f2a9c61f3f73c20884b4ae498c5164fa91bd469b85d2cbe",
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
+          "policyRef": "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9"
         },
         {
           "normalizedIdentity": "cli-source-declaration:scripts%2Fdocs-api-go-output-role-adapter.go",
@@ -216716,7 +216716,7 @@
           "sourceAuthority": "scripts/docs-api-output-discovery.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "10ab72ac579861dfc88ca843e9b9974eb0d8c0f0aab25bf9579460a1d36c7198",
+          "factsSha256": "b70e7e7e465d6629f2f7963ad00a045cb089364d7e0740eb3c67f77b0cde46e7",
           "sourceBindingSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2",
           "policyRef": "647b57160a845d548cb1b9163b88874f421badd5a310371ba1cbf03734b08c1a"
         },
@@ -217076,7 +217076,7 @@
           "sourceAuthority": "scripts/docs-publication-examples.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "7cc8294d193513b9719402f9f908b3b8d5d9594fe59ebf8aa653a79c8faa35ca",
+          "factsSha256": "959466dd0b9bd321f52af5aa47de3577e619b611cc6d3c6dbf766a3c380b59ed",
           "sourceBindingSha256": "b55c0e9addce76c121f4f5aedd5863493d581dca0a0d90be69a420b7b942c262",
           "policyRef": "f869c4f13b4489569676d7e7b6417baa4865ca5ae1d06c0e218b30dbdd079443"
         },
@@ -217086,9 +217086,9 @@
           "sourceAuthority": "scripts/docs-publication-instruction-syntax.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "29ba0b435f0cae77e26e9d4225cb98312a74320e82adf81ac5660a44f77e4bf0",
-          "sourceBindingSha256": "de702704ee7e70dd7e9ecd3c1d277c331882c4a02c89a70f6517470d252a710f",
-          "policyRef": "cee961337241b3fc1576e85336f86bc3c2d32353ba8ae0a40ec958dea7da2367"
+          "factsSha256": "e9aa286ba8339279161dcbd2bdb4fcfa5a883f610a2c09e0f940e18a3e6c3a3c",
+          "sourceBindingSha256": "4f91df3bcbd66cc0d2894f2d5bfb43cff97b22a66f8afa91b3866fcccd03a9d4",
+          "policyRef": "4a5d84677833962cbf7122b2953339b417a46016123c5999070bcec7905da973"
         },
         {
           "normalizedIdentity": "cli-source-declaration:scripts%2Fdocs-publication.mjs",
@@ -218126,7 +218126,7 @@
           "sourceAuthority": "scripts/tests/api-output-cli-compiler-custody.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "83c0645488dc6c9de8d417b61f90491eb0a63a3babe662b45fc6df717e53e035",
+          "factsSha256": "e9895936f67eb1722430df511a107f37183c86f3a45ee99286f50fa70a2c592c",
           "sourceBindingSha256": "3fc77590a07f9fe892930a850d6937a6d92eb13f0b3b82b2d6d641c5f5232c91",
           "policyRef": "fb02c6cd1c088f7ffc44ebdd3ddc1efbdcad369ffef9440210db3fe85d66dc12"
         },
@@ -218136,7 +218136,7 @@
           "sourceAuthority": "scripts/tests/api-output-cli-fixture-compiler-custody.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "a482a8b4ef08a6ff59888f4ff6ad7c6abb225fce1693f1705084d2c506f8f120",
+          "factsSha256": "cc164c8df27d2bcd793a5972a2c6ed83492b4a5b9e155614df9523a8218d2bd8",
           "sourceBindingSha256": "f09a6119ab98f79813f11f328200993323d24c81e40948723733e7efc21c524c",
           "policyRef": "081612e50f2e36ca1e30ccd303bd6dc6368803d119efcd97c9b035e1cd47def5"
         },
@@ -218196,7 +218196,7 @@
           "sourceAuthority": "scripts/tests/api-output-publication-parser-custody.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "a9155fc3ebcde8ec8ff3e30e32d625800d621af20515c4bfa242bb4cb3d00ca6",
+          "factsSha256": "b6b5b1f75ad729b096f3506009378853e2c42e7b320c374096a0f1b632aaa7b7",
           "sourceBindingSha256": "3de5e39f506f3cf5b715d7c2cf88f848b84c86c3b507eae370ab4579e35df2ce",
           "policyRef": "a79ed14c38cf8a9ec585cc5df2c113ada107bc76d0d9ef03ed4c1664b80c128a"
         },
@@ -218226,7 +218226,7 @@
           "sourceAuthority": "scripts/tests/api-reference.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "cc6a6f84bc5107f5bde7707585e168db28f010deb6d1ac4bca34081876d41a38",
+          "factsSha256": "ba4001fda274ba94f4deb867f210f982ef58cc2053da0c22f8b6ad17abb2def2",
           "sourceBindingSha256": "683a5290709af2a4d7faf7cdf2bad97ac760fab70ddc5aa59ff2a03bd5f0833a",
           "policyRef": "df8b7afe88b25a91db802a676d610101740ea431d94c5d18ea2f59e71d5c1d14"
         },
@@ -218256,7 +218256,7 @@
           "sourceAuthority": "scripts/tests/docs-api-top-level-script-purpose.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "e5b08a3de7d42af3a00d592bdeada346724822bf82af8d3b1ede8498cb6dcb01",
+          "factsSha256": "8bffa2ae8d69db86d84213ec87b500e1547006a3e9a5f6685496c8617e6918fb",
           "sourceBindingSha256": "5f82b5c4121a9a045fdebb0fd6167705237ca48f2e5c9e8ce069d951ad9a7bf0",
           "policyRef": "1f8a58a5b1d1e9bce7cbaac4c950f21d5ccd911a97f1daf04e85e9e65af70995"
         },
@@ -218426,9 +218426,9 @@
           "sourceAuthority": "scripts/tests/docs-publication-examples.test.mjs",
           "canonicalTarget": "docs/site/reference/cli.md",
           "owner": "platform-operations",
-          "factsSha256": "f516e35e88e00b7b7e3391000fb23abbffb768848eadba14b916d70f18767d00",
-          "sourceBindingSha256": "91072953045370980097bb0a051d7b5d4035922910d45084db8b0c4c81ada693",
-          "policyRef": "1a8e99d768f7f92c869bc72d56660a60e2f57b15845c16a91f633536942fd38d"
+          "factsSha256": "26435f4213fd6f40c3c9e43be0f3fa33dab13ca414d8dd5f75556228ab94a65d",
+          "sourceBindingSha256": "6fc070c113689b96fa1e7ef672b139fa6ab066143c7fd7bcaafc6b34e0fdfb87",
+          "policyRef": "4b28bfe1bdd143a2119e335da39ff0e3c3ae0a0d6da768bb71248194725d51d2"
         },
         {
           "normalizedIdentity": "cli-source-declaration:scripts%2Ftests%2Fdocs-publication-links.test.mjs",
@@ -233354,8 +233354,8 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/configuration.md",
           "owner": "documentation; each named consumer owns its setting semantics",
-          "factsSha256": "bb4c73b699b22fe0819ee8f6bd189cc8c9d5d854aa371ed3a9fda39292bee01a",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
+          "factsSha256": "e134d919fc92589279871aa55f17692618c8288fba698ced4a560d93f9a66dd5",
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
           "policyRef": "0b7d769ed07a32af75a3366c3262339eff70bbf0b0f8e5a529cde49019839532"
         },
         {
@@ -428181,9 +428181,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/environment-variables.md",
           "owner": "platform-operations",
-          "factsSha256": "5c118e5f87de696c7763e7a009fd012346e6e34b0bfa04bf9b188bd386158137",
+          "factsSha256": "e4f57a3cb92a242e0388d6f929f568a70008fc5c395ee072e36a2ae5ce7b29dc",
           "primaryIdentity": "configuration-source-boundary:scripts%2Fdocs-api-documentation-role-custody.mjs",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
           "policyRef": "e38679b4631a51139d64f0f6180f945679a0289aae376d91c5491a59e28c8847"
         },
         {
@@ -428192,9 +428192,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/environment-variables.md",
           "owner": "platform-operations",
-          "factsSha256": "027e74b81a267e73bd97ff276e556500b9d1af298ebb8fdc968f625f435dd4be",
+          "factsSha256": "36de858d01217a292c6bbe2f540cbefacab68c46cd61c90656a6a7693809aff5",
           "primaryIdentity": "configuration-source-boundary:scripts%2Fdocs-api-documentation-role-custody.mjs",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
           "policyRef": "e38679b4631a51139d64f0f6180f945679a0289aae376d91c5491a59e28c8847"
         },
         {
@@ -428203,9 +428203,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/environment-variables.md",
           "owner": "platform-operations",
-          "factsSha256": "b267586fbf04ab6d30b8f50711a48f55bf41a903f109e9a5cb9f37f365853926",
+          "factsSha256": "4aed7fa78182114f4f23b6a71affee0ba5bc9371e715bb6e80c8d1d37aa62346",
           "primaryIdentity": "configuration-source-boundary:scripts%2Fdocs-api-documentation-role-custody.mjs",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
           "policyRef": "e38679b4631a51139d64f0f6180f945679a0289aae376d91c5491a59e28c8847"
         },
         {
@@ -428214,9 +428214,9 @@
           "sourceAuthority": "scripts/docs-api-documentation-role-custody.mjs",
           "canonicalTarget": "docs/site/reference/environment-variables.md",
           "owner": "platform-operations",
-          "factsSha256": "43ef8d1436c902c58be78e49f2defe4678010755d5830d841e4029786ed193b9",
+          "factsSha256": "d0c3727c2b15f0309e64520bf6986c3509f63b7c53e15d7cdf724b3e3c54de86",
           "primaryIdentity": "configuration-source-boundary:scripts%2Fdocs-api-documentation-role-custody.mjs",
-          "sourceBindingSha256": "fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f",
+          "sourceBindingSha256": "435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2",
           "policyRef": "e38679b4631a51139d64f0f6180f945679a0289aae376d91c5491a59e28c8847"
         },
         {
@@ -614993,19 +614993,6 @@
           "classification": "qualified-ordered-configuration-view",
           "classificationBasis": "Existing qualified family process-environment; native ordered projection position is part of the identity, not semantic qualification by itself."
         },
-        "1a8e99d768f7f92c869bc72d56660a60e2f57b15845c16a91f633536942fd38d": {
-          "recordKind": "source-bound-fact",
-          "primaryMechanicalAuthority": true,
-          "inventory": "docs/generated/inventory/cli-surfaces.json",
-          "generator": "scripts/docs-inventory.mjs --cli",
-          "checks": [
-            "node scripts/docs-inventory.mjs --cli --check"
-          ],
-          "consumerBoundary": "Actual declared first-party launch; Source model is not proof of successful invocation.",
-          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
-          "classification": "supported",
-          "classificationBasis": "{\"source\":\"scripts/tests/docs-publication-examples.test.mjs\",\"kind\":\"supported\",\"supportState\":\"supported\",\"boundary\":\"Actual declared first-party launch; Source model is not proof of successful invocation.\",\"sha256\":\"91072953045370980097bb0a051d7b5d4035922910d45084db8b0c4c81ada693\",\"gitObject\":\"78146341533645a39b051d88b9d53fd656e3fac8\",\"mode\":\"100644\"}"
-        },
         "1a900b2628a8bd1a0938d03334ad5b9094ad8cfe534ee2b5870a9ed90978d315": {
           "recordKind": "projection-reference",
           "primaryMechanicalAuthority": false,
@@ -622207,6 +622194,19 @@
           "classification": "qualified-ordered-configuration-view",
           "classificationBasis": "Existing qualified family test-provider; native ordered projection position is part of the identity, not semantic qualification by itself."
         },
+        "4a5d84677833962cbf7122b2953339b417a46016123c5999070bcec7905da973": {
+          "recordKind": "source-bound-fact",
+          "primaryMechanicalAuthority": true,
+          "inventory": "docs/generated/inventory/cli-surfaces.json",
+          "generator": "scripts/docs-inventory.mjs --cli",
+          "checks": [
+            "node scripts/docs-inventory.mjs --cli --check"
+          ],
+          "consumerBoundary": "New native entry/parser candidate. Read-only source declaration, not supported invocation or execution authority.",
+          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
+          "classification": "source-only-unqualified",
+          "classificationBasis": "{\"source\":\"scripts/docs-publication-instruction-syntax.mjs\",\"kind\":\"source-only-unqualified\",\"supportState\":\"not established\",\"boundary\":\"New native entry/parser candidate. Read-only source declaration, not supported invocation or execution authority.\",\"sha256\":\"4f91df3bcbd66cc0d2894f2d5bfb43cff97b22a66f8afa91b3866fcccd03a9d4\",\"gitObject\":\"3c095d53f5b2e25eea8a9ad3f40821546a130ed9\",\"mode\":\"100644\"}"
+        },
         "4a6296284999c61cd2df9865641c6bb26cf0acdc024666538d2de819a99c0ba5": {
           "recordKind": "source-bound-fact",
           "primaryMechanicalAuthority": true,
@@ -622284,6 +622284,19 @@
           "scopeLimit": "Ordered qualified projection, not a unique JSON-schema branch pointer. Repeated/conditional views remain distinct. Read the owning schema/consumer reference for applicability and defaults; no effective value or execution is inferred.",
           "classification": "qualified-ordered-configuration-view",
           "classificationBasis": "Existing qualified family process-environment; native ordered projection position is part of the identity, not semantic qualification by itself."
+        },
+        "4b28bfe1bdd143a2119e335da39ff0e3c3ae0a0d6da768bb71248194725d51d2": {
+          "recordKind": "source-bound-fact",
+          "primaryMechanicalAuthority": true,
+          "inventory": "docs/generated/inventory/cli-surfaces.json",
+          "generator": "scripts/docs-inventory.mjs --cli",
+          "checks": [
+            "node scripts/docs-inventory.mjs --cli --check"
+          ],
+          "consumerBoundary": "Actual declared first-party launch; Source model is not proof of successful invocation.",
+          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
+          "classification": "supported",
+          "classificationBasis": "{\"source\":\"scripts/tests/docs-publication-examples.test.mjs\",\"kind\":\"supported\",\"supportState\":\"supported\",\"boundary\":\"Actual declared first-party launch; Source model is not proof of successful invocation.\",\"sha256\":\"6fc070c113689b96fa1e7ef672b139fa6ab066143c7fd7bcaafc6b34e0fdfb87\",\"gitObject\":\"13ac9e22f8f73a0ebbd07ab210c30ec9e055cbcc\",\"mode\":\"100644\"}"
         },
         "4b3ba1e44969647cdf15001a585a7bb7754c00970027e17de2c7b52a5dd96f03": {
           "recordKind": "projection-reference",
@@ -627323,19 +627336,6 @@
           "classification": "inventory-scoped-declaration-or-source-relation",
           "classificationBasis": "docs/generated/inventory/platform-surfaces.json: This scope includes only the nine platform inventory groups. Names can be the same in different sources. Source-qualified occurrences keep their source identities.",
           "authorityKind": "physical-source"
-        },
-        "6d3dce955c510f25a02b311e6f8227565ab4c11fefabb320565751fabd8f88e8": {
-          "recordKind": "source-bound-fact",
-          "primaryMechanicalAuthority": true,
-          "inventory": "docs/generated/inventory/cli-surfaces.json",
-          "generator": "scripts/docs-inventory.mjs --cli",
-          "checks": [
-            "node scripts/docs-inventory.mjs --cli --check"
-          ],
-          "consumerBoundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.",
-          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
-          "classification": "delegated-receiver",
-          "classificationBasis": "{\"source\":\"scripts/docs-api-documentation-role-custody.mjs\",\"kind\":\"delegated-receiver\",\"supportState\":\"delegated-receiver\",\"boundary\":\"Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.\",\"sha256\":\"fc38cf78dc4d55568ddd0d9315b3aabec522233561af3f82cb010ae290b85e0f\",\"gitObject\":\"3e16eaaee1f04270bd54419d12a73ed9c7e9d583\",\"mode\":\"100644\"}"
         },
         "6d6425715696bbfc37c730856b6472f0a6b88330a41d7179b797f3058da2dbac": {
           "recordKind": "source-bound-fact",
@@ -635635,6 +635635,19 @@
           "classification": "qualified-ordered-configuration-view",
           "classificationBasis": "Existing qualified family process-environment; native ordered projection position is part of the identity, not semantic qualification by itself."
         },
+        "a5c5906b7e2af58fd689aed70c330042eca9246a1d2926335298e7b3c0e6e6c9": {
+          "recordKind": "source-bound-fact",
+          "primaryMechanicalAuthority": true,
+          "inventory": "docs/generated/inventory/cli-surfaces.json",
+          "generator": "scripts/docs-inventory.mjs --cli",
+          "checks": [
+            "node scripts/docs-inventory.mjs --cli --check"
+          ],
+          "consumerBoundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.",
+          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
+          "classification": "delegated-receiver",
+          "classificationBasis": "{\"source\":\"scripts/docs-api-documentation-role-custody.mjs\",\"kind\":\"delegated-receiver\",\"supportState\":\"delegated-receiver\",\"boundary\":\"Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.\",\"sha256\":\"435336940959e46161ce9d2de5d2dfb30e21f905fd8502172cd0208daaafd0a2\",\"gitObject\":\"654964dac14fabeb72db4df0a5dd9c1b3d2edf14\",\"mode\":\"100644\"}"
+        },
         "a600a63f61c9238faf03b8d808d47343c400f771e242b7a4edd4d076ea65517f": {
           "recordKind": "source-bound-fact",
           "primaryMechanicalAuthority": true,
@@ -641644,19 +641657,6 @@
           "scopeLimit": "Ordered qualified projection, not a unique JSON-schema branch pointer. Repeated/conditional views remain distinct. Read the owning schema/consumer reference for applicability and defaults; no effective value or execution is inferred.",
           "classification": "qualified-ordered-configuration-view",
           "classificationBasis": "Existing qualified family registered-plugin; native ordered projection position is part of the identity, not semantic qualification by itself."
-        },
-        "cee961337241b3fc1576e85336f86bc3c2d32353ba8ae0a40ec958dea7da2367": {
-          "recordKind": "source-bound-fact",
-          "primaryMechanicalAuthority": true,
-          "inventory": "docs/generated/inventory/cli-surfaces.json",
-          "generator": "scripts/docs-inventory.mjs --cli",
-          "checks": [
-            "node scripts/docs-inventory.mjs --cli --check"
-          ],
-          "consumerBoundary": "New native entry/parser candidate. Read-only source declaration, not supported invocation or execution authority.",
-          "scopeLimit": "Native source declarations only. Candidate/private/delegated/test/history states and the source record's unresolved/adapter limits remain explicit; no supported invocation, generic executable or runtime capability follows.",
-          "classification": "source-only-unqualified",
-          "classificationBasis": "{\"source\":\"scripts/docs-publication-instruction-syntax.mjs\",\"kind\":\"source-only-unqualified\",\"supportState\":\"not established\",\"boundary\":\"New native entry/parser candidate. Read-only source declaration, not supported invocation or execution authority.\",\"sha256\":\"de702704ee7e70dd7e9ecd3c1d277c331882c4a02c89a70f6517470d252a710f\",\"gitObject\":\"f8d4c893c51f090bd131a8f416a2d0f3d454e344\",\"mode\":\"100644\"}"
         },
         "cef3ce4c178bb02a0ce28271f8b3d3fb43bbfbe11029debbd3813c9c30171204": {
           "recordKind": "projection-reference",
