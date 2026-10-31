@@ -371,7 +371,18 @@ after changing this tool. It executes the unmodified original CLI in an isolated
 fixture, checks offline behavior, checksum rejection and shared-entry preservation.
 Its online acquisition is a local fixture, not a successful external chart pull.
 
-The common stable sequence is:
+Choose the generation and freshness route for the outputs actually changed.
+Governance-only changes cover page metadata, the authority relation and its
+marked Product Surface Map summary. Use `npm run docs:governance:generate` and
+`npm run docs:governance:check` instead of the global `docs:generate` /
+`docs:generate:check` pair. Inspect both owned outputs together. This substitution
+applies only when no underlying product source or owning inventory changed;
+otherwise run that owner's generation and freshness checks first. Keep the
+applicable reference, site-boundary and publication checks below. A failure in
+any selected required check remains a stop, not a reason to change source locks.
+
+The common stable sequence below uses the default source-reference route;
+substitute the selected owned freshness check as described above:
 
 ```sh
 set -eu
