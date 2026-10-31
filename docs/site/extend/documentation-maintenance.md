@@ -183,6 +183,10 @@ remain distinct from selected runtime readers. No command here proves runtime
 default insertion, live reload, browser/provider/telemetry execution or deployment.
 Inspect the diffs and use the relevant source-value/refusal controls and
 independent source, reader and quality review before publishing changed meanings.
+For this selected change, use these owned generation/check pairs in the common
+chain instead of its default global `docs:generate`/`docs:generate:check` pair;
+retain the other applicable governance, link and publication checks. Do not add
+a global write or discovery run merely to complete the bounded procedure.
 For prose-only maintenance changes, retain the qualified source snapshot and
 check its existing outputs rather than regenerating unrelated families.
 

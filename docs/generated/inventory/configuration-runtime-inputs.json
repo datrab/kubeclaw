@@ -1413,7 +1413,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 66,
+          "line": 155,
           "path": "scripts/docs-schema-fields.mjs"
         }
       ],
@@ -1424,7 +1424,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 66,
+      "line": 155,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-schema-fields.mjs",
@@ -5775,6 +5775,44 @@
       "type": "value-taking argument; source does not prove a narrower type",
       "unknownOptionBehavior": "The project parser rejects any option outside its five-name allow-list. Without --project, this entry point delegates the complete argv to the Core CLI.",
       "valueTaking": true
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
+          "line": 161,
+          "path": "scripts/docs-schema-fields.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 161,
+      "name": "--reference",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-schema-fields.mjs",
+      "ownerEvidence": "scripts/docs-schema-fields.mjs",
+      "path": "scripts/docs-schema-fields.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-schema-fields.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
     },
     {
       "aliasFor": null,
@@ -231930,10 +231968,10 @@
     }
   ],
   "totals": {
-    "cliDefinitions": 209,
-    "cliFlags": 209,
+    "cliDefinitions": 210,
+    "cliFlags": 210,
     "cliInvocations": 0,
-    "cliOccurrences": 272,
+    "cliOccurrences": 273,
     "configurationConsumerSources": 275,
     "configuredEnvironmentReceivers": 5,
     "derivedValues": 47,

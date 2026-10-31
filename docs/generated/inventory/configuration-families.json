@@ -181796,7 +181796,7 @@
       "sensitivity": "ordinary-value",
       "setting": "KUBECLAW_DOCS_GO_BINARY",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "021c50bd618dd6cd132008cc8650424a4950ba230f4e98765c55aad8dff067f7"
+      "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -183252,7 +183252,7 @@
       "sensitivity": "ordinary-value",
       "setting": "NODE_OPTIONS",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "021c50bd618dd6cd132008cc8650424a4950ba230f4e98765c55aad8dff067f7"
+      "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
     },
     {
       "consumer": "charts/kubeclaw/templates/deployment.yaml",
@@ -183448,7 +183448,7 @@
       "sensitivity": "ordinary-value",
       "setting": "npm_execpath",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "021c50bd618dd6cd132008cc8650424a4950ba230f4e98765c55aad8dff067f7"
+      "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
     },
     {
       "consumer": "charts/kubeclaw/templates/deployment.yaml",
@@ -184260,7 +184260,7 @@
       "sensitivity": "ordinary-value",
       "setting": "PATH",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "021c50bd618dd6cd132008cc8650424a4950ba230f4e98765c55aad8dff067f7"
+      "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -188712,7 +188712,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--check",
       "source": "scripts/docs-schema-fields.mjs",
-      "sourceSha256": "b04ec974b484b966e05b302f1f44c18e9826723744b0529d420a327de1b10994"
+      "sourceSha256": "4a66035baceeb8d3dc0f625d4ad7bf2d270398c591440d491436a00bd6a317c1"
     },
     {
       "consumer": "scripts/docs-status.mjs",
@@ -190309,6 +190309,20 @@
       "setting": "--recover",
       "source": "skills/nova/project/cli.ts",
       "sourceSha256": "6dbf4cb0a699b1e4c5e64c7f94d1bcbe9bdba1fcd1cf5232d81d7ad45ea5f366"
+    },
+    {
+      "consumer": "scripts/docs-schema-fields.mjs",
+      "consumerRole": "argument-parser",
+      "defaultAndPrecedence": "{\"default\":\"false/not selected\",\"precedence\":[\"explicit command-line flag\",\"parser-specific duplicate handling\",\"environment or source default when the consumer declares one\",\"built-in behavior\"],\"duplicates\":\"The linked parser decides whether a repeated option fails or wins.\"}",
+      "family": "owned-cli-maintenance",
+      "kind": "cli-field",
+      "owner": "operator script scripts/docs-schema-fields.mjs",
+      "reference": "[CLI](cli.md), [verification commands](verification-commands.md)",
+      "reloadOrRetention": "Selects the parser branch or value used by this command.",
+      "sensitivity": "Argument definition only; no supplied value copied.",
+      "setting": "--reference",
+      "source": "scripts/docs-schema-fields.mjs",
+      "sourceSha256": "4a66035baceeb8d3dc0f625d4ad7bf2d270398c591440d491436a00bd6a317c1"
     },
     {
       "consumer": "scripts/vendor-external-helm-authorities.mjs",
@@ -402719,7 +402733,7 @@
           "sensitivity": "ordinary-value",
           "setting": "KUBECLAW_DOCS_GO_BINARY",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "021c50bd618dd6cd132008cc8650424a4950ba230f4e98765c55aad8dff067f7"
+          "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402733,7 +402747,7 @@
           "sensitivity": "ordinary-value",
           "setting": "NODE_OPTIONS",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "021c50bd618dd6cd132008cc8650424a4950ba230f4e98765c55aad8dff067f7"
+          "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402747,7 +402761,7 @@
           "sensitivity": "ordinary-value",
           "setting": "npm_execpath",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "021c50bd618dd6cd132008cc8650424a4950ba230f4e98765c55aad8dff067f7"
+          "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402761,7 +402775,7 @@
           "sensitivity": "ordinary-value",
           "setting": "PATH",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "021c50bd618dd6cd132008cc8650424a4950ba230f4e98765c55aad8dff067f7"
+          "sourceSha256": "62062f355ada9ea6f348d6048e98180862d856189c401fe9919bfd94e5722ed7"
         }
       ]
     },
@@ -404379,7 +404393,21 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--check",
           "source": "scripts/docs-schema-fields.mjs",
-          "sourceSha256": "b04ec974b484b966e05b302f1f44c18e9826723744b0529d420a327de1b10994"
+          "sourceSha256": "4a66035baceeb8d3dc0f625d4ad7bf2d270398c591440d491436a00bd6a317c1"
+        },
+        {
+          "consumer": "scripts/docs-schema-fields.mjs",
+          "consumerRole": "argument-parser",
+          "defaultAndPrecedence": "{\"default\":\"false/not selected\",\"precedence\":[\"explicit command-line flag\",\"parser-specific duplicate handling\",\"environment or source default when the consumer declares one\",\"built-in behavior\"],\"duplicates\":\"The linked parser decides whether a repeated option fails or wins.\"}",
+          "family": "owned-cli-maintenance",
+          "kind": "cli-field",
+          "owner": "operator script scripts/docs-schema-fields.mjs",
+          "reference": "[CLI](cli.md), [verification commands](verification-commands.md)",
+          "reloadOrRetention": "Selects the parser branch or value used by this command.",
+          "sensitivity": "Argument definition only; no supplied value copied.",
+          "setting": "--reference",
+          "source": "scripts/docs-schema-fields.mjs",
+          "sourceSha256": "4a66035baceeb8d3dc0f625d4ad7bf2d270398c591440d491436a00bd6a317c1"
         }
       ]
     },
