@@ -119,10 +119,11 @@ test('phone chat waits for real variants and automatically displays the complete
  await expect(chat).toContainText('Drei neue Entwürfe werden erstellt…');
  await expect(chat.getByRole('button',{name:'Nachricht senden',exact:true})).toBeDisabled();
  await expect(page.getByRole('tab',{name:'Herdfeuer'})).toBeVisible();
- activeDirections=['Offener Nachtlotse','Ruhiges Editorial','Leichte Übersicht'].map((title,index)=>{const d=structuredClone(documents[index]);d.meta.title=title;d.views.home.root.children[0].props.content=title;documents.push(d);return {id:`new-${index}`,title,state:'proposed',source_document_id:`doc-${index+3}`};});
+ activeDirections=['Offener Nachtlotse','Ruhiges Editorial','Leichte Übersicht'].map((title,index)=>{const d=structuredClone(documents[index]);d.meta.title=title;d.views.home.root.children[0].props.content=title;documents.push(d);return {id:`new-${index}`,title:`Nachtlotse · ${title}`,state:'proposed',source_document_id:`doc-${index+3}`};});
  chatTurns[0].design_state='completed';
  await expect(page.getByRole('tab',{name:'Offener Nachtlotse'})).toHaveAttribute('aria-selected','true',{timeout:15000});
  await expect(page.frameLocator('iframe.plain-preview').getByRole('heading',{name:'Offener Nachtlotse'})).toBeVisible();
+ await expect(page.getByRole('tab',{name:'Ruhiges Editorial'})).toBeVisible();await expect(page.getByRole('tab',{name:'Leichte Übersicht'})).toBeVisible();await expect(page.locator('.design-decision')).toContainText('Offener Nachtlotse');
  expect(mutations).toEqual([]);
 });
 

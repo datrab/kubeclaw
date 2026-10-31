@@ -76,6 +76,11 @@ function App() {
     Array<{ eventId: string; action: string; retractsEventId?: string }>
   >([]);
   const [directions,setDirections]=useState<StudioDirection[]>([]);
+  const directionName=(direction:StudioDirection)=>{
+    const parts=direction.title.split(/ · | – | — | - /);
+    const shared=directions.filter(item=>item.title.split(/ · | – | — | - /)[0]===parts[0]).length>1;
+    return shared&&parts.length>1?parts.slice(1).join(' · '):parts[0];
+  };
   const [roundMessage,setRoundMessage]=useState("");
   const [roundBusy,setRoundBusy]=useState(false);
   const [roundPending,setRoundPending]=useState(false);
@@ -748,11 +753,11 @@ function App() {
         {directions.length>0 && <section className="design-comparison" aria-label="Entwürfe vergleichen">
           <div className="comparison-heading"><strong>{directions.length} Entwürfe vergleichen</strong><span>Vorschau ohne Auswahl</span></div>
           <div className="direction-tabs" role="tablist" aria-label="Designrichtungen">
-            {directions.map((direction,index)=><button key={direction.id} role="tab" aria-selected={direction.source_document_id===new URLSearchParams(location.search).get('document')} disabled={working || revisionPending || directionBusy} onClick={()=>void previewDirection(direction).catch(error=>setActionError(String(error)))}><span>{index+1}</span>{direction.title.split(/ · | – | - /)[0]}</button>)}
+            {directions.map((direction,index)=><button key={direction.id} role="tab" aria-selected={direction.source_document_id===new URLSearchParams(location.search).get('document')} disabled={working || revisionPending || directionBusy} onClick={()=>void previewDirection(direction).catch(error=>setActionError(String(error)))}><span>{index+1}</span>{directionName(direction)}</button>)}
           </div>
         </section>}
         {directions.filter(item=>item.source_document_id===new URLSearchParams(location.search).get('document')).map(item=><section className="design-decision" key={item.id} aria-label="Entwurf bestätigen">
-          <strong>{item.title.split(/ · | – | - /)[0]}</strong>
+          <strong>{directionName(item)}</strong>
           <button className="primary" disabled={item.state!=='proposed'||working||revisionPending||directionBusy} onClick={()=>void confirmDirection(item.id)}>{item.state==='selected'?'✓ Entwurf bestätigt':item.state==='rejected'?'Entwurf verworfen':'Diesen Entwurf bestätigen'}</button>
           <span>Speichert deine Auswahl für dieses Projekt. Keine Veröffentlichung.</span>
           {item.state==='proposed'&&<button disabled={working||revisionPending||directionBusy} onClick={()=>void recordDirectionFeedback(item.id,'rejected').catch(error=>setActionError(String(error)))}>Diesen Entwurf verwerfen</button>}
