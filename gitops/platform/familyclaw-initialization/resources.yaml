@@ -76,7 +76,7 @@ subjects:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: familyclaw-initialization-v2
+  name: familyclaw-initialization-v3
   namespace: kubeclaw-ops
   annotations:
     argocd.argoproj.io/sync-wave: '10'

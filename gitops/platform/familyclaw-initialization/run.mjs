@@ -81,8 +81,10 @@ async function main() {
     (actualBinding, token) => createBundle(actualBinding, token, () => transferred.tls));
   console.log(JSON.stringify(result));
   // Explicit one-shot Argo operation; no automatic workload pruning or sync.
-  kubectl(['-n', 'argocd', 'patch', 'application', 'familyclaw', '--type=merge', '--patch-file=/dev/stdin'],
-    {operation: {initiatedBy: {username: 'familyclaw-initialization'}, sync: {revision, prune: false, syncStrategy: {apply: {}}}}});
+  const operation = {operation: {initiatedBy: {username: 'familyclaw-initialization'}, sync: {revision, prune: false, syncStrategy: {apply: {}}}}};
+  // This patch contains no credential. /dev/stdin cannot be reopened when
+  // execFileSync supplies fd0 through its Unix socket pair (ENXIO).
+  kubectl(['-n', 'argocd', 'patch', 'application', 'familyclaw', '--type=merge', '--patch', JSON.stringify(operation)]);
   console.log(JSON.stringify({argoSyncRequested: true, revision}));
 }
 
