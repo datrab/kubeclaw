@@ -169,21 +169,23 @@ The pipeline does not require them when another supported component supplies the
 
 The [full identity index](reference/generated-documentation-map.json) is under `sourceSurfaceMap.authorityMatrix`. Start with a SUR family above or search an exact source path in `sourceAuthority`. Each `normalizedIdentity` names its SUR family, source authority, canonical reader target and documentation owner. Resolve its `policyRef` in `authorityPolicies` for the owning inventory, generator or manual route, required check, consumer boundary and classification. Shared policies avoid copying competing ownership rules.
 
+The separate `docs/config/source-authority-family-assignments.json` is reviewed assignment metadata, not another product-fact source; generation never rewrites it. An added, removed or reassigned selected identity requires an explicit affected Source review. Each family also has an `authorityAvailability` disposition: named admitted typed identities, or an explicit bounded reason that the selected inventories do not cover that whole high-level surface. A projection retains its actual primary authority even when assigned to a different family. This disposition is not proof of repository-wide source discovery.
+
 For the reverse direction, find a canonical page/anchor in `inverse` and follow its exact identities. Configuration view identities retain the native ordered record position: repeated or conditional projections are not unique schema branch pointers. Open the owning schema/consumer reference for applicability and default behavior.
 
 | SUR group | Families | Source-bound declarations/relations | Projection references | Manual review routes |
 | --- | --- | --- | --- | --- |
 | CTL | 7 | 18 | 0 | 7 |
-| SPC | 6 | 4 | 0 | 6 |
-| CFG | 8 | 20565 | 0 | 8 |
-| API | 11 | 22981 | 9 | 11 |
+| SPC | 6 | 4 | 4 | 6 |
+| CFG | 8 | 5208 | 15559 | 8 |
+| API | 11 | 22704 | 435 | 11 |
 | COM | 4 | 0 | 0 | 4 |
 | DAT | 6 | 0 | 0 | 6 |
 | TEL | 3 | 0 | 0 | 3 |
 | SEC | 7 | 0 | 0 | 7 |
-| DEP | 10 | 697 | 0 | 10 |
+| DEP | 10 | 698 | 0 | 10 |
 | OPT | 5 | 8 | 0 | 5 |
-| OPS | 6 | 13 | 0 | 6 |
+| OPS | 6 | 11 | 0 | 6 |
 | EXT | 11 | 119 | 0 | 11 |
 
 These are index relations, **not counts of active public runtime features**. Explicit fixture, retained, private, candidate and declaration-only classifications remain in their owning policies. A manual route assigns a named source/consumer review and documentation owner; it does not claim generated freshness, completed semantic review or source-discovery completeness. Historical source links and guide-depth labels in the navigation tables are not current mechanical authorities.
