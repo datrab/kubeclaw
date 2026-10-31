@@ -52,7 +52,7 @@ test('automatic deployment requires successful main provenance and explicit boot
   assert.match(workflow.jobs.publish.if, /GITOPS_ENABLED == 'true'/);
   assert.equal(workflow.concurrency['cancel-in-progress'], false);
   assert.ok(workflow.jobs.publish.steps.some(step => step.run === 'node scripts/updates/select-runtime-deployment.mjs'));
-  const publish = workflow.jobs.publish.steps.at(-1).run;
+  const publish = workflow.jobs.publish.steps.find(step => step.name === 'Materialize and validate Argo deployment').run;
   assert.ok(publish.indexOf('verify-release-source') < publish.indexOf('git push'));
   assert.doesNotMatch(publish, /git push.*--force/);
 });
