@@ -86,6 +86,9 @@ ARG MYPY_VERSION=2.3.0
 ARG PIP_AUDIT_VERSION=2.10.1
 ARG SEMGREP_VERSION=1.183.0
 
+# Wheel pip is build-only: its vendored libraries are independent of our locked
+# packages. Runtime pip-api uses Debian's security-maintained pip instead.
+# Semgrep needs neither pip nor the setuptools seeded by python3-venv at runtime.
 COPY docker/python-tools/common.txt docker/python-tools/semgrep-nova.txt /opt/kubeclaw-python-locks/
 RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/common.txt \
 && grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/common.txt \
@@ -95,6 +98,9 @@ RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/common.txt \
   -r /opt/kubeclaw-python-locks/common.txt \
 && python3 -m venv /opt/semgrep \
 && /opt/semgrep/bin/pip install --no-cache-dir --require-hashes --only-binary=:all: -r /opt/kubeclaw-python-locks/semgrep-nova.txt \
+&& /opt/semgrep/bin/python -m pip uninstall --yes setuptools pip \
+&& python3 -m pip uninstall --break-system-packages --yes pip \
+&& python3 -c 'import pip; assert pip.__file__.startswith("/usr/lib/python3/dist-packages/pip/"), pip.__file__' \
 && ln -s /opt/semgrep/bin/semgrep /usr/local/bin/semgrep \
 && ruff --version \
 && mypy --version \

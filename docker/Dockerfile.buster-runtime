@@ -88,13 +88,17 @@ ARG RUFF_VERSION=0.15.22
 ARG MYPY_VERSION=2.3.0
 ARG PIP_AUDIT_VERSION=2.10.1
 ARG SEMGREP_VERSION=1.183.0
+# Retain Debian's security-maintained pip for pip-api, not the build wheel's
+# independent (and otherwise unpatched) vendored dependency copies.
 COPY docker/python-tools/buster.txt /opt/kubeclaw-python-locks/buster.txt
 RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "pip-audit==${PIP_AUDIT_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "semgrep==${SEMGREP_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && pip install --break-system-packages --no-cache-dir --require-hashes --only-binary=:all: \
-      -r /opt/kubeclaw-python-locks/buster.txt
+      -r /opt/kubeclaw-python-locks/buster.txt \
+    && python3 -m pip uninstall --break-system-packages --yes pip \
+    && python3 -c 'import pip; assert pip.__file__.startswith("/usr/lib/python3/dist-packages/pip/"), pip.__file__'
 
 # Stable tools can be supplied by a content-keyed, digest-pinned CI image.
 # Local and PR builds retain the identical in-file toolchain by default.
