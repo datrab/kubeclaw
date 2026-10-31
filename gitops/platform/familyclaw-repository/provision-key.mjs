@@ -1,5 +1,5 @@
 import {generateKeyPairSync, createPublicKey, createHash} from 'node:crypto';
-import {readFileSync} from 'node:fs';
+import {readFileSync, realpathSync} from 'node:fs';
 import https from 'node:https';
 import {pathToFileURL} from 'node:url';
 
@@ -80,7 +80,7 @@ export function clusterApi() {
   });
 }
 
-if (process.argv[1] && import.meta.url === pathToFileURL(process.argv[1]).href) {
+if (process.argv[1] && import.meta.url === pathToFileURL(realpathSync(process.argv[1])).href) {
   try {
     console.log(JSON.stringify(await provision(clusterApi())));
   } catch {
