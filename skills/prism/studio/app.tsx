@@ -53,8 +53,18 @@ function App() {
   } | null>(null);
   const [acceptedWarnings, setAcceptedWarnings] = useState<string[]>([]);
   const [viewport, setViewport] = useState<Viewport>(() => matchMedia('(max-width: 800px)').matches ? 'compact' : 'wide');
-  const [viewId, setViewId] = useState("home");
-  const [viewState, setViewState] = useState("default");
+  const canvasStage = useRef<HTMLDivElement>(null);
+  const [canvasWidth, setCanvasWidth] = useState(0);
+  useEffect(() => {
+    if (!document || !canvasStage.current) return;
+    const observer = new ResizeObserver(([entry]) => setCanvasWidth(entry.contentRect.width));
+    observer.observe(canvasStage.current); return () => observer.disconnect();
+  }, [Boolean(document)]);
+  const canvasZoom = viewport === 'compact' || !canvasWidth ? 1 : Math.min(1, canvasWidth / (viewport === 'regular' ? 768 : 1280));
+  const [requestedViewId, setViewId] = useState("home");
+  const viewId = document && !document.views[requestedViewId] ? Object.keys(document.views)[0] ?? "home" : requestedViewId;
+  const [requestedViewState, setViewState] = useState("default");
+  const viewState = document?.views[viewId] && !document.views[viewId].states[requestedViewState] ? document.views[viewId].initialState ?? Object.keys(document.views[viewId].states)[0] ?? "default" : requestedViewState;
   const [instruction, setInstruction] = useState("");
   const [working, setWorking] = useState(false);
   const [revisionPending,setRevisionPending]=useState(false);
@@ -75,7 +85,7 @@ function App() {
   const [panel, setPanel] = useState<"navigate" | "insert" | "prism" | null>(
     null,
   );
-  const [mode, setMode] = useState<"edit" | "preview">("edit");
+  const [mode, setMode] = useState<"edit" | "preview">(() => new URLSearchParams(location.search).get("mode") === "edit" ? "edit" : "preview");
   const previewRef=useRef<HTMLIFrameElement>(null);
   const [selectedNodeId,setSelectedNodeId]=useState<string|null>(null);
   const selectedNode=useMemo(()=>document ? elements(document,viewId).find(item=>item.node.id===selectedNodeId)?.node : undefined,[document,selectedNodeId,viewId]);
@@ -543,7 +553,7 @@ function App() {
             <option value="regular">Regular</option>
             <option value="wide">Wide</option>
           </select>
-          <button onClick={() => setMode(mode === "edit" ? "preview" : "edit")}>
+          <button onClick={() => { setMode(mode === "edit" ? "preview" : "edit"); setPanel(null); }}>
             {mode === "edit" ? "Preview" : "Edit"}
           </button>
           <button
@@ -563,7 +573,7 @@ function App() {
           </button>
         </div>
       </header>
-      <aside className="navigator">
+      <aside className="navigator" aria-label="Design navigation">
         <p className="eyebrow">Experience</p>
         {roundMessage && <p role="status">{roundMessage}</p>}
         {(roundPending || (directions.length===3 && directions.every(direction=>direction.state==="rejected"))) && <button disabled={roundBusy} onClick={()=>void requestNewRound().catch(error=>setRoundMessage(String(error)))}>{roundBusy ? "Waiting for new round…" : roundPending ? "Retry the same design round" : "Request new design round"}</button>}
@@ -680,10 +690,10 @@ function App() {
         {actionError && <p role="alert">{actionError}</p>}
         {revisionPending && <p role="status">Your existing feedback is retained. Reconcile it before sending another request.</p>}
         <div className="workspace-label">
-          <span>{viewport}</span>
-          <span>{mode}</span>
+          <span>{document.views[viewId]?.title ?? viewId} · {viewport === "compact" ? "390" : viewport === "regular" ? "768" : "1280"} px</span>
+          <span>{mode === "preview" ? "Interactive preview" : "Design canvas"}</span>
         </div>
-        <div className={`device device-${viewport}`}>
+        <div className="canvas-stage" ref={canvasStage}><div className={`device device-${viewport}`} style={{transform:`scale(${canvasZoom})`,transformOrigin:"top left"}}>
           {mode === "edit" ? (
             <Puck
               key={`${document.meta.documentId}-${viewId}-${viewport}`}
@@ -734,9 +744,9 @@ function App() {
             />
             </>
           )}
-        </div>
+        </div></div>
       </section>
-      <aside className="inspector">
+      <aside className="inspector" aria-label="Element properties">
         <p className="eyebrow">Selected element</p>
         <h2>
           {selectedNode?`${selectedNode.type} · ${selectedNode.id}`:"No selection"}
@@ -810,19 +820,19 @@ function App() {
       </aside>
       <nav className="mobile-nav">
         <button
-          onClick={() => setPanel(panel === "navigate" ? null : "navigate")}
+          aria-expanded={panel === "navigate"} onClick={() => setPanel(panel === "navigate" ? null : "navigate")}
         >
           Navigate
         </button>
-        <button onClick={() => setPanel(panel === "insert" ? null : "insert")}>
+        <button aria-expanded={panel === "insert"} onClick={() => setPanel(panel === "insert" ? null : "insert")}>
           Edit elements
         </button>
-        <button onClick={() => setPanel(panel === "prism" ? null : "prism")}>
+        <button aria-expanded={panel === "prism"} onClick={() => setPanel(panel === "prism" ? null : "prism")}>
           Prism
         </button>
       </nav>
       {panel && (
-        <section className="sheet">
+        <section className="sheet" aria-label="Mobile tools">
           <button className="sheet-close" onClick={() => setPanel(null)}>
             Close
           </button>

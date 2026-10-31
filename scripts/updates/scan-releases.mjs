@@ -1,7 +1,8 @@
+import { readReleaseScan } from './upstream-security-policy.mjs';
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { scanInventory, readScan, writeSecurityReport, blocksRelease } from './security-report.mjs';
+import { scanInventory, writeSecurityReport, blocksRelease } from './security-report.mjs';
 
 const root = process.cwd();
 const directory = path.resolve(process.env.KUBECLAW_TRIVY_REPORT_DIR || 'dist/trivy');
@@ -16,7 +17,7 @@ const persist = () => writeSecurityReport({ ...plan, images: [...plan.images, ..
 persist();
 for (const item of inventory.images) {
   const result = spawnSync('bash', ['scripts/scan-runtime-images.sh', item.reference], { stdio: 'inherit', env: { ...process.env, KUBECLAW_TRIVY_REPORT_DIR: directory } });
-  plan.images.push(readScan(item, directory, result.status));
+  plan.images.push(readReleaseScan(item, directory, result.status));
   persist();
 }
 const failed = plan.errors.length || plan.images.some(blocksRelease);

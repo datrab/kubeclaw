@@ -96,3 +96,19 @@ test('gate CLI distinguishes deferred findings, blocking findings and scanner er
   fs.unlinkSync(file);
   assert.equal(run(0).status,2);
 });
+
+test('upstream exception matches exact unchanged findings and never masks owned fixes or baseline failures', async () => {
+  const {deferInheritedOpenclaw,usesOpenclaw}=await import('../../../scripts/updates/upstream-security-policy.mjs');
+  const upstreamFinding={id:'CVE-base',package:'upstream-lib',installed:'1',severity:'HIGH',fixed:'2',type:'node-pkg',target:'Node.js',packagePath:'app/node_modules/upstream-lib/package.json'};
+  const upstream={reference:'pinned-openclaw@sha256:base',status:'vulnerable',findings:[upstreamFinding]};
+  const image={status:'vulnerable',findings:[{...upstreamFinding},{...upstreamFinding,packagePath:'opt/our-plugin/node_modules/upstream-lib/package.json'}]};
+  const result=deferInheritedOpenclaw(image,upstream);
+  assert.equal(result.findings.length,2);
+  assert.equal(result.findings[0].deferredReason,'retained-openclaw-upstream');
+  assert.equal(result.findings[1].deferredReason,undefined);
+  assert.equal(blocksRelease(result),true);
+  assert.equal(blocksRelease({...result,findings:[result.findings[0]]}),false);
+  assert.equal(blocksRelease(deferInheritedOpenclaw(image,{status:'error',error:'missing',findings:[]})),true);
+  assert.equal(usesOpenclaw(`ghcr.io/datrab/kubeclaw-prism-agent@sha256:${'a'.repeat(64)}`),true);
+  assert.equal(usesOpenclaw(`ghcr.io/datrab/kubeclaw-prism-worker@sha256:${'a'.repeat(64)}`),false);
+});

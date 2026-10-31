@@ -4,7 +4,7 @@ test("desktop Studio edits the canonical revision and previews it", async ({
   page,
 }, testInfo) => {
   test.skip(testInfo.project.name !== "desktop");
-  await page.goto("/");
+  await page.goto("/?mode=edit");
   await expect(page.locator(".brand strong")).toHaveText("Prism");
   await page.getByLabel('Element text').fill('Services');
   await page.getByRole("button", { name: "Save text" }).click();

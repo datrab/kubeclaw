@@ -13,7 +13,7 @@
     "BUSTER_NODE_BASE": "node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c",
     "CONTROLLER_GO_BASE": "golang:1.26.10-alpine3.24@sha256:a2012b4a1d1f9f7e9f44e0d39b805a901e856b1dd80b4e6ee4338db547050308",
     "CONTROLLER_RUNTIME_BASE": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
-    "DEBIAN_SNAPSHOT": "20261025T000000Z",
+    "DEBIAN_SNAPSHOT": "20261031T000000Z",
     "GOCYCLO_VERSION": "v0.6.0",
     "GOVULNCHECK_VERSION": "v1.9.0",
     "GO_SHA256_AMD64": "65efbc80fdc1fa2cd2631cad5b481777a68e8725f34e89f50fc6ac714e379b40",
@@ -67,7 +67,7 @@
   },
   "imageOverrides": {
     "buster-runtime": {
-      "DEBIAN_SNAPSHOT": "20261025T000000Z",
+      "DEBIAN_SNAPSHOT": "20261031T000000Z",
       "SEMGREP_VERSION": "1.183.0"
     },
     "ops-pod": {

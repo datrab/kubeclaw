@@ -108,6 +108,13 @@ for image in "$@"; do
   fi
 done
 
+# Authenticate the unchanged pinned upstream before evaluating its consumers.
+if node --input-type=module -e 'import {usesOpenclaw} from "./scripts/updates/upstream-security-policy.mjs"; process.exit(process.argv.slice(1).some(usesOpenclaw)?0:1)' "$@"; then
+  upstream_reference="$(node --input-type=module -e 'import {openclawReference} from "./scripts/updates/upstream-security-policy.mjs"; console.log(openclawReference())')"
+  # This reference cannot match usesOpenclaw, so recursion is bounded to one level.
+  bash "${BASH_SOURCE[0]}" "$upstream_reference"
+fi
+
 trivy_executable="$(install_trivy "$(uname -m)")"
 installed_version="$($trivy_executable --version | awk '/^Version:/ { print $2; exit }')"
 if [[ $installed_version != "$TRIVY_VERSION" ]]; then

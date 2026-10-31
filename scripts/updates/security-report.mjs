@@ -66,15 +66,17 @@ export function readScan(item, reportDir, exitCode) {
 // Re-evaluated on every scan: a published fix immediately restores blocking.
 export function blocksRelease(image) {
   return !['clean', 'vulnerable'].includes(image.status)
-    || image.findings.some(finding => Boolean(finding.fixed));
+    || image.findings.some(finding => Boolean(finding.fixed) && !finding.deferredReason);
 }
 
 export function securityMarkdown(plan, { limit = Infinity } = {}) {
   const vulnerable = plan.images.filter(x => x.status === 'vulnerable');
   const errors = plan.images.filter(x => x.status === 'error');
+  const upstreamDeferred = plan.images.reduce((sum, image) => sum + image.findings.filter(finding => finding.deferredReason).length, 0);
   const run = plan.runUrl ? `[Scan run and full report artifact](${plan.runUrl})` : 'Local scan; full reports in dist/trivy/';
   let out = `Release security scan: ${plan.generatedAt}\n\n${run}\n\nSource commit: \`${plan.commit || 'local working tree'}\`. ${plan.images.length} unique images: ${vulnerable.length} with HIGH/CRITICAL findings, ${errors.length} scan errors, ${plan.images.filter(x => x.status === 'clean').length} clean.\n\n`;
-  out += 'Build inputs, CI images and selected releases are separate scopes; a clean replacement build does not update the selected release. Counts are package/advisory occurrences, not confirmed exploitable paths. No finding or scan failure is suppressed. Gate policy: HIGH/CRITICAL findings with published fixes and scan failures block releases; findings without a published fix are non-blocking and retained for monitoring. Every scan re-evaluates fix availability.\n\n';
+  out += 'Build inputs, CI images and selected releases are separate scopes; a clean replacement build does not update the selected release. Counts are package/advisory occurrences, not confirmed exploitable paths. No finding or scan failure is suppressed. Gate policy: HIGH/CRITICAL findings with published fixes and scan failures block releases; findings without a published fix are non-blocking and retained for monitoring. Every scan re-evaluates fix availability. Explicit upstream exception: findings proven unchanged in the pinned OpenClaw image remain non-blocking while that upstream version is retained; their full records and upstream identity remain in update-plan.json.\n\n';
+  if (upstreamDeferred) out += `**Upstream exception active:** ${upstreamDeferred} findings deferred only after matching the pinned OpenClaw baseline; not a vulnerability-free result. Full findings remain in the JSON report.\n\n`;
   if (plan.errors.length || errors.length) {
     out += '## Scan / configuration failures\n\n';
     for (const error of plan.errors) out += `- ${cell(error)}\n`;

@@ -1,3 +1,4 @@
+import { studioContentSecurityPolicy } from '../../server/studio-request.ts';
 import { test, expect } from '@playwright/test';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
@@ -32,6 +33,7 @@ test.beforeAll(async () => {
   const bundle = fileURLToPath(new URL('../../dist-studio/', import.meta.url));
   server = createServer((request, response) => {
     void (async () => {
+      response.setHeader('content-security-policy',studioContentSecurityPolicy);
       const pathname = new URL(request.url, 'http://fixture').pathname;
       if (pathname === '/v1/session') { response.setHeader('content-type', 'application/json'); response.end(JSON.stringify({ csrf: 'fixture', userId: 'operator' })); return; }
       if (pathname === '/v1/documents/demo') { response.setHeader('content-type', 'application/json'); response.end(JSON.stringify({ document })); return; }
@@ -54,7 +56,8 @@ test.afterAll(async () => {
   if (temporary) await rm(temporary, { recursive: true, force: true });
 });
 test('real iframe clicks run original App transitions and canonical image loads inside sandbox', async ({ page }) => {
-  mode = 'normal'; await page.goto(`${origin}/?document=demo`);
+  const violations=[];page.on('console',m=>{if(m.type()==='error'&&m.text().includes('Content Security Policy'))violations.push(m.text())});
+  mode = 'normal'; await page.goto(`${origin}/?document=demo&mode=edit`);
   await page.getByRole('button', { name: 'Preview', exact: true }).click();
   await expect(page.locator('iframe[title="Isolated prototype preview"]')).toHaveAttribute('sandbox', 'allow-scripts');
   const frame = page.frameLocator('iframe[title="Isolated prototype preview"]');
@@ -67,12 +70,27 @@ test('real iframe clicks run original App transitions and canonical image loads 
   await frame.getByRole('button', { name: 'Previous', exact: true }).click();
   await expect(frame.getByRole('heading', { name: 'Deployments' })).toBeVisible();
   await expect(frame.getByRole('navigation', { name: 'Pagination' })).toContainText('1 / 2');
+  expect(violations).toEqual([]);
 });
 for (const [failure, message] of [['denied', 'LOAD_FAILED:403'], ['corrupt', 'INTEGRITY_FAILED'], ['oversize', 'SIZE_EXCEEDED']]) {
   test(`production App exposes asset ${failure} without an unverified image`, async ({ page }) => {
-    mode = failure; await page.goto(`${origin}/?document=demo`);
+    mode = failure; await page.goto(`${origin}/?document=demo&mode=edit`);
     await page.getByRole('button', { name: 'Preview', exact: true }).click();
     await expect(page.getByRole('alert').filter({ hasText: message })).toBeVisible();
     await expect(page.frameLocator('iframe[title="Isolated prototype preview"]').getByRole('img')).toHaveCount(0);
   });
 }
+
+for (const width of [390,1440]) test(`default document opens its rendered preview and fits ${width}px without CSP violations`, async ({page}) => {
+  mode='normal';await page.setViewportSize({width,height:1000});
+  const violations=[];page.on('console',m=>{if(m.type()==='error'&&m.text().includes('Content Security Policy'))violations.push(m.text())});
+  await page.goto(`${origin}/?document=demo`);
+  await expect(page.getByRole('button',{name:'Edit',exact:true})).toBeVisible();
+  const preview=page.locator('iframe[title="Isolated prototype preview"]');await expect(preview).toBeVisible();
+  const frame=page.frameLocator('iframe[title="Isolated prototype preview"]');
+  await frame.getByRole('button',{name:'Next',exact:true}).click();
+  await expect(frame.getByRole('heading',{name:'Second page'})).toBeVisible();
+  await expect.poll(()=>page.evaluate(()=>document.documentElement.scrollWidth)).toBe(width);
+  const bounds=await preview.boundingBox();expect(bounds.width).toBeLessThanOrEqual(width);
+  expect(violations).toEqual([]);
+});

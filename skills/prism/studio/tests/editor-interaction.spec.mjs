@@ -1,3 +1,4 @@
+import { studioContentSecurityPolicy } from '../../server/studio-request.ts';
 import { test, expect } from '@playwright/test';
 import { createServer } from 'node:http';
 import { once } from 'node:events';
@@ -17,6 +18,7 @@ function reset() {
 test.beforeAll(async()=>{
   const bundle=fileURLToPath(new URL('../../dist-studio/',import.meta.url));
   server=createServer((request,response)=>{void(async()=>{
+    response.setHeader('content-security-policy',studioContentSecurityPolicy);
     const pathname=new URL(request.url,'http://fixture').pathname;
     response.setHeader('content-type','application/json');
     const reply=(status,value)=>{response.writeHead(status);response.end(JSON.stringify(value));};
@@ -73,7 +75,7 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
     const alltag=structuredClone(document.views.home);
     const focus=structuredClone(alltag);focus.title='Tagesfokus';focus.root.children[0].props.content='Fokusansicht';
     document.views={alltag,tagesfokus:focus};
-    await page.goto(`${origin}/?project=project&document=demo`);
+    await page.goto(`${origin}/?project=project&document=demo&mode=edit`);
     await expect(page.frameLocator('.design-canvas iframe').getByRole('heading',{name:'Deployments',exact:true})).toBeVisible();
     await expect(page.locator('.brief')).toBeVisible();
     expect(await page.locator('.brief').evaluate(el=>el.open)).toBe(false);
@@ -85,9 +87,10 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
       if(mode==='preview')await page.getByRole('button',{name:'Preview',exact:true}).click();
       for(const [value,width] of [['compact',390],['regular',768],['wide',1280]]){
         await page.getByLabel('Viewport',{exact:true}).selectOption(value);
-        await expect(page.locator('.device')).toHaveCSS('width',`${width}px`);
-        if(mode==='edit')await expect(page.locator('.design-canvas iframe')).toHaveCSS('width',`${width}px`);
-        if(mode==='preview')await expect(page.locator('iframe[title="Isolated prototype preview"]')).toHaveCSS('width',`${width}px`);
+        const fittedWidth=mobile&&value==='compact'?366:width;
+        await expect(page.locator('.device')).toHaveCSS('width',`${fittedWidth}px`);
+        if(mode==='edit')await expect(page.locator('.design-canvas iframe')).toHaveCSS('width',`${fittedWidth-2}px`);
+        if(mode==='preview')await expect(page.locator('iframe[title="Isolated prototype preview"]')).toHaveCSS('width',`${fittedWidth-2}px`);
       }
     }
     await page.getByRole('button',{name:'Check design',exact:true}).click();
@@ -98,7 +101,7 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
     expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
   });
   test('arbitrary text and sibling order persist through real operations and page reload',async({page},testInfo)=>{
-    await page.goto(`${origin}/?document=demo`);
+    await page.goto(`${origin}/?document=demo&mode=edit`);
     const tools=page.locator('.layout-tools');await tools.locator('summary').click();
     await expect(tools.getByTestId('drawer-item:Heading')).toBeVisible();await expect(tools.getByRole('textbox',{name:'title',exact:true})).toHaveCount(0);
     await tools.locator('summary').click();let scope=await editor(page);
@@ -116,13 +119,13 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
     await page.screenshot({path:testInfo.outputPath('editor.png')});
   });
   test('a real pointer drag saves one canonical reorder',async({page})=>{
-    await page.goto(`${origin}/?document=demo`);const scope=await editor(page);await gesture(page,scope);
+    await page.goto(`${origin}/?document=demo&mode=edit`);const scope=await editor(page);await gesture(page,scope);
     await expect.poll(()=>operations.length).toBe(1);
     expect(operations[0]).toMatchObject({type:'node.move',nodeId:'beta',index:1,baseRevision:1});
     expect(document.views.home.root.children.map(node=>node.id)).toEqual(['title','beta','alpha','gamma']);
   });
   test('selecting an element in the rendered design exposes its actual text and updates the live preview',async({page})=>{
-    await page.goto(`${origin}/?document=demo`);let scope=await editor(page);
+    await page.goto(`${origin}/?document=demo&mode=edit`);let scope=await editor(page);
     await scope.getByRole('button',{name:'text: Alpha',exact:true}).click();
     if(mobile)await page.getByRole('button',{name:'Close',exact:true}).tap();
     await page.getByRole('button',{name:'Preview',exact:true}).click();
@@ -136,13 +139,13 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
     await expect(frame.getByRole('heading',{name:'Familienboard',exact:true})).toBeVisible();expect(document.views.home.root.children[0].props.content).toBe('Familienboard');
   });
   test('a rejected save keeps the editor and draft visible without claiming success',async({page})=>{
-    rejectSave=true;await page.goto(`${origin}/?document=demo`);const scope=await editor(page);
+    rejectSave=true;await page.goto(`${origin}/?document=demo&mode=edit`);const scope=await editor(page);
     await scope.getByLabel('Element text').fill('Unsaved draft');await scope.getByRole('button',{name:'Save text',exact:true}).click();
     await expect(scope.getByRole('alert')).toContainText('Revision conflict');await expect(scope.getByLabel('Element text')).toHaveValue('Unsaved draft');
     await expect(scope.getByRole('status')).toHaveCount(0);expect(document.meta.revision).toBe(1);await expect(page.getByRole('heading',{name:'Prism cannot open'})).toHaveCount(0);
   });
   test('interrupted feedback stays editable/reconcilable after reload and reuses its original identity',async({page})=>{
-    failFeedback=true;await page.goto(`${origin}/?document=demo`);if(mobile)await page.locator('.mobile-nav').getByRole('button',{name:'Prism',exact:true}).tap();
+    failFeedback=true;await page.goto(`${origin}/?document=demo&mode=edit`);if(mobile)await page.locator('.mobile-nav').getByRole('button',{name:'Prism',exact:true}).tap();
     let scope=page.locator(mobile?'.sheet':'.inspector');await scope.getByLabel('Prism instruction').fill('More space around the family notes');await scope.getByRole('button',{name:'Propose change',exact:true}).click();
     await expect(page.getByRole('heading',{name:'Prism cannot open'})).toHaveCount(0);
     await expect(scope.getByRole('button',{name:'Reconcile existing change',exact:true})).toBeEnabled();
@@ -155,7 +158,17 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
     expect(document.views.home.root.children[0].props.content).toBe('Reviewed layout');
   });
   if(mobile)test('touch cancellation never saves a half-finished move',async({page})=>{
-    await page.goto(`${origin}/?document=demo`);const scope=await editor(page);await gesture(page,scope,true);
+    await page.goto(`${origin}/?document=demo&mode=edit`);const scope=await editor(page);await gesture(page,scope,true);
     await expect(scope.locator('[data-drop-target]')).toHaveCount(0);expect(operations).toHaveLength(0);expect(document.meta.revision).toBe(1);
   });
+});
+
+test('non-home design opens in preview immediately and compact canvas fits a narrow desktop',async({page})=>{
+  const alltag=structuredClone(document.views.home);document.views={alltag};
+  await page.setViewportSize({width:801,height:1000});
+  await page.goto(`${origin}/?document=demo`);
+  await expect(page.getByRole('button',{name:'Edit',exact:true})).toBeVisible();
+  await expect(page.frameLocator('iframe[title="Isolated prototype preview"]').getByRole('heading',{name:'Deployments',exact:true})).toBeVisible();
+  await page.getByLabel('Viewport',{exact:true}).selectOption('compact');
+  await expect.poll(async()=>{const canvas=await page.locator('.device').boundingBox();const stage=await page.locator('.canvas-stage').boundingBox();return canvas.width<=stage.width}).toBe(true);
 });

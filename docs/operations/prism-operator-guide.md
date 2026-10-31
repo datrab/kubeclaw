@@ -306,3 +306,26 @@ another external design action. The persisted preference subject must match;
 explicit Studio requests for a new round still require their parent/document
 revision. A blocked job still requires the reconciliation above before dispatch
 can return a usable receipt.
+
+## Production preview and mobile acceptance
+
+Documents open in the actual rendered preview by default. **Edit** opens the
+structural component canvas; `?mode=edit` is an explicit deep link to that mode.
+The typed element inspector can edit the real document from Preview without
+replacing its appearance with generic component placeholders. Briefing metadata
+starts collapsed. Wide/regular designs fit the workspace while preserving their
+logical breakpoint; compact designs fit the available screen width.
+
+Studio's CSP permits required inline styles but permits no arbitrary inline
+scripts. The preview selection bridge is allowed by its exact SHA-256 hash,
+shared with the parent response; the sandbox still has only `allow-scripts`.
+Engine captures and Studio share semantic control defaults. Puck's optional
+remote font stylesheet is removed during the build, using local/system fonts.
+
+Run browser regressions against the built production bundle **with the actual
+Studio CSP**, not only Vite. Verify document opening without a `home` view,
+compact layout at 390px and near the desktop breakpoint, preview selections,
+text saves/reloads, touch reorders, and explicit save/network failures.
+A successful Actions publish job whose materialization step was skipped is not
+proof of deployment. Match selected image receipts, Argo state, and the live
+bundle/CSP before capturing final mobile/desktop evidence.

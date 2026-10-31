@@ -1,3 +1,4 @@
+import { documentBaseStyles } from '../renderer/base-styles.ts';
 import type { PrismDocument } from "@kubeclaw/prism-contracts-v1";
 import { resolveView } from "../domain/index.ts";
 import { renderNode } from "../renderer/index.ts";
@@ -65,7 +66,7 @@ function renderHtml(
         Record<string, unknown> | undefined
     )?.family,
   );
-  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'"><style>*,*::before,*::after{box-sizing:border-box}html,body{margin:0;min-height:100%;background:${bodyBackground};color:${bodyForeground};font-family:${bodyFont},system-ui,sans-serif}button,input,select,textarea{font:inherit}img{max-width:100%;height:auto}</style></head><body>${renderNode(
+  const html = `<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><meta http-equiv="Content-Security-Policy" content="default-src 'none'; img-src data:; font-src data:; style-src 'unsafe-inline'"><style>${documentBaseStyles}html,body{margin:0;min-height:100%;background:${bodyBackground};color:${bodyForeground};font-family:${bodyFont},system-ui,sans-serif}button,input,select,textarea{font:inherit}img{max-width:100%;height:auto}</style></head><body>${renderNode(
     resolveView(
       document,
       String(input.view ?? "home"),

@@ -1,3 +1,5 @@
+import { createHash } from 'node:crypto';
+import { previewSelectionScript } from '../studio/preview-selection.ts';
 import type { IncomingMessage, ServerResponse } from 'node:http';
 import { open, stat } from 'node:fs/promises';
 import { extname, resolve, sep } from 'node:path';
@@ -17,6 +19,9 @@ class StudioRequestError extends Error {
     super(code, cause === undefined ? undefined : { cause }); this.status = status;
   }
 }
+// srcdoc inherits the parent policy: allow only the exact trusted selection bridge.
+export const studioContentSecurityPolicy = `default-src 'self'; script-src 'self' 'sha256-${createHash('sha256').update(previewSelectionScript).digest('base64')}'; style-src 'self' 'unsafe-inline'; img-src 'self' data: blob:; font-src 'self' data:; frame-src 'self'; connect-src 'self' https:; object-src 'none'; base-uri 'none'`;
+
 const types: Record<string, string> = { '.html': 'text/html', '.js': 'text/javascript', '.css': 'text/css', '.svg': 'image/svg+xml' };
 
 function errorDetails(error: unknown): { message: string; code?: string; cause?: string } {
@@ -122,7 +127,7 @@ async function staticFile(url: URL, response: ServerResponse, options: StudioOpt
   }
   try {
     response.setHeader('content-type', types[extname(file)] ?? 'application/octet-stream');
-    response.setHeader('content-security-policy', "default-src 'self'; frame-src 'self'; connect-src 'self' https:; object-src 'none'; base-uri 'none'");
+    response.setHeader('content-security-policy', studioContentSecurityPolicy);
     await pipeline(handle.createReadStream(), response);
   } finally { await handle.close(); }
 }

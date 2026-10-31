@@ -1,7 +1,7 @@
 # Version defaults are generated from versions.json; run npm run versions:sync.
 ARG NODE_BASE=node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c
 FROM ${NODE_BASE} AS native-launcher
-ARG DEBIAN_SNAPSHOT=20261025T000000Z
+ARG DEBIAN_SNAPSHOT=20261031T000000Z
 USER root
 RUN printf '%s\n' \
       'Types: deb' \
@@ -49,6 +49,8 @@ ENV PRISM_NATIVE_LAUNCHER=/usr/local/libexec/kubeclaw-native-worker-launcher \
 ENV PLAYWRIGHT_BROWSERS_PATH=/ms-playwright
 RUN rm -f /etc/apt/sources.list \
  && node ./node_modules/playwright/cli.js install --with-deps chromium \
+ && apt-get -o Acquire::Retries=5 update \
+ && apt-get -o Acquire::Retries=5 upgrade -y --no-install-recommends \
  && test -d /ms-playwright \
  && rm -rf /usr/local/lib/node_modules /opt/yarn-* \
  && rm -f /usr/local/bin/npm /usr/local/bin/npx /usr/local/bin/corepack /usr/local/bin/yarn /usr/local/bin/yarnpkg \
