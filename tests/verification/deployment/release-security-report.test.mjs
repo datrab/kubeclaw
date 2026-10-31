@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import { spawnSync } from 'node:child_process';
 import { scanInventory, readScan, securityMarkdown, blocksRelease } from '../../../scripts/updates/security-report.mjs';
 
 const reference = `example/image@sha256:${'a'.repeat(64)}`;
@@ -79,4 +80,19 @@ test('gate exempts only unfixed findings and re-blocks when a fix appears', t =>
   fs.unlinkSync(file);
   assert.equal(blocksRelease(readScan(item,dir,0)),true);
   assert.equal(blocksRelease({...item,status:'clean',findings:[]}),false);
+});
+
+
+test('gate CLI distinguishes deferred findings, blocking findings and scanner errors', t => {
+  const {dir,file} = fixture(t, {Results:[{Vulnerabilities:[findings[1]]}]});
+  const run = code => spawnSync(process.execPath, ['scripts/updates/security-gate.mjs',reference,dir,String(code)], {encoding:'utf8'});
+  assert.equal(run(1).status,0);
+  assert.match(run(1).stdout,/1 without published fix/);
+  assert.equal(run(2).status,2);
+  const data = JSON.parse(fs.readFileSync(file));
+  data.Results[0].Vulnerabilities.push(findings[0]);
+  fs.writeFileSync(file,JSON.stringify(data));
+  assert.equal(run(1).status,1);
+  fs.unlinkSync(file);
+  assert.equal(run(0).status,2);
 });

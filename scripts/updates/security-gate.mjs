@@ -5,4 +5,5 @@ const image = readScan({ reference, sources: [], categories: [] }, directory, Nu
 const deferred = image.findings.filter(finding => !finding.fixed).length;
 console.log(`Security gate: ${image.status}; ${image.findings.length - deferred} fixable, ${deferred} without published fix (non-blocking).`);
 if (image.error) console.error(image.error);
-process.exitCode = blocksRelease(image) ? 1 : 0;
+// Preserve infrastructure failure separately from completed vulnerability scans.
+process.exitCode = image.status === 'error' ? 2 : blocksRelease(image) ? 1 : 0;

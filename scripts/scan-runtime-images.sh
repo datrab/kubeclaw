@@ -149,16 +149,16 @@ for image in "$@"; do
     if "$trivy_executable" convert --format table --output "$table" "$report"; then
       cat "$table"
     else
-      scan_failed=1
+      scan_failed=2
     fi
   else
     echo "Scanner produced no report for $image" >&2
-    scan_failed=1
+    scan_failed=2
   fi
   # Keep the full unfiltered report; only the gate decision exempts unfixed findings.
-  if ! node scripts/updates/security-gate.mjs "$image" "$report_dir" "$scanner_exit"; then
-    scan_failed=1
-  fi
+  gate_exit=0
+  node scripts/updates/security-gate.mjs "$image" "$report_dir" "$scanner_exit" || gate_exit=$?
+  if (( gate_exit > scan_failed )); then scan_failed=$gate_exit; fi
   echo "Saved report: $report"
 done
 
