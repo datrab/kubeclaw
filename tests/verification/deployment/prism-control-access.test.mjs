@@ -20,6 +20,10 @@ test('network-only application is opt-in, non-pruning and retained by production
   assert.throws(() => appendPrismControlAccess([], {...config, namespace: 'other'}, repository), /NAMESPACE_MISMATCH/);
   const [app] = appendPrismControlAccess([], config, repository);
   assert.equal(app.spec.project, config.naming.workloadProject);
+  assert.deepEqual(app.metadata.annotations, {'kubeclaw.io/health-mode':'observed'});
+  const runtimeApps=yaml.loadAll(fs.readFileSync('gitops/production/apps/applications.yaml','utf8')).filter(x=>['kubeclaw-nova','kubeclaw-prism','kubeclaw-buster'].includes(x?.metadata?.name));
+  assert.equal(runtimeApps.length,3);
+  for(const runtime of runtimeApps)assert.notEqual(runtime.metadata.annotations?.['kubeclaw.io/health-mode'],'observed');
   assert.equal(app.spec.source.path, 'gitops/production/prism-control-access');
   assert.equal(app.spec.source.repoURL, repository);
   assert.deepEqual(app.spec.syncPolicy.automated, {prune: false, selfHeal: true, allowEmpty: false});

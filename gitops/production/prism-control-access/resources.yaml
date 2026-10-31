@@ -4,6 +4,10 @@ kind: NetworkPolicy
 metadata:
   name: nova-prism-control-access
   namespace: kubeclaw
+  labels:
+    app.kubernetes.io/name: prism-control-access
+    app.kubernetes.io/part-of: kubeclaw
+    app.kubernetes.io/component: network-access
 spec:
   podSelector:
     matchLabels:

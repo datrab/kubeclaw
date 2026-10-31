@@ -232,6 +232,8 @@ kind: Application
 metadata:
   name: kubeclaw-prism-control-access
   namespace: argocd
+  annotations:
+    kubeclaw.io/health-mode: observed
 spec:
   project: kubeclaw
   source:

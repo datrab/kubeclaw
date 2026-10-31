@@ -59,7 +59,11 @@ export function appendPrismControlAccess(documents, config, repository) {
   if (config.namespace !== 'kubeclaw' || config.prismNamespace !== 'kubeclaw') throw new Error('PRISM_CONTROL_ACCESS_NAMESPACE_MISMATCH');
   return [...documents, {
     apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',
-    metadata: { name: `${config.naming.rootName}-prism-control-access`, namespace: config.argoNamespace },
+    // This mutable network-only support path has no selected runtime revision.
+    // Observed health avoids deadlocking the parent after unrelated main commits;
+    // immutable runtime Applications keep their strict revision health gate.
+    metadata: { name: `${config.naming.rootName}-prism-control-access`, namespace: config.argoNamespace,
+      annotations: { 'kubeclaw.io/health-mode': 'observed' } },
     spec: {
       project: config.naming.workloadProject,
       source: { repoURL: repository, targetRevision: 'main',
