@@ -368,7 +368,7 @@ for (const [file, collection, rename, change] of [
     item => { item.id += '.mutation'; }, item => { item.consumer += ' changed'; }],
   ['packaging/runtime/package-ownership.json', data => data.packages,
     item => { item.id += '.mutation'; }, item => { item.owner += '-changed'; }],
-  ['docs/operator-tasks.json', data => data.tasks,
+  ['docs/generated/inventory/operator-tasks.json', data => data.tasks,
     item => { item.taskId += '.mutation'; }, item => { item.owner += '-changed'; }],
 ]) test(`${file}: added authority adapter detects add/change/remove`, () => {
   for (const mutation of [data => { const item = structuredClone(collection(data)[0]); rename(item); collection(data).push(item); },
