@@ -1,0 +1,49 @@
+{
+  "at": "2026-10-31T20:58:36.355036+00:00",
+  "reviewedSourceRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+  "newGateIds": [
+    "A98-10",
+    "A98-11",
+    "A98-14",
+    "A911-02",
+    "A911-11",
+    "A913-01",
+    "A913-08"
+  ],
+  "newRequirementIds": [
+    "QUA-010"
+  ],
+  "acceptedGates": 81,
+  "gateTotal": 89,
+  "acceptedRequirements": 259,
+  "requirementTotal": 261,
+  "targetedPreservedRecords": 44,
+  "actualCurrentPublication": {
+    "pages": 184,
+    "exitCode": 0,
+    "elapsedSeconds": 314.70356243895367
+  },
+  "actualArtifactCheck": {
+    "exitCode": 0,
+    "elapsedSeconds": 32.393347658915445
+  },
+  "originalChecker": {
+    "ok": true,
+    "policy": "compact-topic-review-20261019",
+    "acceptancePoints": 89,
+    "catalogueRequirements": 261,
+    "acceptedGates": 81,
+    "acceptedRequirements": 259,
+    "complete": false,
+    "contentReviewPerformedByChecker": false
+  },
+  "wholeIndependentDecisions": "qua010-and-shared-drift-original-consolidated-decision-20261031.json#finalIndependentWholeOriginalDecision",
+  "limits": [
+    "PUB-007 real independent screenreader/contrast obligation not accepted; earlier representative viewport/keyboard/Axe observations retain limits.",
+    "QUA-007 independent actual operator journey remains unmet; feasible original documentation-only sixfacet exercise is next, not presumed external blocker.",
+    "A911-08 read-only and A911-12 full generator reproduction remain original NOT_READY; preserved exact failures/limited successful paths not blanket waived.",
+    "A913-11 AP10 pre-deletion parity/approval remains explicitly deferred, not usable new-docs delivery blocker. No legacy deletion or89/89 claim.",
+    "Local owning CI checks and native controls actually executed; no hosted CI, new runtime feature deployment or human participant success claimed."
+  ],
+  "evidenceCodeFormat": "Actual external executor recipe copied as .py.txt documentation artifact, not a new shipped executable or product Source authority."
+}

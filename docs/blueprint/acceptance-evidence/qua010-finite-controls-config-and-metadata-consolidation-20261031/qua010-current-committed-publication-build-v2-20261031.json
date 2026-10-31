@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-31T20:46:53.816617+00:00",
+  "sourceRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+  "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+  "exitCode": 0,
+  "elapsedSeconds": 314.70356243895367,
+  "log": "qua010-current-committed-publication-build-v2-20261031.log",
+  "priorFailedBuildRetained": "qua010-current-committed-publication-build-20261031.json"
+}

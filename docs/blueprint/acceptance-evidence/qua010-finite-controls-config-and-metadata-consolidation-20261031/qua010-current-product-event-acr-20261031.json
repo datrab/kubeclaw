@@ -1,0 +1,72 @@
+{
+  "at": "2026-10-31T19:54:59.817477+00:00",
+  "nativeSourceVector": "e5039961034419bc55214f8982d04999932dc04aa13583999b20a69592565fc5",
+  "fixtureRoot": "/home/node/.openclaw/workspace/tmp/qua010-current-product-event-acr-20261031",
+  "copiedExactPrimaryAndSupportingSources": 3157,
+  "outputBaseline": {
+    "docs/generated/inventory/event-contracts.json": "643d691cf993a7d15f07a159ba03ae4915cbcc00c1695c58de47004b49202ce6",
+    "docs/site/reference/events.md": "30fad69b3565deb7ec753f78ee0ad344c8ce04ffc4775d5c4d79999d0ccc8590"
+  },
+  "cases": [
+    {
+      "name": "add",
+      "actualProductPath": "skills/nova/core/telemetry/audit.ts",
+      "nativeExitCode": 1,
+      "diagnostic": "EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:9ecf33ab1ba5a606f2faf7ae0bf184c61ef609634399eee4b4b85bd19ad7142b; reader=docs/site/reference/events.md\n",
+      "elapsedSeconds": 0.7680567150237039,
+      "outputsByteExactUnchanged": true,
+      "readerTarget": "docs/site/reference/events.md",
+      "mutationSourceSha256": "deb11817e8436aaa683e0852eb9218db00d784f1b63b165fb28c28f5a47a94d8",
+      "restoration": {
+        "exitCode": 0,
+        "output": "{\"ok\":true,\"mode\":\"check\",\"families\":14,\"sources\":3153}\n",
+        "elapsedSeconds": 8.649770449032076,
+        "sourceByteExact": true,
+        "outputsByteExact": true
+      }
+    },
+    {
+      "name": "change",
+      "actualProductPath": "skills/nova/core/telemetry/audit.ts",
+      "nativeExitCode": 1,
+      "diagnostic": "EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:3657b22f8069d5ebeacf298895742031d7b00de06933b623b4148bc2826c8ab0; reader=docs/site/reference/events.md\n",
+      "elapsedSeconds": 0.6961288180900738,
+      "outputsByteExactUnchanged": true,
+      "readerTarget": "docs/site/reference/events.md",
+      "mutationSourceSha256": "2374899e25762030587b1d8fb60604cf3d4612f340dc3669524f3b184dbd550f",
+      "restoration": {
+        "exitCode": 0,
+        "output": "{\"ok\":true,\"mode\":\"check\",\"families\":14,\"sources\":3153}\n",
+        "elapsedSeconds": 8.787881491007283,
+        "sourceByteExact": true,
+        "outputsByteExact": true
+      }
+    },
+    {
+      "name": "remove",
+      "actualProductPath": "skills/nova/core/telemetry/audit.ts",
+      "nativeExitCode": 1,
+      "diagnostic": "EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:ef0acbbf8223b6522a54f22530fb9b600512c33de48853487e62a8ab1caa8370; reader=docs/site/reference/events.md\n",
+      "elapsedSeconds": 0.6951974739786237,
+      "outputsByteExactUnchanged": true,
+      "readerTarget": "docs/site/reference/events.md",
+      "mutationSourceSha256": "82a24a5ecdec246ecffd7a88a3de3565269e85b1ad876cd19d2e33be1459d7ce",
+      "restoration": {
+        "exitCode": 0,
+        "output": "{\"ok\":true,\"mode\":\"check\",\"families\":14,\"sources\":3153}\n",
+        "elapsedSeconds": 8.78716736100614,
+        "sourceByteExact": true,
+        "outputsByteExact": true
+      }
+    }
+  ],
+  "scope": "Actual current product audit producer source changes through unchanged maintained native event CLI. Source-disposition refusal and correct reader routing; not runtime event emission or every event parser/family execution.",
+  "baseline": {
+    "exitCode": 0,
+    "output": "{\"ok\":true,\"mode\":\"check\",\"families\":14,\"sources\":3153}\n",
+    "elapsedSeconds": 8.808560829027556
+  },
+  "verdict": "PASS_CURRENT_PRODUCT_EVENT_ADD_CHANGE_REMOVE_DISPOSITION_READER_ROUTING_AND_RESTORATION",
+  "wholeQUA010Accepted": false,
+  "ownedFixtureRemoved": true
+}

@@ -1,0 +1,118 @@
+{
+  "at": "2026-10-31T19:58:43.138116+00:00",
+  "status": "UNADOPTED_FINITE_EIGHT_EXTRACTOR_CASE_PROPOSAL_NOT_ACCEPTANCE",
+  "originalNecessity": "AP09-acceptance-contract.md independent parser paths currently four embedded prefixes Add-only; meaningful Change/Remove missing. These eight cases address distinct extraction transformations, not every hypothetical language variant.",
+  "minimalMaintainedTestToExtend": "scripts/tests/python-environment-discovery.test.mjs (already loads actual production Node/Python/acquisition/environment/coverage functions; preserves genuine KUBECLAW_NATIVE_SUPERVISOR_PID owning receiver and actual native C source prerequisite)",
+  "alternativeExistingNodeCustodyTest": "scripts/tests/environment-custody-boundaries.test.mjs has actual positive Node heredoc and YAML scalar fixtures; use only if exact selected fixture requires that already existing custody harness, not a new platform.",
+  "cases": [
+    {
+      "prefix": "embedded-node-heredoc",
+      "kind": "actual current production source bytes, in-memory only",
+      "path": "docker/buster-runtime-entrypoint.sh",
+      "sourceLocation": 163,
+      "extractor": "sandbox.embeddedNodeEnvironmentReads(path, text)",
+      "baselineAnchor": "const root = process.env.RUNTIME_CONFIG_ROOT;",
+      "changeBefore": "process.env.RUNTIME_CONFIG_ROOT",
+      "changeAfter": "process.env.QUA010_CHANGED_RUNTIME_CONFIG_ROOT",
+      "removeBefore": "const root = process.env.RUNTIME_CONFIG_ROOT;",
+      "removeAfter": "const root = '/fixture-owned-root';",
+      "oldKey": "RUNTIME_CONFIG_ROOT",
+      "newKey": "QUA010_CHANGED_RUNTIME_CONFIG_ROOT",
+      "note": "Full source parse only; never execute startup materialization or shell entrypoint. Assert anchor unique before replacement and all unrelated extracted reader identities unchanged.",
+      "readerTarget": "docs/site/reference/environment-variables.md",
+      "operations": [
+        "change",
+        "remove"
+      ],
+      "baselineObservable": "Production extractor returns selected oldKey at exact original path/line/index; record canonical comparable occurrence vector, baseline production parser succeeds. Store unchanged source string and byte-exact generated current environment page; fixture baseline extraction is not a whole native inventory baseline.",
+      "changeObservable": "Mutated valid program returns newKey at actual changed access; no selected oldKey remains, all unrelated reader identities unchanged; production verifyEnvironmentConsumerCoverage with genuine owned-receiver prerequisite rejects new unqualified key with CONFIG_SEMANTIC_GAP naming newKey:path (when entire real source is within supported exact responsibilities; never install a fake approving reader contract).",
+      "removeObservable": "Mutated still-valid program returns no selected oldKey/newKey and all unrelated extracted reader identities remain. Pure coverage guard MUST NOT be asserted to fail on removal: it checks extant reads only. Removal staleness requires the independently exercised shared runtime --check exact old-output comparison, not a fabricated CONFIG_SEMANTIC_GAP. The extractor test itself asserts precise removal, and CI fails if parser keeps stale read. Public environment reader target is resolved from existing governed source-to-doc mapping.",
+      "restorationObservable": "Restore original in-memory string; full comparable occurrence vector equals baseline exactly, reassert original source-coordinate/name, canonical reader file remains byte-exact. Finally restore sandbox runtimeTextSources/read/environmentOccurrences in finally, including genuine ownedreceiver precondition."
+    },
+    {
+      "prefix": "inline-node-environment",
+      "kind": "actual current production YAML source bytes, in-memory only",
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sourceLocation": 746,
+      "extractor": "sandbox.acquiredNodeEnvironmentReads(path, text, 'inline') (or sandbox.inlineProgramEnvironmentReads with explicit kind filter)",
+      "baselineAnchor": "if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK;",
+      "changeBefore": "if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK;",
+      "changeAfter": "if (process.env.QUA010_CHANGED_DISCORD_WEBHOOK) config.discord_webhook_url=process.env.QUA010_CHANGED_DISCORD_WEBHOOK;",
+      "removeBefore": "if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK;",
+      "removeAfter": "/* fixture: selected inline webhook read removed */",
+      "oldKey": "DISCORD_WEBHOOK",
+      "newKey": "QUA010_CHANGED_DISCORD_WEBHOOK",
+      "note": "Two same-key accesses occur in this one selected node-e statement; both must change/remove. Filter exact inline extractor branch/selected statement, not global Kubernetes producer entries or other embedded process.env reads. Parse source without rendering or running full chart.",
+      "readerTarget": "docs/site/reference/environment-variables.md",
+      "operations": [
+        "change",
+        "remove"
+      ],
+      "baselineObservable": "Production extractor returns selected oldKey at exact original path/line/index; record canonical comparable occurrence vector, baseline production parser succeeds. Store unchanged source string and byte-exact generated current environment page; fixture baseline extraction is not a whole native inventory baseline.",
+      "changeObservable": "Mutated valid program returns newKey at actual changed access; no selected oldKey remains, all unrelated reader identities unchanged; production verifyEnvironmentConsumerCoverage with genuine owned-receiver prerequisite rejects new unqualified key with CONFIG_SEMANTIC_GAP naming newKey:path (when entire real source is within supported exact responsibilities; never install a fake approving reader contract).",
+      "removeObservable": "Mutated still-valid program returns no selected oldKey/newKey and all unrelated extracted reader identities remain. Pure coverage guard MUST NOT be asserted to fail on removal: it checks extant reads only. Removal staleness requires the independently exercised shared runtime --check exact old-output comparison, not a fabricated CONFIG_SEMANTIC_GAP. The extractor test itself asserts precise removal, and CI fails if parser keeps stale read. Public environment reader target is resolved from existing governed source-to-doc mapping.",
+      "restorationObservable": "Restore original in-memory string; full comparable occurrence vector equals baseline exactly, reassert original source-coordinate/name, canonical reader file remains byte-exact. Finally restore sandbox runtimeTextSources/read/environmentOccurrences in finally, including genuine ownedreceiver precondition."
+    },
+    {
+      "prefix": "embedded-python-heredoc",
+      "kind": "existing supported parser fixture, NOT observed production environment reader",
+      "path": "fixture.sh",
+      "existingTest": "scripts/tests/python-environment-discovery.test.mjs:197 and :226",
+      "extractor": "sandbox.embeddedPythonEnvironmentReads(path, text)",
+      "baselineText": "python3 - <<'PY'\nimport os\nprint(os.getenv('QUA010_PYTHON_BASE', ''))\nPY\n",
+      "changeBefore": "os.getenv('QUA010_PYTHON_BASE', '')",
+      "changeAfter": "os.getenv('QUA010_PYTHON_CHANGED', '')",
+      "removeBefore": "print(os.getenv('QUA010_PYTHON_BASE', ''))",
+      "removeAfter": "print('literal-with-no-environment-read')",
+      "oldKey": "QUA010_PYTHON_BASE",
+      "newKey": "QUA010_PYTHON_CHANGED",
+      "note": "Actual repo has Python heredoc commands (scripts/remove-qdrant.sh:19, scripts/deploy-cilium.sh:16), but bounded inspection did not establish a current literal environment reader inside them. Do not relabel fixture as product/native-Python runtime proof; ordinary Python3 parser fixture avoids annotationlib3.14 assumptions.",
+      "readerTarget": "docs/site/reference/environment-variables.md",
+      "operations": [
+        "change",
+        "remove"
+      ],
+      "baselineObservable": "Production extractor returns selected oldKey at exact original path/line/index; record canonical comparable occurrence vector, baseline production parser succeeds. Store unchanged source string and byte-exact generated current environment page; fixture baseline extraction is not a whole native inventory baseline.",
+      "changeObservable": "Mutated valid program returns newKey at actual changed access; no selected oldKey remains, all unrelated reader identities unchanged; production verifyEnvironmentConsumerCoverage with genuine owned-receiver prerequisite rejects new unqualified key with CONFIG_SEMANTIC_GAP naming newKey:path (when entire real source is within supported exact responsibilities; never install a fake approving reader contract).",
+      "removeObservable": "Mutated still-valid program returns no selected oldKey/newKey and all unrelated extracted reader identities remain. Pure coverage guard MUST NOT be asserted to fail on removal: it checks extant reads only. Removal staleness requires the independently exercised shared runtime --check exact old-output comparison, not a fabricated CONFIG_SEMANTIC_GAP. The extractor test itself asserts precise removal, and CI fails if parser keeps stale read. Public environment reader target is resolved from existing governed source-to-doc mapping.",
+      "restorationObservable": "Restore original in-memory string; full comparable occurrence vector equals baseline exactly, reassert original source-coordinate/name, canonical reader file remains byte-exact. Finally restore sandbox runtimeTextSources/read/environmentOccurrences in finally, including genuine ownedreceiver precondition."
+    },
+    {
+      "prefix": "embedded-yaml-javascript",
+      "kind": "existing supported YAML ConfigMap embedded-JS positive fixture from original runner",
+      "path": "charts/ops-pod/templates/ap98-embedded-javascript.yaml",
+      "existingTest": "scripts/check-configuration-drift-mutations.mjs:734; scripts/tests/environment-custody-boundaries.test.mjs:226 shared YAML scalar custody positive",
+      "extractor": "sandbox.embeddedNodeEnvironmentReads(path, text) or sandbox.acquiredNodeEnvironmentReads(path,text), preserving full actual source positions",
+      "baselineText": "apiVersion: v1\nkind: ConfigMap\nmetadata: {name: ap98-embedded-javascript}\ndata:\n  reader.sh: |\n    cat > /tmp/ap98-reader.mjs <<'JAVASCRIPT'\n    const environment = process.env;\n    const read = (name) => environment[name];\n    process.stdout.write(read('AP98_EMBEDDED_YAML_HELPER') || '');\n    JAVASCRIPT\n",
+      "changeBefore": "read('AP98_EMBEDDED_YAML_HELPER')",
+      "changeAfter": "read('QUA010_EMBEDDED_YAML_CHANGED')",
+      "removeBefore": "process.stdout.write(read('AP98_EMBEDDED_YAML_HELPER') || '');",
+      "removeAfter": "process.stdout.write('literal-with-no-environment-read');",
+      "oldKey": "AP98_EMBEDDED_YAML_HELPER",
+      "newKey": "QUA010_EMBEDDED_YAML_CHANGED",
+      "note": "Keep alias/helper declarations, quote delimiter, YAML indentation and passive-vs-executable custody exact. A bare data literal is not promoted to executed JS. If this exact original positive fixture is not acquired by production parser, retain actual failure and instead use already positive command/sh/-c Node-heredoc fixture from environment-custody-boundaries:226; do not waive custody.",
+      "readerTarget": "docs/site/reference/environment-variables.md",
+      "operations": [
+        "change",
+        "remove"
+      ],
+      "baselineObservable": "Production extractor returns selected oldKey at exact original path/line/index; record canonical comparable occurrence vector, baseline production parser succeeds. Store unchanged source string and byte-exact generated current environment page; fixture baseline extraction is not a whole native inventory baseline.",
+      "changeObservable": "Mutated valid program returns newKey at actual changed access; no selected oldKey remains, all unrelated reader identities unchanged; production verifyEnvironmentConsumerCoverage with genuine owned-receiver prerequisite rejects new unqualified key with CONFIG_SEMANTIC_GAP naming newKey:path (when entire real source is within supported exact responsibilities; never install a fake approving reader contract).",
+      "removeObservable": "Mutated still-valid program returns no selected oldKey/newKey and all unrelated extracted reader identities remain. Pure coverage guard MUST NOT be asserted to fail on removal: it checks extant reads only. Removal staleness requires the independently exercised shared runtime --check exact old-output comparison, not a fabricated CONFIG_SEMANTIC_GAP. The extractor test itself asserts precise removal, and CI fails if parser keeps stale read. Public environment reader target is resolved from existing governed source-to-doc mapping.",
+      "restorationObservable": "Restore original in-memory string; full comparable occurrence vector equals baseline exactly, reassert original source-coordinate/name, canonical reader file remains byte-exact. Finally restore sandbox runtimeTextSources/read/environmentOccurrences in finally, including genuine ownedreceiver precondition."
+    }
+  ],
+  "totalNecessaryNewOperations": 8,
+  "sharedComparisonJoin": {
+    "originalRequirement": "Meaningful Add/Change/Remove stale-documentation refusal and correct reader; one shared comparator may cover several extractor paths with explicit explanation.",
+    "supportedBaseline": [
+      "node scripts/docs-configuration-inventory.mjs --runtime-only --check",
+      "or existing complete --configuration-reference-only --check when its selectedSource contract is unchanged"
+    ],
+    "doNotRun": "Unchanged default full mutation runner reacquires unrelated global program-output API before any case, currently failing API_PRODUCT_DIAGNOSTIC_SOURCE_ROLE_UNQUALIFIED; no need to repair universal API for these parser obligations.",
+    "requiredActualSharedRefusal": "Use existing native supported runtime-only output comparison on a disposable owned temp output directory: generate baseline through normal strict native owner (no allow-semantic-gaps), append a harmless stale byte to copied configuration-runtime-inputs.json, execute runtime-only --check --out-dir that directory and observe stale path/nonzero, restore exact baseline file and check0. This proves actual shared byte-check refusal, not invented per-extractor semantic rejection. Distinct extractor tests above establish each source A/C/R changes the facts that feed this same output.",
+    "readerTargetQualification": "The stale raw filename is not itself reader proof. Reuse exact current source-map/ref003/config env canonical join to docs/site/reference/environment-variables.md; add assertion that canonical governed relation resolves that reader target (and page bytes unchanged) to the bounded fixture report. No receipt/hash refresh or new route registry."
+  },
+  "noFakePass": "Eight successful extractor changes/removals plus actual shared native comparison can form a compositional original drift evidence join; they do NOT each claim an independently rerun whole product inventory drift rejection or a product runtime observation. Final independent original QUA010 judge must explicitly assess this join against original correct-reader and meaningful-mutation criteria, retaining any actual gap. Parser tests alone or test-file existence cannot grant whole QUA010/A91111/A91308.",
+  "readOnlyEffects": "Only this external proposal file written. No repo source/test edits or parser/generator/test executions."
+}

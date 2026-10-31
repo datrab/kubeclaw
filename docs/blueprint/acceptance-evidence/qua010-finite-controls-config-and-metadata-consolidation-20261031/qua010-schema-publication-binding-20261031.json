@@ -1,0 +1,226 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PASS_EXACT_ONE_SHA_SCHEMA_PAGE_AND_NESTED_BINDING_SUCCESSOR",
+  "page": "docs/site/reference/schemas.md",
+  "currentPageSha256": "9bedad92e725514c64567a7263382795ab0426b4164565f606bb17c8146acaaf",
+  "oldHeadPageSha256": "6ed82ed92c3967293fc35d2b13f959a2f46cc835e5ccee991d03dc439ff1a37a",
+  "exactOnlyOneSourceShaReplacement": true,
+  "nativeSource": {
+    "path": "scripts/docs-configuration-inventory.mjs",
+    "oldSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7",
+    "currentSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f",
+    "registeredSchemaAuthoritiesLines": "3178-3210",
+    "completeSelectorByteIdentical": true,
+    "selectorSha256": "82ae1aaeba20a201e6123f6203b5d770c1a3b1cf7e3e0ab3888515ff30f015a3",
+    "meaning": "Registration discovery, configSchema string/inline handling, named roots, existence checks and ordering all byte-identical; reviewed case-only assertion change elsewhere in file changes fullsourceidentity only."
+  },
+  "census": {
+    "jsonNodes": 56814,
+    "stringLeaves": 39634,
+    "targetAndOldNewSourceHashOccurrences": [
+      {
+        "path": "/pages/115/path",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/checks/0/inputs/786",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/checks/0/inputs/787",
+        "chars": 38,
+        "sha256": "61cb942315ae706b54dfc74d4aaaae26ef36849726ba850fcbce25f34af13b91"
+      },
+      {
+        "path": "/authorities/75/sha256",
+        "chars": 64,
+        "sha256": "22e849554c9f34862c445f849dc57a3b8560a57193521c2a5635fbbe51cf5d90"
+      },
+      {
+        "path": "/contracts/115/scope",
+        "chars": 24550,
+        "sha256": "592726cb9e79cb7ecc68693ff7cbe63e4f4d82ae75b991064b0b2352a29d69bb"
+      },
+      {
+        "path": "/contracts/131/sourceRef",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/prerequisites/anchors/0/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/prerequisites/anchors/1/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/errors/anchors/0/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/errors/anchors/1/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/effects/anchors/0/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/effects/anchors/1/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/cleanup/anchors/0/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/expectedResults/anchors/0/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/expectedResults/anchors/1/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/anchors/0/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/anchors/1/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      },
+      {
+        "path": "/contracts/131/anchors/2/ref",
+        "chars": 30,
+        "sha256": "b0a90c8a42222097e56d48aeedaacb2790c32c8d0538e7b68d89acbacd45f5f0"
+      }
+    ],
+    "nestedSchemaAnchors": 12,
+    "quotes": [
+      {
+        "path": "/contracts/131/prerequisites/anchors/0",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "4e652795da012aa7661cf3dd914ddce3d832d245c190b304a10a7d7bef96335d"
+      },
+      {
+        "path": "/contracts/131/prerequisites/anchors/1",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "857cae4d4e6089f1a4b07bc35684f14cb4ad1d9d8430858859d780bdf171ffce"
+      },
+      {
+        "path": "/contracts/131/errors/anchors/0",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "4e652795da012aa7661cf3dd914ddce3d832d245c190b304a10a7d7bef96335d"
+      },
+      {
+        "path": "/contracts/131/errors/anchors/1",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "465a0fbd65d722cda409fc115e583a1002688efea82728855ba3d6bf863fa1cb"
+      },
+      {
+        "path": "/contracts/131/effects/anchors/0",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "24fe45c8e9a1859c1531015a20106bd5d5ec8f0532434fa1d8fc45766d8d9bba"
+      },
+      {
+        "path": "/contracts/131/effects/anchors/1",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "06f62e221ed30b53933102891f16332a54b8d0d9f6a20cae6cf173151fb94a16"
+      },
+      {
+        "path": "/contracts/131/cleanup/anchors/0",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "5fe83dab957895a1de153d530a519b91e6c4823a783b7ac35b0602031cad0643"
+      },
+      {
+        "path": "/contracts/131/expectedResults/anchors/0",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "085b0ca79f9eca056f32064601f2f545f965fe8109cb41d792e91dee48a43cb7"
+      },
+      {
+        "path": "/contracts/131/expectedResults/anchors/1",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "4e652795da012aa7661cf3dd914ddce3d832d245c190b304a10a7d7bef96335d"
+      },
+      {
+        "path": "/contracts/131/anchors/0",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "ffc15e3c21d277eaf5ecd28b99f8be3bf0f4af3b70bab295a8e005e8bc99a16e"
+      },
+      {
+        "path": "/contracts/131/anchors/1",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "085b0ca79f9eca056f32064601f2f545f965fe8109cb41d792e91dee48a43cb7"
+      },
+      {
+        "path": "/contracts/131/anchors/2",
+        "expected": 1,
+        "actual": 1,
+        "oldCount": 1,
+        "excerptSha256": "5fe83dab957895a1de153d530a519b91e6c4823a783b7ac35b0602031cad0643"
+      }
+    ],
+    "blocks": 0,
+    "proseRegions": 1
+  },
+  "exactUnadoptedProposal": [
+    {
+      "path": "/pages/115/sha256",
+      "old": "6ed82ed92c3967293fc35d2b13f959a2f46cc835e5ccee991d03dc439ff1a37a",
+      "new": "9bedad92e725514c64567a7263382795ab0426b4164565f606bb17c8146acaaf"
+    },
+    {
+      "path": "/pages/115/prose/0/sha256",
+      "old": "6ed82ed92c3967293fc35d2b13f959a2f46cc835e5ccee991d03dc439ff1a37a",
+      "new": "9bedad92e725514c64567a7263382795ab0426b4164565f606bb17c8146acaaf"
+    }
+  ],
+  "normalOwner": "scripts/docs-schema-fields.mjs --reference produced actual page; native publicationExampleBlocks/publicationExampleProse identities and recursive exact source contract anchors must all agree after minimal adoption.",
+  "review": {
+    "sourceAccuracy": "PASS_TARGETED_SOURCE_IDENTITY_ONLY",
+    "readerUsability": "PASS_RETAINED_UNCHANGED_CONTENT_MEANING_AND_NAVIGATION",
+    "quality": "PASS_TARGETED_NO_CONTENT_CHANGE"
+  },
+  "preservation": "Existing5event/helper claims updates remain untouched. Existing source/generated schema input meanings/inventory/bindings unchanged; no new original acceptance or entire schema semantic review inferred.",
+  "limits": [
+    "No repo mutation or current whole publication PASS.",
+    "Proposal only exact listed fields; no blanket claims regeneration or historical basis/receipt rewrite.",
+    "Actual normal binder/publication checks and original review conditions remain required."
+  ]
+}

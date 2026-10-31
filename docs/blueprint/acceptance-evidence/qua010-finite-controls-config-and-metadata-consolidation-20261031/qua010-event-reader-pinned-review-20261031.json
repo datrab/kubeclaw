@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The diagnostic-only change appends the existing event-reference page path after the unchanged semantic-disposition error prefix and source-vector hash. It does not alter validation, control flow, writes, or exit behavior.",
+  "overall_confidence": 0.99
+}

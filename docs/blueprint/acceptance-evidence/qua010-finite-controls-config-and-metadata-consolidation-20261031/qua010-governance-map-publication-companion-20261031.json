@@ -1,0 +1,87 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PASS_EXACT_QUALIFIED_GOVERNANCE_MAP_ASSET_COMPANION",
+  "sourceCommit": "7839db0993315832dcb90ef9b29ca702a7d969bd",
+  "asset": "docs/site/reference/generated-documentation-map.json",
+  "assetIndex": 26,
+  "oldSha256": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223",
+  "currentSha256": "5748b2cc329429e1f746b12687997c8a46e5c2d8d75ad6bb7bed631ebcaed59f",
+  "qualifier": "qua010-governance-map-successor-and-affected-preservation-20261031.json",
+  "census": {
+    "nodes": 56814,
+    "stringLeaves": 39634,
+    "targetAndHashOccurrences": [
+      {
+        "path": "/assets/26/path",
+        "chars": 52,
+        "sha256": "dad097c68e94ff087c7922d6b997ab3380312ad815b14513ac388623904120dc",
+        "value": "docs/site/reference/generated-documentation-map.json"
+      },
+      {
+        "path": "/assets/26/sha256",
+        "chars": 64,
+        "sha256": "cb1227d6085d6ea31752d668e4698b5d3c05f3c7593629c593f2cf3c35a25dc1",
+        "value": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223"
+      },
+      {
+        "path": "/checks/0/inputs/2014",
+        "chars": 52,
+        "sha256": "dad097c68e94ff087c7922d6b997ab3380312ad815b14513ac388623904120dc",
+        "value": "docs/site/reference/generated-documentation-map.json"
+      },
+      {
+        "path": "/checks/20/inputs/15",
+        "chars": 52,
+        "sha256": "dad097c68e94ff087c7922d6b997ab3380312ad815b14513ac388623904120dc",
+        "value": "docs/site/reference/generated-documentation-map.json"
+      },
+      {
+        "path": "/contracts/115/sourceRef",
+        "chars": 52,
+        "sha256": "dad097c68e94ff087c7922d6b997ab3380312ad815b14513ac388623904120dc",
+        "value": "docs/site/reference/generated-documentation-map.json"
+      },
+      {
+        "path": "/contracts/115/anchors/0/ref",
+        "chars": 52,
+        "sha256": "dad097c68e94ff087c7922d6b997ab3380312ad815b14513ac388623904120dc",
+        "value": "docs/site/reference/generated-documentation-map.json"
+      }
+    ],
+    "contractIndex": 115,
+    "contractFields": [
+      "sourceRef",
+      "kind",
+      "scope",
+      "owners",
+      "nativeChecks",
+      "prerequisites",
+      "errors",
+      "effects",
+      "cleanup",
+      "expectedResults",
+      "limits",
+      "execution",
+      "anchors"
+    ],
+    "nestedAnchors": [
+      {
+        "path": "/contracts/115/anchors/0",
+        "expected": 1,
+        "actual": 1,
+        "excerptSha256": "1c0d9baf775e976af232546918e9c524bc28abc8e089ac4dd14d2072e9d1aa11"
+      }
+    ]
+  },
+  "exactMinimalProposal": [
+    {
+      "path": "/assets/26/sha256",
+      "old": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223",
+      "new": "5748b2cc329429e1f746b12687997c8a46e5c2d8d75ad6bb7bed631ebcaed59f"
+    }
+  ],
+  "sourceReaderQuality": "Only asset identity for independently qualified actualmap changes:184entirepages/routes/owners/checks unchanged;44858logicalidentities exact178migration;policymeaning/state/inverse intact;actual source/facts joins qualified. Asset contract obligations/quotedstatements/source-onlyexecution and authority responsibilities retained. No new originalacceptance or freshReaderexercise.",
+  "existingSevenEventsSchemasEdits": "Retain verbatim; no oldbasis/receipt/historicaltext rewrite.",
+  "failurePreservation": "qua010-current-committed-publication-build-20261031 actual7839build46.38s binderasset mismatch remains exit1; no nativeactions/artifactPASS inferred. Root must newclaimsSourcecommit+actualbuild under differentfilename, normal binder unchanged.",
+  "repoMutation": false
+}

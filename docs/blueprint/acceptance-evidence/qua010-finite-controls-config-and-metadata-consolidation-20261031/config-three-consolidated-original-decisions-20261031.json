@@ -1,0 +1,279 @@
+{
+  "at": "2026-10-31T19:39:19.970854+00:00",
+  "reviewer": "Independent non-author native child /root/qua010_execution_path",
+  "reviewedRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+  "mode": "Bounded original criterion consolidation only; no repo modifications, tests, generators or source audit campaign",
+  "originalCriteria": {
+    "A98-10": "Ein rekursives Konfigurationsinventar erfasst innerhalb der verbindlichen Produktgrenze swarm.config.json, Helm Values, GitOps Values, Environment, Secrets, CLI-/Scriptflags und abgeleitete Werte mit Typ, Pflichtstatus, Default, Grenze, Owner und Consumer. Tats\u00e4chlich verwendete oder unterst\u00fctzte Kubernetes-Konfigurationen einschlie\u00dflich relevanter Defaults und Auslassungen sind zugeordnet; allgemeine Upstream-Felder werden verlinkt.",
+    "A98-11": "F\u00fcr jeden effektiven Wert ist die vollst\u00e4ndige Pr\u00e4zedenz vom authored input bis zum Runtime-Consumer erkl\u00e4rt; Konflikt-, leerer-Wert-, Secret- und ung\u00fcltiger-Wert-F\u00e4lle sind getestet.",
+    "A911-02": "Jede Referenz ist innerhalb der verbindlichen Produktgrenze rekursiv vollst\u00e4ndig und bewahrt Varianten, Bedingungen, Defaults, Grenzen, Deprecated-Zustand, Consumer und Source-Position. Allgemeine Kubernetes-Felder werden passend verlinkt; tats\u00e4chlich verwendete oder unterst\u00fctzte Konfigurationen werden produktbezogen erkl\u00e4rt."
+  },
+  "criterionCitations": {
+    "A98-10": "docs/blueprint/AP09-acceptance-contract.md:114",
+    "A98-11": "docs/blueprint/AP09-acceptance-contract.md:115",
+    "A911-02": "docs/blueprint/AP09-acceptance-contract.md:202"
+  },
+  "decisions": {
+    "A98-10": {
+      "verdict": "PASS",
+      "source": {
+        "verdict": "PASS",
+        "basis": "The former actual deployment/host completeness gap is now substantively covered by complete plugin/swarm recursive declarations, current local/external Helm+GitOps values/receiver contracts, host/OpenClaw/Codex/Prism producer-consumer bodies, complete environment/153Secret inventory retaining54previously omitted YAML identities, CLI/script and derived consumer defaults. REF003 current15family source/consumer composition and REF004 branch/ref authority reference join these domains. This is supported source-scope completeness, not README or counts-as-authority.",
+        "evidenceKeys": [
+          "plugin",
+          "helm",
+          "host",
+          "envSecrets",
+          "network",
+          "configurationWhole",
+          "schemaWhole"
+        ]
+      },
+      "reader": {
+        "verdict": "PASS",
+        "basis": "Actual REF003 restricted Reader located provider/default, omitted versus empty Prism URL, capture/retention, inverse consumer and undelivered boundaries; REF004 fresh Reader found recursive constraints/default/consumer/declaration-only status. Complete topic readers source-exposed only where explicitly stated; no newly blind participant claimed.",
+        "evidenceKeys": [
+          "configurationWhole",
+          "schemaWhole",
+          "host",
+          "envSecrets"
+        ]
+      },
+      "quality": {
+        "verdict": "PASS",
+        "basis": "Typed/source-positioned recursive facts link to authored default/owner/receiver/Secret/impact meanings; omissions and upstream Kubernetes defaults are expressly preserved (Service targetPort omitted vs effective port, init-only NODE_OPTIONS/resources). Later coherent authority terminal preserves these existing complete-source responsibilities and actual positive output checks.",
+        "evidenceKeys": [
+          "network",
+          "helm",
+          "authorityFinal"
+        ]
+      },
+      "missingOriginalCondition": null
+    },
+    "A98-11": {
+      "verdict": "PASS",
+      "source": {
+        "verdict": "PASS",
+        "basis": "Actual complete ten-family CFG013 Source decision joins platform/graph/testnode/compact/plugin/observer/Helm/Kubernetes/host precedence through exact consumers. Distinct manual/default/schema/no-useDefaults versus cloned-provider useDefaults, stage/adapter config, original-root placeholder versus overridden context and caller runid are explicit. Corrected same-name env rules include later-resolved winner, required earlier Secret failure, optional-missing skip and explicit empty handling without pretending they were executed in kubelet. Env/Secrets and current host/Helm full topic decisions fill former global-inventory gap.",
+        "evidenceKeys": [
+          "precedence",
+          "precedenceFindingFacets",
+          "host",
+          "helm",
+          "envSecrets",
+          "configurationWhole"
+        ]
+      },
+      "reader": {
+        "verdict": "PASS",
+        "basis": "Independent complete CFG013 practical semantic tasks chose platform-authority path, suite/matrix/direct winner, null/duplicate behavior, raw-vs-effective compact root, observer null/empty/false/env, and safe duplicate-Secret investigation/STOP. Other completed configuration reader tasks preserve lookup/default ownership across references.",
+        "evidenceKeys": [
+          "precedence",
+          "configurationWhole",
+          "envSecrets"
+        ]
+      },
+      "quality": {
+        "verdict": "PASS",
+        "basis": "Actual local24exported-consumer controls test conflict/null/empty/false/invalid; actual observer config test includes configured redisPassword retained by owning resolver and invalid port rejection; actual synthetic tokenSecretRef+duplicate literal/URL Helm render tests the Secret-backed conflict structure. These are meaningful representative Secret/configuration cases under the existing simplified contract, not live Secret availability tests. Original A98-11 does not require executing every downstream kubelet failure or real credential use. Complete source-qualified failure ordering supplies the documented rule, distinctly from executed local controls.",
+        "evidenceKeys": [
+          "precedence",
+          "helmNative"
+        ]
+      },
+      "missingOriginalCondition": null,
+      "secretTestAdjudication": "A genuine limited Secret-related case was exercised: observer secret-password configuration resolution plus actual duplicate synthetic Secret-reference rendering. No actual kubelet resolution, missing required Secret, optional Secret retrieval or deployed overwrite is marked passed. Those execution modes are disclosed limits, not a new mandatory live gate under A98-11."
+    },
+    "A911-02": {
+      "verdict": "PASS",
+      "source": {
+        "verdict": "PASS",
+        "basis": "The current supported reference set now joins complete recursive configuration/plugin, selected Helm/GitOps/Kubernetes, env/Secrets, host, CLI/derived and schema branch/ref/constraint/default/consumer/source-position responsibilities. Current schema declaration/current-retained-fixture statuses cover conditional/deprecated/declaration-only assets without inventing runtime readers. The criterion applies to reference completeness, not only configuration: existing actual diagnostic whole decision supplies dynamic constructions and sources; authored endpoint/store/workflow binding decision and current retained event/SDK/registration/capability domain responsibilities remain separate reused inputs within qualified product bounds. Latest authority terminal explicitly preserves those original semantic scopes rather than substituting map row counts for them. No presently missing supported public reference family is identified by those complete-topic decisions.",
+        "evidenceKeys": [
+          "plugin",
+          "helm",
+          "host",
+          "envSecrets",
+          "network",
+          "configurationWhole",
+          "schemaWhole",
+          "diagnosticWhole",
+          "authoredReferenceBindings",
+          "authoritySource",
+          "authorityFinal"
+        ]
+      },
+      "reader": {
+        "verdict": "PASS",
+        "basis": "REF003 and REF004 actual fresh restricted lookup tasks substantiate recursive variants/conditions/default/consumer/source navigation; existing complete-topic diagnostic/dynamic and authored surface Reader judgments preserve other reference tasks. Current full authority Reader forward/inverse task confirms readers reach the owning page/check and distinguish typed versus manual high-level routes. No browser/accessibility finding is claimed resolved.",
+        "evidenceKeys": [
+          "configurationWhole",
+          "schemaWhole",
+          "diagnosticWhole",
+          "authoredReferenceBindings",
+          "authorityFinal"
+        ]
+      },
+      "quality": {
+        "verdict": "PASS",
+        "basis": "Reference constraints are linked to actual authoritative schemas rather than a fabricated evaluator; ordinary upstream Kubernetes is linked, product-used fields/omissions explained; unknown external/declaration-only readers and dependency dynamic suffix vocabularies are visible support limits. Prior range citation defect independently corrected; later exact-map coherent reference/boundary/publication tests passed. No material supported-reference omission remains established.",
+        "evidenceKeys": [
+          "configurationWhole",
+          "schemaWhole",
+          "diagnosticWhole",
+          "authorityFinal"
+        ]
+      },
+      "missingOriginalCondition": null
+    }
+  },
+  "evidenceIndex": {
+    "plugin": "operations/pr13/evidence/next-original-selection-20261027/cfg007-integrated9682-whole-original/verdict.json",
+    "helm": "operations/pr13/evidence/helm-gitops-values-whole-20261030/independent-original-CFG009-REF013-final-and130.json",
+    "helmNative": "operations/pr13/evidence/helm-gitops-values-whole-20261030/final-publication-results.json",
+    "host": "operations/pr13/evidence/cfg010-whole-original-20261028/verdict.json",
+    "envSecrets": "docs/blueprint/acceptance-evidence/complete-environment-secrets-20261030/complete-env-secrets-whole-verdict.json",
+    "network": "operations/pr13/evidence/cfg012-whole-original-20261028/actual1901-delivery-independent/verdict-and-exact-preservation.json",
+    "precedence": "operations/pr13/evidence/cfg013-whole-original-20261028/final-whole-original-verdict.json",
+    "precedenceFindingFacets": "operations/pr13/evidence/cfg013-whole-original-20261028/corrected-current-finding-facets.json",
+    "changeImpact": "operations/pr13/evidence/cfg014-whole-original-20261028/verdict.json",
+    "configurationWhole": "docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-citation-whole-acceptance-verdict.json",
+    "schemaWhole": "docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/ref004-whole-original-verdict.json",
+    "authorityFinal": "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json",
+    "authoritySource": "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/authority-matrix-static-assignment-source-verdict.json",
+    "diagnosticWhole": "docs/blueprint/acceptance-evidence/a91105-errors-20261030/whole-content-verdict.json",
+    "authoredReferenceBindings": "docs/blueprint/acceptance-evidence/a91106-authored-bindings-20261025/gate-decision-verdict.json"
+  },
+  "actualControlEvidence": [
+    "operations/pr13/evidence/cfg013-native-checks-20261028/actual-conflict-boundary-controls-v2.json",
+    "operations/pr13/evidence/cfg013-native-checks-20261028/actual-conflict-boundary-controls-v2.log",
+    "operations/pr13/evidence/cfg013-native-checks-20261028/observer-config.json",
+    "skills/common/plugins/openclaw-agent-observer/tests/config.test.mjs",
+    "operations/pr13/evidence/cfg013-native-checks-20261028/platform-contract.json",
+    "operations/pr13/evidence/cfg013-canonical-conflict-remedy-20261028/actual-collision-render.json",
+    "operations/pr13/evidence/cfg013-canonical-conflict-remedy-20261028/actual-collision-render.log"
+  ],
+  "currentEligibility": {
+    "latestSharedPreservationBaseline": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "basis": "Complete69accepted-record terminal preservation includes each reused substantive config/reference responsibility. Since that candidate, source/page changes are only PUB007 diagnostic claims/native helper; existing configuration generators, qualified inventories, references, source families and map are unchanged. Exact previous original consumer tests versus da01fe52 remain unchanged for observer config/test, compact expander and platform-config test. No old53or123meaning gap is assumed fixed by count; later complete environment/selected YAML Source judgment is explicit remedy.",
+    "sha256": {
+      "docs/site/reference/configuration-precedence.md": "507a6da536dc050dbc64eb2d39528af33bd64255a5586be20cf0346c1d6dfa04",
+      "docs/site/reference/configuration.md": "529a312cf9add7b1ca6040667130f9e28cda176e46bc7e652ff3991b857e7689",
+      "docs/site/reference/schemas.md": "6ed82ed92c3967293fc35d2b13f959a2f46cc835e5ccee991d03dc439ff1a37a",
+      "docs/site/reference/plugin-configuration.md": "7f9d58b61a55f6d0ea5e48f3aa16568b4a44723500941b4dba12eede7c499c1c",
+      "docs/site/reference/helm-values.md": "2b353ec62d140afddf3d8caaa0610fd70d7104cb79915678dbc1aedd7a0b19db",
+      "docs/site/reference/environment-variables.md": "2cd7f967dcd721a5ddae67ea5ef9944d9ca7d40653a0b7902e72818c9eea73cd",
+      "docs/site/reference/secrets.md": "3ecee1b2983d6a67c582dd966c5019824336aab40418bdc3b1bad3646b9d2649",
+      "docs/site/reference/host-and-prism-configuration.md": "f4cb0d8a77902249345dc75804a7d54d4b7b56106d4287c0ea62637f8b5198b6",
+      "docs/site/reference/cli.md": "de4bf08f804090aaffdba4f83abaef80f3dd2bc7c5990dc322f52d3d0ea0ad6e",
+      "scripts/docs-configuration-inventory.mjs": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7",
+      "scripts/docs-generate.mjs": "cc6e7b8d45bab47fb3ee40b63aef294eae1131d3e7123dd1d888502d390b6843",
+      "docs/config/source-authority-family-assignments.json": "e1ad60a529d92dde13ecfb0fd92f9d74cdac0dc6fd65d586c76b833cdd1fec31"
+    }
+  },
+  "historicalFindingDispositions": [
+    {
+      "finding": "20261027 exact full deployment/host consumer not qualified",
+      "current": "Superseded for these gates by later actual full host/Helm/Prism/producer-consumer Source responsibilities; not by historical report restoration or obsolete scanner cap."
+    },
+    {
+      "finding": "A98-R2 runtime reader123/name100 qualification",
+      "current": "Earlier CFG013 explicitly did not close whole inventory; later CFG011/REF012 selected complete YAML composition and REF003 complete consumer inventory do the substantive domain work. Historical global finding object unchanged."
+    },
+    {
+      "finding": "A98-SOURCE-REGISTRY-DEFAULTS / A98-SOURCE-EMPTY-PRECEDENCE / compact original-root conflict",
+      "current": "Explicit actual receiving source plus completed native configuration/precedence controls; no blanket source-role grant."
+    },
+    {
+      "finding": "CFG013-KUBERNETES-SAME-NAME-ENV-CONFLICT",
+      "current": "Actual corrected46line reference plus full source-qualified required-first/optional-skip/winner semantics and real synthetic render. Native kubelet execution remains unperformed."
+    },
+    {
+      "finding": "Earlier incomplete runtime-only Secret view omitted54YAML identities",
+      "current": "Actual complete same76file selected-YAML composition restores those identities and keeps consumer/source guards; not normal full executable API success."
+    },
+    {
+      "finding": "REF004 missing22current declarations / REF003 invalid citation range",
+      "current": "Independent complete source-authority successor and exact range12-13 correction preserve historical negatives; final original verdicts genuinely PASS."
+    },
+    {
+      "finding": "Generic lazy/eval_str/staticmethod/metaclass ToolSource, Python3.14, arbitrary API DATA outputs",
+      "current": "Retained unresolved as general acquisition/runtime claims, not used to infer supported direct-source configuration/reference completeness. Honest explicitly absent functionality is not fabricated documentation failure or global repair."
+    }
+  ],
+  "limits": [
+    "Documentation-domain source/semantic lookup acceptance only; no successful cluster admission, deployed effective values, Secret lookup/authentication/rotation, runtime reload, provider, browser or recovery execution inferred.",
+    "No blanket generic ToolSource/Python3.14/default-global-API repair. Selected-YAML direct source-qualified routes establish supported documented config without depending on those failing general discovery mechanisms.",
+    "Original test runs remain historical actual outcomes; Node/Helm versions and fixture-vs-runtime scope are not relabelled. No new test executed by this reviewer.",
+    "Current PUB007 build and accessibility/participant obligations remain independent; historical missing-required-Secret kubelet execution is not claimed."
+  ],
+  "finalRole": {
+    "verdict": "Independent original Source/Reader/Quality integration complete for each named gate",
+    "astraModelExecution": false,
+    "basis": "Current AP09 section2 accepts one coherent independent topic review; no separate model/person/per-subpoint rerun imposed. No original model execution claim."
+  },
+  "registerMutationPerformed": false,
+  "finiteNextAction": "Execute node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check through supported yielding process. Reuse actual just-passed runtime/schema semantics and independently reviewed matcher correction. On terminal0, retain failed oldrunner/globalAPI evidence, register the three substantive original decisions with original checker/invariants and coherent exactremote. Do not claim QUA010mutations or defaultAPI passed, rerun unchanged broad source, or renew unrelated role bindings.",
+  "observableCompletion": "Actual records for A98-10,A98-11,A911-02 linked to this independent decision, original checker0, and exact remote verification.",
+  "latestTargetedNativeGuardFailure": {
+    "at": "2026-10-31T19:45:03.402465+00:00",
+    "source": "Root reported actual new supported config baseline execution; reviewer does not rerun",
+    "command": "node scripts/check-configuration-drift-mutations.mjs --case-prefix=embedded-node-heredoc:",
+    "exitCode": 1,
+    "phase": "BEFORE mutation execution; current configuration baseline meaning assertion",
+    "log": "operations/pr13/evidence/qua010-current-embedded-node-20261031.log",
+    "location": "scripts/docs-configuration-inventory.mjs:9961",
+    "actualMeaning": "There is no fallback... The observer merges registration configuration, then service configuration, then hook configuration...",
+    "badGuard": "/Registration configuration.*service configuration.*hook configuration/u",
+    "causalFinding": "Stale case-sensitive uppercaseR guard rejects exact documented ordered precedence; not changed consumer semantics or meaningful drift rejection. No historical test failure rewritten.",
+    "contentDecisionImpact": "Substantive Source/Reader/Quality judgments and actual unchanged prior compact/observer/platform consumer tests remain valid. Original whole current technical acceptance must not claim this baseline passed; narrow guard remedy/review/current baseline required before root registers these three new gate records. Existing accepted topic scopes are not retrospectively retracted.",
+    "finiteRemedy": "Narrow ordered case-insensitive /registration configuration.*service configuration.*hook configuration/iu; independent affected code/source meaning review and actual supported baseline retry, preserving failed log; no new proof platform, test waiver or live grant."
+  },
+  "originalWholeCurrentTechnicalCloseout": "PENDING_SUPPORTED_CONFIGURATION_REFERENCE_ONLY_CHECK_NOT_DEFAULT_GLOBAL_API",
+  "defaultApiCouplingDisposition": {
+    "at": "2026-10-31T19:53:18.886185+00:00",
+    "actualCorrectedAttempt": {
+      "log": "operations/pr13/evidence/qua010-corrected-embedded-node-20261031.log",
+      "exitCode": 1,
+      "beforeFailure": [
+        "Actual runtime consumer semantics PASS",
+        "Recursive schema/registry/default/approval empty/Secret controls PASS"
+      ],
+      "terminal": "API_PRODUCT_DIAGNOSTIC_SOURCE_ROLE_UNQUALIFIED: scripts/check-site-reader-boundary.mjs",
+      "mutationExecuted": false,
+      "defaultApiPassed": false
+    },
+    "originalConditionEnabled": {
+      "A98-10": "Current supported recursive documented configuration source inventory and product-used Kubernetes mappings, not universal executable program-output acquisition.",
+      "A98-11": "Current documented input-to-consumer precedence and meaningful representative conflict/empty/Secret/invalid tests. Corrected native runtime/schema checks actually passed before unrelated default API acquisition stop.",
+      "A911-02": "Complete supported source-bound recursive references with variants/conditions/defaults/limits/deprecated/consumer/source-position. Actual absent/unqualified runtime output remains an explicit unsupported/undelivered boundary, not a secretly waived supported input."
+    },
+    "judgment": "DEFAULT global API program-output discovery is NOT an original necessary success condition of these three documentation gates. The already independently qualified configuration-reference-only composition is the correct finite current technical baseline. It calls the SAME ordinary YAML/schema/receiver/Secret guards with selectedYamlOnly:true and explicitly refuses unresolved selected source/default/owner/consumer/Secret gaps; this is not moving standards or a new exclusion. It already underlies original complete REF003 and CFG011/REF012 judgments. The old mutation runner defaults to broader acquisition BEFORE selected cases and cannot serve as an original gate failure surrogate for unrelated global API role qualification.",
+    "sourceCitations": [
+      "scripts/docs-configuration-inventory.mjs:10313",
+      "scripts/docs-configuration-inventory.mjs:10350",
+      "scripts/docs-configuration-inventory.mjs:10408",
+      "scripts/docs-configuration-inventory.mjs:10414",
+      "docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-citation-whole-acceptance-verdict.json",
+      "docs/blueprint/acceptance-evidence/complete-environment-secrets-20261030/complete-env-secrets-whole-verdict.json"
+    ],
+    "finiteActualCommand": {
+      "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+      "argv": [
+        "node",
+        "scripts/docs-configuration-inventory.mjs",
+        "--configuration-reference-only",
+        "--check"
+      ],
+      "whySufficient": "One supported selected-YAML composition includes YAML/Helm, all recursive schemas, full runtime env+Secrets, source-family and inverse consumers and zero-blocker guards; no additional runtime-only rerun needed if this passes. After source successor, stale supported artifacts are real failures needing only their genuine source-qualified owner regeneration/review, never blind hashes.",
+      "redundantUnlessIsolatedDiagnosis": "node scripts/docs-configuration-inventory.mjs --runtime-only --check",
+      "alreadyObservedNoRepeat": [
+        "--check-runtime-consumer-semantics-only",
+        "--check-schema-semantics-only"
+      ],
+      "sameHubIfMateriallyChanged": "node scripts/docs-generate.mjs --only configuration-hub --revision 95d336f4e92ea4b5b1f821caefe13949d2ed6fc8 --check; use existing documented Source snapshot, not currentHEAD hash refresh"
+    },
+    "observableCompletion": "Supported configuration-reference-only --check terminal0 plus independent exact matcher correction review, already observed actual current semantic controls, unchanged relevant prior complete content facets, original checker and exactremote. QUA010mutation and globalAPI remain unpassed.",
+    "noNewExecution": "Reviewer only inspected existing branches/reports, executed no generator/check."
+  }
+}

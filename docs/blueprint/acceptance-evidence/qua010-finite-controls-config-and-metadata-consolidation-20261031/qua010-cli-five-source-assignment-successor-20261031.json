@@ -1,0 +1,1626 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PASS_EXPLICIT_FIVE_SOURCE_CLI_DECLARATION_ASSIGNMENT_SUCCESSOR_ONLY",
+  "manifest": "docs/config/source-authority-family-assignments.json",
+  "currentManifestSha256": "e1ad60a529d92dde13ecfb0fd92f9d74cdac0dc6fd65d586c76b833cdd1fec31",
+  "constructor": "scripts/lib/docs-source-surface-map.mjs:8 and964\u2013966; exact encodeURIComponent(String(part)) constructor and sixdeclarationkinds reused without identity normalization/guard change.",
+  "oldFiveSourceEmittedIdentityCount": 434,
+  "newFiveSourceEmittedIdentityCount": 434,
+  "retainedSubsetExactlyOldCLI": true,
+  "proposedSubsetExactlyCurrentNativeCLI": true,
+  "unchangedIdentityCount": 256,
+  "removeCount": 178,
+  "addCount": 178,
+  "exactPairs": [
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "defaults",
+      "index": 0,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:root%3D%3D%3DreviewedRecoveryCompilerInput.root%3FreviewedRecoveryCompilerInput%3Aroot%3D%3D%3DreviewedIsolatedCompilerInput.root%3FreviewedIsolatedCompilerInput%3Arecipe.foundation:verifyRootCompilerFoundation:463663:0",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:root%3D%3D%3DreviewedPracticalReaderCompilerInput.root%3FreviewedPracticalReaderCompilerInput%3Aroot%3D%3D%3DreviewedRecoveryCompilerInput.root%3FreviewedRecoveryCompilerInput%3Aroot%3D%3D%3DreviewedIsolatedCompilerInput.root%3FreviewedIsolatedCompilerInput%3Arecipe.foundation:verifyRootCompilerFoundation:463961:0",
+      "nameOrExpressionChanged": true,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "defaults",
+      "index": 1,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:fs.existsSync(file)%3Fpath.relative(root%2Cfs.realpathSync(file)).replaceAll(path.sep%2C'%2F')%3Anull:assertDocumentationExecutableRole:512780:1",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:fs.existsSync(file)%3Fpath.relative(root%2Cfs.realpathSync(file)).replaceAll(path.sep%2C'%2F')%3Anull:assertDocumentationExecutableRole:514483:1",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "defaults",
+      "index": 2,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:source.endsWith('.py')%3F%5Bnew%20URL('.%2Fdocs-api-python-ast-v1.py'%2Cimport.meta.url).pathname%2C'--stdin-custody'%2Csource%5D%3A%5B'run'%2Cnew%20URL('.%2Fdocs-api-go-output-role-adapter.go'%2Cimport.meta.url).pathname%2C'--documentation-custody'%2Cpath.join(root%2Csource)%5D:assertDocumentationExecutableRole:513550:2",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:source.endsWith('.py')%3F%5Bnew%20URL('.%2Fdocs-api-python-ast-v1.py'%2Cimport.meta.url).pathname%2C'--stdin-custody'%2Csource%5D%3A%5B'run'%2Cnew%20URL('.%2Fdocs-api-go-output-role-adapter.go'%2Cimport.meta.url).pathname%2C'--documentation-custody'%2Cpath.join(root%2Csource)%5D:assertDocumentationExecutableRole:515253:2",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "defaults",
+      "index": 3,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:bytes.match(%2F%5B%5E%5Cn%5D*%5Cn%7C%5B%5E%5Cn%5D%2B%24%2Fgu)%3F%3F%5B%5D:assertRootHarnessClosure:1285107:3",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:bytes.match(%2F%5B%5E%5Cn%5D*%5Cn%7C%5B%5E%5Cn%5D%2B%24%2Fgu)%3F%3F%5B%5D:assertRootHarnessClosure:1286810:3",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "defaults",
+      "index": 4,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:path.dirname(directory):assertNativeNpmPosixAuthority:1287594:4",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:path.dirname(directory):assertNativeNpmPosixAuthority:1289297:4",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "defaults",
+      "index": 5,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:%2F%5B*%3F%5D%2Fu.test(word.value)%3FexpandReviewedNodePackageGlob(root%2C%7Bname%2Ccommand%2Cword%2CnativeTest%3Aacquisition.nativeTest%7D)%3A%5Bpath.posix.normalize(word.value)%5D:qualifiedRootNodeHarnessSources:1289402:5",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:defaults:%2F%5B*%3F%5D%2Fu.test(word.value)%3FexpandReviewedNodePackageGlob(root%2C%7Bname%2Ccommand%2Cword%2CnativeTest%3Aacquisition.nativeTest%7D)%3A%5Bpath.posix.normalize(word.value)%5D:qualifiedRootNodeHarnessSources:1291105:5",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "exits",
+      "index": 0,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:throw%20error%3B:verifyRootCompilerFoundation:464006:0",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:throw%20error%3B:verifyRootCompilerFoundation:464390:0",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "exits",
+      "index": 1,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:throw%20error%3B:verifyRootCompilerFoundation:465355:1",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:throw%20error%3B:verifyRootCompilerFoundation:465739:1",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "exits",
+      "index": 2,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:receipt.status:assertDocumentationExecutableRole:513937:2",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:receipt.status:assertDocumentationExecutableRole:515640:2",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "exits",
+      "index": 3,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:receipt.error:assertDocumentationExecutableRole:514034:3",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:receipt.error:assertDocumentationExecutableRole:515737:3",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "exits",
+      "index": 4,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:config.status:assertNativeNpmPosixAuthority:1288279:4",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:config.status:assertNativeNpmPosixAuthority:1289982:4",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "recordKind": "exits",
+      "index": 5,
+      "remove": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:capture.status:expandReviewedNodePackageGlob:1294862:5",
+      "add": "cli-declaration:scripts%2Fdocs-api-documentation-role-custody.mjs:exits:capture.status:expandReviewedNodePackageGlob:1296565:5",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 0,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:mapped:targetFor:37232:0",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:mapped:targetFor:37393:0",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 1,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:scope.directory:targetFor:37256:1",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:scope.directory:targetFor:37417:1",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 2,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:specifier%3D%3D%3DpackageDefinition.name%3F'.'%3A'.%2F'%2Bspecifier.slice(packageDefinition.name.length%2B1):targetFor:37438:2",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:specifier%3D%3D%3DpackageDefinition.name%3F'.'%3A'.%2F'%2Bspecifier.slice(packageDefinition.name.length%2B1):targetFor:37599:2",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 3,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:typeof%20exports%3D%3D%3D'string'%26%26subpath%3D%3D%3D'.'%3Fexports%3Aexports%26%26typeof%20exports%3D%3D%3D'object'%26%26!Array.isArray(exports)%26%26Object.hasOwn(exports%2Csubpath)%3Fexports%5Bsubpath%5D%3Anull:targetFor:37587:3",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:typeof%20exports%3D%3D%3D'string'%26%26subpath%3D%3D%3D'.'%3Fexports%3Aexports%26%26typeof%20exports%3D%3D%3D'object'%26%26!Array.isArray(exports)%26%26Object.hasOwn(exports%2Csubpath)%3Fexports%5Bsubpath%5D%3Anull:targetFor:37748:3",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 4,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:selected:targetFor:38033:4",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:selected:targetFor:38194:4",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 5,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:scope.directory:targetFor:38059:5",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:scope.directory:targetFor:38220:5",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 6,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:decodeURIComponent(new%20URL(specifier).pathname):targetFor:38151:6",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:decodeURIComponent(new%20URL(specifier).pathname):targetFor:38312:6",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 7,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'.%2F'%2Bpath.relative(root%2Cspecifier).replaceAll(path.sep%2C'%2F'):targetFor:38332:7",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'.%2F'%2Bpath.relative(root%2Cspecifier).replaceAll(path.sep%2C'%2F'):targetFor:38493:7",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 8,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'':targetFor:38409:8",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'':targetFor:38570:8",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 9,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:candidate:targetFor:39187:9",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:candidate:targetFor:39348:9",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 10,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:syntaxEntry%3F.key%3D%3D%3DsyntaxKey%3FsyntaxEntry.tree%3Ats.createSourceFile(source%2Cbytes.toString()%2Cts.ScriptTarget.Latest%2Ctrue%2C%2F%5C.%5Bcm%5D%3Fts%24%2Fu.test(source)%3Fts.ScriptKind.TS%3Ats.ScriptKind.JS):documentationModuleGraph:41081:10",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:syntaxEntry%3F.key%3D%3D%3DsyntaxKey%3FsyntaxEntry.tree%3Ats.createSourceFile(source%2Cbytes.toString()%2Cts.ScriptTarget.Latest%2Ctrue%2C%2F%5C.%5Bcm%5D%3Fts%24%2Fu.test(source)%3Fts.ScriptKind.TS%3Ats.ScriptKind.JS):documentationModuleGraph:41242:10",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 11,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:binding%3FintrinsicModuleVar(binding.value.parent)%26%26ts.isIdentifier(binding.value)%26%26binding.value.text%3D%3D%3D'module'%3F'commonjs-module'%3AloaderCapability(binding.value%2Cseen)%3AimportCapabilities.get(node.text)%3F%3F(node.text%3D%3D%3D'require'%3F'require'%3Anode.text%3D%3D%3D'module'%26%26!moduleIsShadowed(node)%3F'commonjs-module'%3Anull):loaderCapability:47648:11",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:binding%3FintrinsicModuleVar(binding.value.parent)%26%26ts.isIdentifier(binding.value)%26%26binding.value.text%3D%3D%3D'module'%3F'commonjs-module'%3AloaderCapability(binding.value%2Cseen)%3AimportCapabilities.get(node.text)%3F%3F(node.text%3D%3D%3D'require'%3F'require'%3Anode.text%3D%3D%3D'module'%26%26!moduleIsShadowed(node)%3F'commonjs-module'%3Anull):loaderCapability:47809:11",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 12,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:binding%3F.property%3Finitial%3D%3D%3D'node-module'%26%26binding.property%3D%3D%3D'createRequire'%3F'create-require'%3Ainitial%3D%3D%3D'commonjs-module'%26%26binding.property%3D%3D%3D'require'%3F'module-require'%3Ainitial%3D%3D%3D'node-module'%26%26%5B'default'%2C'Module'%5D.includes(binding.property)%3F'node-module'%3Anull%3Ainitial:loaderCapability:48346:12",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:binding%3F.property%3Finitial%3D%3D%3D'node-module'%26%26binding.property%3D%3D%3D'createRequire'%3F'create-require'%3Ainitial%3D%3D%3D'commonjs-module'%26%26binding.property%3D%3D%3D'require'%3F'module-require'%3Ainitial%3D%3D%3D'node-module'%26%26%5B'default'%2C'Module'%5D.includes(binding.property)%3F'node-module'%3Anull%3Ainitial:loaderCapability:48507:12",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 13,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:ts.isImportDeclaration(node)%3F'import'%3A're-export':visit:61898:13",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:ts.isImportDeclaration(node)%3F'import'%3A're-export':visit:62147:13",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 14,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'import-equals':visit:62093:14",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'import-equals':visit:62342:14",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 15,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'dynamic-import':visit:62459:15",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'dynamic-import':visit:62708:15",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 16,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:isSelectedCompilerCapability(loaderCapability(node.expression))%3FloaderCapability(node.expression).kind%3A'require':visit:62609:16",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:isSelectedCompilerCapability(loaderCapability(node.expression))%3FloaderCapability(node.expression).kind%3A'require':visit:62858:16",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 17,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'require-capability-escape':visit:63073:17",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:'require-capability-escape':visit:63322:17",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 18,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:specifier%3D%3D%3Dnull%3Fnull%3AtargetFor(source%2Cspecifier%2Ckind%2Cts.isCallExpression(node)%3FloaderCapability(node.expression)%3Anull):visit:63177:18",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:specifier%3D%3D%3Dnull%3Fnull%3AtargetFor(source%2Cspecifier%2Ckind%2Cts.isCallExpression(node)%3FloaderCapability(node.expression)%3Anull):visit:63426:18",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 19,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(absolute)%3Fpath.relative(root%2Cfs.realpathSync(absolute)).replaceAll(path.sep%2C'%2F')%3Aselected:assertDocumentationToolQualifications:74475:19",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(absolute)%3Fpath.relative(root%2Cfs.realpathSync(absolute)).replaceAll(path.sep%2C'%2F')%3Aselected:assertDocumentationToolQualifications:74724:19",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 20,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(packageFile)%3Ffs.readFileSync(packageFile)%3ABuffer.from('%7B%7D'):nodeOutputExecutableSources:76509:20",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(packageFile)%3Ffs.readFileSync(packageFile)%3ABuffer.from('%7B%7D'):nodeOutputExecutableSources:76758:20",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 21,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(registry)%3FJSON.parse(fs.readFileSync(registry%2C'utf8')).documentationToolBoundary%3F%3F%7B%7D%3A%7B%7D:nodeOutputExecutableSources:76688:21",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(registry)%3FJSON.parse(fs.readFileSync(registry%2C'utf8')).documentationToolBoundary%3F%3F%7B%7D%3A%7B%7D:nodeOutputExecutableSources:76937:21",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 22,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(file)%3Ffs.readFileSync(file)%3ABuffer.from('%7B%7D'):documentationToolSources:80092:22",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(file)%3Ffs.readFileSync(file)%3ABuffer.from('%7B%7D'):documentationToolSources:80341:22",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 23,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(packageBytes).scripts%3F%3F%7B%7D:documentationToolSources:80166:23",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(packageBytes).scripts%3F%3F%7B%7D:documentationToolSources:80415:23",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 24,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(registryFile)%3FJSON.parse(fs.readFileSync(registryFile%2C'utf8')).documentationToolBoundary%3F%3F%7B%7D%3A%7B%7D:documentationToolSources:80344:24",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(registryFile)%3FJSON.parse(fs.readFileSync(registryFile%2C'utf8')).documentationToolBoundary%3F%3F%7B%7D%3A%7B%7D:documentationToolSources:80593:24",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 25,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(authority)%3FJSON.parse(fs.readFileSync(authority%2C'utf8')).nativeLanguageSerializationContracts%3F%3F%5B%5D%3A%5B%5D:assertNativeSerializationRoles:99976:25",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(authority)%3FJSON.parse(fs.readFileSync(authority%2C'utf8')).nativeLanguageSerializationContracts%3F%3F%5B%5D%3A%5B%5D:assertNativeSerializationRoles:100341:25",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 26,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:source%3D%3D%3D'scripts%2Flib%2Fcli%2Fpython_cli_ast.py'%3FassertCliStaticAstOutputVector(root%2Csource%2Coutputs)%3Anull:assertNativeSerializationRoles:100629:26",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:source%3D%3D%3D'scripts%2Flib%2Fcli%2Fpython_cli_ast.py'%3FassertCliStaticAstOutputVector(root%2Csource%2Coutputs)%3Anull:assertNativeSerializationRoles:100994:26",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 27,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(path.join(root%2C'my-values%2Fbuster-values.yaml'))%20%3F%20read('my-values%2Fbuster-values.yaml')%20%3A%20%7BagentRole%3A'buster'%7D:profiles:131589:27",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(path.join(root%2C'my-values%2Fbuster-values.yaml'))%20%3F%20read('my-values%2Fbuster-values.yaml')%20%3A%20%7BagentRole%3A'buster'%7D:profiles:131954:27",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 28,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:instrumented.slice(0%2Cinsertion.at)%2Binsertion.text%2Binstrumented.slice(insertion.at):instrumentChart:141134:28",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:instrumented.slice(0%2Cinsertion.at)%2Binsertion.text%2Binstrumented.slice(insertion.at):instrumentChart:141499:28",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 29,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:schemaAuthorityOnly%3F%5B%5D%3ArejectedProfileContracts(root):discoverHelmOutputs:145370:29",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:schemaAuthorityOnly%3F%5B%5D%3ArejectedProfileContracts(root):discoverHelmOutputs:145735:29",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 30,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(fs.readFileSync(registry%2C'utf8')).nonApiOutputContracts%3F%3F%5B%5D:assertReviewedDiagnosticOutputSources:162773:30",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(fs.readFileSync(registry%2C'utf8')).nonApiOutputContracts%3F%3F%5B%5D:assertReviewedDiagnosticOutputSources:163138:30",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 31,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(current):%3Cmodule-or-anonymous%3E:188080:31",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(current):%3Cmodule-or-anonymous%3E:188564:31",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 32,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(physical('package.json')).scripts%3F%3F%7B%7D:checkedCommonErrorMarkdownOutput:188500:32",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(physical('package.json')).scripts%3F%3F%7B%7D:checkedCommonErrorMarkdownOutput:188984:32",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 33,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(current):%3Cmodule-or-anonymous%3E:195733:33",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(current):%3Cmodule-or-anonymous%3E:196336:33",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 34,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.lstatSync(current):%3Cmodule-or-anonymous%3E:195788:34",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.lstatSync(current):%3Cmodule-or-anonymous%3E:196391:34",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 35,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(fs.readFileSync(path.join(root%2C'package.json'))).scripts%3F%3F%7B%7D:checkedEventContractDocumentationOutputs:196359:35",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(fs.readFileSync(path.join(root%2C'package.json'))).scripts%3F%3F%7B%7D:checkedEventContractDocumentationOutputs:196962:35",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 36,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(current):checkedPublicationYamlValidationInputs:205022:36",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(current):checkedPublicationYamlValidationInputs:205744:36",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 37,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(fs.readFileSync(path.join(root%2C'package.json'))).scripts%3F%3F%7B%7D:checkedPublicationYamlValidationInputs:205619:37",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(fs.readFileSync(path.join(root%2C'package.json'))).scripts%3F%3F%7B%7D:checkedPublicationYamlValidationInputs:206341:37",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 38,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(current):checkedPublicationNativeValidation:314883:38",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(current):checkedPublicationNativeValidation:315724:38",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 39,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:definition.scripts%3F%3F%7B%7D:checkedPublicationNativeValidation:316174:39",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:definition.scripts%3F%3F%7B%7D:checkedPublicationNativeValidation:317015:39",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 40,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:executableSourceSet.has(reviewedArgocdArtifactProfile.source)%0A%20%20%20%20%3FcheckedArgocdArtifactOutputs(root%2CreviewedArgocdArtifactProfile.source%2C%0A%20%20%20%20%20%20fs.readFileSync(path.join(root%2CreviewedArgocdArtifactProfile.source)%2C'utf8'))%3Anull:discoverScriptApiOutputs:319773:40",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:executableSourceSet.has(reviewedArgocdArtifactProfile.source)%0A%20%20%20%20%3FcheckedArgocdArtifactOutputs(root%2CreviewedArgocdArtifactProfile.source%2C%0A%20%20%20%20%20%20fs.readFileSync(path.join(root%2CreviewedArgocdArtifactProfile.source)%2C'utf8'))%3Anull:discoverScriptApiOutputs:320614:40",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 41,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:executableSourceSet.has(bundleSource)%0A%20%20%20%20%3FruntimeBundleCopyCustody(root%2CbundleSource%2Cfs.readFileSync(path.join(root%2CbundleSource)))%3Anull:discoverScriptApiOutputs:320368:41",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:executableSourceSet.has(bundleSource)%0A%20%20%20%20%3FruntimeBundleCopyCustody(root%2CbundleSource%2Cfs.readFileSync(path.join(root%2CbundleSource)))%3Anull:discoverScriptApiOutputs:321209:41",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 42,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:executableSourceSet.has(configSource)%0A%20%20%20%20%3FdeploymentConfigOutputCustody(root%2CconfigSource%2Cfs.readFileSync(path.join(root%2CconfigSource)))%3Anull:discoverScriptApiOutputs:320587:42",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:executableSourceSet.has(configSource)%0A%20%20%20%20%3FdeploymentConfigOutputCustody(root%2CconfigSource%2Cfs.readFileSync(path.join(root%2CconfigSource)))%3Anull:discoverScriptApiOutputs:321428:42",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 43,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:executableSourceSet.has(minimalPluginSource)%0A%20%20%20%20%3FminimalPluginFixtureOutputCustody(root%2CminimalPluginSource%2Cfs.readFileSync(path.join(root%2CminimalPluginSource)))%3Anull:discoverScriptApiOutputs:320822:43",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:executableSourceSet.has(minimalPluginSource)%0A%20%20%20%20%3FminimalPluginFixtureOutputCustody(root%2CminimalPluginSource%2Cfs.readFileSync(path.join(root%2CminimalPluginSource)))%3Anull:discoverScriptApiOutputs:321663:43",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 44,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:sourcePurposeSources.includes('scripts%2Fupdates%2Fdeployment-release.mjs')%0A%20%20%20%20%3FcheckedReleaseRendererOutputs(root%2CtopLevelPurposes)%3Anull:discoverScriptApiOutputs:322881:44",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:sourcePurposeSources.includes('scripts%2Fupdates%2Fdeployment-release.mjs')%0A%20%20%20%20%3FcheckedReleaseRendererOutputs(root%2CtopLevelPurposes)%3Anull:discoverScriptApiOutputs:323722:44",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 45,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'%25s%5C%5Cn'%5Cs*%5C%5C%5Cn(%5B%5Cs%5CS%5D*%3F)%3E%20%5C%2Fetc%5C%2Fapt%5C%2Fsources%5C.list%5C.d%5C%2Fdebian%5C.sources%2Fgu%2C(match%2CargumentsText)%3D%3E%2F%5E(%3F%3A%5B%5Cs%5C%5C%5D*%7C'(%3F%3ATypes%3A%20deb%7CSuites%3A%20bookworm(%3F%3A%20bookworm-updates%7C-security)%3F%7CComponents%3A%20main%7CSigned-By%3A%20%5C%2Fusr%5C%2Fshare%5C%2Fkeyrings%5C%2Fdebian-archive-keyring%5C.gpg%7C)'%7C%22URIs%3A%20https%3F%3A%5C%2F%5C%2Fsnapshot%5C.debian%5C.org%5C%2Farchive%5C%2Fdebian(%3F%3A-security)%3F%5C%2F%5C%24%5C%7BDEBIAN_SNAPSHOT%5C%7D%22)*%24%2Fu.test(argumentsText)%3F''%3Amatch):discoverScriptApiOutputs:325289:45",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'%25s%5C%5Cn'%5Cs*%5C%5C%5Cn(%5B%5Cs%5CS%5D*%3F)%3E%20%5C%2Fetc%5C%2Fapt%5C%2Fsources%5C.list%5C.d%5C%2Fdebian%5C.sources%2Fgu%2C(match%2CargumentsText)%3D%3E%2F%5E(%3F%3A%5B%5Cs%5C%5C%5D*%7C'(%3F%3ATypes%3A%20deb%7CSuites%3A%20bookworm(%3F%3A%20bookworm-updates%7C-security)%3F%7CComponents%3A%20main%7CSigned-By%3A%20%5C%2Fusr%5C%2Fshare%5C%2Fkeyrings%5C%2Fdebian-archive-keyring%5C.gpg%7C)'%7C%22URIs%3A%20https%3F%3A%5C%2F%5C%2Fsnapshot%5C.debian%5C.org%5C%2Farchive%5C%2Fdebian(%3F%3A-security)%3F%5C%2F%5C%24%5C%7BDEBIAN_SNAPSHOT%5C%7D%22)*%24%2Fu.test(argumentsText)%3F''%3Amatch):discoverScriptApiOutputs:326130:45",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 46,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'Acquire%3A%3ACheck-Valid-Until%20%22false%22%3B%5C%5Cn'%20%3E%20%5C%2Fetc%5C%2Fapt%5C%2Fapt%5C.conf%5C.d%5C%2F99snapshot%2Fgu%2C''):discoverScriptApiOutputs:325724:46",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'Acquire%3A%3ACheck-Valid-Until%20%22false%22%3B%5C%5Cn'%20%3E%20%5C%2Fetc%5C%2Fapt%5C%2Fapt%5C.conf%5C.d%5C%2F99snapshot%2Fgu%2C''):discoverScriptApiOutputs:326565:46",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 47,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'builder%3A100000%3A65536%5C%5Cn'%20%3E%3E%20%5C%2Fetc%5C%2Fsub(%3F%3Auid%7Cgid)%2Fgu%2C''):discoverScriptApiOutputs:325858:47",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'builder%3A100000%3A65536%5C%5Cn'%20%3E%3E%20%5C%2Fetc%5C%2Fsub(%3F%3Auid%7Cgid)%2Fgu%2C''):discoverScriptApiOutputs:326699:47",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 48,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'%25s%20%20%25s%5C%5Cn'%20%22%5C%24%5Ba-z_%5D%2B_sha%22%20(%3F%3A%22%5B%5E%22%5Cn%5D*%22%7C%5C%2Ftmp%5C%2Fkubectl)%20%5C%7C%20sha256sum%20-c%20-%2Fgu%2C''):discoverScriptApiOutputs:325963:48",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'%25s%20%20%25s%5C%5Cn'%20%22%5C%24%5Ba-z_%5D%2B_sha%22%20(%3F%3A%22%5B%5E%22%5Cn%5D*%22%7C%5C%2Ftmp%5C%2Fkubectl)%20%5C%7C%20sha256sum%20-c%20-%2Fgu%2C''):discoverScriptApiOutputs:326804:48",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 49,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'%25s%20%20(%3F%3Asource%7Chelm)%5C.tar%5C.gz%5C%5Cn'%20%22%5C%24(%3F%3AGH_SOURCE_SHA256%7COPS_HELM_SOURCE_SHA256%7Chelm_sha)%22%20%5C%7C%20sha256sum%20-c%20-%2Fgu%2C''):discoverScriptApiOutputs:326092:49",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'%25s%20%20(%3F%3Asource%7Chelm)%5C.tar%5C.gz%5C%5Cn'%20%22%5C%24(%3F%3AGH_SOURCE_SHA256%7COPS_HELM_SOURCE_SHA256%7Chelm_sha)%22%20%5C%7C%20sha256sum%20-c%20-%2Fgu%2C''):discoverScriptApiOutputs:326933:49",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 50,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'%25s%5C%5Cn'%20%22v%5C%24%5C%7BKUBECTL_VERSION%5C%7D-standalone-strict%5C%2F%22%20%3E%20%22%5C%24schema_repo%5C%2F%5C.git%5C%2Finfo%5C%2Fsparse-checkout%22%2Fgu%2C''):discoverScriptApiOutputs:326255:50",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%20'%25s%5C%5Cn'%20%22v%5C%24%5C%7BKUBECTL_VERSION%5C%7D-standalone-strict%5C%2F%22%20%3E%20%22%5C%24schema_repo%5C%2F%5C.git%5C%2Finfo%5C%2Fsparse-checkout%22%2Fgu%2C''):discoverScriptApiOutputs:327096:50",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 51,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fecho%20%22Unsupported%20architecture%3A%20%5C%24arch%22%20%3E%262%2Fgu%2C''):discoverScriptApiOutputs:326410:51",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fecho%20%22Unsupported%20architecture%3A%20%5C%24arch%22%20%3E%262%2Fgu%2C''):discoverScriptApiOutputs:327251:51",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 52,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%5C(%22%25ld%5C%5Cn%22%2C%20page_size%5C)%2Fgu%2C''):discoverScriptApiOutputs:327068:52",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fprintf%5C(%22%25ld%5C%5Cn%22%2C%20page_size%5C)%2Fgu%2C''):discoverScriptApiOutputs:327909:52",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 53,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fwrite%5C(descriptor%2C%20pid%2C%20%5C(size_t%5C)length%5C)%2Fgu%2C''):discoverScriptApiOutputs:327313:53",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fwrite%5C(descriptor%2C%20pid%2C%20%5C(size_t%5C)length%5C)%2Fgu%2C''):discoverScriptApiOutputs:328154:53",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 54,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fwrite%5C(child_cgroup_kill_fd%2C%20%221%22%2C%201%5C)%2Fgu%2C''):discoverScriptApiOutputs:327533:54",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fwrite%5C(child_cgroup_kill_fd%2C%20%221%22%2C%201%5C)%2Fgu%2C''):discoverScriptApiOutputs:328374:54",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 55,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fwrite%5C(membership%2C%20%220%22%2C%201%5C)%2Fgu%2C''):discoverScriptApiOutputs:327774:55",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Fwrite%5C(membership%2C%20%220%22%2C%201%5C)%2Fgu%2C''):discoverScriptApiOutputs:328615:55",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 56,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Ffprintf%5C(stderr%2C%20%22%25s%5C%5Cn%22%2C%20code%5C)%2Fgu%2C''):discoverScriptApiOutputs:328258:56",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Ffprintf%5C(stderr%2C%20%22%25s%5C%5Cn%22%2C%20code%5C)%2Fgu%2C''):discoverScriptApiOutputs:329099:56",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 57,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Ffprintf%5C(stderr%2C%20%22(%3F%3A%5B%5E%22%25%5C%5C%5D%7C%5C%5C.)*%22%5C)%2Fgu%2C'').replace(%2Fperror%5C(%22%5B%5E%22%5C%5C%5D*%22%5C)%2Fgu%2C''):discoverScriptApiOutputs:328338:57",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:unqualified.replace(%2Ffprintf%5C(stderr%2C%20%22(%3F%3A%5B%5E%22%25%5C%5C%5D%7C%5C%5C.)*%22%5C)%2Fgu%2C'').replace(%2Fperror%5C(%22%5B%5E%22%5C%5C%5D*%22%5C)%2Fgu%2C''):discoverScriptApiOutputs:329179:57",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 58,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:declarations.get(node.name.text)%3F%3F%5B%5D:collect:338173:58",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:declarations.get(node.name.text)%3F%3F%5B%5D:collect:339014:58",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 59,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:ts.isComputedPropertyName(property.name)%3Fevaluate(property.name.expression%2Cseen)%3Aproperty.name.getText(tree).replace(%2F%5E%5B'%22%5D%7C%5B'%22%5D%24%2Fgu%2C''):evaluate:343312:59",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:ts.isComputedPropertyName(property.name)%3Fevaluate(property.name.expression%2Cseen)%3Aproperty.name.getText(tree).replace(%2F%5E%5B'%22%5D%7C%5B'%22%5D%24%2Fgu%2C''):evaluate:344153:59",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 60,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:evaluate(ts.isPropertyAssignment(property)%3Fproperty.initializer%3Aproperty.name%2Cseen):evaluate:343644:60",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:evaluate(ts.isPropertyAssignment(property)%3Fproperty.initializer%3Aproperty.name%2Cseen):evaluate:344485:60",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 61,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:ts.isPropertyAccessExpression(expression)%3Fexpression.name.text%3Aevaluate(expression.argumentExpression%2Cseen):projection:344682:61",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:ts.isPropertyAccessExpression(expression)%3Fexpression.name.text%3Aevaluate(expression.argumentExpression%2Cseen):projection:345523:61",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 62,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:target%5Bmember%5D:evaluate:346380:62",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:target%5Bmember%5D:evaluate:347221:62",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 63,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:evaluate(mutation.right%2Cnew%20Set(%5B...seen%2Ckey%5D)):evaluate:346616:63",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:evaluate(mutation.right%2Cnew%20Set(%5B...seen%2Ckey%5D)):evaluate:347457:63",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 64,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:publications.length%3FMath.min(...publications.map(publication%3D%3Epublication.getStart(tree)))%3AInfinity:%3Cmodule-or-anonymous%3E:352192:64",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:publications.length%3FMath.min(...publications.map(publication%3D%3Epublication.getStart(tree)))%3AInfinity:%3Cmodule-or-anonymous%3E:353033:64",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 65,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(file)%3FJSON.parse(fs.readFileSync(file%2C'utf8'))%3A%7B%7D:%3Cmodule-or-anonymous%3E:353556:65",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(file)%3FJSON.parse(fs.readFileSync(file%2C'utf8'))%3A%7B%7D:%3Cmodule-or-anonymous%3E:354397:65",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 66,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:%60%24%7Bconfigured.leaseApiGroup%7D%2F%24%7Bconfigured.leaseApiVersion%7D%60:%3Cmodule-or-anonymous%3E:354930:66",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:%60%24%7Bconfigured.leaseApiGroup%7D%2F%24%7Bconfigured.leaseApiVersion%7D%60:%3Cmodule-or-anonymous%3E:355771:66",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 67,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:publication.getStart(tree):discoverScriptApiOutputs:356545:67",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:publication.getStart(tree):discoverScriptApiOutputs:357386:67",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 68,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(value):discoverScriptApiOutputs:357169:68",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(value):discoverScriptApiOutputs:358010:68",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 69,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(directory):discoverGoApiOutputs:361069:69",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:path.dirname(directory):discoverGoApiOutputs:361910:69",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 70,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(nativeAuthority)%3FJSON.parse(fs.readFileSync(nativeAuthority%2C'utf8')).nativeLanguageSerializationContracts%3F%3F%5B%5D%3A%5B%5D:discoverGoApiOutputs:362440:70",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(nativeAuthority)%3FJSON.parse(fs.readFileSync(nativeAuthority%2C'utf8')).nativeLanguageSerializationContracts%3F%3F%5B%5D%3A%5B%5D:discoverGoApiOutputs:363281:70",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 71,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:lines.map((line%2Cindex)%3D%3Eblocks.some(block%3D%3Eblock!%3D%3Dselected%26%26block.start%3C%3Dindex%26%26index%3C%3Dblock.end)%3F''%3Aline).join('%5Cn'):shellRawChannelUnbound:381988:71",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:lines.map((line%2Cindex)%3D%3Eblocks.some(block%3D%3Eblock!%3D%3Dselected%26%26block.start%3C%3Dindex%26%26index%3C%3Dblock.end)%3F''%3Aline).join('%5Cn'):shellRawChannelUnbound:382829:71",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 72,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:definitions.find(match%3D%3E%7Bconst%20first%3Dbytes.slice(0%2Cmatch.index).split('%5Cn').length%3Breturn%20first%3C%3Dsink.line%26%26sink.line%3C%3Dfirst%2Bmatch%5B0%5D.split('%5Cn').length-1%3B%7D)%3F%3F(dynamic%26%26definitions.length%3D%3D%3D1%3Fdefinitions%5B0%5D%3Anull):shellNativeSummaryQualified:384587:72",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:definitions.find(match%3D%3E%7Bconst%20first%3Dbytes.slice(0%2Cmatch.index).split('%5Cn').length%3Breturn%20first%3C%3Dsink.line%26%26sink.line%3C%3Dfirst%2Bmatch%5B0%5D.split('%5Cn').length-1%3B%7D)%3F%3F(dynamic%26%26definitions.length%3D%3D%3D1%3Fdefinitions%5B0%5D%3Anull):shellNativeSummaryQualified:385428:72",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 73,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.replace(%2F%5E%5B%20%5Ct%5D*%23%5B%5E%5Cn%5D*%24%2Fgmu%2C''):shellYamlScalarGraphQualified:398166:73",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.replace(%2F%5E%5B%20%5Ct%5D*%23%5B%5E%5Cn%5D*%24%2Fgmu%2C''):shellYamlScalarGraphQualified:399007:73",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 74,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.replace(%2F%5E%5B%20%5Ct%5D*%23%5B%5E%5Cn%5D*%24%2Fgmu%2C''):shellReleaseFileProof:402207:74",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.replace(%2F%5E%5B%20%5Ct%5D*%23%5B%5E%5Cn%5D*%24%2Fgmu%2C''):shellReleaseFileProof:403048:74",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 75,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellReleaseFileProof:402323:75",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellReleaseFileProof:403164:75",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 76,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.replace(%2F%5E%5B%20%5Ct%5D*%23%5B%5E%5Cn%5D*%24%2Fgmu%2C''):shellNamedFileProof:407211:76",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.replace(%2F%5E%5B%20%5Ct%5D*%23%5B%5E%5Cn%5D*%24%2Fgmu%2C''):shellNamedFileProof:408052:76",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 77,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellNamedFileProof:407263:77",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellNamedFileProof:408104:77",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 78,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:returned%26%26ts.isObjectLiteralExpression(returned)%3Freturned.properties.filter(node%3D%3Ets.isPropertyAssignment(node)%26%26node.name.getText(tree)%3D%3D%3D%22'containerd-nri.toml'%22)%3A%5B%5D:shellNamedFileProof:414693:78",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:returned%26%26ts.isObjectLiteralExpression(returned)%3Freturned.properties.filter(node%3D%3Ets.isPropertyAssignment(node)%26%26node.name.getText(tree)%3D%3D%3D%22'containerd-nri.toml'%22)%3A%5B%5D:shellNamedFileProof:415534:78",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 79,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:lines%5Bsink.line-1%5D%3F.trim()%3F%3F'':shellFiniteNativeExecutableProof:434889:79",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:lines%5Bsink.line-1%5D%3F.trim()%3F%3F'':shellFiniteNativeExecutableProof:435730:79",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 80,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:lines%5Bsink.line-1%5D%3F.trim()%3F%3F'':shellDynamicOperationProof:528683:80",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:lines%5Bsink.line-1%5D%3F.trim()%3F%3F'':shellDynamicOperationProof:529524:80",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 81,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.indexOf(consumer.sourceEvidence%2Coffset%2B1):shellOutputConsumerMatches:540874:81",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.indexOf(consumer.sourceEvidence%2Coffset%2B1):shellOutputConsumerMatches:541715:81",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 82,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:543073:82",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:543914:82",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 83,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:546538:83",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:547379:83",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 84,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:548704:84",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:549545:84",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 85,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:549834:85",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:550675:85",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 86,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line%5D%3F%3F'':shellOutputConsumerMatches:549874:86",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line%5D%3F%3F'':shellOutputConsumerMatches:550715:86",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 87,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:550377:87",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:bytes.split('%5Cn')%5Bsink.line-1%5D%3F%3F'':shellOutputConsumerMatches:551218:87",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 88,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:constructor%3Fbytes.match(new%20RegExp(%60%5E%24%7Bconstructor%7D%5C%5C(%5C%5C)%20%5C%5C%7B%5B%5C%5Cs%5C%5CS%5D*%3F%5E%5C%5C%7D%60%2C'mu'))%3Anull:discoverShellDirectApiPatches:553730:88",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:constructor%3Fbytes.match(new%20RegExp(%60%5E%24%7Bconstructor%7D%5C%5C(%5C%5C)%20%5C%5C%7B%5B%5C%5Cs%5C%5CS%5D*%3F%5E%5C%5C%7D%60%2C'mu'))%3Anull:discoverShellDirectApiPatches:554571:88",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 89,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(registryFile)%3FJSON.parse(fs.readFileSync(registryFile%2C'utf8'))%3A%7B%7D:discoverShellApiOutputs:562927:89",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:fs.existsSync(registryFile)%3FJSON.parse(fs.readFileSync(registryFile%2C'utf8'))%3A%7B%7D:discoverShellApiOutputs:563768:89",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 90,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:content.replace(variable%5B0%5D%2Cfragment):discoverShellApiOutputs:566556:90",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:content.replace(variable%5B0%5D%2Cfragment):discoverShellApiOutputs:567397:90",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 91,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:%2F%5Ekubectl%5Cs%2Bapply(%3F%3A%5Cs%7C%24)%2Fu.test(invocation)%3F%7BrequestOperation%3A'kubectl-apply'%2CrequestInvocation%3Ainvocation%2C...(constructor%3F%7BrequestConstructor%3Aconstructor%7D%3A%7B%7D)%7D%3A%7B%7D:discoverShellApiOutputs:567095:91",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:%2F%5Ekubectl%5Cs%2Bapply(%3F%3A%5Cs%7C%24)%2Fu.test(invocation)%3F%7BrequestOperation%3A'kubectl-apply'%2CrequestInvocation%3Ainvocation%2C...(constructor%3F%7BrequestConstructor%3Aconstructor%7D%3A%7B%7D)%7D%3A%7B%7D:discoverShellApiOutputs:567936:91",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 92,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:value:installerShell:586465:92",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:value:installerShell:587306:92",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "defaults",
+      "index": 93,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(versionsBytes.toString('utf8')).infrastructureCharts%3F%3F%7B%7D:discoverInfrastructureApiOutputs:590122:93",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:defaults:JSON.parse(versionsBytes.toString('utf8')).infrastructureCharts%3F%3F%7B%7D:discoverInfrastructureApiOutputs:590963:93",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 0,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:assertNativeSerializationRoles:100467:0",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:assertNativeSerializationRoles:100832:0",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 1,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:audited.status:assertNativeSerializationRoles:101526:1",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:audited.status:assertNativeSerializationRoles:101891:1",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 2,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:producerAdapterOperationRecipe:124806:2",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:producerAdapterOperationRecipe:125171:2",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 3,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:producerAdapterOperationRecipe:125188:3",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:producerAdapterOperationRecipe:125553:3",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 4,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverHelmOutputs:147443:4",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverHelmOutputs:147808:4",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 5,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:observed.status:discoverHelmOutputs:147768:5",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:observed.status:discoverHelmOutputs:148133:5",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 6,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:observed.status:discoverHelmOutputs:148149:6",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:observed.status:discoverHelmOutputs:148514:6",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 7,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:authoritative.status:discoverHelmOutputs:149025:7",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:authoritative.status:discoverHelmOutputs:149390:7",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 8,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20error%3B:checkedArgocdArtifactOutputs:160058:8",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20error%3B:checkedArgocdArtifactOutputs:160423:8",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 9,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20error%3B:checkedGitOpsOutputProfiles:166906:9",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20error%3B:checkedGitOpsOutputProfiles:167271:9",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 10,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20error%3B:checkedInfrastructureOutputProfiles:176337:10",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20error%3B:checkedInfrastructureOutputProfiles:176702:10",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 11,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20error%3B:%3Cmodule-or-anonymous%3E:195858:11",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20error%3B:%3Cmodule-or-anonymous%3E:196461:11",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 12,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverScriptApiOutputs:330163:12",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverScriptApiOutputs:331004:12",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 13,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_SCRIPT_MUTATION_KEY_UNQUALIFIED%3A%20%24%7Bsource%7D%60)%3B:projection:344894:13",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_SCRIPT_MUTATION_KEY_UNQUALIFIED%3A%20%24%7Bsource%7D%60)%3B:projection:345735:13",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 14,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_SCRIPT_MUTATION_UNQUALIFIED%3A%20%24%7Bsource%7D%60)%3B:evaluate:345393:14",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_SCRIPT_MUTATION_UNQUALIFIED%3A%20%24%7Bsource%7D%60)%3B:evaluate:346234:14",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 15,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_SCRIPT_SERIALIZED_OUTPUT_UNQUALIFIED%3A%20%24%7Bsource%7D%60)%3B:discoverScriptApiOutputs:356991:15",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_SCRIPT_SERIALIZED_OUTPUT_UNQUALIFIED%3A%20%24%7Bsource%7D%60)%3B:discoverScriptApiOutputs:357832:15",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 16,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_SCRIPT_SERIALIZED_JSON_INVALID%3A%20%24%7Bsource%7D%60)%3B:discoverScriptApiOutputs:357230:16",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_SCRIPT_SERIALIZED_JSON_INVALID%3A%20%24%7Bsource%7D%60)%3B:discoverScriptApiOutputs:358071:16",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 17,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:roles.status:discoverGoApiOutputs:362893:17",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:roles.status:discoverGoApiOutputs:363734:17",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 18,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:roles.error:discoverGoApiOutputs:362949:18",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:roles.error:discoverGoApiOutputs:363790:18",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 19,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:discoverGoApiOutputs:364943:19",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:discoverGoApiOutputs:365784:19",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 20,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.error:discoverGoApiOutputs:365000:20",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.error:discoverGoApiOutputs:365841:20",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 21,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:shellReleaseFileProof:405653:21",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:shellReleaseFileProof:406494:21",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 22,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:version.status:discoverShellSelectedSecretArrays:513729:22",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:version.status:discoverShellSelectedSecretArrays:514570:22",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 23,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:%3Cmodule-or-anonymous%3E:514150:23",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:%3Cmodule-or-anonymous%3E:514991:23",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 24,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:render.status:shellDynamicOperationProof:538897:24",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:render.status:shellDynamicOperationProof:539738:24",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 25,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:version.status:shellDynamicOperationProof:539428:25",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:version.status:shellDynamicOperationProof:540269:25",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 26,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:discoverShellSelectedJsonPatches:558675:26",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:discoverShellSelectedJsonPatches:559516:26",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 27,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:served.status:discoverTransformedApiOutputs:575023:27",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:served.status:discoverTransformedApiOutputs:575864:27",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 28,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:%3Cmodule-or-anonymous%3E:578966:28",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:%3Cmodule-or-anonymous%3E:579807:28",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 29,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverTransformedApiOutputs:580113:29",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverTransformedApiOutputs:580954:29",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 30,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverTransformedApiOutputs:583700:30",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverTransformedApiOutputs:584541:30",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 31,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:%3Cmodule-or-anonymous%3E:587039:31",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:parsed.status:%3Cmodule-or-anonymous%3E:587880:31",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 32,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_INSTALLER_FLAG_UNQUALIFIED%3A%20%24%7BsourcePath%7D%3A%24%7Bflag%7D%60)%3B:installerHelmRecipe:589468:32",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:throw%20new%20Error(%60API_PRODUCT_INSTALLER_FLAG_UNQUALIFIED%3A%20%24%7BsourcePath%7D%3A%24%7Bflag%7D%60)%3B:installerHelmRecipe:590309:32",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 33,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:stage.status:discoverInfrastructureApiOutputs:591556:33",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:stage.status:discoverInfrastructureApiOutputs:592397:33",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 34,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverInfrastructureApiOutputs:593885:34",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverInfrastructureApiOutputs:594726:34",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 35,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:check.status:discoverInfrastructureApiOutputs:595148:35",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:check.status:discoverInfrastructureApiOutputs:595989:35",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 36,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:result.status:%3Cmodule-or-anonymous%3E:597320:36",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:result.status:%3Cmodule-or-anonymous%3E:598161:36",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "recordKind": "exits",
+      "index": 37,
+      "remove": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverExternalChartApiOutputs:608866:37",
+      "add": "cli-declaration:scripts%2Fdocs-api-output-discovery.mjs:exits:rendered.status:discoverExternalChartApiOutputs:609707:37",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "commands",
+      "index": 0,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:commands:..%2F:%3Cmodule-or-anonymous%3E:1061847:0",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:commands:..%2F:%3Cmodule-or-anonymous%3E:1061848:0",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 2,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--environment-producer-custody-probe:%3Cmodule-or-anonymous%3E:1061613:2",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--environment-producer-custody-probe:%3Cmodule-or-anonymous%3E:1061614:2",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 3,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--probe-input:%3Cmodule-or-anonymous%3E:1062072:3",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--probe-input:%3Cmodule-or-anonymous%3E:1062073:3",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 8,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--environment-producer-custody-index-only:%3Cmodule-or-anonymous%3E:1061162:8",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--environment-producer-custody-index-only:%3Cmodule-or-anonymous%3E:1061163:8",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 9,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--environment-producer-custody-probe:%3Cmodule-or-anonymous%3E:1061542:9",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--environment-producer-custody-probe:%3Cmodule-or-anonymous%3E:1061543:9",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 10,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--native-supervisor-environment-entry:%3Cmodule-or-anonymous%3E:1062519:10",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--native-supervisor-environment-entry:%3Cmodule-or-anonymous%3E:1062520:10",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 11,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--check-runtime-consumer-semantics-only:%3Cmodule-or-anonymous%3E:1062714:11",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--check-runtime-consumer-semantics-only:%3Cmodule-or-anonymous%3E:1062715:11",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 12,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--check-environment-coverage-only:%3Cmodule-or-anonymous%3E:1062842:12",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--check-environment-coverage-only:%3Cmodule-or-anonymous%3E:1062843:12",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 13,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--check-schema-semantics-only:%3Cmodule-or-anonymous%3E:1062961:13",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--check-schema-semantics-only:%3Cmodule-or-anonymous%3E:1062962:13",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 14,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--describe-discovery:%3Cmodule-or-anonymous%3E:1078608:14",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--describe-discovery:%3Cmodule-or-anonymous%3E:1078609:14",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 15,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--helm-values-only:%3Cmodule-or-anonymous%3E:1079067:15",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--helm-values-only:%3Cmodule-or-anonymous%3E:1079068:15",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 16,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--runtime-only:%3Cmodule-or-anonymous%3E:1079088:16",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--runtime-only:%3Cmodule-or-anonymous%3E:1079089:16",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 17,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--schemas-only:%3Cmodule-or-anonymous%3E:1079105:17",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--schemas-only:%3Cmodule-or-anonymous%3E:1079106:17",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 18,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--allow-semantic-gaps:%3Cmodule-or-anonymous%3E:1079122:18",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--allow-semantic-gaps:%3Cmodule-or-anonymous%3E:1079123:18",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 19,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--allow-local-helm-authority-maintenance:%3Cmodule-or-anonymous%3E:1079146:19",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--allow-local-helm-authority-maintenance:%3Cmodule-or-anonymous%3E:1079147:19",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 20,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--configuration-reference-only:buildConfigurationInventories:1091229:20",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--configuration-reference-only:buildConfigurationInventories:1091230:20",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 21,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--helm-values-only:buildConfigurationInventories:1091328:21",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--helm-values-only:buildConfigurationInventories:1091329:21",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 22,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--runtime-only:buildConfigurationInventories:1091482:22",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--runtime-only:buildConfigurationInventories:1091483:22",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 23,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--schemas-only:buildConfigurationInventories:1092248:23",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--schemas-only:buildConfigurationInventories:1092249:23",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "options",
+      "index": 24,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--check-payload-delivery-only:%3Cmodule-or-anonymous%3E:1092602:24",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:options:--check-payload-delivery-only:%3Cmodule-or-anonymous%3E:1092603:24",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "defaults",
+      "index": 222,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:defaults:input%20%3F%20fs.readFileSync(input%2C'utf8')%20%3A%20read(sourcePath):%3Cmodule-or-anonymous%3E:1062246:222",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:defaults:input%20%3F%20fs.readFileSync(input%2C'utf8')%20%3A%20read(sourcePath):%3Cmodule-or-anonymous%3E:1062247:222",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "defaults",
+      "index": 223,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:defaults:fs.existsSync(target)%20%3F%20fs.readFileSync(target%2C%20'utf8')%20%3A%20null:%3Cmodule-or-anonymous%3E:1093029:223",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:defaults:fs.existsSync(target)%20%3F%20fs.readFileSync(target%2C%20'utf8')%20%3A%20null:%3Cmodule-or-anonymous%3E:1093030:223",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 21,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1061504:21",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1061505:21",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 22,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1062481:22",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1062482:22",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 23,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1062676:23",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1062677:23",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 24,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1062804:24",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1062805:24",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 25,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1062923:25",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1062924:25",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 26,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1063045:26",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1063046:26",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 27,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1078814:27",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1078815:27",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 28,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1092785:28",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exit(0):%3Cmodule-or-anonymous%3E:1092786:28",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 29,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exitCode%20%3D%201:%3Cmodule-or-anonymous%3E:1093552:29",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:process.exitCode%20%3D%201:%3Cmodule-or-anonymous%3E:1093553:29",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "recordKind": "exits",
+      "index": 30,
+      "remove": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:externalAuthorityCheck.status:%3Cmodule-or-anonymous%3E:1093819:30",
+      "add": "cli-declaration:scripts%2Fdocs-configuration-inventory.mjs:exits:externalAuthorityCheck.status:%3Cmodule-or-anonymous%3E:1093820:30",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-event-contracts.mjs",
+      "recordKind": "exits",
+      "index": 0,
+      "remove": "cli-declaration:scripts%2Fdocs-event-contracts.mjs:exits:throw%20new%20Error(%60EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED%3Asource-vector%3A%24%7Bcensus.sourceSetSha256%7D%60)%3B:%3Cmodule-or-anonymous%3E:1206:0",
+      "add": "cli-declaration:scripts%2Fdocs-event-contracts.mjs:exits:throw%20new%20Error(%60EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED%3Asource-vector%3A%24%7Bcensus.sourceSetSha256%7D%3B%20reader%3D%24%7BpagePath%7D%60)%3B:%3Cmodule-or-anonymous%3E:1206:0",
+      "nameOrExpressionChanged": true,
+      "scopeChanged": false
+    },
+    {
+      "source": "scripts/docs-event-contracts.mjs",
+      "recordKind": "exits",
+      "index": 1,
+      "remove": "cli-declaration:scripts%2Fdocs-event-contracts.mjs:exits:throw%20new%20Error(%60DOC_DRIFT_EVENT_CONTRACT%3A%24%7Bstale.join('%2C')%7D%60)%3B:%3Cmodule-or-anonymous%3E:2053:1",
+      "add": "cli-declaration:scripts%2Fdocs-event-contracts.mjs:exits:throw%20new%20Error(%60DOC_DRIFT_EVENT_CONTRACT%3A%24%7Bstale.join('%2C')%7D%60)%3B:%3Cmodule-or-anonymous%3E:2073:1",
+      "nameOrExpressionChanged": false,
+      "scopeChanged": false
+    }
+  ],
+  "allOtherFamiliesAndFieldsDeepEqual": true,
+  "policyDispositionSelectedInventoriesUnchanged": true,
+  "logicalSourceKindIndexMembershipUnchanged": true,
+  "semanticQualification": "Only encoded location/defaultrootcondition/eventdiagnostic declarationkeys from previously qualified5nativeSources replaced. Sixrecordkind membership/cardinality and canonical CLI target unchanged;2newdelegation ASTrecords are NOT admitted by these6kinds and not silently added. Source-only/delegated classifications and producer/root conditions retain prior finitequalification. No broad manifest regeneration.",
+  "preexistingFailure": "Actual normalgovernance generation refused beforewrites at SUR-API-01 typedauthority/manualreplacement; preserved as failure, not rewritten.",
+  "relatedQualification": "qua010-cli-native-successor-qualification-20261031.json",
+  "allowedAdoption": "Root may replace ONLY listed exact old/addpairs in SUR-API-01.authorityAvailability.typedIdentities, retaining ordering and all other bytes/structure where possible. Validate originalsubset and global restdeepequality, then actual normalgovgeneration. Proposal not originalacceptance.",
+  "repoMutation": false
+}

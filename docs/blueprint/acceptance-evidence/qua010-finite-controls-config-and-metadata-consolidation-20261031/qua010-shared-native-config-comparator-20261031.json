@@ -1,0 +1,30 @@
+{
+  "at": "2026-10-31T20:06:26.533267+00:00",
+  "mode": "UNCHANGED native --configuration-reference-only --check; actual selected YAML/schema/runtime full composition; default globalAPI not claimed",
+  "baselineRuntimeSha256": "e8120484c2798161773e01a99349c1e31e26e9fb2519c0317b8e76e351209c6d",
+  "checks": [
+    {
+      "label": "current baseline",
+      "command": "node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check --out-dir /home/node/.openclaw/workspace/tmp/qua010-config-prospective-current-20261031",
+      "exitCode": 0,
+      "elapsedSeconds": 152.1972994300304,
+      "output": "Configuration documentation inventory is current.\n"
+    },
+    {
+      "label": "stale byte rejection",
+      "command": "node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check --out-dir /home/node/.openclaw/workspace/tmp/qua010-config-prospective-current-20261031",
+      "exitCode": 1,
+      "elapsedSeconds": 147.61803017708007,
+      "output": "DOC_DRIFT_CONFIG: Configuration documentation inventory is stale:\n- ../tmp/qua010-config-prospective-current-20261031/configuration-runtime-inputs.json\nRun: npm run docs:inventory:config\n"
+    },
+    {
+      "label": "byte-exact restoration",
+      "command": "node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check --out-dir /home/node/.openclaw/workspace/tmp/qua010-config-prospective-current-20261031",
+      "exitCode": 0,
+      "elapsedSeconds": 153.84928344702348,
+      "output": "Configuration documentation inventory is current.\n"
+    }
+  ],
+  "verdict": "PASS_CURRENT_SUPPORTED_BASELINE_STALE_REFUSAL_UNCHANGED_FILE_RESTORED_GREEN",
+  "wholeQUA010Accepted": false
+}

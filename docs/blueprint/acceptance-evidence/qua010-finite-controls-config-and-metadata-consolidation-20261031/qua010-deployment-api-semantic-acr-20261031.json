@@ -1,0 +1,98 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PARTIAL_NATIVE_SEMANTIC_ACR_PASS_CORRECT_READER_REFUSAL_GAP",
+  "originalCriterion": "AP09-acceptance-contract.md246\u2013253 DeploymentAPI semantic Add/Change/Remove, not lockbytes/parent/embedded payload substitution",
+  "actualControls": [
+    {
+      "operation": "add",
+      "nativeSemanticAuthoredMembershipPassed": true,
+      "restoredCompleteSelectionEqual": true,
+      "source": "my-values/infra/litellm-deployment.yaml",
+      "mutationSha256": "95239b47daa60df4984ff21b3fd045f4c3e18d1949957a2daae28f35b3a05c06"
+    },
+    {
+      "operation": "change",
+      "nativeSemanticAuthoredMembershipPassed": true,
+      "restoredCompleteSelectionEqual": true,
+      "source": "my-values/infra/litellm-deployment.yaml",
+      "mutationSha256": "59c4fe123633196f17803d9ff2e4eb0698e1cd94b31bb843c1a40f668ee89f4b"
+    },
+    {
+      "operation": "remove",
+      "nativeSemanticAuthoredMembershipPassed": true,
+      "restoredCompleteSelectionEqual": true,
+      "source": "my-values/infra/litellm-deployment.yaml",
+      "mutationSha256": "385cde82bbe831822342662ab3da5f0cbe8f7b04ba901af7fc2ea5316769a1ea"
+    },
+    {
+      "unknownFieldRefusal": "API_SCHEMA_FIELD_MISSING: apps/v1/Deployment spec.QUA010_UNKNOWN_FIELD stopped at spec",
+      "correctReaderInDiagnostic": false
+    }
+  ],
+  "failure": null,
+  "ownership": "Only isolated owned copy of actual current my-values/infra/litellm-deployment.yaml; unchanged pinned Kubernetes OpenAPI/module resolver and real apiProductSelection receiver registry. No root source/schema lock/authority mutation or refresh.",
+  "scope": "Actual selected YAML uses same apiProductSelection/apiFieldSchemaAuthority as buildApiResourceInventory(selectedYamlOnly:true). Excludes executable program-output discovery, not YAML API resolution; no default globalAPI pass claimed.",
+  "remainingGap": "Direct same-path selected product YAML field resolver semantic3controls pass with full selection restoration; omission/default applicability retained correctly. Native unknown-field diagnostic lacks canonical reader path. No actual full output stale/refusal/restoredgreen join executed here; original QUA010 semantic3end-to-end criterion remains incomplete until owning command/output and correctreader assertions joined. No synthetic renderer promoted.",
+  "reader": "docs/site/reference/api-object-updates.md",
+  "negativeReceiptsPreserved": true,
+  "newOriginalAcceptance": false,
+  "firstAttemptPreserved": {
+    "verdict": "NATIVE_CONTROL_FAILED",
+    "actualControls": [
+      {
+        "operation": "add",
+        "actualSourceCopy": "my-values/infra/litellm-deployment.yaml",
+        "mutationSourceSha256": "95239b47daa60df4984ff21b3fd045f4c3e18d1949957a2daae28f35b3a05c06",
+        "nativeSelectionChanged": true,
+        "samePinnedResolver": true,
+        "restoredCompleteSelectionEqual": true
+      }
+    ],
+    "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert(!selection.fieldPaths.includes('$.spec.replicas'))\n\n    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/[eval1]:1:1706\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)",
+    "reason": "Invalid assessor expectation: removal of authored field does not remove default/omission mechanism coverage. Correct oracle tests authored-resource-field applicability, not blanket fieldPaths disappearance. Guard unchanged."
+  },
+  "executedSemanticProbeRecipe": {
+    "actualSource": "my-values/infra/litellm-deployment.yaml",
+    "sourceParse": "YAML.parseAllDocuments(original)[0].toJS()",
+    "context": "{path:rel,document:0,sourceDigest:sha256(currentFixtureText)}",
+    "nativeCall": "apiProductSelection('apps/v1','Deployment',contexts,versionedApiReceiverRegistries.get('apps/v1'),ownedFixtureRoot)",
+    "authoredMembershipPredicate": "JSON.stringify(selection.applicability[field] ?? []).includes('authored-resource-field')",
+    "baselineActualAssertion": "assert(authored(base, '$.spec.replicas'))",
+    "cases": [
+      {
+        "operation": "add",
+        "before": "Actual complete Deployment source; no authored spec.progressDeadlineSeconds in baseline",
+        "constructor": "const v=structuredClone(doc); v.spec.progressDeadlineSeconds=600; const text=YAML.stringify(v);",
+        "executedAssertions": [
+          "assert(authored(actual,'$.spec.progressDeadlineSeconds'))",
+          "assert.equal(apiFieldSchemaAuthority('apps/v1','Deployment','spec.progressDeadlineSeconds').type,'integer')"
+        ],
+        "actualResult": "Assertions passed; mutation source SHA95239b47daa60df4984ff21b3fd045f4c3e18d1949957a2daae28f35b3a05c06"
+      },
+      {
+        "operation": "change",
+        "before": "Baseline spec.replicas=1 (authored)",
+        "constructor": "const v=structuredClone(doc); delete v.spec.replicas; v.spec.paused=true; const text=YAML.stringify(v);",
+        "executedAssertions": [
+          "assert(!authored(actual,'$.spec.replicas'))",
+          "assert(authored(actual,'$.spec.paused'))",
+          "assert.equal(apiFieldSchemaAuthority('apps/v1','Deployment','spec.paused').type,'boolean')"
+        ],
+        "actualResult": "Assertions passed; mutation source SHA59c4fe123633196f17803d9ff2e4eb0698e1cd94b31bb843c1a40f668ee89f4b"
+      },
+      {
+        "operation": "remove",
+        "before": "Baseline spec.replicas=1 (authored)",
+        "constructor": "const v=structuredClone(doc); delete v.spec.replicas; const text=YAML.stringify(v);",
+        "executedAssertions": [
+          "assert(!authored(actual,'$.spec.replicas'))"
+        ],
+        "actualResult": "Assertion passed; omission/default-selected replica coverage not wrongly discarded; mutation source SHA385cde82bbe831822342662ab3da5f0cbe8f7b04ba901af7fc2ea5316769a1ea"
+      }
+    ],
+    "allThreeRestoration": "assert.deepEqual(select(original),base) actually executed after each case; complete native selection restored, not only selectedfield hash.",
+    "readOnlyRoot": "Only ownedfixture source copy written/removed; original canonical reader bytes unchanged.",
+    "sourceOfRecipe": "Exact code executed in retained functions.exec node module cell during this childtask; appended retrospectively from that actual command, no rerun or new outcome invented."
+  },
+  "correctReaderJoinClarification": "Raw native APIexception alone has no route; this receipt does not require a new exception code change. A separately qualified original probe can assert maintained correct reader mapping and shared native comparator/output refusal with these actual semantic3facts; root/execution child owns that combined original decision. This receipt alone still not whole QUA010 acceptance."
+}

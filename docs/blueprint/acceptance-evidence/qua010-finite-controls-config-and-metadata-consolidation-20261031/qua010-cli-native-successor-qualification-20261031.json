@@ -1,0 +1,1157 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PASS_FINITE_ACTUAL_NATIVE_CLI_SUCCESSOR",
+  "sourceSnapshot": "9a57ddc5 reviewed local Source (not a remote claim)",
+  "oldCliSourceRevision": "e7798d60a03ab5e187d3290acab1b4f183043290",
+  "staleSourceCount": 5,
+  "exactStaleSources": [
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "oldSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+      "currentSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0",
+      "originalOwnershipRetained": {
+        "source": "scripts/docs-api-documentation-role-custody.mjs",
+        "kind": "delegated-receiver",
+        "supportState": "delegated-receiver",
+        "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.",
+        "sha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e",
+        "gitObject": "f74140924171f5b4d4221900b8db4a42669d8394",
+        "mode": "100644"
+      }
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "oldSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2",
+      "currentSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158",
+      "originalOwnershipRetained": {
+        "source": "scripts/docs-api-output-discovery.mjs",
+        "kind": "delegated-receiver",
+        "supportState": "delegated-receiver",
+        "boundary": "Implementation/caller argument receiver, not an independent public invocation; compose actual caller and receiver separately.",
+        "sha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2",
+        "gitObject": "cc07c7f63280be97967763d30977a67b86bf2650",
+        "mode": "100644"
+      }
+    },
+    {
+      "path": "scripts/docs-configuration-inventory.mjs",
+      "oldSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7",
+      "currentSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f",
+      "originalOwnershipRetained": {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "kind": "supported",
+        "supportState": "supported",
+        "boundary": "Actual declared first-party launch; Source model is not proof of successful invocation.",
+        "sha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7",
+        "gitObject": "7e55df9f0a76207f3cd3711d0a813e495a24b4cc",
+        "mode": "100644"
+      }
+    },
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "oldSha256": "88d84cfabb4e160d9259420a04cb2dc187dacc56cb440f88431d42ed1e10439e",
+      "currentSha256": "cd82dc095cda6663f39b242a7b329dab8bbbb4e6156e93693f81631bbc0c225b",
+      "originalOwnershipRetained": {
+        "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "kind": "source-only-unqualified",
+        "supportState": "not established",
+        "boundary": "New native entry/parser candidate. Read-only source declaration, not supported invocation or execution authority.",
+        "sha256": "88d84cfabb4e160d9259420a04cb2dc187dacc56cb440f88431d42ed1e10439e",
+        "gitObject": "2ab6474c864484add1d5b87f159a6450d4bc2c63",
+        "mode": "100644"
+      }
+    },
+    {
+      "path": "scripts/docs-event-contracts.mjs",
+      "oldSha256": "d501c2a0fd3d2e81d214aa8eadd7128af2b840f4b483c48ee5303d9e394a57bf",
+      "currentSha256": "d732c59be80007cdc986059a23437e41d96ee6984860a242138a72a7b253507d",
+      "originalOwnershipRetained": {
+        "source": "scripts/docs-event-contracts.mjs",
+        "kind": "source-only-unqualified",
+        "supportState": "not established",
+        "boundary": "New native entry/parser candidate. Read-only source declaration, not supported invocation or execution authority.",
+        "sha256": "d501c2a0fd3d2e81d214aa8eadd7128af2b840f4b483c48ee5303d9e394a57bf",
+        "gitObject": "71ae2de35e5621f2bc75cc41f76f0cd778d831f4",
+        "mode": "100644"
+      }
+    }
+  ],
+  "preparatoryAssessment": "Complete actual5source diff against CLI sourceRevision inspected. Changes are existing qualified exact practicalReader physical-root/compiler purpose inputs and existing authority pins in custody/discovery, prior claims pin in owner-purpose, independently qualified onecase matcher in config helper and correctreader message in eventCLI. Expect actual native AST changes to conditions/defaults/callables/locations plus identities; DO NOT assume purehash output delta. Existingdelegated2/supported1/source-only-unqualified2 classes must not be promoted.",
+  "applicableQualificationRefs": [
+    "qua010-finite-event-vector-qualification-20261031.json (finite maintenance-vs-product event impact, NOT universal CLI code approval)",
+    "qua010-observer-prose-matcher-review-20261031.json",
+    "qua010-event-reader-diagnostic-source-review-20261031.json",
+    "qua010-targeted-affected-record-preservation-20261031.json (original MNT004/GOV existing source role scope reuse)"
+  ],
+  "pendingOwner": null,
+  "resumeCondition": null,
+  "noRepositoryMutation": true,
+  "noAcceptanceClaim": true,
+  "trackedSha256": "03784e1af8f54a615088effb2d06946379d9a3c7f1e97594aa46314de26d444e",
+  "actualProspectiveSha256": "ce31f7f38bc6e069abd9e7632801e798de210a8fb088c1653bcbd69936fd6078",
+  "prospectiveSourceRevision": "9a57ddc51e5b919f1add0da1bf2a17a4b69d445e",
+  "sourceCount": 872,
+  "sourceRosterUnchanged": true,
+  "allCurrentSourceBindingHashesVerified": true,
+  "allOwnershipStatesPreserved": true,
+  "rawDeltaSummary": {
+    "positionalScalarChanges": 13490,
+    "keyOrArrayCardinalityObservations": 156,
+    "notBehaviorCounts": true
+  },
+  "normalizedTopLevelEquality": {
+    "schemaVersion": true,
+    "authority": true,
+    "acceptance": true,
+    "ownership": true,
+    "manifestInterfaces": true,
+    "launchGraph": true,
+    "ownershipDeclarationSha256": true,
+    "archivedDataDispositions": true,
+    "unresolved": true,
+    "dependencyBindings": true,
+    "producerBindings": true,
+    "tools": true,
+    "limits": true
+  },
+  "changedSourceRecords": [
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "sections": [
+        "ownership",
+        "sourceBinding",
+        "sourceBindings",
+        "defaults",
+        "exits",
+        "branches",
+        "delegations",
+        "guards",
+        "adapterLimits"
+      ],
+      "ownIdentityChanged": true
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "sections": [
+        "ownership",
+        "sourceBinding",
+        "sourceBindings",
+        "defaults",
+        "exits",
+        "branches",
+        "delegations",
+        "guards",
+        "unresolved",
+        "adapterLimits"
+      ],
+      "ownIdentityChanged": true
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/docs-api-schema-authorities.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "sections": [
+        "ownership",
+        "sourceBinding",
+        "sourceBindings",
+        "commands",
+        "options",
+        "defaults",
+        "exits",
+        "branches",
+        "delegations",
+        "adapterLimits"
+      ],
+      "ownIdentityChanged": true
+    },
+    {
+      "source": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "sections": [
+        "ownership",
+        "sourceBinding",
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": true
+    },
+    {
+      "source": "scripts/docs-event-contracts.mjs",
+      "sections": [
+        "ownership",
+        "sourceBinding",
+        "sourceBindings",
+        "exits",
+        "adapterLimits"
+      ],
+      "ownIdentityChanged": true
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-cli-compiler-custody.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-cli-fixture-compiler-custody.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-cli-native-protocol-custody.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-common-error-markdown-custody.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-event-contract-documentation-custody.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-module-input-successor.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-publication-child-custody.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-publication-parser-custody.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/api-reference.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    },
+    {
+      "source": "scripts/tests/docs-api-top-level-script-purpose.test.mjs",
+      "sections": [
+        "sourceBindings"
+      ],
+      "ownIdentityChanged": false
+    }
+  ],
+  "meaningfulAlignedSemanticChanges": [
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "section": "defaults",
+      "removed": [
+        {
+          "bindingExpression": "selectedInput",
+          "conditions": [],
+          "expression": "root===reviewedRecoveryCompilerInput.root?reviewedRecoveryCompilerInput:root===reviewedIsolatedCompilerInput.root?reviewedIsolatedCompilerInput:recipe.foundation",
+          "guardExpression": "root===reviewedRecoveryCompilerInput.root",
+          "kind": "guarded-conditional-selection-rule",
+          "scope": "verifyRootCompilerFoundation",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        }
+      ],
+      "added": [
+        {
+          "bindingExpression": "selectedInput",
+          "conditions": [],
+          "expression": "root===reviewedPracticalReaderCompilerInput.root?reviewedPracticalReaderCompilerInput:root===reviewedRecoveryCompilerInput.root?reviewedRecoveryCompilerInput:root===reviewedIsolatedCompilerInput.root?reviewedIsolatedCompilerInput:recipe.foundation",
+          "guardExpression": "root===reviewedPracticalReaderCompilerInput.root",
+          "kind": "guarded-conditional-selection-rule",
+          "scope": "verifyRootCompilerFoundation",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "section": "branches",
+      "removed": [
+        {
+          "conditions": [
+            {
+              "conditionExpression": "root!==r.root||fs.realpathSync(root)!==root||fs.realpathSync(process.cwd())!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "root!==r.root||fs.realpathSync(root)!==root||fs.realpathSync(process.cwd())!==root",
+          "kind": "source-argv-condition",
+          "scope": "assertCliNativeCompilerInputs",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "root!==r.root||!selectedSources.includes(r.driver)||!selectedSources.includes(r.source)",
+              "role": "condition"
+            }
+          ],
+          "expression": "root!==r.root||!selectedSources.includes(r.driver)||!selectedSources.includes(r.source)",
+          "kind": "source-argv-condition",
+          "scope": "cliTypedFixtureAnalysisSeed",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root,reviewedRecoveryCompilerInput.root].includes(root))||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root,reviewedRecoveryCompilerInput.root].includes(root))||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "verifyRootCompilerFoundation",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        }
+      ],
+      "added": [
+        {
+          "conditions": [
+            {
+              "conditionExpression": "(root!==r.root&&!isReviewedPracticalReaderRoot(root))||fs.realpathSync(root)!==root||fs.realpathSync(process.cwd())!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "(root!==r.root&&!isReviewedPracticalReaderRoot(root))||fs.realpathSync(root)!==root||fs.realpathSync(process.cwd())!==root",
+          "kind": "source-argv-condition",
+          "scope": "assertCliNativeCompilerInputs",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "(root!==r.root&&!isReviewedPracticalReaderRoot(root))||!selectedSources.includes(r.driver)||!selectedSources.includes(r.source)",
+              "role": "condition"
+            }
+          ],
+          "expression": "(root!==r.root&&!isReviewedPracticalReaderRoot(root))||!selectedSources.includes(r.driver)||!selectedSources.includes(r.source)",
+          "kind": "source-argv-condition",
+          "scope": "cliTypedFixtureAnalysisSeed",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root,reviewedRecoveryCompilerInput.root,reviewedPracticalReaderCompilerInput.root].includes(root))||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "typeof root!=='string'||!path.isAbsolute(root)||root!==path.resolve(root)||!([recipe.canonicalDependencyRoot,reviewedIsolatedCompilerInput.root,reviewedRecoveryCompilerInput.root,reviewedPracticalReaderCompilerInput.root].includes(root))||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "verifyRootCompilerFoundation",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-api-documentation-role-custody.mjs",
+      "section": "delegations",
+      "removed": [],
+      "added": [
+        {
+          "bindingExpression": "reviewedPracticalReaderCompilerInput",
+          "conditions": [],
+          "expression": "frozenRecipes({\n  \"root\": \"/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550\",\n  \"pins\": [\n    {\n      \"path\": \"package.json\",\n      \"sha256\": \"0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef\"\n    },\n    {\n      \"path\": \"package-lock.json\",\n      \"sha256\": \"9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe\"\n    },\n    {\n      \"path\": \"node_modules/.package-lock.json\",\n      \"sha256\": \"5de787895573574c33b442fa83a469c616269de39ed7941662031b5b6d638474\"\n    },\n    {\n      \"path\": \"node_modules/typescript/package.json\",\n      \"sha256\": \"822ef7ca6452205657b6288b066481ecf508bfbf43455d715cf7d3ec457561e6\"\n    },\n    {\n      \"path\": \"node_modules/typescript/lib/typescript.js\",\n      \"sha256\": \"3ae902c92cc44dace175c0e69e13a4b0899f6983c6121d76b9ab8dd5795e7675\"\n    }\n  ],\n  \"absent\": [\n    \"node_modules/typescript/lib/package.json\"\n  ],\n  \"scope\": \"Exact isolated practical Reader existing-dependency input; all five physical pins and the entire existing TypeScript 5.9.3 member/directory/absence catalog apply. No fresh-install claim, compiler capability, runtime acquisition, product acceptance or documentation acceptance.\"\n})",
+          "kind": "input-value-transformation-not-a-default",
+          "scope": "<module-or-anonymous>",
+          "scopeIdentity": {
+            "kind": "module",
+            "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+          },
+          "sourcePath": "scripts/docs-api-documentation-role-custody.mjs"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "section": "branches",
+      "removed": [
+        {
+          "conditions": [
+            {
+              "conditionExpression": "source==='scripts/lib/docs-publication-example-coverage.mjs'&&fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'",
+              "role": "condition"
+            },
+            {
+              "conditionExpression": "forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression))",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "capability==='create-require'||capability==='create-require-forwarder'",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "ts.isCallExpression(node)",
+              "role": "then"
+            }
+          ],
+          "expression": "source==='scripts/lib/docs-publication-example-coverage.mjs'&&fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'",
+          "kind": "source-argv-condition",
+          "scope": "loaderCapability",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "source==='scripts/lib/cli/typed-cli-ast.mjs'&&fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'",
+              "role": "condition"
+            },
+            {
+              "conditionExpression": "forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression))",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "capability==='create-require'||capability==='create-require-forwarder'",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "ts.isCallExpression(node)",
+              "role": "then"
+            }
+          ],
+          "expression": "source==='scripts/lib/cli/typed-cli-ast.mjs'&&fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'",
+          "kind": "source-argv-condition",
+          "scope": "loaderCapability",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "checkedCommonErrorMarkdownOutput",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "checkedEventContractDocumentationOutputs",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "checkedPublicationYamlValidationInputs",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "checkedPublicationNativeValidation",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        }
+      ],
+      "added": [
+        {
+          "conditions": [
+            {
+              "conditionExpression": "source==='scripts/lib/docs-publication-example-coverage.mjs'&&(fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'||isReviewedPracticalReaderGraphRoot(root))",
+              "role": "condition"
+            },
+            {
+              "conditionExpression": "forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression))",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "capability==='create-require'||capability==='create-require-forwarder'",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "ts.isCallExpression(node)",
+              "role": "then"
+            }
+          ],
+          "expression": "source==='scripts/lib/docs-publication-example-coverage.mjs'&&(fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'||isReviewedPracticalReaderGraphRoot(root))",
+          "kind": "source-argv-condition",
+          "scope": "loaderCapability",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "source==='scripts/lib/cli/typed-cli-ast.mjs'&&(fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'||isReviewedPracticalReaderGraphRoot(root))",
+              "role": "condition"
+            },
+            {
+              "conditionExpression": "forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression))",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "capability==='create-require'||capability==='create-require-forwarder'",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "ts.isCallExpression(node)",
+              "role": "then"
+            }
+          ],
+          "expression": "source==='scripts/lib/cli/typed-cli-ast.mjs'&&(fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery'||isReviewedPracticalReaderGraphRoot(root))",
+          "kind": "source-argv-condition",
+          "scope": "loaderCapability",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "(root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "(root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "checkedCommonErrorMarkdownOutput",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "(root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "(root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "checkedEventContractDocumentationOutputs",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "(root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "(root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "checkedPublicationYamlValidationInputs",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "(root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root",
+              "role": "condition"
+            }
+          ],
+          "expression": "(root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root",
+          "kind": "source-argv-condition",
+          "scope": "checkedPublicationNativeValidation",
+          "scopeIdentity": {
+            "kind": "function",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "section": "delegations",
+      "removed": [],
+      "added": [
+        {
+          "bindingExpression": "isReviewedPracticalReaderGraphRoot",
+          "conditions": [],
+          "expression": "root=>root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root",
+          "kind": "input-value-transformation-not-a-default",
+          "scope": "<module-or-anonymous>",
+          "scopeIdentity": {
+            "kind": "module",
+            "sourcePath": "scripts/docs-api-output-discovery.mjs"
+          },
+          "sourcePath": "scripts/docs-api-output-discovery.mjs"
+        }
+      ]
+    },
+    {
+      "source": "scripts/docs-event-contracts.mjs",
+      "section": "exits",
+      "removed": [
+        {
+          "conditions": [
+            {
+              "conditionExpression": "typeof bindings.qualifiedSourceVectorSha256 !== 'string'\n      || bindings.qualifiedSourceVectorSha256 !== census.sourceSetSha256",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+              "role": "else"
+            }
+          ],
+          "exceptionContext": [
+            {
+              "catchSource": {
+                "conditions": [
+                  {
+                    "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+                    "role": "else"
+                  }
+                ],
+                "expression": "catch (error) {\n    process.stderr.write(`${error.message}\\n`);\n    process.exitCode = 1;\n  }",
+                "scope": "<module-or-anonymous>",
+                "scopeIdentity": {
+                  "kind": "module",
+                  "sourcePath": "scripts/docs-event-contracts.mjs"
+                },
+                "sourcePath": "scripts/docs-event-contracts.mjs"
+              },
+              "finallySource": null,
+              "origin": "try",
+              "policy": "Lexical completion edge: catch receives throws from try only; a completion in finally may supersede the pending completion. No blanket exit status.",
+              "trySite": {
+                "conditions": [
+                  {
+                    "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+                    "role": "else"
+                  }
+                ],
+                "expression": "try {\n    const check = args.includes('--check');\n    const bindingPath = 'docs/config/event-reference-bindings.json';\n    const inventoryPath = 'docs/generated/inventory/event-contracts.json';\n    const pagePath = 'docs/site/reference/events.md';\n    const bindings = JSON.parse(fs.readFileSync(path.join(root, bindingPath), 'utf8'));\n    const census = collectEventSourceVector(root);\n    if (typeof bindings.qualifiedSourceVectorSha256 !== 'string'\n      || bindings.qualifiedSourceVectorSha256 !== census.sourceSetSha256) {\n      throw new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}`);\n    }\n    const inventory = collectBoundEventReference(root, census, bindings);\n    const outputs = new Map([\n      [inventoryPath, JSON.stringify(inventory, null, 2) + '\\n'],\n      [pagePath, replaceEventReference(fs.readFileSync(path.join(root, pagePath), 'utf8'), renderEventReference(inventory))],\n    ]);\n    // All discovery, semantic responsibility checks and rendering finish before\n    // any write. --check takes only this comparison branch and never creates a\n    // directory, temporary checkout or output file.\n    const stale = [...outputs].filter(([file, content]) => !fs.existsSync(path.join(root, file))\n      || fs.readFileSync(path.join(root, file), 'utf8') !== content).map(([file]) => file);\n    if (check && stale.length) throw new Error(`DOC_DRIFT_EVENT_CONTRACT:${stale.join(',')}`);\n    if (!check) for (const [file, content] of outputs) {\n      fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });\n      fs.writeFileSync(path.join(root, file), content);\n    }\n    process.stdout.write(`${JSON.stringify({ ok: true, mode: check ? 'check' : 'generate', families: inventory.families.length, sources: census.sources.length })}\\n`);\n  } catch (error) {\n    process.stderr.write(`${error.message}\\n`);\n    process.exitCode = 1;\n  }",
+                "scope": "<module-or-anonymous>",
+                "scopeIdentity": {
+                  "kind": "module",
+                  "sourcePath": "scripts/docs-event-contracts.mjs"
+                },
+                "sourcePath": "scripts/docs-event-contracts.mjs"
+              }
+            }
+          ],
+          "expression": "throw new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}`);",
+          "functionSource": null,
+          "kind": "source-throw-completion",
+          "policy": "Propagates through the bound call/Promise and lexical catch/finally edges; not an unconditional process exit or guessed numeric status.",
+          "scope": "<module-or-anonymous>",
+          "scopeIdentity": {
+            "kind": "module",
+            "sourcePath": "scripts/docs-event-contracts.mjs"
+          },
+          "sourcePath": "scripts/docs-event-contracts.mjs",
+          "valueExpression": "new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}`)"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "check && stale.length",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+              "role": "else"
+            }
+          ],
+          "exceptionContext": [
+            {
+              "catchSource": {
+                "conditions": [
+                  {
+                    "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+                    "role": "else"
+                  }
+                ],
+                "expression": "catch (error) {\n    process.stderr.write(`${error.message}\\n`);\n    process.exitCode = 1;\n  }",
+                "scope": "<module-or-anonymous>",
+                "scopeIdentity": {
+                  "kind": "module",
+                  "sourcePath": "scripts/docs-event-contracts.mjs"
+                },
+                "sourcePath": "scripts/docs-event-contracts.mjs"
+              },
+              "finallySource": null,
+              "origin": "try",
+              "policy": "Lexical completion edge: catch receives throws from try only; a completion in finally may supersede the pending completion. No blanket exit status.",
+              "trySite": {
+                "conditions": [
+                  {
+                    "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+                    "role": "else"
+                  }
+                ],
+                "expression": "try {\n    const check = args.includes('--check');\n    const bindingPath = 'docs/config/event-reference-bindings.json';\n    const inventoryPath = 'docs/generated/inventory/event-contracts.json';\n    const pagePath = 'docs/site/reference/events.md';\n    const bindings = JSON.parse(fs.readFileSync(path.join(root, bindingPath), 'utf8'));\n    const census = collectEventSourceVector(root);\n    if (typeof bindings.qualifiedSourceVectorSha256 !== 'string'\n      || bindings.qualifiedSourceVectorSha256 !== census.sourceSetSha256) {\n      throw new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}`);\n    }\n    const inventory = collectBoundEventReference(root, census, bindings);\n    const outputs = new Map([\n      [inventoryPath, JSON.stringify(inventory, null, 2) + '\\n'],\n      [pagePath, replaceEventReference(fs.readFileSync(path.join(root, pagePath), 'utf8'), renderEventReference(inventory))],\n    ]);\n    // All discovery, semantic responsibility checks and rendering finish before\n    // any write. --check takes only this comparison branch and never creates a\n    // directory, temporary checkout or output file.\n    const stale = [...outputs].filter(([file, content]) => !fs.existsSync(path.join(root, file))\n      || fs.readFileSync(path.join(root, file), 'utf8') !== content).map(([file]) => file);\n    if (check && stale.length) throw new Error(`DOC_DRIFT_EVENT_CONTRACT:${stale.join(',')}`);\n    if (!check) for (const [file, content] of outputs) {\n      fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });\n      fs.writeFileSync(path.join(root, file), content);\n    }\n    process.stdout.write(`${JSON.stringify({ ok: true, mode: check ? 'check' : 'generate', families: inventory.families.length, sources: census.sources.length })}\\n`);\n  } catch (error) {\n    process.stderr.write(`${error.message}\\n`);\n    process.exitCode = 1;\n  }",
+                "scope": "<module-or-anonymous>",
+                "scopeIdentity": {
+                  "kind": "module",
+                  "sourcePath": "scripts/docs-event-contracts.mjs"
+                },
+                "sourcePath": "scripts/docs-event-contracts.mjs"
+              }
+            }
+          ],
+          "expression": "throw new Error(`DOC_DRIFT_EVENT_CONTRACT:${stale.join(',')}`);",
+          "functionSource": null,
+          "kind": "source-throw-completion",
+          "policy": "Propagates through the bound call/Promise and lexical catch/finally edges; not an unconditional process exit or guessed numeric status.",
+          "scope": "<module-or-anonymous>",
+          "scopeIdentity": {
+            "kind": "module",
+            "sourcePath": "scripts/docs-event-contracts.mjs"
+          },
+          "sourcePath": "scripts/docs-event-contracts.mjs",
+          "valueExpression": "new Error(`DOC_DRIFT_EVENT_CONTRACT:${stale.join(',')}`)"
+        }
+      ],
+      "added": [
+        {
+          "conditions": [
+            {
+              "conditionExpression": "typeof bindings.qualifiedSourceVectorSha256 !== 'string'\n      || bindings.qualifiedSourceVectorSha256 !== census.sourceSetSha256",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+              "role": "else"
+            }
+          ],
+          "exceptionContext": [
+            {
+              "catchSource": {
+                "conditions": [
+                  {
+                    "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+                    "role": "else"
+                  }
+                ],
+                "expression": "catch (error) {\n    process.stderr.write(`${error.message}\\n`);\n    process.exitCode = 1;\n  }",
+                "scope": "<module-or-anonymous>",
+                "scopeIdentity": {
+                  "kind": "module",
+                  "sourcePath": "scripts/docs-event-contracts.mjs"
+                },
+                "sourcePath": "scripts/docs-event-contracts.mjs"
+              },
+              "finallySource": null,
+              "origin": "try",
+              "policy": "Lexical completion edge: catch receives throws from try only; a completion in finally may supersede the pending completion. No blanket exit status.",
+              "trySite": {
+                "conditions": [
+                  {
+                    "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+                    "role": "else"
+                  }
+                ],
+                "expression": "try {\n    const check = args.includes('--check');\n    const bindingPath = 'docs/config/event-reference-bindings.json';\n    const inventoryPath = 'docs/generated/inventory/event-contracts.json';\n    const pagePath = 'docs/site/reference/events.md';\n    const bindings = JSON.parse(fs.readFileSync(path.join(root, bindingPath), 'utf8'));\n    const census = collectEventSourceVector(root);\n    if (typeof bindings.qualifiedSourceVectorSha256 !== 'string'\n      || bindings.qualifiedSourceVectorSha256 !== census.sourceSetSha256) {\n      throw new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}; reader=${pagePath}`);\n    }\n    const inventory = collectBoundEventReference(root, census, bindings);\n    const outputs = new Map([\n      [inventoryPath, JSON.stringify(inventory, null, 2) + '\\n'],\n      [pagePath, replaceEventReference(fs.readFileSync(path.join(root, pagePath), 'utf8'), renderEventReference(inventory))],\n    ]);\n    // All discovery, semantic responsibility checks and rendering finish before\n    // any write. --check takes only this comparison branch and never creates a\n    // directory, temporary checkout or output file.\n    const stale = [...outputs].filter(([file, content]) => !fs.existsSync(path.join(root, file))\n      || fs.readFileSync(path.join(root, file), 'utf8') !== content).map(([file]) => file);\n    if (check && stale.length) throw new Error(`DOC_DRIFT_EVENT_CONTRACT:${stale.join(',')}`);\n    if (!check) for (const [file, content] of outputs) {\n      fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });\n      fs.writeFileSync(path.join(root, file), content);\n    }\n    process.stdout.write(`${JSON.stringify({ ok: true, mode: check ? 'check' : 'generate', families: inventory.families.length, sources: census.sources.length })}\\n`);\n  } catch (error) {\n    process.stderr.write(`${error.message}\\n`);\n    process.exitCode = 1;\n  }",
+                "scope": "<module-or-anonymous>",
+                "scopeIdentity": {
+                  "kind": "module",
+                  "sourcePath": "scripts/docs-event-contracts.mjs"
+                },
+                "sourcePath": "scripts/docs-event-contracts.mjs"
+              }
+            }
+          ],
+          "expression": "throw new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}; reader=${pagePath}`);",
+          "functionSource": null,
+          "kind": "source-throw-completion",
+          "policy": "Propagates through the bound call/Promise and lexical catch/finally edges; not an unconditional process exit or guessed numeric status.",
+          "scope": "<module-or-anonymous>",
+          "scopeIdentity": {
+            "kind": "module",
+            "sourcePath": "scripts/docs-event-contracts.mjs"
+          },
+          "sourcePath": "scripts/docs-event-contracts.mjs",
+          "valueExpression": "new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}; reader=${pagePath}`)"
+        },
+        {
+          "conditions": [
+            {
+              "conditionExpression": "check && stale.length",
+              "role": "then"
+            },
+            {
+              "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+              "role": "else"
+            }
+          ],
+          "exceptionContext": [
+            {
+              "catchSource": {
+                "conditions": [
+                  {
+                    "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+                    "role": "else"
+                  }
+                ],
+                "expression": "catch (error) {\n    process.stderr.write(`${error.message}\\n`);\n    process.exitCode = 1;\n  }",
+                "scope": "<module-or-anonymous>",
+                "scopeIdentity": {
+                  "kind": "module",
+                  "sourcePath": "scripts/docs-event-contracts.mjs"
+                },
+                "sourcePath": "scripts/docs-event-contracts.mjs"
+              },
+              "finallySource": null,
+              "origin": "try",
+              "policy": "Lexical completion edge: catch receives throws from try only; a completion in finally may supersede the pending completion. No blanket exit status.",
+              "trySite": {
+                "conditions": [
+                  {
+                    "conditionExpression": "args.some((arg) => arg !== '--check') || new Set(args).size !== args.length",
+                    "role": "else"
+                  }
+                ],
+                "expression": "try {\n    const check = args.includes('--check');\n    const bindingPath = 'docs/config/event-reference-bindings.json';\n    const inventoryPath = 'docs/generated/inventory/event-contracts.json';\n    const pagePath = 'docs/site/reference/events.md';\n    const bindings = JSON.parse(fs.readFileSync(path.join(root, bindingPath), 'utf8'));\n    const census = collectEventSourceVector(root);\n    if (typeof bindings.qualifiedSourceVectorSha256 !== 'string'\n      || bindings.qualifiedSourceVectorSha256 !== census.sourceSetSha256) {\n      throw new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}; reader=${pagePath}`);\n    }\n    const inventory = collectBoundEventReference(root, census, bindings);\n    const outputs = new Map([\n      [inventoryPath, JSON.stringify(inventory, null, 2) + '\\n'],\n      [pagePath, replaceEventReference(fs.readFileSync(path.join(root, pagePath), 'utf8'), renderEventReference(inventory))],\n    ]);\n    // All discovery, semantic responsibility checks and rendering finish before\n    // any write. --check takes only this comparison branch and never creates a\n    // directory, temporary checkout or output file.\n    const stale = [...outputs].filter(([file, content]) => !fs.existsSync(path.join(root, file))\n      || fs.readFileSync(path.join(root, file), 'utf8') !== content).map(([file]) => file);\n    if (check && stale.length) throw new Error(`DOC_DRIFT_EVENT_CONTRACT:${stale.join(',')}`);\n    if (!check) for (const [file, content] of outputs) {\n      fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });\n      fs.writeFileSync(path.join(root, file), content);\n    }\n    process.stdout.write(`${JSON.stringify({ ok: true, mode: check ? 'check' : 'generate', families: inventory.families.length, sources: census.sources.length })}\\n`);\n  } catch (error) {\n    process.stderr.write(`${error.message}\\n`);\n    process.exitCode = 1;\n  }",
+                "scope": "<module-or-anonymous>",
+                "scopeIdentity": {
+                  "kind": "module",
+                  "sourcePath": "scripts/docs-event-contracts.mjs"
+                },
+                "sourcePath": "scripts/docs-event-contracts.mjs"
+              }
+            }
+          ],
+          "expression": "throw new Error(`DOC_DRIFT_EVENT_CONTRACT:${stale.join(',')}`);",
+          "functionSource": null,
+          "kind": "source-throw-completion",
+          "policy": "Propagates through the bound call/Promise and lexical catch/finally edges; not an unconditional process exit or guessed numeric status.",
+          "scope": "<module-or-anonymous>",
+          "scopeIdentity": {
+            "kind": "module",
+            "sourcePath": "scripts/docs-event-contracts.mjs"
+          },
+          "sourcePath": "scripts/docs-event-contracts.mjs",
+          "valueExpression": "new Error(`DOC_DRIFT_EVENT_CONTRACT:${stale.join(',')}`)"
+        }
+      ]
+    }
+  ],
+  "semanticInterpretation": "Only6sections in3sources differ after custody/location normalization. Custody defaults1/branches3 + discoverybranches6 truthfully reflect prior independently qualified exact physical practicalReader root support. Exactly2newdelegations are input-value-transformation-not-a-default: reviewedPracticalReaderCompilerInput (5physicalpins+absence) and isReviewedPracticalReaderGraphRoot exactrootpredicate. No arbitrary root grant or new public invocation. Event2exits reflect reviewed correctreader suffix in throw/try context; catches, exit1, guards and no-write unchanged. Commands/options/positionals and supported reader meaning retained; source-only/delegated states unpromoted.",
+  "actualProducer": "Root normal generateNativeCliModel terminal0 with real Go1.26.5/hashlocked shfmt3.13.1; reviewer did not rerun generator or standalone CLI--check.",
+  "readerJudgment": "Prior bounded SOURCE/READER/QUALITY scope retained; no fresh journey/execution or whole code/API approval. Actual internal AST facts preserved, not hidden as hashes.",
+  "prospectiveAcceptedRecordImpactCount": 27,
+  "prospectiveAcceptedRecordImpacts": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "A912-11-deterministic-page-records-20261022",
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "MNT-014-whole-native-publication-examples-20261027",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "A99-11-whole-published-example-claims-20261027",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/generated/inventory/cli-surfaces.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/generated/inventory/cli-surfaces.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    },
+    {
+      "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/generated/inventory/cli-surfaces.json"
+      ]
+    },
+    {
+      "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/generated/inventory/cli-surfaces.json"
+      ]
+    },
+    {
+      "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "relevantPaths": [
+        "docs/generated/inventory/cli-surfaces.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ]
+    }
+  ],
+  "allowedNextAction": "Adopt EXACT successful native prospective bytes, bytejoin copy to native output, normalgovcohort generate/check and separately qualify actualminimalmapdelta; only actually hit accepted records preservation. No standalone CLI--check or new original acceptance inferred."
+}

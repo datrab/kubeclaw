@@ -1,0 +1,16 @@
+✔ QUA010 embedded-node-heredoc:change changes exact production extraction and restores it (207.471563ms)
+✔ QUA010 embedded-node-heredoc:remove changes exact production extraction and restores it (214.083653ms)
+✔ QUA010 inline-node-environment:change changes exact production extraction and restores it (400.165898ms)
+✔ QUA010 inline-node-environment:remove changes exact production extraction and restores it (336.278829ms)
+✔ QUA010 embedded-python-heredoc:change changes exact production extraction and restores it (252.669413ms)
+✔ QUA010 embedded-python-heredoc:remove changes exact production extraction and restores it (250.083917ms)
+✔ QUA010 embedded-yaml-javascript:change changes exact production extraction and restores it (126.820424ms)
+✔ QUA010 embedded-yaml-javascript:remove changes exact production extraction and restores it (186.361812ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2558.19219

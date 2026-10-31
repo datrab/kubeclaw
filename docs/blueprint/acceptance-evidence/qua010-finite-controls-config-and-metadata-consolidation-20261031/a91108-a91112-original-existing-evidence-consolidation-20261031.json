@@ -1,0 +1,300 @@
+{
+  "schemaVersion": 1,
+  "reviewer": "Independent /root/pub007_binding",
+  "mode": "Bounded original existing-evidence consolidation, no generator replay, audit expansion or repo mutation",
+  "sourceCandidate": "7839db0993315832dcb90ef9b29ca702a7d969bd",
+  "originalCriteria": [
+    {
+      "gate": "A911-08",
+      "citation": "docs/blueprint/AP09-acceptance-contract.md:208",
+      "text": "Generatoren sind deterministisch, besitzen einen read-only --check-Modus, ver\u00e4ndern dabei keine Datei und verwerfen stale Output bytegenau.",
+      "automaticFailure": "Ein Check regeneriert still oder akzeptiert semantisch veraltete Ausgabe."
+    },
+    {
+      "gate": "A911-12",
+      "citation": "docs/blueprint/AP09-acceptance-contract.md:212",
+      "text": "Ein unabh\u00e4ngiger Source-Auditor best\u00e4tigt den vollst\u00e4ndigen Suchraum und ein Maintainer reproduziert alle Generatoren aus sauberem Checkout ohne nicht deklarierte Werkzeuge.",
+      "automaticFailure": "Autorenselbstauskunft oder erfolgreicher aktueller Output gen\u00fcgt."
+    }
+  ],
+  "applicableAcceptedEvidence": [
+    {
+      "record": "MNT-014-whole-native-publication-examples-20261027",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "MNT-014"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "Complete published example responsibility only:177pages/813MarkdownIt blocks/28assets/205whole-source contracts and actual inline/prose regions. No peridentifier or hash-as-behavior award; complete independent disjoint content responsibilities and exact current deltas joined.",
+        "Retention SQL reuses exact successful private PostgreSQL18.6 CI40537386596/source511db8c7 assertion, including8cases/negative/restoration/cleanup. No production database, current effective retention policy, deployment or fresh normal-check DB run.",
+        "Original global receiver genuinely exits1 at DOCUMENTATION_READER_CI_PURPOSE_DRIFT: scripts/docs-publication.mjs. This is NEW publisher/CI/package qualification debt, not baseline-identical docsite-first failure. No current external-CI analysis seed, downstream API/source-role, global Source freshness or global receiver PASS; no purpose/profile/receipt pins rewritten."
+      ]
+    },
+    {
+      "record": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "MNT-015"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "MNT015 whole original owner/review maintenance duty only; no associated gate, MNT009/A91107/global API/every-field technical coverage or hosted approval enforcement award.",
+        "Maintenance routes compose native inventory identities, metadata parents, actual package/schema consumers and shared mandatory independent Source/Reader/Quality procedure. No fabricated per-symbol reviewer column, new framework, sixth registration or runtime lookup API.",
+        "Prompt-contract remains dependency-only, unregistered and without production consumer/capability/effect/lifecycle authority. Old five-registration bcf evidence/verification frame is retained; current library is separately source-qualified, not newly deployed."
+      ]
+    },
+    {
+      "record": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "MNT-008"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "Original MNT-008 only under AP09 acceptance contract sections1\u20133 and catalogue405. Not global A97-06/allAPI/internal-algorithm/store recovery completion, deployed upstream effective policy or arbitrary host/PVC/database discovery.",
+        "Source declarations, symbolic expressions, nullish constructor defaults, configured caller values and conditional native policy-comparison fixtures remain distinct. Expiry/admission/compaction/domain retirement/backup pruning/PVC requests do not grant general deletion, successful backup/restore or live cleanup.",
+        "Shared7994SourceLock/profile/custody purpose remains unchanged. Historical global API/tree/producer/source-purpose failures retained at original scope, not green or waived by local MNT-008 acceptance."
+      ]
+    },
+    {
+      "record": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "MNT-006"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "No A911 gate or whole A913-06/QUA-002 controlled-language acceptance is granted. Strict Source-unexposed whole language Reader remains separate and pending.",
+        "Static source contracts and local native tests do not prove live event delivery, external payloads, production deployment, replay/retention success or execution of quoted source definitions. Existing dated practical/runtime receipts remain unchanged.",
+        "Universal primary source-vector identity guard is a stop requiring semantic qualification, not automatic repinning or a new independent approval of every unrelated physical source file. Complete actual semantic role/declaration/schema/activation/call responsibilities are joined by original Source qualification."
+      ]
+    },
+    {
+      "record": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "MNT-005"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "Maintained source-bound families and representative owner/consumer links are not a finite vocabulary of arbitrary dependency messages, automatic universal source discovery, exhaustive call graph, or live execution/recovery proof.",
+        "Diagnostic text fences are unexecuted source constructions; local render/check commands only maintain documentation. Runtime sources remain unchanged from3a2546e3.",
+        "Historical Source/reader/native observations retain their exact bounds and exposure limits. Current independent topic-content review is not a fresh Source-unexposed whole A913 reader or new Astra-model execution."
+      ]
+    },
+    {
+      "record": "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "MNT-011"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "A fingerprint mismatch triggers scoped review, not diagnostic identity/cause/effect/recovery approval. Conservative unrelated source changes can also stop the guard.",
+        "Prior common catalogue Source/meaning/reader qualifications and unchanged generated pages reused; first NOT_READY reports and all old negative records preserved. No product runtime/live deployment or whole A913/QUA002 acceptance."
+      ]
+    },
+    {
+      "record": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "MNT-010"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "Fixture, retained and documentation schemas are still guarded without claiming activation; current-declaration status is source presence only. Dependency/build/cache/temp directories are outside the explicit owned-source selector.",
+        "Existing six TS-pipeline/stage controls and qualified schema/config/SDK/event reference meanings are reused at unchanged scope. Their Source and expected output paths are byte-exact to80786; no fresh control run or universal schema consumer audit is claimed."
+      ]
+    },
+    {
+      "record": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "MNT-004"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "Static source declarations and qualified producer control tests are not live product CLI, interpreter outcome, CI, runtime or deployment executions. Symbolic/default/conditional/caller status boundaries remain explicit.",
+        "Custom argparse parser_class/action/expanded factory shapes fail explicitly rather than inventing native parser behavior; current selected source membership is qualified and unsupported shapes are not silently accepted.",
+        "Non-author Source-exposed topical Reader and final integration, not a blind-reader or new Astra-model run. No QUA002/A91306, other original requirement or new gate acceptance."
+      ]
+    },
+    {
+      "record": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "requirements": [
+        "REF-003"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "No default global executable/API-output generation success or generic ToolSource/nativePython3.14 closure.",
+        "Fresh Reader is bounded documentation lookup, not browser layout/fullbootstrap proof; longtable/Studioexception friction retained.",
+        "All eight historical global finding identities/states and prior negative evidence remain; direct current configuration-domain facts do not rely on their unsupported generic inference."
+      ]
+    },
+    {
+      "record": "REF004-whole-supported-schemas-constraints-defaults-20261031",
+      "revision": "a54c0270bb37f2be1e93e87a16509b0b0aed4833",
+      "requirements": [
+        "REF-004"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "Fresh Reader is documentation lookup, not browser layout/fullbootstrap; dense hub and need for exact rawJSON branch/ref lookup retained.",
+        "Historical global A98-20261012-CANONICAL-REFLECTION-S4/S5 and all prior negatives remain unchanged; no generic acquisition/globalAPI campaign or new gate."
+      ]
+    },
+    {
+      "record": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "requirements": [
+        "MNT-003"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "No default global configuration/API generation, generic ToolSource or native Python3.14 closure.",
+        "Fresh Reader is bounded documentation lookup/planning, not practical artificial source mutation, fresh install, browser build or fullbootstrap; those gates remain separate.",
+        "Historical global negatives remain unchanged; no MNT001/MNT009/GOV or new gate award."
+      ]
+    },
+    {
+      "record": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "requirements": [
+        "GOV-002",
+        "MNT-001",
+        "MNT-009"
+      ],
+      "priorSourceReaderQuality": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "applicability": "Reuse only original selected generator/source/parser/owner/Reader responsibility; no associated gate award inferred.",
+      "criticalLimits": [
+        "No default global API/ToolSource or native Python3.14 closure; no schema annotation promoted to actual consumer default.",
+        "No runtime/Helm/provider/browser/deployment execution, telemetry, package install, or fresh bootstrap award.",
+        "Existing copied dependencies and canonical generated-contract preparation are not fresh locked installation; clean source-first and prepared publication phases remain distinct."
+      ]
+    }
+  ],
+  "actualReusableTechnicalResults": [
+    {
+      "evidence": "a91108-20261025/run0851/NEXT.md + provider-route-result.json/error-route-result.json",
+      "supports": "Two deterministic source-owned provider/error parser generation routes; baseline/stale/restored checks preserve complete fixture bytes. Original independent corrected reviews apply only their exact source/history scope.",
+      "notSupports": "Not entire generator universe, dependency-clean standalone checkout, untracked/syscall no-write guarantee or failed global receiver success."
+    },
+    {
+      "evidence": "a91108-20261025/run0911/\u2026 run0931/\u2026 run0941/\u2026 run1001/\u2026 run1011/NEXT.md",
+      "supports": "Additional schema/operator/workflow/AP08/governance/platform route acquisitions and concrete platform ordering correction retained at exact independently qualified bounds.",
+      "notSupports": "Original combined negative assessment or historical dependency/provenance findings cannot be recast as whole PASS."
+    },
+    {
+      "evidence": "qua010-shared-native-config-comparator-20261031.json",
+      "supports": "Current SAME supported four-output selected configuration baseline0, output-only stale1/no-repair, restored0; qualified232scalar source/coordinate successors.",
+      "notSupports": "Default globalAPI generator success, universal no-filesystem-syscall proof or new all-generator clean-checkout exercise."
+    },
+    {
+      "evidence": "qua010-current-product-event-acr-20261031.json + supported event generation/check receipts",
+      "supports": "Actual current14families complete source custody + product A/C/R refusal with correctreader and byte-exact output preservation/restoration.",
+      "notSupports": "No whole-runtime event or all-generator clean-checkout execution."
+    },
+    {
+      "evidence": "qua010-cli-native-successor-qualification-20261031.json + qua010-native-cli-output-adoption-20261031.json",
+      "supports": "Actual maintained native CLI producer terminal0 with real locked Go1.26.5/shfmt3.13.1, exactcopy/hashjoin and complete872source model; finite source meaning/custody qualified.",
+      "notSupports": "Standalone current CLI --check was not executed; no assertion it was. Earlier wrongtool failures remain failures. Successful currentoutput alone cannot establish gate12."
+    },
+    {
+      "evidence": "GOV002-MNT001-MNT009 accepted whole original record",
+      "supports": "Independent bounded source-space/authority matrix and practical maintainer baseline\u2192summary mutation\u2192refusal\u2192documented restoration with current checks; declaredtools, exactphysical input source/caller purposes preserved.",
+      "notSupports": "Record explicitly excludes freshlockedinstall/fullbootstrap/globalToolSource/defaultAPI; does not claim maintainer reproduced ALL generators."
+    }
+  ],
+  "decisions": [
+    {
+      "gate": "A911-08",
+      "verdict": "NOT_READY_ORIGINAL_WHOLE_SCOPE_UNMET",
+      "reason": "Strong separately applicable deterministic/read-only/stale receipts exist and should be reused without blanket reruns. They do not establish original complete distinct-generator zero-write responsibility. Historical whole-feasibility actual --check temp writes and failed default globalreceiver are expressly retained, not overridden by selected-route normal generation/byte snapshots. No evidence found that independently disposes the exact failed whole check path at current scope.",
+      "finiteUncoveredCase": "Original whole receiver --check zero-write case previously failed through temp writes; current qualified selected routes do not repair/adjudicate that same whole path. Existing normal docs-inventory CLI producer current0 is not another check receipt.",
+      "nextAction": "Read exact retained original feasibility/receiver trace and identify its specific remaining temp-write call/owning check boundary; reuse unchanged route receipts. Only if finite samepath read-only correction/control can be executed within originalscope, run that missing case. Do not begin new per-generator campaign or duplicate current fullnativeCLI just to relabel success.",
+      "owner": "Original check/generator owner; root sole integrator",
+      "resume": "Exact same failing whole-path no-write disposition and independently qualified missing distinct-route result, not requirement counts."
+    },
+    {
+      "gate": "A911-12",
+      "verdict": "NOT_READY_ORIGINAL_MAINTAINER_AND_SEARCHSPACE_UNMET",
+      "reason": "Accepted GOV/MNT/REF evidence establishes finite complete authority/source/topic scopes, not universal generic ToolSource/full default generator searchspace. Maintainer evidence explicitly distinguishes existing copied dependencies/prepared build from fresh installation; more importantly it exercises selected documented generators, not all original generators. Actual default globalAPI path remains unsuccessful/unawarded. Declared locked tools fix current CLI prerequisite honestly but do not retroactively prove clean-checkout allgenerator reproduction.",
+      "finiteUncoveredCase": "No retained actual independent maintainer terminal receipt reproducing the remaining original default global configuration/API generator from clean sourcecheckout with declared tools and no unsupported source-purpose boundary. Existing unresolved source-auditor findings/reports have not been shown independently closed at whole assigned scope.",
+      "nextAction": "Use existing original Source finding/owner ledger to resolve only named unqualified defaultAPI/whole-searchspace boundary before maintainer repeats that exact missing generator; reuse successful selected-route maintainer evidence and already declaredGo/shfmt receipts. No new generic audit/bootstrap campaign.",
+      "owner": "Original defaultAPI/ToolSource owner plus independent maintainer/evidence custodian",
+      "resume": "Exact original Source dispositions available/qualified and missing clean-checkout maintainer generator result actually terminal0."
+    }
+  ],
+  "historicalNegatives": [
+    "a91108-20261025/run0851/result.json originalreceiver failure byteimmutable is NOT successful generation/stale proof",
+    "a91108-20261025/run0851/original-report-access.json ENOENT for original two reports with exactexpectedhashes remains originalbounded evidence dependency; no invented restoredreport",
+    "a91108-20261025/run1011/NEXT.md preserves deploy.sh maintainedSources provenance and negative combinedassessment; do not treat its narrow correctedcode review as globalPASS",
+    "current-work.json wholefeasibility453ff87e actual --check tempwrites retained",
+    "Current pending7839 normalbuild not recorded as completed here; only actualterminal outcome may support later integration"
+  ],
+  "acceptanceGranted": false,
+  "newGateIds": [],
+  "newRequirementIds": [],
+  "noRepoMutation": true
+}

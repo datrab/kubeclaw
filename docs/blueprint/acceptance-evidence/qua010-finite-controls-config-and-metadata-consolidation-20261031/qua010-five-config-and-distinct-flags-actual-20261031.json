@@ -1,0 +1,589 @@
+{
+  "at": "2026-10-31T20:19:23.529147+00:00",
+  "mode": "OWNED ISOLATED exact current product source fixture; strict supported configuration-reference-only native check, not defaultAPI/runtime success",
+  "fixtureRoot": "/home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031",
+  "sourceRevision": "9a57ddc51e5b919f1add0da1bf2a17a4b69d445e",
+  "copiedCurrentTrackedFiles": 6771,
+  "nodeModules": "symlink to existing actual installed dependencies",
+  "canonicalObserverSync": {
+    "exitCode": 0,
+    "output": ""
+  },
+  "cases": [
+    {
+      "name": "helm-field:add",
+      "source": "charts/kubeclaw/values.yaml",
+      "readerTarget": "docs/site/reference/helm-values.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa",
+      "mutatedSourceSha256": "5e1164265a6a9e743c53ede1d126ccd43600dda80b09cedcbfa779f9e9260e52",
+      "native": {
+        "label": "helm-field:add",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 30.23277791100554,
+        "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: CONFIGURATION_FAMILY_SOURCE_IDENTITY: charts/kubeclaw/values.yaml\n+ actual - expected\n\n+ '5e1164265a6a9e743c53ede1d126ccd43600dda80b09cedcbfa779f9e9260e52'\n- '2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa'\n\n    at buildConfigurationFamilyReference (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10335:12)\n    at buildConfigurationInventories (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10410:63)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10443:37\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '5e1164265a6a9e743c53ede1d126ccd43600dda80b09cedcbfa779f9e9260e52',\n  expected: '2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "RELATED_CONFIGURATION_SOURCE_AUTHORITY_DISPOSITION",
+      "sourceByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": false,
+      "narrowOriginalCiCatch": true,
+      "outputsByteExactRestored": true,
+      "maintainedReaderProof": {
+        "family": "deployment-values",
+        "route": "[Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md)",
+        "canonicalPage": "docs/site/reference/helm-values.md",
+        "owner": "platform-operations",
+        "checks": [
+          "npm run docs:inventory:local-helm:check",
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "environment-setting:add",
+      "source": "scripts/deploy.sh",
+      "readerTarget": "docs/site/reference/environment-variables.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "mutatedSourceSha256": "87683deb9122f5c1d79cb9c887380c8a558a03dac23956880f55284571617065",
+      "native": {
+        "label": "environment-setting:add",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 35.604604311985895,
+        "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: API_PRODUCT_ADAPTER_RECIPE_DRIFT: scripts/deploy.sh; actual structured operation differs from the adapter recipe\n+ actual - expected\n... Skipped lines\n\n  {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n...\n      'esac',\n+     ':',\n+     '${AP98_MUTATION_ENV:?Set AP98_MUTATION_ENV for the mutation fixture}'\n    ]\n  }\n\n    at assertProducerAdapterAuthority (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-output-discovery.mjs:1655:12)\n    at discoverExternalChartApiOutputs (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-output-discovery.mjs:7276:3)\n    at loadCustomResourceSchemas (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-schema-authorities.mjs:161:36)\n    at apiFieldSchemaAuthority (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-schema-authorities.mjs:285:20)\n    at yamlSemantics (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:1914:20)\n    at yamlFields (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2628:478)\n    at yamlFields (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2766:7)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2892:47\n    at Array.map (<anonymous>)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2877:28 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n      'pipefail',\n      'SCRIPT_DIR=$(cd $',\n      '(',\n      'dirname',\n      '${BASH_SOURCE[0]}',\n      ')',\n      ' && pwd)',\n      'REPO_DIR=$(dirname $SCRIPT_DIR)',\n      'CHART_DIR=$REPO_DIR/charts/kubeclaw',\n      'VALUES_DIR=$REPO_DIR/my-values',\n      'INFRA_DIR=$VALUES_DIR/infra',\n      'POSTGRESQL_RELEASE=${POSTGRESQL_RELEASE:-postgresql}',\n      'POSTGRESQL_VALUES_FILE=${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}',\n      'REDIS_RELEASE=${REDIS_RELEASE:-redis}',\n      'REDIS_VALUES_FILE=${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}',\n      'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE=/etc/kubeclaw/production-receipt-authority.pub',\n      'NAMESPACE_WAS_SET=${NAMESPACE+x}',\n      'NAMESPACE=${NAMESPACE:-kubeclaw}',\n      'TAILSCALE_OPERATOR_NAMESPACE=${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}',\n      'TAILSCALE_OPERATOR_RELEASE=${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}',\n      'TAILSCALE_OAUTH_SECRET_NAME=${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}',\n      'TAILSCALE_VALUES_FILE=${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}',\n      'KUBECLAW_WORKSPACE_PROMPT=${KUBECLAW_WORKSPACE_PROMPT:-auto}',\n      'KUBECLAW_WORKSPACE_NAMESPACE_FILE=${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}',\n      'KUBECLAW_DEPLOY_POSTGRESQL=${KUBECLAW_DEPLOY_POSTGRESQL:-true}',\n      'KUBECLAW_DEPLOY_LITELLM=${KUBECLAW_DEPLOY_LITELLM:-true}',\n      'LITELLM_NODE_PORT=${LITELLM_NODE_PORT:-30050}',\n      'KUBECLAW_DEPLOY_SPIRE=${KUBECLAW_DEPLOY_SPIRE:-true}',\n      'SPIFFE_HELM_REPO=${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}',\n      'SPIRE_CRDS_CHART_VERSION=${SPIRE_CRDS_CHART_VERSION:-0.6.0}',\n      'SPIRE_CHART_VERSION=${SPIRE_CHART_VERSION:-0.30.0}',\n      'SPIRE_VALUES_FILE=${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}',\n      'KUBECLAW_DEPLOY_PRISM=${KUBECLAW_DEPLOY_PRISM:-true}',\n      'PRISM_NAMESPACE=${PRISM_NAMESPACE:-$NAMESPACE}',\n      'PRISM_RELEASE=${PRISM_RELEASE:-prism}',\n      'PRISM_VALUES_OVERLAY=${PRISM_VALUES_FILE:-}',\n      'PRISM_VALUES_FILE=$REPO_DIR/releases/values/prism.yaml',\n      'PRISM_AGENT_VALUES_OVERLAY=${PRISM_AGENT_VALUES_FILE:-}',\n      'PRISM_AGENT_VALUES_FILE=$REPO_DIR/releases/values/prism-agent.yaml',\n      'PRISM_HELM_TIMEOUT=${PRISM_HELM_TIMEOUT:-45m}',\n      'PRISM_ROLLOUT_TIMEOUT=${PRISM_ROLLOUT_TIMEOUT:-45m}',\n      'PRISM_CONTROL_IMAGE_REPOSITORY=${PRISM_CONTROL_IMAGE_REPOSITORY:-}',\n      'PRISM_CONTROL_IMAGE_DIGEST=${PRISM_CONTROL_IMAGE_DIGEST:-}',\n      'PRISM_STUDIO_IMAGE_REPOSITORY=${PRISM_STUDIO_IMAGE_REPOSITORY:-}',\n      'PRISM_STUDIO_IMAGE_DIGEST=${PRISM_STUDIO_IMAGE_DIGEST:-}',\n      'PRISM_WORKER_IMAGE_REPOSITORY=${PRISM_WORKER_IMAGE_REPOSITORY:-}',\n      'PRISM_WORKER_IMAGE_DIGEST=${PRISM_WORKER_IMAGE_DIGEST:-}',\n      'PRISM_INGESTION_IMAGE_REPOSITORY=${PRISM_INGESTION_IMAGE_REPOSITORY:-}',\n      'PRISM_INGESTION_IMAGE_DIGEST=${PRISM_INGESTION_IMAGE_DIGEST:-}',\n      'PRISM_RUNTIME_SECRET_NAME=${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}',\n      'PRISM_DATABASE_SECRET_NAME=${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}',\n      'PRISM_IMAGE_PULL_SECRET_NAME=${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}',\n      'ALLOW_PARTIAL_INFRA=${ALLOW_PARTIAL_INFRA:-false}',\n      'AGENT_HELM_TIMEOUT=${AGENT_HELM_TIMEOUT:-45m}',\n      'AGENT_ROLLOUT_TIMEOUT=${AGENT_ROLLOUT_TIMEOUT:-45m}',\n      'CODE_BUNDLE_RELEASE_TAG=${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}',\n      'CODE_BUNDLE_PREFLIGHT_SKIP=${CODE_BUNDLE_PREFLIGHT_SKIP:-false}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE=${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT=${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}',\n      'export',\n      'NAMESPACE',\n      'export',\n      'KUBECLAW_DEPLOY_POSTGRESQL',\n      'export',\n      'KUBECLAW_DEPLOY_LITELLM',\n      'export',\n      'LITELLM_NODE_PORT',\n      'export',\n      'KUBECLAW_DEPLOY_SPIRE',\n      'export',\n      'KUBECLAW_DEPLOY_PRISM',\n      'PRISM_NAMESPACE',\n      'PRISM_RELEASE',\n      'PRISM_VALUES_FILE',\n      'PRISM_AGENT_VALUES_FILE',\n      'export',\n      'ALLOW_PARTIAL_INFRA',\n      'RED=\\\\033[0;31m',\n      'GREEN=\\\\033[0;32m',\n      'YELLOW=\\\\033[1;33m',\n      'BLUE=\\\\033[0;34m',\n      'NC=\\\\033[0m',\n      'log',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${GREEN}[\u2713]${NC} $1',\n      ';',\n      '}',\n      'warn',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${YELLOW}[!]${NC} $1',\n      ';',\n      '}',\n      ... 10127 more items\n    ]\n  },\n  expected: {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n      'pipefail',\n      'SCRIPT_DIR=$(cd $',\n      '(',\n      'dirname',\n      '${BASH_SOURCE[0]}',\n      ')',\n      ' && pwd)',\n      'REPO_DIR=$(dirname $SCRIPT_DIR)',\n      'CHART_DIR=$REPO_DIR/charts/kubeclaw',\n      'VALUES_DIR=$REPO_DIR/my-values',\n      'INFRA_DIR=$VALUES_DIR/infra',\n      'POSTGRESQL_RELEASE=${POSTGRESQL_RELEASE:-postgresql}',\n      'POSTGRESQL_VALUES_FILE=${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}',\n      'REDIS_RELEASE=${REDIS_RELEASE:-redis}',\n      'REDIS_VALUES_FILE=${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}',\n      'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE=/etc/kubeclaw/production-receipt-authority.pub',\n      'NAMESPACE_WAS_SET=${NAMESPACE+x}',\n      'NAMESPACE=${NAMESPACE:-kubeclaw}',\n      'TAILSCALE_OPERATOR_NAMESPACE=${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}',\n      'TAILSCALE_OPERATOR_RELEASE=${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}',\n      'TAILSCALE_OAUTH_SECRET_NAME=${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}',\n      'TAILSCALE_VALUES_FILE=${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}',\n      'KUBECLAW_WORKSPACE_PROMPT=${KUBECLAW_WORKSPACE_PROMPT:-auto}',\n      'KUBECLAW_WORKSPACE_NAMESPACE_FILE=${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}',\n      'KUBECLAW_DEPLOY_POSTGRESQL=${KUBECLAW_DEPLOY_POSTGRESQL:-true}',\n      'KUBECLAW_DEPLOY_LITELLM=${KUBECLAW_DEPLOY_LITELLM:-true}',\n      'LITELLM_NODE_PORT=${LITELLM_NODE_PORT:-30050}',\n      'KUBECLAW_DEPLOY_SPIRE=${KUBECLAW_DEPLOY_SPIRE:-true}',\n      'SPIFFE_HELM_REPO=${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}',\n      'SPIRE_CRDS_CHART_VERSION=${SPIRE_CRDS_CHART_VERSION:-0.6.0}',\n      'SPIRE_CHART_VERSION=${SPIRE_CHART_VERSION:-0.30.0}',\n      'SPIRE_VALUES_FILE=${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}',\n      'KUBECLAW_DEPLOY_PRISM=${KUBECLAW_DEPLOY_PRISM:-true}',\n      'PRISM_NAMESPACE=${PRISM_NAMESPACE:-$NAMESPACE}',\n      'PRISM_RELEASE=${PRISM_RELEASE:-prism}',\n      'PRISM_VALUES_OVERLAY=${PRISM_VALUES_FILE:-}',\n      'PRISM_VALUES_FILE=$REPO_DIR/releases/values/prism.yaml',\n      'PRISM_AGENT_VALUES_OVERLAY=${PRISM_AGENT_VALUES_FILE:-}',\n      'PRISM_AGENT_VALUES_FILE=$REPO_DIR/releases/values/prism-agent.yaml',\n      'PRISM_HELM_TIMEOUT=${PRISM_HELM_TIMEOUT:-45m}',\n      'PRISM_ROLLOUT_TIMEOUT=${PRISM_ROLLOUT_TIMEOUT:-45m}',\n      'PRISM_CONTROL_IMAGE_REPOSITORY=${PRISM_CONTROL_IMAGE_REPOSITORY:-}',\n      'PRISM_CONTROL_IMAGE_DIGEST=${PRISM_CONTROL_IMAGE_DIGEST:-}',\n      'PRISM_STUDIO_IMAGE_REPOSITORY=${PRISM_STUDIO_IMAGE_REPOSITORY:-}',\n      'PRISM_STUDIO_IMAGE_DIGEST=${PRISM_STUDIO_IMAGE_DIGEST:-}',\n      'PRISM_WORKER_IMAGE_REPOSITORY=${PRISM_WORKER_IMAGE_REPOSITORY:-}',\n      'PRISM_WORKER_IMAGE_DIGEST=${PRISM_WORKER_IMAGE_DIGEST:-}',\n      'PRISM_INGESTION_IMAGE_REPOSITORY=${PRISM_INGESTION_IMAGE_REPOSITORY:-}',\n      'PRISM_INGESTION_IMAGE_DIGEST=${PRISM_INGESTION_IMAGE_DIGEST:-}',\n      'PRISM_RUNTIME_SECRET_NAME=${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}',\n      'PRISM_DATABASE_SECRET_NAME=${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}',\n      'PRISM_IMAGE_PULL_SECRET_NAME=${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}',\n      'ALLOW_PARTIAL_INFRA=${ALLOW_PARTIAL_INFRA:-false}',\n      'AGENT_HELM_TIMEOUT=${AGENT_HELM_TIMEOUT:-45m}',\n      'AGENT_ROLLOUT_TIMEOUT=${AGENT_ROLLOUT_TIMEOUT:-45m}',\n      'CODE_BUNDLE_RELEASE_TAG=${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}',\n      'CODE_BUNDLE_PREFLIGHT_SKIP=${CODE_BUNDLE_PREFLIGHT_SKIP:-false}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE=${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT=${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}',\n      'export',\n      'NAMESPACE',\n      'export',\n      'KUBECLAW_DEPLOY_POSTGRESQL',\n      'export',\n      'KUBECLAW_DEPLOY_LITELLM',\n      'export',\n      'LITELLM_NODE_PORT',\n      'export',\n      'KUBECLAW_DEPLOY_SPIRE',\n      'export',\n      'KUBECLAW_DEPLOY_PRISM',\n      'PRISM_NAMESPACE',\n      'PRISM_RELEASE',\n      'PRISM_VALUES_FILE',\n      'PRISM_AGENT_VALUES_FILE',\n      'export',\n      'ALLOW_PARTIAL_INFRA',\n      'RED=\\\\033[0;31m',\n      'GREEN=\\\\033[0;32m',\n      'YELLOW=\\\\033[1;33m',\n      'BLUE=\\\\033[0;34m',\n      'NC=\\\\033[0m',\n      'log',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${GREEN}[\u2713]${NC} $1',\n      ';',\n      '}',\n      'warn',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${YELLOW}[!]${NC} $1',\n      ';',\n      '}',\n      ... 10125 more items\n    ]\n  },\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "RELATED_CHANGED_SCRIPT_STRUCTURED_RECIPE_DISPOSITION",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check runs after finite cases, not ten unchanged fullscope reruns"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": false,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "process-environment",
+        "route": "[Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md)",
+        "canonicalPage": "docs/site/reference/environment-variables.md",
+        "owner": "platform-operations",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "secret-setting:add",
+      "source": "my-values/setup-secrets.sh",
+      "readerTarget": "docs/site/reference/secrets.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "d417ee6bb8f6ba1008ad077f7cb4bf6172891aa9d8753681701aad4697e1834c",
+      "mutatedSourceSha256": "9444a7ca6a31b57a33c1ef851b9d863cddad51c776b86c609da371e7eaa0b14d",
+      "native": {
+        "label": "secret-setting:add",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 153.74032929097302,
+        "output": "file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:9824\n    throw new Error(`CONFIG_SEMANTIC_GAP: ${diagnostics.join(' ')} `);\n          ^\n\nError: CONFIG_SEMANTIC_GAP: Secret declarations or references lack maintained operator authority: declared-keys-in-script:ap98-mutation::ap98MutationKey:my-values/setup-secrets.sh:<shell function main>. Expected authority: purpose, namespace, keys, optionality, producer, consumer, rotation owner and method, and failure symptom. \n    at buildRuntimeInputInventory (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:9824:11)\n    at buildConfigurationFamilyReference (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10355:19)\n    at buildConfigurationInventories (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10410:63)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10443:37\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5)\n\nNode.js v24.22.1\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "ACTUAL_NEW_SECRET_OPERATOR_AUTHORITY_SEMANTIC_REFUSAL",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check runs after finite cases, not ten unchanged fullscope reruns"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": true,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "process-environment",
+        "route": "[Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md)",
+        "canonicalPage": "docs/site/reference/secrets.md",
+        "owner": "platform-security",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "script-flag:add",
+      "source": "scripts/deploy.sh",
+      "readerTarget": "docs/site/reference/cli.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "mutatedSourceSha256": "5c3970885c9da9f2cb59ac8c9b1e70ae103c6870f0ffa3a736c306169c1001f2",
+      "native": {
+        "label": "script-flag:add",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 36.044633853947744,
+        "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: API_PRODUCT_ADAPTER_RECIPE_DRIFT: scripts/deploy.sh; actual structured operation differs from the adapter recipe\n+ actual - expected\n... Skipped lines\n\n  {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n...\n      '--with-code',\n+     '|',\n+     '--ap98-mutation',\n      ')',\n      'with_code=1',\n      ';;',\n      '*',\n      ')',\n\n    at assertProducerAdapterAuthority (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-output-discovery.mjs:1655:12)\n    at discoverExternalChartApiOutputs (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-output-discovery.mjs:7276:3)\n    at loadCustomResourceSchemas (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-schema-authorities.mjs:161:36)\n    at apiFieldSchemaAuthority (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-schema-authorities.mjs:285:20)\n    at yamlSemantics (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:1914:20)\n    at yamlFields (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2628:478)\n    at yamlFields (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2766:7)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2892:47\n    at Array.map (<anonymous>)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2877:28 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n      'pipefail',\n      'SCRIPT_DIR=$(cd $',\n      '(',\n      'dirname',\n      '${BASH_SOURCE[0]}',\n      ')',\n      ' && pwd)',\n      'REPO_DIR=$(dirname $SCRIPT_DIR)',\n      'CHART_DIR=$REPO_DIR/charts/kubeclaw',\n      'VALUES_DIR=$REPO_DIR/my-values',\n      'INFRA_DIR=$VALUES_DIR/infra',\n      'POSTGRESQL_RELEASE=${POSTGRESQL_RELEASE:-postgresql}',\n      'POSTGRESQL_VALUES_FILE=${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}',\n      'REDIS_RELEASE=${REDIS_RELEASE:-redis}',\n      'REDIS_VALUES_FILE=${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}',\n      'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE=/etc/kubeclaw/production-receipt-authority.pub',\n      'NAMESPACE_WAS_SET=${NAMESPACE+x}',\n      'NAMESPACE=${NAMESPACE:-kubeclaw}',\n      'TAILSCALE_OPERATOR_NAMESPACE=${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}',\n      'TAILSCALE_OPERATOR_RELEASE=${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}',\n      'TAILSCALE_OAUTH_SECRET_NAME=${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}',\n      'TAILSCALE_VALUES_FILE=${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}',\n      'KUBECLAW_WORKSPACE_PROMPT=${KUBECLAW_WORKSPACE_PROMPT:-auto}',\n      'KUBECLAW_WORKSPACE_NAMESPACE_FILE=${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}',\n      'KUBECLAW_DEPLOY_POSTGRESQL=${KUBECLAW_DEPLOY_POSTGRESQL:-true}',\n      'KUBECLAW_DEPLOY_LITELLM=${KUBECLAW_DEPLOY_LITELLM:-true}',\n      'LITELLM_NODE_PORT=${LITELLM_NODE_PORT:-30050}',\n      'KUBECLAW_DEPLOY_SPIRE=${KUBECLAW_DEPLOY_SPIRE:-true}',\n      'SPIFFE_HELM_REPO=${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}',\n      'SPIRE_CRDS_CHART_VERSION=${SPIRE_CRDS_CHART_VERSION:-0.6.0}',\n      'SPIRE_CHART_VERSION=${SPIRE_CHART_VERSION:-0.30.0}',\n      'SPIRE_VALUES_FILE=${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}',\n      'KUBECLAW_DEPLOY_PRISM=${KUBECLAW_DEPLOY_PRISM:-true}',\n      'PRISM_NAMESPACE=${PRISM_NAMESPACE:-$NAMESPACE}',\n      'PRISM_RELEASE=${PRISM_RELEASE:-prism}',\n      'PRISM_VALUES_OVERLAY=${PRISM_VALUES_FILE:-}',\n      'PRISM_VALUES_FILE=$REPO_DIR/releases/values/prism.yaml',\n      'PRISM_AGENT_VALUES_OVERLAY=${PRISM_AGENT_VALUES_FILE:-}',\n      'PRISM_AGENT_VALUES_FILE=$REPO_DIR/releases/values/prism-agent.yaml',\n      'PRISM_HELM_TIMEOUT=${PRISM_HELM_TIMEOUT:-45m}',\n      'PRISM_ROLLOUT_TIMEOUT=${PRISM_ROLLOUT_TIMEOUT:-45m}',\n      'PRISM_CONTROL_IMAGE_REPOSITORY=${PRISM_CONTROL_IMAGE_REPOSITORY:-}',\n      'PRISM_CONTROL_IMAGE_DIGEST=${PRISM_CONTROL_IMAGE_DIGEST:-}',\n      'PRISM_STUDIO_IMAGE_REPOSITORY=${PRISM_STUDIO_IMAGE_REPOSITORY:-}',\n      'PRISM_STUDIO_IMAGE_DIGEST=${PRISM_STUDIO_IMAGE_DIGEST:-}',\n      'PRISM_WORKER_IMAGE_REPOSITORY=${PRISM_WORKER_IMAGE_REPOSITORY:-}',\n      'PRISM_WORKER_IMAGE_DIGEST=${PRISM_WORKER_IMAGE_DIGEST:-}',\n      'PRISM_INGESTION_IMAGE_REPOSITORY=${PRISM_INGESTION_IMAGE_REPOSITORY:-}',\n      'PRISM_INGESTION_IMAGE_DIGEST=${PRISM_INGESTION_IMAGE_DIGEST:-}',\n      'PRISM_RUNTIME_SECRET_NAME=${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}',\n      'PRISM_DATABASE_SECRET_NAME=${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}',\n      'PRISM_IMAGE_PULL_SECRET_NAME=${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}',\n      'ALLOW_PARTIAL_INFRA=${ALLOW_PARTIAL_INFRA:-false}',\n      'AGENT_HELM_TIMEOUT=${AGENT_HELM_TIMEOUT:-45m}',\n      'AGENT_ROLLOUT_TIMEOUT=${AGENT_ROLLOUT_TIMEOUT:-45m}',\n      'CODE_BUNDLE_RELEASE_TAG=${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}',\n      'CODE_BUNDLE_PREFLIGHT_SKIP=${CODE_BUNDLE_PREFLIGHT_SKIP:-false}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE=${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT=${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}',\n      'export',\n      'NAMESPACE',\n      'export',\n      'KUBECLAW_DEPLOY_POSTGRESQL',\n      'export',\n      'KUBECLAW_DEPLOY_LITELLM',\n      'export',\n      'LITELLM_NODE_PORT',\n      'export',\n      'KUBECLAW_DEPLOY_SPIRE',\n      'export',\n      'KUBECLAW_DEPLOY_PRISM',\n      'PRISM_NAMESPACE',\n      'PRISM_RELEASE',\n      'PRISM_VALUES_FILE',\n      'PRISM_AGENT_VALUES_FILE',\n      'export',\n      'ALLOW_PARTIAL_INFRA',\n      'RED=\\\\033[0;31m',\n      'GREEN=\\\\033[0;32m',\n      'YELLOW=\\\\033[1;33m',\n      'BLUE=\\\\033[0;34m',\n      'NC=\\\\033[0m',\n      'log',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${GREEN}[\u2713]${NC} $1',\n      ';',\n      '}',\n      'warn',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${YELLOW}[!]${NC} $1',\n      ';',\n      '}',\n      ... 10127 more items\n    ]\n  },\n  expected: {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n      'pipefail',\n      'SCRIPT_DIR=$(cd $',\n      '(',\n      'dirname',\n      '${BASH_SOURCE[0]}',\n      ')',\n      ' && pwd)',\n      'REPO_DIR=$(dirname $SCRIPT_DIR)',\n      'CHART_DIR=$REPO_DIR/charts/kubeclaw',\n      'VALUES_DIR=$REPO_DIR/my-values',\n      'INFRA_DIR=$VALUES_DIR/infra',\n      'POSTGRESQL_RELEASE=${POSTGRESQL_RELEASE:-postgresql}',\n      'POSTGRESQL_VALUES_FILE=${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}',\n      'REDIS_RELEASE=${REDIS_RELEASE:-redis}',\n      'REDIS_VALUES_FILE=${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}',\n      'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE=/etc/kubeclaw/production-receipt-authority.pub',\n      'NAMESPACE_WAS_SET=${NAMESPACE+x}',\n      'NAMESPACE=${NAMESPACE:-kubeclaw}',\n      'TAILSCALE_OPERATOR_NAMESPACE=${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}',\n      'TAILSCALE_OPERATOR_RELEASE=${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}',\n      'TAILSCALE_OAUTH_SECRET_NAME=${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}',\n      'TAILSCALE_VALUES_FILE=${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}',\n      'KUBECLAW_WORKSPACE_PROMPT=${KUBECLAW_WORKSPACE_PROMPT:-auto}',\n      'KUBECLAW_WORKSPACE_NAMESPACE_FILE=${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}',\n      'KUBECLAW_DEPLOY_POSTGRESQL=${KUBECLAW_DEPLOY_POSTGRESQL:-true}',\n      'KUBECLAW_DEPLOY_LITELLM=${KUBECLAW_DEPLOY_LITELLM:-true}',\n      'LITELLM_NODE_PORT=${LITELLM_NODE_PORT:-30050}',\n      'KUBECLAW_DEPLOY_SPIRE=${KUBECLAW_DEPLOY_SPIRE:-true}',\n      'SPIFFE_HELM_REPO=${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}',\n      'SPIRE_CRDS_CHART_VERSION=${SPIRE_CRDS_CHART_VERSION:-0.6.0}',\n      'SPIRE_CHART_VERSION=${SPIRE_CHART_VERSION:-0.30.0}',\n      'SPIRE_VALUES_FILE=${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}',\n      'KUBECLAW_DEPLOY_PRISM=${KUBECLAW_DEPLOY_PRISM:-true}',\n      'PRISM_NAMESPACE=${PRISM_NAMESPACE:-$NAMESPACE}',\n      'PRISM_RELEASE=${PRISM_RELEASE:-prism}',\n      'PRISM_VALUES_OVERLAY=${PRISM_VALUES_FILE:-}',\n      'PRISM_VALUES_FILE=$REPO_DIR/releases/values/prism.yaml',\n      'PRISM_AGENT_VALUES_OVERLAY=${PRISM_AGENT_VALUES_FILE:-}',\n      'PRISM_AGENT_VALUES_FILE=$REPO_DIR/releases/values/prism-agent.yaml',\n      'PRISM_HELM_TIMEOUT=${PRISM_HELM_TIMEOUT:-45m}',\n      'PRISM_ROLLOUT_TIMEOUT=${PRISM_ROLLOUT_TIMEOUT:-45m}',\n      'PRISM_CONTROL_IMAGE_REPOSITORY=${PRISM_CONTROL_IMAGE_REPOSITORY:-}',\n      'PRISM_CONTROL_IMAGE_DIGEST=${PRISM_CONTROL_IMAGE_DIGEST:-}',\n      'PRISM_STUDIO_IMAGE_REPOSITORY=${PRISM_STUDIO_IMAGE_REPOSITORY:-}',\n      'PRISM_STUDIO_IMAGE_DIGEST=${PRISM_STUDIO_IMAGE_DIGEST:-}',\n      'PRISM_WORKER_IMAGE_REPOSITORY=${PRISM_WORKER_IMAGE_REPOSITORY:-}',\n      'PRISM_WORKER_IMAGE_DIGEST=${PRISM_WORKER_IMAGE_DIGEST:-}',\n      'PRISM_INGESTION_IMAGE_REPOSITORY=${PRISM_INGESTION_IMAGE_REPOSITORY:-}',\n      'PRISM_INGESTION_IMAGE_DIGEST=${PRISM_INGESTION_IMAGE_DIGEST:-}',\n      'PRISM_RUNTIME_SECRET_NAME=${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}',\n      'PRISM_DATABASE_SECRET_NAME=${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}',\n      'PRISM_IMAGE_PULL_SECRET_NAME=${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}',\n      'ALLOW_PARTIAL_INFRA=${ALLOW_PARTIAL_INFRA:-false}',\n      'AGENT_HELM_TIMEOUT=${AGENT_HELM_TIMEOUT:-45m}',\n      'AGENT_ROLLOUT_TIMEOUT=${AGENT_ROLLOUT_TIMEOUT:-45m}',\n      'CODE_BUNDLE_RELEASE_TAG=${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}',\n      'CODE_BUNDLE_PREFLIGHT_SKIP=${CODE_BUNDLE_PREFLIGHT_SKIP:-false}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE=${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT=${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}',\n      'export',\n      'NAMESPACE',\n      'export',\n      'KUBECLAW_DEPLOY_POSTGRESQL',\n      'export',\n      'KUBECLAW_DEPLOY_LITELLM',\n      'export',\n      'LITELLM_NODE_PORT',\n      'export',\n      'KUBECLAW_DEPLOY_SPIRE',\n      'export',\n      'KUBECLAW_DEPLOY_PRISM',\n      'PRISM_NAMESPACE',\n      'PRISM_RELEASE',\n      'PRISM_VALUES_FILE',\n      'PRISM_AGENT_VALUES_FILE',\n      'export',\n      'ALLOW_PARTIAL_INFRA',\n      'RED=\\\\033[0;31m',\n      'GREEN=\\\\033[0;32m',\n      'YELLOW=\\\\033[1;33m',\n      'BLUE=\\\\033[0;34m',\n      'NC=\\\\033[0m',\n      'log',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${GREEN}[\u2713]${NC} $1',\n      ';',\n      '}',\n      'warn',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${YELLOW}[!]${NC} $1',\n      ';',\n      '}',\n      ... 10125 more items\n    ]\n  },\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "RELATED_CHANGED_SCRIPT_STRUCTURED_RECIPE_DISPOSITION",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check after finite cases"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": false,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "owned-cli-maintenance",
+        "route": "[CLI](cli.md), [verification commands](verification-commands.md)",
+        "canonicalPage": "docs/site/reference/cli.md",
+        "owner": "platform-operations",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "swarm-config-field:add",
+      "source": "charts/kubeclaw/files/config/swarm.config.json",
+      "readerTarget": "docs/site/reference/plugin-configuration.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678",
+      "mutatedSourceSha256": "812c9ba92da06ec7c833de087e3fd21335e7407ae2e579140d722944eb3f0fa1",
+      "native": {
+        "label": "swarm-config-field:add",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 151.08667951496318,
+        "output": "DOC_DRIFT_CONFIG: Configuration documentation inventory is stale:\n- docs/generated/inventory/configuration-schemas.json\n- docs/generated/inventory/configuration-families.json\nRun: npm run docs:inventory:config\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "ACTUAL_SWARM_FIELD_SCHEMA_AND_FAMILY_OUTPUT_DRIFT",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check after finite cases"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": true,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "registered-plugin",
+        "route": "[Plugin configuration](plugin-configuration.md), [plugin catalogue](../extend/plugin-catalogue/README.md)",
+        "canonicalPage": "docs/site/reference/plugin-configuration.md",
+        "owner": "configuration source owners listed for each schema",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "nova-cli-flag:add",
+      "source": "skills/nova/core/cli.ts",
+      "readerTarget": "docs/site/reference/cli.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+      "mutatedSourceSha256": "8190479fd57d0991da81838d4660d02a4c337eb41c568336539c05dd0dd43696",
+      "native": {
+        "label": "nova-cli-flag:add",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 149.67375908303075,
+        "output": "DOC_DRIFT_CONFIG: Configuration documentation inventory is stale:\n- docs/generated/inventory/configuration-runtime-inputs.json\n- docs/generated/inventory/configuration-families.json\nRun: npm run docs:inventory:config\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "ACTUAL_OWNED_CLI_DECLARATION_OUTPUT_DRIFT",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check after finite cases"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": true,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "owned-cli-maintenance",
+        "route": "[CLI](cli.md), [verification commands](verification-commands.md)",
+        "canonicalPage": "docs/site/reference/cli.md",
+        "owner": "platform-operations",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "nova-cli-flag:change",
+      "source": "skills/nova/core/cli.ts",
+      "readerTarget": "docs/site/reference/cli.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+      "mutatedSourceSha256": "28c22af8ff66c95bd81b0be1fc36ed2e032a84c1d5a921396d064e078df0dbcd",
+      "native": {
+        "label": "nova-cli-flag:change",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 149.87017392890994,
+        "output": "DOC_DRIFT_CONFIG: Configuration documentation inventory is stale:\n- docs/generated/inventory/configuration-runtime-inputs.json\n- docs/generated/inventory/configuration-families.json\nRun: npm run docs:inventory:config\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "ACTUAL_OWNED_CLI_DECLARATION_OUTPUT_DRIFT",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check after finite cases"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": true,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "owned-cli-maintenance",
+        "route": "[CLI](cli.md), [verification commands](verification-commands.md)",
+        "canonicalPage": "docs/site/reference/cli.md",
+        "owner": "platform-operations",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "nova-cli-flag:remove",
+      "source": "skills/nova/core/cli.ts",
+      "readerTarget": "docs/site/reference/cli.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "09121b4b0a160d2e5e35448795156856b15ccc078a229bb1895f570c22f76787",
+      "mutatedSourceSha256": "e88eeec972a4e0e105ce1e3eb9786bd7c894ad1675d5795b8c4e72c0dee2a9e1",
+      "native": {
+        "label": "nova-cli-flag:remove",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 152.89307759492658,
+        "output": "DOC_DRIFT_CONFIG: Configuration documentation inventory is stale:\n- docs/generated/inventory/configuration-runtime-inputs.json\n- docs/generated/inventory/configuration-families.json\nRun: npm run docs:inventory:config\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "ACTUAL_OWNED_CLI_DECLARATION_OUTPUT_DRIFT",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check after finite cases"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": true,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "owned-cli-maintenance",
+        "route": "[CLI](cli.md), [verification commands](verification-commands.md)",
+        "canonicalPage": "docs/site/reference/cli.md",
+        "owner": "platform-operations",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "script-flag:change",
+      "source": "scripts/deploy.sh",
+      "readerTarget": "docs/site/reference/cli.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "mutatedSourceSha256": "7a3bb14641798457bb82c253fc36b645f4fd3b4fc1b81daf31a8d6d7b6fa5851",
+      "native": {
+        "label": "script-flag:change",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 34.966067890054546,
+        "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: API_PRODUCT_ADAPTER_RECIPE_DRIFT: scripts/deploy.sh; actual structured operation differs from the adapter recipe\n+ actual - expected\n... Skipped lines\n\n  {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n...\n      ';;',\n+     '--with-source-code',\n-     '--with-code',\n      ')',\n      'with_code=1',\n      ';;',\n      '*',\n      ')',\n\n    at assertProducerAdapterAuthority (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-output-discovery.mjs:1655:12)\n    at discoverExternalChartApiOutputs (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-output-discovery.mjs:7276:3)\n    at loadCustomResourceSchemas (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-schema-authorities.mjs:161:36)\n    at apiFieldSchemaAuthority (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-schema-authorities.mjs:285:20)\n    at yamlSemantics (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:1914:20)\n    at yamlFields (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2628:478)\n    at yamlFields (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2766:7)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2892:47\n    at Array.map (<anonymous>)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2877:28 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n      'pipefail',\n      'SCRIPT_DIR=$(cd $',\n      '(',\n      'dirname',\n      '${BASH_SOURCE[0]}',\n      ')',\n      ' && pwd)',\n      'REPO_DIR=$(dirname $SCRIPT_DIR)',\n      'CHART_DIR=$REPO_DIR/charts/kubeclaw',\n      'VALUES_DIR=$REPO_DIR/my-values',\n      'INFRA_DIR=$VALUES_DIR/infra',\n      'POSTGRESQL_RELEASE=${POSTGRESQL_RELEASE:-postgresql}',\n      'POSTGRESQL_VALUES_FILE=${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}',\n      'REDIS_RELEASE=${REDIS_RELEASE:-redis}',\n      'REDIS_VALUES_FILE=${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}',\n      'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE=/etc/kubeclaw/production-receipt-authority.pub',\n      'NAMESPACE_WAS_SET=${NAMESPACE+x}',\n      'NAMESPACE=${NAMESPACE:-kubeclaw}',\n      'TAILSCALE_OPERATOR_NAMESPACE=${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}',\n      'TAILSCALE_OPERATOR_RELEASE=${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}',\n      'TAILSCALE_OAUTH_SECRET_NAME=${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}',\n      'TAILSCALE_VALUES_FILE=${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}',\n      'KUBECLAW_WORKSPACE_PROMPT=${KUBECLAW_WORKSPACE_PROMPT:-auto}',\n      'KUBECLAW_WORKSPACE_NAMESPACE_FILE=${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}',\n      'KUBECLAW_DEPLOY_POSTGRESQL=${KUBECLAW_DEPLOY_POSTGRESQL:-true}',\n      'KUBECLAW_DEPLOY_LITELLM=${KUBECLAW_DEPLOY_LITELLM:-true}',\n      'LITELLM_NODE_PORT=${LITELLM_NODE_PORT:-30050}',\n      'KUBECLAW_DEPLOY_SPIRE=${KUBECLAW_DEPLOY_SPIRE:-true}',\n      'SPIFFE_HELM_REPO=${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}',\n      'SPIRE_CRDS_CHART_VERSION=${SPIRE_CRDS_CHART_VERSION:-0.6.0}',\n      'SPIRE_CHART_VERSION=${SPIRE_CHART_VERSION:-0.30.0}',\n      'SPIRE_VALUES_FILE=${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}',\n      'KUBECLAW_DEPLOY_PRISM=${KUBECLAW_DEPLOY_PRISM:-true}',\n      'PRISM_NAMESPACE=${PRISM_NAMESPACE:-$NAMESPACE}',\n      'PRISM_RELEASE=${PRISM_RELEASE:-prism}',\n      'PRISM_VALUES_OVERLAY=${PRISM_VALUES_FILE:-}',\n      'PRISM_VALUES_FILE=$REPO_DIR/releases/values/prism.yaml',\n      'PRISM_AGENT_VALUES_OVERLAY=${PRISM_AGENT_VALUES_FILE:-}',\n      'PRISM_AGENT_VALUES_FILE=$REPO_DIR/releases/values/prism-agent.yaml',\n      'PRISM_HELM_TIMEOUT=${PRISM_HELM_TIMEOUT:-45m}',\n      'PRISM_ROLLOUT_TIMEOUT=${PRISM_ROLLOUT_TIMEOUT:-45m}',\n      'PRISM_CONTROL_IMAGE_REPOSITORY=${PRISM_CONTROL_IMAGE_REPOSITORY:-}',\n      'PRISM_CONTROL_IMAGE_DIGEST=${PRISM_CONTROL_IMAGE_DIGEST:-}',\n      'PRISM_STUDIO_IMAGE_REPOSITORY=${PRISM_STUDIO_IMAGE_REPOSITORY:-}',\n      'PRISM_STUDIO_IMAGE_DIGEST=${PRISM_STUDIO_IMAGE_DIGEST:-}',\n      'PRISM_WORKER_IMAGE_REPOSITORY=${PRISM_WORKER_IMAGE_REPOSITORY:-}',\n      'PRISM_WORKER_IMAGE_DIGEST=${PRISM_WORKER_IMAGE_DIGEST:-}',\n      'PRISM_INGESTION_IMAGE_REPOSITORY=${PRISM_INGESTION_IMAGE_REPOSITORY:-}',\n      'PRISM_INGESTION_IMAGE_DIGEST=${PRISM_INGESTION_IMAGE_DIGEST:-}',\n      'PRISM_RUNTIME_SECRET_NAME=${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}',\n      'PRISM_DATABASE_SECRET_NAME=${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}',\n      'PRISM_IMAGE_PULL_SECRET_NAME=${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}',\n      'ALLOW_PARTIAL_INFRA=${ALLOW_PARTIAL_INFRA:-false}',\n      'AGENT_HELM_TIMEOUT=${AGENT_HELM_TIMEOUT:-45m}',\n      'AGENT_ROLLOUT_TIMEOUT=${AGENT_ROLLOUT_TIMEOUT:-45m}',\n      'CODE_BUNDLE_RELEASE_TAG=${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}',\n      'CODE_BUNDLE_PREFLIGHT_SKIP=${CODE_BUNDLE_PREFLIGHT_SKIP:-false}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE=${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT=${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}',\n      'export',\n      'NAMESPACE',\n      'export',\n      'KUBECLAW_DEPLOY_POSTGRESQL',\n      'export',\n      'KUBECLAW_DEPLOY_LITELLM',\n      'export',\n      'LITELLM_NODE_PORT',\n      'export',\n      'KUBECLAW_DEPLOY_SPIRE',\n      'export',\n      'KUBECLAW_DEPLOY_PRISM',\n      'PRISM_NAMESPACE',\n      'PRISM_RELEASE',\n      'PRISM_VALUES_FILE',\n      'PRISM_AGENT_VALUES_FILE',\n      'export',\n      'ALLOW_PARTIAL_INFRA',\n      'RED=\\\\033[0;31m',\n      'GREEN=\\\\033[0;32m',\n      'YELLOW=\\\\033[1;33m',\n      'BLUE=\\\\033[0;34m',\n      'NC=\\\\033[0m',\n      'log',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${GREEN}[\u2713]${NC} $1',\n      ';',\n      '}',\n      'warn',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${YELLOW}[!]${NC} $1',\n      ';',\n      '}',\n      ... 10125 more items\n    ]\n  },\n  expected: {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n      'pipefail',\n      'SCRIPT_DIR=$(cd $',\n      '(',\n      'dirname',\n      '${BASH_SOURCE[0]}',\n      ')',\n      ' && pwd)',\n      'REPO_DIR=$(dirname $SCRIPT_DIR)',\n      'CHART_DIR=$REPO_DIR/charts/kubeclaw',\n      'VALUES_DIR=$REPO_DIR/my-values',\n      'INFRA_DIR=$VALUES_DIR/infra',\n      'POSTGRESQL_RELEASE=${POSTGRESQL_RELEASE:-postgresql}',\n      'POSTGRESQL_VALUES_FILE=${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}',\n      'REDIS_RELEASE=${REDIS_RELEASE:-redis}',\n      'REDIS_VALUES_FILE=${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}',\n      'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE=/etc/kubeclaw/production-receipt-authority.pub',\n      'NAMESPACE_WAS_SET=${NAMESPACE+x}',\n      'NAMESPACE=${NAMESPACE:-kubeclaw}',\n      'TAILSCALE_OPERATOR_NAMESPACE=${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}',\n      'TAILSCALE_OPERATOR_RELEASE=${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}',\n      'TAILSCALE_OAUTH_SECRET_NAME=${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}',\n      'TAILSCALE_VALUES_FILE=${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}',\n      'KUBECLAW_WORKSPACE_PROMPT=${KUBECLAW_WORKSPACE_PROMPT:-auto}',\n      'KUBECLAW_WORKSPACE_NAMESPACE_FILE=${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}',\n      'KUBECLAW_DEPLOY_POSTGRESQL=${KUBECLAW_DEPLOY_POSTGRESQL:-true}',\n      'KUBECLAW_DEPLOY_LITELLM=${KUBECLAW_DEPLOY_LITELLM:-true}',\n      'LITELLM_NODE_PORT=${LITELLM_NODE_PORT:-30050}',\n      'KUBECLAW_DEPLOY_SPIRE=${KUBECLAW_DEPLOY_SPIRE:-true}',\n      'SPIFFE_HELM_REPO=${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}',\n      'SPIRE_CRDS_CHART_VERSION=${SPIRE_CRDS_CHART_VERSION:-0.6.0}',\n      'SPIRE_CHART_VERSION=${SPIRE_CHART_VERSION:-0.30.0}',\n      'SPIRE_VALUES_FILE=${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}',\n      'KUBECLAW_DEPLOY_PRISM=${KUBECLAW_DEPLOY_PRISM:-true}',\n      'PRISM_NAMESPACE=${PRISM_NAMESPACE:-$NAMESPACE}',\n      'PRISM_RELEASE=${PRISM_RELEASE:-prism}',\n      'PRISM_VALUES_OVERLAY=${PRISM_VALUES_FILE:-}',\n      'PRISM_VALUES_FILE=$REPO_DIR/releases/values/prism.yaml',\n      'PRISM_AGENT_VALUES_OVERLAY=${PRISM_AGENT_VALUES_FILE:-}',\n      'PRISM_AGENT_VALUES_FILE=$REPO_DIR/releases/values/prism-agent.yaml',\n      'PRISM_HELM_TIMEOUT=${PRISM_HELM_TIMEOUT:-45m}',\n      'PRISM_ROLLOUT_TIMEOUT=${PRISM_ROLLOUT_TIMEOUT:-45m}',\n      'PRISM_CONTROL_IMAGE_REPOSITORY=${PRISM_CONTROL_IMAGE_REPOSITORY:-}',\n      'PRISM_CONTROL_IMAGE_DIGEST=${PRISM_CONTROL_IMAGE_DIGEST:-}',\n      'PRISM_STUDIO_IMAGE_REPOSITORY=${PRISM_STUDIO_IMAGE_REPOSITORY:-}',\n      'PRISM_STUDIO_IMAGE_DIGEST=${PRISM_STUDIO_IMAGE_DIGEST:-}',\n      'PRISM_WORKER_IMAGE_REPOSITORY=${PRISM_WORKER_IMAGE_REPOSITORY:-}',\n      'PRISM_WORKER_IMAGE_DIGEST=${PRISM_WORKER_IMAGE_DIGEST:-}',\n      'PRISM_INGESTION_IMAGE_REPOSITORY=${PRISM_INGESTION_IMAGE_REPOSITORY:-}',\n      'PRISM_INGESTION_IMAGE_DIGEST=${PRISM_INGESTION_IMAGE_DIGEST:-}',\n      'PRISM_RUNTIME_SECRET_NAME=${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}',\n      'PRISM_DATABASE_SECRET_NAME=${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}',\n      'PRISM_IMAGE_PULL_SECRET_NAME=${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}',\n      'ALLOW_PARTIAL_INFRA=${ALLOW_PARTIAL_INFRA:-false}',\n      'AGENT_HELM_TIMEOUT=${AGENT_HELM_TIMEOUT:-45m}',\n      'AGENT_ROLLOUT_TIMEOUT=${AGENT_ROLLOUT_TIMEOUT:-45m}',\n      'CODE_BUNDLE_RELEASE_TAG=${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}',\n      'CODE_BUNDLE_PREFLIGHT_SKIP=${CODE_BUNDLE_PREFLIGHT_SKIP:-false}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE=${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT=${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}',\n      'export',\n      'NAMESPACE',\n      'export',\n      'KUBECLAW_DEPLOY_POSTGRESQL',\n      'export',\n      'KUBECLAW_DEPLOY_LITELLM',\n      'export',\n      'LITELLM_NODE_PORT',\n      'export',\n      'KUBECLAW_DEPLOY_SPIRE',\n      'export',\n      'KUBECLAW_DEPLOY_PRISM',\n      'PRISM_NAMESPACE',\n      'PRISM_RELEASE',\n      'PRISM_VALUES_FILE',\n      'PRISM_AGENT_VALUES_FILE',\n      'export',\n      'ALLOW_PARTIAL_INFRA',\n      'RED=\\\\033[0;31m',\n      'GREEN=\\\\033[0;32m',\n      'YELLOW=\\\\033[1;33m',\n      'BLUE=\\\\033[0;34m',\n      'NC=\\\\033[0m',\n      'log',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${GREEN}[\u2713]${NC} $1',\n      ';',\n      '}',\n      'warn',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${YELLOW}[!]${NC} $1',\n      ';',\n      '}',\n      ... 10125 more items\n    ]\n  },\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "RELATED_CHANGED_SCRIPT_STRUCTURED_RECIPE_DISPOSITION",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check after finite cases"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": false,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "owned-cli-maintenance",
+        "route": "[CLI](cli.md), [verification commands](verification-commands.md)",
+        "canonicalPage": "docs/site/reference/cli.md",
+        "owner": "platform-operations",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    },
+    {
+      "name": "script-flag:remove",
+      "source": "scripts/deploy.sh",
+      "readerTarget": "docs/site/reference/cli.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "97c1e39bf9cec6c1d5d8e11198af90ed04efd15a6077f2bbac1129c2ea0741e2",
+      "mutatedSourceSha256": "33646eda987732f41de2e1d970394282a70c5ec04dfd5a3e6b0d9b149e925e08",
+      "native": {
+        "label": "script-flag:remove",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 35.16838709090371,
+        "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: API_PRODUCT_ADAPTER_RECIPE_DRIFT: scripts/deploy.sh; actual structured operation differs from the adapter recipe\n+ actual - expected\n... Skipped lines\n\n  {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n...\n      ';;',\n-     '--with-code',\n-     ')',\n-     'with_code=1',\n-     ';;',\n      '*',\n      ')',\n      'err',\n      'Usage: $0 agent <nova|buster|prism> [--with-code]',\n      'return',\n\n    at assertProducerAdapterAuthority (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-output-discovery.mjs:1655:12)\n    at discoverExternalChartApiOutputs (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-output-discovery.mjs:7276:3)\n    at loadCustomResourceSchemas (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-schema-authorities.mjs:161:36)\n    at apiFieldSchemaAuthority (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-api-schema-authorities.mjs:285:20)\n    at yamlSemantics (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:1914:20)\n    at yamlFields (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2628:478)\n    at yamlFields (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2766:7)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2892:47\n    at Array.map (<anonymous>)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:2877:28 {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n      'pipefail',\n      'SCRIPT_DIR=$(cd $',\n      '(',\n      'dirname',\n      '${BASH_SOURCE[0]}',\n      ')',\n      ' && pwd)',\n      'REPO_DIR=$(dirname $SCRIPT_DIR)',\n      'CHART_DIR=$REPO_DIR/charts/kubeclaw',\n      'VALUES_DIR=$REPO_DIR/my-values',\n      'INFRA_DIR=$VALUES_DIR/infra',\n      'POSTGRESQL_RELEASE=${POSTGRESQL_RELEASE:-postgresql}',\n      'POSTGRESQL_VALUES_FILE=${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}',\n      'REDIS_RELEASE=${REDIS_RELEASE:-redis}',\n      'REDIS_VALUES_FILE=${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}',\n      'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE=/etc/kubeclaw/production-receipt-authority.pub',\n      'NAMESPACE_WAS_SET=${NAMESPACE+x}',\n      'NAMESPACE=${NAMESPACE:-kubeclaw}',\n      'TAILSCALE_OPERATOR_NAMESPACE=${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}',\n      'TAILSCALE_OPERATOR_RELEASE=${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}',\n      'TAILSCALE_OAUTH_SECRET_NAME=${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}',\n      'TAILSCALE_VALUES_FILE=${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}',\n      'KUBECLAW_WORKSPACE_PROMPT=${KUBECLAW_WORKSPACE_PROMPT:-auto}',\n      'KUBECLAW_WORKSPACE_NAMESPACE_FILE=${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}',\n      'KUBECLAW_DEPLOY_POSTGRESQL=${KUBECLAW_DEPLOY_POSTGRESQL:-true}',\n      'KUBECLAW_DEPLOY_LITELLM=${KUBECLAW_DEPLOY_LITELLM:-true}',\n      'LITELLM_NODE_PORT=${LITELLM_NODE_PORT:-30050}',\n      'KUBECLAW_DEPLOY_SPIRE=${KUBECLAW_DEPLOY_SPIRE:-true}',\n      'SPIFFE_HELM_REPO=${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}',\n      'SPIRE_CRDS_CHART_VERSION=${SPIRE_CRDS_CHART_VERSION:-0.6.0}',\n      'SPIRE_CHART_VERSION=${SPIRE_CHART_VERSION:-0.30.0}',\n      'SPIRE_VALUES_FILE=${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}',\n      'KUBECLAW_DEPLOY_PRISM=${KUBECLAW_DEPLOY_PRISM:-true}',\n      'PRISM_NAMESPACE=${PRISM_NAMESPACE:-$NAMESPACE}',\n      'PRISM_RELEASE=${PRISM_RELEASE:-prism}',\n      'PRISM_VALUES_OVERLAY=${PRISM_VALUES_FILE:-}',\n      'PRISM_VALUES_FILE=$REPO_DIR/releases/values/prism.yaml',\n      'PRISM_AGENT_VALUES_OVERLAY=${PRISM_AGENT_VALUES_FILE:-}',\n      'PRISM_AGENT_VALUES_FILE=$REPO_DIR/releases/values/prism-agent.yaml',\n      'PRISM_HELM_TIMEOUT=${PRISM_HELM_TIMEOUT:-45m}',\n      'PRISM_ROLLOUT_TIMEOUT=${PRISM_ROLLOUT_TIMEOUT:-45m}',\n      'PRISM_CONTROL_IMAGE_REPOSITORY=${PRISM_CONTROL_IMAGE_REPOSITORY:-}',\n      'PRISM_CONTROL_IMAGE_DIGEST=${PRISM_CONTROL_IMAGE_DIGEST:-}',\n      'PRISM_STUDIO_IMAGE_REPOSITORY=${PRISM_STUDIO_IMAGE_REPOSITORY:-}',\n      'PRISM_STUDIO_IMAGE_DIGEST=${PRISM_STUDIO_IMAGE_DIGEST:-}',\n      'PRISM_WORKER_IMAGE_REPOSITORY=${PRISM_WORKER_IMAGE_REPOSITORY:-}',\n      'PRISM_WORKER_IMAGE_DIGEST=${PRISM_WORKER_IMAGE_DIGEST:-}',\n      'PRISM_INGESTION_IMAGE_REPOSITORY=${PRISM_INGESTION_IMAGE_REPOSITORY:-}',\n      'PRISM_INGESTION_IMAGE_DIGEST=${PRISM_INGESTION_IMAGE_DIGEST:-}',\n      'PRISM_RUNTIME_SECRET_NAME=${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}',\n      'PRISM_DATABASE_SECRET_NAME=${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}',\n      'PRISM_IMAGE_PULL_SECRET_NAME=${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}',\n      'ALLOW_PARTIAL_INFRA=${ALLOW_PARTIAL_INFRA:-false}',\n      'AGENT_HELM_TIMEOUT=${AGENT_HELM_TIMEOUT:-45m}',\n      'AGENT_ROLLOUT_TIMEOUT=${AGENT_ROLLOUT_TIMEOUT:-45m}',\n      'CODE_BUNDLE_RELEASE_TAG=${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}',\n      'CODE_BUNDLE_PREFLIGHT_SKIP=${CODE_BUNDLE_PREFLIGHT_SKIP:-false}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE=${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT=${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}',\n      'export',\n      'NAMESPACE',\n      'export',\n      'KUBECLAW_DEPLOY_POSTGRESQL',\n      'export',\n      'KUBECLAW_DEPLOY_LITELLM',\n      'export',\n      'LITELLM_NODE_PORT',\n      'export',\n      'KUBECLAW_DEPLOY_SPIRE',\n      'export',\n      'KUBECLAW_DEPLOY_PRISM',\n      'PRISM_NAMESPACE',\n      'PRISM_RELEASE',\n      'PRISM_VALUES_FILE',\n      'PRISM_AGENT_VALUES_FILE',\n      'export',\n      'ALLOW_PARTIAL_INFRA',\n      'RED=\\\\033[0;31m',\n      'GREEN=\\\\033[0;32m',\n      'YELLOW=\\\\033[1;33m',\n      'BLUE=\\\\033[0;34m',\n      'NC=\\\\033[0m',\n      'log',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${GREEN}[\u2713]${NC} $1',\n      ';',\n      '}',\n      'warn',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${YELLOW}[!]${NC} $1',\n      ';',\n      '}',\n      ... 10121 more items\n    ]\n  },\n  expected: {\n    language: 'Shell',\n    tokens: [\n      'set',\n      '-euo',\n      'pipefail',\n      'SCRIPT_DIR=$(cd $',\n      '(',\n      'dirname',\n      '${BASH_SOURCE[0]}',\n      ')',\n      ' && pwd)',\n      'REPO_DIR=$(dirname $SCRIPT_DIR)',\n      'CHART_DIR=$REPO_DIR/charts/kubeclaw',\n      'VALUES_DIR=$REPO_DIR/my-values',\n      'INFRA_DIR=$VALUES_DIR/infra',\n      'POSTGRESQL_RELEASE=${POSTGRESQL_RELEASE:-postgresql}',\n      'POSTGRESQL_VALUES_FILE=${POSTGRESQL_VALUES_FILE:-$INFRA_DIR/postgresql-values.yaml}',\n      'REDIS_RELEASE=${REDIS_RELEASE:-redis}',\n      'REDIS_VALUES_FILE=${REDIS_VALUES_FILE:-$INFRA_DIR/redis-values.yaml}',\n      'PRODUCTION_RECEIPT_TRUSTED_PUBLIC_KEY_FILE=/etc/kubeclaw/production-receipt-authority.pub',\n      'NAMESPACE_WAS_SET=${NAMESPACE+x}',\n      'NAMESPACE=${NAMESPACE:-kubeclaw}',\n      'TAILSCALE_OPERATOR_NAMESPACE=${TAILSCALE_OPERATOR_NAMESPACE:-tailscale}',\n      'TAILSCALE_OPERATOR_RELEASE=${TAILSCALE_OPERATOR_RELEASE:-tailscale-operator}',\n      'TAILSCALE_OAUTH_SECRET_NAME=${TAILSCALE_OAUTH_SECRET_NAME:-operator-oauth}',\n      'TAILSCALE_VALUES_FILE=${TAILSCALE_VALUES_FILE:-$INFRA_DIR/tailscale-operator-values.yaml}',\n      'KUBECLAW_WORKSPACE_PROMPT=${KUBECLAW_WORKSPACE_PROMPT:-auto}',\n      'KUBECLAW_WORKSPACE_NAMESPACE_FILE=${KUBECLAW_WORKSPACE_NAMESPACE_FILE:-$VALUES_DIR/.workspace-namespace}',\n      'KUBECLAW_DEPLOY_POSTGRESQL=${KUBECLAW_DEPLOY_POSTGRESQL:-true}',\n      'KUBECLAW_DEPLOY_LITELLM=${KUBECLAW_DEPLOY_LITELLM:-true}',\n      'LITELLM_NODE_PORT=${LITELLM_NODE_PORT:-30050}',\n      'KUBECLAW_DEPLOY_SPIRE=${KUBECLAW_DEPLOY_SPIRE:-true}',\n      'SPIFFE_HELM_REPO=${SPIFFE_HELM_REPO:-https://spiffe.github.io/helm-charts-hardened/}',\n      'SPIRE_CRDS_CHART_VERSION=${SPIRE_CRDS_CHART_VERSION:-0.6.0}',\n      'SPIRE_CHART_VERSION=${SPIRE_CHART_VERSION:-0.30.0}',\n      'SPIRE_VALUES_FILE=${SPIRE_VALUES_FILE:-$INFRA_DIR/spire-values.yaml}',\n      'KUBECLAW_DEPLOY_PRISM=${KUBECLAW_DEPLOY_PRISM:-true}',\n      'PRISM_NAMESPACE=${PRISM_NAMESPACE:-$NAMESPACE}',\n      'PRISM_RELEASE=${PRISM_RELEASE:-prism}',\n      'PRISM_VALUES_OVERLAY=${PRISM_VALUES_FILE:-}',\n      'PRISM_VALUES_FILE=$REPO_DIR/releases/values/prism.yaml',\n      'PRISM_AGENT_VALUES_OVERLAY=${PRISM_AGENT_VALUES_FILE:-}',\n      'PRISM_AGENT_VALUES_FILE=$REPO_DIR/releases/values/prism-agent.yaml',\n      'PRISM_HELM_TIMEOUT=${PRISM_HELM_TIMEOUT:-45m}',\n      'PRISM_ROLLOUT_TIMEOUT=${PRISM_ROLLOUT_TIMEOUT:-45m}',\n      'PRISM_CONTROL_IMAGE_REPOSITORY=${PRISM_CONTROL_IMAGE_REPOSITORY:-}',\n      'PRISM_CONTROL_IMAGE_DIGEST=${PRISM_CONTROL_IMAGE_DIGEST:-}',\n      'PRISM_STUDIO_IMAGE_REPOSITORY=${PRISM_STUDIO_IMAGE_REPOSITORY:-}',\n      'PRISM_STUDIO_IMAGE_DIGEST=${PRISM_STUDIO_IMAGE_DIGEST:-}',\n      'PRISM_WORKER_IMAGE_REPOSITORY=${PRISM_WORKER_IMAGE_REPOSITORY:-}',\n      'PRISM_WORKER_IMAGE_DIGEST=${PRISM_WORKER_IMAGE_DIGEST:-}',\n      'PRISM_INGESTION_IMAGE_REPOSITORY=${PRISM_INGESTION_IMAGE_REPOSITORY:-}',\n      'PRISM_INGESTION_IMAGE_DIGEST=${PRISM_INGESTION_IMAGE_DIGEST:-}',\n      'PRISM_RUNTIME_SECRET_NAME=${PRISM_RUNTIME_SECRET_NAME:-prism-runtime}',\n      'PRISM_DATABASE_SECRET_NAME=${PRISM_DATABASE_SECRET_NAME:-prism-postgresql-auth}',\n      'PRISM_IMAGE_PULL_SECRET_NAME=${PRISM_IMAGE_PULL_SECRET_NAME:-ghcr-secret}',\n      'ALLOW_PARTIAL_INFRA=${ALLOW_PARTIAL_INFRA:-false}',\n      'AGENT_HELM_TIMEOUT=${AGENT_HELM_TIMEOUT:-45m}',\n      'AGENT_ROLLOUT_TIMEOUT=${AGENT_ROLLOUT_TIMEOUT:-45m}',\n      'CODE_BUNDLE_RELEASE_TAG=${CODE_BUNDLE_RELEASE_TAG:-agent-code-bundles}',\n      'CODE_BUNDLE_PREFLIGHT_SKIP=${CODE_BUNDLE_PREFLIGHT_SKIP:-false}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE=${BUILDKIT_ROOTLESS_PREFLIGHT_IMAGE:-moby/buildkit:v0.26.2-rootless@sha256:0ffa2fcf6b8757c47d569b3ef0f03f9d5eb3b9ff5ce68d858f994f89b749da0c}',\n      'BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT=${BUILDKIT_ROOTLESS_PREFLIGHT_TIMEOUT:-180s}',\n      'export',\n      'NAMESPACE',\n      'export',\n      'KUBECLAW_DEPLOY_POSTGRESQL',\n      'export',\n      'KUBECLAW_DEPLOY_LITELLM',\n      'export',\n      'LITELLM_NODE_PORT',\n      'export',\n      'KUBECLAW_DEPLOY_SPIRE',\n      'export',\n      'KUBECLAW_DEPLOY_PRISM',\n      'PRISM_NAMESPACE',\n      'PRISM_RELEASE',\n      'PRISM_VALUES_FILE',\n      'PRISM_AGENT_VALUES_FILE',\n      'export',\n      'ALLOW_PARTIAL_INFRA',\n      'RED=\\\\033[0;31m',\n      'GREEN=\\\\033[0;32m',\n      'YELLOW=\\\\033[1;33m',\n      'BLUE=\\\\033[0;34m',\n      'NC=\\\\033[0m',\n      'log',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${GREEN}[\u2713]${NC} $1',\n      ';',\n      '}',\n      'warn',\n      '()',\n      '{',\n      'echo',\n      '-e',\n      '${YELLOW}[!]${NC} $1',\n      ';',\n      '}',\n      ... 10125 more items\n    ]\n  },\n  operator: 'deepStrictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "RELATED_CHANGED_SCRIPT_STRUCTURED_RECIPE_DISPOSITION",
+      "restoration": {
+        "mode": "Exact original source/output bytes restored; shared final native check after finite cases"
+      },
+      "sourceByteExactRestored": true,
+      "outputsByteExactRestored": true,
+      "distinctParserSemanticProvedByThisNativeRun": false,
+      "narrowOriginalCiCatch": true,
+      "maintainedReaderProof": {
+        "family": "owned-cli-maintenance",
+        "route": "[CLI](cli.md), [verification commands](verification-commands.md)",
+        "canonicalPage": "docs/site/reference/cli.md",
+        "owner": "platform-operations",
+        "checks": [
+          "npm run docs:generate:check",
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "sourceHeaderOwnerMatchesGovernedPage": true
+      }
+    }
+  ],
+  "wholeGateAccepted": false,
+  "baseline": {
+    "label": "baseline",
+    "argv": [
+      "node",
+      "scripts/docs-configuration-inventory.mjs",
+      "--configuration-reference-only",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 166.63367750192992,
+    "output": "Configuration documentation inventory is current.\n"
+  },
+  "controllerConsolidation": "Exact retained own restored-source snapshot reused; strict baseline0 already actually observed. Each source/output byte restoration checked and one final strict native0. Deliberately cancelled redundant fullmode restore is retained separately and not scored.",
+  "controllerHistory": [
+    {
+      "failure": "AssertionError(('script-flag:add', '[--with-code]', 4))",
+      "status": "PRESERVED_REAL_EXECUTION_OR_FIXTURE_FAILURE",
+      "reason": "Fixture unique-anchor assertion was stricter than maintained original .replace first; repair to original first replacement, no product change"
+    },
+    {
+      "stage": "Initial redundant native restoration deliberately interrupted for consolidated reuse",
+      "nativeExitCode": -2,
+      "nativeSeconds": 133.34569216589443,
+      "controllerExitCode": 1,
+      "reason": "Root authorized avoiding ten unchangedfullmode restores; exact ownsnapshot retained before interruption. Interruption never counted as nativePASS/productfailure; final laternativecheck0 actually observed.",
+      "source": "Actual session19371 terminal observation, not rerun"
+    }
+  ],
+  "baselineReuse": "Original actual strict ownbaseline0 + currentroot shared native0/1/0, actual fouroutput bytejoin and same frozen native/producers/current committed9a57 source; no native input or dependency change from driver-only repair. Currentroot clean; exact current source/deps copied anew, fouroutputs checked below. No fresh baseline execution claimed.",
+  "currentFixtureCustody": {
+    "frozenNativeSourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f",
+    "allPriorMutatedProductBodiesExactlyOriginal": true,
+    "rootFourOutputJoin": true,
+    "sameNodeModulesTarget": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/node_modules",
+    "actualCurrentSourceCommittedClean": true
+  },
+  "finalRestoredNative": {
+    "label": "final-restored",
+    "argv": [
+      "node",
+      "scripts/docs-configuration-inventory.mjs",
+      "--configuration-reference-only",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 154.55197560496163,
+    "output": "Configuration documentation inventory is current.\n"
+  },
+  "status": "COMPLETE_TEN_QUALIFIED_ACTUAL_CI_CATCHES_SOURCE_RESTORATION_FINAL_NATIVE0",
+  "ownedFixtureRemoved": true,
+  "independentOriginalScopeAdjudication": {
+    "at": "2026-10-31T20:46:52.890503+00:00",
+    "verdict": "TEN_ACTUAL_CI_REFUSALS_AND_FINAL_STRICT_RESTORATION_QUALIFIED_AT_EXACT_DISTINCT_SCOPES",
+    "source": "Actual exact original maintained constructors changed source/declaration fields/Secret/operator-flag forms; no code or native authority/pin/recipe was changed to permit the mutations. The same-path Source identity/structured recipe failure is genuinely related to the changed documentation authority, not unrelated defaultAPI failure. It catches undocumented original additions under narrow A98-14/QUA010 wording, but is not claimed as deep flag/field parser semantics.",
+    "reader": "Every probe independently resolves required canonical reader through maintained configuration-family map/current governed source/check metadata; raw error itself need not print a canonical page. No browser or operator participant execution inferred.",
+    "quality": "Strict actualbaseline0 and finalnative0; ten meaningful source changes each1; each source restored to originalbyteSHA and all outputs/readers unchanged. Current rootdataonly successor does not alter those producer bodies. Full native output retained; defaultAPI/assessor fixture failures separately preserved.",
+    "timingsAndKinds": [
+      {
+        "name": "helm-field:add",
+        "kind": "RELATED_CONFIGURATION_SOURCE_AUTHORITY_DISPOSITION",
+        "exitCode": 1,
+        "seconds": 30.23277791100554,
+        "reader": "docs/site/reference/helm-values.md",
+        "parserSemanticByThisRun": false
+      },
+      {
+        "name": "environment-setting:add",
+        "kind": "RELATED_CHANGED_SCRIPT_STRUCTURED_RECIPE_DISPOSITION",
+        "exitCode": 1,
+        "seconds": 35.604604311985895,
+        "reader": "docs/site/reference/environment-variables.md",
+        "parserSemanticByThisRun": false
+      },
+      {
+        "name": "secret-setting:add",
+        "kind": "ACTUAL_NEW_SECRET_OPERATOR_AUTHORITY_SEMANTIC_REFUSAL",
+        "exitCode": 1,
+        "seconds": 153.74032929097302,
+        "reader": "docs/site/reference/secrets.md",
+        "parserSemanticByThisRun": true
+      },
+      {
+        "name": "script-flag:add",
+        "kind": "RELATED_CHANGED_SCRIPT_STRUCTURED_RECIPE_DISPOSITION",
+        "exitCode": 1,
+        "seconds": 36.044633853947744,
+        "reader": "docs/site/reference/cli.md",
+        "parserSemanticByThisRun": false
+      },
+      {
+        "name": "swarm-config-field:add",
+        "kind": "ACTUAL_SWARM_FIELD_SCHEMA_AND_FAMILY_OUTPUT_DRIFT",
+        "exitCode": 1,
+        "seconds": 151.08667951496318,
+        "reader": "docs/site/reference/plugin-configuration.md",
+        "parserSemanticByThisRun": true
+      },
+      {
+        "name": "nova-cli-flag:add",
+        "kind": "ACTUAL_OWNED_CLI_DECLARATION_OUTPUT_DRIFT",
+        "exitCode": 1,
+        "seconds": 149.67375908303075,
+        "reader": "docs/site/reference/cli.md",
+        "parserSemanticByThisRun": true
+      },
+      {
+        "name": "nova-cli-flag:change",
+        "kind": "ACTUAL_OWNED_CLI_DECLARATION_OUTPUT_DRIFT",
+        "exitCode": 1,
+        "seconds": 149.87017392890994,
+        "reader": "docs/site/reference/cli.md",
+        "parserSemanticByThisRun": true
+      },
+      {
+        "name": "nova-cli-flag:remove",
+        "kind": "ACTUAL_OWNED_CLI_DECLARATION_OUTPUT_DRIFT",
+        "exitCode": 1,
+        "seconds": 152.89307759492658,
+        "reader": "docs/site/reference/cli.md",
+        "parserSemanticByThisRun": true
+      },
+      {
+        "name": "script-flag:change",
+        "kind": "RELATED_CHANGED_SCRIPT_STRUCTURED_RECIPE_DISPOSITION",
+        "exitCode": 1,
+        "seconds": 34.966067890054546,
+        "reader": "docs/site/reference/cli.md",
+        "parserSemanticByThisRun": false
+      },
+      {
+        "name": "script-flag:remove",
+        "kind": "RELATED_CHANGED_SCRIPT_STRUCTURED_RECIPE_DISPOSITION",
+        "exitCode": 1,
+        "seconds": 35.16838709090371,
+        "reader": "docs/site/reference/cli.md",
+        "parserSemanticByThisRun": false
+      }
+    ],
+    "distinctSemanticJoin": "New TSCLI actualruntime/family stale A/C/R complements unchanged existing shell/typed native extraction A/C/R logs in MNT004; those plus actual sourceCI guards+sharedcomparison/reader mapping are combined by original finaljudge, not mislabelled as ten deep-parser executions.",
+    "limits": [
+      "Artificial declared flags/source fields, not implementation or successful execution of new runtime features.",
+      "No full defaultglobalAPI pass, hostedCI execution, cluster/Secret availability or runtime deployment.",
+      "One deliberately cancelled redundant restoration -2 and driver-only uniqueanchor mismatch are retained as controller/fixture failures, not native product PASS/failure rewriting.",
+      "No original gate automatically awarded by counts or this executor receipt."
+    ]
+  }
+}

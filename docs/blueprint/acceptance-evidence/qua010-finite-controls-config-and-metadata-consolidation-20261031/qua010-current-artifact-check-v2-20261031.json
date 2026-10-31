@@ -1,0 +1,8 @@
+{
+  "at": "2026-10-31T20:49:44.102644+00:00",
+  "sourceRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+  "command": "operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs",
+  "exitCode": 0,
+  "elapsedSeconds": 32.393347658915445,
+  "priorWrongSubcommandFailureRetained": "qua010-current-artifact-check-20261031.log"
+}

@@ -1,0 +1,266 @@
+[
+  {
+    "id": "AP09.1-ready-topics-20261020",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "0de85fe7a6c928c25f00cab6794e1abde22670c16eb14c77e7f2f2bcf24b7e47"
+  },
+  {
+    "id": "Reviewed-corrections-20261020",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "4dd2011565f652998940bb621c4906876e09d93ecf8bc27c84d73e7654a2f183"
+  },
+  {
+    "id": "AP09-reviewed-reference-20261020",
+    "priorRevision": "090d9bb60d2d6f68f5acfbdd3ffe1417ef48f41f",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "f44b602fc8ba234a1f28d38c2b906ea24410b050e4ccdb2a0ee3c00743120036"
+  },
+  {
+    "id": "AP09-complete-public-cli-20261020",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "c540eb55ce3565322bb0dd5f567c71f8be3dad1950df1128be1b2e9ea7ed45b7"
+  },
+  {
+    "id": "AP09-documentation-agent-maintenance-20261021",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "bf2d1af50fcfabff5f6e3b5dd6ce46068fd0d11ee003755792b976af25ad71a4"
+  },
+  {
+    "id": "AP09-complete-static-reader-search-20261021",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "c19341d37b7202512c0da4949409f291a68c78fb0feef94a84f706f842a860b4"
+  },
+  {
+    "id": "AP09-reference-event-payloads-80178-20261021",
+    "priorRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "f3eb3eaf45adb326e7078e644fefdc458b64049b05bd5e93da8198a82397fc67"
+  },
+  {
+    "id": "A912-11-deterministic-page-records-20261022",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "6ea3f819cc00c104e35a722c8c6262fe00c357e89af9133b7c64fc75bf1c7ddd"
+  },
+  {
+    "id": "AP09-publication-positive-scope-7ef16585",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "1a8c40eab9411bc0cc44ca27846e019e480f7bb149fb44d92df158e762c89bf0"
+  },
+  {
+    "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "10c28731c9bebefec950fe5c3e2774751806a481295f7135e19461dce5130ee3"
+  },
+  {
+    "id": "AP09-whole-extension-drift-A91014-20261023",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "e47eaba6eb54863613d8cc05ee5eec10404395f7459d5e966cc564c882ad7cdf"
+  },
+  {
+    "id": "A99-13-original-seven-dimension-drift-20261025",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "9551f1c8a0ae6379a53d652ecf8988d7bf094b19a7491aa9ed3f9497fcb737cd"
+  },
+  {
+    "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "d0b0ab592833a550ed794fc9790ecad10ae809344a15b41a979c7dc2d57f1316"
+  },
+  {
+    "id": "A911-01-whole-ten-family-discovery-declarations-20261027",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "08fade89c54f84b5be95074886944f1fd9e42a0fb706750d3559334c67e483e7"
+  },
+  {
+    "id": "MNT-014-whole-native-publication-examples-20261027",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "d04c8a9722a5aa3b93d590e622065d8ada50c049510e8ef0cccceb85cfe0ec87"
+  },
+  {
+    "id": "A99-11-whole-published-example-claims-20261027",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "e82aa43ef8b213c4b9afaf0422109ff99ad69c32b56ad4c1de46da6dacc37688"
+  },
+  {
+    "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "fb2cee8c97f80b2f0ff41ca3bbc34ef07e43f1b1b835fe0db42adda30fce0304"
+  },
+  {
+    "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "e1463bc38997e318aeb9fa1f7787c77221897fb05b3271e2b0fffe0a3e90e170"
+  },
+  {
+    "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "80efcb00dd82d9023f6744888bb3aee5b2d7aa32c99c6f4afa3c90e233b17dc7"
+  },
+  {
+    "id": "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "9ad0a3a93a47cb37cb26d49c5ef529780ac3c7b0fcd7e88588554cb28831575d"
+  },
+  {
+    "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "23cd0da40cb22a5df15773bfd81d5f7422a26da72c34275c9b4c18c198fba559"
+  },
+  {
+    "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "cf40a774c8e6e43548092e98ce7c56d70444a2a5fd998f99d37d499bea11a6de"
+  },
+  {
+    "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "6034dfb1b77ca1b137dfe3faceb7f6544815c94d5dff32b1b88e8f7413ff1842"
+  },
+  {
+    "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "733661b004242f7bd2b46077913e97eb1577a03008a4e4a2fddd2ae14420d98b"
+  },
+  {
+    "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "f857b8b0850e9385fb10f1c432cadfd684cfdaa12ebf835ca9e358e776a8b605"
+  },
+  {
+    "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "a3af7a5937eeb214152d0bbebb187e5ce44a3dd1998071c85ee1e219bcfd8c07"
+  },
+  {
+    "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "798b1e15a6163e51f4e3841d761a9fa992d4f944313fa4ed856ba49ddb499b0a"
+  },
+  {
+    "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "016c536049df61f6377f6d4d38f831819c87ce3f8299936ff20f6e0e0240077f"
+  },
+  {
+    "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "7f526df0a376817e6dacc0f8de1cb40476ac3902676df7d4a99300f6d533d293"
+  },
+  {
+    "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "8dfdb0b28628b20af2350e257c5e0b1a0599f38a6a5200364af4f7137f0a6eea"
+  },
+  {
+    "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "73fff6b160744ba74d7244341b7f99197b3c357a8527f3e46922be394ac70008"
+  },
+  {
+    "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "14a97391fcffdb098ef0a0a5680836b8b673c45c96f852d3ba6dcca543039b65"
+  },
+  {
+    "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "58d3b5cb677e1b27c1150cd72170707827639c2d00407c58ea64e71c983c70a4"
+  },
+  {
+    "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "f9f8db6adfa9c43b71a58c2b59180e9ea7e1ec94c1cba014dff7f02483b17dc3"
+  },
+  {
+    "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "65bc32a4351a0880175c92c4252396dde749e4bbc077f039babafd23a2517400"
+  },
+  {
+    "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "d7d596759aaed259071ef6aca5b38e3e217a4cad8dd33c86efea259942ccb18f"
+  },
+  {
+    "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "7641824b013757405c95d2b16007335c6601dbdbd972e4b3785f77e77ab5cef9"
+  },
+  {
+    "id": "CFG011-REF012-whole-complete-environment-secrets-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "ee792087c70f8415b36cf0d8b0479393ffc138ca9a48cf88e331397cb26fedf6"
+  },
+  {
+    "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "60069e91080db1b5c7647ff7234a4d8e74b76c4859af68abd3b04792bf19f0fd"
+  },
+  {
+    "id": "REF004-whole-supported-schemas-constraints-defaults-20261031",
+    "priorRevision": "a54c0270bb37f2be1e93e87a16509b0b0aed4833",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "872d127607ea1853e46d234ac8e6e4bac75096d187d68f5e2086c464212eb170"
+  },
+  {
+    "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "932a98d646f3ca20f3772c2f82962b7c6ec2992c85e752a7ca2cd078fdd3b005"
+  },
+  {
+    "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "206225443f3ac8ceccc5e39fdd6d87d4e53e2c4d1b4d2ced80e423a51e8d1e24"
+  },
+  {
+    "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "0fbbcf380f3ac7e34a741e5d45e4924efcbd69215805895a2b5616b957839a79"
+  },
+  {
+    "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+    "priorRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "fullOriginalRecordSha256": "2d600e4e8d98eb6076ae28ed67a91e806fac57af3214e403d54c871c76ac979e"
+  }
+]

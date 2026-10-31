@@ -1,0 +1,51 @@
+import pathlib,os,subprocess,json,hashlib,datetime,time,shutil
+W=pathlib.Path('/home/node/.openclaw/workspace');R=W/'kubeclaw-pr13-recovery';E=W/'operations/pr13/evidence';T=W/'tmp/qua010-five-config-distinct-flags-20261031';P=E/'qua010-five-config-and-distinct-flags-actual-20261031.json';B=W/'tmp/qua010-five-config-distinct-flags-owned-snapshot-20261031';assert B.exists() and not T.exists();B.rename(T)
+sha=lambda b:hashlib.sha256(b).hexdigest()
+result=json.loads((E/'qua010-five-config-initial-actual-before-controller-consolidation-20261031.json').read_text())
+result['controllerConsolidation']='Exact retained own restored-source snapshot reused; strict baseline0 already actually observed. Each source/output byte restoration checked and one final strict native0. Deliberately cancelled redundant fullmode restore is retained separately and not scored.'
+result['cases'][0]['sourceByteExactRestored']=sha((T/result['cases'][0]['source']).read_bytes())==result['cases'][0]['oldSourceSha256']
+def persist():P.write_text(json.dumps(result,indent=2)+'\n')
+def run(label):
+ argv=['node','scripts/docs-configuration-inventory.mjs','--configuration-reference-only','--check'];start=time.monotonic();p=subprocess.run(argv,cwd=T,text=True,stdout=subprocess.PIPE,stderr=subprocess.STDOUT,env={**os.environ,'PATH':'/usr/local/go/bin:'+os.environ.get('PATH','')});row={'label':label,'argv':argv,'exitCode':p.returncode,'seconds':time.monotonic()-start,'output':p.stdout};(E/('qua010-owned-config-'+label.replace(':','-')+'-20261031.log')).write_text(p.stdout);print(json.dumps({'label':label,'code':p.returncode,'seconds':row['seconds'],'tail':p.stdout[-900:]}),flush=True);return row
+persist()
+try:
+ assert result['canonicalObserverSync']['exitCode']==0
+ assert result['baseline']['exitCode']==0
+ persist()
+ outputs=['docs/generated/inventory/'+x for x in ['configuration-families.json','configuration-helm-values.json','configuration-schemas.json','configuration-runtime-inputs.json']];outputbytes={p:(T/p).read_bytes() for p in outputs};reader='docs/site/reference/'
+ cases=[
+ ('helm-field:add','charts/kubeclaw/values.yaml',None,'ap98Mutation:\n  nestedField: true',reader+'helm-values.md'),
+ ('environment-setting:add','scripts/deploy.sh',None,': "${AP98_MUTATION_ENV:?Set AP98_MUTATION_ENV for the mutation fixture}"',reader+'environment-variables.md'),
+ ('secret-setting:add','my-values/setup-secrets.sh',None,'kubectl create secret generic ap98-mutation --from-literal=ap98MutationKey="$AP98_MUTATION_SECRET"',reader+'secrets.md'),
+ ('script-flag:add','scripts/deploy.sh',[('[--with-code]','[--with-code] [--ap98-mutation]'),('    --with-code)\n','    --with-code|--ap98-mutation)\n')],None,reader+'cli.md'),
+ ('swarm-config-field:add','charts/kubeclaw/files/config/swarm.config.json','JSON_ADD',None,reader+'plugin-configuration.md'),
+ ('nova-cli-flag:add','skills/nova/core/cli.ts',[('[--signal <resume-signal.json>]','[--signal <resume-signal.json>] [--ap98-mutation <value>]')],None,reader+'cli.md'),
+ ('nova-cli-flag:change','skills/nova/core/cli.ts',[('--audit <run-id>','--audit-mutated <run-id>')],None,reader+'cli.md'),
+ ('nova-cli-flag:remove','skills/nova/core/cli.ts',[(' [--signal <resume-signal.json>]','')],None,reader+'cli.md'),
+ ('script-flag:change','scripts/deploy.sh',[('[--with-code]','[--with-source-code]'),('    --with-code)\n','    --with-source-code)\n')],None,reader+'cli.md'),
+ ('script-flag:remove','scripts/deploy.sh',[(' [--with-code]',''),('    --with-code)\n      with_code=1\n      ;;\n','')],None,reader+'cli.md'),
+ ]
+ for name,source,replacements,append,target in cases:
+  if any(row['name']==name for row in result['cases']):continue
+  f=T/source;original=f.read_bytes();text=original.decode();beforeReader=(T/target).read_bytes()
+  if replacements=='JSON_ADD':
+   v=json.loads(text);v['ap98Mutation']={'nestedField':True};text=json.dumps(v,indent=2)+'\n'
+  elif replacements is None:text=text.rstrip()+'\n'+append+'\n'
+  else:
+   for old,new in replacements:
+    assert text.count(old)==1,(name,old,text.count(old));text=text.replace(old,new,1)
+  f.write_text(text);row={'name':name,'source':source,'readerTarget':target,'constructor':'Exact existing check-configuration-drift-mutations.mjs source transformation','oldSourceSha256':sha(original),'mutatedSourceSha256':sha(f.read_bytes())};result['cases'].append(row);persist()
+  try:
+   row['native']=run(name);row['outputsUnchanged']=all((T/p).read_bytes()==b for p,b in outputbytes.items());row['readerUnchanged']=(T/target).read_bytes()==beforeReader;persist()
+   assert row['native']['exitCode']!=0,'mutated source unexpectedly green'
+   out=row['native']['output'];assert 'API_PRODUCT_DIAGNOSTIC_SOURCE_ROLE_UNQUALIFIED' not in out and 'API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED' not in out,out
+   # Preserve native diagnostic for independent classification; do not auto-count
+   # an unfamiliar admission/parser/tool failure as a passing original mutation.
+   row['classification']='PENDING_INDEPENDENT_DIAGNOSTIC_CLASSIFICATION';persist()
+  finally:f.write_bytes(original)
+  row['restoration']={'mode':'Exact original source/output bytes restored; shared final native check runs after finite cases, not ten unchanged fullscope reruns'};row['sourceByteExactRestored']=f.read_bytes()==original;row['outputsByteExactRestored']=all((T/p).read_bytes()==b for p,b in outputbytes.items());persist();assert row['sourceByteExactRestored'] and row['outputsByteExactRestored']
+ result['finalRestoredNative']=run('final-restored');persist();assert result['finalRestoredNative']['exitCode']==0,result['finalRestoredNative']['output']
+ result['status']='ALL_TEN_ACTUAL_NEGATIVE_AND_EXACT_RESTORED_SOURCE_PLUS_FINAL_NATIVE0_PENDING_INDEPENDENT_CLASSIFICATION'
+except Exception as e:result['failure']=repr(e);result['status']='PRESERVED_REAL_EXECUTION_OR_FIXTURE_FAILURE';raise
+finally:
+ persist();shutil.rmtree(T);result['ownedFixtureRemoved']=not T.exists();persist()

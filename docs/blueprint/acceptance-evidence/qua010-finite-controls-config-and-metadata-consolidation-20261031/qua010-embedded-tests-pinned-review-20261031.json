@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The added focused change/remove cases exercise the intended production parser entry points, preserve the unrelated extracted-name set, and verify the original source fixture remains extractable. The collector map initialization supplies the required production context in the VM harness.",
+  "overall_confidence": 0.91
+}

@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The case-insensitive flag fixes the documented editorial-capitalization failure while preserving all three required role phrases in their original order. No behavioral assertions, observer configuration semantics, or validation coverage are bypassed by this one-line change.",
+  "overall_confidence": 0.99
+}

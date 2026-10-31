@@ -1,0 +1,2564 @@
+{
+  "at": "2026-10-31T19:59:01.013733+00:00",
+  "fieldsChanged": 221,
+  "fillOnlyFields": 217,
+  "nonemptyOwnerCorrections": 4,
+  "changes": [
+    {
+      "id": "FLW-001",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-001",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-001",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-001",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-002",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-002",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-002",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-002",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-003",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-003",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-003",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-003",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-004",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-004",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-004",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-004",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-005",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-005",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-005",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-005",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-006",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-006",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-006",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-006",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-007",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-007",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-007",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-007",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-008",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-008",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-008",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-008",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-009",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-009",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-009",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-009",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-010",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-010",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-010",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-010",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-012",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-012",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-012",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-012",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-013",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-013",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-013",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-013",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-014",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-014",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-014",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-014",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-015",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-015",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-015",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-015",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-016",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-016",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-016",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-016",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "FLW-017",
+      "field": "pageOwner",
+      "old": null,
+      "new": "product integration maintainers"
+    },
+    {
+      "id": "FLW-017",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "FLW-017",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "skills/nova/project/compiler.ts",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/worker-result-recovery.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/tailnet-exposure.md"
+      ]
+    },
+    {
+      "id": "FLW-017",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-001",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-001",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-001",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-001",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-002",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-002",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-002",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-002",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-003",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-003",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-003",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-003",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-004",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-004",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-004",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-004",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-005",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-005",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-005",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-005",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-006",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-006",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-006",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-006",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-007",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-007",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-007",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-007",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-008",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-008",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-008",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-008",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "DEV-009",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers"
+    },
+    {
+      "id": "DEV-009",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "DEV-009",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "package-lock.json",
+        "tsconfig.base.json",
+        "packaging/runtime/package-ownership.json",
+        "versions.json",
+        ".github/workflows",
+        "skills/nova/core",
+        "skills/worker/core",
+        "skills/buster/engine",
+        "skills/prism",
+        "tools/ops-mcp",
+        "scripts"
+      ]
+    },
+    {
+      "id": "DEV-009",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-001",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-001",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-001",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-001",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-002",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-002",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-002",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-002",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-003",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-003",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-003",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-003",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-004",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-004",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-004",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-004",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-005",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-005",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-005",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-005",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-006",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-006",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-006",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-006",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-007",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-007",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-007",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-007",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-010",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-010",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-010",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-010",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-011",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-011",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-011",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-011",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-012",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-012",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-012",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-012",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "CDV-013",
+      "field": "pageOwner",
+      "old": null,
+      "new": "developer experience maintainers; each component owner retains implementation authority"
+    },
+    {
+      "id": "CDV-013",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "CDV-013",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "package.json",
+        "skills/prism/package.json",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/prism/storage/index.ts",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/docs-checks.yaml"
+      ]
+    },
+    {
+      "id": "CDV-013",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "REF-003",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation; each named consumer owns its setting semantics"
+    },
+    {
+      "id": "REF-004",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation. Consumer semantics belong to the named component."
+    },
+    {
+      "id": "REF-006",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation; named components own diagnostic and delivery semantics"
+    },
+    {
+      "id": "REF-006",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored-with-generated-region"
+    },
+    {
+      "id": "REF-006",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-event-contracts.mjs",
+        "scripts/lib/docs-event-contracts.mjs",
+        "scripts/lib/docs-event-reference-collector.mjs",
+        "scripts/lib/docs-event-reference.mjs",
+        "docs/config/event-reference-bindings.json",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/telemetry/observers.ts",
+        "skills/nova/core/telemetry/observer-delivery.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/core/telemetry/audit.ts",
+        "contracts/agent-observability/v1/src/constants.ts"
+      ]
+    },
+    {
+      "id": "REF-006",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:events:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "REF-009",
+      "field": "pageOwner",
+      "old": null,
+      "new": "runtime packaging, Nova, Buster, Prism, and Worker Core maintainers"
+    },
+    {
+      "id": "REF-009",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "REF-009",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/values.yaml",
+        "packaging/runtime/external-capabilities.json",
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/prism.json",
+        "scripts/build-runtime-role-bundle.mjs",
+        "scripts/check-runtime-role-manifests.mjs",
+        "skills/buster/engine/remote-plan-cli.ts",
+        "skills/buster/engine/test-gates/production.ts",
+        "skills/buster/engine/test-gates/remote-plan-http.ts",
+        "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/legacy-import-cli.ts",
+        "skills/nova/project/recovery.ts",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/engine/index.ts",
+        "skills/prism/engine/worker-binding.ts",
+        "skills/prism/runtime.ts",
+        "skills/prism/server/internal-auth.ts",
+        "skills/prism/server/native-worker-execution.ts",
+        "skills/prism/server/native-worker-host.ts",
+        "skills/prism/server/worker-config.ts",
+        "skills/prism/server/worker.ts",
+        "skills/worker/core/worker/native-attempt-executor.ts",
+        "skills/worker/core/worker/native-attempt-journal.ts",
+        "skills/worker/core/worker/native-pool-policy.ts",
+        "skills/worker/core/worker/native-result.ts",
+        "skills/worker/core/worker/native-runtime-identity.ts",
+        "skills/worker/core/worker/native-supervisor-authority.ts",
+        "skills/worker/core/worker/native-worker-launcher.c",
+        "skills/worker/core/worker/native-worker-process.ts",
+        "skills/worker/core/worker/trust.ts",
+        "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
+        "tests/verification/contracts/check-prism-runtime-role.mts"
+      ]
+    },
+    {
+      "id": "REF-009",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "REF-010",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation; named contract and store components own behavior"
+    },
+    {
+      "id": "REF-010",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "REF-010",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "skills/common/plugin-runtime/foundation/observability",
+        "skills/common/plugins/operator-messaging/src",
+        "skills/nova/plugins/review/src",
+        "contracts/prism/v1/src/baseline-archive.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "contracts/prism/v1/src/index.ts",
+        "contracts/delivery-manifest/v3/src/index.ts",
+        "skills/common/plugin-runtime/foundation/observability/record-retirement.ts"
+      ]
+    },
+    {
+      "id": "REF-010",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "REF-014",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation; named contract and store components own behavior"
+    },
+    {
+      "id": "REF-014",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "REF-014",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "skills/nova/core/execution/run-root.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/prism/storage/artifacts.ts",
+        "charts/prism/files/prism-backup.sh",
+        "docs/site/use/recovery.md"
+      ]
+    },
+    {
+      "id": "REF-014",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "REF-015",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation; release owners select artifacts and workload owners verify deployment"
+    },
+    {
+      "id": "REF-015",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "REF-015",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "versions.json",
+        ".github/workflows/build-images.yaml",
+        ".github/workflows/build-ops-mcp.yaml",
+        "scripts/updates/deployment-release.mjs",
+        "scripts/updates/oci-image-identity.mjs",
+        "scripts/updates/code-release.mjs"
+      ]
+    },
+    {
+      "id": "REF-015",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "REF-018",
+      "field": "pageOwner",
+      "old": null,
+      "new": "SDK maintainers (plugin-foundation)"
+    },
+    {
+      "id": "REF-018",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "REF-018",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "skills/common/plugin-runtime/sdk/package.json",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "skills/common/plugin-runtime/sdk/src/source-revision.ts",
+        "skills/common/plugin-runtime/sdk/src/review-subject.ts",
+        "skills/common/plugin-runtime/sdk/src/source-preflight.ts",
+        "skills/common/plugin-runtime/sdk/src/source-approval.ts",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "scripts/docs-sdk-semantics.mjs"
+      ]
+    },
+    {
+      "id": "REF-018",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:sdk:check",
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-001",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-001",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-001",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-001",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-002",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-002",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-002",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-002",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-003",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-003",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-003",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-003",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-004",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-004",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-004",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-004",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-005",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-005",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-005",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-005",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-006",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-006",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-006",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-006",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-007",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-007",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-007",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-007",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-008",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-008",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-008",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-008",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "PUB-009",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "PUB-009",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "PUB-009",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-reader/page-records.mjs",
+        "scripts/tests/docs-reader-page-records.test.mjs",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/diagrams.mjs",
+        "scripts/docs-reader/check-diagrams.mjs",
+        "scripts/tests/docs-reader-diagrams.test.mjs",
+        "docs/config/documentation-diagrams.json",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/docs-reader/redirects.mjs",
+        "scripts/docs-reader/serve.mjs",
+        "scripts/tests/docs-reader-redirects.test.mjs",
+        "scripts/tests/docs-reader-redirects.browser.mjs"
+      ]
+    },
+    {
+      "id": "PUB-009",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "MNT-001",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "MNT-003",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "MNT-009",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "MNT-014",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "MNT-014",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "MNT-014",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-governance.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/check-configuration-cli-drift.mjs",
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-tree-boundary.mjs",
+        "scripts/docs-parity-transition.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/documentation-tree-baseline.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/vendor-external-helm-authorities.mjs",
+        "scripts/external-helm-archives.json",
+        "scripts/docs-external-helm-authority-lock.json",
+        "scripts/tests/vendor-external-helm-authorities.test.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-argocd-checked-artifact-authority.json"
+      ]
+    },
+    {
+      "id": "MNT-014",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "MNT-017",
+      "field": "pageOwner",
+      "old": null,
+      "new": "documentation"
+    },
+    {
+      "id": "MNT-017",
+      "field": "contentKind",
+      "old": "not-in-current-map",
+      "new": "authored"
+    },
+    {
+      "id": "MNT-017",
+      "field": "sourceDependencies",
+      "old": [],
+      "new": [
+        "scripts/docs-governance.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/check-configuration-cli-drift.mjs",
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-tree-boundary.mjs",
+        "scripts/docs-parity-transition.mjs",
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/documentation-tree-baseline.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "package.json",
+        ".github/workflows/docs-checks.yaml",
+        "scripts/vendor-external-helm-authorities.mjs",
+        "scripts/external-helm-archives.json",
+        "scripts/docs-external-helm-authority-lock.json",
+        "scripts/tests/vendor-external-helm-authorities.test.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-api-argocd-checked-artifact-authority.json"
+      ]
+    },
+    {
+      "id": "MNT-017",
+      "field": "automatedChecks",
+      "old": [],
+      "new": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "id": "REF-005",
+      "field": "pageOwner",
+      "old": "documentation",
+      "new": "documentation; named components own diagnostic and delivery semantics",
+      "basis": "Canonical pageOwner follows currently governed page Owner; catalogueOwner remains distinct original catalogue role. Current native governance passed184pages."
+    },
+    {
+      "id": "MNT-004",
+      "field": "pageOwner",
+      "old": "documentation automation",
+      "new": "documentation",
+      "basis": "Canonical pageOwner follows currently governed page Owner; catalogueOwner remains distinct original catalogue role. Current native governance passed184pages."
+    },
+    {
+      "id": "QUA-001",
+      "field": "pageOwner",
+      "old": "documentation",
+      "new": "platform operator",
+      "basis": "Canonical pageOwner follows currently governed page Owner; catalogueOwner remains distinct original catalogue role. Current native governance passed184pages."
+    },
+    {
+      "id": "QUA-004",
+      "field": "pageOwner",
+      "old": "documentation",
+      "new": "platform operator",
+      "basis": "Canonical pageOwner follows currently governed page Owner; catalogueOwner remains distinct original catalogue role. Current native governance passed184pages."
+    }
+  ],
+  "originalAcceptanceStatesUnchanged": true,
+  "requirementsAccepted": 258,
+  "threeOpenRequirementReasonsUpdatedWithHistory": [
+    "PUB-007",
+    "QUA-007",
+    "QUA-010"
+  ],
+  "canonicalMapSha256": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223",
+  "review": "Deterministic217field proposal independentlyqualified; fourcanonicalownerrolecorrections and actualcurrentjoin need final independent validation before A91301registration."
+}

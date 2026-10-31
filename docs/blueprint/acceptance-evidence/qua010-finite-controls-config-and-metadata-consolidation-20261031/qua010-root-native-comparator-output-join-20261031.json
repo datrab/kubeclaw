@@ -1,0 +1,31 @@
+{
+  "at": "2026-10-31T20:20:40.096875+00:00",
+  "verdict": "PASS_ROOT_FOUR_OUTPUTS_BYTE_EQUAL_ACTUAL_SUPPORTED_0_1_0_COMPARATOR",
+  "outputs": [
+    {
+      "file": "configuration-families.json",
+      "sha256": "75c35bec0a249d22df27bd0bce47e84ac2d37b88dce41e41d8a12c3f0cbebedb",
+      "rootEqualsActualTestedOutput": true
+    },
+    {
+      "file": "configuration-helm-values.json",
+      "sha256": "85e0463ba92eead94091cef8f2e5ad14e5658ad485fa7c67b0a6abd8c6bfb841",
+      "rootEqualsActualTestedOutput": true
+    },
+    {
+      "file": "configuration-runtime-inputs.json",
+      "sha256": "e8120484c2798161773e01a99349c1e31e26e9fb2519c0317b8e76e351209c6d",
+      "rootEqualsActualTestedOutput": true
+    },
+    {
+      "file": "configuration-schemas.json",
+      "sha256": "d6d539677e89ed0c41c964c0f983588a8eef23d1e4ff272c237d3d9ebb5c7206",
+      "rootEqualsActualTestedOutput": true
+    }
+  ],
+  "nativeReceipt": "qua010-shared-native-config-comparator-20261031.json",
+  "limits": [
+    "Default global API program-output acquisition failure unwaived",
+    "No whole QUA010 or mutation acceptance inferred"
+  ]
+}

@@ -1,0 +1,441 @@
+{
+  "at": "2026-10-31T20:16:18.618685+00:00",
+  "reviewer": "Independent native non-author /root/qua010_execution_path",
+  "sourceRevision": "96daf5b514f5088b609f3e0f8a5d533d076b4a19",
+  "mode": "Bounded existing proof consolidation, no new source audit/test/generator/repository mutations",
+  "newActualEvidenceJudgments": {
+    "events": {
+      "verdict": "PASS_AT_CURRENT_PRODUCT_EVENT_PATH",
+      "basis": "Actual current audit producer Add, version Change, journal-head Remove each rejects by maintained semantic-source-disposition gate, names canonical events reader, leaves inventory/page unchanged, then restored native check0 and source/output equality. This is actual configured source-admission drift, not runtime event emission or field-hash-as-semantic review.",
+      "evidence": "operations/pr13/evidence/qua010-current-product-event-acr-20261031.json"
+    },
+    "fourEmbeddedExtractors": {
+      "verdict": "PASS_COMPOSITIONAL_DISTINCT_EXTRACTION_CHANGE_REMOVE_SCOPE",
+      "basis": "Eight cases execute actual production extraction functions, positively acquire baseline, show renamed/removed selected reads with unrelated readers preserved, restore complete occurrence vector, and assert maintained process-environment->ENVreader/governedowner/check relation plus unchanged page. Real full Nodeheredoc and inlineNode sources; Python and YAMLcommand/heredoc are existing supported parserfixtures, not product runtime proof. Passive ConfigMap cat-only recipe is correctly not counted. Fullfile90PASS/34existingSKIP is only supporting execution context; exact eight names/operations carry scope.",
+      "evidence": [
+        "operations/pr13/evidence/qua010-eight-embedded-config-extractor-controls-v3-20261031.log",
+        "operations/pr13/evidence/qua010-complete-existing-python-environment-tests-20261031.log",
+        "operations/pr13/evidence/qua010-embedded-tests-pinned-review-20261031.json",
+        "scripts/tests/python-environment-discovery.test.mjs:1822"
+      ],
+      "limits": "Change/Remove of extraction is meaningful; these tests do not each run a whole inventory or claim per-case semantic-gap refusal on Remove. Extant-reader coverage cannot detect absent readers; shared exact comparison is needed."
+    },
+    "sharedNativeComparison": {
+      "verdict": "PASS_CURRENT_SUPPORTED_0_1_0",
+      "actualExitCodes": [
+        0,
+        1,
+        0
+      ],
+      "actualSeconds": [
+        152.1972994300304,
+        147.61803017708007,
+        153.84928344702348
+      ],
+      "basis": "Actual strict supported configuration-reference-only baseline0, one stale output byte refused1 naming configuration-runtime-inputs.json, exact restored artifact nativecheck0. Same ordinary YAML/schema/runtime/Secret/source-family guards; defaultAPI not claimed. Four extractor changes/removals and existing Add/coverage controls feed this common inventory projection/comparison; shared use is valid at that bounded path. This does not replace independent YAML/config/CLI extraction outcomes or separate DeploymentAPI semantic resolver proof.",
+      "evidence": "operations/pr13/evidence/qua010-shared-native-config-comparator-20261031.json"
+    },
+    "reusableActualPlatform": {
+      "verdict": "PASS_AT_PREVIOUSLY_QUALIFIED_PATHS",
+      "actualExitCode": 0,
+      "basis": "Complete43actual cases in postchange log cover sourceTS/JSendpoint, Go controller, prefix/static fallback, outbound/Go outbound, event/store/ops and renderedHelm dependency/claim/Secret/service paths; exact diagnostic group comparison. No platform rerun required for unrelated globalAPI or eight embedded cases. Existing whole CFG012/current69record semantic preservation carries corrected source scope; sourceparser/event current deltas qualified separately.",
+      "evidence": [
+        "operations/pr13/evidence/cfg012-whole-original-20261028/native-controls/actual-postchange-platform-mutation-check.json",
+        "operations/pr13/evidence/cfg012-whole-original-20261028/native-controls/actual-postchange-platform-mutation-check.log"
+      ]
+    },
+    "reusableActualPluginErrorSdkWorkflow": {
+      "verdict": "PASS_AT_ACTUAL_PREVIOUS_BOUNDED_SCOPES",
+      "basis": "Actual A91014 manifest/extension/error/SDK+schema stdout logs contain baseline, explicit A/C/R diagnostic+reader, no-write/restoredgreen; actual A9913 independent seven-dimension verdict and progress log substantiate their original mapped scopes. Separate common error MNT011 sharedguard A/C/R and current Source-bound common catalogue remain useful. No allregistration or allSDK parser award inferred from a singlemanifest runner.",
+      "evidence": [
+        "operations/pr13/evidence/extension-guide-drift-20261023/check-plugin-manifest-drift-mutations.mjs.stdout",
+        "operations/pr13/evidence/extension-guide-drift-20261023/check-extension-class-drift-mutations.mjs.stdout",
+        "operations/pr13/evidence/extension-guide-drift-20261023/check-error-code-drift-mutations.mjs.stdout",
+        "operations/pr13/evidence/extension-guide-drift-20261023/check-contract-drift-mutations.mjs.stdout",
+        "operations/pr13/evidence/extension-guide-drift-20261023/check-schema-drift-mutations.mjs.stdout",
+        "operations/pr13/evidence/a9913-20261025/gate-verdict.json",
+        "operations/pr13/evidence/a9913-20261025/original-progress-mutations.log",
+        "operations/pr13/evidence/mnt011-common-error-drift-20261030/actual-common-source-add-change-remove-controls.json"
+      ]
+    }
+  },
+  "decisions": {
+    "A98-14": {
+      "verdict": "NOT_READY_ACTUAL_FIVE_ADDITION_OUTCOMES_NOT_ESTABLISHED_BY_AVAILABLE_REUSE",
+      "criterionCitation": "docs/blueprint/AP09-acceptance-contract.md:118",
+      "Source": "PASS_FOR_INSPECTED_EXISTING_CONSTRUCTORS_NOT_EXECUTION_AWARD",
+      "Reader": "PARTIAL_ACTUAL_ENV_JOIN_AND_REUSED_SCOPES",
+      "Quality": "NOT_READY_FOR_WHOLE_ACTUAL_MUTATION_CRITERION",
+      "missingOriginalCase": "Actual Add-to-product rejection outcomes for each original Helm-field/environment/Secret/scriptflag/swarm-config-field with affected operator reader. Matrix explicitly labels original fullconfig result historical-terminal-pass-claim-original-log-unavailable; current focused attempt failed BEFORE these mutations. Neither new8ChangeRemove extractor tests nor stalebyte1 substitutes for these five different original Add obligations.",
+      "finiteNextAction": "Reuse matching actual independently qualified5Add log if precisely available; otherwise execute ONLY five named existing Add constructors under current supported configuration-reference/runtime mode (strict baseline, real newly undocumented source facts, correct reader, restore0). Do not rerun full defaultmatrix or valid unrelated parser families."
+    },
+    "QUA-010": {
+      "verdict": "NOT_READY_WHOLE_DISTINCT_PATH_JOIN",
+      "criterionCitation": "docs/blueprint/AP09-completeness-audit.md:429 and current QUA010closureDecision",
+      "Source": "PASS_FOR_NEW_EVENT_AND_FOUR_EMBEDDED_SCOPE",
+      "Reader": "PASS_FOR_NEW_EVENT_AND_EMBEDDED_ENV_TARGETS; other mapped results retain their original bounds",
+      "Quality": "NOT_READY_WHOLE_UNJOINED_ACTUAL_CONFIG_FLAG_RESULTS",
+      "missingOriginalCase": "Original independent config/flag source changes still need matching actual Add/Change/Remove outcome/reuse at their existing parser scope, particularly the five named configuration additions above and shell-versusTSCLI distinct path outcome. Current event3/embedded8/comparator0_1_0 genuinely close their bounded missing scopes but are not the whole original5kind probe. No matching complete configuration/flag native outcome was established from currently available actual receipts; do not count unavailable oldlogs or testexistence.",
+      "finiteNextAction": "Finish only original fiveAdd outcomes and match existing actual shell/TSCLI A/C/R logs or execute supported focused unchanged constructors where genuinely uncovered. Then one independent whole QUA010correctreader/distinctpath join, not another general content campaign."
+    },
+    "A911-11": {
+      "verdict": "NOT_READY_KNOWN_DISTINCT_API_RESOLVER_CASE",
+      "criterionCitation": "docs/blueprint/AP09-acceptance-contract.md:211 and :246-259",
+      "Source": "PASS_FOR_AVAILABLE_QUALIFIED_PATHS; original resolver gap retained",
+      "Reader": "PASS_AT_NAMED_CURRENT_AND_REUSED_TARGETS_NOT_WHOLE_AWARD",
+      "Quality": "NOT_READY_ORIGINAL_SEMANTIC_RESOLVER_PROBE_UNMET",
+      "missingOriginalCase": "DeploymentAPI field resolver meaningful semantic Add/Change/Remove has no superseding actual proof established. Exact originalcontract explicitly says api-operational-field:add plus lockbytes/sourcecontent/parent-substitution do NOT establish semantic A/C/R; embedded-payload A/C/R tests different payload boundary. Full43platform A/C/R and recursiveJSONschema tests do not silently close this independent resolution path. Also finish actual config/flag receipts above before whole join.",
+      "finiteNextAction": "Inspect ONLY existing API field-resolver positive fixture and current selected-source native owner path; reuse any actual later semantic A/C/R result if found. If not, add/run representative3semantic field operations against SAME resolver and correct Helm/config reader, retaining guards/defaultAPI limits. No universal new API acquisition platform or broad reruns."
+    },
+    "A913-08": {
+      "verdict": "NOT_READY_SAME_DISTINCT_API_RESOLVER_AND_CONFIG_EVIDENCE_JOIN",
+      "criterionCitation": "docs/blueprint/AP09-acceptance-contract.md:297",
+      "Source": "Same exact relevant actual/reused path qualifications as A91111",
+      "Reader": "Same correctreader bounded pass; no unrelated judgment",
+      "Quality": "NOT_READY_ORIGINAL_DISTINCT_PATH_REMAINDER",
+      "missingOriginalCase": "Share actual results with A98-14/A911-11/QUA010; remaining original uncovered configuration/flag outcomes and semantic DeploymentAPI resolver A/C/R are not satisfied by newevent/embedded/sharedstale controls alone.",
+      "finiteNextAction": "One coherent finite missing-path batch and one independent consolidation may support all relevant original gates; no per-gate duplicate execution."
+    }
+  },
+  "preservedFailures": [
+    "operations/pr13/evidence/qua010-current-embedded-node-20261031.log",
+    "operations/pr13/evidence/qua010-corrected-embedded-node-20261031.log",
+    "operations/pr13/evidence/qua010-eight-embedded-config-extractor-controls-20261031.log",
+    "operations/pr13/evidence/qua010-eight-embedded-config-extractor-controls-v2-20261031.log"
+  ],
+  "preservedLimits": [
+    "Default globalAPI role acquisition failure is not mutation success and is not a new prerequisite for supported selected-YAML parser/configuration scope.",
+    "No fixture-native language extraction is live product deployment, actual event emission, Secret availability, browser/AT or operator participant execution.",
+    "No previously accepted record/gate withdrawn or recounted. New narrower PASS facets are material progress, not whole4gate awards.",
+    "AP10parity/deletion remains separately deferred; no original criterion lowered."
+  ],
+  "registrationRecommendation": "No new whole acceptance from this report. Root may use exact bounded completed scopes, finish genuinely uncovered named original probes, commit reviewed source and obtain final coherent artifact/checker/exactremote.",
+  "effects": "Only this external evidence JSON written; no repo mutation, test execution, source/receipt rewrite or audit fan-out.",
+  "laterActualApiJoinDecision": {
+    "at": "2026-10-31T20:36:31.409721+00:00",
+    "verdict": "PASS_AT_PREVIOUSLY_MISSING_DISTINCT_DEPLOYMENT_API_RESOLVER_PATH_COMPOSITIONAL_SCOPE",
+    "originalRequirement": "Representative semantic Add/Change/Remove of actual independent resolver with proper reader, common comparator allowed; not every rawexception must printreader.",
+    "actualSemanticOperations": [
+      {
+        "operation": "add",
+        "before": "Actual complete Deployment source; no authored spec.progressDeadlineSeconds in baseline",
+        "constructor": "const v=structuredClone(doc); v.spec.progressDeadlineSeconds=600; const text=YAML.stringify(v);",
+        "executedAssertions": [
+          "assert(authored(actual,'$.spec.progressDeadlineSeconds'))",
+          "assert.equal(apiFieldSchemaAuthority('apps/v1','Deployment','spec.progressDeadlineSeconds').type,'integer')"
+        ],
+        "actualResult": "Assertions passed; mutation source SHA95239b47daa60df4984ff21b3fd045f4c3e18d1949957a2daae28f35b3a05c06"
+      },
+      {
+        "operation": "change",
+        "before": "Baseline spec.replicas=1 (authored)",
+        "constructor": "const v=structuredClone(doc); delete v.spec.replicas; v.spec.paused=true; const text=YAML.stringify(v);",
+        "executedAssertions": [
+          "assert(!authored(actual,'$.spec.replicas'))",
+          "assert(authored(actual,'$.spec.paused'))",
+          "assert.equal(apiFieldSchemaAuthority('apps/v1','Deployment','spec.paused').type,'boolean')"
+        ],
+        "actualResult": "Assertions passed; mutation source SHA59c4fe123633196f17803d9ff2e4eb0698e1cd94b31bb843c1a40f668ee89f4b"
+      },
+      {
+        "operation": "remove",
+        "before": "Baseline spec.replicas=1 (authored)",
+        "constructor": "const v=structuredClone(doc); delete v.spec.replicas; const text=YAML.stringify(v);",
+        "executedAssertions": [
+          "assert(!authored(actual,'$.spec.replicas'))"
+        ],
+        "actualResult": "Assertion passed; omission/default-selected replica coverage not wrongly discarded; mutation source SHA385cde82bbe831822342662ab3da5f0cbe8f7b04ba901af7fc2ea5316769a1ea"
+      }
+    ],
+    "actualRestoration": "assert.deepEqual(select(original),base) actually executed after each case; complete native selection restored, not only selectedfield hash.",
+    "feedAndOutputVerified": [
+      "buildConfigurationFamilyReference calls buildYamlInventory({selectedYamlOnly:true})",
+      "buildApiResourceInventory same apiProductSelection+versionedreceiverregistry",
+      "apiReceiverCoverage returns actual productSelection unchanged as serialized plain object",
+      "buildYamlInventory includes apiResources; selectedreference returns yaml as configuration-helm-values.json",
+      "Confirmed actual serialized baseline apps/v1Deployment productSelection.applicability[$.spec.replicas] contains EXACT actual authored selectedSource/field/digest; not an unconnected unit model",
+      "Same final stableJson/check loop for all4inventory outputs; actualstrict sharednative0_1_0 validates that comparison/restoration responsibility, no separateidenticalcomparator perfield required."
+    ],
+    "actualSerializedBaselineWitness": {
+      "document": 0,
+      "fieldPath": "$.spec.replicas",
+      "path": "my-values/infra/litellm-deployment.yaml",
+      "reason": "authored-resource-field",
+      "sourceDigest": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab"
+    },
+    "readerAssertion": {
+      "page": "docs/site/reference/api-object-updates.md",
+      "familyRoute": "[Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md)",
+      "owner": "platform operations",
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ],
+      "rawSourceOwnerEqualsGovernedMetadata": true
+    },
+    "whySemanticNotHash": "Native Add selects authored progressDeadlineSeconds with integer type; Change removes authoredreplicas and selects authoredpaused with boolean type; Remove removes authoredreplicas but keeps correct upstreamdefault/omission coverage. These actual structured membership/type assertions alter serialized semantic selection/applicability, not merely sourceDigest. Digest only binds the actualsource witness.",
+    "limits": [
+      "Rawunknownfieldexception lacks reader; probe-level maintainedroute assertion and reportedpage names correctreader as originalrequires. No nativeerror rewrite needed.",
+      "No defaultglobalAPI/programoutput, clusterexecution or everyDeploymentvariant proof.",
+      "Initial wrongassessororacle expecting allreplica fieldcoverage to vanish remains preserved; revised authored-vs-default test is genuine semantic correction, not waived guard.",
+      "This resolves named APIresolver missingpath only; whole4gate decisions still await actual config/flag cases and independent final join."
+    ],
+    "evidence": [
+      "operations/pr13/evidence/qua010-deployment-api-semantic-acr-20261031.json",
+      "operations/pr13/evidence/qua010-shared-native-config-comparator-20261031.json",
+      "operations/pr13/evidence/qua010-root-native-comparator-output-join-20261031.json",
+      "scripts/docs-configuration-inventory.mjs:2826",
+      "scripts/docs-api-receiver-coverage.mjs:54",
+      "scripts/docs-configuration-inventory.mjs:10443"
+    ]
+  },
+  "finalIndependentWholeOriginalDecision": {
+    "at": "2026-10-31T20:49:29.981884+00:00",
+    "currentRootRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+    "authorRole": "Non-author documentation/native-helper finalreviewer; authored only external isolated executiondriver, not reviewed product docs/native generators. Actual observations alone are not independent approval of own new productcode (none introduced).",
+    "originalScopeCorrection": "Earlier working NOT_READY overextended original QUA010 fivekind artificialchange into everyinternalparserlayer; retained historically, narrowly resolved against exact original audit429 and binding owner proportionality. A9814 Source/recipe CI catch and A91111/A91308 semantic/sharedway responsibility are now distinct explicit judgments. No original wording waived.",
+    "decisions": {
+      "A98-14": {
+        "originalWholeVerdict": "PASS",
+        "review": {
+          "sourceAccuracy": "PASS",
+          "readerUsability": "PASS",
+          "quality": "PASS"
+        },
+        "originalCriterion": "Five original additions: Helm field, environment setting, Secret, script flag and swarm.config field without Operator documentation must make CI owning checks reject; fieldcounts or unnoticed newfield fails.",
+        "substantiveSourceJudgment": "Allfive exact existing source constructors were actually exercised against strict supported native config composition. Each native check returns1 while source/output/readers are preserved and Source is exactly restored; final strict nativecheck0 actually observed154.55s. Helm sourceauthority and changed-script structuredrecipe gates genuinely protect the actual changed documentation Source; original A98-14 does not require bypassing these legitimate guards to force a particular deeper exception. Secret actual newname/key requires complete missingoperator contract; swarmactual schema/family output comparison detects declarednewfield. This is original CIcatch, not artificialfieldcount or unrelated genericAPI error.",
+        "substantiveReaderJudgment": "Each actual probe resolves correct maintained canonical operator reader and owner/check: Helmvalues, Environmentvariables, Secrets, CLI, Pluginconfiguration/rawSourcefield reference. Reader pages unchanged; raw nativeexceptions need not independently repeat the canonical path because probes name and verify actual maintained route.",
+        "substantiveQualityJudgment": "Actual0baseline/five1negatives/exact-restoration/final0 supported by durable rawcommands/logs/timings. No Sourceguard/pin/recipe exemptions; no hostedCI/runtime execution claimed. Former unavailable oldconfigurationlog was not reused as a successful newrun.",
+        "missingOriginalCondition": null,
+        "evidence": [
+          "operations/pr13/evidence/qua010-five-config-and-distinct-flags-actual-20261031.json",
+          "operations/pr13/evidence/qua010-root-native-comparator-output-join-20261031.json"
+        ]
+      },
+      "QUA-010": {
+        "originalWholeVerdict": "PASS",
+        "review": {
+          "sourceAccuracy": "PASS",
+          "readerUsability": "PASS",
+          "quality": "PASS"
+        },
+        "originalCriterion": "AP09-completeness-audit429: artificial new Config/Event/Plugin/Flag/error surfaces; CI catches each missingdocumentation. Do not silently replace narrower original criterion with universal everyASTlayer semantic certification.",
+        "substantiveSourceJudgment": "Actual five configuration/source additions and current native TSCLI Add/Change/Remove plus shell relevantSource recipe A/C/R protections now join actual current product event3source-disposition outcomes, unchanged qualified manifest plugin3 and Bustererror3 actual source controls, and later commonerror guard broader scope. At original fivekindmaintainability scope, relevant sameSource authority/recipe refusal is valid catch; it is explicitly not falsely labelled deep extraction semantics or a running newfeature. Current actual event sourceguard names eventsreader and restores0; plugin/error earlieractual reports name canonicalaffectedreaders and retain independently qualified sourcebounds.",
+        "substantiveReaderJudgment": "Actual current config/flag probes, productevent probes and reused plugin/error controls identify the right canonical reader through maintained family/source map or actual diagnostic. Source/output/restoration checks prevent covert regeneration. This is maintainer documentation-drift task, not a new operator/browser/human participant exercise.",
+        "substantiveQualityJudgment": "Concrete original missing event/config/flag evidence is now actual, not testexistence, counters or absent receipts. Four embedded language parser Change/Remove controls and shared strict actual0/1/0 comparison provide supplementary distinctpath qualification with honest fixtures. No original material maintainability gap remains identified; initial broad NOT_READY remains historical.",
+        "missingOriginalCondition": null,
+        "evidence": [
+          "operations/pr13/evidence/qua010-five-config-and-distinct-flags-actual-20261031.json",
+          "operations/pr13/evidence/qua010-current-product-event-acr-20261031.json",
+          "operations/pr13/evidence/extension-guide-drift-20261023/check-plugin-manifest-drift-mutations.mjs.stdout",
+          "operations/pr13/evidence/extension-guide-drift-20261023/check-error-code-drift-mutations.mjs.stdout",
+          "operations/pr13/evidence/mnt011-common-error-drift-20261030/actual-common-source-add-change-remove-controls.json"
+        ]
+      },
+      "A911-11": {
+        "originalWholeVerdict": "PASS",
+        "review": {
+          "sourceAccuracy": "PASS",
+          "readerUsability": "PASS",
+          "quality": "PASS"
+        },
+        "originalCriterion": "Representative Add/Change/Remove for each actually different generator/parser detects stale docs and names affectedreader; shared paths may reuse an explained probe. Unrelated buildfailure is never drift proof.",
+        "substantiveSourceJudgment": "The finite original contract211\u2013259 path map is independently joined, not promoted from QUA010 or related counters. New8actual production embedded Node/Python/YAML extraction Change/Remove cases close their explicit Add-only gap, with actualcommon4output nativecomparison0/1/0 and verified ENVreader. Separate deployedAPI resolver actualsemantic3Add/Change/Remove changes authoredfield applicability/type, preserves validdefaultcoverage on Remove, and restores full selection; independently verified same real productionfeed into serialized configuration-helm-values productSelection plus common comparator and APIreader route. This is genuine semanticcoverage, not Sourceidentity/lockbytes/parent/payload substitution. Actualcurrent TSCLI A/C/R stale output complements unchanged prior MNT004 native shell and typed source A/C/R/default tests. Other SDK/schema/workflow/progress/capability/manifest/extension/provider/fixture/report and platformTS/Go/prefix/outbound/Helm-resource/store/ops scopes reuse their actual bounded original A91014/A9913/CFG012/MNT semantic controls, not one-manifest or platform-only extrapolation.",
+        "substantiveReaderJudgment": "The new probes assert maintained ENV/CLI/config/API canonicalroutes and page owner/checks; eventnative probe explicitly names eventsreader. Prior actualmanifest/error/schema/contract/registration/platform reports retain their named owningreference/explanation routes. A probe-level verified canonicalroute satisfies original wording; absence of reader in a rawunknownAPIexception is retained limiteddiagnostic behavior, not an invented mandatory error-code rewrite.",
+        "substantiveQualityJudgment": "Explicit split between sourceCIcatch and semanticparserproof is maintained: Helmidentity/deployrecipe catches do not themselves prove innerfield/CLIextractor behavior; available nativeparser semantic fixtures and sharedoutputcomparison supply those complementary responsibilities. Actual parsed shell native source add/change/remove/default tests and actual typed alias/default tests are present in retained MNT004 logs, not inferred from files. Valid sharedYAML/serializedcomparison responsibilities reused once; no duplication perSourcekind/nestedtoken or genericreflectionplatform required. Previously named real parser gaps now have bounded actual results and correctreader join. No remaining actual independent original path is established as uncovered in finite maintained mapping.",
+        "missingOriginalCondition": null,
+        "evidence": [
+          "operations/pr13/evidence/qua010-five-config-and-distinct-flags-actual-20261031.json",
+          "operations/pr13/evidence/qua010-deployment-api-semantic-acr-20261031.json",
+          "operations/pr13/evidence/qua010-shared-native-config-comparator-20261031.json",
+          "operations/pr13/evidence/qua010-eight-embedded-config-extractor-controls-v3-20261031.log",
+          "operations/pr13/evidence/mnt004-original-20261028/native-corrected-shell-native-root-tests.log",
+          "operations/pr13/evidence/mnt004-original-20261028/native-corrected-nonshell-tests.log",
+          "operations/pr13/evidence/mnt004-original-20261028/coherent-correction-current-controls.json",
+          "operations/pr13/evidence/cfg012-whole-original-20261028/native-controls/actual-postchange-platform-mutation-check.log",
+          "operations/pr13/evidence/a9913-20261025/gate-verdict.json"
+        ]
+      },
+      "A913-08": {
+        "originalWholeVerdict": "PASS",
+        "review": {
+          "sourceAccuracy": "PASS",
+          "readerUsability": "PASS",
+          "quality": "PASS"
+        },
+        "originalCriterion": "Representative probes cover actually distinct generator/parser ways with Add/Change/Remove and correct reader; valid existing probes reused, sharedways explained.",
+        "substantiveSourceJudgment": "Same actual finite path responsibilities independently assessed for A91111 above substantiate this original integrated drift condition; acceptance is an explicit original judgment, not copied state or a second execution. New event/embedded/config/flag/APIsemantic results join retained actualindependent nativeways. Sharedcomparisonloop justified by exact productioncallgraph and actualserialized baseline witness.",
+        "substantiveReaderJudgment": "Correctreader proof retained at each distinct Sourcekind; actual maintainedroute assertions make stale rawinventory paths useful without pretending every errorprints a page. Explicit fixture/inactive/declaration distinctions remain.",
+        "substantiveQualityJudgment": "Same actualresults may serve this gate and A91111/A9814/QUA010 at their separate conditions. Failures/initialmisoracles/controller interruptions/olddefaultAPI stops preserved; no broad reruns, Sourceguard weakening, generatedreceipt rewrite or hash-as-semantic behavior proof.",
+        "missingOriginalCondition": null,
+        "evidence": [
+          "operations/pr13/evidence/qua010-and-shared-drift-original-consolidated-decision-20261031.json",
+          "operations/pr13/evidence/qua010-five-config-and-distinct-flags-actual-20261031.json",
+          "operations/pr13/evidence/qua010-deployment-api-semantic-acr-20261031.json",
+          "operations/pr13/evidence/qua010-shared-native-config-comparator-20261031.json"
+        ]
+      }
+    },
+    "existingActualScopeReuseReferences": {
+      "events": {
+        "verdict": "PASS_AT_CURRENT_PRODUCT_EVENT_PATH",
+        "basis": "Actual current audit producer Add, version Change, journal-head Remove each rejects by maintained semantic-source-disposition gate, names canonical events reader, leaves inventory/page unchanged, then restored native check0 and source/output equality. This is actual configured source-admission drift, not runtime event emission or field-hash-as-semantic review.",
+        "evidence": "operations/pr13/evidence/qua010-current-product-event-acr-20261031.json"
+      },
+      "fourEmbeddedExtractors": {
+        "verdict": "PASS_COMPOSITIONAL_DISTINCT_EXTRACTION_CHANGE_REMOVE_SCOPE",
+        "basis": "Eight cases execute actual production extraction functions, positively acquire baseline, show renamed/removed selected reads with unrelated readers preserved, restore complete occurrence vector, and assert maintained process-environment->ENVreader/governedowner/check relation plus unchanged page. Real full Nodeheredoc and inlineNode sources; Python and YAMLcommand/heredoc are existing supported parserfixtures, not product runtime proof. Passive ConfigMap cat-only recipe is correctly not counted. Fullfile90PASS/34existingSKIP is only supporting execution context; exact eight names/operations carry scope.",
+        "evidence": [
+          "operations/pr13/evidence/qua010-eight-embedded-config-extractor-controls-v3-20261031.log",
+          "operations/pr13/evidence/qua010-complete-existing-python-environment-tests-20261031.log",
+          "operations/pr13/evidence/qua010-embedded-tests-pinned-review-20261031.json",
+          "scripts/tests/python-environment-discovery.test.mjs:1822"
+        ],
+        "limits": "Change/Remove of extraction is meaningful; these tests do not each run a whole inventory or claim per-case semantic-gap refusal on Remove. Extant-reader coverage cannot detect absent readers; shared exact comparison is needed."
+      },
+      "sharedNativeComparison": {
+        "verdict": "PASS_CURRENT_SUPPORTED_0_1_0",
+        "actualExitCodes": [
+          0,
+          1,
+          0
+        ],
+        "actualSeconds": [
+          152.1972994300304,
+          147.61803017708007,
+          153.84928344702348
+        ],
+        "basis": "Actual strict supported configuration-reference-only baseline0, one stale output byte refused1 naming configuration-runtime-inputs.json, exact restored artifact nativecheck0. Same ordinary YAML/schema/runtime/Secret/source-family guards; defaultAPI not claimed. Four extractor changes/removals and existing Add/coverage controls feed this common inventory projection/comparison; shared use is valid at that bounded path. This does not replace independent YAML/config/CLI extraction outcomes or separate DeploymentAPI semantic resolver proof.",
+        "evidence": "operations/pr13/evidence/qua010-shared-native-config-comparator-20261031.json"
+      },
+      "reusableActualPlatform": {
+        "verdict": "PASS_AT_PREVIOUSLY_QUALIFIED_PATHS",
+        "actualExitCode": 0,
+        "basis": "Complete43actual cases in postchange log cover sourceTS/JSendpoint, Go controller, prefix/static fallback, outbound/Go outbound, event/store/ops and renderedHelm dependency/claim/Secret/service paths; exact diagnostic group comparison. No platform rerun required for unrelated globalAPI or eight embedded cases. Existing whole CFG012/current69record semantic preservation carries corrected source scope; sourceparser/event current deltas qualified separately.",
+        "evidence": [
+          "operations/pr13/evidence/cfg012-whole-original-20261028/native-controls/actual-postchange-platform-mutation-check.json",
+          "operations/pr13/evidence/cfg012-whole-original-20261028/native-controls/actual-postchange-platform-mutation-check.log"
+        ]
+      },
+      "reusableActualPluginErrorSdkWorkflow": {
+        "verdict": "PASS_AT_ACTUAL_PREVIOUS_BOUNDED_SCOPES",
+        "basis": "Actual A91014 manifest/extension/error/SDK+schema stdout logs contain baseline, explicit A/C/R diagnostic+reader, no-write/restoredgreen; actual A9913 independent seven-dimension verdict and progress log substantiate their original mapped scopes. Separate common error MNT011 sharedguard A/C/R and current Source-bound common catalogue remain useful. No allregistration or allSDK parser award inferred from a singlemanifest runner.",
+        "evidence": [
+          "operations/pr13/evidence/extension-guide-drift-20261023/check-plugin-manifest-drift-mutations.mjs.stdout",
+          "operations/pr13/evidence/extension-guide-drift-20261023/check-extension-class-drift-mutations.mjs.stdout",
+          "operations/pr13/evidence/extension-guide-drift-20261023/check-error-code-drift-mutations.mjs.stdout",
+          "operations/pr13/evidence/extension-guide-drift-20261023/check-contract-drift-mutations.mjs.stdout",
+          "operations/pr13/evidence/extension-guide-drift-20261023/check-schema-drift-mutations.mjs.stdout",
+          "operations/pr13/evidence/a9913-20261025/gate-verdict.json",
+          "operations/pr13/evidence/a9913-20261025/original-progress-mutations.log",
+          "operations/pr13/evidence/mnt011-common-error-drift-20261030/actual-common-source-add-change-remove-controls.json"
+        ]
+      }
+    },
+    "resolvedApiSemanticJoin": {
+      "at": "2026-10-31T20:36:31.409721+00:00",
+      "verdict": "PASS_AT_PREVIOUSLY_MISSING_DISTINCT_DEPLOYMENT_API_RESOLVER_PATH_COMPOSITIONAL_SCOPE",
+      "originalRequirement": "Representative semantic Add/Change/Remove of actual independent resolver with proper reader, common comparator allowed; not every rawexception must printreader.",
+      "actualSemanticOperations": [
+        {
+          "operation": "add",
+          "before": "Actual complete Deployment source; no authored spec.progressDeadlineSeconds in baseline",
+          "constructor": "const v=structuredClone(doc); v.spec.progressDeadlineSeconds=600; const text=YAML.stringify(v);",
+          "executedAssertions": [
+            "assert(authored(actual,'$.spec.progressDeadlineSeconds'))",
+            "assert.equal(apiFieldSchemaAuthority('apps/v1','Deployment','spec.progressDeadlineSeconds').type,'integer')"
+          ],
+          "actualResult": "Assertions passed; mutation source SHA95239b47daa60df4984ff21b3fd045f4c3e18d1949957a2daae28f35b3a05c06"
+        },
+        {
+          "operation": "change",
+          "before": "Baseline spec.replicas=1 (authored)",
+          "constructor": "const v=structuredClone(doc); delete v.spec.replicas; v.spec.paused=true; const text=YAML.stringify(v);",
+          "executedAssertions": [
+            "assert(!authored(actual,'$.spec.replicas'))",
+            "assert(authored(actual,'$.spec.paused'))",
+            "assert.equal(apiFieldSchemaAuthority('apps/v1','Deployment','spec.paused').type,'boolean')"
+          ],
+          "actualResult": "Assertions passed; mutation source SHA59c4fe123633196f17803d9ff2e4eb0698e1cd94b31bb843c1a40f668ee89f4b"
+        },
+        {
+          "operation": "remove",
+          "before": "Baseline spec.replicas=1 (authored)",
+          "constructor": "const v=structuredClone(doc); delete v.spec.replicas; const text=YAML.stringify(v);",
+          "executedAssertions": [
+            "assert(!authored(actual,'$.spec.replicas'))"
+          ],
+          "actualResult": "Assertion passed; omission/default-selected replica coverage not wrongly discarded; mutation source SHA385cde82bbe831822342662ab3da5f0cbe8f7b04ba901af7fc2ea5316769a1ea"
+        }
+      ],
+      "actualRestoration": "assert.deepEqual(select(original),base) actually executed after each case; complete native selection restored, not only selectedfield hash.",
+      "feedAndOutputVerified": [
+        "buildConfigurationFamilyReference calls buildYamlInventory({selectedYamlOnly:true})",
+        "buildApiResourceInventory same apiProductSelection+versionedreceiverregistry",
+        "apiReceiverCoverage returns actual productSelection unchanged as serialized plain object",
+        "buildYamlInventory includes apiResources; selectedreference returns yaml as configuration-helm-values.json",
+        "Confirmed actual serialized baseline apps/v1Deployment productSelection.applicability[$.spec.replicas] contains EXACT actual authored selectedSource/field/digest; not an unconnected unit model",
+        "Same final stableJson/check loop for all4inventory outputs; actualstrict sharednative0_1_0 validates that comparison/restoration responsibility, no separateidenticalcomparator perfield required."
+      ],
+      "actualSerializedBaselineWitness": {
+        "document": 0,
+        "fieldPath": "$.spec.replicas",
+        "path": "my-values/infra/litellm-deployment.yaml",
+        "reason": "authored-resource-field",
+        "sourceDigest": "21136d7cc63b549db0d9e1f3a32d449c5bf3c2644790d144d47d476372c56bab"
+      },
+      "readerAssertion": {
+        "page": "docs/site/reference/api-object-updates.md",
+        "familyRoute": "[Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md)",
+        "owner": "platform operations",
+        "checks": [
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ],
+        "rawSourceOwnerEqualsGovernedMetadata": true
+      },
+      "whySemanticNotHash": "Native Add selects authored progressDeadlineSeconds with integer type; Change removes authoredreplicas and selects authoredpaused with boolean type; Remove removes authoredreplicas but keeps correct upstreamdefault/omission coverage. These actual structured membership/type assertions alter serialized semantic selection/applicability, not merely sourceDigest. Digest only binds the actualsource witness.",
+      "limits": [
+        "Rawunknownfieldexception lacks reader; probe-level maintainedroute assertion and reportedpage names correctreader as originalrequires. No nativeerror rewrite needed.",
+        "No defaultglobalAPI/programoutput, clusterexecution or everyDeploymentvariant proof.",
+        "Initial wrongassessororacle expecting allreplica fieldcoverage to vanish remains preserved; revised authored-vs-default test is genuine semantic correction, not waived guard.",
+        "This resolves named APIresolver missingpath only; whole4gate decisions still await actual config/flag cases and independent final join."
+      ],
+      "evidence": [
+        "operations/pr13/evidence/qua010-deployment-api-semantic-acr-20261031.json",
+        "operations/pr13/evidence/qua010-shared-native-config-comparator-20261031.json",
+        "operations/pr13/evidence/qua010-root-native-comparator-output-join-20261031.json",
+        "scripts/docs-configuration-inventory.mjs:2826",
+        "scripts/docs-api-receiver-coverage.mjs:54",
+        "scripts/docs-configuration-inventory.mjs:10443"
+      ]
+    },
+    "newActualFixtureCleanup": true,
+    "finalStrictNative": {
+      "label": "final-restored",
+      "argv": [
+        "node",
+        "scripts/docs-configuration-inventory.mjs",
+        "--configuration-reference-only",
+        "--check"
+      ],
+      "exitCode": 0,
+      "seconds": 154.55197560496163,
+      "output": "Configuration documentation inventory is current.\n"
+    },
+    "noFuturePass": "All referenced new native terminal0/1 results are observed; root publicationv2/sourcecommit/checker/remote still separate actualcloseout steps.",
+    "requiredRootCloseout": [
+      "Coherent reviewed Source commit and appropriate currentartifact/native/docchecks with valid unchanged reuse, not blanket rerun.",
+      "Register only QUA010 and gates A9814/A91111/A91308 under these original decisions; run unchanged original checker + delta invariants.",
+      "Coherent push and exactremote verification; retain remaining PUB007/QUA007 and AP10deferred obligations. No other original requirement or wholePR acceptance."
+    ],
+    "retainedLimit": [
+      "No hostedCI execution, real newruntimefeatureexecution, cluster/admission/Secretrotation or nativePython3.14/environmentallanguage claim.",
+      "Fixtures and declaredpublicflag/sourcefield changes are artificial maintenanceprobes; Source guards and invalidinput/parsererrors remain separately classified.",
+      "No defaultglobalAPI success; samepath Source/recipe catches are not unrelated olddefaultAPI failure.",
+      "All originalfailedreceipts/misoracles/controller -2/firstreplacefailure remain failures at their actualscope; currentpositiveactualsuccessors append rather than rewrite."
+    ]
+  }
+}

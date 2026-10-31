@@ -1,0 +1,734 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PASS_FINITE_EVENT_VECTOR_AND_PUBLICATION_BINDING_PROPOSAL",
+  "event": {
+    "actualCurrentVector": "9dc884c2859995dc383a1524da8415dc29aa3aeef7f55786341ebbe202e4691a",
+    "priorReviewedVector": "e5039961034419bc55214f8982d04999932dc04aa13583999b20a69592565fc5",
+    "reconstructedWithOriginalTest": "e5039961034419bc55214f8982d04999932dc04aa13583999b20a69592565fc5",
+    "sourceCount": 3153,
+    "all14FamiliesEqual": true,
+    "activationEqual": true,
+    "supportEqual": true,
+    "onlyNewSource": "scripts/tests/python-environment-discovery.test.mjs",
+    "currentTestSha256": "2f12765ad504acc3b7269ba46f73708fb2dfd14cd5eaa2c2694c266dee364313",
+    "originalTestSha256": "93a642b555f2d547384dde441ed833dec0b403a729fe8b3b4521a601aa390888"
+  },
+  "claimsCensus": {
+    "nodes": 56814,
+    "stringLeaves": 39634,
+    "allTargetHits": 42,
+    "targetOccurrences": [
+      {
+        "path": "$.pages.99.path",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.pages.99.blocks.0.owner",
+        "valueSha256": "78c32428eb910906bcbb3c4b7389c9093ce86c2c163a8ebe5936ec0d544a7fb3",
+        "chars": 115
+      },
+      {
+        "path": "$.pages.99.blocks.1.owner",
+        "valueSha256": "d71dd47a20af93ba410017890b9f97ff2dd7aa3b8c129ecccd1729cc6e0e1688",
+        "chars": 142
+      },
+      {
+        "path": "$.pages.99.blocks.2.owner",
+        "valueSha256": "113c642daa829b6364bb5e148468107e515d6cd289ae67d977b57d5f7e068e8a",
+        "chars": 133
+      },
+      {
+        "path": "$.pages.99.blocks.3.owner",
+        "valueSha256": "113c642daa829b6364bb5e148468107e515d6cd289ae67d977b57d5f7e068e8a",
+        "chars": 133
+      },
+      {
+        "path": "$.pages.99.blocks.4.owner",
+        "valueSha256": "44f7ebb8e99e3e4d4f0098b6a3804f6a1df183ae8409b0022ea415b77dc056a1",
+        "chars": 123
+      },
+      {
+        "path": "$.checks.0.inputs.716",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.checks.0.inputs.717",
+        "valueSha256": "55408b2fed30142bf7469ba1bf564f54a7497c2cb82afc770a9339b5c29c9f32",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2734",
+        "valueSha256": "af115821c277f3689a534aaa63031a5c8ee0404fe8c8217df05cc49335de19df",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2735",
+        "valueSha256": "1dbeeda0baae0067ee9527c6cac7e9274759f109d16c6cc5b44f38248794a6b7",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2736",
+        "valueSha256": "51c35d05c0de9429720dba45860edd3709a2c7fce26a74d6c4f59beeb4be0e1e",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2737",
+        "valueSha256": "2ccb035e5513c29544b6a5c83fddcfff99bb10651b0e6bf6fc08d5607668f6e2",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2738",
+        "valueSha256": "05010a7f8a0394967033456cb5564ab3df9ba737ed60a8ed33d8f384dde20409",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2739",
+        "valueSha256": "39916b6e53ad994967f098e2151943648e2c86b228d8f6f06ba93243271fb090",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2740",
+        "valueSha256": "837aa4d36c19a9af48bb49b2d593c507419f8560f3623542ffbd2816455e8c7a",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2741",
+        "valueSha256": "2c2785e535e036d66262ad84710d82429b2796295ea9d7b3929a0173268ec14b",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2742",
+        "valueSha256": "95d800c55c351f54c8fb37ea40f22f9eee75589cb84ad670de9230e4fd8d3d08",
+        "chars": 37
+      },
+      {
+        "path": "$.checks.0.inputs.2743",
+        "valueSha256": "2cf76724d6885a06b73c2182fbb18d563c9e1f831cd0e8258663036b2978cdae",
+        "chars": 37
+      },
+      {
+        "path": "$.authorities.75.path",
+        "valueSha256": "5c63855e7baa2452950e3cfff7c8aee15c9f49425aa3118cd40066795476819b",
+        "chars": 40
+      },
+      {
+        "path": "$.contracts.106.errors.anchors.1.exactExcerpt",
+        "valueSha256": "8834c01fa00ce63ad64453f02eb272b85acebf2d787fd49b3d0a0576c43515f9",
+        "chars": 678
+      },
+      {
+        "path": "$.contracts.106.cleanup.anchors.0.exactExcerpt",
+        "valueSha256": "22c6df8708dec06473e3cdb35fd0f04587b2cff31fb9ea1ba074d2a2bfa373a3",
+        "chars": 630
+      },
+      {
+        "path": "$.contracts.106.anchors.2.exactExcerpt",
+        "valueSha256": "22c6df8708dec06473e3cdb35fd0f04587b2cff31fb9ea1ba074d2a2bfa373a3",
+        "chars": 630
+      },
+      {
+        "path": "$.contracts.114.sourceRef",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.scope",
+        "valueSha256": "a83089bdde5fb4dee57c1c3c722a7c047ce7b6cb0f36f709ff12ca2158fcebe0",
+        "chars": 1262
+      },
+      {
+        "path": "$.contracts.114.prerequisites.anchors.0.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.prerequisites.anchors.1.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.errors.anchors.0.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.errors.anchors.1.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.effects.anchors.0.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.effects.anchors.1.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.cleanup.anchors.0.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.cleanup.anchors.0.exactExcerpt",
+        "valueSha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34",
+        "chars": 2690643
+      },
+      {
+        "path": "$.contracts.114.expectedResults.anchors.0.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.expectedResults.anchors.1.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.execution.statement",
+        "valueSha256": "351244508955a6aad56043f0fab5f0dea9b18bed204c9b0a3253f226376d65ba",
+        "chars": 1689
+      },
+      {
+        "path": "$.contracts.114.anchors.0.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.anchors.1.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.anchors.2.ref",
+        "valueSha256": "64f5d7a9cc2fc7fb98b747983d08a0dd15fe34d2603489106b9c9ef2059d1a0a",
+        "chars": 29
+      },
+      {
+        "path": "$.contracts.114.anchors.2.exactExcerpt",
+        "valueSha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34",
+        "chars": 2690643
+      },
+      {
+        "path": "$.contracts.131.cleanup.anchors.0.exactExcerpt",
+        "valueSha256": "5fe83dab957895a1de153d530a519b91e6c4823a783b7ac35b0602031cad0643",
+        "chars": 773
+      },
+      {
+        "path": "$.contracts.131.anchors.2.exactExcerpt",
+        "valueSha256": "5fe83dab957895a1de153d530a519b91e6c4823a783b7ac35b0602031cad0643",
+        "chars": 773
+      },
+      {
+        "path": "$.contracts.137.anchors.4.exactExcerpt",
+        "valueSha256": "142159234ba5fac7c40a4e0ff78430062e2fae9e81acfcd4a86b027190772469",
+        "chars": 1938917
+      }
+    ],
+    "nestedAnchors": 54,
+    "anchorResults": [
+      {
+        "path": "$.contracts[106].prerequisites.anchors.0",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1595cdc5a70918a6b7d40b23b31fb8e2af5261490adf92f9a210371226577788"
+      },
+      {
+        "path": "$.contracts[106].prerequisites.anchors.1",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "f3ed44092c15c2680ed8719d5023888ab08d48e15f5c9111bc135eee212e124a"
+      },
+      {
+        "path": "$.contracts[106].errors.anchors.0",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "954e726d3371a4b8d74b43d5f2a044eb752fd5b54261d44aa36cd3de89023420"
+      },
+      {
+        "path": "$.contracts[106].errors.anchors.1",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "8834c01fa00ce63ad64453f02eb272b85acebf2d787fd49b3d0a0576c43515f9"
+      },
+      {
+        "path": "$.contracts[106].effects.anchors.0",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "f3ed44092c15c2680ed8719d5023888ab08d48e15f5c9111bc135eee212e124a"
+      },
+      {
+        "path": "$.contracts[106].effects.anchors.1",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "d4887c771dd09c17fa649c28674faf6f79d3b876d7392237080e32a68bb9d48a"
+      },
+      {
+        "path": "$.contracts[106].cleanup.anchors.0",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "22c6df8708dec06473e3cdb35fd0f04587b2cff31fb9ea1ba074d2a2bfa373a3"
+      },
+      {
+        "path": "$.contracts[106].expectedResults.anchors.0",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "6475c60d694f1720ee0bff11acc60c996f2ce1ea389f66c6a62ef85cee5da46f"
+      },
+      {
+        "path": "$.contracts[106].expectedResults.anchors.1",
+        "ref": "docs/site/reference/pipeline-platform.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "44066aebd156dea0cc0c93afb7003b318c02f107b95cc8bdcf87db5dd248ea05"
+      },
+      {
+        "path": "$.contracts[106].expectedResults.anchors.2",
+        "ref": "docs/site/reference/pipeline-platform.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "ca0ab6bbddbfea852439508537f7df163f34481d2e5bdafa8fb9da5d28f66f33"
+      },
+      {
+        "path": "$.contracts[106].expectedResults.anchors.3",
+        "ref": "docs/site/reference/configuration-precedence.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "7ad9489b8a5cea7ed4007efd18312e8318db21f21baacaf43d4abbb01c8bf10b"
+      },
+      {
+        "path": "$.contracts[106].expectedResults.anchors.4",
+        "ref": "docs/site/reference/pipeline-platform.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "695148f873e23002ba7c630a5b73affc9a281a91431a997ba527c43856524287"
+      },
+      {
+        "path": "$.contracts[106].anchors.0",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "2161b63730b0bebc097c747fcb2b4018682d66ce6b34c43dd9db4585ddb5d1c5"
+      },
+      {
+        "path": "$.contracts[106].anchors.1",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1595cdc5a70918a6b7d40b23b31fb8e2af5261490adf92f9a210371226577788"
+      },
+      {
+        "path": "$.contracts[106].anchors.2",
+        "ref": "docs/site/reference/configuration.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "22c6df8708dec06473e3cdb35fd0f04587b2cff31fb9ea1ba074d2a2bfa373a3"
+      },
+      {
+        "path": "$.contracts[114].prerequisites.anchors.0",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "a11165923a0c145083fddba479487af72dec7479c5588c8dd3fb6601e3e6ccb4"
+      },
+      {
+        "path": "$.contracts[114].prerequisites.anchors.1",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "8ad9aa188c6eb4b47ce739934babc1a3de40a32bd6763eec4aee3f59070ff03b"
+      },
+      {
+        "path": "$.contracts[114].errors.anchors.0",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "8ad9aa188c6eb4b47ce739934babc1a3de40a32bd6763eec4aee3f59070ff03b"
+      },
+      {
+        "path": "$.contracts[114].errors.anchors.1",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "cd3eb7f4988adbed18960bf67e83f666853b0ff2b237271cb139e740d39cddbe"
+      },
+      {
+        "path": "$.contracts[114].effects.anchors.0",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "00eda1e902ae821199d0fdb31433746cadc6029e6c6b00108123247b9bb7eab5"
+      },
+      {
+        "path": "$.contracts[114].effects.anchors.1",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "7b48cddd1b11761475b74b9db25f34f3b3f2ba1bb1242197dab8cf6f8ddc4b53"
+      },
+      {
+        "path": "$.contracts[114].cleanup.anchors.0",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 0,
+        "pass": false,
+        "excerptSha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34"
+      },
+      {
+        "path": "$.contracts[114].expectedResults.anchors.0",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "8c8a9fe5313b699b5c672085e8d7d2f1a76937adcc4f365482cc86689e01fed5"
+      },
+      {
+        "path": "$.contracts[114].expectedResults.anchors.1",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "dc5306aeddaa662a88837669bb6026087fe0576e1fa11e3d2dff2425ed95c01f"
+      },
+      {
+        "path": "$.contracts[114].anchors.0",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "6983e2c7730cdcb2341b5cbe7addd8871e065d9c5b837accd961d7adbf7f1bb5"
+      },
+      {
+        "path": "$.contracts[114].anchors.1",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "a11165923a0c145083fddba479487af72dec7479c5588c8dd3fb6601e3e6ccb4"
+      },
+      {
+        "path": "$.contracts[114].anchors.2",
+        "ref": "docs/site/reference/events.md",
+        "expected": 1,
+        "actual": 0,
+        "pass": false,
+        "excerptSha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34"
+      },
+      {
+        "path": "$.contracts[131].prerequisites.anchors.0",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "4e652795da012aa7661cf3dd914ddce3d832d245c190b304a10a7d7bef96335d"
+      },
+      {
+        "path": "$.contracts[131].prerequisites.anchors.1",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "857cae4d4e6089f1a4b07bc35684f14cb4ad1d9d8430858859d780bdf171ffce"
+      },
+      {
+        "path": "$.contracts[131].errors.anchors.0",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "4e652795da012aa7661cf3dd914ddce3d832d245c190b304a10a7d7bef96335d"
+      },
+      {
+        "path": "$.contracts[131].errors.anchors.1",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "465a0fbd65d722cda409fc115e583a1002688efea82728855ba3d6bf863fa1cb"
+      },
+      {
+        "path": "$.contracts[131].effects.anchors.0",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "24fe45c8e9a1859c1531015a20106bd5d5ec8f0532434fa1d8fc45766d8d9bba"
+      },
+      {
+        "path": "$.contracts[131].effects.anchors.1",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "06f62e221ed30b53933102891f16332a54b8d0d9f6a20cae6cf173151fb94a16"
+      },
+      {
+        "path": "$.contracts[131].cleanup.anchors.0",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "5fe83dab957895a1de153d530a519b91e6c4823a783b7ac35b0602031cad0643"
+      },
+      {
+        "path": "$.contracts[131].expectedResults.anchors.0",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "085b0ca79f9eca056f32064601f2f545f965fe8109cb41d792e91dee48a43cb7"
+      },
+      {
+        "path": "$.contracts[131].expectedResults.anchors.1",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "4e652795da012aa7661cf3dd914ddce3d832d245c190b304a10a7d7bef96335d"
+      },
+      {
+        "path": "$.contracts[131].anchors.0",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "ffc15e3c21d277eaf5ecd28b99f8be3bf0f4af3b70bab295a8e005e8bc99a16e"
+      },
+      {
+        "path": "$.contracts[131].anchors.1",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "085b0ca79f9eca056f32064601f2f545f965fe8109cb41d792e91dee48a43cb7"
+      },
+      {
+        "path": "$.contracts[131].anchors.2",
+        "ref": "docs/site/reference/schemas.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "5fe83dab957895a1de153d530a519b91e6c4823a783b7ac35b0602031cad0643"
+      },
+      {
+        "path": "$.contracts[137].prerequisites.anchors.0",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1e567ceeeca5a6179f03a9a52f7b1d9dbfbcd5060360a56aa08c9be0debfc460"
+      },
+      {
+        "path": "$.contracts[137].prerequisites.anchors.1",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1da4eb15059c151477bce7eee187db337fd92436d9c8185ec27e8ddc254d6155"
+      },
+      {
+        "path": "$.contracts[137].errors.anchors.0",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1e567ceeeca5a6179f03a9a52f7b1d9dbfbcd5060360a56aa08c9be0debfc460"
+      },
+      {
+        "path": "$.contracts[137].errors.anchors.1",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1da4eb15059c151477bce7eee187db337fd92436d9c8185ec27e8ddc254d6155"
+      },
+      {
+        "path": "$.contracts[137].effects.anchors.0",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1e567ceeeca5a6179f03a9a52f7b1d9dbfbcd5060360a56aa08c9be0debfc460"
+      },
+      {
+        "path": "$.contracts[137].effects.anchors.1",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1da4eb15059c151477bce7eee187db337fd92436d9c8185ec27e8ddc254d6155"
+      },
+      {
+        "path": "$.contracts[137].cleanup.anchors.0",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1e567ceeeca5a6179f03a9a52f7b1d9dbfbcd5060360a56aa08c9be0debfc460"
+      },
+      {
+        "path": "$.contracts[137].cleanup.anchors.1",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1da4eb15059c151477bce7eee187db337fd92436d9c8185ec27e8ddc254d6155"
+      },
+      {
+        "path": "$.contracts[137].expectedResults.anchors.0",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1e567ceeeca5a6179f03a9a52f7b1d9dbfbcd5060360a56aa08c9be0debfc460"
+      },
+      {
+        "path": "$.contracts[137].expectedResults.anchors.1",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1da4eb15059c151477bce7eee187db337fd92436d9c8185ec27e8ddc254d6155"
+      },
+      {
+        "path": "$.contracts[137].anchors.0",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "ccd2131e0b1e889372d0188cbf904bd304e2e5597c5d618d1195f0aaa76ef411"
+      },
+      {
+        "path": "$.contracts[137].anchors.1",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "713c0b92acfbec12c9221a279a8d074303438853c9ddd1ee0cb81a78804630b5"
+      },
+      {
+        "path": "$.contracts[137].anchors.2",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1e567ceeeca5a6179f03a9a52f7b1d9dbfbcd5060360a56aa08c9be0debfc460"
+      },
+      {
+        "path": "$.contracts[137].anchors.3",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "1da4eb15059c151477bce7eee187db337fd92436d9c8185ec27e8ddc254d6155"
+      },
+      {
+        "path": "$.contracts[137].anchors.4",
+        "ref": "docs/site/reference/verification-commands.md",
+        "expected": 1,
+        "actual": 1,
+        "pass": true,
+        "excerptSha256": "142159234ba5fac7c40a4e0ff78430062e2fae9e81acfcd4a86b027190772469"
+      }
+    ]
+  },
+  "exactUnadoptedClaimsSuccessorFields": [
+    {
+      "path": "/authorities/75/sha256",
+      "old": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7",
+      "new": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f",
+      "reason": "Reviewed exact native matcher-only maintenance delta; complete responsibility retained."
+    },
+    {
+      "path": "/pages/99/sha256",
+      "old": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34",
+      "new": "2f3add53b588aff3eacf45d5d366ea2461998ff922757d33c7a968bc76d39551",
+      "reason": "Exact canonical supported prospective renderer; ONLY2vector literal replacements."
+    },
+    {
+      "path": "/pages/99/prose/0/sha256",
+      "old": "e3561a0d76b2e6734f24f601ffb246e5f1fc32dd7420af1a30843a70afb547ef",
+      "new": "8a7379b7a1c1eb0dfb9cbf3d057a0c897373beabd12cc6dffb7e43925eef1cb4",
+      "reason": "Same2vector literal replacements; rest prose bytes identical."
+    },
+    {
+      "path": "/contracts/114/cleanup/anchors/0/exactExcerpt",
+      "oldSha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34",
+      "newSha256": "2f3add53b588aff3eacf45d5d366ea2461998ff922757d33c7a968bc76d39551",
+      "replacementTextEvidencePath": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua010-events-prospective-current-source-20261031.md",
+      "reason": "Full-page exact quote includes changed vectors. Replace BOTH quoted copies with identical supported prospective current page; preserve occurrences1 and obligation statements."
+    },
+    {
+      "path": "/contracts/114/anchors/2/exactExcerpt",
+      "oldSha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34",
+      "newSha256": "2f3add53b588aff3eacf45d5d366ea2461998ff922757d33c7a968bc76d39551",
+      "replacementTextEvidencePath": "/home/node/.openclaw/workspace/operations/pr13/evidence/qua010-events-prospective-current-source-20261031.md",
+      "reason": "Full-page exact quote includes changed vectors. Replace BOTH quoted copies with identical supported prospective current page; preserve occurrences1 and obligation statements."
+    }
+  ],
+  "normalOwner": "scripts/lib/docs-publication-example-coverage.mjs publicationExampleBlocks/publicationExampleProse + bindPublicationExampleCoverage; actual normal docs-publication-examples.mjs still required",
+  "currentEventPageDiff": "diff --git a/docs/site/reference/events.md b/docs/site/reference/events.md\nindex d47b026e..5dc026fc 100644\n--- a/docs/site/reference/events.md\n+++ b/docs/site/reference/events.md\n@@ -267,9 +267,9 @@ Syntax extraction does not prove live delivery or recovery.\n \n Source contracts and configured paths do not prove live delivery. Declaration, construction, validation and consumption are separate facts.\n \n-Primary executable/delivered Source vector SHA-256: <code>c943f7304bd6bdaf1ee1c449ac1a1f1da3aa11b82350446b4046a1f81bcbef8a</code>.\n+Primary executable/delivered Source vector SHA-256: <code>e5039961034419bc55214f8982d04999932dc04aa13583999b20a69592565fc5</code>.\n \n-Combined primary and supplementary authority vector SHA-256: <code>591b7b0fddb5ffb03468c2f749508e6127991027b0622e059bcc984079cde46b</code>.\n+Combined primary and supplementary authority vector SHA-256: <code>b28ba8c2cdf31a12901680446e7460e004ceb4d52e9430ed95c1c03d86b2e623</code>.\n \n Supplementary authority [<code>contracts/telemetry/v1/README.md</code>:1](../../../contracts/telemetry/v1/README.md) — SHA-256 <code>557bb4c6b35df61f1dc31a964953d62c035905790fec1dd06db33248deaef892</code>.\n \n",
+  "limits": [
+    "Proposal only; no repo mutation.",
+    "Current event page still prior vector until root adopts newly qualified event successor and supported regeneration; recompute page/prose hashes again AFTER that output, not adopt stale proposal hashes.",
+    "Original8new mutation controls actual result and pinned review supplied by root, not independently rerun; no product runtime claim.",
+    "No current publication artifact or QUA010/PUB007 acceptance inferred.",
+    "Root further current env/hub generation can change additional page bindings; requires finite exact successor qualification then normal binder, not blanket receipt refresh."
+  ],
+  "prospectiveSupportedEventPage": {
+    "vector": "9dc884c2859995dc383a1524da8415dc29aa3aeef7f55786341ebbe202e4691a",
+    "sha256": "2f3add53b588aff3eacf45d5d366ea2461998ff922757d33c7a968bc76d39551",
+    "currentTrackedSha256": "30fad69b3565deb7ec753f78ee0ad344c8ce04ffc4775d5c4d79999d0ccc8590",
+    "oldHeadSha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34",
+    "changedLinesFromHead": [
+      {
+        "line": 270,
+        "old": "Primary executable/delivered Source vector SHA-256: <code>c943f7304bd6bdaf1ee1c449ac1a1f1da3aa11b82350446b4046a1f81bcbef8a</code>.",
+        "new": "Primary executable/delivered Source vector SHA-256: <code>9dc884c2859995dc383a1524da8415dc29aa3aeef7f55786341ebbe202e4691a</code>."
+      },
+      {
+        "line": 272,
+        "old": "Combined primary and supplementary authority vector SHA-256: <code>591b7b0fddb5ffb03468c2f749508e6127991027b0622e059bcc984079cde46b</code>.",
+        "new": "Combined primary and supplementary authority vector SHA-256: <code>50641d96fc3b39d48c0c7fefbe8167323bfb2efacae45365c31939aa480572fc</code>."
+      }
+    ],
+    "all5BlocksUnchanged": true,
+    "proseRegions": 6,
+    "onlyFirstProseChanged": true
+  },
+  "nestedBindingDisposition": "2full-page anchors expected stale at old page; exact canonical successor supplied, other52checkedanchors unchanged. No blanket replacement of historical basis/receipts. All6obligation statements, execution/source-only bounds, check assignments and source-role meaning retained.",
+  "testDeltaJudgment": "Full58line added test diff inspected; harness Map initializes existing collector context;8Change/Remove cases exercise real NodehereDoc/inline source plus existing supported Python/YAML positive fixtures. YAML command/heredoc custody not passive cat text. No product source/registration/activation change. Independent pinned code review clean; root supplied actual8controlPASS remains its actual scope."
+}

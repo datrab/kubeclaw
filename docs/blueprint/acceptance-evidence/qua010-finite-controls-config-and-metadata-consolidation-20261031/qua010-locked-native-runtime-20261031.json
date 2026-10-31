@@ -1,0 +1,15 @@
+{
+  "at": "2026-10-31T20:24:56.068281+00:00",
+  "status": "Exact locked shfmt native3.13.1 hash and version tested through official PRoot5.5.0 runtime-only file bind; original native producer and all hash/version guards unchanged",
+  "lockedShfmtSha256": "fb096c5d1ac6beabbdbaa2874d025badb03ee07929f0c9ff67563ce8c75398b1",
+  "prootSha256": "db185300a9daabbce86aca7632d8c7fdc4249f6f153171954013b70c5f491ec0",
+  "failuresRetained": [
+    "Installed3.14.1 mismatch",
+    "Standard path root filesystem read-only; no file changed",
+    "Old archived proot runtime segfault; replaced by current official checksum-verified5.5.0"
+  ],
+  "command": "proot -b locked-native-tools/shfmt:/usr/local/bin/shfmt native node process",
+  "actualShfmtVersionExitCode": 0,
+  "actualOutput": "v3.13.1",
+  "normalCliGeneration": "running yielding process; NOT passed yet"
+}

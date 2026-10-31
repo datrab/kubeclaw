@@ -1,0 +1,41 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PASS_MINIMAL_PROSE_MATCHER_SUCCESSOR_PROPOSAL",
+  "path": "scripts/docs-configuration-inventory.mjs",
+  "line": 9961,
+  "currentSourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7",
+  "exactOldLine": "assert.match(rule.omission, /Registration configuration.*service configuration.*hook configuration/u);",
+  "exactNewLine": "assert.match(rule.omission, /registration configuration.*service configuration.*hook configuration/iu);",
+  "prospectiveSourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f",
+  "exactPatch": "--- a/scripts/docs-configuration-inventory.mjs\n+++ b/scripts/docs-configuration-inventory.mjs\n@@ -9961,1 +9961,1 @@\n-    assert.match(rule.omission, /Registration configuration.*service configuration.*hook configuration/u);\n+    assert.match(rule.omission, /registration configuration.*service configuration.*hook configuration/iu);\n",
+  "sourceResponsibility": "Runtime consumer verification must continue testing all17 source-owned observer settings and their configured/env precedence/normalization/failure meanings. Source-owned prose now begins The observer merges registration configuration\u2026 instead of capitalized Registration. Existing case-sensitive initial token is editorially stale, not a consumer behavior disagreement.",
+  "completeRelevantOwnersInspected": [
+    "scripts/docs-configuration-inventory.mjs:9907 verifyRuntimeConsumerSemantics through next function (all assertions)",
+    "scripts/docs-configuration-inventory.mjs:4206 schemaRuntimeValidationRules observer branch",
+    "scripts/docs-configuration-inventory.mjs:5321 complete flattenSchema recursion/admission/reference/conjunctive siblings/branches",
+    "scripts/docs-configuration-inventory.mjs:5126 structural observer schema meaning",
+    "scripts/docs-runtime-consumer-contracts.mjs:1618 observerInlineFieldContract and per-field mapping",
+    "skills/common/plugins/openclaw-agent-observer/src/observer-support.ts:21 mergeConfigInputs",
+    "skills/common/plugins/openclaw-agent-observer/src/index.ts:197 ordered merge registration/service/hook",
+    "skills/common/plugins/openclaw-agent-observer/src/config.ts configuredValue+all field normalizers",
+    "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json configSchema"
+  ],
+  "semanticAssessment": "/iu changes case sensitivity only; retains all3 literal role phrases and their ordered sequence. No assertion removed, wildcard broadened, loop shortened, skipped field, schema contract changed or exception waived. Actual merge loops configs in call order, ignores undefined, retains null/empty, and configuredValue prefers defined merged key over environment. Existing native merge and normalizer behavioral assertions unchanged.",
+  "focusedReadOnlyControls": {
+    "actual17InlinePropertyOmissionContractsMatchSuccessor": true,
+    "missingServiceRejected": true,
+    "missingHookRejected": true,
+    "reversedRolesRejected": true,
+    "fullNativeFunctionExecuted": false
+  },
+  "relatedSameCausalAssertionCensus": {
+    "directProseOmissionMatchCount": 1,
+    "additionalObsoleteProseAssertionsFound": [],
+    "otherMatches": "Other function regex assertions check actual runtime exception tokens/URL/security/type behavior or wrong-type absence from schemaEmptyBehavior, not this changed registration/service/hook prose. No same-causal second change identified; do not alter them preemptively.",
+    "limit": "Read/source-scoped assessment plus17contract controls, not claim full native baseline passed. Actual retry remains necessary."
+  },
+  "priorNegativeEvidence": "qua010-current-embedded-node-20261031.log remains real baseline exit1 before mutations. Repair is not original QUA010 PASS.",
+  "eventVectorBoundary": "This additional maintenance source change invalidates prior f109e9db proposal. Recompute exact current vector only after adopted source patch; old\u2192new event impact remains finite maintenance-matcher delta with all family/activation/source owners unchanged. No stale vector adoption.",
+  "proposalOnly": true,
+  "repoMutationPerformed": false
+}

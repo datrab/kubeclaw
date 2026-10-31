@@ -1,0 +1,50 @@
+{
+  "at": "2026-10-31T20:19:23.529147+00:00",
+  "mode": "OWNED ISOLATED exact current product source fixture; strict supported configuration-reference-only native check, not defaultAPI/runtime success",
+  "fixtureRoot": "/home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031",
+  "sourceRevision": "96daf5b514f5088b609f3e0f8a5d533d076b4a19",
+  "copiedCurrentTrackedFiles": 6771,
+  "nodeModules": "symlink to existing actual installed dependencies",
+  "canonicalObserverSync": {
+    "exitCode": 0,
+    "output": ""
+  },
+  "cases": [
+    {
+      "name": "helm-field:add",
+      "source": "charts/kubeclaw/values.yaml",
+      "readerTarget": "docs/site/reference/helm-values.md",
+      "constructor": "Exact existing check-configuration-drift-mutations.mjs source transformation",
+      "oldSourceSha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa",
+      "mutatedSourceSha256": "5e1164265a6a9e743c53ede1d126ccd43600dda80b09cedcbfa779f9e9260e52",
+      "native": {
+        "label": "helm-field:add",
+        "argv": [
+          "node",
+          "scripts/docs-configuration-inventory.mjs",
+          "--configuration-reference-only",
+          "--check"
+        ],
+        "exitCode": 1,
+        "seconds": 30.23277791100554,
+        "output": "node:internal/modules/run_main:107\n    triggerUncaughtException(\n    ^\n\nAssertionError [ERR_ASSERTION]: CONFIGURATION_FAMILY_SOURCE_IDENTITY: charts/kubeclaw/values.yaml\n+ actual - expected\n\n+ '5e1164265a6a9e743c53ede1d126ccd43600dda80b09cedcbfa779f9e9260e52'\n- '2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa'\n\n    at buildConfigurationFamilyReference (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10335:12)\n    at buildConfigurationInventories (file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10410:63)\n    at file:///home/node/.openclaw/workspace/tmp/qua010-five-config-distinct-flags-20261031/scripts/docs-configuration-inventory.mjs:10443:37\n    at process.processTicksAndRejections (node:internal/process/task_queues:104:5) {\n  generatedMessage: false,\n  code: 'ERR_ASSERTION',\n  actual: '5e1164265a6a9e743c53ede1d126ccd43600dda80b09cedcbfa779f9e9260e52',\n  expected: '2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa',\n  operator: 'strictEqual',\n  diff: 'simple'\n}\n\nNode.js v24.22.1\n"
+      },
+      "outputsUnchanged": true,
+      "readerUnchanged": true,
+      "classification": "PENDING_INDEPENDENT_DIAGNOSTIC_CLASSIFICATION"
+    }
+  ],
+  "wholeGateAccepted": false,
+  "baseline": {
+    "label": "baseline",
+    "argv": [
+      "node",
+      "scripts/docs-configuration-inventory.mjs",
+      "--configuration-reference-only",
+      "--check"
+    ],
+    "exitCode": 0,
+    "seconds": 166.63367750192992,
+    "output": "Configuration documentation inventory is current.\n"
+  }
+}
