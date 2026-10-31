@@ -49249,7 +49249,7 @@
     },
     {
       "path": "scripts/docs-publication-example-native.mjs",
-      "sha256": "75ccb5e8b86cad5395e2dd698aa7de67583c165bd1daa9718ab8e0153c450fa7",
+      "sha256": "4b10931357712db448ec49609ea510c274d7a596fe5569e40e6a123453d57ba3",
       "responsibility": "Exact native validator/source dependency for the authored publication assertion; identity binding is not independent source accuracy or execution proof."
     },
     {

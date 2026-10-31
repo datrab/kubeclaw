@@ -399,7 +399,7 @@ export function validateHelmOverlayExamples(root, values) {
       { cwd: root, encoding: 'utf8', timeout: 120000, maxBuffer: 32 * 1024 * 1024 });
     if (rejected.error) throw rejected.error;
     assert.notEqual(rejected.status, 0, 'empty Prism image policy must fail');
-    assert.match(rejected.stderr, /images\.control\.pullPolicy/u, 'expected image-policy rejection, not an unrelated Helm failure');
+    assert.match(rejected.stderr, /(?:images\.control\.pullPolicy|\/images\/control\/pullPolicy)/u, 'expected image-policy rejection, not an unrelated Helm failure');
     return { actualHelmVersion: execFileSync('helm', ['version', '--short'], { encoding: 'utf8' }).trim(),
       receiver: 'agent-nova/kubeclaw', orderedRenderSha256: [base, empty, remove, reversed].map(item => item.outputSha256),
       expectedInvalidPrismPolicy: rejected.status, clusterContact: false, historicalVersionExecutionClaim: false };
