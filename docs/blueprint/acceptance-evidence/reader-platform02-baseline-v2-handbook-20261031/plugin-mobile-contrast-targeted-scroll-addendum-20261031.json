@@ -1,0 +1,1397 @@
+{
+  "artifactRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+  "width": 320,
+  "scope": "Only34previouslypartiallyobscured colorcontrast nodes, actual horizontal/vertical scroll each into view; automatic subset not whole human/AT acceptance",
+  "observations": [
+    {
+      "selector": "table:nth-child(29) > tbody > tr:nth-child(1) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.46875,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(29) > tbody > tr:nth-child(2) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 391.03125,
+        "width": 120,
+        "height": 117.375,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(29) > tbody > tr:nth-child(3) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 356.40625,
+        "width": 120,
+        "height": 186.65625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(29) > tbody > tr:nth-child(4) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.0625,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(29) > tbody > tr:nth-child(5) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 379.625,
+        "width": 120,
+        "height": 140.46875,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(29) > tbody > tr:nth-child(6) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.09375,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(29) > tbody > tr:nth-child(7) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.65625,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(87) > tbody > tr:nth-child(1) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 391.25,
+        "width": 120,
+        "height": 117.375,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(87) > tbody > tr:nth-child(2) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 379.625,
+        "width": 120,
+        "height": 140.46875,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(87) > tbody > tr:nth-child(3) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 380.09375,
+        "width": 120,
+        "height": 140.46875,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(87) > tbody > tr:nth-child(4) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 333.5625,
+        "width": 120,
+        "height": 232.84375,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 2,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ],
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#f0f0f3",
+                    "contrastRatio": 14.4,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 14.4"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(1) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.578125,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 2,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ],
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#f0f0f3",
+                    "contrastRatio": 14.4,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 14.4"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(2) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 357.140625,
+        "width": 120,
+        "height": 186.65625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(3) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 367.796875,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 2,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ],
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#f0f0f3",
+                    "contrastRatio": 14.4,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 14.4"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(4) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 356.359375,
+        "width": 120,
+        "height": 186.65625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(5) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 380.015625,
+        "width": 120,
+        "height": 140.46875,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(6) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 356.484375,
+        "width": 120,
+        "height": 186.65625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(7) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 357.140625,
+        "width": 120,
+        "height": 186.65625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(8) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 379.796875,
+        "width": 120,
+        "height": 140.46875,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(97) > tbody > tr:nth-child(9) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.265625,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(1) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 379.359375,
+        "width": 120,
+        "height": 140.46875,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(2) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 367.828125,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(3) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 379.390625,
+        "width": 120,
+        "height": 140.46875,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(4) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 356.859375,
+        "width": 120,
+        "height": 186.65625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(5) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 345.515625,
+        "width": 120,
+        "height": 209.75,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(6) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.265625,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 2,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ],
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#f0f0f3",
+                    "contrastRatio": 14.4,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 14.4"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(7) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 367.828125,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(8) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.390625,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "table:nth-child(121) > tbody > tr:nth-child(9) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 390.953125,
+        "width": 120,
+        "height": 117.375,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "tr:nth-child(10) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 391.328125,
+        "width": 120,
+        "height": 117.375,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "tr:nth-child(11) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 321.703125,
+        "width": 120,
+        "height": 255.9375,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "tr:nth-child(12) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 379.640625,
+        "width": 120,
+        "height": 140.46875,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "tr:nth-child(13) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.109375,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    },
+    {
+      "selector": "tr:nth-child(14) > td:nth-child(3)",
+      "geometry": {
+        "x": 183.5,
+        "y": 368.671875,
+        "width": 120,
+        "height": 163.5625,
+        "color": "rgb(28, 32, 36)",
+        "backgroundColor": "rgba(0, 0, 0, 0)"
+      },
+      "result": {
+        "violations": [],
+        "incomplete": [],
+        "passes": [
+          {
+            "id": "color-contrast",
+            "nodes": 1,
+            "checks": [
+              [
+                {
+                  "id": "color-contrast",
+                  "data": {
+                    "fgColor": "#1c2024",
+                    "bgColor": "#ffffff",
+                    "contrastRatio": 16.38,
+                    "fontSize": "10.5pt (14px)",
+                    "fontWeight": "normal",
+                    "expectedContrastRatio": "4.5:1"
+                  },
+                  "relatedNodes": [],
+                  "impact": "serious",
+                  "message": "Element has sufficient color contrast of 16.38"
+                }
+              ]
+            ]
+          }
+        ]
+      }
+    }
+  ]
+}

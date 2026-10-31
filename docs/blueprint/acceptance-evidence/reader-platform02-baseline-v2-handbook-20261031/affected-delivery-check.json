@@ -1,0 +1,149 @@
+{
+  "at": "2026-10-31T23:33:53.594Z",
+  "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+  "fixtureSha256": "86f9a38e7f7fd6b1ad71fb5d4df6d226f483607054f27cb2caee9dd13f582253",
+  "exactFixture": true,
+  "hrefSetEqualExceptCurrentSource": true,
+  "newSourceLinksVerified": [
+    "https://github.com/datrab/kubeclaw/blob/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/package-lock.json",
+    "https://github.com/datrab/kubeclaw/blob/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/package.json",
+    "https://github.com/datrab/kubeclaw/blob/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/packaging/runtime/package-ownership.json",
+    "https://github.com/datrab/kubeclaw/blob/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/tsconfig.base.json",
+    "https://github.com/datrab/kubeclaw/blob/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/versions.json",
+    "https://github.com/datrab/kubeclaw/tree/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/.github/workflows",
+    "https://github.com/datrab/kubeclaw/tree/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/scripts",
+    "https://github.com/datrab/kubeclaw/tree/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/skills/buster/engine",
+    "https://github.com/datrab/kubeclaw/tree/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/skills/nova/core",
+    "https://github.com/datrab/kubeclaw/tree/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/skills/prism",
+    "https://github.com/datrab/kubeclaw/tree/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/skills/worker/core",
+    "https://github.com/datrab/kubeclaw/tree/7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b/tools/ops-mcp"
+  ],
+  "sourceChecks": {
+    "uniqueVerifiedLinks": 12,
+    "uniqueSourceObjects": 12,
+    "primarySources": [
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": ".github/workflows",
+        "kind": "tree",
+        "gitObject": "9246058df54585971a19bf330ce56f03d1c32f36",
+        "bytes": 0
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "package-lock.json",
+        "kind": "blob",
+        "gitObject": "d568a978e1a195da03fa0c9c433d17fb10dfc6e9",
+        "bytes": 278187,
+        "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe"
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "package.json",
+        "kind": "blob",
+        "gitObject": "547a26e7d9ccb65e4b4a8ebc530bc3c97c89c452",
+        "bytes": 54287,
+        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "packaging/runtime/package-ownership.json",
+        "kind": "blob",
+        "gitObject": "b1c7215f732ee1f50a9ab20141ac2f095c13e237",
+        "bytes": 5597,
+        "sha256": "0723d0a55eba3fdcc6c041132616db3330c3397db6a24f1d0abbf874bd28cab8"
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "scripts",
+        "kind": "tree",
+        "gitObject": "ac5b73ac24d9cdbe46d6fb1e7af45cd69df75596",
+        "bytes": 0
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "skills/buster/engine",
+        "kind": "tree",
+        "gitObject": "5cb8e4f22c7e4046f6e9b366b901767570cd4e94",
+        "bytes": 0
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "skills/nova/core",
+        "kind": "tree",
+        "gitObject": "324cc2f913bd255aff5fc5c165d2c97c0cefde11",
+        "bytes": 0
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "skills/prism",
+        "kind": "tree",
+        "gitObject": "364315be868dc14aada281338274b5171baea45f",
+        "bytes": 0
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "skills/worker/core",
+        "kind": "tree",
+        "gitObject": "202417d9cd305785da9d06776e9c2745f6f4c17a",
+        "bytes": 0
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "tools/ops-mcp",
+        "kind": "tree",
+        "gitObject": "7575d8b97cc375ad3e482d0a7e71f0235e590ad8",
+        "bytes": 0
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "tsconfig.base.json",
+        "kind": "blob",
+        "gitObject": "1871814ddea4daa22e538000c8319e7e70f8fb02",
+        "bytes": 390,
+        "sha256": "edf7efcc1466d14a9f436dffe1134ca81561333d91f4660b08e5ec33e92b148d"
+      },
+      {
+        "repository": "datrab/kubeclaw",
+        "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "file": "versions.json",
+        "kind": "blob",
+        "gitObject": "61a3f3fc113d72e5cf71d913972ad13d2c55a4ee",
+        "bytes": 7603,
+        "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1"
+      }
+    ]
+  },
+  "observations": [
+    {
+      "width": 320,
+      "literalParagraph": "Before editing, retain the clean baseline commit and exact original bytes of the changed source/tests, all three guides, this handbook's affected callouts, the checker, docs/generated/inventory/documentation-source-revision.json, and generated inventory/reference/map output. Record baseline results. For the lifecycle exercise, use startingState.revision from the registered exercise fixture as the immutable original product baseline. It is not the later changed source or documentation authority revision.",
+      "layout": {
+        "viewport": 320,
+        "scrollWidth": 320
+      },
+      "searchHit": 1
+    },
+    {
+      "width": 1440,
+      "literalParagraph": "Before editing, retain the clean baseline commit and exact original bytes of the changed source/tests, all three guides, this handbook's affected callouts, the checker, docs/generated/inventory/documentation-source-revision.json, and generated inventory/reference/map output. Record baseline results. For the lifecycle exercise, use startingState.revision from the registered exercise fixture as the immutable original product baseline. It is not the later changed source or documentation authority revision.",
+      "layout": {
+        "viewport": 1440,
+        "scrollWidth": 1440
+      },
+      "searchHit": 1
+    }
+  ],
+  "limits": "Actual bounded affected paragraph/fixture selection/search/layout only; old Source/Reader/Quality scopes reused. No fullbrowser/allcontrast/realAT/freshtask/gate award."
+}

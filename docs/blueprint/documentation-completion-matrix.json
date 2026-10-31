@@ -5116,7 +5116,7 @@
     },
     {
       "id": "AP09-reader-developers-20261020",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -5449,6 +5449,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -6178,6 +6183,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -8876,7 +8890,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [
@@ -9020,6 +9034,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -9650,7 +9669,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-closeout-runtime-20261020",
@@ -11003,7 +11031,7 @@
     },
     {
       "id": "AP09-closeout-developer-maintenance-20261020",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -11278,6 +11306,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -12132,7 +12165,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-closeout-ARC006-20261020",
@@ -14164,7 +14206,7 @@
     },
     {
       "id": "AP09-contributor-baselines-and-migrations-20261021",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations); current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [],
@@ -14219,6 +14261,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -14351,7 +14398,16 @@
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
         }
       ],
-      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902"
+      "previousReviewedRevision": "3be8232a024f551f163d55f770c5fc97127d7902",
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
@@ -16045,7 +16101,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -16529,6 +16585,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -17671,6 +17732,15 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
@@ -18011,7 +18081,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -18331,6 +18401,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -18942,7 +19017,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-registry-data-path-20261021",
@@ -20794,7 +20878,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -21093,6 +21177,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -21792,11 +21881,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -22202,6 +22300,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -22843,11 +22946,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "verdict": "PASS",
@@ -23528,6 +23640,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "limits": [
@@ -25378,6 +25495,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -27907,7 +28033,7 @@
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "verdict": "PASS",
@@ -28028,6 +28154,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "limits": [
@@ -28416,6 +28547,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -33626,7 +33766,7 @@
     },
     {
       "id": "A910-01-whole-content-20261021",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [
@@ -33668,6 +33808,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -33753,11 +33898,20 @@
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A910-11-whole-content-20261021",
-      "revision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [
@@ -33810,6 +33964,11 @@
           "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node --max-old-space-size=4096 scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Actual current MNT005 publication build; affected shared documentation projections and source/prose bindings qualified, no new runtime or unrelated original whole-scope execution inferred. Log /home/node/.openclaw/workspace/operations/pr13/evidence/mnt005-whole-path-20261030/current-catalogue-publication-seven-v2/actual-1.log SHA256 b1756e0ad53ecaa5e583fda20cd05b83dd8e5ddb39e0632199a82f33a52c6d99"
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -33908,7 +34067,16 @@
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A99-01-whole-recursive-input-content-20261021",
@@ -40944,7 +41112,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -41444,6 +41612,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -42727,11 +42900,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -42937,6 +43119,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -43569,7 +43756,16 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
@@ -45027,7 +45223,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -45472,6 +45668,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -46229,6 +46430,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -48535,7 +48745,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -48847,6 +49057,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -49446,6 +49661,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -50276,7 +50500,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -50647,6 +50871,11 @@
           "command": "Independent original69 affected-scope preservation at GOV002/MNT001/MNT009 candidate",
           "exitCode": 0,
           "observation": "Actual named original scopes preserved only at final independent whole decision bounds. No runtime/globalAPI/nativePython3.14/fresh-install or new gate award; all prior negative evidence retained."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only package.json, scripts/docs-generate.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nOriginal A911-06 authored binding across72endpoint/65outbound/75store records plus CI/product workflows. Reuses original substantive Source/semantic Reader/Quality with exact unchanged complete vectors; fresh four semantic slice assessments. Not inferred from inventory, common anchors or publication counts. No new catalogue requirement counted. Independent whole original criterion Source/semantic Reader/Quality PASS; exact five literal exclusions were assessed as nonmaterial to authored binding, not cleared for Source/execution.",
@@ -50924,11 +51153,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -51117,6 +51355,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -51439,6 +51682,15 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
@@ -51565,7 +51817,7 @@
     },
     {
       "id": "A99-06-actual-compiled-minimal-project-20261026",
-      "revision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 SourceQuality and fresh semantic Reader reviewers; final original-scope adoption reviewer",
       "gateIds": [
@@ -51649,6 +51901,11 @@
           "command": "Independent exact26-original-scope preservation; node scripts/docs-governance.mjs --check; original committed Reader build and five native reader checks",
           "exitCode": 0,
           "observation": "Complete original contracts/limits and 676-file vectors reviewed; exact first-plugin/6literal asset paths/three generated metadata rows preserve existing bounds. Final seven coordinator processes and four bounded browser cases passed; fresh observer source checkout/install/lifecycle passed separately. No new accepted IDs, human/live/global qualification; original histories and failures retained. Evidence docs/blueprint/acceptance-evidence/observer-lifecycle-20261026/."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -51883,11 +52140,20 @@
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "cbbd9a75e0eda6a7439cb6e05f80747d37875e69",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -52313,6 +52579,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -52754,11 +53025,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "QUA-006-fresh-independent-technical-reader-20261027",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 original criterion adjudicator; fresh native model Reader /root/fresh_technical_reader",
       "gateIds": [],
@@ -52820,6 +53100,11 @@
           "command": "Pinned fe588b1a Codex gpt-5.6-terra/high/P2 whole QUA-006 adjudication plus actual current canonical Source correction",
           "exitCode": 0,
           "observation": "First independent RU/Quality PASS and Source NOT_READY preserved. Full canonical acceptance page plus both declared native owners supplied; corrective actual CANONICAL_SOURCE_INSPECTION/sourceAccuracy/readerUsability/quality/WHOLE_QUA006 explicit PASS, no findings. No participant or global release rerun/waiver."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -52929,7 +53214,16 @@
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
         }
-      ]
+      ],
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     },
     {
       "id": "A911-01-whole-ten-family-discovery-declarations-20261027",
@@ -53888,7 +54182,7 @@
       ]
     },
     {
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -54337,6 +54631,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -54797,10 +55096,19 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -55249,6 +55557,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -55709,6 +56022,15 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
@@ -55847,7 +56169,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -56277,6 +56599,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -56735,11 +57062,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -57551,6 +57887,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -57868,11 +58209,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -58384,6 +58734,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -58599,6 +58954,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -59192,7 +59556,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -59429,6 +59793,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -59619,6 +59988,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -59823,7 +60201,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -60115,6 +60493,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -60269,11 +60652,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -60598,6 +60990,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -60767,11 +61164,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -61046,6 +61452,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -61194,11 +61605,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -62410,6 +62830,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -62569,11 +62994,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63395,6 +63829,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -63488,11 +63927,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64037,6 +64485,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -64129,11 +64582,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "MNT-005-common-source-bound-error-catalogue-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64498,6 +64960,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -64618,11 +65085,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65022,6 +65498,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -65116,11 +65597,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65285,6 +65775,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -65375,11 +65870,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65545,6 +66049,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -65641,11 +66150,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66023,6 +66541,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -66143,11 +66666,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66598,6 +67130,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -66733,11 +67270,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "MNT-004-whole-source-owned-cli-reference-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -68036,6 +68582,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -68151,11 +68702,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -68330,6 +68890,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -68412,11 +68977,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "A91306-QUA002-original-controlled-language-whole-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova /root retained sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
       "gateIds": [
@@ -68702,6 +69276,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -68782,11 +69361,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "A911-05-whole-owned-diagnostic-reference-20261030",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "Nova sole integration owner; existing diagnostic documentation authors",
       "reviewer": "Independent Codex gpt-5.6-terra/high whole original A911-05 content assessor, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; nonauthor, bounded qualified REF005/MNT005 reuse",
       "gateIds": [
@@ -69070,6 +69658,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -69126,6 +69719,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -69240,7 +69842,7 @@
     },
     {
       "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/ref003_fresh_reader",
       "gateIds": [],
@@ -69389,6 +69991,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -69445,6 +70052,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -69552,7 +70168,7 @@
     },
     {
       "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/mnt003_fresh_reader",
       "gateIds": [],
@@ -69712,6 +70328,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -69756,11 +70377,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent restricted practical Reader /root/gov_mnt_practical_reader",
       "gateIds": [],
@@ -69820,6 +70450,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -69862,11 +70497,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
       "gateIds": [
@@ -69909,6 +70553,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -69943,11 +70592,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -70672,6 +71330,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -70704,11 +71367,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -71380,6 +72052,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -71402,11 +72079,20 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
       }
     },
     {
       "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
-      "revision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native non-author /root/qua010_execution_path",
       "gateIds": [
@@ -71520,6 +72206,11 @@
           "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
           "exitCode": 0,
           "observation": "Current affected delivery at Source d7504972985dca8a134b0b6e1958fd35fc08e7b7: actual native build0,184pages in321.25s; canonical artifact and all four standard reader-owner checks0, affected320/1440 keyboard/layout/search/axe-subset0 and independent rendered-page contentPASS. Original scoped meanings/check histories/limits retained, not rerun or promoted;34mobile contrast incompletes and fresh public Plugin FAIL remain open."
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -71539,6 +72230,15 @@
         "currentDeliverySource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
         "currentDeliveryProof": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/current-delivery-closeout.json",
         "originalSummaryLimitsAndHistoryRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      },
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
       }
@@ -71640,7 +72340,7 @@
     },
     {
       "id": "QUA007-independent-actual-operator-six-facets-20261031",
-      "revision": "9abba46ece3063df72f3db16d0a27a83446a0088",
+      "revision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
       "gateIds": [],
@@ -71736,6 +72436,11 @@
           "command": "Fresh registered operator: session-cleanup-check",
           "exitCode": 0,
           "observation": "Actual terminal execution; elapsedSeconds=0.14857172966003418"
+        },
+        {
+          "command": "operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build; canonical artifact plus bounded affected handbook/fixture delivery",
+          "exitCode": 0,
+          "observation": "Current Source 7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b: actual native184page build0/302.12sec, canonical artifact0, exact fixture bytes/current SHA and registered f4 baseline, literal handbook pointer and320/1440 layout/search PASS. Authored href set unchanged except current Source links (12 actually verified). Independent exact51 scopes preserve original limits and historical checks; no fullcorpus browser rerun, new practical case, defaultAPI/generator, AT or AP10 acceptance."
         }
       ],
       "review": {
@@ -71753,7 +72458,16 @@
         "Existing native publication/artifact checks at 5390bc45 reused for unchanged public content; no new build claimed."
       ],
       "openIssues": [],
-      "verdict": "PASS"
+      "verdict": "PASS",
+      "scopePreservationPlatformBaseline20261031": {
+        "previousReviewedRevision": "9abba46ece3063df72f3db16d0a27a83446a0088",
+        "currentDeliverySource": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+        "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+        "currentDeliveryProof": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-v2-handbook-20261031/current-delivery-closeout.json",
+        "originalSummariesLimitsHistoryAndReviewsRetained": true,
+        "historicalChecksNotRelabelledCurrent": true,
+        "newWholeAcceptance": false
+      }
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",

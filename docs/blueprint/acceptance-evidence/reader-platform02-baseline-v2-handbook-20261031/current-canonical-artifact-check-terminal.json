@@ -1,0 +1,13 @@
+{
+  "start": "2026-10-31T23:33:49.205151+00:00",
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "--max-old-space-size=4096",
+    "scripts/docs-reader/check-artifact.mjs"
+  ],
+  "sourceRevision": "7e6eee2a38fb66f8f72f02350efcf1ff66a5af9b",
+  "end": "2026-10-31T23:34:20.955051+00:00",
+  "elapsedSeconds": 31.74992784904316,
+  "exitCode": 0
+}
