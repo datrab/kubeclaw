@@ -131,14 +131,14 @@ const platform = {
   administrativeDecisionIssuers: [],
 };
 
-async function run(definitionValue, runId) {
-  const runtime = await prepareRuntime(platform, definitionValue);
+async function run(definitionValue, runId, selectedPlatform = platform) {
+  const runtime = await prepareRuntime(selectedPlatform, definitionValue);
   const adapters = new core.AdapterRuntime({
     granted: runtime.granted,
     activated: runtime.activated,
     configs: new Map(),
     effects: {},
-    shutdownTimeoutMs: platform.shutdownTimeoutMs,
+    shutdownTimeoutMs: selectedPlatform.shutdownTimeoutMs,
     async emitDomainEvent() {},
   });
   const journal = new MemoryJournal();
@@ -150,7 +150,7 @@ async function run(definitionValue, runId) {
       activated: runtime.activated,
       adapters,
       journal,
-      orchestratorIssuerId: platform.orchestratorIssuerId,
+      orchestratorIssuerId: selectedPlatform.orchestratorIssuerId,
     });
     return { result: await runner.run(runId), journal };
   } finally {
@@ -211,14 +211,78 @@ try {
     /Value failed schema/u,
   );
 
+  // An unrequested grant is denied before activation; the stage still declares
+  // no capabilities and no state provider is selected or invoked.
+  const baselineRuntime = await prepareRuntime(platform, definition({ name: 'KubeClaw' }));
+  assert.deepEqual([...baselineRuntime.snapshot.packages.keys()], ['example.greeting']);
+  assert.deepEqual([...baselineRuntime.snapshot.stages.keys()], ['example.greeting.say']);
+  assert.deepEqual(baselineRuntime.snapshot.stages.get('example.greeting.say').registration.requiredCapabilities, []);
+  await assert.rejects(prepareRuntime({ ...platform, grants: {
+    'example.greeting:say': { 'state.read': {} },
+  } }, definition({ name: 'KubeClaw' })), error => error?.code === 'REGISTRY_CAPABILITY_UNREQUESTED');
+  const restoredRuntime = await prepareRuntime(platform, definition({ name: 'KubeClaw' }));
+  assert.equal(restoredRuntime.snapshot.snapshotDigest, baselineRuntime.snapshot.snapshotDigest);
+
+  // Same manifest/registration identity, different owned path and module bytes.
+  // Never edit a released package or discover old and new copies together.
+  const replacementRoot = path.join(temporary, 'replacement-plugins');
+  const replacementPackage = path.join(replacementRoot, 'minimal-stage-v2');
+  fs.mkdirSync(replacementRoot);
+  fs.cpSync(fixtureRoot, replacementPackage, { recursive: true });
+  const replacementManifestPath = path.join(replacementPackage, 'plugin.json');
+  const replacementManifest = JSON.parse(fs.readFileSync(replacementManifestPath, 'utf8'));
+  replacementManifest.packageVersion = '2.0.0';
+  fs.writeFileSync(replacementManifestPath, JSON.stringify(replacementManifest));
+  const replacementModulePath = path.join(replacementPackage, 'src/stage.js');
+  const originalModule = fs.readFileSync(replacementModulePath, 'utf8');
+  const greeting = '${context.contract.config.prefix}, ${input.name}!';
+  assert.equal(originalModule.split(greeting).length - 1, 1, 'replacement greeting anchor must be unique');
+  fs.writeFileSync(replacementModulePath, originalModule.replace(greeting,
+    '${context.contract.config.prefix}-v2, ${input.name}!'));
+  const replacementPlatform = { ...platform,
+    installationRoots: [replacementRoot], trustedBuiltinRoots: [replacementRoot] };
+  const replacementRuntime = await prepareRuntime(replacementPlatform, definition({ name: 'KubeClaw' }));
+  assert.deepEqual([...replacementRuntime.snapshot.packages.keys()], ['example.greeting']);
+  assert.deepEqual([...replacementRuntime.snapshot.stages.keys()], ['example.greeting.say']);
+  assert.equal(replacementRuntime.activated.stages.size, 1);
+  assert.equal(replacementRuntime.snapshot.packages.get('example.greeting').manifest.packageVersion, '2.0.0');
+  assert.equal(replacementRuntime.snapshot.packages.get('example.greeting').root, replacementPackage);
+  assert.notEqual(replacementRuntime.snapshot.snapshotDigest, baselineRuntime.snapshot.snapshotDigest);
+  const replacement = await run(definition({ name: 'KubeClaw' }), 'run:ap08-replacement', replacementPlatform);
+  assert.equal(replacement.result.status, 'succeeded');
+  assert.equal(replacement.result.stages.get('greet')?.facts?.['tutorial.greeting'], 'Hello-v2, KubeClaw!');
+  const rollback = await run(definition({ name: 'KubeClaw' }), 'run:ap08-rollback');
+  assert.equal(rollback.result.stages.get('greet')?.facts?.['tutorial.greeting'], 'Hello, KubeClaw!');
+  assert.equal((await prepareRuntime(platform, definition({ name: 'KubeClaw' }))).snapshot.snapshotDigest,
+    baselineRuntime.snapshot.snapshotDigest);
+
+  const disabledRoot = path.join(temporary, 'disabled-plugins');
+  fs.mkdirSync(disabledRoot);
+  const disabledPlatform = { ...platform, installationRoots: [disabledRoot], trustedBuiltinRoots: [disabledRoot] };
+  const disabledRegistry = core.buildRegistry(core.discoverPackages({ installationRoots: [disabledRoot],
+    trustPolicy: { trustedBuiltinRoots: [disabledRoot], allowedSourceDigests: new Map(),
+      verifiedAttestations: new Map(), verifierId: 'ap08-disabled-fixture' } }));
+  assert.equal(disabledRegistry.packages.has('example.greeting'), false);
+  assert.equal(disabledRegistry.stages.has('example.greeting.say'), false);
+  await assert.rejects(prepareRuntime(disabledPlatform, definition({ name: 'KubeClaw' })),
+    /PIPELINE_STAGE_OWNER_MISSING:example\.greeting\.say/u);
+  const retainedBeforeRemoval = [success, failure, replacement, rollback]
+    .map(run => JSON.stringify(run.journal.records()));
+  fs.rmSync(replacementPackage, { recursive: true });
+  await assert.rejects(prepareRuntime(replacementPlatform, definition({ name: 'KubeClaw' })),
+    /PIPELINE_STAGE_OWNER_MISSING:example\.greeting\.say/u);
+
   fs.rmSync(installedPackage, { recursive: true, force: true });
   await assert.rejects(
     core.validatePipelineRuntimeV2(platform, definition({ name: 'KubeClaw' })),
     /PIPELINE_STAGE_OWNER_MISSING:example\.greeting\.say/u,
   );
 
-  const retainedJournals = [success.journal.records(), failure.journal.records()];
+  const retainedJournals = [success.journal.records(), failure.journal.records(),
+    replacement.journal.records(), rollback.journal.records()];
   assert(retainedJournals.every((records) => records.length > 0), 'successful and failed run evidence must remain after package removal');
+  assert.deepEqual(retainedJournals.map(records => JSON.stringify(records)), retainedBeforeRemoval,
+    'package removal must preserve the complete original run journals');
 
   console.log(JSON.stringify({
     ok: true,
@@ -230,6 +294,16 @@ try {
     successFact: 'Hello, KubeClaw!',
     intentionalFailure: 'failed',
     invalidInput: 'rejected',
+    undeclaredGrant: 'REGISTRY_CAPABILITY_UNREQUESTED',
+    grantRestored: true,
+    replacement: { packageId: 'example.greeting', registrationId: 'example.greeting:say',
+      packageVersion: '2.0.0', activatedStages: replacementRuntime.activated.stages.size,
+      baselineSnapshotDigest: baselineRuntime.snapshot.snapshotDigest,
+      replacementSnapshotDigest: replacementRuntime.snapshot.snapshotDigest,
+      successFact: 'Hello-v2, KubeClaw!' },
+    rollback: 'original-snapshot-and-behavior',
+    disabled: 'package-and-stage-absent',
+    replacementRemoval: 'stage-owner-missing',
     removal: 'stage-owner-missing',
     retainedRunJournals: retainedJournals.length,
     persistenceBoundary: 'in-memory journal; persistent recovery requires separate checks',
