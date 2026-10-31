@@ -20,6 +20,7 @@ test.beforeAll(async()=>{
   server=createServer((request,response)=>{void(async()=>{
     response.setHeader('content-security-policy',studioContentSecurityPolicy);
     const pathname=new URL(request.url,'http://fixture').pathname;
+    if(pathname.endsWith('/chat')){response.setHeader('content-type','application/json');response.end(JSON.stringify({items:[]}));return;}
     response.setHeader('content-type','application/json');
     const reply=(status,value)=>{response.writeHead(status);response.end(JSON.stringify(value));};
     if(pathname==='/v1/session'){reply(200,{csrf:'fixture',userId:'operator'});return;}
@@ -93,7 +94,7 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
         if(mode==='preview')await expect(page.locator('iframe[title="Isolated prototype preview"]')).toHaveCSS('width',`${fittedWidth-2}px`);
       }
     }
-    await page.getByRole('button',{name:'Check design',exact:true}).click();
+    await page.getByRole('button',{name:'Prototyp prüfen',exact:true}).click();
     await expect(page.locator('.workspace').getByRole('region',{name:'Design quality'})).toBeVisible();
     await expect(page.locator('.plain-preview')).toBeInViewport();
     await page.locator('.brief summary').click();await expect(page.locator('.brief dd').first()).toBeVisible();
@@ -144,17 +145,12 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
     await expect(scope.getByRole('alert')).toContainText('Revision conflict');await expect(scope.getByLabel('Element text')).toHaveValue('Unsaved draft');
     await expect(scope.getByRole('status')).toHaveCount(0);expect(document.meta.revision).toBe(1);await expect(page.getByRole('heading',{name:'Prism cannot open'})).toHaveCount(0);
   });
-  test('interrupted feedback automatically resumes after reload with its original identity',async({page})=>{
-    failFeedback=true;await page.goto(`${origin}/?document=demo&mode=edit`);if(mobile)await page.locator('.mobile-nav').getByRole('button',{name:'Prism',exact:true}).tap();
-    let scope=page.locator(mobile?'.sheet':'.inspector');await scope.getByLabel('Prism instruction').fill('More space around the family notes');await scope.getByRole('button',{name:'Änderung senden',exact:true}).click();
-    await expect(page.getByRole('heading',{name:'Prism cannot open'})).toHaveCount(0);
-    await expect(scope.getByRole('button',{name:'Status erneut prüfen',exact:true})).toBeEnabled();
-    await expect(scope.getByLabel('Prism instruction')).toHaveValue('More space around the family notes');await expect(scope.getByLabel('Prism instruction')).toBeDisabled();
-    await page.reload();if(mobile)await page.locator('.mobile-nav').getByRole('button',{name:'Prism',exact:true}).tap();scope=page.locator(mobile?'.sheet':'.inspector');
-    await expect(scope.getByRole('status')).toContainText('Änderung übernommen');
-    await expect(scope.getByRole('button',{name:'Änderung senden',exact:true})).toBeVisible({timeout:5000});
-    await expect(scope.getByLabel('Prism instruction')).toBeEnabled();
-    expect(feedback).toHaveLength(2);expect(feedback[0].idempotencyKey).toBe(feedback[1].idempotencyKey);expect(feedback[1].input.instruction).toBe('More space around the family notes');
+  test('legacy interrupted feedback resumes after reload without creating a new change',async({page})=>{
+    const pending={operation:'generate',baseRevision:1,input:{instruction:'More space around the family notes',mode:'refine'},idempotencyKey:'legacy-feedback-key'};
+    await page.addInitScript(value=>sessionStorage.setItem('prism-agent-revision:'+JSON.stringify(['operator','demo']),JSON.stringify(value)),pending);
+    await page.goto(`${origin}/?document=demo&mode=edit`);
+    await expect(page.locator('.workspace .revision-status')).toContainText('Änderung übernommen');
+    expect(feedback).toHaveLength(1);expect(feedback[0].idempotencyKey).toBe('legacy-feedback-key');
     expect(document.views.home.root.children[0].props.content).toBe('Reviewed layout');
   });
   if(mobile)test('touch cancellation never saves a half-finished move',async({page})=>{

@@ -17,9 +17,9 @@ export async function handleAgentJobs(request:IncomingMessage,response:ServerRes
     if(!match)throw new Error('unknown agent job route');
     if(request.method==='GET' && !match[2])result={job:await agentJob(options.db,match[1]!)};
     else if(request.method==='POST' && match[2]){
-      const input=await options.readBody(request) as {fence:string;outcome:Record<string,unknown>};
+      const input=await options.readBody(request) as {fence:string;outcome:Record<string,unknown>;reply?:string};
       if(!input.outcome || typeof input.outcome!=='object')throw new Error('agent outcome is required');
-      result={job:await finishAgentRun(options.db,match[1]!,input.fence,input.outcome)};
+      result={job:await finishAgentRun(options.db,match[1]!,input.fence,input.outcome,input.reply)};
     }else throw new Error('unsupported agent job method');
   }
   response.writeHead(200,{'content-type':'application/json','cache-control':'no-store'});

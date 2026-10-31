@@ -3,7 +3,7 @@ import { inTransaction, RevisionRepository, type Database, type Queryable } from
 import type { PreferenceEvent } from "../preferences/index.ts";
 import { insertPreference, lockPreference } from "./preferences.ts";
 
-type Decision = { action: "selected"; documentId: string } | { action: "rejected" | "liked" | "disliked" | "preserved"; trait?: string };
+type Decision = { action: "selected"; documentId: string; expectedRevision?:number } | { action: "rejected" | "liked" | "disliked" | "preserved"; trait?: string };
 type Direction = { project_id: string; external_id: string; direction_key: string; state: string; source_document_id: string; source_revision_id: string };
 const digest = (value: unknown) => createHash("sha256").update(JSON.stringify(value)).digest("hex");
 
@@ -34,7 +34,8 @@ async function applyDecision(connection: Queryable, direction: Direction, id: st
   const currentRound = await connection.query("SELECT d.id FROM prism.design_document d JOIN prism.design_request r ON r.id=d.design_request_id AND r.status='active' WHERE d.id=$1 AND d.design_round_id IS NOT DISTINCT FROM r.current_round_id",[direction.source_document_id]);
   if (!currentRound.rows[0]) throw new Error("direction is not part of the current design round");
   const current = await new RevisionRepository(connection).current(direction.source_document_id);
-  if (direction.source_revision_id !== current.id) throw new Error("direction is stale; generate new directions from the current revision");
+  if(input.expectedRevision!==undefined && (!Number.isSafeInteger(input.expectedRevision)||input.documentId!==direction.source_document_id||current.document.meta.revision!==input.expectedRevision))throw new Error('Der angezeigte Entwurf hat sich geändert. Bitte lade die Vorschau erneut.');
+  if (input.expectedRevision===undefined && direction.source_revision_id !== current.id) throw new Error("direction is stale; generate new directions from the current revision");
   const updated = await connection.query<{id: string}>("UPDATE prism.direction SET state=CASE WHEN id=$1 THEN 'selected' ELSE 'rejected' END WHERE project_id=$2 AND source_document_id IN (SELECT d.id FROM prism.design_document d JOIN prism.design_request r ON r.id=d.design_request_id AND r.status='active' AND d.design_round_id IS NOT DISTINCT FROM r.current_round_id WHERE d.project_id=$2) AND state IN ('proposed','selected') RETURNING id", [id, direction.project_id]);
   if (!updated.rows.some((row) => row.id === id)) throw new Error("direction is not part of the active design request");
   return { document: current.document, documentId: direction.source_document_id, directionKey: direction.direction_key };

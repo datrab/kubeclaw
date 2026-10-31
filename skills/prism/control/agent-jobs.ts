@@ -6,7 +6,7 @@ import { inTransaction, type Database, type Queryable } from '../storage/index.t
 import { agentSessionKey } from '../server/agent-session.ts';
 
 export type AgentJob = Record<string,unknown> & {
-  id:string; attempt_number:number; project_id:string; operation:'design-set'|'revise'; session_key:string;
+  id:string; attempt_number:number; project_id:string; operation:'design-set'|'revise'|'chat'; session_key:string;
   request_digest:string; request:Record<string,unknown>; state:'accepted'|'running'|'completed'|'needs_nova'|'superseded';
   attempt_envelope:WorkerAttemptEnvelopeV2|null; fence:string|null; result:unknown; result_digest:string|null;
 };
@@ -41,7 +41,7 @@ export async function claimAgentJob(db:Database,runnerId:string) {
   return inTransaction(db,async connection=>{
     await connection.query("SELECT pg_advisory_xact_lock(hashtextextended('prism-agent-admission',0))");
     await connection.query("UPDATE prism.agent_job SET state='needs_nova',outcome=jsonb_build_object('reason','external agent outcome unresolved after claim expiry'),updated_at=clock_timestamp() WHERE state='running' AND expires_at<=clock_timestamp()");
-    await connection.query("UPDATE prism.agent_job j SET state='superseded',outcome=jsonb_build_object('reason','source changed before external action started'),updated_at=clock_timestamp() WHERE j.state='accepted' AND ((j.operation='design-set' AND NOT EXISTS (SELECT 1 FROM prism.design_round round JOIN prism.design_request request ON request.id=round.design_request_id WHERE round.id=j.id AND request.status='active' AND request.current_round_id=round.id)) OR (j.operation='revise' AND NOT EXISTS (SELECT 1 FROM prism.design_document document JOIN prism.design_revision revision ON revision.id=document.current_revision_id WHERE document.id::text=j.request->>'documentId' AND revision.revision::text=j.request->>'expectedRevision'))) ");
+    await connection.query("UPDATE prism.agent_job j SET state='superseded',outcome=jsonb_build_object('reason','source changed before external action started'),updated_at=clock_timestamp() WHERE j.state='accepted' AND ((j.operation='design-set' AND NOT EXISTS (SELECT 1 FROM prism.design_round round JOIN prism.design_request request ON request.id=round.design_request_id WHERE round.id=j.id AND request.status='active' AND request.current_round_id=round.id)) OR (j.operation IN ('revise','chat') AND NOT EXISTS (SELECT 1 FROM prism.design_document document JOIN prism.design_revision revision ON revision.id=document.current_revision_id WHERE document.id::text=j.request->>'documentId' AND revision.revision::text=j.request->>'expectedRevision'))) ");
     const rows=await connection.query<AgentJob>("SELECT j.* FROM prism.agent_job j WHERE j.state='accepted' AND NOT EXISTS (SELECT 1 FROM prism.agent_job active WHERE active.session_key=j.session_key AND active.state IN ('running','needs_nova')) ORDER BY j.created_at,j.id LIMIT 1 FOR UPDATE OF j");
     if(!rows.rows[0])return null;
     const source=rows.rows[0];const fence=randomUUID();
@@ -53,14 +53,18 @@ export async function claimAgentJob(db:Database,runnerId:string) {
   });
 }
 
-export async function finishAgentRun(db:Database,id:string,fence:string,outcome:Record<string,unknown>) {
+export async function finishAgentRun(db:Database,id:string,fence:string,outcome:Record<string,unknown>,reply?:string) {
   return inTransaction(db,async connection=>{
     const rows=await connection.query<AgentJob>('SELECT * FROM prism.agent_job WHERE id=$1 FOR UPDATE',[id]);
     const job=rows.rows[0];
     if(!job || job.fence!==fence)throw new Error('agent job fence conflict');
     validateAgentOutcome(job,outcome);
     if(job.state==='completed' || job.state==='needs_nova')return job;
-    const completed=outcome.schemaVersion==='worker-attempt-result.v2' && outcome.state==='completed' && job.result!==null;
+    if(job.operation==='chat' && outcome.state==='completed'){
+      if(typeof reply!=='string'||!reply.trim()||reply.length>100000)throw new Error('Prism chat reply is missing or too large');
+      await connection.query('UPDATE prism.agent_chat SET reply=$2 WHERE job_id=$1',[id,reply]);
+    }
+    const completed=outcome.schemaVersion==='worker-attempt-result.v2' && outcome.state==='completed' && (job.result!==null || (job.operation==='chat' && Boolean(reply?.trim())));
     await connection.query("UPDATE prism.agent_job SET state=$2,outcome=$3::jsonb,updated_at=clock_timestamp() WHERE id=$1",[id,completed?'completed':'needs_nova',JSON.stringify(outcome)]);
     return agentJob(connection,id);
   });

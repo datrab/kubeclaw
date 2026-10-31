@@ -131,3 +131,33 @@ test('authenticated project status exposes stopped generation without requiring 
   assert.equal(stopped.status,200);assert.equal(stopped.value.state,'needs_nova');assert.match(stopped.value.summary,/stopped/);
  }finally{await context.close();}
 });
+
+test('Studio chat HTTP binds exact origin session, fences changes and stores preferences only on explicit selection',async()=>{
+ const context=await setup();try{
+  const {WorkerAttemptExecutor}=await import('@kubeclaw/worker-core');const {AgentProcess}=await import('../server/agent-process.ts');
+  const finish=async(job:any,reply?:string)=>{
+   const outcome=await new WorkerAttemptExecutor({envelope:job.attempt_envelope,operation:new AgentProcess(process.execPath,['-e','process.exitCode=0']),retainLogs:false}).execute();
+   const r=await context.api(`/v1/agent/jobs/${job.id}/finish`,{fence:job.fence,outcome,...(reply?{reply}:{})},headers);assert.equal(r.status,200,JSON.stringify(r.value));
+  };
+  await context.dispatch('chat-http',1);const origin=await context.claim();const delivered=await context.deliver(origin,'Chat');await finish(origin);
+  const docId=delivered.details.documentId;const operator=await context.session();
+  const postHeaders={...operator.headers,'idempotency-key':'chat-http-message'};
+  assert.equal((await context.api(`/v1/documents/${docId}/chat`,{message:'More space'})).status,422);
+  const admitted=await context.api(`/v1/documents/${docId}/chat`,{message:'More space'},postHeaders);assert.equal(admitted.status,202,JSON.stringify(admitted.value));
+  assert.deepEqual((await context.api(`/v1/documents/${docId}/chat`,{message:'More space'},postHeaders)).value,admitted.value);
+  const turn=await context.claim();assert.equal(turn.id,admitted.value.jobId);assert.equal(turn.session_key,origin.session_key);assert.equal(turn.operation,'chat');
+  const next=structuredClone(turn.request.document);next.meta.revision++;next.views.home.root.children[0].props.content='Chat spacing applied';
+  const revision={jobId:turn.id,fence:turn.fence,generationId:turn.id,projectId:'chat-http',documentId:docId,expectedRevision:turn.request.expectedRevision,instruction:'More space',document:next};
+  assert.equal((await context.api('/v1/agent/revisions',{...revision,documentId:delivered.details.directions[1].documentId},headers)).status,422);
+  assert.equal((await context.api('/v1/agent/revisions',{...revision,fence:'00000000-0000-4000-8000-000000000000'},headers)).status,422);
+  const applied=await context.api('/v1/agent/revisions',revision,headers);assert.equal(applied.status,200,JSON.stringify(applied.value));
+  await finish(turn,'I updated the spacing.');
+  const history=await context.api(`/v1/documents/${docId}/chat`,undefined,operator.headers);assert.equal(history.value.items[0].reply,'I updated the spacing.');assert.equal(history.value.items[0].state,'completed');
+  assert.equal((await context.db().query<{count:number}>('SELECT count(*)::int AS count FROM prism.preference_event')).rows[0]!.count,0);
+  assert.equal((await context.db().query<{count:number}>('SELECT count(*)::int AS count FROM prism.preference_generation')).rows[0]!.count,1,'chat did not create a preference-generation snapshot');
+  const choice=delivered.details.directions[0].directionId;
+  const stale=await context.api(`/v1/directions/${choice}/select`,{documentId:docId,expectedRevision:1},{...operator.headers,'idempotency-key':'stale-confirm'});assert.equal(stale.status,422);
+  const chosen=await context.api(`/v1/directions/${choice}/select`,{documentId:docId,expectedRevision:2},{...operator.headers,'idempotency-key':'confirm-displayed'});assert.equal(chosen.status,200,JSON.stringify(chosen.value));
+  assert.equal((await context.db().query<{count:number}>('SELECT count(*)::int AS count FROM prism.preference_event')).rows[0]!.count,1);
+ }finally{await context.close();}
+});

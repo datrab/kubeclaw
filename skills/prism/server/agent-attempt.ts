@@ -9,7 +9,7 @@ function unavailable(unit:'milliseconds'|'bytes'|'processes') {
 
 /** This is the local launcher profile, not the remote gateway/model engine or deterministic Prism engine. */
 export async function agentAttempt(job:{attempt_number?:number;id:string;fence:string;expires_at:string|Date;request_digest:string;request:Record<string,unknown>},runnerId:string):Promise<WorkerAttemptEnvelopeV2> {
-  const files=['agent-process.ts','agent-attempt.ts','agent-job-runner.mjs','agent-prompt.mjs','preference-prompt.mjs'];
+  const files=['agent-process.ts','agent-attempt.ts','agent-job-runner.mjs','agent-prompt.mjs','preference-prompt.mjs','chat-reply.mjs'];
   const content=await Promise.all(files.map(async file=>({file,digest:sha256Text(await readFile(new URL(file,import.meta.url),'utf8'))})));
   const unsignedProfile={schemaVersion:'worker-profile.v2' as const,profileId:'prism-openclaw-launcher-v2',workerType:'prism-agent',coreContractId:'kubeclaw.pipeline-worker-core@2',
     engine:{engineId:'prism-openclaw-launcher',contractId:'kubeclaw.prism-agent-launcher@1',engineVersion:'2.0.0',contentDigest:sha256Digest(content)},capabilities:['openclaw.agent','artifacts.write'],resourceCapabilities:{

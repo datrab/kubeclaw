@@ -1,3 +1,4 @@
+import {StudioChat} from './StudioChat.tsx';
 import type { ProjectDesignStatus } from '../control/project-status.ts';
 import {savedRevision,pendingRevision,submitRevision,waitForRevision,type RevisionClient,type PendingRevision} from './agent-revision-client.ts';
 import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, type RoundClient, type StudioDirection } from "./design-round-client.ts";
@@ -338,11 +339,31 @@ function App() {
     pendingDirectionKeys.current.set(identity, key);
     return { identity, options: { method: "POST", headers: { "content-type": "application/json", "x-prism-csrf": csrf, "Idempotency-Key": key }, body } };
   };
+  const findingTarget = (target:string) => {
+    const find=(node:PrismNode):PrismNode|undefined=>node.id===target?node:(node.children??[]).map(find).find(Boolean);
+    const node=document&&Object.values(document.views).map(view=>find(view.root)).find(Boolean);
+    return node ? String(node.props.label??node.props.content??node.type).slice(0,100) : target;
+  };
+  const refreshChatDocument = async () => {
+    const id=new URLSearchParams(location.search).get('document');if(!id)return;
+    const r=await fetch(`/v1/documents/${encodeURIComponent(id)}`);if(!r.ok)throw new Error('Aktueller Entwurf konnte nicht geladen werden.');
+    // viewId and viewState are derived above with existence checks, including renamed/removed views.
+    const value=await r.json();if(new URLSearchParams(location.search).get('document')===id){setDocument(value.document);setQuality(null);}
+  };
+  const saveChatPreference = async (turn:{job_id:string;message:string;created_at?:string}) => {
+    if(!document)return;
+    const event={schema:'prism.preference-event.v1',eventId:`event-chat-${turn.job_id}`,userId,projectId:document.meta.projectId,action:'preserved',target:{documentId:new URLSearchParams(location.search).get('document'),chatTurnId:turn.job_id},traits:[turn.message],context:{surface:'chat',preferenceType:'project'},source:'explicit',learningScope:'project',occurredAt:new Date(turn.created_at!).toISOString()};
+    const r=await fetch('/v1/preferences',{method:'POST',headers:{'content-type':'application/json','x-prism-csrf':csrf},body:JSON.stringify(event)});const value=await r.json();if(!r.ok)throw new Error(value.error??'Vorliebe konnte nicht gespeichert werden.');
+  };
+  const confirmDirection = async (id:string) => {if(directionBusy||working||revisionPending)return;setDirectionBusy(true);setActionError('');try{await selectDirection(id);}catch(error){setActionError(String(error));}finally{setDirectionBusy(false);}};
   const selectDirection = async (directionId: string) => {
     const documentId = new URLSearchParams(location.search).get("document");
     if (!documentId) throw new Error("Document ID is missing");
     const route = `/v1/directions/${encodeURIComponent(directionId)}/select`;
-    const mutation = directionRequest(route, {documentId});
+    const direction=directions.find(item=>item.id===directionId);
+    const sourceId=direction?.source_document_id;if(!sourceId)throw new Error("Entwurf nicht verfügbar");
+    if(!document||documentId!==sourceId)throw new Error('Öffne zuerst die Vorschau dieses Entwurfs und bestätige dann den angezeigten Stand.');
+    const mutation = directionRequest(route, {documentId:sourceId,expectedRevision:document.meta.revision});
     const response = await fetch(route, mutation.options);
     const result = (await response.json()) as {
       document?: PrismDocument;
@@ -357,6 +378,8 @@ function App() {
       const query=new URLSearchParams(location.search);query.set("document",result.documentId);
       history.replaceState(null,"",`?${query.toString()}`);
     }
+    setViewId(Object.keys(result.document.views)[0]??'home');setPanel(null);
+    setApprovalMessage('Entwurf bestätigt. Deine Auswahl wurde als Vorliebe für dieses Projekt gespeichert. Das ist noch keine Produktionsfreigabe.');
     setQuality(null);
     setAcceptedWarnings([]);
     setDirections((items) =>
@@ -590,7 +613,7 @@ function App() {
               void evaluateDesign().catch((error) => setActionError(String(error)))
             }
           >
-            Check design
+            Prototyp prüfen
           </button>
           <button
             className="approve"
@@ -688,7 +711,7 @@ function App() {
 
         {quality && (
           <section aria-label="Design quality">
-            <h2>Design quality: {quality.status}</h2>
+            <h2>Prototyp-Prüfung: {quality.status==='ready'?'keine offenen Hinweise':quality.status==='blocked'?'Fehler beheben':'Hinweise prüfen'}</h2><p>Prüft Funktionen und Aufbau, nicht deinen gestalterischen Geschmack. Häkchen bestätigen nur, dass du den jeweiligen Hinweis geprüft hast.</p>
             {quality.findings.length === 0 ? (
               <p>No findings.</p>
             ) : (
@@ -709,8 +732,8 @@ function App() {
                       )
                     }
                   />
-                  <strong>{finding.level}</strong> {finding.message}
-                  {finding.target ? ` (${finding.target})` : ""}
+                  <strong>{finding.level==='review'?'Bitte prüfen':finding.level==='blocking'?'Fehler':'Hinweis'}</strong> {finding.message==='An interactive action is not connected to a flow.'?'Für dieses Bedienelement ist noch keine Aktion oder Navigation hinterlegt.':finding.message}
+                  {finding.target ? ` · ${findingTarget(finding.target)}` : ""}
                 </label>
               ))
             )}
@@ -724,6 +747,12 @@ function App() {
             {directions.map((direction,index)=><button key={direction.id} role="tab" aria-selected={direction.source_document_id===new URLSearchParams(location.search).get('document')} disabled={working || revisionPending || directionBusy} onClick={()=>void previewDirection(direction).catch(error=>setActionError(String(error)))}><span>{index+1}</span>{direction.title.split(/ · | – | - /)[0]}</button>)}
           </div>
         </section>}
+        {directions.filter(item=>item.source_document_id===new URLSearchParams(location.search).get('document')).map(item=><section className="design-decision" key={item.id} aria-label="Entwurf bestätigen">
+          <strong>{item.title.split(/ · | – | - /)[0]}</strong>
+          <button className="primary" disabled={item.state!=='proposed'||working||revisionPending||directionBusy} onClick={()=>void confirmDirection(item.id)}>{item.state==='selected'?'✓ Entwurf bestätigt':item.state==='rejected'?'Entwurf verworfen':'Diesen Entwurf bestätigen'}</button>
+          <span>Speichert deine Auswahl für dieses Projekt. Keine Veröffentlichung.</span>
+          {item.state==='proposed'&&<button disabled={working||revisionPending||directionBusy} onClick={()=>void recordDirectionFeedback(item.id,'rejected').catch(error=>setActionError(String(error)))}>Diesen Entwurf verwerfen</button>}
+        </section>)}
         {revisionMessage && <p className="revision-status" role="status" aria-live="polite">{revisionMessage}</p>}
         <div className="workspace-label">
           <span>{document.views[viewId]?.title ?? viewId} · {viewport === "compact" ? "390" : viewport === "regular" ? "768" : "1280"} px</span>
@@ -795,22 +824,8 @@ function App() {
         <hr />
         <p className="eyebrow">Ask Prism</p>
         {revisionMessage && <p className="revision-status" role="status" aria-live="polite">{revisionMessage}</p>}
-        <textarea
-          aria-label="Prism instruction"
-          disabled={working || directionBusy || revisionPending}
-          value={instruction}
-          onChange={(event) => setInstruction(event.target.value)}
-          placeholder="Describe the change you want…"
-        />
-        <button
-          className="primary"
-          disabled={working || directionBusy || (!instruction.trim() && !revisionPending)}
-          onClick={() =>
-            void propose().catch((error) => setActionError(String(error)))
-          }
-        >
-          {directionBusy ? "Entwurf wird geladen…" : working ? "Prism arbeitet…" : revisionPending ? "Status erneut prüfen" : "Änderung senden"}
-        </button>
+<StudioChat documentId={new URLSearchParams(location.search).get('document')!} title={document.meta.title} userId={userId} csrf={csrf} busy={working||revisionPending||directionBusy} onCompleted={refreshChatDocument} onPreference={saveChatPreference}/>
+        {revisionPending && <p className="quiet">Gespeicherter Änderungsauftrag: {instruction}</p>}{revisionPending && <button disabled={working} onClick={()=>void propose().catch(error=>setActionError(String(error)))}>{working ? 'Prism arbeitet…' : 'Status der bisherigen Änderung prüfen'}</button>}
         <button onClick={() => void loadLearned()}>What Prism learned</button>
         {Object.entries(learned).map(([key, value]) => (
           <details key={key}>
@@ -912,22 +927,8 @@ function App() {
               {actionError && <p role="alert">{actionError}</p>}
               {revisionMessage && <p className="revision-status" role="status" aria-live="polite">{revisionMessage}</p>}
               <p className="quiet">Änderung für: {document.meta.title}</p>
-              <textarea
-                aria-label="Prism instruction"
-                disabled={working || directionBusy || revisionPending}
-                value={instruction}
-                onChange={(event) => setInstruction(event.target.value)}
-                placeholder="Describe the change you want…"
-              />
-              <button
-                className="primary"
-                disabled={working || directionBusy || (!instruction.trim() && !revisionPending)}
-                onClick={() =>
-                  void propose().catch((error) => setActionError(String(error)))
-                }
-              >
-                {directionBusy ? "Entwurf wird geladen…" : working ? "Prism arbeitet…" : revisionPending ? "Status erneut prüfen" : "Änderung senden"}
-              </button>
+<StudioChat documentId={new URLSearchParams(location.search).get('document')!} title={document.meta.title} userId={userId} csrf={csrf} busy={working||revisionPending||directionBusy} onCompleted={refreshChatDocument} onPreference={saveChatPreference}/>
+        {revisionPending && <p className="quiet">Gespeicherter Änderungsauftrag: {instruction}</p>}{revisionPending && <button disabled={working} onClick={()=>void propose().catch(error=>setActionError(String(error)))}>{working ? 'Prism arbeitet…' : 'Status der bisherigen Änderung prüfen'}</button>}
             </>
           )}
         </section>

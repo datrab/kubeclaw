@@ -1,3 +1,4 @@
+import {startChat,chatHistory} from '../control/agent-chat.ts';
 import { projectDesignStatus } from '../control/project-status.ts';
 import { handleAgentReconciliation } from './agent-reconciliation-routes.ts';
 import { productAuthorityHandler } from './product-decisions.ts';
@@ -272,7 +273,10 @@ private runWorker(
       if(!input.projectId||!input.documentId||!input.instruction||!Number.isSafeInteger(input.expectedRevision))throw new Error("complete Prism revision input is required");
       const owner=await pool.query<{external_id:string}>("SELECT p.external_id FROM prism.design_document d JOIN prism.project p ON p.id=d.project_id WHERE d.id=$1",[input.documentId]);
       if(owner.rows[0]?.external_id!==input.projectId)throw new Error("document does not belong to the Prism project");
-      const generation = await requirePreferenceGeneration(pool,input.generationId,input.projectId,{operation:"revise",documentId:input.documentId,expectedRevision:input.expectedRevision});
+      const job=await agentJob(pool,input.jobId);
+      // Chat uses the same fenced document transaction, but never creates preference evidence.
+      if(job.operation==='chat' && (job.request.documentId!==input.documentId || job.request.projectId!==input.projectId || job.request.expectedRevision!==input.expectedRevision || job.request.instruction!==input.instruction || input.generationId!==job.id))throw new Error('Chat revision does not match its admitted target');
+      const generation = job.operation==='chat' ? {generationId:job.id} : await requirePreferenceGeneration(pool,input.generationId,input.projectId,{operation:"revise",documentId:input.documentId,expectedRevision:input.expectedRevision});
       const current=await repository.revision(input.documentId,input.expectedRevision!);
       const document=validatePrism<PrismDocument>("designDocument",input.document);
       if(document.meta.revision!==input.expectedRevision!+1)throw new Error("Prism agent must increment the document revision exactly once");
@@ -280,6 +284,12 @@ private runWorker(
       return json(response,200,{status:"updated",document:updated});
     }
     const actor = this.authenticated(request);
+    const chat=/^\/v1\/documents\/([0-9a-f-]+)\/chat$/.exec(url.pathname);
+    if(chat && request.method==='GET')return json(response,200,await chatHistory(pool,chat[1]!,userKey(actor.user)));
+    if(chat && request.method==='POST'){
+      const input=await body(request) as {message:string};
+      return json(response,202,await startChat(pool,chat[1]!,userKey(actor.user),directionIdempotencyKey(request.headers['idempotency-key']),input.message));
+    }
     const projectStatus=/^\/v1\/projects\/([0-9a-f-]+)\/status$/.exec(url.pathname);
     if(projectStatus && request.method==='GET')return json(response,200,await projectDesignStatus(pool,projectStatus[1]!));
     const agentStatus=/^\/v1\/agent-jobs\/([0-9a-f-]+)$/.exec(url.pathname);
@@ -386,9 +396,9 @@ private runWorker(
       url.pathname,
     );
     if (selectDirection && request.method === "POST") {
-      const input = (await body(request)) as { documentId?: string };
+      const input = (await body(request)) as { documentId?: string;expectedRevision?:number };
       if (!input.documentId) throw new Error("documentId is required");
-      const result = await decideDirection(pool, userKey(actor.user), selectDirection[1]!, directionIdempotencyKey(request.headers["idempotency-key"]), {action: "selected", documentId: input.documentId});
+      const result = await decideDirection(pool, userKey(actor.user), selectDirection[1]!, directionIdempotencyKey(request.headers["idempotency-key"]), {action: "selected", documentId: input.documentId,...(input.expectedRevision===undefined?{}:{expectedRevision:input.expectedRevision})});
       return json(response, 200, result);
     }
     const current = /^\/v1\/documents\/([0-9a-f-]+)$/.exec(url.pathname);

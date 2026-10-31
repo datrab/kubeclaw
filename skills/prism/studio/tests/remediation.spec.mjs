@@ -35,6 +35,7 @@ test.beforeAll(async () => {
     void (async () => {
       response.setHeader('content-security-policy',studioContentSecurityPolicy);
       const pathname = new URL(request.url, 'http://fixture').pathname;
+    if(pathname.endsWith('/chat')){response.setHeader('content-type','application/json');response.end(JSON.stringify({items:[]}));return;}
       if (pathname === '/v1/session') { response.setHeader('content-type', 'application/json'); response.end(JSON.stringify({ csrf: 'fixture', userId: 'operator' })); return; }
       if (pathname === '/v1/documents/demo') { response.setHeader('content-type', 'application/json'); response.end(JSON.stringify({ document })); return; }
       if (pathname.startsWith('/v1/artifacts/')) {
