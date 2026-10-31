@@ -103,7 +103,7 @@ Nova owns architecture and module planning. Prism returns a versioned, explicitl
 
 Sources: Prism architecture, historical integration choices, [role manifest](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/packaging/runtime/roles/prism.json). Historical fixed software versions in the integration note are not current release authority.
 
-**Reevaluation condition.** A separate vector store needs measured PostgreSQL limits that justify its operational and consistency cost. The initial colocated capture service depends on resource measurements. A separate sidecar or service is needed when Chromium isolation, concurrency, or scaling requires it. These conditions do not transfer product or worker authority. [Original architecture](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-design-engine-architecture.md).
+**Reevaluation condition.** A separate vector store needs measured PostgreSQL limits that justify its operational and consistency cost. The initial colocated capture service depends on resource measurements. A separate sidecar or service is needed when Chromium isolation, concurrency, or scaling requires it. These conditions do not transfer product or worker authority. [source authority: Original architecture](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-design-engine-architecture.md).
 
 ## ADR-020
 
@@ -353,7 +353,7 @@ Sources: version policy, [manifest](https://github.com/datrab/kubeclaw/blob/ad67
 
 **Supersession:** each data version retains its original hash/codec semantics. No new migration is authorized here.
 
-Sources: [snapshot authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/execution/engine-snapshots.ts), [journal recovery](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/recovery.ts), [recovery contract](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/site/use/recovery.md).
+Sources: [snapshot authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/execution/engine-snapshots.ts), [journal recovery](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/skills/nova/core/lifecycle/recovery.ts), [source authority: recovery contract](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/site/use/recovery.md).
 
 **Reevaluation condition.** A required configuration change uses an explicit new run or verified migration, not current defaults substituted into an old run. Obsolete implementation retirement needs explicit drain or migration with original receipts and unresolved ownership evidence preserved. No migration is authorized by this record.
 
@@ -383,7 +383,7 @@ Sources: [snapshot authority](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c
 
 Source: accepted recovery contract.
 
-**Reevaluation condition.** When the accepted data-loss limit becomes shorter than one day, add continuous WAL-based point-in-time recovery. This changes operations policy, not Prism domain contracts. Other recovery-target or replication triggers must be explicit deployment policy, not inferred numbers. [Original recovery policy](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-recovery-observability-v1.md#postgresql-backup).
+**Reevaluation condition.** When the accepted data-loss limit becomes shorter than one day, add continuous WAL-based point-in-time recovery. This changes operations policy, not Prism domain contracts. Other recovery-target or replication triggers must be explicit deployment policy, not inferred numbers. [source authority: Original recovery policy](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/prism-recovery-observability-v1.md#postgresql-backup).
 
 ## Supported operations access
 

@@ -723,7 +723,7 @@ registrations, package parity, runtime contracts, and assembled bundles are read
 it does not require a real model run for every package edit. The current
 [real-system verification route](../reference/verification-commands.md) selects
 the full harness. Prepare its real infrastructure, credentials, gateway and agent
-capacity before dispatch. A source inspection or capabilities-only probe is not
+capacity before dispatch. A source-only reading or capabilities-only probe is not
 the full successful run.
 
 The current release owner's capacity reservation and cutover scheduling authority

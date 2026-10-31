@@ -69,7 +69,7 @@ Core validates a graph before a run. Remediation follows declared edges. Conditi
 
 **Supersession and related decisions.** Replaces specialist-owned copies of common worker mechanics. D-110 narrows the initial Buster connection to plan jobs. It does not prove rejection of the longer-term shared queue in D-098. See ADR-013.
 
-**Reevaluation condition.** Revisit the TypeScript-only worker host when measurements show a clear need for a Go host. Preserve the worker protocol and the same contract and behavior tests. This condition applies only to the host language, not the shared-core authority. [Historical D-103](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-103-typescript-first-with-a-language-neutral-worker-protocol).
+**Reevaluation condition.** Revisit the TypeScript-only worker host when measurements show a clear need for a Go host. Preserve the worker protocol and the same contract and behavior tests. This condition applies only to the host language, not the shared-core authority. [source authority: Historical D-103](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/pipeline-test-gate-design.md#d-103-typescript-first-with-a-language-neutral-worker-protocol).
 
 ## ADR-003: Keep Buster test semantics outside Nova and Worker Core
 
@@ -155,7 +155,7 @@ Core implements the administrative exception through [authenticated reopen](http
 
 **Supersession and related decisions.** Extends the earlier three-surface vision with test providers and report adapters. Exact installed counts belong in the generated inventory, not a permanent architectural default.
 
-**Reevaluation condition.** Reconsider excluded policy hooks only after a concrete cross-cutting requirement cannot fit correctly within the existing mechanisms. These are core policy, stages, capability adapters, schema validation, and observers. A resulting core/SDK contract change must define typed input and decision, ordering, timeout, conflicts, failure behavior, capabilities, and replay semantics. [Historical policy-hook boundary](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md#policy-hooks).
+**Reevaluation condition.** Reconsider excluded policy hooks only after a concrete cross-cutting requirement cannot fit correctly within the existing mechanisms. These are core policy, stages, capability adapters, schema validation, and observers. A resulting core/SDK contract change must define typed input and decision, ordering, timeout, conflicts, failure behavior, capabilities, and replay semantics. [source authority: Historical policy-hook boundary](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/plugin-system-vision.md#policy-hooks).
 
 ## ADR-007: Grant bounded capabilities instead of ambient authority
 

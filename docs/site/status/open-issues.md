@@ -854,7 +854,7 @@ The historical comparison could keep a synchronized runtime child Progressing. T
 - charts/gitops/files/application-health.lua
 - Runtime app-of-apps
 
-At the recorded ad67f9bb5c75cfa8cc1b926668aec1dd0168452c baseline, the Lua compared the branch name with resolved commit IDs and the cited positive continuous-main case was absent. Current source no longer requires sync.revision to equal the literal main. It still checks the compared repository, path, targetRevision, directory selection and destination, workload health and successful operation. Reuse across different main revisions requires the marked immutable bundle path and matching applied-source provenance. The current test file declares continuous-main positive, prior-bundle, mismatched-operation and immutable-bundle cases. This source inspection is not a newly executed test or an installed rollout result.
+At the recorded ad67f9bb5c75cfa8cc1b926668aec1dd0168452c baseline, the Lua compared the branch name with resolved commit IDs and the cited positive continuous-main case was absent. Current source no longer requires sync.revision to equal the literal main. It still checks the compared repository, path, targetRevision, directory selection and destination, workload health and successful operation. Reuse across different main revisions requires the marked immutable bundle path and matching applied-source provenance. The current test file declares continuous-main positive, prior-bundle, mismatched-operation and immutable-bundle cases. This source-only reading is not a newly executed test or an installed rollout result.
 
 ### Remaining work
 
@@ -883,7 +883,7 @@ No dependency on another entry in this register is established.
 
 ### Current evidence boundary
 
-Historical source inspection established the original branch/SHA mismatch. Fresh complete current Lua, continuous generator and test-source inspection identifies the corrected selection conditions and declared positive/negative fixtures. No new Lua or Argo execution occurred in this independent review.
+Historical source-only reading established the original branch/SHA mismatch. Fresh complete current Lua, continuous generator and test-source-only reading identifies the corrected selection conditions and declared positive/negative fixtures. No new Lua or Argo execution occurred in this independent reading.
 
 
 ### Sources
@@ -1034,7 +1034,7 @@ Source tracing followed the recovery guard through normal execution and administ
 
 ### Reproduction and verification procedure
 
-- In [Prepare a clean checkout](../extend/developer-handbook.md#prepare-a-clean-checkout), use source revision `fbb85fd6e1678bbe86dc1019ce5a422a1f24e23b` in step 2. From the repository root, use `node --test tests/verification/reliability/external-effect-recovery.test.mts tests/verification/reliability/observer-recovery.test.mts`. The tests write files and start processes and a local HTTP server. [Original record C020](https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md#L243) gives this command's result at source `8b1ce24b38b5e628dc03a88c6af0b8124848c5de`. These tests do not add a reconciliation operation.
+- In [Prepare a clean checkout](../extend/developer-handbook.md#prepare-a-clean-checkout), use source revision `fbb85fd6e1678bbe86dc1019ce5a422a1f24e23b` in step 2. From the repository root, use `node --test tests/verification/reliability/external-effect-recovery.test.mts tests/verification/reliability/observer-recovery.test.mts`. The tests write files and start processes and a local HTTP server. [source authority: historical command result](https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md#L243) gives this command's result at source `8b1ce24b38b5e628dc03a88c6af0b8124848c5de`. These tests do not add a reconciliation operation.
 - Create an accepted external effect without a receipt, then attempt normal resume and administrative retry. Observe that both paths return the unresolved-outcome guard.
 - Inspect skills/nova/core/execution/effect-recovery.ts, engine-run.ts and engine-admin.ts. Confirm that no supported reconciliation import operation follows the stop.
 

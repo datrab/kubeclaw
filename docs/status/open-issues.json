@@ -1067,7 +1067,7 @@
         "charts/gitops/files/application-health.lua",
         "Runtime app-of-apps"
       ],
-      "current_state": "At the recorded ad67f9bb5c75cfa8cc1b926668aec1dd0168452c baseline, the Lua compared the branch name with resolved commit IDs and the cited positive continuous-main case was absent. Current source no longer requires sync.revision to equal the literal main. It still checks the compared repository, path, targetRevision, directory selection and destination, workload health and successful operation. Reuse across different main revisions requires the marked immutable bundle path and matching applied-source provenance. The current test file declares continuous-main positive, prior-bundle, mismatched-operation and immutable-bundle cases. This source inspection is not a newly executed test or an installed rollout result.",
+      "current_state": "At the recorded ad67f9bb5c75cfa8cc1b926668aec1dd0168452c baseline, the Lua compared the branch name with resolved commit IDs and the cited positive continuous-main case was absent. Current source no longer requires sync.revision to equal the literal main. It still checks the compared repository, path, targetRevision, directory selection and destination, workload health and successful operation. Reuse across different main revisions requires the marked immutable bundle path and matching applied-source provenance. The current test file declares continuous-main positive, prior-bundle, mismatched-operation and immutable-bundle cases. This source-only reading is not a newly executed test or an installed rollout result.",
       "remaining_work": [
         "Run the current original Lua fixture test with its supported interpreter and preserve all positive, stale-operation, source, destination, error, drift and immutable-bundle assertions. A test declaration alone is not execution evidence.",
         "Accept an actual branch-to-commit rollout in a separately authorized target, including the subsequent wave and a stale or mismatched operation. Preserve runtime versus manually observed platform health as separate contracts."
@@ -1085,7 +1085,7 @@
       "live_validation": "After correction, accept an actual branch-to-SHA rollout with the subsequent wave and a stale operation. Lua fixtures alone do not establish live acceptance.",
       "dependencies": [],
       "evidence": {
-        "assessment": "Historical source inspection established the original branch/SHA mismatch. Fresh complete current Lua, continuous generator and test-source inspection identifies the corrected selection conditions and declared positive/negative fixtures. No new Lua or Argo execution occurred in this independent review.",
+        "assessment": "Historical source-only reading established the original branch/SHA mismatch. Fresh complete current Lua, continuous generator and test-source-only reading identifies the corrected selection conditions and declared positive/negative fixtures. No new Lua or Argo execution occurred in this independent reading.",
         "original_scope": "Additional AP03 follow-up; outside the original 154 and five separately closed integration findings.",
         "current_source_scope": "Current code inspection only; installed rollout and later-wave evidence remain pending.",
         "historical_failure_preserved": "The original ad67 source comparison and historical reproduction remain above; this update does not rewrite that old failure or infer live acceptance."
@@ -1280,7 +1280,7 @@
         "Add failure, duplicate, cancellation, restart and audit tests, then document the supported operator and extension behavior."
       ],
       "reproduction": [
-        "In [Prepare a clean checkout](../extend/developer-handbook.md#prepare-a-clean-checkout), use source revision `fbb85fd6e1678bbe86dc1019ce5a422a1f24e23b` in step 2. From the repository root, use `node --test tests/verification/reliability/external-effect-recovery.test.mts tests/verification/reliability/observer-recovery.test.mts`. The tests write files and start processes and a local HTTP server. [Original record C020](https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md#L243) gives this command's result at source `8b1ce24b38b5e628dc03a88c6af0b8124848c5de`. These tests do not add a reconciliation operation.",
+        "In [Prepare a clean checkout](../extend/developer-handbook.md#prepare-a-clean-checkout), use source revision `fbb85fd6e1678bbe86dc1019ce5a422a1f24e23b` in step 2. From the repository root, use `node --test tests/verification/reliability/external-effect-recovery.test.mts tests/verification/reliability/observer-recovery.test.mts`. The tests write files and start processes and a local HTTP server. [source authority: historical command result](https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md#L243) gives this command's result at source `8b1ce24b38b5e628dc03a88c6af0b8124848c5de`. These tests do not add a reconciliation operation.",
         "Create an accepted external effect without a receipt, then attempt normal resume and administrative retry. Observe that both paths return the unresolved-outcome guard.",
         "Inspect skills/nova/core/execution/effect-recovery.ts, engine-run.ts and engine-admin.ts. Confirm that no supported reconciliation import operation follows the stop."
       ],
@@ -1306,7 +1306,7 @@
           "path": "docs/blueprint/AP08.10-checkpoint.md",
           "commit": "4ccb21b79cd45d205163692f43e4940e60e28a19",
           "url": "https://github.com/datrab/kubeclaw/blob/4ccb21b79cd45d205163692f43e4940e60e28a19/docs/blueprint/AP08.10-checkpoint.md",
-          "scope": "The independent review records the exercised stop and the missing continuation operation."
+          "scope": "The independent reading records the exercised stop and the missing continuation operation."
         }
       ]
     },

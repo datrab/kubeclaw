@@ -40,7 +40,7 @@ rows share. This avoids repeated explanations for every ID and preserves each id
 
 **Evidence verification.** Unknown: no reevaluation condition is established in this group record.
 
-**Governor and repair.** Unknown except D-ER4-017: a later cross-project ledger may add a deployment namespace outside content identity if product needs require it. This optional addition does not change existing content identity. [Original D-ER4-017](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/echo-review-phase-4-design.md#d-er4-017-fingerprints-exclude-line-number-hints).
+**Governor and repair.** Unknown except D-ER4-017: a later cross-project ledger may add a deployment namespace outside content identity if product needs require it. This optional addition does not change existing content identity. [source authority: Original D-ER4-017](https://github.com/datrab/kubeclaw/blob/ad67f9bb5c75cfa8cc1b926668aec1dd0168452c/docs/architecture/echo-review-phase-4-design.md#d-er4-017-fingerprints-exclude-line-number-hints).
 
 **Simplification and reporting.** Unknown: no reevaluation condition is established in this group record.
 

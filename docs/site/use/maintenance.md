@@ -841,7 +841,7 @@ It retains source, destination, successful-operation and workload-health checks.
 Reuse across different `main` revisions requires the marked immutable bundle path and matching applied-source provenance.
 
 [The continuous GitOps rollout evidence gap](../status/open-issues.md#continuous-gitops-health-still-needs-installed-branch-to-commit-rollout-evidence) remains open.
-Source inspection and declared test cases do not prove the installed rollout, its subsequent wave or stale-operation rejection.
+Source-only reading and declared test cases do not prove the installed rollout, its subsequent wave or stale-operation rejection.
 
 Do not bypass a failed health check by accepting any revision.
 Resolve the branch to the intended commit and record both values.

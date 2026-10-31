@@ -1040,7 +1040,7 @@ This status map applies to every step below at the recorded revision.
 not mean that this deployment exercised it. At that recorded revision, the absent
 runtime release selection stopped that checkout before deployment and the live journey.
 For the current checkout, use [Preflight Without Mutation](install.md#preflight-without-mutation).
-Stop if selection, binding or rendering fails. The recorded verification did
+Stop if selection, binding or rendering fails. The cited execution did
 not include any live Studio-to-Nova step. Agent work additionally remains
 unavailable until the selected release meets [SPIFFE agent admission](#spiffe-agent-admission);
 service health alone does not remove that boundary. The notification mismatch
