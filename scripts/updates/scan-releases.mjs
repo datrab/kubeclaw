@@ -1,7 +1,7 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { spawnSync } from 'node:child_process';
-import { scanInventory, readScan, writeSecurityReport } from './security-report.mjs';
+import { scanInventory, readScan, writeSecurityReport, blocksRelease } from './security-report.mjs';
 
 const root = process.cwd();
 const directory = path.resolve(process.env.KUBECLAW_TRIVY_REPORT_DIR || 'dist/trivy');
@@ -19,6 +19,6 @@ for (const item of inventory.images) {
   plan.images.push(readScan(item, directory, result.status));
   persist();
 }
-const failed = plan.errors.length || plan.images.some(image => image.status !== 'clean');
+const failed = plan.errors.length || plan.images.some(blocksRelease);
 if (process.env.GITHUB_STEP_SUMMARY) fs.appendFileSync(process.env.GITHUB_STEP_SUMMARY, fs.readFileSync(path.join(directory, 'security-issue.md')));
 process.exitCode = failed ? 1 : 0;

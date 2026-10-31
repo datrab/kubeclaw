@@ -130,6 +130,7 @@ for image in "$@"; do
   # Do not let an earlier successful scan hide a failed retry.
   rm -f -- "$report" "$table" "$diagnostics"
   echo "Scanning $image with Trivy $TRIVY_VERSION"
+  scanner_exit=0
   if "$trivy_executable" image \
     --cache-dir "$database_cache" \
     --db-repository "${TRIVY_DB_REPOSITORY:-ghcr.io/aquasecurity/trivy-db:2}" \
@@ -142,7 +143,7 @@ for image in "$@"; do
     "$image" 2> >(tee "$diagnostics" >&2); then
     :
   else
-    scan_failed=1
+    scanner_exit=$?
   fi
   if [[ -s "$report" ]]; then
     if "$trivy_executable" convert --format table --output "$table" "$report"; then
@@ -152,6 +153,10 @@ for image in "$@"; do
     fi
   else
     echo "Scanner produced no report for $image" >&2
+    scan_failed=1
+  fi
+  # Keep the full unfiltered report; only the gate decision exempts unfixed findings.
+  if ! node scripts/updates/security-gate.mjs "$image" "$report_dir" "$scanner_exit"; then
     scan_failed=1
   fi
   echo "Saved report: $report"

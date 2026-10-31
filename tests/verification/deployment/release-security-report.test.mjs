@@ -3,7 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
-import { scanInventory, readScan, securityMarkdown } from '../../../scripts/updates/security-report.mjs';
+import { scanInventory, readScan, securityMarkdown, blocksRelease } from '../../../scripts/updates/security-report.mjs';
 
 const reference = `example/image@sha256:${'a'.repeat(64)}`;
 const item = { reference, sources: ['releases/ops-images.json:images.ops-mcp'], categories: ['Selected release'] };
@@ -59,4 +59,24 @@ test('actionable report preserves unfixed findings, source paths and errors, and
   assert.ok(bounded.length<55000);
   assert.match(bounded,/update-plan.md/);
   assert.ok(securityMarkdown(large).includes('package-1999'));
+});
+
+
+test('gate exempts only unfixed findings and re-blocks when a fix appears', t => {
+  const {dir,file} = fixture(t, {Results:[{Vulnerabilities:[findings[1]]}]});
+  let image = readScan(item,dir,1);
+  assert.equal(image.status,'vulnerable');
+  assert.equal(image.findings.length,1);
+  assert.equal(blocksRelease(image),false);
+  assert.match(securityMarkdown({images:[image],errors:[]}),/non-blocking/);
+  const data = JSON.parse(fs.readFileSync(file));
+  data.Results[0].Vulnerabilities.push(findings[0]);
+  fs.writeFileSync(file,JSON.stringify(data));
+  image = readScan(item,dir,1);
+  assert.equal(blocksRelease(image),true);
+  assert.equal(image.findings.length,2);
+  assert.equal(blocksRelease(readScan(item,dir,2)),true);
+  fs.unlinkSync(file);
+  assert.equal(blocksRelease(readScan(item,dir,0)),true);
+  assert.equal(blocksRelease({...item,status:'clean',findings:[]}),false);
 });
