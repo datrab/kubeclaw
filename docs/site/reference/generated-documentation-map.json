@@ -2099,7 +2099,7 @@
       ],
       "checks": [
         "node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check",
-        "node scripts/docs-generate.mjs --only configuration-hub --revision dea397103b5769a5526bda8b4a0d95f7ed1e0f68 --check",
+        "node scripts/docs-generate.mjs --only configuration-hub --revision 95d336f4e92ea4b5b1f821caefe13949d2ed6fc8 --check",
         "npm run docs:governance:check",
         "npm run docs:publication:check",
         "npm run docs:check:refs"
