@@ -7,3 +7,4 @@ configMapGenerator:
     namespace: kubeclaw-ops
     files:
       - run.mjs
+      - argo-sync.mjs

@@ -3,8 +3,41 @@ import fs from 'node:fs';
 import test from 'node:test';
 import yaml from 'js-yaml';
 import {platformServices} from '../../../scripts/platform-services.mjs';
+import {requestHouseholdSync} from '../../../gitops/platform/familyclaw-initialization/argo-sync.mjs';
 
 const resources = yaml.loadAll(fs.readFileSync('gitops/platform/familyclaw-initialization/resources.yaml', 'utf8'));
+test('a superseded in-progress sync is terminated before requesting the fixed revision without prune', async () => {
+  const patches = [];
+  let reads = 0;
+  const run = args => {
+    if (args.includes('get')) return JSON.stringify(++reads < 3
+      ? {operation: {sync: {revision: 'old'}}, status: {operationState: {phase: reads === 1 ? 'Running' : 'Terminating'}}}
+      : {status: {operationState: {phase: 'Failed'}}});
+    patches.push(JSON.parse(args.at(-1)));
+    return '';
+  };
+  const result = await requestHouseholdSync('new', run, async () => {});
+  assert.deepEqual(patches[0], {status: {operationState: {phase: 'Terminating'}}});
+  assert.equal(patches[1].operation.sync.revision, 'new');
+  assert.equal(patches[1].operation.sync.prune, false);
+  assert.equal(patches[1].operation.retry.limit, 0);
+  assert.equal(result.argoSyncRequested, true);
+});
+test('a current revision is left running and failed termination cannot overwrite an operation', async () => {
+  let patches = 0;
+  const same = args => {
+    assert.ok(args.includes('get'));
+    return JSON.stringify({operation: {sync: {revision: 'new'}}});
+  };
+  assert.equal((await requestHouseholdSync('new', same, async () => {})).alreadyInProgress, true);
+  const stuck = args => {
+    if (args.includes('get')) return JSON.stringify({operation: {sync: {revision: 'old'}}});
+    patches++;
+    return '';
+  };
+  await assert.rejects(requestHouseholdSync('new', stuck, async () => {}), /did not terminate/u);
+  assert.equal(patches, 1);
+});
 test('household bootstrap can create but cannot overwrite or delete family credentials', () => {
   const roles = resources.filter(x => x.kind === 'Role');
   const household = roles.find(x => x.metadata.namespace === 'familyclaw');
