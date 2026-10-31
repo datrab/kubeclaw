@@ -1,5 +1,5 @@
 import type { ProjectDesignStatus } from '../control/project-status.ts';
-import {savedRevision,pendingRevision,submitRevision,waitForRevision,type RevisionClient} from './agent-revision-client.ts';
+import {savedRevision,pendingRevision,submitRevision,waitForRevision,type RevisionClient,type PendingRevision} from './agent-revision-client.ts';
 import { savedRound, pendingRound, submitRound, currentDirections, loadRoundDocument, completeRound, waitForRound, type RoundClient, type StudioDirection } from "./design-round-client.ts";
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
@@ -68,6 +68,8 @@ function App() {
   const [instruction, setInstruction] = useState("");
   const [working, setWorking] = useState(false);
   const [revisionPending,setRevisionPending]=useState(false);
+  const [revisionMessage,setRevisionMessage]=useState("");
+  const [directionBusy,setDirectionBusy]=useState(false);
   const [learned, setLearned] = useState<Record<string, unknown>>({});
   const [preferenceEvents, setPreferenceEvents] = useState<
     Array<{ eventId: string; action: string; retractsEventId?: string }>
@@ -82,7 +84,7 @@ function App() {
   const [revisions, setRevisions] = useState<
     Array<{ id: string; revision: number; createdAt: string }>
   >([]);
-  const [panel, setPanel] = useState<"navigate" | "insert" | "prism" | null>(
+  const [panel, setPanel] = useState<"directions" | "navigate" | "insert" | "prism" | null>(
     null,
   );
   const [mode, setMode] = useState<"edit" | "preview">(() => new URLSearchParams(location.search).get("mode") === "edit" ? "edit" : "preview");
@@ -149,7 +151,7 @@ function App() {
       );
       const revisionClient:RevisionClient={documentId:id,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
       const revision=savedRevision(revisionClient);
-      if(revision){setRevisionPending(true);setInstruction(revision.input.instruction);}
+      if(revision){setRevisionPending(true);setInstruction(revision.input.instruction);setWorking(true);setRevisionMessage("Gespeicherte Änderung wird geprüft…");}
       const projectId = new URLSearchParams(location.search).get("project");
       if (projectId) {
         const client:RoundClient={projectId,userId:sessionData.userId,csrf:sessionData.csrf,origin:location.origin,storage:sessionStorage};
@@ -169,6 +171,7 @@ function App() {
           await new Promise(resolve=>setTimeout(resolve,2000));
         }
       }
+      if(revision)await continueRevision(revisionClient,revision).catch(error=>setActionError(String(error)));
     })().catch((error) =>
       setFailure(error instanceof Error ? error.message : String(error)),
     );
@@ -208,19 +211,45 @@ function App() {
     setQuality(null);
     setAcceptedWarnings([]);
   };
+  const continueRevision = async (client:RevisionClient,pending:PendingRevision) => {
+    setWorking(true);setRevisionPending(true);
+    setRevisionMessage(pending.jobId ? "Status deiner Änderung wird geladen…" : "Änderung wird gesendet…");
+    try {
+      // A known job is resumed by GET, never re-admitted as a fresh change.
+      const accepted=pending.jobId ? pending : await submitRevision(client,pending);
+      const next=await waitForRevision(client,accepted,status=>setRevisionMessage(status==='accepted'
+        ? "Deine Änderung wartet auf Prism…" : status==='running' ? "Prism arbeitet an deiner Änderung…" : "Änderung wird übernommen…"));
+      setDocument(next);setRevisionPending(false);setQuality(null);setAcceptedWarnings([]);setInstruction("");
+      setRevisionMessage(`Änderung übernommen · Revision ${next.meta.revision}. Du kannst die Vorschau jetzt prüfen.`);
+    } catch(error) {
+      setRevisionMessage("Die Änderung konnte noch nicht bestätigt werden. Dein Text bleibt gespeichert. Prüfe den Status erneut.");
+      throw error;
+    } finally {setWorking(false);}
+  };
   const propose = async () => {
-    if (!document || (!instruction.trim() && !revisionPending)) return;
+    if (working || directionBusy || !document || (!instruction.trim() && !revisionPending)) return;
     setActionError("");
     const id = new URLSearchParams(location.search).get("document");
     if (!id) throw new Error("Document ID is missing");
     const client:RevisionClient={documentId:id,userId,csrf,origin:location.origin,storage:sessionStorage};
     const pending=pendingRevision(client,document,instruction.trim());setRevisionPending(true);
-    setWorking(true);
+    await continueRevision(client,pending);
+  };
+  const previewDirection = async (direction:StudioDirection) => {
+    if(working || revisionPending || directionBusy)return;
+    if(!direction.source_document_id)throw new Error("Für diesen Entwurf ist noch keine Vorschau verfügbar.");
+    setDirectionBusy(true);setActionError("");
     try {
-      const accepted=await submitRevision(client,pending);
-      const next=await waitForRevision(client,accepted);
-      setDocument(next);setRevisionPending(false);setQuality(null);setAcceptedWarnings([]);setInstruction("");
-    } finally {setWorking(false);}
+      const projectId=new URLSearchParams(location.search).get('project');
+      if(!projectId)throw new Error("Project ID is missing");
+      const loaded=await loadRoundDocument({projectId,userId,csrf,origin:location.origin,storage:sessionStorage},[direction],direction.source_document_id);
+      const query=new URLSearchParams(location.search);query.set('document',loaded.documentId);history.replaceState(null,'',`?${query.toString()}`);
+      setDocument(loaded.document);setViewId(Object.keys(loaded.document.views)[0]??'home');setMode('preview');setPanel(null);setQuality(null);setRevisionMessage("");
+      const client:RevisionClient={documentId:loaded.documentId,userId,csrf,origin:location.origin,storage:sessionStorage};
+      const pending=savedRevision(client);
+      setInstruction(pending?.input.instruction??"");setRevisionPending(!!pending);
+      if(pending)await continueRevision(client,pending);
+    } finally {setDirectionBusy(false);}
   };
   const loadLearned = async () => {
     const projectId = document?.meta.projectId;
@@ -585,10 +614,11 @@ function App() {
               <article key={direction.id} className="direction">
                 <strong>{direction.title}</strong>
                 <p>{direction.summary}</p>
+                <button disabled={working || revisionPending || directionBusy} onClick={()=>void previewDirection(direction).catch(error=>setActionError(String(error)))}>Vorschau ansehen</button>
                 {direction.evidence?.tradeoffs?.length?<><small>Trade-offs</small><ul>{direction.evidence.tradeoffs.map((item)=><li key={item}>{item}</li>)}</ul></>:null}
                 {direction.evidence?.references?.length?<p className="quiet">Grounded in {direction.evidence.references.length} approved corpus references.</p>:<p className="quiet">No approved corpus reference matched this brief.</p>}
                 <button
-                  disabled={direction.state === "selected"}
+                  disabled={direction.state === "selected" || working || revisionPending || directionBusy}
                   onClick={() =>
                     void selectDirection(direction.id).catch((error) =>
                       setActionError(String(error)),
@@ -688,7 +718,13 @@ function App() {
         )}
         {brief&&<details aria-label="Design brief" className="brief"><summary>Design brief</summary><p>Prism imported the approved Nova architecture and uses it as the design boundary.</p><dl>{Object.entries((brief.architectureContent&&typeof brief.architectureContent==="object"?brief.architectureContent:brief) as Record<string,unknown>).slice(0,12).map(([key,value])=><React.Fragment key={key}><dt>{key}</dt><dd>{typeof value==="string"?value:JSON.stringify(value)}</dd></React.Fragment>)}</dl></details>}
         {actionError && <p role="alert">{actionError}</p>}
-        {revisionPending && <p role="status">Your existing feedback is retained. Reconcile it before sending another request.</p>}
+        {directions.length>0 && <section className="design-comparison" aria-label="Entwürfe vergleichen">
+          <div className="comparison-heading"><strong>{directions.length} Entwürfe vergleichen</strong><span>Vorschau ohne Auswahl</span></div>
+          <div className="direction-tabs" role="tablist" aria-label="Designrichtungen">
+            {directions.map((direction,index)=><button key={direction.id} role="tab" aria-selected={direction.source_document_id===new URLSearchParams(location.search).get('document')} disabled={working || revisionPending || directionBusy} onClick={()=>void previewDirection(direction).catch(error=>setActionError(String(error)))}><span>{index+1}</span>{direction.title.split(/ · | – | - /)[0]}</button>)}
+          </div>
+        </section>}
+        {revisionMessage && <p className="revision-status" role="status" aria-live="polite">{revisionMessage}</p>}
         <div className="workspace-label">
           <span>{document.views[viewId]?.title ?? viewId} · {viewport === "compact" ? "390" : viewport === "regular" ? "768" : "1280"} px</span>
           <span>{mode === "preview" ? "Interactive preview" : "Design canvas"}</span>
@@ -758,21 +794,22 @@ function App() {
         <button onClick={insert}>Insert action</button>
         <hr />
         <p className="eyebrow">Ask Prism</p>
+        {revisionMessage && <p className="revision-status" role="status" aria-live="polite">{revisionMessage}</p>}
         <textarea
           aria-label="Prism instruction"
-          disabled={working || revisionPending}
+          disabled={working || directionBusy || revisionPending}
           value={instruction}
           onChange={(event) => setInstruction(event.target.value)}
           placeholder="Describe the change you want…"
         />
         <button
           className="primary"
-          disabled={working || (!instruction.trim() && !revisionPending)}
+          disabled={working || directionBusy || (!instruction.trim() && !revisionPending)}
           onClick={() =>
             void propose().catch((error) => setActionError(String(error)))
           }
         >
-          {working ? "Working…" : revisionPending ? "Reconcile existing change" : "Propose change"}
+          {directionBusy ? "Entwurf wird geladen…" : working ? "Prism arbeitet…" : revisionPending ? "Status erneut prüfen" : "Änderung senden"}
         </button>
         <button onClick={() => void loadLearned()}>What Prism learned</button>
         {Object.entries(learned).map(([key, value]) => (
@@ -819,6 +856,7 @@ function App() {
         ))}
       </aside>
       <nav className="mobile-nav">
+        <button aria-expanded={panel === "directions"} onClick={()=>setPanel(panel === "directions" ? null : "directions")}>Entwürfe{directions.length ? ` (${directions.length})` : ""}</button>
         <button
           aria-expanded={panel === "navigate"} onClick={() => setPanel(panel === "navigate" ? null : "navigate")}
         >
@@ -837,12 +875,19 @@ function App() {
             Close
           </button>
           <h2>
-            {panel === "navigate"
+            {panel === "directions" ? "Entwürfe vergleichen" : panel === "navigate"
               ? "Screens and flows"
               : panel === "insert"
                 ? "Edit elements"
                 : "Ask Prism"}
           </h2>
+          {actionError && panel !== 'prism' && <p role="alert">{actionError}</p>}
+          {panel === "directions" && <>
+            <p className="quiet">Tippe auf einen Entwurf, um sein Layout anzusehen. Dadurch wird noch nichts ausgewählt oder verändert.</p>
+            <div className="direction-options">{directions.map((direction,index)=><button key={direction.id} aria-pressed={direction.source_document_id===new URLSearchParams(location.search).get('document')} disabled={working || revisionPending || directionBusy} onClick={()=>void previewDirection(direction).catch(error=>setActionError(String(error)))}><strong>{index+1} · {direction.title}</strong><span>{direction.summary}</span><small>Vorschau ansehen →</small></button>)}</div>
+            {!directions.length && <p role="status">Die Entwürfe werden noch vorbereitet.</p>}
+            {(working || revisionPending) && <p role="status">Schließe zuerst die laufende Änderung ab. Sie bleibt diesem Entwurf zugeordnet.</p>}
+          </>}
           {panel === "insert" && (
             <>
               <ElementEditor design={document} viewId={viewId} selectedId={selectedNodeId} onSelect={setSelectedNodeId} onCommit={commit} />
@@ -865,22 +910,23 @@ function App() {
           {panel === "prism" && (
             <>
               {actionError && <p role="alert">{actionError}</p>}
-              {revisionPending && <p role="status">Your existing feedback is retained. Reconcile it before sending another request.</p>}
+              {revisionMessage && <p className="revision-status" role="status" aria-live="polite">{revisionMessage}</p>}
+              <p className="quiet">Änderung für: {document.meta.title}</p>
               <textarea
                 aria-label="Prism instruction"
-                disabled={working || revisionPending}
+                disabled={working || directionBusy || revisionPending}
                 value={instruction}
                 onChange={(event) => setInstruction(event.target.value)}
                 placeholder="Describe the change you want…"
               />
               <button
                 className="primary"
-                disabled={working || (!instruction.trim() && !revisionPending)}
+                disabled={working || directionBusy || (!instruction.trim() && !revisionPending)}
                 onClick={() =>
                   void propose().catch((error) => setActionError(String(error)))
                 }
               >
-                {revisionPending ? "Reconcile existing change" : "Propose change"}
+                {directionBusy ? "Entwurf wird geladen…" : working ? "Prism arbeitet…" : revisionPending ? "Status erneut prüfen" : "Änderung senden"}
               </button>
             </>
           )}

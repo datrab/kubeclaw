@@ -16,3 +16,12 @@ Secondary: Editor X (14de8ffb-7140-4d73-ad7f-94e8befaff75): grouped properties, 
 | Media | Existing generated FamilyClaw documents | Render actual document colors/layout/assets; no fake mockup imagery |
 
 Reject: raw architecture taking over the page, unstyled white preview, full-width stacked direction actions, page-level horizontal scrolling, passing CI mistaken for deployment.
+
+## Mobile comparison and change feedback — Raven, 2026-10-31
+
+Keep the established Linear/Framer chrome and original three documents. Direct-build interaction repair, not another visual direction. The user's physical screenshot is the failure reference: mobile has no direction chooser; a running request has a disabled button labelled as reconciliation instead of work.
+
+- Framer content-first comparison + Raven's explicit goal: three numbered preview tabs and a persistent mobile “Entwürfe” entry. Viewing is a read-only document GET, never choosing/rejecting a direction.
+- Bundled Refero copywriting, “context / outcome / next step”: show queued, running, applied, or retry-needed text inside the open request sheet, with an explicit target document.
+- Bundled craft-details form/state guidance: disabled submit says what is running; aria-live status announces changes. A saved job automatically resumes its existing GET status stream on reload and preserves its original identity.
+- Preserve: dark canvas, restrained orange active border, actual document preview. Reject hidden desktop-only choices, silent disabled actions, duplicate generation, invented progress percentages, and treating paint/layout checks as complete workflow acceptance.
