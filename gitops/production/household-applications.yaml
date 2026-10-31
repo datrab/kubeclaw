@@ -8,7 +8,7 @@ metadata:
 spec:
   description: Family household stack; separate from Kubeclaw runtime permissions.
   sourceRepos:
-    - https://github.com/datrab/Familyclaw.git
+    - ssh://git@ssh.github.com:443/datrab/Familyclaw.git
   destinations:
     - namespace: familyclaw
       server: https://kubernetes.default.svc
@@ -46,7 +46,7 @@ metadata:
 spec:
   project: familyclaw
   source:
-    repoURL: https://github.com/datrab/Familyclaw.git
+    repoURL: ssh://git@ssh.github.com:443/datrab/Familyclaw.git
     targetRevision: main
     path: deploy/helm/family-stack
     helm:
