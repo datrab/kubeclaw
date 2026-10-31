@@ -1,0 +1,6 @@
+{
+  "at": "2026-10-31T23:12:47.511295+00:00",
+  "pid": 414765,
+  "actual": "Process absent, empty log, no structured verdict. No clean/review completion inferred.",
+  "remedy": "Same unchanged candidate/argv via supported foreground exec yielding session; parent remains alive, not detached Popen."
+}

@@ -1,0 +1,13 @@
+{
+  "actualRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "snapshot": "/home/node/.openclaw/workspace/tmp/reader-platform02-baseline-review-20261031",
+  "baseline": "f4a0108f9f12168f06c087e3c9dc3dd7e9d52fa4",
+  "changedProductPaths": [
+    "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+    "docs/config/publication-example-claims.json",
+    "scripts/docs-api-output-discovery.mjs",
+    "scripts/docs-documentation-owner-purpose-custody.mjs"
+  ],
+  "responsibility": "Full fixture; complete affected asset and contract; exact whole owning guards; complete claims serialized reconstruction. No refused A91112 registry supplied/reacquired.",
+  "contextBytes": 480095
+}

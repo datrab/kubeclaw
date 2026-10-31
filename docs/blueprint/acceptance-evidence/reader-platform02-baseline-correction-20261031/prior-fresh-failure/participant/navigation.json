@@ -1,0 +1,51 @@
+{
+  "participant": "fresh MODEL platform-developer",
+  "human": false,
+  "priorContribution": false,
+  "startedAt": "2026-10-31T23:05:27.561569+00:00",
+  "reviewedRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "navigation": [
+    {
+      "path": "docs/site/README.md",
+      "sha256": "4301425464181be552e9509083c3d5ef5b7011664f51b9736c9ab4ee3da060c0"
+    },
+    {
+      "path": "docs/site/extend/README.md",
+      "sha256": "dce42e4f653e4b6b3520d226e667c68eb395e9383348d37bb085b645a6ba8307"
+    },
+    {
+      "path": "docs/site/extend/developer-handbook.md",
+      "sha256": "bb2d586fc555a3230581052a91785bf22b6d7791927fb61d15cdb49966360f47"
+    },
+    {
+      "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "sha256": "9120b99b49a473e6a98b1c3e8c1f5b48f276dcb831de23c22c52e31b06515f2b"
+    },
+    {
+      "path": "docs/site/understand/nova-core.md",
+      "sha256": "0bd4d1704e0aa000159c21aea125c173b4951062b61b4d52ac16ece5cee9e6e4"
+    }
+  ],
+  "sourceReads": [
+    {
+      "path": "skills/nova/core/execution/run-decisions.ts",
+      "sha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171",
+      "selection": "developer-handbook Change Nova lifecycle"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/reducer.ts",
+      "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d",
+      "selection": "developer-handbook Change Nova lifecycle"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/recovery-state.ts",
+      "sha256": "bc20a1e3f27ba2f4f67ce0f33df0f41bc4ebadcc40dcce8606ba37213660c99f",
+      "selection": "handbook Nova owner/recovery and named reliability fixture"
+    },
+    {
+      "path": "tests/verification/reliability/lifecycle.test.mts",
+      "sha256": "3ff75f78dc7ce12b4d362a7fc40292178d49eafd28eab5cada3c4508ccda9ace",
+      "selection": "handbook named Nova reliability check"
+    }
+  ]
+}

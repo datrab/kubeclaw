@@ -1,0 +1,2 @@
+npm notice run plugin-system:sdk:check
+npm notice run node scripts/generate-plugin-sdk-types.mjs --check

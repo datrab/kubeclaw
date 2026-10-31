@@ -117179,6 +117179,20 @@
       "newAcceptedGates": [],
       "newAcceptedRequirements": [],
       "scope": "Useful authority/dependency/recovery contract lookup only. No contradiction or new award of prior A97-11 semantic scope; no actual joined execution."
+    },
+    {
+      "id": "READER-PLATFORM-02-initial-baseline-20261031",
+      "taskId": "READER-PLATFORM-02",
+      "reviewedDocumentationRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+      "executionRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+      "participantType": "fresh independent MODEL platform-developer, not human",
+      "verdict": "FAIL",
+      "originalUnmetCondition": "Exact fixture-selected baseline governance check exits1 stale map before implementation. No changed/negative/crash/removal proof; earlier genuine baseline checks0 retained.",
+      "independentDecision": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-correction-20261031/final-source-reader-decision.json",
+      "evidence": "docs/blueprint/acceptance-evidence/reader-platform02-baseline-correction-20261031/prior-fresh-failure/participant/report.md",
+      "newAcceptedGates": [],
+      "newAcceptedRequirements": [],
+      "scope": "Prior FAIL immutable; narrow Source-pin repair is not fresh task acceptance. New eligible actor required after correction."
     }
   ]
 }

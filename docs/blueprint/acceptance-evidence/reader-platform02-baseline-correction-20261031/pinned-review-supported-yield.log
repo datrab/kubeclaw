@@ -1,0 +1,12 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: on
+trufflehog: clean (2.0s)
+bundle: 1637 bytes; review passes: 1
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.9)
+The fixture’s revised baseline and purpose are matched by the supplied claim checksum, exact contract anchor, and fixed-input custody pins. The change retains its not-executed boundary and does not alter product behavior or claim execution evidence.

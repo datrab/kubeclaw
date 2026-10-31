@@ -541,7 +541,7 @@ const publicationExampleChildPurpose=freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "e2e9217c75e738b369ff8f4e9631f09fb262ce809600ae489ea0c95c0bc5ebb4"
+      "sha256": "d62b70728f5bffc1a2f4f4324b8db025fb4dfe03c4c2d8357a28a2b139e9bcbd"
     },
     {
       "path": "package.json",

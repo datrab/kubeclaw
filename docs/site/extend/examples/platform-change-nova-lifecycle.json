@@ -4,10 +4,10 @@
   "persona": "platform-developer",
   "purpose": "This file gives the necessary behavior and bounded fault input for a temporary Nova lifecycle exercise. It records no execution result.",
   "startingState": {
-    "revision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+    "revision": "f4a0108f9f12168f06c087e3c9dc3dd7e9d52fa4",
     "checkout": "The checkout at the start must be clean and isolated. It must have no prepared implementation or test change.",
     "baseline": "Before you change the source, record the baseline lifecycle result, durable reason, and state counters. Record generated outputs and selected check results.",
-    "revisionPurpose": "This immutable source revision identifies the unchanged product baseline for this scratch exercise. It records no execution result."
+    "revisionPurpose": "This immutable public source revision supplies the coherent documentation checks and unchanged product baseline for this scratch exercise. It records no execution result."
   },
   "desiredBehavior": {
     "reason": "administrative_retry_suppressed",

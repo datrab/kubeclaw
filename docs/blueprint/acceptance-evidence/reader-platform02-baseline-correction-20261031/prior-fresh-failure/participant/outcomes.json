@@ -1,0 +1,60 @@
+{
+  "taskId": "READER-PLATFORM-02",
+  "participantType": "MODEL",
+  "freshContext": true,
+  "priorContribution": false,
+  "persona": "platform-developer",
+  "reviewedRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "executionSourceRevision": "671234b056bf5f5f503e51e8db30f843e781ba6e",
+  "decision": "FAIL",
+  "stopReason": "Original stale-generated-output failure threshold reached on unchanged baseline; first common documentation check failed.",
+  "firstFailure": {
+    "command": "npm run docs:governance:check",
+    "exitCode": 1,
+    "elapsedSeconds": 0.2726087470073253,
+    "diagnostic": "docs/site/reference/generated-documentation-map.json is stale. Run npm run docs:governance:generate.",
+    "log": "18-command.log"
+  },
+  "outcomes": [
+    {
+      "id": "ownership-and-invariants-found",
+      "decision": "PASS",
+      "evidence": [
+        "selection.md",
+        "navigation.json",
+        "baseline-hashes.json"
+      ]
+    },
+    {
+      "id": "smallest-complete-chain-runs",
+      "decision": "FAIL",
+      "reason": "Selected complete chain; baseline Nova checks passed but documentation chain failed at first check; downstream required checks not run."
+    },
+    {
+      "id": "negative-and-recovery-proof-pass",
+      "decision": "NOT_DEMONSTRATED",
+      "reason": "Stopped before temporary implementation/new assertions; existing SIGKILL fixture pass is not registered administrative retry crash proof."
+    },
+    {
+      "id": "removal-restores-baseline",
+      "decision": "NOT_DEMONSTRATED",
+      "reason": "No implementation/test/docs changes made. Clean scratch was removed, but post-change removal and selected-check rerun never occurred."
+    }
+  ],
+  "implementationEdited": false,
+  "mainCheckoutEdited": false,
+  "forbiddenSourcesConsulted": false,
+  "sourcePinsOrGuardsBypassed": false,
+  "cleanup": "cleanup.json",
+  "unexecuted": [
+    "baseline direct fixture lifecycle observations",
+    "temporary implementation and direct assertions for all registered cases",
+    "registered pending transition byte-preservation proof",
+    "registered durable-block SIGKILL and same-record restart proof",
+    "changed product and documentation chains",
+    "downstream baseline documentation checks after governance",
+    "removal and complete post-removal checks"
+  ],
+  "humanAcceptanceClaimed": false,
+  "completedAt": "2026-10-31T23:08:49.038739+00:00"
+}

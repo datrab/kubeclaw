@@ -1,0 +1,3 @@
+npm notice run docs:core-guides:check
+npm notice run node scripts/check-core-architecture-guides.mjs
+{"ok":true,"pages":3,"requirements":52,"pinnedSourceLinks":220,"currentEvidenceFiles":122,"capabilities":28,"novaErrorCodesCoveredByFamily":446,"workerErrorCodesNamed":223,"pluginRuntimeDiagnosticsNamed":89}

@@ -1,0 +1,31 @@
+{
+  "status": "PASS_EXACT_BOUNDED_SOURCE_READER_CORRECTION_NOT_TASK_ACCEPTANCE",
+  "findings": [],
+  "baseline": "f4a0108f9f12168f06c087e3c9dc3dd7e9d52fa4",
+  "fixtureSha256": "86f9a38e7f7fd6b1ad71fb5d4df6d226f483607054f27cb2caee9dd13f582253",
+  "claimsSha256": "d62b70728f5bffc1a2f4f4324b8db025fb4dfe03c4c2d8357a28a2b139e9bcbd",
+  "sourceDecision": "PASS: full real fixture changes only startingState.revision from671234 to exact current publicf4 and revisionPurpose to immutable public/coherent docs/unchanged product baseline with no execution-result claim. Prior exact runtime/schema/contract/lifecycle/replay/test comparison supports unchanged product exercise. One owner checker export-only and protected-guide literal change confer no new product semantics. Root actual f4 governance0/session70940 qualifies baseline docs check, not task execution.",
+  "readerDecision": "PASS: exact immutable selector cleanly directs next fresh reader to coherent baseline before dependencies, leaving entire original task/problem/tests/stop/removal duties untouched. This is repair of stale supplied baseline, not actor error, human restriction, relaxed check or intended behavior preimplementation.",
+  "fullAffectedRecords": {
+    "fixtureComplement": "Actual parsed fixture complement equals f4 baseline after restoring entire startingState; inspection confirms exactly revision+revisionPurpose changed. Original desired reason, five negative/ordinary/admin/crash cases, externalCompatibility, evidence/removal and executionStatus=not-executed retained.",
+    "asset13": "Complete old/current asset reviewed: sha update and concise additive basis only; old basis verbatim prefix, same owner/checks/desired-fault-spec claim/execution boundary. Basis explicitly retains actual671234 governance failure, all original duties and unexecuted state.",
+    "contract31": "Complete old/current contract reviewed: ONLY anchors[0].exactExcerpt changes to exact full current fixture. Owner/prerequisites/errors/effects/cleanup/expectedResults/limits/execution unchanged, no live/historical execution promotion.",
+    "wholeClaimsComplement": "Independent actual current-vs-baseline reconstruction: replace only asset13 and exact contract31 anchor; entire parsed claims deep-equal. Supplied whole serialized reconstruction proof true at22399933bytes; current actual SHA matches d62b70728f5bffc1a2f4f4324b8db025fb4dfe03c4c2d8357a28a2b139e9bcbd. No whole23MB semantic re-audit claim."
+  },
+  "ownerDecision": "PASS: read complete13 owning declaration/function contexts and exact real source diff. Only FOUR physical input literals renew: discovery2 claims+1 fixture, custody1 claims. Root/cwd/physical/no-symlink, package/public invocation, graph edge/alias, finite roster, selector/fact/rawslot/receipt and normal parent-child gates unchanged. Existing all-purpose/role meaning retained at qualified scope; receipt explicitly denies runtime/API authority and tool-success/future-temp/rollback guarantees. No refused A91112 registry read/reacquired or gate exclusion.",
+  "originalPlatform02ActualDisposition": {
+    "verdict": "FAIL_IMMUTABLE",
+    "ownershipOutcome": "PASS bounded pre-edit owner/invariant/compatibility/routing selection.",
+    "smallestCompleteChain": "FAIL actual required baseline governance1/stale generated map after selected product baselines0; clean original fixture-selected671234 is legitimate.",
+    "negativeCrashRestart": "NOT_DEMONSTRATED: no temporary implementation/assertions, no administrative diagnostic crash-after-durable-block proof; generic baseline process-death fixture not substitute.",
+    "removal": "NOT_DEMONSTRATED: no changed implementation to remove and no changed/postremoval chain; scratch cleanup only is not exercise restoration.",
+    "whyNoRetroactivePass": "Correction/current baseline governance does not rewrite old receipts or establish new task outcomes. New eligible fresh actor must execute original conditions after coherent corrected publication."
+  },
+  "pendingActualRootOutcomes": [
+    "Terra414765 final not observed; no future0 inferred.",
+    "Native coverage/contract/assets84058 final not observed; no future0 inferred.",
+    "Any needed current publication/delivery/original checker evidence and exact public corrected-source availability root-owned."
+  ],
+  "awards": "Zero new acceptance or whole gate; original semantic records/failures/limits unchanged. Default global API/generator/A91112 blocked roles untouched.",
+  "actions": "Only exact4-file diff/full fixture, complete two affected claims and13 complete owner contexts/proof read with bounded read-only comparisons. No tests/main edits or wholeSource campaign."
+}

@@ -1,0 +1,2 @@
+npm notice run plugin-system:sandbox:build
+npm notice run node scripts/build-plugin-sandbox.mjs

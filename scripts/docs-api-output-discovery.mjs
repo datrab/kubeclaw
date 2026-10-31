@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "e2e9217c75e738b369ff8f4e9631f09fb262ce809600ae489ea0c95c0bc5ebb4"
+      "sha256": "d62b70728f5bffc1a2f4f4324b8db025fb4dfe03c4c2d8357a28a2b139e9bcbd"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3424,7 +3424,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "e2e9217c75e738b369ff8f4e9631f09fb262ce809600ae489ea0c95c0bc5ebb4"
+      "sha256": "d62b70728f5bffc1a2f4f4324b8db025fb4dfe03c4c2d8357a28a2b139e9bcbd"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3480,7 +3480,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
-      "sha256": "9120b99b49a473e6a98b1c3e8c1f5b48f276dcb831de23c22c52e31b06515f2b"
+      "sha256": "86f9a38e7f7fd6b1ad71fb5d4df6d226f483607054f27cb2caee9dd13f582253"
     },
     {
       "path": "docs/site/extend/first-plugin.md",

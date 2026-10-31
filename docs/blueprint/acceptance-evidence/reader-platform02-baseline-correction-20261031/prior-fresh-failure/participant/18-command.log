@@ -1,0 +1,3 @@
+npm notice run docs:governance:check
+npm notice run node scripts/docs-governance.mjs --check
+docs/site/reference/generated-documentation-map.json is stale. Run npm run docs:governance:generate.

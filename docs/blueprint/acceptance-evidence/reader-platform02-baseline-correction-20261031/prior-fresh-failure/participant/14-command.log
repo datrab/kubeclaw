@@ -1,0 +1,13 @@
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=false (2220.378423ms)
+✔ Project CLI recovery compiler preserves stored source contract and rejects changed projects; legacy=true (1557.289812ms)
+✔ captured original v1/v2 snapshot bytes remain verified or fail closed across locales (1000.034694ms)
+✔ new original snapshot writer and graph verifier preserve Unicode maps and node ordering across locales (614.796836ms)
+✔ all five actual closed source inputs reject unknown identity codecs; legacy and explicit version accepted (21.757259ms)
+ℹ tests 5
+ℹ suites 0
+ℹ pass 5
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 4285.747155

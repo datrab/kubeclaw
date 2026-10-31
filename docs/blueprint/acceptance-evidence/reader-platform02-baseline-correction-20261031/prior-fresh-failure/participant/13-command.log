@@ -1,0 +1,12 @@
+✔ native terminal decisions retain their distinct dispositions and reject altered evidence (16.803404ms)
+✔ snapshot publication survives process death as a complete set and rejects overwrite or corruption (253.713657ms)
+✔ repair through the real recorder and journal reruns lint before Echo and Buster (214.425764ms)
+✔ SIGKILL after durable wait resolution preserves the exact approved continuation (155.845515ms)
+ℹ tests 4
+ℹ suites 0
+ℹ pass 4
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 643.93644
