@@ -50,7 +50,7 @@ test('all role chart/value changes force full rendering, exporter-only code does
 
 test('automatic publication consumes only validated selector export commands', () => {
   const workflow = yaml.load(fs.readFileSync('.github/workflows/auto-promote-runtime.yaml', 'utf8'));
-  const step = workflow.jobs.publish.steps.at(-1);
+  const step = workflow.jobs.publish.steps.find(item => item.name === 'Materialize and validate Argo deployment');
   assert.equal(step.env.EXPORT_COMMAND, '${{ steps.selection.outputs.export_command }}');
   assert.match(step.run, /case "\$EXPORT_COMMAND" in export\|export-buster\)/);
   assert.match(step.run, /gitops-continuous\.mjs "\$EXPORT_COMMAND" "\$BUNDLE_DIRECTORY"/);
@@ -87,7 +87,7 @@ test('automatic selector checks authorization before changing selected receipts'
   const command = runtimePublicationCommand(prior, next, true);
   assert.equal(command, 'export');
   assert.doesNotThrow(() => assertRuntimePublicationScope(command, workflow.jobs.publish.env.RUNTIME_PUBLICATION_SCOPE));
-  const publish = workflow.jobs.publish.steps.at(-1);
+  const publish = workflow.jobs.publish.steps.find(item => item.name === 'Materialize and validate Argo deployment');
   assert.equal(workflow.jobs.publish.permissions.packages, 'read');
   assert.ok(publish.env.TRIVY_PASSWORD);
   assert.ok(publish.run.indexOf('scan-runtime-images.sh') > publish.run.indexOf('materialize-release'));

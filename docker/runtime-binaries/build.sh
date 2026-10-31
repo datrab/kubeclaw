@@ -11,6 +11,9 @@ binary_output=${RUNTIME_BINARY_OUTPUT_DIR:-/out}
 mkdir -p "$binary_output"
 for binary in "$@"; do
   flags='-s -w'
+  lock_directory="$binary"
+  tags=''
+  cgo=0
   case "$binary" in
     helm)
       module=helm.sh/helm/v3; expected="v${HELM_VERSION}"; package=helm.sh/helm/v3/cmd/helm
@@ -36,15 +39,31 @@ for binary in "$@"; do
       module=github.com/aquasecurity/trivy; expected="v${TRIVY_VERSION}"; package=github.com/aquasecurity/trivy/cmd/trivy
       flags="$flags -X github.com/aquasecurity/trivy/pkg/version/app.ver=$TRIVY_VERSION"
       ;;
+    buildctl|buildkitd)
+      lock_directory=buildkit
+      module=github.com/moby/buildkit; expected="v${BUILDKIT_VERSION}"; package="$module/cmd/$binary"
+      flags="$flags -X github.com/moby/buildkit/version.Version=$expected -X github.com/moby/buildkit/version.Revision=kubeclaw-security-rebuild"
+      ;;
+    buildkit-runc)
+      lock_directory=runc
+      module=github.com/opencontainers/runc; expected="v${RUNC_VERSION}"; package=$module
+      # Match BuildKit's upstream runc tags, including seccomp/AppArmor and
+      # static linking. No runtime sandbox feature is removed by the rebuild.
+      cgo=1; tags='apparmor seccomp netgo cgo static_build osusergo'
+      flags="$flags -extldflags=-static -X main.version=$RUNC_VERSION -X main.gitCommit=kubeclaw-security-rebuild"
+      ;;
+    rootlesskit)
+      module=github.com/rootless-containers/rootlesskit/v3; expected="v${ROOTLESSKIT_VERSION}"; package="$module/cmd/rootlesskit"
+      ;;
     *) echo "Unknown runtime binary: $binary" >&2; exit 2 ;;
   esac
   (
-    cd "$binary"
+    cd "$lock_directory"
     lock_before=$(sha256sum go.mod go.sum)
     go mod download all
     test "$lock_before" = "$(sha256sum go.mod go.sum)"
     go mod verify
     test "$(go list -mod=readonly -m -f '{{.Version}}' "$module")" = "$expected"
-    go build -p=2 -mod=readonly -trimpath -ldflags "$flags" -o "$binary_output/$binary" "$package"
+    CGO_ENABLED="$cgo" go build -p=2 -mod=readonly -trimpath -tags "$tags" -ldflags "$flags" -o "$binary_output/$binary" "$package"
   )
 done

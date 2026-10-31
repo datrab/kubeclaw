@@ -70,3 +70,10 @@ jobs:
           # A concurrent push fails safely; never overwrite or rebase over newer code.
           # GITHUB_TOKEN pushes do not trigger a build loop; Argo observes Git directly.
           git push origin HEAD:main
+      - name: Preserve production security scan evidence
+        if: ${{ !cancelled() && steps.selection.outputs.selected == 'true' }}
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4
+        with:
+          name: production-security-reports
+          path: dist/trivy
+          if-no-files-found: warn

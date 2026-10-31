@@ -7,10 +7,15 @@ ARG KUBECLAW_TOOLCHAIN=toolchain
 ARG RUNTIME_GO_BASE=golang:1.27.3-bookworm@sha256:d9b6a1beb9474adc2a1ce842573639b44b2a0dd49b6669f51d3821baf9ec37c9
 FROM ${RUNTIME_GO_BASE} AS runtime-binaries
 ARG TARGETARCH
+ARG BUILDKIT_VERSION=0.34.1
+ARG ROOTLESSKIT_VERSION=3.3.0
+ARG RUNC_VERSION=1.5.2
 WORKDIR /src
 COPY docker/runtime-binaries/ /src/
+ARG DEBIAN_SNAPSHOT=20261031T000000Z
+RUN sh /src/install-seccomp.sh "$DEBIAN_SNAPSHOT"
 RUN --mount=type=cache,target=/go/pkg/mod --mount=type=cache,target=/root/.cache/go-build \
-    sh /src/build.sh kubectl trivy
+    sh /src/build.sh kubectl trivy buildctl buildkitd buildkit-runc rootlesskit
 
 FROM ${BUILDKIT_BASE} AS buildkit
 FROM ${BUSTER_NODE_BASE} AS toolchain
@@ -21,7 +26,7 @@ USER root
 COPY docker/npm-tools/ /opt/kubeclaw-npm/
 RUN sh /opt/kubeclaw-npm/install.sh \
     && rm -rf /usr/local/lib/node_modules/npm \
-    && ln -s /opt/kubeclaw-npm/node_modules/npm /usr/local/lib/node_modules/npm \
+    && cp -a /opt/kubeclaw-npm/node_modules/npm /usr/local/lib/node_modules/npm \
     && npm --version
 SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 ARG DEBIAN_SNAPSHOT=20261031T000000Z
@@ -51,7 +56,7 @@ RUN printf '%s\n' \
       > /etc/apt/sources.list.d/debian.sources \
     && rm -f /etc/apt/sources.list \
     && printf 'Acquire::Check-Valid-Until "false";\n' > /etc/apt/apt.conf.d/99snapshot \
-    && packages=(bash ca-certificates curl git openssh-client jq python3 python3-pip uidmap libcap2-bin fuse-overlayfs iproute2 iptables tini util-linux build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap) \
+    && packages=(bash ca-certificates curl git openssh-client jq python3 python3-pip uidmap libcap2-bin libseccomp2 fuse-overlayfs iproute2 iptables tini util-linux build-essential shellcheck yamllint ripgrep tree netcat-openbsd nmap) \
     && apt-get -o Acquire::Retries=5 -o APT::Update::Error-Mode=any update \
     && apt-get -o Acquire::Retries=5 upgrade -y --no-install-recommends \
     && apt-get -o Acquire::Retries=5 install -y --no-install-recommends "${packages[@]}" \
@@ -60,10 +65,10 @@ RUN printf '%s\n' \
     && setcap cap_setuid=ep /usr/bin/newuidmap \
     && setcap cap_setgid=ep /usr/bin/newgidmap
 
-COPY --from=buildkit /usr/bin/buildkitd /usr/local/bin/buildkitd
-COPY --from=buildkit /usr/bin/buildctl /usr/local/bin/buildctl
-COPY --from=buildkit /usr/bin/buildkit-runc /usr/local/bin/buildkit-runc
-COPY --from=buildkit /usr/bin/rootlesskit /usr/local/bin/rootlesskit
+COPY --from=runtime-binaries /out/buildkitd /usr/local/bin/buildkitd
+COPY --from=runtime-binaries /out/buildctl /usr/local/bin/buildctl
+COPY --from=runtime-binaries /out/buildkit-runc /usr/local/bin/buildkit-runc
+COPY --from=runtime-binaries /out/rootlesskit /usr/local/bin/rootlesskit
 
 RUN set -eux; \
     groupmod --new-name builder node; \

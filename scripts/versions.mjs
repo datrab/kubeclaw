@@ -171,7 +171,7 @@ export function versionOutputs(root) {
   bindInfrastructureVersions(manifest, replaceOne);
   bindApplicationVersions(manifest, args, replaceOne);
   outputs.set('docker/runtime-binaries/versions.env', '# Generated from versions.json; run npm run versions:sync.\n'
-    + ['GO_VERSION', 'HELM_VERSION', 'SHFMT_VERSION', 'KUBECONFORM_VERSION', 'KUBECTL_VERSION', 'TFLINT_VERSION', 'TRIVY_VERSION']
+    + ['GO_VERSION', 'HELM_VERSION', 'SHFMT_VERSION', 'KUBECONFORM_VERSION', 'KUBECTL_VERSION', 'TFLINT_VERSION', 'TRIVY_VERSION', 'BUILDKIT_VERSION', 'ROOTLESSKIT_VERSION', 'RUNC_VERSION']
       .map(key => `${key}=${args[key]}\n`).join(''));
   bindRuntimeToolInputs(manifest, args, outputs);
   return outputs;

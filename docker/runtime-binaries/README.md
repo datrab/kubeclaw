@@ -20,3 +20,10 @@ After changing a tool version or transitive security pin, regenerate its Go lock
 with the selected Go compiler, execute the real binary, and scan the resulting
 binary with `trivy rootfs`. Native `build.sh` checks can set the absolute
 `RUNTIME_BINARY_OUTPUT_DIR` instead of Docker's `/out`.
+
+Buster also rebuilds BuildKit, runc and RootlessKit from their locked upstream
+modules with patched archive/network dependencies. runc retains the upstream
+seccomp and AppArmor build tags and static linking; its libseccomp library
+comes from the same dated Debian snapshot as the worker. The npm CLI is copied
+to its canonical module path, rather than replacing a lower-layer directory
+with a symlink that can leave stale package inventory in image scanners.
