@@ -229,6 +229,316 @@ const authorityPolicyFields = Object.freeze(['recordKind', 'primaryMechanicalAut
 // These are relation invariants. They neither qualify a new inventory nor
 // execute its source-freshness check. Actual adapter meanings remain subject to
 // affected Source review and the named owning checks.
+// Finite reviewed selector relevance, independent of generated typed records.
+// An unrelated inventory cannot be offered as a manual-only disposition.
+export const manualAuthorityInventoryScopes = {
+  "SUR-CTL-01": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-CTL-02": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-CTL-03": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-CTL-04": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-CTL-05": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-CTL-06": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-CTL-07": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-SPC-01": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json"
+  ],
+  "SUR-SPC-02": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json"
+  ],
+  "SUR-SPC-03": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json"
+  ],
+  "SUR-SPC-04": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json"
+  ],
+  "SUR-SPC-05": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json"
+  ],
+  "SUR-SPC-06": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json"
+  ],
+  "SUR-CFG-01": [
+    "docs/generated/inventory/configuration-families.json"
+  ],
+  "SUR-CFG-02": [
+    "docs/generated/inventory/configuration-families.json"
+  ],
+  "SUR-CFG-03": [
+    "docs/generated/inventory/configuration-families.json"
+  ],
+  "SUR-CFG-04": [
+    "docs/generated/inventory/configuration-families.json"
+  ],
+  "SUR-CFG-05": [
+    "docs/generated/inventory/configuration-families.json"
+  ],
+  "SUR-CFG-06": [
+    "docs/generated/inventory/configuration-families.json"
+  ],
+  "SUR-CFG-07": [
+    "docs/generated/inventory/configuration-families.json"
+  ],
+  "SUR-CFG-08": [
+    "docs/generated/inventory/configuration-families.json"
+  ],
+  "SUR-API-01": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-API-02": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-API-03": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-API-04": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-API-05": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-API-06": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json"
+  ],
+  "SUR-API-07": [
+    "docs/generated/inventory/event-contracts.json",
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-API-08": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-API-09": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-API-10": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/workflows.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-API-11": [
+    "docs/generated/inventory/platform-surfaces.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-COM-01": [
+    "docs/generated/inventory/event-contracts.json",
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-COM-02": [
+    "docs/generated/inventory/event-contracts.json",
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-COM-03": [
+    "docs/generated/inventory/event-contracts.json",
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-COM-04": [
+    "docs/generated/inventory/event-contracts.json",
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DAT-01": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DAT-02": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DAT-03": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DAT-04": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DAT-05": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DAT-06": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-TEL-01": [
+    "docs/generated/inventory/event-contracts.json"
+  ],
+  "SUR-TEL-02": [
+    "docs/generated/inventory/event-contracts.json"
+  ],
+  "SUR-TEL-03": [
+    "docs/generated/inventory/event-contracts.json"
+  ],
+  "SUR-SEC-01": [
+    "docs/generated/inventory/configuration-runtime-inputs.json",
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-SEC-02": [
+    "docs/generated/inventory/configuration-runtime-inputs.json",
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-SEC-03": [
+    "docs/generated/inventory/configuration-runtime-inputs.json",
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-SEC-04": [
+    "docs/generated/inventory/configuration-runtime-inputs.json"
+  ],
+  "SUR-SEC-05": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-SEC-06": [
+    "docs/generated/inventory/workflows.json",
+    "packaging/runtime/package-ownership.json"
+  ],
+  "SUR-SEC-07": [
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/plugin-system.json"
+  ],
+  "SUR-DEP-01": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-02": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-03": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-04": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-05": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-06": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-07": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-08": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-09": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-DEP-10": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-OPT-01": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-OPT-02": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-OPT-03": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-OPT-04": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-OPT-05": [
+    "docs/generated/inventory/platform-surfaces.json"
+  ],
+  "SUR-OPS-01": [
+    "docs/operator-tasks.json"
+  ],
+  "SUR-OPS-02": [
+    "docs/operator-tasks.json"
+  ],
+  "SUR-OPS-03": [
+    "docs/operator-tasks.json"
+  ],
+  "SUR-OPS-04": [
+    "docs/operator-tasks.json"
+  ],
+  "SUR-OPS-05": [
+    "docs/operator-tasks.json"
+  ],
+  "SUR-OPS-06": [
+    "docs/operator-tasks.json"
+  ],
+  "SUR-EXT-01": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-02": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-03": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-04": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-05": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-06": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-07": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-08": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-09": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-10": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ],
+  "SUR-EXT-11": [
+    "docs/generated/inventory/plugin-system.json",
+    "docs/generated/inventory/sdk-reference.json"
+  ]
+};
+
 // Keep declared docs-generate ownership separate from the bounded inventory.
 export function generatedPageFreshnessChecks(page, configurationPages, generatedReferencePages, configurationRevision) {
   if (page === 'docs/site/reference/configuration.md') {
@@ -341,9 +651,16 @@ export function assertAuthorityMatrix(matrix) {
       .map(record => record.normalizedIdentity).sort();
     assert.deepEqual(available.typedIdentities, actual,
       `authority-matrix available typed authority cannot be replaced by manual route: ${family.id}`);
-    if (actual.length) assert.equal(available.disposition, 'named-admitted-typed-authorities');
-    else {
+    if (actual.length) {
+      assert.equal(available.disposition, 'named-admitted-typed-authorities');
+      const actualInventories = [...new Set(resolvedRecords.filter(record => record.recordKind !== 'manual-review-route'
+        && record.surFamily === family.id).map(record => record.inventory))].sort();
+      assert.deepEqual(available.selectedInventories, actualInventories,
+        `authority-matrix assigned inventory set differs: ${family.id}`);
+    } else {
       assert.equal(available.disposition, 'no-admitted-typed-inventory-for-high-level-surface');
+      assert.deepEqual(available.selectedInventories, manualAuthorityInventoryScopes[family.id],
+        `authority-matrix unrelated selected inventory in manual disposition: ${family.id}`);
       assert(typeof available.reason === 'string' && available.reason.trim()
         && Array.isArray(available.selectedInventories) && available.selectedInventories.length,
         `authority-matrix manual-only family lacks bounded inventory disposition: ${family.id}`);
@@ -512,19 +829,19 @@ export function buildAuthorityMatrix(root, pages, domains, additionalRecords = [
     if (!inverse.has(record.canonicalTarget)) inverse.set(record.canonicalTarget, []);
     inverse.get(record.canonicalTarget).push(record.normalizedIdentity);
   }
-  const selectedInventories = [...new Set(records.filter(record => record.primaryMechanicalAuthority)
-    .map(record => record.inventory))].sort();
-  for (const family of families) {
-    const typedIdentities = records.filter(record => record.recordKind !== 'manual-review-route'
-      && record.surFamily === family.id).map(record => record.normalizedIdentity).sort();
-    family.authorityAvailability = typedIdentities.length
-      ? { disposition: 'named-admitted-typed-authorities', typedIdentities }
-      : { disposition: 'no-admitted-typed-inventory-for-high-level-surface', typedIdentities,
-        selectedInventories,
-        reason: `${family.id} (${family.title}) is an authored high-level surface. The explicitly selected inventory adapters assign no typed identity to this whole surface; its named guide/source review remains required. This bounded disposition does not assert that no other repository source or future typed inventory exists.` };
-  }
+  // This is retained, independently reviewed assignment metadata. The owner
+  // must never rewrite it from the current records: input removal/reassignment
+  // must fail before a manual review route can conceal the missing identity.
+  const assignmentPath = 'docs/config/source-authority-family-assignments.json';
+  const assignments = read(assignmentPath);
+  assert.equal(assignments.schemaVersion, 'finite-sur-authority-assignments.v1');
+  assert.deepEqual(assignments.families.map(family => family.id).sort(), [...requiredSurfaceFamilies].sort(),
+    'authority-matrix assignment manifest must retain the exact finite SUR roster');
+  const byFamily = new Map(assignments.families.map(family => [family.id, family.authorityAvailability]));
+  for (const family of families) family.authorityAvailability = structuredClone(byFamily.get(family.id));
   return compactAuthorityMatrix({
     schemaVersion: 'source-authority-matrix.v1',
+    assignmentManifest: { path: assignmentPath, sha256: digest(assignments) },
     authority: 'Relations between explicitly admitted inventory identities and reader/review ownership. Owning freshness checks and independent semantic qualification remain required.',
     families, records,
     inverse: [...inverse].sort(([a], [b]) => a.localeCompare(b, 'en'))
@@ -765,6 +1082,6 @@ export function renderAuthorityMatrixSummary(matrix, text) {
     const records = matrix.records.filter(record => record.surFamily.split('-')[1] === group).map(resolve);
     return `| ${group} | ${families.length} | ${records.filter(record => record.primaryMechanicalAuthority).length} | ${records.filter(record => record.recordKind === 'projection-reference').length} | ${records.filter(record => record.recordKind === 'manual-review-route').length} |`;
   });
-  const block = `${start}\n\n## Current source and reader relations\n\nThe [full identity index](reference/generated-documentation-map.json) is under \`sourceSurfaceMap.authorityMatrix\`. Start with a SUR family above or search an exact source path in \`sourceAuthority\`. Each \`normalizedIdentity\` names its SUR family, source authority, canonical reader target and documentation owner. Resolve its \`policyRef\` in \`authorityPolicies\` for the owning inventory, generator or manual route, required check, consumer boundary and classification. Shared policies avoid copying competing ownership rules.\n\nEach family also has an \`authorityAvailability\` disposition: named admitted typed identities, or an explicit bounded reason that the selected inventories do not cover that whole high-level surface. A projection retains its actual primary authority even when assigned to a different family. This disposition is not proof of repository-wide source discovery.\n\nFor the reverse direction, find a canonical page/anchor in \`inverse\` and follow its exact identities. Configuration view identities retain the native ordered record position: repeated or conditional projections are not unique schema branch pointers. Open the owning schema/consumer reference for applicability and default behavior.\n\n| SUR group | Families | Source-bound declarations/relations | Projection references | Manual review routes |\n| --- | --- | --- | --- | --- |\n${rows.join('\n')}\n\nThese are index relations, **not counts of active public runtime features**. Explicit fixture, retained, private, candidate and declaration-only classifications remain in their owning policies. A manual route assigns a named source/consumer review and documentation owner; it does not claim generated freshness, completed semantic review or source-discovery completeness. Historical source links and guide-depth labels in the navigation tables are not current mechanical authorities.\n\nRun the required owning checks before relying on current facts, then the governance check for this complete relation. Neither this join nor a successful structural check proves runtime validation, default insertion, deployment, browser/provider execution or a previously unknown public launch.\n\n${end}`;
+  const block = `${start}\n\n## Current source and reader relations\n\nThe [full identity index](reference/generated-documentation-map.json) is under \`sourceSurfaceMap.authorityMatrix\`. Start with a SUR family above or search an exact source path in \`sourceAuthority\`. Each \`normalizedIdentity\` names its SUR family, source authority, canonical reader target and documentation owner. Resolve its \`policyRef\` in \`authorityPolicies\` for the owning inventory, generator or manual route, required check, consumer boundary and classification. Shared policies avoid copying competing ownership rules.\n\nThe separate \`docs/config/source-authority-family-assignments.json\` is reviewed assignment metadata, not another product-fact source; generation never rewrites it. An added, removed or reassigned selected identity requires an explicit affected Source review. Each family also has an \`authorityAvailability\` disposition: named admitted typed identities, or an explicit bounded reason that the selected inventories do not cover that whole high-level surface. A projection retains its actual primary authority even when assigned to a different family. This disposition is not proof of repository-wide source discovery.\n\nFor the reverse direction, find a canonical page/anchor in \`inverse\` and follow its exact identities. Configuration view identities retain the native ordered record position: repeated or conditional projections are not unique schema branch pointers. Open the owning schema/consumer reference for applicability and default behavior.\n\n| SUR group | Families | Source-bound declarations/relations | Projection references | Manual review routes |\n| --- | --- | --- | --- | --- |\n${rows.join('\n')}\n\nThese are index relations, **not counts of active public runtime features**. Explicit fixture, retained, private, candidate and declaration-only classifications remain in their owning policies. A manual route assigns a named source/consumer review and documentation owner; it does not claim generated freshness, completed semantic review or source-discovery completeness. Historical source links and guide-depth labels in the navigation tables are not current mechanical authorities.\n\nRun the required owning checks before relying on current facts, then the governance check for this complete relation. Neither this join nor a successful structural check proves runtime validation, default insertion, deployment, browser/provider execution or a previously unknown public launch.\n\n${end}`;
   return text.slice(0, a) + block + text.slice(b + end.length);
 }

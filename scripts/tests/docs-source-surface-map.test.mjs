@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import { buildSourceSurfaceMap, assertSourceSurfaceMap, assertAuthorityMatrix,
-  requiredSurfaceFamilies, generatedPageFreshnessChecks } from '../lib/docs-source-surface-map.mjs';
+  requiredSurfaceFamilies, generatedPageFreshnessChecks, manualAuthorityInventoryScopes } from '../lib/docs-source-surface-map.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const mapFile = path.join(root, 'docs/site/reference/generated-documentation-map.json');
@@ -46,9 +46,9 @@ function authorityFixture() {
     const typedIdentities = records.filter(record => record.recordKind !== 'manual-review-route'
       && record.surFamily === family.id).map(record => record.normalizedIdentity).sort();
     family.authorityAvailability = typedIdentities.length
-      ? { disposition: 'named-admitted-typed-authorities', typedIdentities }
+      ? { disposition: 'named-admitted-typed-authorities', typedIdentities, selectedInventories: ['fixture/schema-index.json'] }
       : { disposition: 'no-admitted-typed-inventory-for-high-level-surface', typedIdentities,
-        selectedInventories: ['fixture/schema-index.json'], reason: 'Fixture inventory covers schema properties only, not this high-level family.' };
+        selectedInventories: manualAuthorityInventoryScopes[family.id], reason: 'Fixture inventory covers schema properties only, not this high-level family.' };
   }
   const inverse = new Map();
   for (const record of records) {
@@ -391,4 +391,19 @@ test('source disagreement and native fixture/profile forgery fail closed', () =>
       mutation(fixture);
     }), /authority-matrix orphan source/u);
   }
+});
+
+
+test('selected input removal or assignment change cannot regenerate a manual substitute', () => {
+  assert.throws(() => build('packaging/runtime/package-ownership.json', data => { data.packages = []; }),
+    /available typed authority cannot be replaced by manual route/u);
+  assert.throws(() => build('docs/config/source-authority-family-assignments.json', data => {
+    const typed = data.families.find(family => family.id === 'SUR-CTL-06');
+    const manual = data.families.find(family => !family.authorityAvailability.typedIdentities.length);
+    manual.authorityAvailability.typedIdentities.push(typed.authorityAvailability.typedIdentities.pop());
+  }), /available typed authority cannot be replaced by manual route/u);
+  assert.throws(() => build('docs/config/source-authority-family-assignments.json', data => {
+    const manual = data.families.find(family => !family.authorityAvailability.typedIdentities.length);
+    manual.authorityAvailability.selectedInventories = ['docs/config/common-error-catalogue.json'];
+  }), /unrelated selected inventory/u);
 });
