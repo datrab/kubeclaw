@@ -1,33 +1,37 @@
 # Configuration
 
-Status: bounded reference; discovery limitations stated below
+Status: generated checked-in configuration reference; consumer boundaries below
 Audience: operator, project author, plugin author, maintainer
-Owner: documentation; consumer semantics belong to the named component
-Evidence: skills/common/plugin-runtime/foundation/config/platform.ts; skills/common/plugin-runtime/foundation/registry/configuration.ts; skills/common/plugin-runtime/foundation/registry/schema.ts; skills/nova/project/cli.ts; skills/prism/server/control-config.ts; scripts/docs-configuration-inventory.mjs
-Applies to: the consumer families and source boundaries listed on this page
-Last verified: 2026-10-15; source behavior checked from current files; no validation or deployment run
+Owner: documentation; each named consumer owns its setting semantics
+Evidence: docs/generated/inventory/configuration-families.json; docs/config/configuration-family-map.json; scripts/docs-configuration-inventory.mjs
+Applies to: current selected configuration families, source contracts and inverse-consumer routes
+Last verified: 2026-10-31; guarded source inventory, not a deployment or live-reload observation
+Source snapshot: `4b1b44901181eab8c233126d262d3bf44798da02`
+
+<!-- BEGIN GENERATED: source-backed reference -->
+
+Generated from: `docs/generated/inventory/configuration-families.json`, `docs/config/configuration-family-map.json`
 
 ## Find the setting before changing it
 
 Start with the process or artifact that consumes the value, not its filename.
-A Helm value, a platform grant, and a stage setting can share a name without
+A Helm value, a platform grant and a stage setting can share a name without
 sharing authority. Changing one does not override the other two.
 
-1. Find the consumer in the family table below.
-2. Open its detailed reference and identify the exact field, version, and default rule.
-3. Use the change class and diagnostic route for that consumer before activation.
+1. Find the family or consuming component in the tables below.
+2. Open its detailed reference and identify the exact field, version and default rule.
+3. Follow that consumer's validation, change and recovery boundary before activation.
 
-For a schema keyword or a contract that describes an input or result, use
-[Schema authorities](schemas.md). For a package name versus a caller grant or
+For input, result and checkpoint contracts that are not configuration settings,
+use [Schema authorities](schemas.md). For a package versus a caller grant or
 native-host permission, use [Roles and package ownership](roles-and-package-ownership.md).
 
 ## Select the configuration family
 
-The component in the Consumer column owns the behavior. These routes describe
-named, supported source families; they are not a claim that every possible
-configuration source in the repository has been cataloged.
+The detailed route supplies field-specific contracts. A schema shape, copied
+file, generated result or successful compilation is not proof of activation.
 
-| Artifact or setting | Version / selection | Consumer and authority | Defaults and override boundary | Detailed route |
+| Family / artifact | Selection | Consumer and authority | Defaults and override boundary | Detailed route |
 | --- | --- | --- | --- | --- |
 | Platform JSON | `pipeline-platform.v2` | Foundation `loadPlatformConfig`; Nova receives this explicit file | One canonical file; schema validation precedes canonical-file-relative path resolution. No Helm or compact-profile merge | [Pipeline platform](pipeline-platform.md) |
 | Nova project JSON | `nova-project.v2`, `--project` and `--platform` route | Nova project CLI and `compileProject`; graph preparation then checks installed registrations and grants | Closed project input compiles a separate graph; it is not an overlay on platform trust | [Nova project](nova-project.md) |
@@ -39,132 +43,163 @@ configuration source in the repository has been cataloged.
 | KubeClaw / Prism / GitOps deployment values | Exact chart, release values, supported overlays | Helm templates, GitOps receiver, then each workload | Ordered values merging is specific to the deployment route; absent upstream values can select receiver defaults | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
 | Compact swarm profile | Shipped `standard` profile; callers of its expander | Shipped classic configuration and verification-support expansion | Exact profile/features/tuning assertions; existing override leaf paths only. Not accepted by platform loader | [Host and Prism configuration](host-and-prism-configuration.md) |
 | OpenClaw / Codex routing and host settings | Rendered gateway/agent input and selected runtime-dispatch target | Gateway or host plugin, not a Nova stage field alone | A target/model label neither edits gateway settings nor proves credentials or capacity | [Host and Prism configuration](host-and-prism-configuration.md), [OpenClaw](../understand/openclaw.md) |
-| Prism process environment and credentials | Exact service loader and trust mode | `loadControlCompositionConfig` snapshots environment at startup; other services have their own loaders | Required credentials differ by trust branch; environment is not a universal live override layer | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
+| Runtime process environment and credentials | Exact service loader and trust mode | Each named receiving process and its field-specific environment contract | Required credentials differ by trust branch; environment is not a universal live override layer | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
 | Prism native pool host policy | Root-owned policy schema `1`, actual node and cgroup state | Native supervisor and host readiness checks | Aggregate host limits and identity are not granted by an environment pointer or worker profile | [Host and Prism configuration](host-and-prism-configuration.md), [worker roles](worker-profiles-and-roles.md) |
 | Lint policy and generated tool settings | Selected policy and tool contract | Lint loader, resolver, admission and tool runners | Use the lint-specific precedence, baseline and waiver rules, not plugin-config default rules | [Lint policy](lint-policy.md), [generated facts](lint-policy-generated.md) |
+| Owned CLI and maintenance inputs | The exact command parser, explicit scope and selected input file. | skills/nova/project/cli.ts | A command has no shared global precedence; its argument/duplicate/default contract applies. Maintenance evidence or a dry run is not permission to mutate product state. | [CLI](cli.md), [verification commands](verification-commands.md) |
+| Durable storage, limits and retention | Explicit storage constructor, selected runtime owner and versioned durable record. | skills/common/plugin-runtime/foundation/observability/durable-records.ts | Caller-supplied limits and storage roots remain distinct from stored event/result data. A new storage root is not an automatic migration or retention waiver. | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
 
-**Source — explicit platform and project acquisition:**
-[loadPlatformConfig / resolvePaths](../../../skills/common/plugin-runtime/foundation/config/platform.ts#L53-L69) (`skills/common/plugin-runtime/foundation/config/platform.ts:53–69`, current-checkout SHA-256 `4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8`). [project CLI acquisition and runtime preparation](../../../skills/nova/project/cli.ts#L16-L39) (`skills/nova/project/cli.ts:16–39`, current-checkout SHA-256 `6dbf4cb0a699b1e4c5e64c7f94d1bcbe9bdba1fcd1cf5232d81d7ad45ea5f366`).
+## Start from a consumer
+
+Use the consumer below to return to its configuration family. The complete index of recorded
+field contracts and whole-file delivery boundaries, including registration, transport, runtime and
+explicit non-delivery roles, is in [`docs/generated/inventory/configuration-families.json`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/docs/generated/inventory/configuration-families.json#L1-L1).
+A registration declaration or ConfigMap copy remains distinct from a runtime reader.
+A payload source tree is not field-level runtime behavior: delivery of a whole file
+does not prove that its tool or image reads every key or inserts a default.
+
+| Consuming source | Configuration family | Detailed route |
+| --- | --- | --- |
+| [`charts/kubeclaw/values.yaml`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/charts/kubeclaw/values.yaml#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts#L1-L1) | Worker resources and profile | [Worker profiles and roles](worker-profiles-and-roles.md), [compatibility](configuration-compatibility.md) |
+| [`scripts/argocd-self-management.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/argocd-self-management.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/build-runtime-role-bundle.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/build-runtime-role-bundle.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
+| [`scripts/gitops-continuous.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/gitops-continuous.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/gitops-owner.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/gitops-owner.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/gitops.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/gitops.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/install/register-runtime-argo.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/install/register-runtime-argo.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/observability-retirement-plan.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/observability-retirement-plan.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
+| [`scripts/recover-openclaw-audit-input.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/recover-openclaw-audit-input.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
+| [`scripts/render-stateful-network-policies.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/render-stateful-network-policies.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/updates/deployment-release.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/updates/deployment-release.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/updates/materialize-release.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/updates/materialize-release.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/updates/refresh-versions.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/updates/refresh-versions.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/updates/release-images.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/updates/release-images.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`scripts/versions.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/versions.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+| [`skills/buster/engine/test-gates/artifacts.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/buster/engine/test-gates/artifacts.ts#L1-L1) | Buster test-provider configuration | [Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
+| [`skills/buster/engine/test-gates/runner.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/buster/engine/test-gates/runner.ts#L1-L1) | Buster test-provider configuration | [Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
+| [`skills/common/plugin-runtime/foundation/config/platform.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/config/platform.ts#L1-L1) | Platform JSON | [Pipeline platform](pipeline-platform.md) |
+| [`skills/common/plugin-runtime/foundation/config/published-pair.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/config/published-pair.ts#L1-L1) | Project authoring pair | [Project pipeline JSON](pipeline-json.md), [publication](project-pipeline-publication.md) |
+| [`skills/common/plugin-runtime/foundation/observability/durable-attempts.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+| [`skills/common/plugin-runtime/foundation/observability/durable-delivery.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+| [`skills/common/plugin-runtime/foundation/observability/durable-records.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+| [`skills/common/plugin-runtime/foundation/registry/configuration.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/registry/configuration.ts#L1-L1) | Plugin stage, observer, adapter configuration; Buster test-provider configuration | [Plugin configuration](plugin-configuration.md), [plugin catalogue](../extend/plugin-catalogue/README.md)<br>[Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
+| [`skills/common/plugins/runtime-dispatch/src/openclaw-result.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugins/runtime-dispatch/src/openclaw-result.ts#L1-L1) | OpenClaw / Codex routing and host settings | [Host and Prism configuration](host-and-prism-configuration.md), [OpenClaw](../understand/openclaw.md) |
+| [`skills/common/plugins/runtime-dispatch/src/openclaw.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugins/runtime-dispatch/src/openclaw.ts#L1-L1) | OpenClaw / Codex routing and host settings | [Host and Prism configuration](host-and-prism-configuration.md), [OpenClaw](../understand/openclaw.md) |
+| [`skills/nova/core/execution/graph-build.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/core/execution/graph-build.ts#L1-L1) | Explicit execution graph | [Pipeline definition](pipeline-definition.md) |
+| [`skills/nova/core/observability/reconciler.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/core/observability/reconciler.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+| [`skills/nova/plugins/lint/src/engine/policy.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/plugins/lint/src/engine/policy.ts#L1-L1) | Lint policy and generated tool settings | [Lint policy](lint-policy.md), [generated facts](lint-policy-generated.md) |
+| [`skills/nova/project/cli.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/project/cli.ts#L1-L1) | Nova project JSON; Owned CLI and maintenance inputs | [Nova project](nova-project.md)<br>[CLI](cli.md), [verification commands](verification-commands.md) |
+| [`skills/nova/project_setup/tools/progress-scaffold.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/project_setup/tools/progress-scaffold.ts#L1-L1) | Project authoring pair | [Project pipeline JSON](pipeline-json.md), [publication](project-pipeline-publication.md) |
+| [`skills/prism/config/database-bootstrap.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/prism/config/database-bootstrap.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
+| [`skills/prism/config/native-worker.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/prism/config/native-worker.ts#L1-L1) | Prism native pool host policy | [Host and Prism configuration](host-and-prism-configuration.md), [worker roles](worker-profiles-and-roles.md) |
+| [`skills/prism/server/control-config.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/prism/server/control-config.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
+| [`skills/prism/server/ingestion.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/prism/server/ingestion.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
+| [`skills/worker/core/worker/ownership-store.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/worker/core/worker/ownership-store.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+| [`tests/verification/e2e/support/platform-config.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/tests/verification/e2e/support/platform-config.ts#L1-L1) | Compact swarm profile | [Host and Prism configuration](host-and-prism-configuration.md) |
 
 ## Determine the effective value
 
-There is no global last-writer-wins rule. Record the family first, then apply
-its [precedence rules](configuration-precedence.md). Keep these cases distinct:
+There is no global last-writer-wins rule. Record the family first, then use
+[Configuration precedence](configuration-precedence.md).
 
-| Case | What to establish | What not to infer |
+| Input state | What to establish | Do not infer |
 | --- | --- | --- |
-| Omitted field | Whether the exact schema requires it; whether the actual resolver or consumer supplies it | A displayed schema `default` means every caller inserts it |
-| Empty string | Whether that field permits it, uses `??`, or requires non-empty text | Empty equals omitted; `??` only replaces null or undefined |
-| `null` | Whether schema type/branch allows null before consumer fallback | A null value always clears a setting |
-| `false` or `0` | Exact type and allowed range, then the real consumer condition | False/zero means missing or disable everywhere |
-| Object / array | Exact family merge or replacement behavior | Helm, compact profiles, provider config and platform JSON share one merge algorithm |
-| Relative path | The loader's path origin and canonical-file handling | Every path is relative to the shell working directory |
-| Secret reference | Named Secret/key or file plus the actual receiving process | A reference proves the credential exists, is valid, or is authorized |
+| Omitted field | Exact schema requirement and actual resolver/consumer fallback. | A displayed schema default is inserted by every caller. |
+| Empty string | Whether the receiver permits it, uses a nullish fallback or requires nonempty text. | Empty equals omitted. |
+| null, false or zero | The exact type/branch and the consumer condition. | All false-like values disable or clear a setting. |
+| Object or array | This family’s merge, replacement and resolution rules. | Helm, compact profiles and plugin configuration share one merge algorithm. |
+| Relative path | The loader’s canonical input and path origin. | Every path is relative to the current shell directory. |
+| Secret reference | Named Secret/key/file and the actual receiving process. | A reference proves contents, authorization or successful authentication. |
 
-The platform loader uses strict validation without a default-insertion option.
-It resolves installation roots, trusted built-in roots, storage root and
-optional cgroup root relative to the real platform file's directory, then
-freezes the result. It does not merge an environment object into that file.
+### Example: a provider default
 
-Registered configuration has two deliberately different operations:
+Identify the contract ID and field in [Provider configuration](buster-provider-configuration.md).
+Check whether the caller only validates or resolves provider configuration.
+Ordinary validation does not insert defaults. Resolution clones values and
+validates with default insertion; it does not install, grant or execute a provider.
+Retain the non-secret contract/schema identity and selected field, not the resolved object.
 
-- **Validate:** check the provided value without inserting defaults. Stage,
-  enabled observer/adapter, and `validateTestProviderConfiguration` use this route.
-- **Resolve provider configuration:** clone the supplied value, validate the
-  clone with default insertion, and return a `provider-configuration.v1` record
-  with contract ID, schema digest and resolved values. The original input is
-  not rewritten. Resolution still does not install or grant a provider.
+### Example: an empty Prism URL
 
-**Source — validation versus resolution:**
-[validateReferencedSchema](../../../skills/common/plugin-runtime/foundation/registry/schema.ts#L84-L113) (`skills/common/plugin-runtime/foundation/registry/schema.ts:84–113`, current-checkout SHA-256 `eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557`). [validateTestProviderConfiguration / resolveTestProviderConfiguration](../../../skills/common/plugin-runtime/foundation/registry/configuration.ts#L82-L121) (`skills/common/plugin-runtime/foundation/registry/configuration.ts:82–121`, current-checkout SHA-256 `94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f`).
-
-### Concrete route: a missing provider option
-
-Suppose a provider field has a default in its registered schema. First open
-[Provider configuration](buster-provider-configuration.md) and identify the
-contract ID and field. Check whether your caller resolves configuration or
-only validates it. A successful validation alone does not prove that the
-provider received a filled-in value. Retain the non-secret resolved contract
-ID/schema digest and the exact provider field, rather than printing the whole
-resolved object. If the provider is unavailable, diagnose installation,
-selection, grants and service availability separately from field validity.
-
-### Concrete route: a Prism URL
-
-`loadControlServerConfig` uses `PRISM_WORKER_URL ?? 'http://prism-worker:8080'`
-and constructs a URL. An omitted variable selects that loader fallback; an
-empty string is not replaced by `??` and must still be a valid URL. The
-composition function copies the environment before asynchronous authority
-loading. Changing a deployment Secret or shell variable does not update the
-already captured process configuration.
-
-**Source — startup capture and URL fallback:**
-[loadControlServerConfig / loadControlCompositionConfig](../../../skills/prism/server/control-config.ts#L36-L72) (`skills/prism/server/control-config.ts:36–72`, current-checkout SHA-256 `9da649103dd1bf2c1a95f533725942bd760e80f1353d4e0db924c4053c8dcd7a`).
+The control loader uses `PRISM_WORKER_URL ?? 'http://prism-worker:8080'`.
+Omission selects that fallback; an empty string does not. It must still be a
+valid URL. Composition captures the process environment before asynchronous
+loading, so editing a Secret does not update an already captured configuration.
+Use [Environment variables](environment-variables.md) and the exact receiving contract.
 
 ## Change and reload boundaries
 
-Use [Configuration change impact](configuration-change-impact.md) for the
-complete procedure. The following distinctions prevent unsafe shortcuts:
+A setting is hot only when its named consumer explicitly watches or rereads it.
+Use [Configuration change impact](configuration-change-impact.md) for the procedure.
 
-| Changed authority | Required boundary to check | Preserve before changing |
-| --- | --- | --- |
-| Platform packages, providers, grants, adapters, observers or graph | Existing run snapshots pin effective authority and graph/package identities. If a change violates those pins, retain the original inputs for that run. Use the changed configuration for a new run. | Prior platform, original graph, package identities and run ID |
-| Platform shutdown/effect-lock timeouts | Recreate the consuming objects; new CLI invocation or restart if startup-loaded. Timeout-only change is not itself a new-run requirement in the recorded runtime subset | Original values, drain state and first shutdown diagnostic |
-| Provider plan or coupled `.swarm` files | Republish a consistent generation, then use its new resolved plan/run | Original pair/generation and plan digest; do not fix only one loose copy |
-| Pod template, environment or startup-mounted configuration | Identify the rendered receiving workload and its restart/rollout behavior; no general hot reload promise | Redacted rendered values, workload identity and previous generation |
-| Signing material or trust identity | Component-specific coordinated credential rotation and restart/reload rule | Old/new acceptance window and identity; never publish private bytes |
-| Native pool policy or capacity | Host preparation, actual cgroup/identity checks, then worker readiness | Policy identity, host state, active attempts and drain status |
-| Persistent location or data format | Component backup/restore/migration procedure, not just a values edit | Proven backup and restore route, ownership and store identity |
-
-These are selection rules, not permission to run a deployment or migration.
-A value is **hot** only where the named consumer explicitly watches or rereads it.
-See the source-linked change matrix for recovery pins and field-specific exceptions.
+| Configuration family | Change / retention boundary |
+| --- | --- |
+| Platform JSON | Recreate the consuming objects or invoke the CLI with the new file; retain existing run snapshot pins. A recorded timeout-only runtime change is not itself proof that every change requires a new run. |
+| Nova project JSON | Compile/prepare a new project/graph input and preserve the prior run inputs; compilation does not prove installed-stage execution. |
+| Explicit execution graph | Use the explicit new graph with its registry/grant validation. Existing run/package/graph pins remain authoritative for an existing run. |
+| Project authoring pair | Publish one consistent pair generation and retain prior generation/pins; do not edit loose members independently or infer live-run activation. |
+| Plugin stage, observer, adapter configuration | The exact registry operation and consumer own loading. Ordinary validation does not insert defaults; a changed package/config does not automatically alter an existing snapshot. |
+| Buster test-provider configuration | Resolve a new plan/configuration through the selected provider. Resolution clones/validates with defaults, but does not execute or grant the provider. |
+| Worker resources and profile | Use the selected contract/version admission path for new work. Keep actual accounting and host authorization distinct; do not replace missing observations with zero. |
+| KubeClaw / Prism / GitOps deployment values | Review the rendered receiver and reconcile through its deployment owner. A Pod-template/startup input can require rollout; rendering is not admission or rollout completion. |
+| Compact swarm profile | Follow the shipped profile/expander and actual consuming image/support boundary. This is not platform-loader acceptance or a universal runtime merge/reload rule. |
+| OpenClaw / Codex routing and host settings | Change the selected gateway/host/adapter authority through its owner. A target label or model selection does not prove credentials, available capacity or an updated existing session. |
+| Runtime process environment and credentials | Follow the individual receiving contract. Startup-captured services require process recreation; no universal hot-reload rule is inferred for all variables or credentials. |
+| Prism native pool host policy | Use host preparation, drain/active-attempt ownership and readiness checks before new work. Policy identity and actual node/cgroup state cannot be granted by a pointer. |
+| Lint policy and generated tool settings | The next owning policy load applies its baseline/waiver/admission rules. Preserve current report/baseline/approval evidence and expiry rather than suppressing failures implicitly. |
+| Owned CLI and maintenance inputs | A new invocation rereads explicit arguments/scope. Mutation, apply, import, rotation or deletion requires its own command boundary; dry-run evidence does not grant those actions. |
+| Durable storage, limits and retention | Reconfigure via the owning constructor/runtime and preserve store identities, locks, journals and retention/migration rules. Changing a path does not migrate or authorize retiring data. |
 
 ## Diagnose without exposing secrets
 
-1. Retain the first diagnostic, artifact version, canonical input path and
-   source/package identity. Redact tokens, private keys, Secret contents and
-   credential-bearing URLs. Do not paste a full environment or config dump.
-2. Match the prefix to [Configuration errors](configuration-errors.md).
-3. Correct the owning input, not a different layer with a similar name.
-4. Follow that family's validation route before restart, republish or new run.
-   Preserve the prior working bytes and unresolved cleanup state if activation fails.
+1. Retain the first diagnostic, input version, canonical source and redacted owner identity.
+2. Follow the family’s schema, registration, grant and receiver route. Do not widen unrelated authority.
+3. Keep the prior working generation and unresolved cleanup state if activation fails.
+4. Verify the actual receiving process before retiring a prior Secret or input generation.
 
-| Signal / question | First route | Stop condition |
-| --- | --- | --- |
-| `PLATFORM_CONFIG_INVALID` | Platform JSON pointer and [platform fields](pipeline-platform.md) | Unknown version/key/type; do not coerce it to another family |
-| `REGISTRY_REGISTRATION_MISSING` / missing stage owner | Exact package registration, enabled owner and grants | Do not widen unrelated grants or pretend schema success activates a package |
-| `REGISTRY_RESULT_INVALID` | Named schema path and validator errors | Determine config/input/result/checkpoint route before modifying a value |
-| `PROJECT_*` / graph error | [Project](nova-project.md), then [graph](pipeline-definition.md) | Compilation is not proof of plugin execution or a valid deployment |
-| Prism required value or URL failure | Exact service loader, rendered environment and [Secrets](secrets.md) | Credential presence is not downstream authentication success |
-| Worker admission failure | Selected resource version and [host policy](host-and-prism-configuration.md) | Do not convert missing accounting to zero or bypass native readiness |
+Use [Common errors](common-errors.md) for a named diagnostic and
+[Secrets](secrets.md) for redacted source/consumer/rotation boundaries.
 
-## Facts, generated tables, and coverage limits
+## Source coverage and explicit limits
 
-[Plugin configuration](plugin-configuration.md), [Helm values](helm-values.md)
-and [Environment variables](environment-variables.md) retain their existing
-field inventories. This page is an authored selector; it is not another
-manually copied field table and is not a newly generated inventory output.
-The documentation generator's current write map does not generate this hub.
+The current composition retains the selected YAML/Helm authority and receiver
+checks, registered schemas, deployed and undeployed payload boundaries,
+owned runtime/CLI inputs, configured environment selectors and direct host,
+publication and durable-storage source contracts. The inverse index records
+actual field contracts rather than promoting every candidate source file to a reader.
 
-The current configuration discovery has separate YAML/Helm, runtime environment
-and owned CLI routes. Its registered-schema selector covers platform plus
-`configSchema` registrations under `skills/common/plugins`, `skills/nova/plugins`
-and `skills/buster/plugins`. That selector does not discover every contract,
-embedded validator, host input or dynamically constructed source.
+Local validation fixtures and documentation output do not become configuration
+emitters because their bytes happen to be JSON, YAML or Kubernetes-shaped.
+Dynamic or external input without qualified provenance is not evaluated as a
+working setting. Generic acquisition limitations do not supply facts or defaults:
+the included facts require their direct source and receiving contracts.
 
-**Source — declared discovery boundaries:**
-[registeredSchemaAuthorities](../../../scripts/docs-configuration-inventory.mjs#L3073-L3103) (`scripts/docs-configuration-inventory.mjs:3073–3103`, current-checkout SHA-256 `f796b673f5dac812f0fb798bdfb2ff9931a0c122f3c9fb257befca05fd49010c`). [buildRuntimeInputInventory](../../../scripts/docs-configuration-inventory.mjs#L8422-L8455) (`scripts/docs-configuration-inventory.mjs:8422–8455`, current-checkout SHA-256 `f796b673f5dac812f0fb798bdfb2ff9931a0c122f3c9fb257befca05fd49010c`).
+The broad executable program-output API discovery path is separate and is not
+certified by this composition. It does not replace [API fields](api-object-updates.md),
+prove a deployed effective value or establish successful reload, admission or rotation.
 
-To maintain these references, use the prerequisite and failure guidance in
-[Documentation maintenance](../extend/documentation-maintenance.md). Inventory
-checks and mutation tests can launch external tools; they are not passive
-reads. A missing source/tool guard is a stop, not a reason to skip semantics.
-We ran no check, reload, live consumer or deployment to produce this page.
+### Payloads without a proved checked-in runtime reader or delivery
 
-Global family discovery and inverse consumer coverage are still incomplete.
-In particular, unsupported/unresolved sources must be classified before this
-selector can be treated as an all-family inventory. Use [Schema coverage
-limits](schemas.md#coverage-and-unresolved-authorities) for the finite companion,
-contract-root and embedded-validator boundaries; do not infer support from a
-filename or infer exclusion from a pruned directory.
+| Source payload | Declared boundary |
+| --- | --- |
+| [`charts/kubeclaw/files/config/lint-policy.json`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/charts/kubeclaw/files/config/lint-policy.json#L1-L1) | The repository proves a parser for request.policyPath, but it does not bind that request field to /runtime-config/lint-policy.json. Materialization and parsing are separate proved boundaries, not a continuous runtime chain. |
+| [`charts/kubeclaw/files/config/swarm.config.json`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/charts/kubeclaw/files/config/swarm.config.json#L1-L1) | The chart materializes the file and injects its mounted path through SWARM_CONFIG. The image-owned process reader and field behavior are not checked in, so path injection does not prove field-level runtime meaning. |
+| [`charts/kubeclaw/files/config/kubernetes-policy-pack-default.json`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L1) | The checked-in chart does not embed or copy kubernetes-policy-pack-default.json. The deployed lint policy references this file, so the runtime loader rejects that reference unless another unsupported process supplies the missing file. |
+
+A source file or stored payload is not a working operator option when its reader or delivery is unproved.
+
+## Maintain this reference
+
+Generate the guarded configuration artifacts with
+`node scripts/docs-configuration-inventory.mjs --configuration-reference-only`,
+then the hub with `node scripts/docs-generate.mjs --only configuration-hub --revision COMMIT`.
+Use a reviewed commit containing the current source, map and inventory bytes.
+This bounded route does not advance the shared documentation source lock.
+Use their `--check` modes for drift. A changed selected source, missing family,
+inverse consumer or source authority is a stop, not permission to relabel unknown data.
+These commands do not claim the normal global configuration/API command passed.
+
+
+
+<!-- END GENERATED -->
