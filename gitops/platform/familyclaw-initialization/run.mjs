@@ -5,7 +5,7 @@ import {setTimeout} from 'node:timers/promises';
 import {requestHouseholdSync} from './argo-sync.mjs';
 import {ensureRuntimeConfiguration} from './runtime-configuration.mjs';
 
-const revision = '4666d431aed675c2896f5b33d4b409dd90004bcc';
+const revision = '025de971037e605b0dc2badbd56229cd43018a6e';
 const namespace = 'familyclaw';
 const context = 'familyclaw-initialization';
 const endpoint = 'http://paperless-ngx.paperless.svc.cluster.local:8000';
