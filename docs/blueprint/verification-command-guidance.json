@@ -16713,7 +16713,7 @@
       "sources": [
         {
           "path": "docs/site/reference/cli.md",
-          "sha256": "d0dbda7ba9dc346098a2a1a61525c435f923bbfd96dbc96c82851bdcea1858cc"
+          "sha256": "de4bf08f804090aaffdba4f83abaef80f3dd2bc7c5990dc322f52d3d0ea0ad6e"
         },
         {
           "path": "scripts/generate-buster-error-reference.mjs",
