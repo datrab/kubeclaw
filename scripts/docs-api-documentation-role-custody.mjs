@@ -10711,7 +10711,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-publication-instruction-syntax.mjs",
-      "sha256": "de702704ee7e70dd7e9ecd3c1d277c331882c4a02c89a70f6517470d252a710f"
+      "sha256": "4f91df3bcbd66cc0d2894f2d5bfb43cff97b22a66f8afa91b3866fcccd03a9d4"
     },
     {
       "path": "scripts/docs-publication-embedded-yaml.mjs",
@@ -10723,7 +10723,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/tests/docs-publication-examples.test.mjs",
-      "sha256": "91072953045370980097bb0a051d7b5d4035922910d45084db8b0c4c81ada693"
+      "sha256": "6fc070c113689b96fa1e7ef672b139fa6ab066143c7fd7bcaafc6b34e0fdfb87"
     }
   ],
   "callers": [

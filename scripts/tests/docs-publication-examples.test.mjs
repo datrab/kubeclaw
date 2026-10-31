@@ -20,7 +20,8 @@ test('prompt library workspace commands retain real receiver and old verificatio
   const sources = new Map(pages.map(page => [page, fs.readFileSync(path.join(root, page), 'utf8')]));
   const result = validateInstructionSyntax(pages, sources);
   assert.equal(result.documentCommandsExecuted, false);
-  assert.equal(result.checkedCommandReferences.length, 451);
+  assert.equal(result.checkedCommandReferences.length, 454);
+  for (const ordinal of [1, 2, 3]) assert.ok(result.checkedCommandReferences.includes(`docs/site/extend/documentation-maintenance.md#block-${ordinal}`));
   for (const ordinal of [1, 2]) assert.ok(result.checkedCommandReferences.includes(`docs/site/extend/contracts.md#block-${ordinal}`));
   const page = 'docs/site/extend/contracts.md', text = sources.get(page);
   // Syntactically valid mutations keep both fences and the total count. The
@@ -32,7 +33,7 @@ test('prompt library workspace commands retain real receiver and old verificatio
     const bad = new Map(sources); bad.set(page, changed);
     assert.throws(() => validateInstructionSyntax(pages, bad), /prompt library workspace commands changed|existing five-registration verification body changed/u);
   }
-  assert.equal(validateInstructionSyntax(pages, sources).checkedCommandReferences.length, 451);
+  assert.equal(validateInstructionSyntax(pages, sources).checkedCommandReferences.length, 454);
 });
 
 const hash = value => crypto.createHash('sha256').update(value).digest('hex');
