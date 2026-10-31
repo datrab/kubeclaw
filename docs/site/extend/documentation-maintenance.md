@@ -115,13 +115,76 @@ an environment whose source/tool prerequisites have not been qualified.
 | Page metadata or evidence dependencies | `npm run docs:governance:generate` writes `docs/site/reference/generated-documentation-map.json` | `docs:governance:check` compares expected bytes and validates route metadata. Missing owner/evidence needs source metadata repair, not a map patch. |
 | Deployment/secret setup/Helm/workflow source facts | `npm run docs:inventory` writes its four inventories under `docs/generated/inventory` | `docs:inventory:check` compares those expected JSON bytes. This does not cover every runtime input. |
 | Platform ports, endpoints, stores and policy authorities | After committing the source change, `npm run docs:ap09:platform-inventory -- --revision <full-committed-revision>` writes the platform inventory and its generated reference | `npm run docs:ap09:platform-inventory:check` derives the facts again from the inventory's selected source revision. New store identities require an explicit qualified policy binding. |
-| JSON-schema field, nested property or plugin schema registration | Inspect the owning schema/validator and reader route. Review the status and source identity in `docs/config/schema-field-bindings.json`, then run `node scripts/docs-schema-fields.mjs`. | `node scripts/docs-schema-fields.mjs --check` refuses new, removed or changed schema inputs, changed registrations and stale generated field pointers. Normal publication runs it too. Use the [schema-field drift route](../reference/schemas.md#global-schema-field-drift); a refreshed hash does not approve field meaning or runtime activation. |
+| JSON-schema field, nested default, registration or reader/default disposition | After affected source and consumer review, maintain `docs/config/schema-field-bindings.json`, then run `node scripts/docs-schema-fields.mjs --reference`. This writes the field index and owned schema-authority reference. | `node scripts/docs-schema-fields.mjs --check --reference` checks both outputs and refuses unreviewed schema, registration, source or authority drift. Normal publication uses the same index/reference check. Follow the [bounded configuration/default procedure](#maintain-generated-configuration-and-defaults); a refreshed hash does not approve meaning or runtime activation. |
 | Common diagnostic family or recovery meaning | Qualify the actual trigger, effect, consumer and recovery boundary before changing `docs/config/common-error-catalogue.json`. Run `npm run docs:errors:generate` to render its seven pages. | `npm run docs:errors:check` first checks selected production-input membership and bytes, then declared source digests and output drift. A changed input stops for review; it is not automatic discovery or approval of a new error. |
 | Active event/payload source or semantic responsibility | Review the complete source-vector delta and affected producer, transformation, validation and consumer branches. Only after that qualification, update the binding registry's qualified source-vector hash and run `npm run docs:events:generate`. This writes `docs/generated/inventory/event-contracts.json` and only the marked section of `reference/events.md`. | `npm run docs:events:check` is read-only and fails on an unqualified source vector, missing/ambiguous bindings or changed output. Never repin a hash merely to clear failure. `npm run docs:events:test` exercises parser, binding, renderer and check-mode failures; it does not prove live delivery. |
-| Declared configuration source families | `npm run docs:inventory:config` writes values, schema, and runtime-input JSON inventories; then selected reference generation | `docs:inventory:config:check` rejects stale bytes and verifies external Helm authorities on its successful-current path. Full discovery may acquire tools/children; it is not just a JSON comparison. |
+| Supported configuration families, defaults and inverse consumers | Use `node scripts/docs-configuration-inventory.mjs --configuration-reference-only`, inspect/check its four inventories, then commit the reviewed snapshot before generating the configuration hub. | Use the [bounded procedure below](#maintain-generated-configuration-and-defaults). The default `docs:inventory:config` route includes unrelated executable/API discovery and is not a substitute for this selected route or a read-only JSON comparison. |
 | Source-derived reference sections | `npm run docs:generate` updates its owned reference outputs | `docs:generate:check` detects mismatch. Prepare the actual source revision and selected discovery route; do not suppress unsupported inputs. |
 | Plugin catalogue/capability/operator matrix | `npm run docs:publication:generate` writes catalogue/capability pages and the marked operator matrix | `docs:publication:check` first runs helper tests and then compares/checks publication inputs. It does not validate every product example or live effect. |
 | New/moved documentation inputs | `npm run docs:tree:generate` derives the tree inventory from classification, baseline, current inputs, and consumers | `docs:tree:check` rebuilds and compares the model. Its dependency/consumer analysis has prerequisites; do not infer a pure file read from its name. |
+
+### Maintain generated configuration and defaults
+
+Start at the [configuration-family and inverse-consumer reference](../reference/configuration.md)
+and the [schema authority reference](../reference/schemas.md). For a nested default
+change, review the actual absent-input, explicit-input and selected-branch
+consumer behavior. A schema annotation, manual fallback, effective value and
+reload/new-run effect are different facts. Review affected precedence, sensitive
+inputs and consumer relationships before changing the existing
+[family map](../../../docs/config/configuration-family-map.json) or
+[schema bindings](../../../docs/config/schema-field-bindings.json); do not edit
+generated facts or refresh a failed identity merely to clear a guard.
+
+For supported configuration-family/default/consumer changes:
+
+```sh
+node scripts/docs-configuration-inventory.mjs --configuration-reference-only
+node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check
+```
+
+Inspect all four outputs under `docs/generated/inventory`:
+`configuration-helm-values.json`, `configuration-schemas.json`,
+`configuration-runtime-inputs.json` and `configuration-families.json`. This selected
+composition retains the ordinary YAML, schema, runtime-input, environment,
+Secret and authority guards; a failure is a stop, not permission to omit a family.
+It excludes executable program-output API discovery. Its success neither repairs
+nor qualifies the default global configuration/API route.
+
+Commit the reviewed source, family map and inventory changes first. Set
+`CONFIGURATION_REVISION` to that full immutable commit hash, then generate and
+check the human configuration hub:
+
+```sh
+node scripts/docs-generate.mjs --only configuration-hub --revision "$CONFIGURATION_REVISION"
+node scripts/docs-generate.mjs --only configuration-hub --revision "$CONFIGURATION_REVISION" --check
+```
+
+This writes only `docs/site/reference/configuration.md`, without updating the
+shared source lock. The selected commit must contain byte-identical copies of
+`scripts/docs-configuration-inventory.mjs`, `scripts/docs-generate.mjs`,
+`scripts/docs-generate-core.mjs`, the family map and `configuration-families.json`.
+If a bound input changes again, review and commit the corrected snapshot first;
+do not choose a moving ref or unrelated hash to suppress snapshot drift.
+
+For an affected schema declaration, nested default, registration or actual
+reader/default disposition, review the owning schema and consumer, maintain the
+existing bindings, then run:
+
+```sh
+node scripts/docs-schema-fields.mjs --reference
+node scripts/docs-schema-fields.mjs --check --reference
+```
+
+This updates `docs/generated/inventory/schema-field-drift.json` and only the
+owned authority region/metadata in `docs/site/reference/schemas.md`. Unknown or
+changed schema, registration, source, package or authority bindings stop the
+route. The property index is not a schema validator; declaration-only assets
+remain distinct from selected runtime readers. No command here proves runtime
+default insertion, live reload, browser/provider/telemetry execution or deployment.
+Inspect the diffs and use the relevant source-value/refusal controls and
+independent source, reader and quality review before publishing changed meanings.
+For prose-only maintenance changes, retain the qualified source snapshot and
+check its existing outputs rather than regenerating unrelated families.
 
 ### Common-error input drift
 
