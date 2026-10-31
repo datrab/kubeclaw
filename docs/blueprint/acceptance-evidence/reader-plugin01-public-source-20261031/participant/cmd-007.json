@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "npm",
+    "run",
+    "verify:runtime-packaging:roles"
+  ],
+  "cwd": "/tmp/reader-plugin01-public-source-fresh-20261031",
+  "start": "2026-10-31T22:53:12.005149+00:00",
+  "end": "2026-10-31T22:53:12.133748+00:00",
+  "exit": 1
+}

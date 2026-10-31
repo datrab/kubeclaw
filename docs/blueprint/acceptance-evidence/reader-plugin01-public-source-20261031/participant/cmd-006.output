@@ -1,0 +1,12 @@
+npm notice run test
+npm notice run node --test tests/stage.test.mjs
+✔ returns a decision fact to the caller (1.238453ms)
+✔ returns an intentional terminal failure (0.172205ms)
+ℹ tests 2
+ℹ suites 0
+ℹ pass 2
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 58.919072

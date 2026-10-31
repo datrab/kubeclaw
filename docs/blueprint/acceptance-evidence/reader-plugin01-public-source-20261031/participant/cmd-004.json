@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "bash",
+    "-c",
+    "set -eu\nnpm run plugin-system:sandbox:build\nnpm run versions:check\nnpm run plugin-system:sdk:check\nnpm run verify:runtime-packaging:ownership\nnode tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs\nnode tests/verification/contracts/check-plugin-system-v2-registry.mjs"
+  ],
+  "cwd": "/tmp/reader-plugin01-public-source-fresh-20261031",
+  "start": "2026-10-31T22:52:54.380651+00:00",
+  "end": "2026-10-31T22:52:58.249098+00:00",
+  "exit": 0
+}

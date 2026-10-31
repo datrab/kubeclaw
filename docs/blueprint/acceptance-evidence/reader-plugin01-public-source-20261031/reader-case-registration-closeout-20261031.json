@@ -1,0 +1,35 @@
+{
+  "status": "PASS_BOUNDED_CASE_OBSERVATION_REGISTRATION",
+  "materialFindings": [],
+  "scope": "Read-only WIP case registration closeout against HEAD55d177d7821a4f6abab7f7375afa47a58697f712, not whole audit or test rerun.",
+  "matrix": "Only readerTaskObservations20261031 appended. Removing it yields complete parsed matrix exact-equal to HEAD55d: all pre-existing completion records/gates/requirements/summaries/checks/limits unchanged; no acceptance count change.",
+  "cases": {
+    "plugin": "Accurately PASS all4 local model outcomes, distinct docs55d/executiona9 revisions; no whole-gate/human/deployed/persistent/AT award.",
+    "platform": "Accurately FAIL missing actual observed same-request/identity input; useful contract lookup only, not contradiction or new award of old A97-11 semantic scope.",
+    "newAcceptedGatesAndRequirements": "Empty for both observations."
+  },
+  "integrity": {
+    "pluginManifest": "All59 file byte lengths/SHA256 match. Documentary .sh.txt aliases preserve actual executed bytes, not new product entrypoints.",
+    "originalCopies": "59 directly comparable participant/registration/decision/erratum/remote-receipt files exact byte-equal to operations originals; zero differences.",
+    "threePriorReportsByteEqual": {
+      "first-report.md": true,
+      "second-report.md": true,
+      "third-public-source-report.md": true
+    },
+    "threePriorReportSources": [
+      "reader-plugin01-fresh-20261031/participant/report.md",
+      "reader-plugin01-corrected-fresh-20261031/participant/REPORT.md",
+      "plugin-stage-local-lifecycle-20261031/public-source-prerequisite-failure/report.md"
+    ]
+  },
+  "mapSizeErratum": {
+    "decision": "Accurate additive narrative correction, no rewritten prior proof or changed map responsibility.",
+    "oldBytes": 53015880,
+    "newBytes": 53015882,
+    "oldSha256": "5748b2cc329429e1f746b12687997c8a46e5c2d8d75ad6bb7bed631ebcaed59f",
+    "newSha256": "ad7fa661d665dcad5553b881e749e4bfbbba39e6cb2f2487c767e0b702ecd09a",
+    "actualVerification": "Complete a9 Git blob and actual current file lengths/hashes match. Earlier4.6MB narrative incorrect; about53MB decimal correct. Entire-file hashes/complement proof remain whole-file, not limited to mistaken narrative size."
+  },
+  "limits": "Original checker outcome not inferred. Earlier checkpoint freshPluginTask=open remains historical at that checkpoint; appended later actualPASS does not retroactively rewrite it. Root sole integration writer.",
+  "actions": "Read-only existing files and bounded byte/JSON comparisons; only external report written, no tests/replays/main/currentwork changes or remote actions."
+}

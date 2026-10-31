@@ -1,0 +1,12 @@
+{
+  "caseId": "READER-PLATFORM-01",
+  "role": "MODEL platform-developer",
+  "freshContext": true,
+  "priorContribution": false,
+  "reviewedRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "outcome": "FAIL",
+  "failure": "Registered successful trace is conceptual, not observed; no joined request identity chain or concrete exchanged identity values.",
+  "observedRuntime": false,
+  "wholeGateAward": false,
+  "recordedAt": "2026-10-31T22:58:26.197402+00:00"
+}

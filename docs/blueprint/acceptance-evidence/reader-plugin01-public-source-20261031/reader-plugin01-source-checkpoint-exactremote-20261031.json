@@ -1,0 +1,17 @@
+{
+  "at": "2026-10-31T22:50:16.834847+00:00",
+  "head": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "remote": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "exactRemoteVerified": true,
+  "publishedAncestorExecutionSource": "a9f9902dc853a352c17f303e69c896080a1b4d8c",
+  "artifactSource": "d7504972985dca8a134b0b6e1958fd35fc08e7b7",
+  "centralDocsConfigAndNativeCodeByteEqualSinceActualBuild": true,
+  "originalChecker": {
+    "exitCode": 0,
+    "acceptedGates": 81,
+    "acceptedRequirements": 260
+  },
+  "newGates": [],
+  "newRequirements": [],
+  "next": "Fresh original public Plugin task, no Source substitution; prior public-sourceFAIL unchanged"
+}

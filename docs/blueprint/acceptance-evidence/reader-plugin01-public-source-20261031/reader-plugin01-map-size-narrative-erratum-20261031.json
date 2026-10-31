@@ -1,0 +1,9 @@
+{
+  "at": "2026-10-31T22:50:16.834847+00:00",
+  "correction": "Several bounded narrative proofs called the whole map 4.6MB using stale historical size. Actual complete files have the exact byte sizes below. No comparison was limited to4.6MB: wholeJSON/serialization roundtrip and actual hashes covered complete files. Preserve priorreports and add this erratum; no changedmapdata/newrole/exemption. GitHub large-file warning is real, preexisting map size, push succeeded.",
+  "oldSource": "a9f9902dc853a352c17f303e69c896080a1b4d8c",
+  "oldBytes": 53015880,
+  "newBytes": 53015882,
+  "oldSha256": "5748b2cc329429e1f746b12687997c8a46e5c2d8d75ad6bb7bed631ebcaed59f",
+  "newSha256": "ad7fa661d665dcad5553b881e749e4bfbbba39e6cb2f2487c767e0b702ecd09a"
+}

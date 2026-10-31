@@ -117145,5 +117145,40 @@
     "newAcceptedRequirements": [],
     "freshPluginTask": "Still open; publicSource prerequisite failed before publication. No retroactive PASS.",
     "artifactSourceNotFinalMetadataCommit": true
-  }
+  },
+  "readerTaskObservations20261031": [
+    {
+      "id": "READER-PLUGIN-01-public-source-20261031",
+      "taskId": "READER-PLUGIN-01",
+      "reviewedDocumentationRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+      "executionRevision": "a9f9902dc853a352c17f303e69c896080a1b4d8c",
+      "persona": "plugin-developer",
+      "participantType": "fresh independent model, not human",
+      "verdict": "PASS",
+      "requiredOutcomes": {
+        "plugin-tests-pass": "PASS",
+        "activation-proven": "PASS",
+        "replacement-proven": "PASS",
+        "removal-state-inspected": "PASS"
+      },
+      "independentDecision": "docs/blueprint/acceptance-evidence/reader-plugin01-public-source-20261031/reader-plugin01-public-source-original-case-decision-20261031.json",
+      "evidence": "docs/blueprint/acceptance-evidence/reader-plugin01-public-source-20261031/participant/report.md",
+      "newAcceptedGates": [],
+      "newAcceptedRequirements": [],
+      "scope": "One actual originallocal Plugin case; no automatic whole Reader-gate/human/deployed/persistent/AT award. All3priorFAILs retained."
+    },
+    {
+      "id": "READER-PLATFORM-01-fresh-20261031",
+      "taskId": "READER-PLATFORM-01",
+      "reviewedDocumentationRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+      "participantType": "fresh independent MODEL platform-developer, not human",
+      "verdict": "FAIL",
+      "originalUnmetCondition": "Registered observed same-request trace and exchanged identities are absent; inputs explicitly conceptual/not live proof.",
+      "independentDecision": "docs/blueprint/acceptance-evidence/reader-platform01-fresh-20261031/reader-platform01-original-case-disposition-20261031.json",
+      "evidence": "docs/blueprint/acceptance-evidence/reader-platform01-fresh-20261031/participant/reader-report.md",
+      "newAcceptedGates": [],
+      "newAcceptedRequirements": [],
+      "scope": "Useful authority/dependency/recovery contract lookup only. No contradiction or new award of prior A97-11 semantic scope; no actual joined execution."
+    }
+  ]
 }

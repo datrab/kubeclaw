@@ -1,0 +1,67 @@
+{
+  "at": "2026-10-31T22:57:11.484062+00:00",
+  "task": {
+    "id": "READER-PLATFORM-01",
+    "persona": "platform-developer",
+    "startPath": "docs/site/README.md",
+    "acceptanceIds": [
+      "A97-11",
+      "A913-04",
+      "A913-05"
+    ],
+    "objective": "Trace one request across Nova, Worker Core, Redis, PostgreSQL, Git, registry, BuildKit, and Tailscale, then identify ownership and recovery at each boundary.",
+    "taskInput": "The registered successful request trace and the registered Redis-unavailable trace for reviewed_revision. No component diagram is supplied outside docs/site.",
+    "fixturePaths": [
+      "docs/site/use/workflows/examples/request-trace-success.json",
+      "docs/site/use/workflows/examples/request-trace-redis-unavailable.json"
+    ],
+    "injectedFaultId": "TRACE-REDIS-UNAVAILABLE",
+    "requiredOutcomes": [
+      {
+        "id": "complete-request-trace",
+        "passCondition": "The trace names Nova, Worker Core, Redis, PostgreSQL, Git, registry, BuildKit, and Tailscale in observed order and records each exchanged identity."
+      },
+      {
+        "id": "authority-boundaries-correct",
+        "passCondition": "For every handoff, the participant identifies the component that may decide and the component that may only report."
+      },
+      {
+        "id": "required-versus-optional-correct",
+        "passCondition": "The participant classifies every traced dependency according to the current required, optional, or planned inventory with no mismatch."
+      },
+      {
+        "id": "recovery-owner-found",
+        "passCondition": "For the Redis fault, the participant identifies the first failed health signal, safe stop rule, recovery owner, and bounded retry rule."
+      }
+    ],
+    "allowedAssistance": "Only docs/site and the two registered trace artifacts. The facilitator cannot name a component or boundary.",
+    "failureThreshold": "FAIL after one missing component, wrong authority owner, wrong dependency class, unsafe recovery, forbidden source, or 90 minutes without completion.",
+    "participantRequirements": {
+      "freshContext": true,
+      "priorContribution": false,
+      "requiredRole": "platform-developer"
+    },
+    "forbiddenSources": [
+      "package-readme",
+      "review-file",
+      "migration-note",
+      "chat-context"
+    ]
+  },
+  "reviewedRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "currentDocsRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site",
+  "fixtures": [
+    {
+      "path": "docs/site/use/workflows/examples/request-trace-success.json",
+      "bytes": 18647,
+      "sha256": "e2f92f057f5e2c7d1f8bd9d8c9faebdf826d1f818bf0c44405a9d0efe5b07ed7"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+      "bytes": 3822,
+      "sha256": "9ea32431ccb8979cb625a6c487fd39e348a49e2fe3bd332a647cdc3a9c89e239"
+    }
+  ],
+  "freshEligibility": "newisolatedMODELplatformreader nopriorcontext/contribution; nothuman/liveruntime",
+  "acceptanceYet": false
+}

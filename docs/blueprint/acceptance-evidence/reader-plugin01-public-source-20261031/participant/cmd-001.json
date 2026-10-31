@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "git",
+    "clone",
+    "https://github.com/datrab/kubeclaw.git",
+    "/tmp/reader-plugin01-public-source-fresh-20261031"
+  ],
+  "cwd": "/home/node/.openclaw/workspace",
+  "start": "2026-10-31T22:50:57.298863+00:00",
+  "end": "2026-10-31T22:51:54.408796+00:00",
+  "exit": 0
+}

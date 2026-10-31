@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "bash",
+    "-c",
+    "set -eu\nKUBECLAW_TUTORIAL_TEMP=\"$(cat /home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/bundle-path.txt)\"\nrealpath skills/nova/plugins/tutorial-greeting\nrealpath \"$KUBECLAW_TUTORIAL_TEMP\"\nps -eo pid,ppid,args\nrm -r skills/nova/plugins/tutorial-greeting\nrm -r \"$KUBECLAW_TUTORIAL_TEMP\"\nnpm run verify:runtime-packaging:roles\nnpm run docs:extensions:minimal-plugin:check\ngit status --short"
+  ],
+  "cwd": "/tmp/reader-plugin01-public-source-fresh-20261031",
+  "start": "2026-10-31T22:54:59.596805+00:00",
+  "end": "2026-10-31T22:55:01.483998+00:00",
+  "exit": 0
+}

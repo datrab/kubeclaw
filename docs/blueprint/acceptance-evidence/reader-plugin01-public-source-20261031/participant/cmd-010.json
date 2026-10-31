@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "bash",
+    "-c",
+    "set -eu\nnpm run plugin-system:sandbox:build\nexport KUBECLAW_TUTORIAL_TEMP=\"$(mktemp -d /tmp/kubeclaw-plugin-tutorial.XXXXXX)\"\nprintf \"%s\\n\" \"$KUBECLAW_TUTORIAL_TEMP\" > /home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/bundle-path.txt\nnode scripts/build-runtime-role-bundle.mjs nova \"$KUBECLAW_TUTORIAL_TEMP/nova\" 0000000000000000000000000000000000000000 v2 2026-09-16T00:00:00Z\nrg -n \"example.greeting\" \"$KUBECLAW_TUTORIAL_TEMP/nova/manifest.json\""
+  ],
+  "cwd": "/tmp/reader-plugin01-public-source-fresh-20261031",
+  "start": "2026-10-31T22:53:18.954870+00:00",
+  "end": "2026-10-31T22:53:19.835764+00:00",
+  "exit": 0
+}

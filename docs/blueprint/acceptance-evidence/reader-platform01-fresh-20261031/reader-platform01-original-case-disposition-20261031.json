@@ -1,0 +1,70 @@
+{
+  "status": "FAIL_ORIGINAL_READER_PLATFORM_01_REGISTERED_OBSERVED_INPUT_MISSING",
+  "taskId": "READER-PLATFORM-01",
+  "registration": "operations/pr13/evidence/reader-platform01-fresh-20261031/registered-task.json",
+  "participantReport": "operations/pr13/evidence/reader-platform01-fresh-20261031/participant/reader-report.md",
+  "actualParticipantOutcome": "FAIL retained unchanged",
+  "reviewedRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "decision": "The fresh actor honestly performed usable contract lookup but the registered observed-request outcome cannot pass from conceptual artifacts. This is a missing actual registered input, not an observed live failure or a human-only rule. No new PASS/exemption/receipt rewrite.",
+  "eligibility": {
+    "decision": "Eligible local MODEL platform-developer attempt at registration/participant provenance scope",
+    "basis": "Preregistered fresh isolated model/no contribution; report and outcome agree. Navigation limited to docs/site and registered artifacts, no implementation or forbidden-source access reported. Nonexistent guessed docs path supplied no content; truncated page read followed by bounded rg/line reads. No facilitator boundary/component correction recorded.",
+    "duration": "Reported22:57:26->22:58:26, approximately60seconds, below90minutes; timing does not cure missing observed data."
+  },
+  "artifactFacts": {
+    "successStatus": "conceptual-reference-only-not-live-proof",
+    "successPurpose": "This reference gives the intended complete-showcase sequence and the evidence that a future joined acceptance harness must bind. It is not an execution record.",
+    "scopeBoundary": "This document is a conceptual reference for 20 platform interaction steps. No maintained harness binds all these interactions into one evidence chain. They include Prism Studio approval, a Nova project run, Discord, Redis, Cilium, Hubble, and Buster BuildKit/Tailscale work. The deployment success exercise gives evidence only for its compiled Nova project and final Buster demo chain. Until a joined harness exists, Prism, human channels, Redis, Cilium, and Hubble must have their separate maintained checks.",
+    "every20StepNoLiveEvidence": true,
+    "completionCondition": "This reference gives a target for a future joined harness. That harness must bind live evidence for all 20 steps to the same identities. These identities include one deployment revision, source revision, Nova run, Prism request and approval, and Buster job. They also include channel identities, network-flow evidence, artifact digests, and cleanup identities. No current command in this document satisfies that condition.",
+    "redisStatus": "contract-example-not-live-proof",
+    "redisFirstSignal": "A class/disjunction of authenticated PING, bounded XADD or adapter connection/authentication/timeout/protocol/capacity failures, not one recorded failing operation/identity."
+  },
+  "fourOriginalOutcomes": [
+    {
+      "id": "complete-request-trace",
+      "decision": "FAIL",
+      "criterion": "Names eight specified components in observed order and records each exchanged identity.",
+      "why": "Participant correctly names all eight and lists all20 target handoffs but explicitly identifies order as conceptual artifact order and identities as descriptions. No same-request joined run/commit/Prism approval/Buster job/digest/Redis/Tailnet values or occurrence order exist in supplied artifacts. Described target is not observed request."
+    },
+    {
+      "id": "authority-boundaries-correct",
+      "decision": "PASS_DOCUMENTED_CONTRACT_INTERPRETATION_ONLY",
+      "why": "All20 rows preserve artifact decisionOwner/reportersOnly, including Nova lifecycle versus Redis reporting, Control job/approval authority, Worker admission and Buster reduction. No reporting transport/process exit elevated to authority. Qualified usable lookup evidence, not proof those handoffs occurred."
+    },
+    {
+      "id": "required-versus-optional-correct",
+      "decision": "PASS_DOCUMENTED_INVENTORY_INTERPRETATION_ONLY",
+      "why": "Cross-check against pipeline-dependencies Dependency Classes/Required Showcase Baseline: participant distinguishes stricter complete showcase from conditional role/stage/access/Core semantics, required registry/mirror/BuildKit/Tailnet services from optional monitoring/cache semantics, planned Git mirror and unresolved client-selection boundaries. No class mismatch identified in traced target inventory; no actual service readiness inferred."
+    },
+    {
+      "id": "recovery-owner-found",
+      "decision": "PASS_CONTRACT_IDENTIFICATION_ONLY_ACTUAL_INCIDENT_SIGNAL_NOT_ESTABLISHED",
+      "why": "Correctly finds first-failure signal class, bounded Redis-only stop, unchanged Nova/Buster authorities, same-endpoint/credential Redis platform owner and adapter-specific original-key replay/deadline/dedup limits; payload one attempt/no replay versus control3/deadletter retained. Cannot identify one actual first failed operation from contract-example input. Thus no full observed-fault/recovery finding or executed recovery is accepted."
+    }
+  ],
+  "failureThreshold": "Case FAIL from one unmet mandatory observed-request outcome regardless of useful remaining facets. No wrong owner/class, unsafe recovery, forbidden source or timeout demonstrated. Do not label conceptual absence a failed real runtime operation.",
+  "exactOldScopeApplicability": {
+    "recordId": "AP09-whole-independent-platform-decision-review-20261021-d477",
+    "gate": "A97-11",
+    "criterionLocation": "docs/blueprint/AP09-acceptance-contract.md:95",
+    "criterionMeaning": "Independent reviewer compares dependencies/matrices to current sources and can select diagnosis and safe recovery from documentation; file existence/link check/self-attestation insufficient.",
+    "oldScope": "Independent complete28dependency-class/seven-owner-batch,30communication-group and telemetry Source/semantic Reader decision; explicitly no successful observed traffic/live execution and rendered Reader separate.",
+    "decision": "NO_CONTRADICTION_OF_OLD_ACCEPTED_SCOPE",
+    "why": "New actor identifies correct authority/classes/diagnosis/safe-recovery contract while honestly refusing observed-trace claim. Missing joined execution excluded by old record cannot retroactively become its acceptance criterion. This case does not independently re-audit old28/30 whole Source responsibility or re-award A97-11; retains exact old summary/limits/failures.",
+    "broaderTask": "A913-04/A913-05 practical full registered case remains unmet for this platform persona; useful Source-contract facets do not promote complete-request outcome or whole gates."
+  },
+  "existingEvidenceApplicability": {
+    "suppliedArtifacts": "Neither registered artifact meets observed joined-input condition. Standalone checks explicitly cannot be joined by documentation.",
+    "qua007": "Provided local Core practical evidence is not complete20-step service-wire/Prism approval/Tailnet/registry joined request; not promoted. No claimed alternative supplied actual evidence establishes the missing full chain. This is bounded evaluation, not exhaustive repository proof that no future/recoverable archive exists.",
+    "noInventedLiveRule": "Original observed-order wording plus supplied success fixture own completionCondition require actual evidence. A pre-existing adequately observed sanitized joined archive could satisfy input without a fresh deployed rerun; a diagram/new conceptual JSON cannot."
+  },
+  "concreteOwnerActionResume": {
+    "owner": "Root integration owner coordinates documentation acceptance input; Nova/Core request-trace owner joins original run identities with Prism Control/approval, Buster/Worker, Redis, PostgreSQL/Git/registry/BuildKit and Tailnet owners.",
+    "nextAction": "Locate and qualify an existing actual same-request successful and Redis-fault trace archive at reviewed Source if available. Otherwise implement/execute the missing maintained joined harness under normal project authorization and collect provenance/timestamps/concrete exchanged identities, first actual Redis signal and preserved authority/retry records. Keep conceptual artifact honestly labelled, do not fabricate values or weaken registered outcome.",
+    "authorityBoundary": "Missing local trace artifact itself does not automatically require external authority or a user approval. A genuinely new deployed run involving private Tailnet/services/credentials and authorized human Prism approval may require their real owners/permissions; determine actual access before dependent actions, do not simulate approval.",
+    "resumeCondition": "Register evidence-backed successful/fault inputs and exact revision/digests; then run a NEW eligible fresh platform reader from central docs with same original outcomes and allowed assistance. This consumed actor/FAIL remains immutable; root can continue other independently actionable original cases meanwhile."
+  },
+  "awards": "No new whole gate, human/live/deployed/AT/AP10 or blanket all-cases-blocked conclusion; Plugin actual PASS and other case obligations independent.",
+  "actions": "Only existing registration/report/outcome, two exact central artifacts, bounded dependency excerpts and exact old completion criterion/summary/limits read; separate disposition written. No tests, reruns, wholeSource audit, main/currentwork mutation or receipt change."
+}

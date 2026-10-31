@@ -1,0 +1,58 @@
+{
+  "registeredAt": "2026-10-31T22:50:36.029348+00:00",
+  "task": {
+    "id": "READER-PLUGIN-01",
+    "persona": "plugin-developer",
+    "startPath": "docs/site/README.md",
+    "acceptanceIds": [
+      "A910-10",
+      "A910-13",
+      "A913-04",
+      "A913-05"
+    ],
+    "objective": "Create, test, activate, replace, disable, and remove the documented minimal plugin without undeclared authority.",
+    "taskInput": "A clean checkout at reviewed_revision and the maintained minimal-stage example under docs/site/extend/examples. Use the exact replacement identity and invalid-capability mutation specified by the guide.",
+    "fixturePaths": [
+      "docs/site/extend/examples/minimal-stage/plugin.json"
+    ],
+    "injectedFaultId": "PLUGIN-UNDECLARED-CAPABILITY",
+    "requiredOutcomes": [
+      {
+        "id": "plugin-tests-pass",
+        "passCondition": "The package-local contract and behavior commands named by the guide exit zero before activation."
+      },
+      {
+        "id": "activation-proven",
+        "passCondition": "Discovery and registry output show the example's exact package and registration identities."
+      },
+      {
+        "id": "replacement-proven",
+        "passCondition": "The documented replacement changes the registry snapshot digest and selects only the replacement implementation."
+      },
+      {
+        "id": "removal-state-inspected",
+        "passCondition": "After disable and removal, discovery no longer lists the identity and the participant records every retained state or artifact named by the guide."
+      }
+    ],
+    "allowedAssistance": "Only docs/site, the maintained example, and tools named by the extension guides. The facilitator cannot correct code or commands.",
+    "failureThreshold": "FAIL after any bypassed validation, undeclared capability, unresolved identity, uninspected retained state, forbidden source, or 120 minutes without completion.",
+    "participantRequirements": {
+      "freshContext": true,
+      "priorContribution": false,
+      "requiredRole": "plugin-developer"
+    },
+    "forbiddenSources": [
+      "package-readme",
+      "review-file",
+      "migration-note",
+      "chat-context"
+    ]
+  },
+  "currentDocsRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site",
+  "guideSha256": "31ce4e5bb6f05d51eff25bae63c2052e72540f8adafec46efc03c1bae697652b",
+  "exactPublishedRemote": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "sourceAvailabilityChanged": "a9 ancestor now published byexactremotepush, priorpublicSourcefailure preserved",
+  "freshEligibility": "newisolatednativeMODELparticipant noearliercontext/contribution, nothuman",
+  "facilitatorMayNotCorrectCommands": true,
+  "acceptanceYet": false
+}

@@ -1,0 +1,53 @@
+/tmp/reader-plugin01-public-source-fresh-20261031/skills/nova/plugins/tutorial-greeting
+/tmp/kubeclaw-plugin-tutorial.bgYYoq
+    PID    PPID COMMAND
+      1       0 /pause
+   1490       0 openclaw-gateway
+   1517    1490 /usr/local/bin/node /app/dist/process/spawn-broker/worker.js
+   1543       0 nginx: master process nginx -g daemon off;
+   1571    1543 nginx: worker process
+   1572    1543 nginx: worker process
+   1573    1543 nginx: worker process
+   1574    1543 nginx: worker process
+   1575    1543 nginx: worker process
+   1576    1543 nginx: worker process
+   1577    1543 nginx: worker process
+   1578    1543 nginx: worker process
+   1579    1543 nginx: worker process
+   1580    1543 nginx: worker process
+   1581    1543 nginx: worker process
+   1582    1543 nginx: worker process
+   1583       0 envoy -c /etc/kubeclaw-worker-trust/envoy.yaml --service-cluster kubeclaw-nova
+   1705    1490 /usr/local/bin/node /app/dist/process/spawn-broker/worker.js
+   1719    1490 /usr/local/bin/node /app/dist/infra/sqlite-readonly-location.worker.js --openclaw-sqlite-readonly-child session
+   1850    1705 /usr/local/bin/node /app/dist/infra/sqlite-readonly-location.worker.js --openclaw-sqlite-readonly-child session
+   1945    1490 /usr/local/bin/node /app/node_modules/.pnpm/@openai+codex@0.160.0/node_modules/@openai/codex/bin/codex.js -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+   1953    1945 /app/node_modules/.pnpm/@openai+codex@0.160.0-linux-x64/node_modules/@openai/codex/vendor/x86_64-unknown-linux-musl/bin/codex -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+   2013    1490 /usr/local/bin/node /app/node_modules/.pnpm/@openai+codex@0.160.0/node_modules/@openai/codex/bin/codex.js -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+   2042    2013 /app/node_modules/.pnpm/@openai+codex@0.160.0-linux-x64/node_modules/@openai/codex/vendor/x86_64-unknown-linux-musl/bin/codex -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+   2146    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+   2153    2146 node /opt/ops-mcp-client/stdio.mjs
+   3660    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+   3667    3660 node /opt/ops-mcp-client/stdio.mjs
+  61364    1490 /usr/local/bin/node /app/node_modules/.pnpm/@openai+codex@0.160.0/node_modules/@openai/codex/bin/codex.js -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+  61371   61364 /app/node_modules/.pnpm/@openai+codex@0.160.0-linux-x64/node_modules/@openai/codex/vendor/x86_64-unknown-linux-musl/bin/codex -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+  61410    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+  61417   61410 node /opt/ops-mcp-client/stdio.mjs
+  61636   61371 /app/node_modules/.pnpm/@openai+codex@0.160.0-linux-x64/node_modules/@openai/codex/vendor/x86_64-unknown-linux-musl/bin/codex-code-mode-host
+  63890    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+  63897   63890 node /opt/ops-mcp-client/stdio.mjs
+  63938   61371 node /opt/ops-mcp-client/stdio.mjs
+ 157367   61371 node /opt/ops-mcp-client/stdio.mjs
+ 256766    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+ 256773  256766 node /opt/ops-mcp-client/stdio.mjs
+ 287367    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+ 287374  287367 node /opt/ops-mcp-client/stdio.mjs
+ 388660   61371 python3 /home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/run.py bash -c set -eu KUBECLAW_TUTORIAL_TEMP="$(cat /home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/bundle-path.txt)" realpath skills/nova/plugins/tutorial-greeting realpath "$KUBECLAW_TUTORIAL_TEMP" ps -eo pid,ppid,args rm -r skills/nova/plugins/tutorial-greeting rm -r "$KUBECLAW_TUTORIAL_TEMP" npm run verify:runtime-packaging:roles npm run docs:extensions:minimal-plugin:check git status --short
+ 388670  388660 bash -c set -eu KUBECLAW_TUTORIAL_TEMP="$(cat /home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/bundle-path.txt)" realpath skills/nova/plugins/tutorial-greeting realpath "$KUBECLAW_TUTORIAL_TEMP" ps -eo pid,ppid,args rm -r skills/nova/plugins/tutorial-greeting rm -r "$KUBECLAW_TUTORIAL_TEMP" npm run verify:runtime-packaging:roles npm run docs:extensions:minimal-plugin:check git status --short
+ 388674  388670 ps -eo pid,ppid,args
+npm notice run verify:runtime-packaging:roles
+npm notice run node scripts/check-runtime-role-manifests.mjs
+{"ok":true,"phase":"5.6-C","roles":3,"plugins":48}
+npm notice run docs:extensions:minimal-plugin:check
+npm notice run node scripts/check-ap08-minimal-plugin.mjs
+{"ok":true,"journey":"ap08-minimal-pipeline-plugin","packageTest":"passed","roleOmission":"rejected","roleInclusion":"passed","activatedStages":1,"successFact":"Hello, KubeClaw!","intentionalFailure":"failed","invalidInput":"rejected","undeclaredGrant":"REGISTRY_CAPABILITY_UNREQUESTED","grantRestored":true,"replacement":{"packageId":"example.greeting","registrationId":"example.greeting:say","packageVersion":"2.0.0","activatedStages":1,"baselineSnapshotDigest":"sha256:bfd27d6450123863c993f115cf5f902d207db7210432f84f5f83c00aeaafb341","replacementSnapshotDigest":"sha256:3e4d06a76cf099c4805a9a347c1bbc3de40e002e0884dfd9c516a973bde0e07d","successFact":"Hello-v2, KubeClaw!"},"rollback":"original-snapshot-and-behavior","disabled":"package-and-stage-absent","replacementRemoval":"stage-owner-missing","removal":"stage-owner-missing","retainedRunJournals":4,"persistenceBoundary":"in-memory journal; persistent recovery requires separate checks"}

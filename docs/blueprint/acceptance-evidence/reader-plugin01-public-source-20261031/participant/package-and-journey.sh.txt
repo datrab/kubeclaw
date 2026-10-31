@@ -1,0 +1,31 @@
+set -e
+git status --short
+node --version
+node --input-type=module <<'JS'
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { parsePluginManifest, validateReferencedSchema } from './skills/common/plugin-runtime/foundation/registry/schema.ts';
+const packageRoot = 'docs/site/extend/examples/minimal-stage';
+const manifestPath = `${packageRoot}/plugin.json`;
+const manifest = parsePluginManifest(fs.readFileSync(manifestPath, 'utf8'), manifestPath);
+assert.throws(() => parsePluginManifest(JSON.stringify({ ...manifest, id: '' }), manifestPath),
+  error => error?.code === 'REGISTRY_MANIFEST_INVALID');
+const cases = {
+  config: { valid: [{ prefix: 'Hello' }], invalid: {} },
+  input: { valid: [{ name: 'KubeClaw' }], invalid: {} },
+  result: { valid: [
+    { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [], facts: { 'tutorial.greeting': 'Hello, KubeClaw!' } },
+    { schemaVersion: 'stage-result.v2', outcome: 'failed', reason: { code: 'tutorial.requested_failure', message: 'Requested failure.' }, artifacts: [] },
+  ], invalid: { schemaVersion: 'stage-result.v2', outcome: 'unknown', artifacts: [] } },
+};
+for (const [name, values] of Object.entries(cases)) {
+  const schemaPath = `${packageRoot}/schemas/${name}.schema.json`;
+  const validator = validateReferencedSchema(fs.readFileSync(schemaPath, 'utf8'), schemaPath);
+  for (const value of values.valid) validator.validate(value);
+  assert.throws(() => validator.validate(values.invalid),
+    error => error?.code === 'REGISTRY_RESULT_INVALID');
+}
+console.log('Package manifest, config, input and both result contracts passed; invalid values rejected.');
+JS
+npm test --prefix docs/site/extend/examples/minimal-stage
+npm run docs:extensions:minimal-plugin:check

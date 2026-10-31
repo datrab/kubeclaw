@@ -1,0 +1,7 @@
+# Original READER-PLUGIN-01: actual public-source case
+
+A new isolated model plugin-developer completed all four original outcomes using the public HTTPS clone and exact executable Source `a9f9902dc853a352c17f303e69c896080a1b4d8c`, after publication `55d177d7821a4f6abab7f7375afa47a58697f712` made it retrievable. The independent non-author original-case decision is PASS. Fourteen actual command records include the expected role-omission exit 1 unchanged; all other commands exit 0. The contract and two behavior tests precede activation. Identity, replacement digest/exclusive implementation, denial/restoration, disable/removal and retained-state inspection pass. Owned clone/cache/bundle cleanup is observed, not promised.
+
+This is local model Reader evidence, not human, deployed service, persistent recovery, arbitrary upgrade, complete screenreader/contrast, AP10 or whole Reader-gate acceptance. Earlier three FAIL reports are preserved exactly. The case is one reusable practical facet; distinct remaining personas and scenarios retain their own conditions. Documentary `.sh.txt` copies preserve exact executed bytes and are mapped in the manifest, not product entrypoints.
+
+The accompanying map-size erratum corrects stale narrative sizing only: the full maps were about 53 MB, not 4.6 MB. Complete hashes and whole-byte reconstruction were never limited to the mistaken narrative size. No prior report, failure or map data is rewritten.

@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "bash",
+    "-c",
+    "set -eu\ngit checkout --detach a9f9902dc853a352c17f303e69c896080a1b4d8c\ngit status --short\ngit rev-parse HEAD\ngit switch -c reader-plugin01-public-source-fresh-20261031\nnode --version\nnpm --version\ngit --version\n/usr/bin/flock --version\ncc --version\nbash --version\ntar --version"
+  ],
+  "cwd": "/tmp/reader-plugin01-public-source-fresh-20261031",
+  "start": "2026-10-31T22:51:56.796240+00:00",
+  "end": "2026-10-31T22:51:59.943848+00:00",
+  "exit": 0
+}

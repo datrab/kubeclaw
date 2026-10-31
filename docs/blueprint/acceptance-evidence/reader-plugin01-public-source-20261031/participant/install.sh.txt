@@ -1,0 +1,39 @@
+set -eu
+DEV_NPM_CACHE="$(mktemp -d /tmp/kubeclaw-dev-npm-cache.XXXXXX)"
+printf "%s\n" "$DEV_NPM_CACHE" > /home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/cache-path.txt
+export NPM_CONFIG_CACHE="$DEV_NPM_CACHE"
+set -euo pipefail
+umask 077
+test "$(git rev-parse --show-toplevel)" = "$PWD"
+test ! -e "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies"
+mkdir -m 0700 "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies"
+git status --short > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/worktree-before.txt"
+git rev-parse HEAD > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/source-commit.txt"
+node --version > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/node-version.txt"
+npm --version > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/npm-version.txt"
+npm config get omit > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/npm-omit.txt"
+sha256sum package-lock.json > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/package-lock.sha256"
+npm config get registry | node -e '
+let value=""; process.stdin.on("data", c => value += c).on("end", () => {
+  const url = new URL(value.trim());
+  url.username = ""; url.password = ""; url.search = ""; url.hash = "";
+  process.stdout.write(url.toString() + "\n");
+});' > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/registry.txt"
+set +e
+npm ci --ignore-scripts --include=dev > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/npm-ci.stdout.txt" \
+  2> "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/npm-ci.stderr.txt"
+npm_ci_status=$?
+set -e
+printf '%s\n' "$npm_ci_status" > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/npm-ci.exit-status.txt"
+test "$npm_ci_status" -eq 0
+set +e
+node -e 'for (const name of ["typescript", "json-schema-to-typescript"]) console.log(require.resolve(name))' \
+  > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/required-modules.stdout.txt" \
+  2> "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/required-modules.stderr.txt"
+module_status=$?
+set -e
+printf '%s\n' "$module_status" > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/required-modules.exit-status.txt"
+test "$module_status" -eq 0
+git status --short > "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/worktree-after.txt"
+cmp "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/worktree-before.txt" \
+  "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant/dependencies/worktree-after.txt"

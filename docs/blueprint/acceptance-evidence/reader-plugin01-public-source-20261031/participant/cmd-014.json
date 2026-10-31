@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "python3",
+    "-c",
+    "import pathlib,os,shutil,json\np=pathlib.Path(\"/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant\")\nroots=[pathlib.Path(\"/tmp/reader-plugin01-public-source-fresh-20261031\"),pathlib.Path((p/\"cache-path.txt\").read_text().strip())]\nbusy=[]\nfor proc in pathlib.Path(\"/proc\").iterdir():\n if not proc.name.isdigit(): continue\n for link in [proc/\"cwd\",proc/\"exe\"]+list((proc/\"fd\").glob(\"*\")):\n  try: target=os.readlink(link)\n  except OSError: continue\n  if any(target==str(r) or target.startswith(str(r)+\"/\") for r in roots): busy.append([proc.name,str(link),target])\nprint(json.dumps({\"ownedRoots\":[str(r) for r in roots],\"activeUsers\":busy}))\nassert not busy\nfor r in roots: shutil.rmtree(r)\nprint(json.dumps({\"removed\":[str(r) for r in roots],\"allAbsent\":all(not r.exists() for r in roots)}))"
+  ],
+  "cwd": "/home/node/.openclaw/workspace",
+  "start": "2026-10-31T22:55:07.678035+00:00",
+  "end": "2026-10-31T22:55:09.366022+00:00",
+  "exit": 0
+}

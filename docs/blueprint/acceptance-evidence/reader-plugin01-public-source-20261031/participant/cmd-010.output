@@ -1,0 +1,5 @@
+npm notice run plugin-system:sandbox:build
+npm notice run node scripts/build-plugin-sandbox.mjs
+{"ok":true,"phase":"5.6-C","roles":3,"plugins":49}
+{"ok":true,"phase":"5.6-D","role":"nova","files":1753,"packages":12,"plugins":33}
+323:      "id": "example.greeting",

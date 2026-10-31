@@ -1,0 +1,20 @@
+npm notice run verify:runtime-packaging:roles
+npm notice run node scripts/check-runtime-role-manifests.mjs
+node:internal/modules/run_main:107
+    triggerUncaughtException(
+    ^
+
+AssertionError [ERR_ASSERTION]: nova omits its plugin: example.greeting
+    at file:///tmp/reader-plugin01-public-source-fresh-20261031/scripts/check-runtime-role-manifests.mjs:172:42
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  generatedMessage: false,
+  code: 'ERR_ASSERTION',
+  actual: false,
+  expected: true,
+  operator: '==',
+  diff: 'simple'
+}
+
+Node.js v24.22.1

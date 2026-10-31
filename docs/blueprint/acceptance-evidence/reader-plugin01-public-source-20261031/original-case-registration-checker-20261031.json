@@ -1,0 +1,23 @@
+{
+  "at": "2026-10-31T23:07:04.615625+00:00",
+  "argv": [
+    "node",
+    "scripts/check-ap09-acceptance-contract.mjs"
+  ],
+  "exitCode": 0,
+  "executionSession": 14667,
+  "sourceRevision": "55d177d7821a4f6abab7f7375afa47a58697f712",
+  "candidate": "actual Plugin PASS / Platform01 FAIL observation bookkeeping only",
+  "result": {
+    "ok": true,
+    "policy": "compact-topic-review-20261019",
+    "acceptancePoints": 89,
+    "catalogueRequirements": 261,
+    "acceptedGates": 81,
+    "acceptedRequirements": 260,
+    "complete": false,
+    "contentReviewPerformedByChecker": false
+  },
+  "newWholeAcceptance": false,
+  "productRebuild": "Not rerun: central documentation/config/scripts unchanged from actual d7504972 artifact; proof metadata only."
+}

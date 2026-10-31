@@ -1,0 +1,76 @@
+{
+  "status": "PASS_ORIGINAL_READER_PLUGIN_01_LOCAL_MODEL_CASE",
+  "taskId": "READER-PLUGIN-01",
+  "reviewerRole": "Independent non-author original-case adjudicator; no participant assistance, rerun or main changes.",
+  "registration": "reader-plugin01-public-source-fresh-20261031/registered-task.json",
+  "participantEvidenceRoot": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-plugin01-public-source-fresh-20261031/participant",
+  "decision": "All four preregistered original outcomes PASS from real command receipts, output, exact executed guide block and independently qualified maintained-tool assertion meanings, not participant verdict alone.",
+  "provenance": {
+    "publicClone": "cmd001 argv is HTTPS github.com/datrab/kubeclaw.git, exit0; cmd002 output reports exact detached a9f9902dc853a352c17f303e69c896080a1b4d8c with clean status before branch. No localclone substitution.",
+    "docs": "Current central docs navigation hashes identify first-plugin31ce4e5bb6f05d51eff25bae63c2052e72540f8adafec46efc03c1bae697652b; current instructions deliberately select executable a9 ancestor, not historical Evidence revision. Root registration records actual public remote55d177d7821a4f6abab7f7375afa47a58697f712; this reviewer did not independently refetch remote.",
+    "dependencyOrder": "cmd002 exact Source precedes cmd003 real npm ci --ignore-scripts --include=dev with required modules/status comparison, then cmd004 named handbook baseline, then cmd005 package contract/behavior/activation. Owned fresh cache and sanitized install records retained.",
+    "commandOrder": "All14 receipt end/start timestamps are sequential. Expected cmd007 role omission exit1 preserved; every other receipt exit0.",
+    "exactFirstGuideFenceEqualsExecutedScript": true,
+    "executionSourceHash": "b5b01f1734372e34237d1c41c710d014db3629f252ead3baa96448620e2025c4 scripts/check-ap08-minimal-plugin.mjs; matches independently qualified helper inspected for exact assertion meanings."
+  },
+  "eligibilityAndRules": {
+    "freshness": "PASS at registered native-model eligibility scope: registration specifies new isolated participant/no prior context or contribution, eligibility.json declares freshContext=true/priorContribution=false/plugin-developer, report consistent. These are registration/participant provenance, not a claim of human identity or independent introspection of model memory. No earlier failed actor reused.",
+    "allowedAssistance": "PASS: recorded navigation is only docs/site README, first-plugin, developer-handbook, quickstart; maintained example and named journey tool inspection are explicitly allowed. Reading the named helper to inspect retained journals is not forbidden implementation-source fallback. No facilitator command/code correction recorded; harmless concrete evidence-path/cache and JSON role-edit mechanics implement documented instructions, not task repair.",
+    "forbiddenSources": "No package README, review file, migration note or chat-context use in submitted navigation/report/command record. Assessment is bounded to available provenance, not an assertion of omniscient process surveillance.",
+    "threshold": "No bypassed validation, exercised undeclared authority, unresolved identity or uninspected named state found. state.read is intentionally denied before activation, not used. cmd007 exact expected documented role failure is a successful negative observation, not an unresolved failure.",
+    "durationSeconds": 252.067159,
+    "within120Minutes": true
+  },
+  "outcomes": [
+    {
+      "id": "plugin-tests-pass",
+      "decision": "PASS",
+      "proof": "cmd005 exact guide firstfence begins set-e. Output first reports canonical package manifest/config/input/both result contracts and exact invalid classes accepted/rejected, then two behavior tests pass, then activation journey JSON. No validation bypass. cmd006 repeats copied-package behavior0."
+    },
+    {
+      "id": "activation-proven",
+      "decision": "PASS",
+      "proof": "cmd005 activatedStages1, successFact original, replacement output exact example.greeting and example.greeting:say; helper meaningful assertions independently inspected require only original package/stage keys and resolve empty grants. cmd007 actual omission1; cmd008 documented exact role edit; cmd009 roles3/plugins49; cmd010 bundle names example.greeting. Local registry/assertion/output proof, not deployed discovery."
+    },
+    {
+      "id": "replacement-proven",
+      "decision": "PASS",
+      "proof": "cmd005 original digest bfd27d6450123863c993f115cf5f902d207db7210432f84f5f83c00aeaafb341 differs from replacement3e4d06a76cf099c4805a9a347c1bbc3de40e002e0884dfd9c516a973bde0e07d; replacement2.0.0 activatedStages1 returns Hello-v2, KubeClaw!. Qualified helper selects only replacement root and asserts exact root, same package/stage, version, one stage and different digest. Rollback original digest/fact and exact REGISTRY_CAPABILITY_UNREQUESTED with grant restoration asserted; no state provider invoked."
+    },
+    {
+      "id": "removal-state-inspected",
+      "decision": "PASS",
+      "proof": "cmd005 disabled package-and-stage-absent, replacementRemoval/removal stage-owner-missing, retainedRunJournals4. Helper asserts empty-root discovery absence and missing-owner on disabled/removed roots; four complete nonempty serialized success/failure/replacement/rollback journals equal before/after removal. Participant retained-state-inspection explicitly accounts for in-memory journals/snapshots, empty artifacts, no external state/deployed logs/images. Private helper scratch removed; cmd012/013 reverse manual role/package/bundle, roles48 and journey0, final clean status. cmd014 activeUsers[] then exact owned clone/cache allAbsent true."
+    }
+  ],
+  "reusableFacet": {
+    "qualifiedFor": [
+      "A910-10",
+      "A910-13",
+      "A913-04",
+      "A913-05"
+    ],
+    "meaning": "One actual preregistered plugin-developer local model Reader task and all four exact original outcomes, eligible as this bounded practical facet in each listed gate only.",
+    "notAutomaticWholeGate": true
+  },
+  "limits": [
+    "No human participant, human AT/contrast, deployed service/operator workflow, persistent stage recovery, arbitrary upgrade compatibility, hosted CI, AP10 or whole four-reader-gate award.",
+    "Tool-owned private fixture mutations and in-memory assertion observations are accepted exactly as documented original task; not falsely manual live replacement or persistent artifact retention.",
+    "Earlier three failed attempts remain unchanged, including genuine public Source unavailability and second case missing contract-before-activation; this new eligible case succeeds after actual prerequisite change.",
+    "No existing49 preservation report or original receipt rewritten; root registers only this actual case and continues remaining original work."
+  ],
+  "evidenceRead": [
+    "registered-task.json",
+    "participant/report.md",
+    "participant/eligibility.json",
+    "participant/cmd-001..014.json",
+    "participant/cmd-001/002/005/007/009/010/011/013/014.output",
+    "participant/package-and-journey.sh",
+    "participant/install.sh",
+    "participant/navigation-hashes.txt",
+    "participant/execution-source-hashes.txt",
+    "participant/retained-state-inspection.txt",
+    "qualified named helper exact lifecycle assertions"
+  ],
+  "actions": "Read-only inspection and this separate external disposition only; no tests/replay/main/currentwork mutation or remote fetch."
+}

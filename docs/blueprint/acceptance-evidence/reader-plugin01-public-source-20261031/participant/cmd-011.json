@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "bash",
+    "-c",
+    "set -eu\nnpm run docs:extensions:minimal-plugin:check\nnpm test --prefix skills/nova/plugins/tutorial-greeting\nnpm run verify:runtime-packaging:roles\nnpm run docs:extensions:minimal-plugin:check\nnpm run docs:extensions:choice:check\nnpm run docs:check:refs"
+  ],
+  "cwd": "/tmp/reader-plugin01-public-source-fresh-20261031",
+  "start": "2026-10-31T22:53:27.720201+00:00",
+  "end": "2026-10-31T22:54:55.725486+00:00",
+  "exit": 0
+}

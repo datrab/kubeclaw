@@ -1,0 +1,11 @@
+{
+  "argv": [
+    "bash",
+    "-c",
+    "set -e\ncp -R docs/site/extend/examples/minimal-stage skills/nova/plugins/tutorial-greeting\nnpm test --prefix skills/nova/plugins/tutorial-greeting"
+  ],
+  "cwd": "/tmp/reader-plugin01-public-source-fresh-20261031",
+  "start": "2026-10-31T22:53:11.781379+00:00",
+  "end": "2026-10-31T22:53:11.977305+00:00",
+  "exit": 0
+}

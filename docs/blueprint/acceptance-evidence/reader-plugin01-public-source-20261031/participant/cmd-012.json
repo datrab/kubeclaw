@@ -1,0 +1,12 @@
+{
+  "argv": [
+    "node",
+    "--input-type=module",
+    "-e",
+    "import fs from \"node:fs\";const p=\"packaging/runtime/roles/nova.json\";const v=JSON.parse(fs.readFileSync(p));v.plugins=v.plugins.filter(x=>x!==\"example.greeting\");fs.writeFileSync(p,JSON.stringify(v,null,2)+\"\\n\");"
+  ],
+  "cwd": "/tmp/reader-plugin01-public-source-fresh-20261031",
+  "start": "2026-10-31T22:54:59.536847+00:00",
+  "end": "2026-10-31T22:54:59.567516+00:00",
+  "exit": 0
+}
