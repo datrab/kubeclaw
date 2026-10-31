@@ -4,6 +4,6 @@ resources:
   - resources.yaml
 configMapGenerator:
   - name: familyclaw-initialization-code
-    namespace: argocd
+    namespace: kubeclaw-ops
     files:
       - run.mjs
