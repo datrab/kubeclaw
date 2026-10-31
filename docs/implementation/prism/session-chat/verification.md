@@ -1,6 +1,6 @@
 # Verification
 
-- `npm run typecheck --prefix skills/prism` and production Studio build pass.
+- `npm run typecheck --prefix skills/prism` plus `tsc --noEmit -p skills/prism/studio/tsconfig.json` and production Studio build pass. The standalone Studio config is a separate required check; CI caught missing optional-props handling, now corrected and reviewed.
 - Studio production/CSP HTTP-fixture browser suite: 32/32 pass (mobile + desktop). Chat regression also renames the active view and verifies the returned revision still renders; explicit preference action is exercised separately.
 - Real PGlite migrations and durable queue tests: exact persisted origin session (deliberately different from derivation), missing-origin rejection, idempotent message admission, scoped history, no implicit preference rows, no replay of a running turn.
 - Original Control HTTP + actual OpenClaw-plugin route tests: authenticated admission, exact originating session, foreign target/stale fence rejection, fenced chat revision commit, durable reply, stale-preview rejection, explicit revised-design selection. Actual agent image COPY relocation imports the launcher and its implementation-profile files.

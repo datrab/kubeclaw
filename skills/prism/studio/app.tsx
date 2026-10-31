@@ -342,7 +342,7 @@ function App() {
   const findingTarget = (target:string) => {
     const find=(node:PrismNode):PrismNode|undefined=>node.id===target?node:(node.children??[]).map(find).find(Boolean);
     const node=document&&Object.values(document.views).map(view=>find(view.root)).find(Boolean);
-    return node ? String(node.props.label??node.props.content??node.type).slice(0,100) : target;
+    return node ? String(node.props?.label??node.props?.content??node.type).slice(0,100) : target;
   };
   const refreshChatDocument = async () => {
     const id=new URLSearchParams(location.search).get('document');if(!id)return;
