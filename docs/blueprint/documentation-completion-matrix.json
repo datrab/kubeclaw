@@ -53482,7 +53482,7 @@
       ]
     },
     {
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -54360,10 +54360,19 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -55241,6 +55250,15 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
@@ -55379,7 +55397,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -56236,11 +56254,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -57338,11 +57365,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -58040,6 +58076,15 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
@@ -58621,7 +58666,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -59019,6 +59064,15 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
@@ -59221,7 +59275,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -59636,11 +59690,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -60103,11 +60166,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -60499,11 +60571,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -61843,11 +61924,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -62731,11 +62821,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63341,11 +63440,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "MNT-005-common-source-bound-error-catalogue-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63799,11 +63907,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64266,11 +64383,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64494,11 +64620,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64729,11 +64864,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65200,11 +65344,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65759,11 +65912,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "MNT-004-whole-source-owned-cli-reference-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -67146,11 +67308,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -67376,11 +67547,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "A91306-QUA002-original-controlled-language-whole-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova /root retained sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
       "gateIds": [
@@ -67715,11 +67895,20 @@
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
         }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
       ]
     },
     {
       "id": "A911-05-whole-owned-diagnostic-reference-20261030",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "Nova sole integration owner; existing diagnostic documentation authors",
       "reviewer": "Independent Codex gpt-5.6-terra/high whole original A911-05 content assessor, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; nonauthor, bounded qualified REF005/MNT005 reuse",
       "gateIds": [
@@ -68029,6 +68218,15 @@
           "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698",
           "scope": "Actual finite changed subset in same69-record table only: complete authority matrix and one owner per fact, structural machine-provenance versus genuine reader-link correction, Source-qualified existing verification/claim representations, and exact isolated tool-root/physical-input qualification. Original criteria/meaning/author/reviewer/checks/summary/limits/history retained, not69newawards.",
           "report": "docs/blueprint/acceptance-evidence/gov-mnt-whole-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
+        }
+      ],
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
         }
       ]
     },
@@ -68594,7 +68792,7 @@
     },
     {
       "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
-      "revision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent restricted practical Reader /root/gov_mnt_practical_reader",
       "gateIds": [],
@@ -68663,6 +68861,809 @@
         "No runtime/Helm/provider/browser/deployment execution, telemetry, package install, or fresh bootstrap award.",
         "Existing copied dependencies and canonical generated-contract preparation are not fresh locked installation; clean source-first and prepared publication phases remain distinct.",
         "All earlier false/invalid/real negative findings and seven incomplete Reader stops retained; accepted only from final actual original decision."
+      ],
+      "openIssues": [],
+      "verdict": "PASS",
+      "targetedPreservationHistory": [
+        {
+          "fromRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+          "toRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "reviewer": "Independent native child /root/pub007_binding",
+          "evidence": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/pub007-targeted-preservation-20261031.json",
+          "scope": "Exact diagnostic matcher and sole maintained authority SHA delta; prior Source/Reader/Quality scopes and limits retained, no new historical exercise."
+        }
+      ]
+    },
+    {
+      "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "author": "PR13 sole integration owner",
+      "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
+      "gateIds": [
+        "A911-07"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/product-surfaces.md",
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/reference/verification-commands.md",
+        "docs/site/reference/cli.md",
+        "docs/site/reference/configuration.md"
+      ],
+      "sources": [
+        "docs/blueprint/verification-command-guidance.json",
+        "docs/config/publication-example-claims.json",
+        "docs/config/source-authority-family-assignments.json",
+        "docs/generated/inventory/cli-surfaces.json",
+        "docs/generated/inventory/configuration-families.json",
+        "docs/generated/inventory/configuration-runtime-inputs.json",
+        "docs/status/open-issues.json",
+        "scripts/check-site-reader-boundary.mjs",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-publication-examples.test.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
+      ],
+      "checks": [
+        {
+          "command": "node scripts/docs-governance.mjs --check",
+          "exitCode": 0,
+          "observation": "Actual current d9cbce88 command: documentation governance passed (184 pages mapped). Existing applicable original source/orphan/inverse/Reader evidence is independently adjudicated in the original-gate decision, not relabelled as fresh execution."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "summary": "Independent original A911-07 forward/inverse source-to-documentation map accepted from complete applicable authority assignment, orphan/inverse controls and actual restricted Reader task evidence; distinct whole-gate decision, not inherited requirement counters.",
+      "limits": [
+        "Manual high-level routes are assigned source/consumer review obligations, not proof of generic semantic extraction, repository-wide discovery, freshness or live runtime.",
+        "No default-global-API, generic ToolSource, native Python3.14, deployment/provider/browser, fresh installation or accessibility award.",
+        "Seven Reader stops, previous source-self-derived availability defect,752boundary failure, compiler/root stops and unrelated PUB007 build timeouts remain retained, not rewritten as PASS.",
+        "No other gate or requirement is awarded. This file does not mutate the register or perform commit/push."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
+    },
+    {
+      "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+      "author": "PR13 sole integration owner",
+      "reviewer": "Independent non-author native child /root/qua010_execution_path",
+      "gateIds": [
+        "A913-02",
+        "A913-03"
+      ],
+      "requirementIds": [],
+      "pages": [
+        "docs/site/README.md",
+        "docs/site/decisions/README.md",
+        "docs/site/decisions/acceptance.md",
+        "docs/site/decisions/core-and-plugins.md",
+        "docs/site/decisions/echo.md",
+        "docs/site/decisions/implementation.md",
+        "docs/site/decisions/prism.md",
+        "docs/site/decisions/runtime-and-operations.md",
+        "docs/site/decisions/test-gate.md",
+        "docs/site/extend/README.md",
+        "docs/site/extend/buster.md",
+        "docs/site/extend/contracts.md",
+        "docs/site/extend/deep-guides/README.md",
+        "docs/site/extend/deep-guides/demo-handoff.md",
+        "docs/site/extend/deep-guides/reports.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/extend/effectful-plugin.md",
+        "docs/site/extend/first-plugin.md",
+        "docs/site/extend/host-and-engine.md",
+        "docs/site/extend/lint.md",
+        "docs/site/extend/nova.md",
+        "docs/site/extend/platform/README.md",
+        "docs/site/extend/platform/buster.md",
+        "docs/site/extend/platform/prism.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+        "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+        "docs/site/extend/testing.md",
+        "docs/site/product-surfaces.md",
+        "docs/site/reference/README.md",
+        "docs/site/reference/api-object-updates.md",
+        "docs/site/reference/buster-error-codes.md",
+        "docs/site/reference/buster-namespace-lease.md",
+        "docs/site/reference/buster-provider-configuration.md",
+        "docs/site/reference/buster-runtime-configuration.md",
+        "docs/site/reference/buster-suites.md",
+        "docs/site/reference/capabilities.md",
+        "docs/site/reference/cli.md",
+        "docs/site/reference/common-errors-configuration.md",
+        "docs/site/reference/common-errors-foundation.md",
+        "docs/site/reference/common-errors-nova.md",
+        "docs/site/reference/common-errors-platform.md",
+        "docs/site/reference/common-errors-prism.md",
+        "docs/site/reference/common-errors-worker.md",
+        "docs/site/reference/common-errors.md",
+        "docs/site/reference/configuration-change-impact.md",
+        "docs/site/reference/configuration-compatibility.md",
+        "docs/site/reference/configuration-errors.md",
+        "docs/site/reference/configuration-precedence.md",
+        "docs/site/reference/configuration.md",
+        "docs/site/reference/contracts.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/documentation-site.md",
+        "docs/site/reference/endpoints.md",
+        "docs/site/reference/environment-variables.md",
+        "docs/site/reference/errors.md",
+        "docs/site/reference/events.md",
+        "docs/site/reference/glossary.md",
+        "docs/site/reference/helm-values.md",
+        "docs/site/reference/host-and-prism-configuration.md",
+        "docs/site/reference/images-and-digests.md",
+        "docs/site/reference/lint-policy-generated.md",
+        "docs/site/reference/lint-policy.md",
+        "docs/site/reference/lint-rules.md",
+        "docs/site/reference/nova-project.md",
+        "docs/site/reference/pipeline-definition.md",
+        "docs/site/reference/pipeline-json.md",
+        "docs/site/reference/pipeline-platform.md",
+        "docs/site/reference/platform-surfaces-generated.md",
+        "docs/site/reference/plugin-configuration.md",
+        "docs/site/reference/project-pipeline-publication.md",
+        "docs/site/reference/roles-and-package-ownership.md",
+        "docs/site/reference/schemas.md",
+        "docs/site/reference/sdk-exports.md",
+        "docs/site/reference/sdk.md",
+        "docs/site/reference/secrets.md",
+        "docs/site/reference/service-routing.md",
+        "docs/site/reference/stores-and-retention.md",
+        "docs/site/reference/verification-commands.md",
+        "docs/site/reference/worker-profiles-and-roles.md",
+        "docs/site/reference/workflows.md",
+        "docs/site/status/acceptance.md",
+        "docs/site/status/current.md",
+        "docs/site/status/open-issues.md",
+        "docs/site/status/roadmap.md",
+        "docs/site/understand/README.md",
+        "docs/site/understand/archviewer.md",
+        "docs/site/understand/buster-namespace-controller.md",
+        "docs/site/understand/buster.md",
+        "docs/site/understand/codex-integration.md",
+        "docs/site/understand/communication.md",
+        "docs/site/understand/components-and-authority.md",
+        "docs/site/understand/data-and-state.md",
+        "docs/site/understand/deployment-and-trust.md",
+        "docs/site/understand/echo.md",
+        "docs/site/understand/forge.md",
+        "docs/site/understand/nova-core.md",
+        "docs/site/understand/openclaw.md",
+        "docs/site/understand/ops-mcp.md",
+        "docs/site/understand/pipeline-dependencies.md",
+        "docs/site/understand/platform-and-operations.md",
+        "docs/site/understand/plugin-runtime.md",
+        "docs/site/understand/prism-data.md",
+        "docs/site/understand/prism-runtime.md",
+        "docs/site/understand/prism.md",
+        "docs/site/understand/request-state-recovery.md",
+        "docs/site/understand/request-to-result.md",
+        "docs/site/understand/security-and-trust.md",
+        "docs/site/understand/telemetry.md",
+        "docs/site/understand/worker-core.md",
+        "docs/site/understand/worker-trust.md",
+        "docs/site/use/README.md",
+        "docs/site/use/capacity.md",
+        "docs/site/use/demo-delivery.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/install.md",
+        "docs/site/use/maintenance.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/plugins.md",
+        "docs/site/use/prism-studio.md",
+        "docs/site/use/quickstart.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/worker-trust.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/build-image.md",
+        "docs/site/use/workflows/buster-suite.md",
+        "docs/site/use/workflows/interruption-recovery.md",
+        "docs/site/use/workflows/kubernetes-fixture.md",
+        "docs/site/use/workflows/local-core.md",
+        "docs/site/use/workflows/redis-replay-recovery.md",
+        "docs/site/use/workflows/repair-retry.md",
+        "docs/site/use/workflows/tailnet-exposure.md",
+        "docs/site/use/workflows/wait-resume.md",
+        "docs/site/use/workflows/worker-result-recovery.md"
+      ],
+      "sources": [
+        ".github/workflows/promote-runtime.yaml",
+        ".github/workflows/release-security.yaml",
+        "charts/gitops/files/application-health.lua",
+        "charts/gitops/values.yaml",
+        "charts/kubeclaw/files/config/lint-policy.json",
+        "charts/kubeclaw/files/config/swarm.config.json",
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+        "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/templates/serviceaccount.yaml",
+        "charts/kubeclaw/values.yaml",
+        "charts/ops-pod/templates/workload.yaml",
+        "charts/ops-pod/values.yaml",
+        "charts/prism/ci-values.yaml",
+        "charts/prism/files/prism-backup.sh",
+        "charts/prism/templates/services.yaml",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.yaml",
+        "cmd/buster-namespace-controller/main.go",
+        "contracts/agent-observability/v1/package.json",
+        "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/src/types.ts",
+        "contracts/pipeline-test-gate/v1/src/validation.ts",
+        "contracts/prism/v1/package.json",
+        "contracts/prism/v1/scripts/generate-validators.mjs",
+        "contracts/prism/v1/src/complexity.ts",
+        "contracts/prism/v1/src/document-semantics.ts",
+        "contracts/prism/v1/src/index.ts",
+        "contracts/prism/v1/src/node-catalog.ts",
+        "contracts/telemetry/v1/README.md",
+        "docker/Dockerfile.buster-gateway",
+        "docker/Dockerfile.prism-agent",
+        "docker/buster-runtime-entrypoint.sh",
+        "docs/blueprint/07-documentation-quality-standard.md",
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/AP09-acceptance-fixtures.json",
+        "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-binding.json",
+        "docs/blueprint/acceptance-evidence/publication-examples-20261027/native-retention-result.json",
+        "docs/blueprint/verification-command-guidance.json",
+        "docs/config/common-error-catalogue.json",
+        "docs/config/common-error-input-surface.json",
+        "docs/config/documentation-diagrams.json",
+        "docs/config/documentation-plugin-complexity.json",
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/publication-example-claims.json",
+        "docs/config/schema-field-bindings.json",
+        "docs/config/source-authority-family-assignments.json",
+        "docs/generated/inventory/cli-surfaces.json",
+        "docs/generated/inventory/configuration-families.json",
+        "docs/generated/inventory/configuration-runtime-inputs.json",
+        "docs/generated/inventory/configuration-schemas.json",
+        "docs/generated/inventory/configuration-values.json",
+        "docs/generated/inventory/platform-surfaces.json",
+        "docs/generated/inventory/schema-field-drift.json",
+        "docs/generated/inventory/sdk-reference.json",
+        "docs/generated/inventory/workflows.json",
+        "docs/site/extend/examples/minimal-stage/package.json",
+        "docs/site/extend/examples/minimal-stage/plugin.json",
+        "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
+        "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
+        "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
+        "docs/site/extend/examples/minimal-stage/src/stage.js",
+        "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
+        "docs/site/extend/examples/observer-lifecycle/journey.mjs",
+        "docs/site/extend/examples/observer-lifecycle/plugin/package.json",
+        "docs/site/extend/examples/observer-lifecycle/plugin/plugin.json",
+        "docs/site/extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
+        "docs/site/extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
+        "docs/site/extend/examples/observer-lifecycle/plugin/src/observer.js",
+        "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+        "docs/site/reference/buster-runtime-configuration.md",
+        "docs/site/reference/documentation-route-registry.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/sdk.md",
+        "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/compiled-project.mjs",
+        "docs/site/use/workflows/examples/first-project.mjs",
+        "docs/site/use/workflows/examples/local-core.mjs",
+        "docs/site/use/workflows/examples/repair-retry.mjs",
+        "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+        "docs/site/use/workflows/examples/request-trace-success.json",
+        "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+        "docs/site/use/workflows/wait-resume/platform.template.json",
+        "docs/site/use/workflows/wait-resume/signal.template.json",
+        "docs/status/open-issues.json",
+        "examples/buster-values.yaml",
+        "examples/cilium/project-network-policy.yaml",
+        "examples/nova-values.yaml",
+        "gitops/platform/bootstrap/alloy.yaml",
+        "gitops/platform/bootstrap/argocd.yaml",
+        "gitops/platform/bootstrap/codex-ops.yaml",
+        "gitops/platform/bootstrap/csi-driver-smb.yaml",
+        "gitops/platform/bootstrap/data-project.yaml",
+        "gitops/platform/bootstrap/identity-project.yaml",
+        "gitops/platform/bootstrap/infra-project.yaml",
+        "gitops/platform/bootstrap/litellm.yaml",
+        "gitops/platform/bootstrap/loki.yaml",
+        "gitops/platform/bootstrap/monitoring-project.yaml",
+        "gitops/platform/bootstrap/postgresql.yaml",
+        "gitops/platform/bootstrap/prometheus.yaml",
+        "gitops/platform/bootstrap/promtail.yaml",
+        "gitops/platform/bootstrap/redis.yaml",
+        "gitops/platform/bootstrap/registry-local.yaml",
+        "gitops/platform/bootstrap/registry-mirror.yaml",
+        "gitops/platform/bootstrap/spire-crds.yaml",
+        "gitops/platform/bootstrap/spire.yaml",
+        "gitops/platform/bootstrap/storage-drivers-project.yaml",
+        "gitops/platform/bootstrap/tailscale-operator.yaml",
+        "gitops/platform/litellm/resources.yaml",
+        "gitops/platform/platform.yaml",
+        "gitops/platform/registry-local/resources.yaml",
+        "gitops/platform/values/alloy.yaml",
+        "gitops/platform/values/codex-ops.yaml",
+        "gitops/platform/values/csi-driver-smb.yaml",
+        "gitops/platform/values/loki.yaml",
+        "gitops/platform/values/postgresql.yaml",
+        "gitops/platform/values/prometheus.yaml",
+        "gitops/platform/values/promtail-retired.yaml",
+        "gitops/platform/values/redis.yaml",
+        "gitops/platform/values/spire-crds.yaml",
+        "gitops/platform/values/spire.yaml",
+        "gitops/platform/values/tailscale-operator.yaml",
+        "my-values/buster-values.yaml",
+        "my-values/infra/argocd-tailscale-ingress.yaml",
+        "my-values/infra/argocd-values.yaml",
+        "my-values/infra/buster-namespace-fence.yaml",
+        "my-values/infra/cilium-cluster-policies.yaml",
+        "my-values/infra/cilium-values.yaml",
+        "my-values/infra/k3s-registries.yaml",
+        "my-values/infra/litellm-config.yaml",
+        "my-values/infra/litellm-deployment.yaml",
+        "my-values/infra/litellm-values.yaml",
+        "my-values/infra/native-worker-pools-ax41.yaml",
+        "my-values/infra/native-worker-pools.yaml",
+        "my-values/infra/network-policies.yaml",
+        "my-values/infra/postgresql-recovery.yaml",
+        "my-values/infra/postgresql-values.yaml",
+        "my-values/infra/redis-values.yaml",
+        "my-values/infra/registry-local.yaml",
+        "my-values/infra/registry-mirror.yaml",
+        "my-values/infra/spire-network-policies.yaml",
+        "my-values/infra/spire-values.yaml",
+        "my-values/infra/tailscale-operator-values.yaml",
+        "my-values/nova-values.yaml",
+        "my-values/prism-agent-values.yaml",
+        "my-values/prism-values.yaml",
+        "package-lock.json",
+        "package.json",
+        "plugins/kubeclaw-ops/.codex-plugin/plugin.json",
+        "plugins/kubeclaw-ops/skills/troubleshoot/SKILL.md",
+        "releases/values/ops.yaml",
+        "scripts/check-ap09-acceptance-contract.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "scripts/deploy-cilium.sh",
+        "scripts/deploy.sh",
+        "scripts/docs-api-authority-lock.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/docs-common-error-catalogue.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-deployment-scalar-occurrence-custody.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-generate-core.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/docs-lint-policy-reference.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-product-pipeline-reference.mjs",
+        "scripts/docs-publication-embedded-yaml.mjs",
+        "scripts/docs-publication-example-assets.mjs",
+        "scripts/docs-publication-example-native.mjs",
+        "scripts/docs-publication-example-projections.mjs",
+        "scripts/docs-publication-examples.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs",
+        "scripts/docs-publication-retention-assertion.mjs",
+        "scripts/docs-publication-sdk-examples.mjs",
+        "scripts/docs-publication-sdk-parser-examples.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-schema-fields.mjs",
+        "scripts/docs-sdk-reference.mjs",
+        "scripts/docs-sdk-semantics.mjs",
+        "scripts/docs-status.mjs",
+        "scripts/generate-buster-error-reference.mjs",
+        "scripts/generate-plugin-sdk-types.mjs",
+        "scripts/generate-telemetry-contracts.mjs",
+        "scripts/gitops-continuous.mjs",
+        "scripts/inspect-node-registry.mjs",
+        "scripts/lib/docs-catalogue-input-surface.mjs",
+        "scripts/lib/docs-configuration-editorial-language.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-claim-contracts.mjs",
+        "scripts/lib/docs-publication-example-coverage.mjs",
+        "scripts/lib/docs-publication-instruction-bindings.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/lib/docs-publication-sdk-example-bindings.mjs",
+        "scripts/lib/docs-retained-configuration-renderer.mjs",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/lib/docs-verification-reference.mjs",
+        "scripts/observability-retirement-plan.mjs",
+        "scripts/registry-client-config.mjs",
+        "scripts/retire-nova-dispatch.mjs",
+        "scripts/retire-operator-request.mjs",
+        "scripts/stateful-release-preflight.mjs",
+        "scripts/tests/docs-publication-examples.test.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs",
+        "scripts/updates/scan-releases.mjs",
+        "scripts/yaml-field-path.mjs",
+        "skills/buster/engine/test-gates/native-fixture-control.ts",
+        "skills/buster/engine/test-gates/native-fixture-lifetime.ts",
+        "skills/buster/engine/test-gates/production.ts",
+        "skills/buster/engine/test-gates/provider-capabilities.ts",
+        "skills/buster/engine/test-gates/provider-child.mjs",
+        "skills/buster/engine/test-gates/provider-loader.ts",
+        "skills/buster/engine/test-gates/remote-plan-http.ts",
+        "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+        "skills/buster/engine/test-gates/remote-plan-service.ts",
+        "skills/buster/engine/test-gates/report-adapter-child.mjs",
+        "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+        "skills/buster/engine/test-gates/runner.ts",
+        "skills/buster/engine/test-gates/terminal-workspace.ts",
+        "skills/buster/plugins/api-flow/README.md",
+        "skills/buster/plugins/api-flow/plugin.json",
+        "skills/buster/plugins/api-flow/src/provider.js",
+        "skills/buster/plugins/axe/README.md",
+        "skills/buster/plugins/axe/plugin.json",
+        "skills/buster/plugins/axe/src/provider.js",
+        "skills/buster/plugins/container-build/README.md",
+        "skills/buster/plugins/container-build/plugin.json",
+        "skills/buster/plugins/container-build/src/provider.js",
+        "skills/buster/plugins/coverage-budget/README.md",
+        "skills/buster/plugins/coverage-budget/plugin.json",
+        "skills/buster/plugins/coverage-budget/src/provider.js",
+        "skills/buster/plugins/demo-auth-smoke/README.md",
+        "skills/buster/plugins/demo-auth-smoke/plugin.json",
+        "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "skills/buster/plugins/direct-command/README.md",
+        "skills/buster/plugins/direct-command/plugin.json",
+        "skills/buster/plugins/direct-command/src/provider.js",
+        "skills/buster/plugins/http/README.md",
+        "skills/buster/plugins/http/plugin.json",
+        "skills/buster/plugins/http/src/provider.js",
+        "skills/buster/plugins/junit-report-adapter/README.md",
+        "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+        "skills/buster/plugins/kubernetes-fixture/README.md",
+        "skills/buster/plugins/kubernetes-fixture/plugin.json",
+        "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "skills/buster/plugins/lighthouse/README.md",
+        "skills/buster/plugins/lighthouse/plugin.json",
+        "skills/buster/plugins/lighthouse/src/provider.js",
+        "skills/buster/plugins/openapi/README.md",
+        "skills/buster/plugins/openapi/plugin.json",
+        "skills/buster/plugins/openapi/src/provider.js",
+        "skills/buster/plugins/playwright/README.md",
+        "skills/buster/plugins/playwright/plugin.json",
+        "skills/buster/plugins/playwright/src/provider.js",
+        "skills/buster/plugins/security-providers/README.md",
+        "skills/buster/plugins/security-providers/plugin.json",
+        "skills/buster/plugins/security-providers/src/common.js",
+        "skills/buster/plugins/security-providers/src/dependency.js",
+        "skills/buster/plugins/security-providers/src/headers.js",
+        "skills/buster/plugins/security-providers/src/image.js",
+        "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+        "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+        "skills/buster/plugins/size-budget/README.md",
+        "skills/buster/plugins/size-budget/plugin.json",
+        "skills/buster/plugins/size-budget/src/provider.js",
+        "skills/buster/plugins/tailscale-exposure/README.md",
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "skills/buster/plugins/visual/README.md",
+        "skills/buster/plugins/visual/plugin.json",
+        "skills/buster/plugins/visual/src/provider.js",
+        "skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+        "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+        "skills/common/plugin-runtime/foundation/registry/activation.ts",
+        "skills/common/plugin-runtime/foundation/registry/build.ts",
+        "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+        "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+        "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+        "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+        "skills/common/plugin-runtime/foundation/registry/schema.ts",
+        "skills/common/plugin-runtime/sdk/package.json",
+        "skills/common/plugin-runtime/sdk/src/artifact-json.ts",
+        "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+        "skills/common/plugin-runtime/sdk/src/index.ts",
+        "skills/common/plugin-runtime/sdk/src/review-cache-profile.ts",
+        "skills/common/plugin-runtime/sdk/src/review-subject.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime-workspace.ts",
+        "skills/common/plugin-runtime/sdk/src/runtime.ts",
+        "skills/common/plugin-runtime/sdk/src/source-approval.ts",
+        "skills/common/plugin-runtime/sdk/src/source-preflight.ts",
+        "skills/common/plugin-runtime/sdk/src/source-revision.ts",
+        "skills/common/plugin-runtime/sdk/src/testing/index.ts",
+        "skills/common/plugin-runtime/sdk/src/values.ts",
+        "skills/common/plugin-runtime/sdk/tests/values.test.ts",
+        "skills/common/plugin-runtime/sdk/tsconfig.build.json",
+        "skills/common/plugins/agent-observability/README.md",
+        "skills/common/plugins/agent-observability/plugin.json",
+        "skills/common/plugins/agent-observability/src/observers.ts",
+        "skills/common/plugins/artifact-store/README.md",
+        "skills/common/plugins/artifact-store/plugin.json",
+        "skills/common/plugins/artifact-store/src/adapter.ts",
+        "skills/common/plugins/command-runner/README.md",
+        "skills/common/plugins/command-runner/plugin.json",
+        "skills/common/plugins/command-runner/src/adapter.ts",
+        "skills/common/plugins/command-runner/src/execution.ts",
+        "skills/common/plugins/command-runner/src/runner.ts",
+        "skills/common/plugins/git-workspace/README.md",
+        "skills/common/plugins/git-workspace/plugin.json",
+        "skills/common/plugins/git-workspace/src/adapter.ts",
+        "skills/common/plugins/git-workspace/src/operations.ts",
+        "skills/common/plugins/git-workspace/src/runner.ts",
+        "skills/common/plugins/git-workspace/src/workspace-ownership.ts",
+        "skills/common/plugins/network-http/README.md",
+        "skills/common/plugins/network-http/plugin.json",
+        "skills/common/plugins/network-http/src/adapter.ts",
+        "skills/common/plugins/notification-observer/README.md",
+        "skills/common/plugins/notification-observer/plugin.json",
+        "skills/common/plugins/notification-observer/src/observer.ts",
+        "skills/common/plugins/openclaw-agent-events/README.md",
+        "skills/common/plugins/openclaw-agent-events/plugin.json",
+        "skills/common/plugins/openclaw-agent-events/src/adapter.ts",
+        "skills/common/plugins/openclaw-agent-events/src/ingress-queue.ts",
+        "skills/common/plugins/openclaw-agent-observer/README.md",
+        "skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json",
+        "skills/common/plugins/openclaw-agent-observer/src/diagnostics.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/index.ts",
+        "skills/common/plugins/openclaw-agent-observer/src/redis-writer.ts",
+        "skills/common/plugins/operator-messaging/README.md",
+        "skills/common/plugins/operator-messaging/plugin.json",
+        "skills/common/plugins/operator-messaging/src/adapter.ts",
+        "skills/common/plugins/operator-messaging/src/payload.ts",
+        "skills/common/plugins/operator-messaging/src/receiver.ts",
+        "skills/common/plugins/redis-transport/README.md",
+        "skills/common/plugins/redis-transport/plugin.json",
+        "skills/common/plugins/redis-transport/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/README.md",
+        "skills/common/plugins/runtime-dispatch/plugin.json",
+        "skills/common/plugins/runtime-dispatch/src/adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-adapter.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw-result.ts",
+        "skills/common/plugins/runtime-dispatch/src/openclaw.ts",
+        "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+        "skills/common/plugins/runtime-dispatch/src/workspace-target.ts",
+        "skills/common/plugins/secret-resolver/README.md",
+        "skills/common/plugins/secret-resolver/plugin.json",
+        "skills/common/plugins/secret-resolver/src/adapter.ts",
+        "skills/common/plugins/state-store/README.md",
+        "skills/common/plugins/state-store/plugin.json",
+        "skills/common/plugins/state-store/src/adapter.ts",
+        "skills/common/plugins/telemetry-observer/README.md",
+        "skills/common/plugins/telemetry-observer/plugin.json",
+        "skills/common/plugins/telemetry-observer/src/observer.ts",
+        "skills/common/plugins/telemetry-store/README.md",
+        "skills/common/plugins/telemetry-store/plugin.json",
+        "skills/common/plugins/telemetry-store/src/adapter.ts",
+        "skills/common/plugins/transport-publisher/README.md",
+        "skills/common/plugins/transport-publisher/plugin.json",
+        "skills/common/plugins/transport-publisher/src/adapter.ts",
+        "skills/common/plugins/wait-store/README.md",
+        "skills/common/plugins/wait-store/plugin.json",
+        "skills/common/plugins/wait-store/src/adapter.ts",
+        "skills/nova/core/effects/contracts.ts",
+        "skills/nova/core/effects/coordinator.ts",
+        "skills/nova/core/effects/dependency-identity.ts",
+        "skills/nova/core/effects/dependency-journal.ts",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/nova/core/effects/identity.ts",
+        "skills/nova/core/effects/journal.ts",
+        "skills/nova/core/effects/memory-locks.ts",
+        "skills/nova/core/effects/resource-acquisition.ts",
+        "skills/nova/core/execution/adapter-invocation-phase.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/adapter-support.ts",
+        "skills/nova/core/execution/adapters.ts",
+        "skills/nova/core/execution/authorization.ts",
+        "skills/nova/core/execution/context.ts",
+        "skills/nova/core/execution/effect-recovery.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine.ts",
+        "skills/nova/core/execution/graph-build.ts",
+        "skills/nova/core/execution/graph.ts",
+        "skills/nova/core/execution/lease.ts",
+        "skills/nova/core/execution/run-decisions.ts",
+        "skills/nova/core/execution/runner.ts",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/test-gates/pipeline.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/nova/plugins/architecture-validator/README.md",
+        "skills/nova/plugins/architecture-validator/plugin.json",
+        "skills/nova/plugins/architecture-validator/src/stage.ts",
+        "skills/nova/plugins/blueprint-sync/README.md",
+        "skills/nova/plugins/blueprint-sync/plugin.json",
+        "skills/nova/plugins/blueprint-sync/src/stage.ts",
+        "skills/nova/plugins/buster-quality-gate/README.md",
+        "skills/nova/plugins/buster-quality-gate/package.json",
+        "skills/nova/plugins/buster-quality-gate/plugin.json",
+        "skills/nova/plugins/buster-quality-gate/src/stage.ts",
+        "skills/nova/plugins/case-study/README.md",
+        "skills/nova/plugins/case-study/plugin.json",
+        "skills/nova/plugins/case-study/src/stage.ts",
+        "skills/nova/plugins/delivery-lint/README.md",
+        "skills/nova/plugins/delivery-lint/plugin.json",
+        "skills/nova/plugins/delivery-lint/src/stage.ts",
+        "skills/nova/plugins/demo-handoff/README.md",
+        "skills/nova/plugins/demo-handoff/plugin.json",
+        "skills/nova/plugins/demo-handoff/src/adapter.ts",
+        "skills/nova/plugins/demo-handoff/src/candidate.ts",
+        "skills/nova/plugins/demo-handoff/src/delivery.ts",
+        "skills/nova/plugins/demo-handoff/src/ready.ts",
+        "skills/nova/plugins/human-approval/README.md",
+        "skills/nova/plugins/human-approval/plugin.json",
+        "skills/nova/plugins/human-approval/src/approval.ts",
+        "skills/nova/plugins/human-approval/src/architecture-approval.ts",
+        "skills/nova/plugins/human-approval/src/stage.ts",
+        "skills/nova/plugins/implementation-agent/README.md",
+        "skills/nova/plugins/implementation-agent/plugin.json",
+        "skills/nova/plugins/implementation-agent/src/stage.ts",
+        "skills/nova/plugins/lint/README.md",
+        "skills/nova/plugins/lint/plugin.json",
+        "skills/nova/plugins/lint/src/adapter.ts",
+        "skills/nova/plugins/lint/src/engine/discovery.ts",
+        "skills/nova/plugins/lint/src/engine/go-terraform-tools.ts",
+        "skills/nova/plugins/lint/src/engine/go-tools.ts",
+        "skills/nova/plugins/lint/src/engine/openapi-tool.ts",
+        "skills/nova/plugins/lint/src/engine/policy.ts",
+        "skills/nova/plugins/lint/src/engine/report.ts",
+        "skills/nova/plugins/lint/src/engine/terraform-tools.ts",
+        "skills/nova/plugins/lint/src/engine/tool-registry-core.ts",
+        "skills/nova/plugins/lint/src/engine/tool-registry.ts",
+        "skills/nova/plugins/lint/src/stage.ts",
+        "skills/nova/plugins/pipeline-review/README.md",
+        "skills/nova/plugins/pipeline-review/plugin.json",
+        "skills/nova/plugins/pipeline-review/src/evidence-adapter.ts",
+        "skills/nova/plugins/pipeline-review/src/stage.ts",
+        "skills/nova/plugins/preflight-contract/README.md",
+        "skills/nova/plugins/preflight-contract/plugin.json",
+        "skills/nova/plugins/preflight-contract/src/declarations.ts",
+        "skills/nova/plugins/preflight-contract/src/source-stage.ts",
+        "skills/nova/plugins/preflight-contract/src/stage.ts",
+        "skills/nova/plugins/prism-design/README.md",
+        "skills/nova/plugins/prism-design/plugin.json",
+        "skills/nova/plugins/prism-design/src/stage.ts",
+        "skills/nova/plugins/project-summary/README.md",
+        "skills/nova/plugins/project-summary/plugin.json",
+        "skills/nova/plugins/project-summary/src/stage.ts",
+        "skills/nova/plugins/remote-test-gate/README.md",
+        "skills/nova/plugins/remote-test-gate/plugin.json",
+        "skills/nova/plugins/remote-test-gate/src/adapter.ts",
+        "skills/nova/plugins/remote-test-gate/src/evidence-adapter.ts",
+        "skills/nova/plugins/repository-adapter/README.md",
+        "skills/nova/plugins/repository-adapter/plugin.json",
+        "skills/nova/plugins/repository-adapter/src/adapter.ts",
+        "skills/nova/plugins/repository-adapter/src/repository-file.ts",
+        "skills/nova/plugins/repository-adapter/src/revision-reader.ts",
+        "skills/nova/plugins/review/README.md",
+        "skills/nova/plugins/review/plugin.json",
+        "skills/nova/plugins/review/src/repository-audit-cache.ts",
+        "skills/nova/plugins/review/src/repository-audit-stage.ts",
+        "skills/nova/plugins/review/src/repository-revalidation-stage.ts",
+        "skills/nova/plugins/review/src/review-content-cache.ts",
+        "skills/nova/plugins/review/src/review-report-flow.ts",
+        "skills/nova/plugins/review/src/review-report-storage.ts",
+        "skills/nova/plugins/review/src/stage.ts",
+        "skills/nova/project/compiler.ts",
+        "skills/nova/project/coverage.ts",
+        "skills/nova/project/delivery-manifest.ts",
+        "skills/nova/project/demo.ts",
+        "skills/nova/project/review-semantics.ts",
+        "skills/nova/project/source.ts",
+        "skills/prism/control/preference-snapshot.ts",
+        "skills/prism/openclaw-plugin/README.md",
+        "skills/prism/openclaw-plugin/index.mjs",
+        "skills/prism/openclaw-plugin/openclaw.plugin.json",
+        "skills/prism/package.json",
+        "skills/prism/preferences/index.ts",
+        "skills/prism/server/control-server.ts",
+        "skills/prism/storage/artifacts.ts",
+        "skills/prism/studio/dev-fixture.ts",
+        "skills/prism/tests/control-generation-http.test.mts",
+        "skills/prism/tests/quality.test.mts",
+        "skills/worker/core/worker/attempt-executor.ts",
+        "spikes/prism/mobile-editor/package.json",
+        "spikes/prism/mobile-editor/playwright.config.mjs",
+        "spikes/prism/preview-isolation/package.json",
+        "spikes/prism/preview-isolation/playwright.config.mjs",
+        "tests/documentation/retained-language-renderer.test.mjs",
+        "tests/verification/contracts/check-pipeline-remote-runtime-config.mts",
+        "tests/verification/contracts/check-pipeline-report-adapter-runtime.mts",
+        "tests/verification/contracts/check-pipeline-test-plan-runner.mts",
+        "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
+        "tests/verification/contracts/check-runtime-bundle-isolation.mjs",
+        "tests/verification/deployment/gitops-health.test.mjs",
+        "tests/verification/deployment/go-tool-locks-native.mjs",
+        "tests/verification/deployment/prism-backup.test.mts",
+        "tests/verification/deployment/runtime-tool-locks-native.mjs",
+        "tests/verification/e2e/support/config-profiles/standard.json",
+        "tests/verification/e2e/support/optional-absence.ts",
+        "tests/verification/e2e/support/platform-config.ts",
+        "tests/verification/reliability/sdk-json-portable.test.mts",
+        "tests/verification/reliability/source-snapshot-version.test.mjs",
+        "versions.json"
+      ],
+      "summary": "Separate original content-six-aspect and independent-topic-review conditions adjudicated from existing complete applicable semantic/topic/actual Reader evidence. Current operational accessibility/operator/mutation obligations, metadata join and config baseline defect remain explicitly open; no blanket review rerun or requirement counter promotion.",
+      "checks": [
+        {
+          "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-publication.mjs build",
+          "exitCode": 0,
+          "observation": "Actual complete current d9cbce88 build. Complete independent topic/content judgments and affected correction checks are separately reused at their original scopes, not relabelled as a fresh full content review."
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "limits": [
+        "Original documentation content and nonauthor topic-review scope only; no new participant/runtime/AT/production-mutation or AP10 approval.",
+        "PUB-007, QUA-007 and QUA-010 remain not accepted. A913-01 metadata inconsistencies and current config native pre-mutation guard failure remain unfinished; no failed command marked passed.",
+        "All prior independent reports, failures, histories and source/execution scope limitations remain retained."
       ],
       "openIssues": [],
       "verdict": "PASS"
@@ -93468,16 +94469,42 @@
       "id": "A911-07",
       "passCondition": "Source-to-doc-Map ordnet jede öffentliche Sourcefläche Seite, Owner, Generator, Check und Readeraufgabe zu; umgekehrt verweist jede exhaustive Seite auf ihre Sources.",
       "automaticFailure": "Verwaiste Source oder Seite bleibt ohne Fehler bestehen.",
-      "state": "not-accepted",
-      "evidence": [],
-      "reviews": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "path": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a91107-consolidated-original-decision-20261031.json",
+          "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "scope": "Whole original A911-07 forward/inverse map, owner/check/Reader routing and orphan rejection."
+        }
+      ],
+      "reviews": [
+        {
+          "role": "source",
+          "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a91107-consolidated-original-decision-20261031.json"
+        },
+        {
+          "role": "reader",
+          "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a91107-consolidated-original-decision-20261031.json"
+        },
+        {
+          "role": "quality",
+          "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a91107-consolidated-original-decision-20261031.json"
+        }
+      ],
       "readerFixtureIds": [],
       "executionScenarioIds": [],
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
-        "reason": "Seven bounded inventory domains now join6653source-qualified IDs to64reader targets;177oldpage records preserved, current governance/41tests/Reader checks pass. Whole source-map gate remains NOT_READY for explicitly unmapped public families and every exhaustive-page inverse obligation; historical generated-platform classification defect is corrected.",
-        "campaign": "current-source-map-and-cli-recovery-20261022"
+        "verdict": "PASS",
+        "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+        "completionRecord": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+        "reason": "Original Source/Reader/Quality gate individually adjudicated through existing applicable full map and real Reader/orphan evidence; no new semantic/runtime/accessibility award.",
+        "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a91107-consolidated-original-decision-20261031.json"
       },
       "closureDecisionHistory": [
         {
@@ -93485,8 +94512,15 @@
           "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
           "reason": "Generated platform page misclassified authored with missing owning generator/check;public-surface inverse map incomplete.",
           "campaign": "independent-ready-topics-20261020"
+        },
+        {
+          "verdict": "NOT_READY",
+          "revision": "c4ebd7e428209c1d2fcf3599dab424ce9e0df23f",
+          "reason": "Seven bounded inventory domains now join6653source-qualified IDs to64reader targets;177oldpage records preserved, current governance/41tests/Reader checks pass. Whole source-map gate remains NOT_READY for explicitly unmapped public families and every exhaustive-page inverse obligation; historical generated-platform classification defect is corrected.",
+          "campaign": "current-source-map-and-cli-recovery-20261022"
         }
-      ]
+      ],
+      "completionRecord": "A911-07-whole-source-to-documentation-map-consolidated-20261031"
     },
     {
       "id": "A911-08",
@@ -93948,18 +94982,57 @@
       "id": "A913-02",
       "passCondition": "Für jeden Punkt sind Verhalten, Entscheidung, Konfiguration, Fehler/Recovery, Extension und Grenze vollständig oder begründet nicht anwendbar.",
       "automaticFailure": "Vorhandene Überschrift, Schema-Link oder grüner Check ersetzt Inhalt.",
-      "state": "not-accepted",
-      "evidence": [],
-      "reviews": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "path": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json",
+          "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "scope": "Separate original A913-02 documentation-content/topic-review condition only."
+        }
+      ],
+      "reviews": [
+        {
+          "role": "source",
+          "reviewer": "Independent non-author native child /root/qua010_execution_path",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json"
+        },
+        {
+          "role": "reader",
+          "reviewer": "Independent non-author native child /root/qua010_execution_path",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json"
+        },
+        {
+          "role": "quality",
+          "reviewer": "Independent non-author native child /root/qua010_execution_path",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json"
+        }
+      ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+        "completionRecord": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+        "reason": "Separate original Source/Reader/Quality content/topic-review decision from complete applicable retained evidence, with operational and technical baseline gaps retained.",
+        "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json"
+      }
     },
     {
       "id": "A913-03",
       "passCondition": "Mindestens ein vom Autor unabhängiger Review pro zusammenhängendem Themenbereich prüft Quelltreue, Leseraufgaben sowie Sprache und Struktur; wesentliche Befunde sind korrigiert und betroffene Änderungen nachgeprüft.",
       "automaticFailure": "Der Autor nimmt sich selbst unabhängig ab, ein wesentlicher Befund bleibt offen oder eine relevante Korrektur wird ohne gezielte Nachprüfung übernommen.",
-      "state": "not-accepted",
-      "evidence": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "path": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json",
+          "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+          "scope": "Separate original A913-03 documentation-content/topic-review condition only."
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/developer_handbook_integrated_complete_reader_fresh",
@@ -93968,10 +95041,36 @@
           "report": "/home/node/Documents/Codex/a98-evidence/developer-handbook-integrated-complete-reader-fresh/REPORT.md",
           "reportSha256": "bfaa7f92f09fa9299bc9fc53a86c23d5ee8a606c97c240045dc7c6aaf0d99cf9",
           "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "role": "source",
+          "reviewer": "Independent non-author native child /root/qua010_execution_path",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json"
+        },
+        {
+          "role": "reader",
+          "reviewer": "Independent non-author native child /root/qua010_execution_path",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json"
+        },
+        {
+          "role": "quality",
+          "reviewer": "Independent non-author native child /root/qua010_execution_path",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json"
         }
       ],
       "readerFixtureIds": [],
-      "executionScenarioIds": []
+      "executionScenarioIds": [],
+      "completionRecord": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "closureDecision": {
+        "verdict": "PASS",
+        "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+        "completionRecord": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+        "reason": "Separate original Source/Reader/Quality content/topic-review decision from complete applicable retained evidence, with operational and technical baseline gaps retained.",
+        "report": "docs/blueprint/acceptance-evidence/pub007-diagnostic-and-a91107-consolidation-20261031/a913010203-consolidated-existing-decisions-20261031.json"
+      }
     },
     {
       "id": "A913-04",

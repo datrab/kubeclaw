@@ -1,0 +1,191 @@
+{
+  "at": "2026-10-31T19:44:31.724549+00:00",
+  "reviewer": "Independent non-author native child /root/qua010_execution_path",
+  "reviewedRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+  "mode": "Existing-evidence consolidation, current metadata read-only; no Source audit campaign, tests/generation or repository mutations",
+  "originalCriterionCitations": {
+    "A913-01": "docs/blueprint/AP09-acceptance-contract.md:290",
+    "A913-02": "docs/blueprint/AP09-acceptance-contract.md:291",
+    "A913-03": "docs/blueprint/AP09-acceptance-contract.md:292"
+  },
+  "ownerRule": "Binding20261031T1931 consolidation; registration is not missing content quality, valid unchanged judgments are shared, actual material failures remain real. AP10parity/deletion gate separately deferred.",
+  "evidenceIndex": {
+    "wholeTechnicalEvidence": "operations/pr13/evidence/qua004-appropriate-evidence-20261030/independent-original-QUA004-coherent-content-verdict.json",
+    "wholeUsableEnglishDepth": "operations/pr13/evidence/qua001-technical-english-depth-20261030/independent-original-QUA001-whole-content-final-integration.json",
+    "wholeControlledLanguage": "operations/pr13/evidence/a91306-current-reader-20261030/independent-original-final-integration.json",
+    "wholeApplicability": "operations/pr13/evidence/a91310-owner-policy-20261027/independent-source-quality/whole-original-a91310-verdict.json",
+    "current69TopicPreservation": "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json",
+    "actualIndependentReader": "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/practical-reader-report.md",
+    "currentPub007HelperCode": "operations/pr13/evidence/pub007-helm-diagnostic-20261031-review.json",
+    "currentPub007BoundedSource": "operations/pr13/evidence/pub007-independent-binding-20261031.json",
+    "currentConfigIntegration": "operations/pr13/evidence/config-three-consolidated-original-decisions-20261031.json",
+    "currentSourceMapIntegration": "operations/pr13/evidence/a91107-consolidated-original-decision-20261031.json"
+  },
+  "decisions": {
+    "A913-01": {
+      "originalCriterion": "All261catalogue IDs have complete findings at final commit; IDs/pages/owners/status machine-consistent. No missing/duplicate/blanket grouped/stale ID.",
+      "verdict": "NOT_READY_FINITE_METADATA_JOIN",
+      "Source": "PASS_FOR_EXISTING_SUBSTANTIVE_PER_ID_TOPIC_FINDINGS; metadata mismatch remains",
+      "Reader": "PASS_AT_REUSED_RELEVANT_TOPIC_SCOPE; no new full Reader claimed",
+      "Quality": "NOT_READY_FOR_MACHINE_CONSISTENT_CURRENT_PER_ID_REGISTER",
+      "actualFindings": {
+        "requirementIds": 261,
+        "uniqueRequirementIds": 261,
+        "missingCanonicalPages": [],
+        "currentUnacceptedRequirementIds": [
+          "PUB-007",
+          "QUA-007",
+          "QUA-010"
+        ],
+        "nullPageOwnerIds": [
+          "FLW-001",
+          "FLW-002",
+          "FLW-003",
+          "FLW-004",
+          "FLW-005",
+          "FLW-006",
+          "FLW-007",
+          "FLW-008",
+          "FLW-009",
+          "FLW-010",
+          "FLW-012",
+          "FLW-013",
+          "FLW-014",
+          "FLW-015",
+          "FLW-016",
+          "FLW-017",
+          "DEV-001",
+          "DEV-002",
+          "DEV-003",
+          "DEV-004",
+          "DEV-005",
+          "DEV-006",
+          "DEV-007",
+          "DEV-008",
+          "DEV-009",
+          "CDV-001",
+          "CDV-002",
+          "CDV-003",
+          "CDV-004",
+          "CDV-005",
+          "CDV-006",
+          "CDV-007",
+          "CDV-010",
+          "CDV-011",
+          "CDV-012",
+          "CDV-013",
+          "REF-003",
+          "REF-004",
+          "REF-006",
+          "REF-009",
+          "REF-010",
+          "REF-014",
+          "REF-015",
+          "REF-018",
+          "PUB-001",
+          "PUB-002",
+          "PUB-003",
+          "PUB-004",
+          "PUB-005",
+          "PUB-006",
+          "PUB-007",
+          "PUB-008",
+          "PUB-009",
+          "MNT-001",
+          "MNT-003",
+          "MNT-009",
+          "MNT-014",
+          "MNT-017"
+        ],
+        "notInCurrentMapCount": 53,
+        "emptySourceDependenciesCount": 53,
+        "emptyAutomatedChecksCount": 53,
+        "nonemptyPageOwnerDisagreements": [
+          {
+            "id": "REF-005",
+            "old": "documentation",
+            "currentCanonicalOwner": "documentation; named components own diagnostic and delivery semantics"
+          },
+          {
+            "id": "MNT-004",
+            "old": "documentation automation",
+            "currentCanonicalOwner": "documentation"
+          },
+          {
+            "id": "QUA-001",
+            "old": "documentation",
+            "currentCanonicalOwner": "platform operator"
+          },
+          {
+            "id": "QUA-004",
+            "old": "documentation",
+            "currentCanonicalOwner": "platform operator"
+          }
+        ],
+        "catalogueOwnerJoin": "All261match current catalogue owner exactly; do not confuse catalogue owner with canonical page owner."
+      },
+      "missingOriginalCondition": "58current canonical page rows still have null pageOwner;53carry obsolete not-in-current-map+empty dependencies/checks. Four nonempty pageOwner values differ from current governed page owner. Three open requirements still carry historical e161 closure reasons; current continuing evidence should be linked as current status, not erase historical decisions. These are bounded original machine-consistency/current-finding duties, not a need for261new content reviews.",
+      "finiteNextAction": "Adopt reviewed fill-only deterministic proposal outside repo, validate exactly217proposed field changes across58IDs and preserve all other facts/reviews/status/limits. Separately adjudicate four nonempty page-owner roles and attach truthful current3open dispositions. Original checker + exact current ID/page/owner/status join, then affected independent A91301 decision; no whole content/generator rerun.",
+      "proposal": "operations/pr13/evidence/a91301-unadopted-current-map-metadata-join-20261031.json",
+      "noPrematurePass": "Proposal is semantically approved at deterministic-join scope only. A91301 cannot be registered until actual owner adoption/current join verified."
+    },
+    "A913-02": {
+      "originalCriterion": "Each point has complete behavior, decision, configuration, error/recovery, extension and boundary meaning, or reasoned N/A. Headings/schema links/green checks alone are insufficient.",
+      "verdict": "PASS_AT_ORIGINAL_CONTENT_SCOPE",
+      "Source": {
+        "verdict": "PASS",
+        "basis": "The complete qualified original177page/28asset Source/content-quality responsibilities, subsequent actual seven diagnostic-page duties and current complete config/schema/env/Secret/Helm/CLI/authority topic judgments supply material behavior/default/consumer/failure/extension/ownership meanings. QUA004 final whole evidence join explicitly adjudicates current behavior, generated facts, instructions, historical observations and limits, not counts/links. Independent A91310whole judgment substantively assesses279structural nodes,11unused records,9distinct applicability families,25open-limit obligations and implicit original corpus; scoped native/example/asset responsibilities preserve exclusions rather than invent blanket N/A."
+      },
+      "Reader": {
+        "verdict": "PASS",
+        "basis": "Actual QUA001 task traces provide complete project-to-compiled-graph, plugin/capability change and changed-input/recovery paths including prerequisites, expected observations, failure/retry/cleanup and STOP. Actual controlled-language fresh delivered-only Reader and current source-map/configuration Reader tasks independently corroborate usability within their explicit scopes. Missing operational participant outcomes are not mislabeled content gaps or passed runs."
+      },
+      "Quality": {
+        "verdict": "PASS",
+        "basis": "Whole language/structure/source-depth and appropriate-evidence judgments plus current complete-topic deltas leave no established material missing original content aspect. Pure/navigation/declaration-only concepts have source-reasoned boundaries; unsupported restore/host/remote work retains owner/action/resume rather than an invented success. No artificial per-ID six-field registry is required by original contract; coherent-topic full semantic judgments and individually retained states suffice."
+      },
+      "threeOpenRequirementDisposition": "PUB007 actual responsive/keyboard/screenreader acceptance, QUA007 full independent operator task and QUA010 artificial product mutation acceptance remain NOT_ACCEPTED. Their current known operational/test obligations are not waived. They do not by themselves contradict six-aspect documentation completeness; old first-project input omission now has separately qualified complete materialization/compile example while full practical runtime exercise is still open.",
+      "missingOriginalCondition": null,
+      "finiteNextAction": "Sole owner may register only A91302 at this original content scope using cited complete semantic evidence and this independent original decision; original checker/invariant delta checks, coherent exactremote. No automatic PUB007/QUA007/QUA010/AP10 or wholePR award."
+    },
+    "A913-03": {
+      "originalCriterion": "At least one author-independent cohesive topic review covers source fidelity, reader tasks, language and structure; material findings corrected and affected changes rechecked.",
+      "verdict": "PASS_AT_ORIGINAL_INDEPENDENT_DOCUMENTATION_REVIEW_SCOPE",
+      "Source": {
+        "verdict": "PASS",
+        "basis": "Actual independent complete-topic Source/Reader/Quality judgments are present, not old absent reports or reviewer counters: whole technical evidence/depth, whole controlled-language final and substantive applicability plus current complete config/schema/error/authority topics. Latest69record terminal preservation explicitly joins affected Source responsibilities and retains original identities/limits; model or author-role conflation is not used."
+      },
+      "Reader": {
+        "verdict": "PASS",
+        "basis": "The controlled-language final joins genuinely separate fresh nonauthor/nonSource public-only participant observations and actual corrected R1successor; original R1FAIL retained. Current authority Reader eighth attempt completes actual forward/inverse lookup and governed-summary refusal/generation/restoration; seven prior stops preserved. Source-exposed topic tasks remain explicitly labeled; no general blind/operational role award."
+      },
+      "Quality": {
+        "verdict": "PASS",
+        "basis": "Material source/default/receiver/Secret/citation/language/route/boundary findings have explicit exact successors and affected rechecks, not wholesale receipt rewrites. Current PUB007 matcher change has independent clean code review plus bounded nested authority/binding review; actual docs and212scope meanings unchanged, current build outcome does not replace content approval. R2search advisory has demonstrated workaround, not an erased defect. No concrete uncorrected material documentation-content defect remains established in the cited whole/topic decisions."
+      },
+      "materialVersusOperationalBoundary": "Unexecuted participant/AT/product mutation outcomes remain original open operational acceptance, not silently reclassified as completed review. Conversely an open operational gate alone does not establish an uncorrected content finding. A91301derived metadata defect is independently retained and needs repair; it does not annul actual author-independent topic judgments or require a blanket preservation campaign.",
+      "missingOriginalCondition": null,
+      "finiteNextAction": "Sole owner may register A91303 original review/content-correction condition only, preserve all three actual unaccepted requirements/AP10deferral, run unchanged checker/delta invariants and verify exactremote. No new full source/content/Reader reruns."
+    }
+  },
+  "currentByteEligibility": {
+    "baseline": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "actualCurrentRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "basis": "Original Source/content/Reader pages, asset bytes and governing source-map/configuration topics retain latest explicit69record semantic preservation. Current committed non-evidence delta is narrow Helm diagnostic matcher plus exact authority digest successor; independent code/binding verdicts qualify that delta. No current prose/topic change is inferred from mere commit movement.",
+    "matrixSha256": "1e8d4dbb47dd28819708bd3f3c811ed18fffef85b71ab6d866362ddd7e04011d",
+    "mapSha256": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223"
+  },
+  "preservedNonAcceptances": [
+    "PUB-007",
+    "QUA-007",
+    "QUA-010"
+  ],
+  "ap10": "A913-11 parity/deletion approval stays explicitly open/deferred before legacy deletion; not a usable-new-docs blocker or erased gate. No deletion authorized by this review.",
+  "historicalPreservation": "All original material negative reports, failed/stopped trials, unexecuted live/AT/provider/runtime/host/restore limits retained. No historical e161receipt or old Source/read claims rewritten. Three actual remaining requirements do not become accepted from this report.",
+  "effects": "Only this requested evidence file and unadopted external metadata proposal written; no repository, register, process, commit or push mutation.",
+  "latestNativeDiagnosticBoundary": {
+    "log": "operations/pr13/evidence/qua010-current-embedded-node-20261031.log",
+    "result": "Current configuration baseline fails before mutations on stale uppercaseRegistration ordered matcher; no meaningful product mutation outcome.",
+    "impact": "Real current local guard defect requires narrow independent remedy/recheck before counting affected technical acceptance. It does not establish wrong current prose/consumer ordering or erase actual prior independent topic Source/Reader/Quality judgments. A91302content and A91303review-content conclusions do not claim failing baseline passed. No pending correction may be adopted without targeted independent review."
+  }
+}

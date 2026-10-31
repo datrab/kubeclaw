@@ -1,0 +1,89 @@
+{
+  "at": "2026-10-31T19:35:19.779739+00:00",
+  "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
+  "reviewedRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+  "gate": "A911-07",
+  "originalCriterion": "Source-to-doc-Map ordnet jede \u00f6ffentliche Sourcefl\u00e4che Seite, Owner, Generator, Check und Readeraufgabe zu; umgekehrt verweist jede exhaustive Seite auf ihre Sources. Automatisches FAIL: Verwaiste Source oder Seite bleibt ohne Fehler bestehen.",
+  "criterionCitation": "docs/blueprint/AP09-acceptance-contract.md:207",
+  "ownerRule": "continuation-worker.md binding owner decision 2026-10-31 19:31: consolidate18 gates; reuse valid evidence; related requirement acceptance alone is insufficient",
+  "originalWholeVerdict": "PASS",
+  "decisionBasis": "Independent criterion-by-criterion review of existing actual forward/inverse map semantics, Source correction judgments, recorded real orphan/removal/misassignment controls and completed restricted Reader lookup/restoration. This is a new original gate decision, not automatic inheritance from GOV/MNT IDs; no new runtime test or AST audit run.",
+  "facets": {
+    "Source": {
+      "verdict": "PASS_AT_ORIGINAL_DOCUMENTATION_MAP_SCOPE",
+      "basis": [
+        "Current governed map includes all84 declared SUR families,30 typed families plus54 explicitly named high-level manual Source/consumer review routes. Every typed relation retains canonical page/anchor, owner, source authority, inventory generator/check via full policyRef. Manual generator null truthfully means authored review, not missing undocumented generator. No public high-level family is silently excluded.",
+        "The nine domain readerTask descriptions provide concrete lookup/change actions; SUR titles/linked canonical procedures and policy consumer boundaries provide tasks for added authority relations/high-level manual routes. Original requirement asks an assigned reader task, not a duplicate readerTask string on every normalized row.",
+        "All184 page rows retain nonempty owner, sourceDependencies and checks. Typed exhaustive surfaces retain pageSources and full exact authority inverse; new/current configuration facts reuse REF003 complete15family/47source/15988relation/898inverse domain approval, not global executable-output claims.",
+        "Static manifest compares exact admitted identities/selected inventory sets; it prevents lost typed data from silently becoming a manual route. Existing tests reject source orphan, deleted page, invalid anchor, duplicate identity, wrong target and inverse omission; affected source verdict and selected-input controls substantiate these mechanisms."
+      ],
+      "citations": [
+        "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/authority-matrix-static-assignment-source-verdict.json",
+        "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/authority-matrix-p1-code-verdict.json",
+        "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/static-assignment-selected-input-controls.log",
+        "scripts/tests/docs-source-surface-map.test.mjs:312",
+        "scripts/tests/docs-source-surface-map.test.mjs:342",
+        "scripts/tests/docs-source-surface-map.test.mjs:397",
+        "docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-citation-whole-acceptance-verdict.json"
+      ]
+    },
+    "Reader": {
+      "verdict": "PASS_FOR_ORIGINAL_MAP_READER_TASK",
+      "basis": "Independent eighth restricted Reader actually resolved exact typed identity to SUR, source authority, consumer, canonical anchor, documentation owner and owning generator/check; reverse query returned480 identities containing the chosen identity. It distinguished fixture/native-render and high-level manual route limits. Controlled governed-summary mutation was refused and normal owner generation restored exact bytes; final checks and clean tracked state passed. This original mapping task does not require browser/participant/runtime results.",
+      "citations": [
+        "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/practical-reader-report.md",
+        "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/practical-reader-evidence.json",
+        "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json"
+      ]
+    },
+    "Quality": {
+      "verdict": "PASS_AT_ORIGINAL_MAP_SCOPE",
+      "basis": "Forward/inverse instructions are discoverable from Product Surface full index and maintenance guide; metadata owner/source/check routes are coherent, generated provenance and authored responsibilities are distinguished. Prior wrong freshness route/self-derived availability and boundary752failures received independent finite corrections and terminal passed scoped checks. No material original A91107 condition remains missing; summary-only diagnostic names paired map rather than summary but published paired ownership/restoration is usable, not a material blocker.",
+      "citations": [
+        "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/authority-matrix-p1-code-verdict.json",
+        "operations/pr13/evidence/gov002-mnt001-mnt009-authority-matrix-20261031/gov-mnt-terminal-original-verdict.json",
+        "docs/site/product-surfaces.md:168",
+        "docs/site/extend/documentation-maintenance.md"
+      ]
+    }
+  },
+  "actualObservedCurrentMap": {
+    "pageRows": 184,
+    "surFamilies": 84,
+    "authorityRecords": 44858,
+    "canonicalPageAnchorInverseKeys": 364,
+    "allPagesHaveSourcesOwnersChecks": true
+  },
+  "currentBytesEligibility": {
+    "baselineRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "currentRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "materialChangedPathsSinceQualifiedTerminalCandidate": [
+      "docs/config/publication-example-claims.json",
+      "scripts/docs-publication-example-native.mjs"
+    ],
+    "finding": "All A91107 map/helper/governance/assignment/Reader page and test bytes unchanged since qualified a4b2a514; exact targeted git diff is empty. Other committed deltas are acceptance evidence/register plus publication-example-claims.json and docs-publication-example-native.mjs (PUB007 diagnostic phase). These two changed source paths are outside map generation, source-family assignment and completed forward/inverse Reader lookup responsibility; their supported build acceptance remains separate, not borrowed from this decision.",
+    "sha256": {
+      "scripts/lib/docs-source-surface-map.mjs": "73267c273d03b3436d2dde5a4364e821a59f98745cd2d7a7ba5e835bf6ad63d9",
+      "scripts/docs-governance.mjs": "c5cba3a94ec31afac44d3f54b2210b64e0fe50d16c596b8c2d14f546638c62f7",
+      "scripts/tests/docs-source-surface-map.test.mjs": "e0f2aff4bf3a42c4bd74979e3b3ba5ee3036c05bcab680a33d38996004f15ba4",
+      "docs/config/source-authority-family-assignments.json": "e1ad60a529d92dde13ecfb0fd92f9d74cdac0dc6fd65d586c76b833cdd1fec31",
+      "docs/site/product-surfaces.md": "875926e574d24c45964388d244db22b8bfe178b3352a6982e4f0df7363c93431",
+      "docs/site/reference/generated-documentation-map.json": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223",
+      "docs/site/extend/documentation-maintenance.md": "f2e56245caa40edaac97b242b90de8d1efeb6477bfc03dc2a997d14ca6b38602"
+    }
+  },
+  "finalRole": {
+    "verdict": "INDEPENDENT_ORIGINAL_GATE_DECISION_COMPLETE",
+    "basis": "Current AP09 contract section2 requires independent cohesive Source/Reader/Quality review, not three people or an Astra-model rerun. This bounded reviewer provides independent final original A91107 integration of already independent actual roles. No Astra model execution claimed; unrelated final whole-PR gates remain separate.",
+    "astraModelExecution": false
+  },
+  "preservedLimits": [
+    "Manual high-level routes are assigned source/consumer review obligations, not proof of generic semantic extraction, repository-wide discovery, freshness or live runtime.",
+    "No default-global-API, generic ToolSource, native Python3.14, deployment/provider/browser, fresh installation or accessibility award.",
+    "Seven Reader stops, previous source-self-derived availability defect,752boundary failure, compiler/root stops and unrelated PUB007 build timeouts remain retained, not rewritten as PASS.",
+    "No other gate or requirement is awarded. This file does not mutate the register or perform commit/push."
+  ],
+  "missingOriginalCondition": null,
+  "finiteNextAction": "Sole integration owner may register only A911-07 using this original gate adjudication and reused cited results, run unchanged original acceptance checker/invariant checks for the registration delta and coherent commit/push/exact remote without blanket content/publication reruns. Preserve current PUB007 WIP and its still-open original evidence.",
+  "observableCompletion": "A911-07 actual completion record linked to this verdict, original checker0, coherent verified remote; gate count moves only when sole owner performs registration."
+}

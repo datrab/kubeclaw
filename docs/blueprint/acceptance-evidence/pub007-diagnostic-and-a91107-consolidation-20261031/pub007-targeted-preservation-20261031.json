@@ -1,0 +1,756 @@
+{
+  "schemaVersion": 1,
+  "verdict": "PASS_TARGETED_PRESERVATION_ONLY_23_EXISTING_SCOPES",
+  "scopes": [
+    {
+      "id": "MNT-014-whole-native-publication-examples-20261027",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-014"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "scripts/docs-publication-example-native.mjs",
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun. Native entire-file diff is solely one field-identity matcher accepting equivalent dotted or JSON Pointer spelling; nonzero rejection, exact invalid field, order/receiver/render assertions, error propagation, cleanup and no-cluster/history boundaries remain intact. Independent code diagnostic review clean.",
+      "priorLimitsRetainedVerbatim": [
+        "Complete published example responsibility only:177pages/813MarkdownIt blocks/28assets/205whole-source contracts and actual inline/prose regions. No peridentifier or hash-as-behavior award; complete independent disjoint content responsibilities and exact current deltas joined.",
+        "Native input/schema/compiler/projection and syntax claims remain distinct. Actual project factories compile complete nova-project.v2/eightstage inputs in private Git; this native validation is not execution of every described pipeline, provider, platform, lint policy or model.",
+        "447shell and116embedded JS/Python syntax inputs are syntax-only;58SDK governed routes plus exact pure codec program and native parsers are bounded checks.22CEL projections and28diagram checks do not imply CEL runtime, every semantic edge, browser teaching application or live workloads.",
+        "Retention SQL reuses exact successful private PostgreSQL18.6 CI40537386596/source511db8c7 assertion, including8cases/negative/restoration/cleanup. No production database, current effective retention policy, deployment or fresh normal-check DB run.",
+        "Original global receiver genuinely exits1 at DOCUMENTATION_READER_CI_PURPOSE_DRIFT: scripts/docs-publication.mjs. This is NEW publisher/CI/package qualification debt, not baseline-identical docsite-first failure. No current external-CI analysis seed, downstream API/source-role, global Source freshness or global receiver PASS; no purpose/profile/receipt pins rewritten.",
+        "175baseline unclassified tree inputs plus one preexisting unrelated evidence log remain unresolved; exactly3new own validation/proof inputs classified earlier. No blanket tree exemption or legacy cleanup. All earlier failures, actual historical practical observations and acceptance limits retained.",
+        "Independent final108scope preservation is required for55direct and53implicit prior consumers. Prior scope/history/checks/limits are retained; neither108new approvals nor rerun historical journeys are claimed."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "A99-11-whole-published-example-claims-20261027",
+      "gateIds": [
+        "A99-11"
+      ],
+      "requirementIds": [],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "scripts/docs-publication-example-native.mjs",
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun. Native entire-file diff is solely one field-identity matcher accepting equivalent dotted or JSON Pointer spelling; nonzero rejection, exact invalid field, order/receiver/render assertions, error propagation, cleanup and no-cluster/history boundaries remain intact. Independent code diagnostic review clean.",
+      "priorLimitsRetainedVerbatim": [
+        "Complete published example responsibility only:177pages/813MarkdownIt blocks/28assets/205whole-source contracts and actual inline/prose regions. No peridentifier or hash-as-behavior award; complete independent disjoint content responsibilities and exact current deltas joined.",
+        "Native input/schema/compiler/projection and syntax claims remain distinct. Actual project factories compile complete nova-project.v2/eightstage inputs in private Git; this native validation is not execution of every described pipeline, provider, platform, lint policy or model.",
+        "447shell and116embedded JS/Python syntax inputs are syntax-only;58SDK governed routes plus exact pure codec program and native parsers are bounded checks.22CEL projections and28diagram checks do not imply CEL runtime, every semantic edge, browser teaching application or live workloads.",
+        "Retention SQL reuses exact successful private PostgreSQL18.6 CI40537386596/source511db8c7 assertion, including8cases/negative/restoration/cleanup. No production database, current effective retention policy, deployment or fresh normal-check DB run.",
+        "Original global receiver genuinely exits1 at DOCUMENTATION_READER_CI_PURPOSE_DRIFT: scripts/docs-publication.mjs. This is NEW publisher/CI/package qualification debt, not baseline-identical docsite-first failure. No current external-CI analysis seed, downstream API/source-role, global Source freshness or global receiver PASS; no purpose/profile/receipt pins rewritten.",
+        "175baseline unclassified tree inputs plus one preexisting unrelated evidence log remain unresolved; exactly3new own validation/proof inputs classified earlier. No blanket tree exemption or legacy cleanup. All earlier failures, actual historical practical observations and acceptance limits retained.",
+        "Independent final108scope preservation is required for55direct and53implicit prior consumers. Prior scope/history/checks/limits are retained; neither108new approvals nor rerun historical journeys are claimed."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-005"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "scripts/docs-publication-example-native.mjs",
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun. Native entire-file diff is solely one field-identity matcher accepting equivalent dotted or JSON Pointer spelling; nonzero rejection, exact invalid field, order/receiver/render assertions, error propagation, cleanup and no-cluster/history boundaries remain intact. Independent code diagnostic review clean.",
+      "priorLimitsRetainedVerbatim": [
+        "Original QUA005 claim-honesty obligation only. Missing live execution is not itself a documentation defect; actual unavailable/unknown proof must remain explicit, not recast as success.",
+        "Complete non-example/source/metadata/prose responsibility must be substantively audited. Prior examples/native checks or valid links/hashes alone cannot certify this wholeglobalnegative or every technicalfield truth.",
+        "Originalglobalreceiver genuinely refuses NEW publisher-purpose debt; no currentexternalCI analysis/API/source-role/globalfreshness grant or purpose/profile/receipt repin. Protected originalfailures and all prior acceptance limits remain.",
+        "No practical/human/hosting/production/deployment/accessibility/full controlled-language or unrelated gate grant. All prior completionrecords/history/checks/observations remain unchanged if finaladoption ismetadataonly.",
+        "Claim-honesty review, not every runtime/API/error/field technical truth or whole product completeness.",
+        "No new live/service/provider/model/browser/human/production execution by assessor.",
+        "Actual exact-source native/Reader/SQL/historical observations retain only their genuine scope; missing execution not itself a documentation defect.",
+        "Original failures, unknowns and limitations preserved; no automatic whole documentation/runtime grant."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "gateIds": [
+        "A913-10"
+      ],
+      "requirementIds": [],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "No A91306/QUA002 language, wholeQUA004 technical truth, external global API/currentrole/newpurpose grant, source-lock/profile/custody waiver or live product defect closure.",
+        "Remaining26Helm/env/Secret technical claim issues and endpoint/language defects remain their actual original unaccepted duties; no hidden resolution claimed.",
+        "No fresh model review process, Lua/browser/cluster/service, native product test or documented command was executed by this reviewer. Pure Git/Python/source comparisons are recorded as identity observations, not semantic test exits.",
+        "No claim of freshly manually reading all29MB/allnativecode. Complete actual topic duty reports and exact qualifying source/delta joins are reused only at actual responsibilities; physically acquired/truncated output is never called model-read semanticcoverage.",
+        "Historical failures and negative receipts are preserved, including current-source physical mismatch, hiddencollection/profile/GitOps findings, source-only generationpurpose refusal and prior oldreview limits.",
+        "Current normal build executes and validates all28 native actions through unchanged checkSite. Its child detail JSON is suppressed; this record does not claim a separately parsed currentV4 action/input log. Earlier d4 structured28/2949 input proof remains historical at its exact scope.",
+        "Original fresh Operator02 is a clean detached canonical-docs task with4verified safe-stop/restore-boundary outcomes, not successful host/application restore, live runtime or human usability proof.",
+        "Actual six current Reader controls cover output integrity, routing/search/source objects/previews and deterministic diagrams, not every semantic field, formal language certification, screenreader/accessibility or production success.",
+        "All prior112 completion scopes and historical failed/NOT_READY/live/globalpurpose/API/source-role limits remain; original A91310 only, no automatic requirement or other-gate award.",
+        "Separate unaccepted CFG-007 retains genuine documentation defects, not product limits or unavailable runtime authority: artifact/repository size and count fallbacks, container Dockerfile path base, direct-command evidence path base, OpenClaw dispatcher fallback/normalization, and review-policy cross-field bounds. They are explicitly retained in next-original-selection-20261027/cfg007-current-coherent-finding-ledger.json; this A913-10 applicability judgment neither waives nor accepts those original technical duties."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-007"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Only the named original requirements are accepted; no gate, whole A98-14 mutation exercise, global API/purpose/SourceLock/profile role, QUA004 technical whole, QUA002/A91306 language, accessibility or fresh humanpersona award follows.",
+        "Current generation/tests were executed at their recorded source and byte vectors; final committed326 build and all five automated Reader controls/repositoryrefs passed. Native28 actions are validated by unchanged build owner, but child detailJSON is suppressed; no independentlyparsed current28 result/input details are claimed.",
+        "Independent content/source responsibilities retain explicit complete-body versus bounded-range qualification and exact valid prior-topic reuse; physical acquisition, source hashes, counts and links alone are not semantic approval. Pinned code review covers new5source/testpaths only, not every byte of the large unchanged owner.",
+        "No live cluster/provider/host event or every-plugin deployment proof is claimed. Documented operational owner assignment, real SDK/event-source topology, authority/reachability and filesystem access remain actual STOP/resumption duties, not product features implemented by this documentation task.",
+        "Historical FAIL/UNPROVEN/NOT_READY and missed prior wholePASS, partial-anchor generation failure, invalid102source coordinate, missing-tool/readonly/defaultCLI attempts and earlier nonfinal-vector test observations remain at their original evidence scope; no receipt rewrites.",
+        "Original113 scopes are separately preserved by exact24minimal qualified revision/impact transitions and89entire unchanged records. Existing checks/history/limits, including A91310 then-openCFG007 wording, are not rewritten as fresh exercises or retroactive acceptance.",
+        "Seven genuinely additional delegated sources, including telemetry projection, retain their exact complete/range responsibilities; no retrospective all280body-read claim. Swarm remains the actual reader-bound product subset; external upstream runtime contracts are not manufactured.",
+        "Stage/adapter/observer validation, schema default annotation, provider resolver insertion and actual consumer fallback remain distinct. Absolute/normalized/realpath selection and process-working-directory roots retain their exact owned timing; no repository confinement, automatic private permissions or combined artifact-root disk cap is inferred."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-015"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "MNT015 whole original owner/review maintenance duty only; no associated gate, MNT009/A91107/global API/every-field technical coverage or hosted approval enforcement award.",
+        "Maintenance routes compose native inventory identities, metadata parents, actual package/schema consumers and shared mandatory independent Source/Reader/Quality procedure. No fabricated per-symbol reviewer column, new framework, sixth registration or runtime lookup API.",
+        "Prompt-contract remains dependency-only, unregistered and without production consumer/capability/effect/lifecycle authority. Old five-registration bcf evidence/verification frame is retained; current library is separately source-qualified, not newly deployed.",
+        "Exact final26delivery files retain manifest-qualified complete versus range/analytical/reused semantic responsibility. Handbook owner table only, legacy parity boundary only; full map/14MB classifier analytically bound with substantive finite-delta review and203/71unchanged qualified reuse, not claimed full model text read. Historical/control ledger snapshot is observed non-delivery input, avoiding circular self-registration without validator waiver.",
+        "Actual normalbuild and five automated Reader/reference controls all0 on96f7. Unchanged checkSite validates all28native IDs/results but child details are suppressed: no individually parsed current28input/result log, blind participant/browser/screenreader/accessibility or live/runtime/production claim.",
+        "All115prior completion scopes preserved by30exact revision-plus-appended-impact transitions and85entire unchanged records, including historicalNOT_READY. Old summaries/checks/review/history/limits and every prior impact prefix remain exact; no old practical observations recast as fresh exercises.",
+        "Original MNT015 historical FAIL/prospective-only mapping failure remains preserved as closure history; actual448!=447 syntax failure, unsupported outside prompt-file launch and wrongpublication check-artifact invocation remain unrewritten. Corrected real Reader owners reuse the valid unchanged build, not relabel failed invocation success.",
+        "Pinned reviews cover actual three-file owner/doc/test and two-file syntax/test changes with complete bounded context. Maintained two-scope/two-authority successor was separately independently qualified; no blanket purpose/SourceLock/profile/custody/API/currentrole exemption or wholePRcode review implied."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-013"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "scripts/docs-publication-example-native.mjs",
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun. Native entire-file diff is solely one field-identity matcher accepting equivalent dotted or JSON Pointer spelling; nonzero rejection, exact invalid field, order/receiver/render assertions, error propagation, cleanup and no-cluster/history boundaries remain intact. Independent code diagnostic review clean.",
+      "priorLimitsRetainedVerbatim": [
+        "CFG-013 only; no A98-10/11 or other gate, CFG010/011/global environment census, global ToolSource parser/custody/source-role/API, purpose/profile/SourceLock, MNT009/A91107, fullQUA004, controlled-language or other requirement grant.",
+        "Whole554line canonical responsibility composes complete508line baseline review plus entire46line correction and integration context, not a fictitious repeat whole-body read. One canonical page plus95 regular tracked sources retain precise full/range/delegated/analytical qualifications. Pinned external primary sources and completionledger control snapshot are qualified non-delivery inputs, not invented tracked source paths.",
+        "Ten-family Source and five inert source/page Reader tasks establish the complete original topic. No fresh persona/human/browser teaching/accessibility/live cluster/native-worker/Redis/Secret availability/authentication/readiness/recovery/apply-patch operation is claimed. Static compile means no pipeline stage/adapter execution, not absence of installed-role validation, import/audit subprocess or new output-file I/O.",
+        "Actual native platform and observer contracts, unchanged Helm/Compact owner inputs and24 current conflict controls use Node24.21; actual Helm3.18.4 renders are not the dated3.22/24 assertions or historical17 expander checks. The new synthetic duplicate render proves fixed-before-extra structure/reference only; kubelet winner/earlier-required-source-failure/optional-skip remains independently primary-source qualified, not locally executed kubelet.",
+        "Actual committedda01 normalbuild/five automatedReader controls/repositoryrefs all0. Unchanged checkSite validates28native IDs/results but suppresses child detailJSON; no separately parsed current28input/result log or every model/SDK/runtime behavior is asserted. All254output and177Source bindings independently verified, not source-truth proof by hashes alone.",
+        "Maintained205scope contract source is a finite13semantic-operation successor for this onepage/prose7 and three new anchors; other204scope records,73authorities,28nativecheck declarations, allsix codeblocks, oldanchors/obligations/execution flags preserved. V2 restores raw bytes outside actualtwo affected top-level records; V1 Unicode serialization normalization and first source commit retained, no history rewrite or global qualification refresh.",
+        "All117 prior scopes independently preserved:10 exact revision-plus-appended-impact transitions and107 entirely unchanged records, including historicalNOT_READY. Earlier reviews, summaries, checks, limits, histories, failedreceipts and all oldimpactprefixes unchanged. Original23findingIDs preserved and individually dispositioned only at CFG013 relevance; every globalfinding object and other requirement/gate unchanged.",
+        "Original wholeNOT_READY and new materialP2 negative remain historical evidence; correction resolves only its concrete documentation duty. Initial missing-root fixture assertion failure remains exit1, corrected fixture reaches intended guard without product/assertion waiver. No prior historical report is recast as a fresh execution or automatic whole-documentation approval."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-010"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "scripts/docs-publication-example-native.mjs",
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun. Native entire-file diff is solely one field-identity matcher accepting equivalent dotted or JSON Pointer spelling; nonzero rejection, exact invalid field, order/receiver/render assertions, error propagation, cleanup and no-cluster/history boundaries remain intact. Independent code diagnostic review clean.",
+      "priorLimitsRetainedVerbatim": [
+        "CFG-010 only, no gate or other requirement award. Original globalfinding objects, API/producer/current-role/ToolSource parser/custody/purpose/SourceLock/profile debts remain unchanged; no blanket exemption or full modern inventory acquisition grant.",
+        "Four delivered pages plus120 regular tracked source/context paths retain precise full/range/delegated/analytical qualifications. No fictitious full model-read of17MB Helm,4MB map, large classifier/raw inventory or every124file. Complete finite semantic responsibilities compose the original topic; whole-object/native output reversals preserve remaining observations/unknown fields.",
+        "Original complete compact/platform/managed OpenClaw/Codex/Prism trust/worker/native/Studio/ingestion/bootstrap consumers and verification scope qualified. Native supervisor/root policy is ownership/no-follow/content validation, not cryptographic signing. Standalone Codex seedonly-if-absent/persisted HOME and two forced MCP settings are not OpenClaw ACP, full upstream Codex schema, account login, MCP, PVC, pairing or session success.",
+        "No live cluster/DB/Secret availability/authentication/readiness/Redis/SPIFFE/controller/capacity/runtimeworker or fresh human/browser/persona operation claimed. Actual existing3Controlconfig and6Ops socket/process tests remain only their bounded local fixtures, not live product acceptance.",
+        "Actual15 native integration tests plus3 focused successor controls passed, with real isolated Git nativeCLI v1/v2, full native reconstruction/reversal and protected nonwrites. Actual originalv1 native production/check atb444 and equal-provenance complete two-renderer byte parity retained; unchanged controls are explicitly reused, not falsely rerun/relabelled at75d. Actual current v2 production/check and threepage generation/check all0 at1940; all semantic/editorial/receiver input bytes remain qualified unchanged afterward. Strict whole-source-first/physical/Git/destination/bundle guards remain implemented unchanged, not bypassed for later non-semantic maintained binding commits.",
+        "V2 finite datatype authenticates source6fa/artifact145 whole tree/sourcegrammar/complete parsed objects/static oldmodel, current33 reviewed receiver bodies and actual current owner modules. All selected historical values/types/default annotations/source coordinates/producer evidence/qualification states remain unchanged; only source-bound semantic string leaves change and reverse exactly, including all123 Secret facts. V1 remains editorial-only106changes/exacttwooutputs/allSecretsEqual; v2 preservation separates legacy and semantic steps instead of a false top-level secretsEqual.",
+        "Actual committed75d build/five automatedReaders/repositoryrefs all0. Build validates28native IDs/results but suppresses child detailJSON; no separately parsed current28input/result log or every native/SDK/product behavior claimed. Complete254registeredoutputs,177Source\u2192HTML,177publishedMarkdown through actual native first-metadata transformation,433artifactfiles and1132bindings/771unique objects verified. These bindings are not semantic accuracy from hashes alone.",
+        "Maintained v2 fourpage/fourcontract/two registered native-authority Source successors independently qualified;201 othercontracts/173pages/71authorities and all28actions/assets remained exact atthatstage. Nativegovernance regenerated exactly host+9source dependencies and Secret retained verification metadata;175other maprecords unchanged. Subsequent v3 onlymapasset/mapcontract source successor qualified;204othercontracts/177pages/73authorities/28actions/27otherassets exact. Original failed fullmap anchor remains immutable Git/evidence; new anchor exactly actualgeneratedmap. Execution flags/history/basis/statement prefixes preserved, no runtime receipt rewrite.",
+        "All118 original scopes independently preserved:35 exact revision+one appended impact transitions,83 whole records unchanged including historicalNOT_READY. Every original summary/check/history/limit/verdict/prefix/otherfield retained.13finding IDs retained historically and requirement-local dispositions only; no globalfinding/gate or legacy failure promoted.",
+        "Initial wholeNOT_READY/core/delegated negatives, b444 range54>53 failed generation-beforewrites, meaningful negative regression, oldauthority-binding rejection, stale governance build and coordinator raw-Markdown equality assumption failure all retained. Exact54\u219253 corrected with exhaustive allmeaning-range regression and independently/pinned reviewed Source successor; publisher rawMarkdown deliberately transforms metadata via unchanged native owner. No acceptance from scaffold/tests alone or historical receipt rewrites."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-012"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "CFG-012 only; no other requirement or gate award. SourceLock/profile/global API/producer/purpose/ToolSource/parser debts and original global findings remain unchanged; no blanket exemptions.",
+        "Two canonical pages plus57 qualified regular source/context paths retain full/range/fresh/reused/delegated/analytical responsibilities. No fullmodel read of420k unrelated platform collections,14MB maintained declaration, every1465discovery line or all global APIs. Exact finite duties and reversal proofs compose this topic.",
+        "Actual native inventory changes only eight activation leaves across four shared controller call records. Other fields/orders/identities/raw defaults and7994 historical runtime-source provenance remain exact; classifier/renderer source1901 and delivered commit1f801 are separate. Selected endpoint route preserves original Source-first/untracked guards and shared SourceLock; unrelated retained v2 and SDK/configuration pages untouched.",
+        "Pinned Kubernetes66452049 core/v1/defaults.go125-134 qualifies omitted targetPort numeric default only, not an executed live API or listener. Raw omission remains explicit; named workload ports remain named. Selected deployment owner is required for same-name direct/GitOps LiteLLM/registry declarations; no two simultaneous live deployments inferred.",
+        "Local Ops source and explicitly pinned upstream central Ops context retain their different authority and deployment-adoption limits. No live DNS/TLS/Tailnet/CNI/identity/provider/cluster/readiness/preview/restore or fresh human/keyboard/screenreader exercise claimed.",
+        "Actual existing native CLI, bounded Go httptest and43 postchange mutation results remain their scoped observations, not runtime production success. Pinned upstream autoreviewfe588b1a Terra/high P2 clean covers supplied actual code bundle/datasets; tests were not executed by that reviewer. Original full generic configuration/checklist debts remain separate from actual relevant native platform/endpoint controls.",
+        "Actual original seven committed controls0 and254 registered outputs/177 source-HTML/177 published Markdown via unchanged native first-metadata transformation/all433 physical artifact files/1132bindings771Gitobjects verified. Build normal28native ID/result validation is not a separately parsed current28-child result log or global source-truth proof.",
+        "Maintained source/procedure binding successor changes exactly seven qualified objects; all original two-page anchors/codeblocks/roles/checks/bases/executionflags retained. Active whole-map anchor matches exact native five-leaf delta; original complete anchor remains immutable1901Git. No execution receipt rewrite.",
+        "All119 original scopes preserved:38 exact top-level revision plus one appended impact,81 entire records exact including historical NOT_READY. Every old summary/check/review/history/limit/verdict and impact prefix retained. Original two P2 negatives, rejected missing-table inference and wrong coordinator map-root-equality postcondition remain historical; no acceptance inferred from hashes/counts or test scaffold alone."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "gateIds": [],
+      "requirementIds": [
+        "REF-016"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Original REF-016 only; no gate or other requirement award, broad Prism package-suite/runtime coverage, globaltree/API/producer/purpose/profile/SourceLock/parser or human/live/hosting acceptance. Global treeFAIL176 and API_REFERENCE_REJECTED_PROFILE_INVENTORY_MISSING remain precise original limits, not green or waived.",
+        "Complete supported native command/guide/package boundary follows original product scope, exact first-class forms, actual receiver/lifecycle semantics and canonical specialist routing; not every private assertion/import/CLI inspection is a new public verification frontdoor. No all-imported-algorithm certification. Full/range/reused/native/delegated Source scopes and complete input limitations remain in ref016-original-20261028 evidence.",
+        "Whole Source/Reader/Quality composes real independent original partitions and finite corrective successors. Other-author first25 package qualification is reused, not its author self-awarded. Canonical owners identify existing maintainer responsibilities, not invented membership, approval or operational authority.",
+        "Command definitions and selected manifest JSON are literal Source reference data, not new runnable instructions/configuration examples or successful results. Original verification bashblock1 and448 actual executable syntax hosts remain exact. Existing claim-contract genuinely consumes new359literal blocks/361prose regions with source/producer fidelity;27other check definitions and all execution flags remain exact. No checker exemption or content shrink.",
+        "Current actual generator/check atcc0a uses genuine source-first/root/untracked/Git/Source-byte guards and authenticated same-row manifests; no documented product command executed.224 other generated files/sharedSourceLock untouched. Only3actual missing-file STOP effects were clarified as basename/parent/caller; demo-auth missing tests and missing Buster helper remain unfixed product limits.",
+        "Original negative and mistaken intermediate judgments remain: HTTP/security/source/owner/cleanup/telemetry/package fixes, prior languagebuildFAIL, full87refsFAIL, actual npm257 wildcardloss and initial authoring assertions. They are not rewritten as passes; successful current9a2afinal artifact alone remedies current documented defects.",
+        "Actual current seven CLI outcomes and offline320/1440 text/layout/focus evidence are bounded native/local observations, not successful deployment/promotion/destruction/provider/network/cluster/runtime/human screenreader/WCAG acceptance. Normal build validates28native result IDs/objects; suppressed child detail logs are not separately claimed as parsed current28results.",
+        "All120 prior records preserved independently:35top revision plus one appended impact each,85entire records exact including historical NOT_READY. Every old check/review/summary/failure/history/limit/verdict/impact prefix is retained; no fresh unrelated Reader study or original award inferred from new hashes or commit."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-008"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Original MNT-008 only under AP09 acceptance contract sections1\u20133 and catalogue405. Not global A97-06/allAPI/internal-algorithm/store recovery completion, deployed upstream effective policy or arbitrary host/PVC/database discovery.",
+        "Source declarations, symbolic expressions, nullish constructor defaults, configured caller values and conditional native policy-comparison fixtures remain distinct. Expiry/admission/compaction/domain retirement/backup pruning/PVC requests do not grant general deletion, successful backup/restore or live cleanup.",
+        "Shared7994SourceLock/profile/custody purpose remains unchanged. Historical global API/tree/producer/source-purpose failures retained at original scope, not green or waived by local MNT-008 acceptance.",
+        "Prior material failures, helper/context/runtime failures, three oversized fulltransfer contexts, two-page Reader/Quality NOT_READY and first normal governance-stale publication failure remain historical. Current semantic transfer and successful native publication remedy only their actual changed current obligations; no historical receipt rewrite.",
+        "Native code tests/mutations, independent exact source partition judgments and actual native output/Chromium are separate observations. No document product command, cluster/deployment/provider/backup/cleanup, human screenreader or hosted site executed by this acceptance.",
+        "Every121prior record retains original summary/checks/reviews/failures/limits/history and impact prefix. Only reviewed affected revision and one semantic impact appended; unaffected records entire exact. No new unrelated reader study or award inferred from commit/hash."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-006"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun. Current supported event collection confirms all14 COMPLETE family records and supplementary vector equal retained inventory. Broad75input source-vector staleness predates this WIP and is preserved separately, not silently qualified or made a new prerequisite.",
+      "priorLimitsRetainedVerbatim": [
+        "No A911 gate or whole A913-06/QUA-002 controlled-language acceptance is granted. Strict Source-unexposed whole language Reader remains separate and pending.",
+        "Static source contracts and local native tests do not prove live event delivery, external payloads, production deployment, replay/retention success or execution of quoted source definitions. Existing dated practical/runtime receipts remain unchanged.",
+        "Universal primary source-vector identity guard is a stop requiring semantic qualification, not automatic repinning or a new independent approval of every unrelated physical source file. Complete actual semantic role/declaration/schema/activation/call responsibilities are joined by original Source qualification.",
+        "Known original tree175 and two nestedPrism baseline failures remain explicitly preserved; this point does not award global tree/API/zero-write/native-host or unrelated criteria.",
+        "Reader judgment uses whole14 task/role boundaries, current changed contexts and exact valid prior facets; no fresh execution of historical procedures, every initializer body, every asset, human persona or screenreader study. Original122 negative76 and all historical receipt limits remain unchanged."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-005"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Maintained source-bound families and representative owner/consumer links are not a finite vocabulary of arbitrary dependency messages, automatic universal source discovery, exhaustive call graph, or live execution/recovery proof.",
+        "Diagnostic text fences are unexecuted source constructions; local render/check commands only maintain documentation. Runtime sources remain unchanged from3a2546e3.",
+        "Historical Source/reader/native observations retain their exact bounds and exposure limits. Current independent topic-content review is not a fresh Source-unexposed whole A913 reader or new Astra-model execution.",
+        "Only actual52 changed original PASS scopes were reconfirmed; all original limits, negative records and historical receipts remain intact. Preexisting broader environment-YAML/API/tree failures are retained, not waived or claimed passed.",
+        "No gate, REF005, MNT011, whole language, global API/tree, production deployment or recovery acceptance is inferred from this original MNT005 closure."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "REF-005"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Supported owned source constructions and dynamic rules do not close arbitrary upstream/dependency messages, future caller input, all runtime outcomes or a universal whole-repository call graph. Source-observed constructions are not execution receipts.",
+        "MNT005 and earlier independent qualifications retain their original scopes; REF005 is an explicit separate original topic decision, not an automatic promotion from generated output.",
+        "No whole A913/controlled-language, global configuration/API/tree, production deployment, retry/rollback success or new Astra-model execution is claimed.",
+        "Actual publication source is 464954006aada327194fc4a97cf159a271e6abe0; subsequent two authority-responsibility strings only narrow a historical compatibility observation after an intentional hub-introduction edit. Pages, assets, code hashes and check inputs are exact; current original binder passes. Historical observations were not rewritten.",
+        "Only13 actually affected old PASS records were reconfirmed; all original limits, old receipts and negative records remain intact. Broader old YAML/API/tree failures remain unwaived."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-011"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Finite current owned production roots, selected deployment scripts, file kinds and explicit exclusions are stated in policy/manifest; new external components/deployment routes require scope review. No universal reachability or arbitrary dependency vocabulary claim.",
+        "A fingerprint mismatch triggers scoped review, not diagnostic identity/cause/effect/recovery approval. Conservative unrelated source changes can also stop the guard.",
+        "Prior common catalogue Source/meaning/reader qualifications and unchanged generated pages reused; first NOT_READY reports and all old negative records preserved. No product runtime/live deployment or whole A913/QUA002 acceptance.",
+        "Only actually changed prior PASS records reconciled, retaining their original responsibilities and historical checks."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-010"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "The index exposes every literal JSON properties-member pointer, including data-object occurrences, not necessarily applicable runtime fields. It does not validate JSON Schema, resolve references, insert defaults or approve consumer semantics.",
+        "Fixture, retained and documentation schemas are still guarded without claiming activation; current-declaration status is source presence only. Dependency/build/cache/temp directories are outside the explicit owned-source selector.",
+        "Existing six TS-pipeline/stage controls and qualified schema/config/SDK/event reference meanings are reused at unchanged scope. Their Source and expected output paths are byte-exact to80786; no fresh control run or universal schema consumer audit is claimed.",
+        "Initial NOT_READY and P2 OpenClaw omission report retained. Actual21controls prove the corrected input/field/output drift behavior, not7355individual semantic approvals. Only actually affected old PASS scopes reconciled; all old negatives and limits retained."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-004"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "This is an actual independent whole QUA004 evidence-fitness/content decision, not a hash/link/page-count or word-method-to-command-truth inference. Appropriate evidence is assessed at each asserted scope; universal API/consumer/callgraph completeness and runtime/deployment/workflow success are not granted.",
+        "The old24negative receipt remains unchanged. Current mechanical1799citation equality supports only literal fidelity, not semantic approval; the three semantic successors and whole claim-kind join have separate non-author judgments.",
+        "Dated historical145/6fa/SourceLock7994 and fixed da43 run evidence remain historical; no old-run/new-factory equivalence, current host, successful live cleanup or restored production state is inferred.",
+        "A Source-exposed topical traceability reviewer is not relabeled as a fresh Source-unexposed whole-language Reader. A913/QUA002 remain separate unaccepted obligations.",
+        "The original native checker code, assets, authority hashes, check assignments, controlling cleanup/execution/history and original positive/negative review limits remain unchanged. Only actually affected old PASS records reconciled; all negative records preserved."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-001"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "scripts/docs-publication-example-native.mjs",
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun. Native entire-file diff is solely one field-identity matcher accepting equivalent dotted or JSON Pointer spelling; nonzero rejection, exact invalid field, order/receiver/render assertions, error propagation, cleanup and no-cluster/history boundaries remain intact. Independent code diagnostic review clean.",
+      "priorLimitsRetainedVerbatim": [
+        "The reviewer is honestly Source-exposed; this is not a fresh Source-unexposed Reader, live operational persona execution, controlled-language certification or whole A913 acceptance. QUA006/QUA007 operational probe and QUA002/A91306 remain distinct.",
+        "The documented first materialization emits project.json/compiled.json with execution:false and platformAdmission:false; the full da43 journey remains its exact dated historical tuple, not current deployment/provider/host success.",
+        "Supported candidate validation, authority/grants, activation/drain/replacement, unknown external outcomes and owned cleanup limits remain explicit. No undocumented install/remove protocol or universal API/consumer proof inferred.",
+        "The required manual final-integration facet is explicitly recorded with actual non-author Codex model/role. Its legacy astra-final label is not evidence of a newly executed Astra model. Controlling AP09sections1\u20134 supersede historical multiple-reviewer formulations.",
+        "No Source/doc/code/assets changed for this acceptance. Actual7technicalresults at ce66ce71912fa6ab03f1671602d82ed9af799bc3 remain valid at exact relevant inputs; no fresh check run or generic audit is claimed. All old completion records/negative receipts unchanged."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-004"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Static source declarations and qualified producer control tests are not live product CLI, interpreter outcome, CI, runtime or deployment executions. Symbolic/default/conditional/caller status boundaries remain explicit.",
+        "Custom argparse parser_class/action/expanded factory shapes fail explicitly rather than inventing native parser behavior; current selected source membership is qualified and unsupported shapes are not silently accepted.",
+        "No rawAST dump or universal static-analysis platform is an original deliverable. The complete purpose-specific JSON remains ordinary full JSON; no codec/data omission/read cap or guard weakening.",
+        "Non-author Source-exposed topical Reader and final integration, not a blind-reader or new Astra-model run. No QUA002/A91306, other original requirement or new gate acceptance.",
+        "Historical ENOBUFS/reader/code failures remain negative evidence. Registration is local until the coherent commit and exact remote verification; no remote success is claimed by this record."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-009",
+        "REF-013"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Current checked-in source and render/admission contracts are not deployed effective values, image behavior, API admission, rollout, policy enforcement or live runtime success.",
+        "Global programmatic API/environment/CI qualifications remain separate; external and unsupported receiving boundaries remain explicit. No other requirement, gate, A91306/QUA002 or blind-reader acceptance.",
+        "Legacy astra-final is truthful non-author final integration under controlling AP09 sections1\u20134, not a newly executed Astra model. Historical failures and original checks remain historical."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "gateIds": [
+        "A913-06"
+      ],
+      "requirementIds": [
+        "QUA-002"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "Not formal ASD-STE100 certification, licensed-dictionary certification or a new all-word/per-token proof. Applicable method and actual qualified responsibilities are retained, not waived.",
+        "Fresh Reader navigation reaches184 pages; proportional cross-track task reading and reached public examples are explicitly recorded. Navigation/text capture is not close-reading every word or newly reviewing every28 asset. Unchanged qualified original scope/asset/parent/term facets are reused, not fabricated fresh runs.",
+        "Static comprehension, source fidelity and documentation checks are not fresh installation, live product recovery, deployment, enforcement or runtime success. Search-short-query precision remains an advisory with successful published workaround, not a concealed material failure.",
+        "Final integration is an actual independent non-author judgment under AP09 sections1\u20134, not a newly executed Astra-model run. Prior failed Reader and scoped Source decisions remain at their actual revisions."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+      "gateIds": [
+        "A911-05"
+      ],
+      "requirementIds": [],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "This is not a claim that every AST token, external dependency message, upstream vocabulary, live dispatch, Kubernetes outcome, or recovery result is documented or executed.",
+        "Source links and source inspection establish the stated construction/meaning scope, not runtime success.",
+        "No A91306, QUA002, REF005, or MNT005 award is inferred from this gate decision; their prior qualified scopes are reused only where unchanged.",
+        "No repository, Git, runtime, publication, checker, or remote action was performed.",
+        "Independent content and unchanged original receiver passed on atomic registration candidate. No reader/runtime/generator bytes changed; qualified existing publication scopes remain unchanged. Commit/push/exactremote is the final integration step after this review, not a claimed already completed observation."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    },
+    {
+      "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "gateIds": [],
+      "requirementIds": [
+        "GOV-002",
+        "MNT-001",
+        "MNT-009"
+      ],
+      "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+      "changedRelevantFiles": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "review": {
+        "sourceAccuracy": "PASS_RETAINED_EXACT_TARGETED_DELTA",
+        "readerUsability": "PASS_RETAINED_UNCHANGED_DELIVERED_CONTENT_HISTORICAL_SCOPE",
+        "quality": "PASS_RETAINED_EXACT_TARGETED_DELTA"
+      },
+      "reason": "Exact complete claims JSON semantic difference is solely native authority SHA. No authored page/asset/block/prose/contract/anchor/statement/check assignment or cited source body changes. Prior original Source/Reader/Quality judgments and all recorded limits retained at original scope; not freshly rerun.",
+      "priorLimitsRetainedVerbatim": [
+        "No new gate or requirement; no acceptance from a prerequisite or graph advancement.",
+        "No default global API/ToolSource or native Python3.14 closure; no schema annotation promoted to actual consumer default.",
+        "No runtime/Helm/provider/browser/deployment execution, telemetry, package install, or fresh bootstrap award.",
+        "Existing copied dependencies and canonical generated-contract preparation are not fresh locked installation; clean source-first and prepared publication phases remain distinct.",
+        "All earlier false/invalid/real negative findings and seven incomplete Reader stops retained; accepted only from final actual original decision."
+      ],
+      "priorReviewRetained": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "newAcceptance": false
+    }
+  ],
+  "scopeCount": 23,
+  "reviewBasis": [
+    "Complete native old/current source diff; independent clean diagnostic review",
+    "Complete39634string/56814node claims census; exactly1authority hash change; affected17nested anchors verified",
+    "Original23 record summaries, Source/Reader/Quality states, checks and complete limits supplied in pub007-affected-accepted-scopes-20261031.json",
+    "Supported event collector complete14families/support equality; preexisting75source-vector drift retained"
+  ],
+  "originalFailuresPreserved": [
+    "Original Helm stderr dotted-only matcher rejected actual JSON Pointer format before repair; not historical success.",
+    "Earlier synchronous300s timeout and failures retained; qualified ten browser navigation observations retain bounded original scope.",
+    "Current build315.54561042401474s exits1 at unchanged page-record current Source/git diff guard because two WIP files differ from HEAD; native/diagram progress is not finalbuild/report PASS.",
+    "Current unchanged original acceptance checker exits1 first MNT014 relevant2file mismatch; not waived.",
+    "Original records retain their global API/current-role/CI/tree/human/runtime/installation/participant limitations and historical negatives verbatim.",
+    "Preexisting event source vector: maintained c943f730\u2026; reconstructed pre-WIP7a096c7e\u2026 mismatches; current75changed/added sources are not newly qualified."
+  ],
+  "eventApplicability": "Separate docs:events:check/docs:drift:event:check/docs:check:generated baseline failure, not direct docs-publication check/build prerequisite. No blanket regeneration/repin or new MNT006 award. See pub007-event-applicability-20261031.json.",
+  "integrationCondition": "Root may make local coherent reviewed two-file Source commit without guard changes, then rebuild actual exact current artifact and run applicable original checker. Only then adopt targeted preservation into existing records if original checks genuinely pass. No remote/publish or register acceptance inferred by this review.",
+  "sourceReaderQualityBoundary": "All23 prior SOURCE/READER/QUALITY judgments retained only within their existing complete original responsibilities. No freshly executed Reader journey, whole publication or human accessibility exercise asserted. New PUB007 original criterion remains unmet.",
+  "newGateIds": [],
+  "newRequirementIds": []
+}

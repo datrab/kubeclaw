@@ -1,0 +1,32 @@
+[
+  {
+    "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-artifact.mjs",
+    "exitCode": 0,
+    "elapsedSeconds": 33.71261560905259,
+    "log": "pub007-current-artifact-20261031.log"
+  },
+  {
+    "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-search.mjs",
+    "exitCode": 0,
+    "elapsedSeconds": 19.12703292805236,
+    "log": "pub007-current-search-20261031.log"
+  },
+  {
+    "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-source-links.mjs",
+    "exitCode": 0,
+    "elapsedSeconds": 275.79384235595353,
+    "log": "pub007-current-source-links-20261031.log"
+  },
+  {
+    "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-source-previews.mjs",
+    "exitCode": 0,
+    "elapsedSeconds": 41.264198202989064,
+    "log": "pub007-current-source-previews-20261031.log"
+  },
+  {
+    "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-diagrams.mjs",
+    "exitCode": 0,
+    "elapsedSeconds": 20.992870960966684,
+    "log": "pub007-current-diagrams-20261031.log"
+  }
+]

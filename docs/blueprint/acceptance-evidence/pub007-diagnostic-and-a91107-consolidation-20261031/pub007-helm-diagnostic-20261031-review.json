@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The matcher now recognizes both the legacy dotted field path and Helm v3.22.1's JSON Pointer field path while retaining the existing nonzero-exit and field-identity checks.",
+  "overall_confidence": 0.99
+}

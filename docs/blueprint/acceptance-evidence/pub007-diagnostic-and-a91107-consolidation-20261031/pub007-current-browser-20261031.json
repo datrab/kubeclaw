@@ -1,0 +1,3455 @@
+{
+  "at": "2026-10-31T19:39:53.667Z",
+  "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+  "observations": [
+    {
+      "width": 320,
+      "route": "README.html",
+      "viewport": 320,
+      "document": 320,
+      "main": true,
+      "title": "KubeClaw Documentation · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 17
+          }
+        ],
+        "passes": 16
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"KubeClaw Documentation\" [level=1]\n    - group: Page scope and sources\n    - heading \"Purpose\" [level=2]\n    - paragraph: Start with the task that you must complete. Each route has one primary reader and one clear result.\n    - heading \"Start With Your Task\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Task Shortest route Result\":\n          - columnheader \"Task\"\n          - columnheader \"Shortest route\"\n          - columnheader \"Result\"\n      - rowgroup:\n        - row \"Understand what KubeClaw controls Architecture entry System boundary, roles, authority, and request flow\":\n          - cell \"Understand what KubeClaw controls\"\n          - cell \"Architecture entry\":\n            - link \"Architecture entry\":\n              - /url: understand/README.html\n          - cell \"System boundary, roles, authority, and request flow\"\n        - row \"Understand or change Prism Prism architecture Complete runtime, data, operator, and developer route\":\n          - cell \"Understand or change Prism\"\n          - cell \"Prism architecture\":\n            - link \"Prism architecture\":\n              - /url: understand/prism.html\n          - cell \"Complete runtime, data, operator, and developer route\"\n        - row \"Understand or change Buster Buster architecture Plan resolution, remote execution, evidence, suites, and safe extension routes\":\n          - cell \"Understand or change Buster\"\n          - cell \"Buster architecture\":\n            - link \"Buster architecture\":\n              - /url: understand/buster.html\n          - cell \"Plan resolution, remote execution, evidence, suites, and safe extension routes\"\n        - row \"Check a local checkout Operator quickstart Verified source and documentation inputs without external effects\":\n          - cell \"Chec",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 320,
+      "route": "use/install.html",
+      "viewport": 320,
+      "document": 320,
+      "main": true,
+      "title": "Plan and Install · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 32
+          }
+        ],
+        "passes": 16
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Plan and Install\" [level=1]\n    - paragraph:\n      - text: \"Status: source-backed deployment path; stored runtime selection fails current configuration verification, so installation must stop before mutation Audience: Kubernetes platform operator, security operator Owner: platform operations Evidence:\"\n      - link \"scripts/deploy.sh\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/scripts/deploy.sh\n      - text: ;\n      - link \"docs/generated/inventory/deploy-script.json\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/docs/generated/inventory/deploy-script.json\n      - text: \"Upstream source scope: central Ops contract at\"\n      - code: 34cf38ef53ee41381543785d0ffae90a37fac9ca\n      - text: \"; no runtime source adoption or live verification is established by this update Applies to: current selected runtime release Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available; schema-step CLI/control fixtures checked on 2026-10-26 with the pinned validator, not an actual deployment render or target-schema approval\"\n    - heading \"Objective\" [level=2]\n    - paragraph: Prepare one KubeClaw environment without hiding a missing platform dependency. Finish with ready workloads, smoke results, and an independent recovery route.\n    - paragraph:\n      - text: This procedure does not install a host, K3s, a storage driver, or a\n      - link \"CNI (Container Networking Interface)\":\n        - /url: https://www.cni.dev/docs/\n      - text: implementation. CNI defines how the container runtime calls network plugins to connect containers. It starts with an existing Kubernetes cluster.\n    - he",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 320,
+      "route": "reference/configuration-precedence.html",
+      "viewport": 320,
+      "document": 320,
+      "main": true,
+      "title": "Configuration Precedence and Effective Values · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 14
+          }
+        ],
+        "passes": 16
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Configuration Precedence and Effective Values\" [level=1]\n    - paragraph:\n      - text: \"Status: current cross-component reference Audience: operator, pipeline author, maintainer Owner: platform operations Evidence:\"\n      - link \"skills/common/plugins/openclaw-agent-observer/src/index.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/index.ts\n      - text: ;\n      - link \"skills/common/plugins/openclaw-agent-observer/src/observer-support.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts\n      - text: ;\n      - link \"skills/common/plugins/openclaw-agent-observer/src/config.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/config.ts\n      - text: ;\n      - link \"skills/common/plugin-runtime/foundation/config/platform.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugin-runtime/foundation/config/platform.ts\n      - text: ;\n      - link \"skills/nova/core/execution/engine-runtime.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/nova/core/execution/engine-runtime.ts\n      - text: ;\n      - link \"skills/nova/core/test-gates/resolver.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/nova/core/test-gates/resolver.ts\n      - text: ;\n      - link \"tests/verification/e2e/support/platform-config.ts\":\n        - /url: https://github.com/datrab",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 320,
+      "route": "reference/helm-values.html",
+      "viewport": 320,
+      "document": 320,
+      "main": true,
+      "title": "Helm, GitOps, And Infrastructure Configuration · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 92
+          }
+        ],
+        "passes": 16
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Helm, GitOps, And Infrastructure Configuration\" [level=1]\n    - group: Page scope and sources\n    - heading \"Summary\" [level=2]\n    - paragraph: This page presents an inventory snapshot of scalars, lists, and maps in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.\n    - heading \"Select And Verify A Change\" [level=2]\n    - list:\n      - listitem: Find the owning file below. Chart values are defaults; a checked-in overlay is not automatically selected by every command.\n      - listitem: Read the receiving source and precedence column. Direct deploy uses generated release values and its optional selected overlay. Production GitOps selects immutable bundle resources through its Application source.\n      - listitem: Change the owning input, not a generated release copy alone. Render the selected chart or regenerate the bundle through the linked producer. Inspect the affected workload, Secret reference and policy before applying it.\n      - listitem: After the normal deployment, verify the effective resource and process health. Source discovery and rendering do not prove a rollout, API admission, image behavior or cluster policy enforcement.\n    - paragraph: \"Scope: all YAML inputs currently discovered under charts, examples, gitops, my-values and releases/values. The file index records the actual selected membership, not a fixed count. Nested API contracts explain the selected manifest fields; this bounded values reference does not renew unrelated global program-output, environment o",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 320,
+      "route": "understand/worker-core.html",
+      "viewport": 320,
+      "document": 320,
+      "main": true,
+      "title": "Worker Core: From Claim To Durable Result · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "DIV",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "DIV",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 88
+          }
+        ],
+        "passes": 25
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - 'heading \"Worker Core: From Claim To Durable Result\" [level=1]'\n    - group: Page scope and sources\n    - heading \"Purpose\" [level=2]\n    - paragraph: Worker Core runs one bounded attempt. It gives Buster, Prism, and a future specialist engine the same rules for identity, limits, cancellation, logs, evidence, cleanup, and terminal results.\n    - paragraph: Worker Core does not decide which pipeline node runs next. Nova owns that decision. Worker Core also does not understand test policy or design policy. The specialist engine owns that meaning.\n    - paragraph: This separation is deliberate. A memory limit must have the same meaning for a test process and a design process. A test result and a design result must not have the same domain meaning.\n    - blockquote:\n      - paragraph:\n        - strong: Core boundary\n      - paragraph:\n        - link \"The public package exports attempt mechanics, native process controls, ownership, trust helpers, and contract digests\":\n          - /url: https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/src/index.ts#L1-L52\n        - text: .\n      - paragraph:\n        - link \"The operation interface keeps specialist execution behind prepare, execute, terminate, measure, cleanup, evidence, and finalization hooks\":\n          - /url: https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/attempt-executor.ts#L30-L93\n        - text: .\n    - heading \"The Two Execution Layers\" [level=2]\n    - paragraph: Worker Core has two related execution layers.\n    - table:\n      - rowgroup:\n        - row \"Layer Responsibility Does not provide\":\n          - columnheader \"Layer\"\n          - columnheader \"Responsibility\"\n          - colum",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 320,
+      "route": "search.html",
+      "viewport": 320,
+      "document": 320,
+      "main": true,
+      "title": "Search documentation · KubeClaw Documentation",
+      "scrollRegions": [],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 20
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Search documentation\" [level=1]\n    - paragraph: Search every published page, including configuration names and code examples. All search data stays in this documentation artifact.\n    - search:\n      - text: Words or exact identifier\n      - searchbox \"Words or exact identifier\"\n      - button \"Search\"\n    - status\n    - list\n  - text: Documentation source\n  - code: d9cbce8803b4\n  - text: ·\n  - link \"Documentation home\":\n    - /url: README.html",
+      "treeTruncated": false,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 768,
+      "route": "README.html",
+      "viewport": 768,
+      "document": 768,
+      "main": true,
+      "title": "KubeClaw Documentation · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 20
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"KubeClaw Documentation\" [level=1]\n    - group: Page scope and sources\n    - heading \"Purpose\" [level=2]\n    - paragraph: Start with the task that you must complete. Each route has one primary reader and one clear result.\n    - heading \"Start With Your Task\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Task Shortest route Result\":\n          - columnheader \"Task\"\n          - columnheader \"Shortest route\"\n          - columnheader \"Result\"\n      - rowgroup:\n        - row \"Understand what KubeClaw controls Architecture entry System boundary, roles, authority, and request flow\":\n          - cell \"Understand what KubeClaw controls\"\n          - cell \"Architecture entry\":\n            - link \"Architecture entry\":\n              - /url: understand/README.html\n          - cell \"System boundary, roles, authority, and request flow\"\n        - row \"Understand or change Prism Prism architecture Complete runtime, data, operator, and developer route\":\n          - cell \"Understand or change Prism\"\n          - cell \"Prism architecture\":\n            - link \"Prism architecture\":\n              - /url: understand/prism.html\n          - cell \"Complete runtime, data, operator, and developer route\"\n        - row \"Understand or change Buster Buster architecture Plan resolution, remote execution, evidence, suites, and safe extension routes\":\n          - cell \"Understand or change Buster\"\n          - cell \"Buster architecture\":\n            - link \"Buster architecture\":\n              - /url: understand/buster.html\n          - cell \"Plan resolution, remote execution, evidence, suites, and safe extension routes\"\n        - row \"Check a local checkout Operator quickstart Verified source and documentation inputs without external effects\":\n          - cell \"Chec",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 768,
+      "route": "use/install.html",
+      "viewport": 768,
+      "document": 768,
+      "main": true,
+      "title": "Plan and Install · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 21
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Plan and Install\" [level=1]\n    - paragraph:\n      - text: \"Status: source-backed deployment path; stored runtime selection fails current configuration verification, so installation must stop before mutation Audience: Kubernetes platform operator, security operator Owner: platform operations Evidence:\"\n      - link \"scripts/deploy.sh\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/scripts/deploy.sh\n      - text: ;\n      - link \"docs/generated/inventory/deploy-script.json\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/docs/generated/inventory/deploy-script.json\n      - text: \"Upstream source scope: central Ops contract at\"\n      - code: 34cf38ef53ee41381543785d0ffae90a37fac9ca\n      - text: \"; no runtime source adoption or live verification is established by this update Applies to: current selected runtime release Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available; schema-step CLI/control fixtures checked on 2026-10-26 with the pinned validator, not an actual deployment render or target-schema approval\"\n    - heading \"Objective\" [level=2]\n    - paragraph: Prepare one KubeClaw environment without hiding a missing platform dependency. Finish with ready workloads, smoke results, and an independent recovery route.\n    - paragraph:\n      - text: This procedure does not install a host, K3s, a storage driver, or a\n      - link \"CNI (Container Networking Interface)\":\n        - /url: https://www.cni.dev/docs/\n      - text: implementation. CNI defines how the container runtime calls network plugins to connect containers. It starts with an existing Kubernetes cluster.\n    - he",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 768,
+      "route": "reference/configuration-precedence.html",
+      "viewport": 768,
+      "document": 768,
+      "main": true,
+      "title": "Configuration Precedence and Effective Values · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 21
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Configuration Precedence and Effective Values\" [level=1]\n    - paragraph:\n      - text: \"Status: current cross-component reference Audience: operator, pipeline author, maintainer Owner: platform operations Evidence:\"\n      - link \"skills/common/plugins/openclaw-agent-observer/src/index.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/index.ts\n      - text: ;\n      - link \"skills/common/plugins/openclaw-agent-observer/src/observer-support.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts\n      - text: ;\n      - link \"skills/common/plugins/openclaw-agent-observer/src/config.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/config.ts\n      - text: ;\n      - link \"skills/common/plugin-runtime/foundation/config/platform.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugin-runtime/foundation/config/platform.ts\n      - text: ;\n      - link \"skills/nova/core/execution/engine-runtime.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/nova/core/execution/engine-runtime.ts\n      - text: ;\n      - link \"skills/nova/core/test-gates/resolver.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/nova/core/test-gates/resolver.ts\n      - text: ;\n      - link \"tests/verification/e2e/support/platform-config.ts\":\n        - /url: https://github.com/datrab",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 768,
+      "route": "reference/helm-values.html",
+      "viewport": 768,
+      "document": 768,
+      "main": true,
+      "title": "Helm, GitOps, And Infrastructure Configuration · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 20
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Helm, GitOps, And Infrastructure Configuration\" [level=1]\n    - group: Page scope and sources\n    - heading \"Summary\" [level=2]\n    - paragraph: This page presents an inventory snapshot of scalars, lists, and maps in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.\n    - heading \"Select And Verify A Change\" [level=2]\n    - list:\n      - listitem: Find the owning file below. Chart values are defaults; a checked-in overlay is not automatically selected by every command.\n      - listitem: Read the receiving source and precedence column. Direct deploy uses generated release values and its optional selected overlay. Production GitOps selects immutable bundle resources through its Application source.\n      - listitem: Change the owning input, not a generated release copy alone. Render the selected chart or regenerate the bundle through the linked producer. Inspect the affected workload, Secret reference and policy before applying it.\n      - listitem: After the normal deployment, verify the effective resource and process health. Source discovery and rendering do not prove a rollout, API admission, image behavior or cluster policy enforcement.\n    - paragraph: \"Scope: all YAML inputs currently discovered under charts, examples, gitops, my-values and releases/values. The file index records the actual selected membership, not a fixed count. Nested API contracts explain the selected manifest fields; this bounded values reference does not renew unrelated global program-output, environment o",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 768,
+      "route": "understand/worker-core.html",
+      "viewport": 768,
+      "document": 768,
+      "main": true,
+      "title": "Worker Core: From Claim To Durable Result · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "DIV",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "DIV",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 25
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - 'heading \"Worker Core: From Claim To Durable Result\" [level=1]'\n    - group: Page scope and sources\n    - heading \"Purpose\" [level=2]\n    - paragraph: Worker Core runs one bounded attempt. It gives Buster, Prism, and a future specialist engine the same rules for identity, limits, cancellation, logs, evidence, cleanup, and terminal results.\n    - paragraph: Worker Core does not decide which pipeline node runs next. Nova owns that decision. Worker Core also does not understand test policy or design policy. The specialist engine owns that meaning.\n    - paragraph: This separation is deliberate. A memory limit must have the same meaning for a test process and a design process. A test result and a design result must not have the same domain meaning.\n    - blockquote:\n      - paragraph:\n        - strong: Core boundary\n      - paragraph:\n        - link \"The public package exports attempt mechanics, native process controls, ownership, trust helpers, and contract digests\":\n          - /url: https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/src/index.ts#L1-L52\n        - text: .\n      - paragraph:\n        - link \"The operation interface keeps specialist execution behind prepare, execute, terminate, measure, cleanup, evidence, and finalization hooks\":\n          - /url: https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/attempt-executor.ts#L30-L93\n        - text: .\n    - heading \"The Two Execution Layers\" [level=2]\n    - paragraph: Worker Core has two related execution layers.\n    - table:\n      - rowgroup:\n        - row \"Layer Responsibility Does not provide\":\n          - columnheader \"Layer\"\n          - columnheader \"Responsibility\"\n          - colum",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 768,
+      "route": "search.html",
+      "viewport": 768,
+      "document": 768,
+      "main": true,
+      "title": "Search documentation · KubeClaw Documentation",
+      "scrollRegions": [],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 26
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Search documentation\" [level=1]\n    - paragraph: Search every published page, including configuration names and code examples. All search data stays in this documentation artifact.\n    - search:\n      - text: Words or exact identifier\n      - searchbox \"Words or exact identifier\"\n      - button \"Search\"\n    - status\n    - list\n  - text: Documentation source\n  - code: d9cbce8803b4\n  - text: ·\n  - link \"Documentation home\":\n    - /url: README.html",
+      "treeTruncated": false,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 1440,
+      "route": "README.html",
+      "viewport": 1440,
+      "document": 1440,
+      "main": true,
+      "title": "KubeClaw Documentation · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 136
+          }
+        ],
+        "passes": 21
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"KubeClaw Documentation\" [level=1]\n    - group: Page scope and sources\n    - heading \"Purpose\" [level=2]\n    - paragraph: Start with the task that you must complete. Each route has one primary reader and one clear result.\n    - heading \"Start With Your Task\" [level=2]\n    - table:\n      - rowgroup:\n        - row \"Task Shortest route Result\":\n          - columnheader \"Task\"\n          - columnheader \"Shortest route\"\n          - columnheader \"Result\"\n      - rowgroup:\n        - row \"Understand what KubeClaw controls Architecture entry System boundary, roles, authority, and request flow\":\n          - cell \"Understand what KubeClaw controls\"\n          - cell \"Architecture entry\":\n            - link \"Architecture entry\":\n              - /url: understand/README.html\n          - cell \"System boundary, roles, authority, and request flow\"\n        - row \"Understand or change Prism Prism architecture Complete runtime, data, operator, and developer route\":\n          - cell \"Understand or change Prism\"\n          - cell \"Prism architecture\":\n            - link \"Prism architecture\":\n              - /url: understand/prism.html\n          - cell \"Complete runtime, data, operator, and developer route\"\n        - row \"Understand or change Buster Buster architecture Plan resolution, remote execution, evidence, suites, and safe extension routes\":\n          - cell \"Understand or change Buster\"\n          - cell \"Buster architecture\":\n            - link \"Buster architecture\":\n              - /url: understand/buster.html\n          - cell \"Plan resolution, remote execution, evidence, suites, and safe extension routes\"\n        - row \"Check a local checkout Operator quickstart Verified source and documentation inputs without external effects\":\n          - cell \"Chec",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 1440,
+      "route": "use/install.html",
+      "viewport": 1440,
+      "document": 1440,
+      "main": true,
+      "title": "Plan and Install · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 21
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Plan and Install\" [level=1]\n    - paragraph:\n      - text: \"Status: source-backed deployment path; stored runtime selection fails current configuration verification, so installation must stop before mutation Audience: Kubernetes platform operator, security operator Owner: platform operations Evidence:\"\n      - link \"scripts/deploy.sh\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/scripts/deploy.sh\n      - text: ;\n      - link \"docs/generated/inventory/deploy-script.json\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/docs/generated/inventory/deploy-script.json\n      - text: \"Upstream source scope: central Ops contract at\"\n      - code: 34cf38ef53ee41381543785d0ffae90a37fac9ca\n      - text: \"; no runtime source adoption or live verification is established by this update Applies to: current selected runtime release Last verified: 2026-10-12; local extracted-command and release-boundary checks only; no live cluster result is available; schema-step CLI/control fixtures checked on 2026-10-26 with the pinned validator, not an actual deployment render or target-schema approval\"\n    - heading \"Objective\" [level=2]\n    - paragraph: Prepare one KubeClaw environment without hiding a missing platform dependency. Finish with ready workloads, smoke results, and an independent recovery route.\n    - paragraph:\n      - text: This procedure does not install a host, K3s, a storage driver, or a\n      - link \"CNI (Container Networking Interface)\":\n        - /url: https://www.cni.dev/docs/\n      - text: implementation. CNI defines how the container runtime calls network plugins to connect containers. It starts with an existing Kubernetes cluster.\n    - he",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 1440,
+      "route": "reference/configuration-precedence.html",
+      "viewport": 1440,
+      "document": 1440,
+      "main": true,
+      "title": "Configuration Precedence and Effective Values · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": true
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 21
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Configuration Precedence and Effective Values\" [level=1]\n    - paragraph:\n      - text: \"Status: current cross-component reference Audience: operator, pipeline author, maintainer Owner: platform operations Evidence:\"\n      - link \"skills/common/plugins/openclaw-agent-observer/src/index.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/index.ts\n      - text: ;\n      - link \"skills/common/plugins/openclaw-agent-observer/src/observer-support.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/observer-support.ts\n      - text: ;\n      - link \"skills/common/plugins/openclaw-agent-observer/src/config.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugins/openclaw-agent-observer/src/config.ts\n      - text: ;\n      - link \"skills/common/plugin-runtime/foundation/config/platform.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/common/plugin-runtime/foundation/config/platform.ts\n      - text: ;\n      - link \"skills/nova/core/execution/engine-runtime.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/nova/core/execution/engine-runtime.ts\n      - text: ;\n      - link \"skills/nova/core/test-gates/resolver.ts\":\n        - /url: https://github.com/datrab/kubeclaw/blob/d9cbce8803b44afdcc79e8324233eebc0744e742/skills/nova/core/test-gates/resolver.ts\n      - text: ;\n      - link \"tests/verification/e2e/support/platform-config.ts\":\n        - /url: https://github.com/datrab",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 1440,
+      "route": "reference/helm-values.html",
+      "viewport": 1440,
+      "document": 1440,
+      "main": true,
+      "title": "Helm, GitOps, And Infrastructure Configuration · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 21
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Helm, GitOps, And Infrastructure Configuration\" [level=1]\n    - group: Page scope and sources\n    - heading \"Summary\" [level=2]\n    - paragraph: This page presents an inventory snapshot of scalars, lists, and maps in chart defaults, checked-in overlays, GitOps values and manifests, release values, and infrastructure manifests. Open a file section to inspect its nested fields. The inventory redacts credentials, identities, and access lists. A redacted value remains configurable, but this page never publishes its content.\n    - heading \"Select And Verify A Change\" [level=2]\n    - list:\n      - listitem: Find the owning file below. Chart values are defaults; a checked-in overlay is not automatically selected by every command.\n      - listitem: Read the receiving source and precedence column. Direct deploy uses generated release values and its optional selected overlay. Production GitOps selects immutable bundle resources through its Application source.\n      - listitem: Change the owning input, not a generated release copy alone. Render the selected chart or regenerate the bundle through the linked producer. Inspect the affected workload, Secret reference and policy before applying it.\n      - listitem: After the normal deployment, verify the effective resource and process health. Source discovery and rendering do not prove a rollout, API admission, image behavior or cluster policy enforcement.\n    - paragraph: \"Scope: all YAML inputs currently discovered under charts, examples, gitops, my-values and releases/values. The file index records the actual selected membership, not a fixed count. Nested API contracts explain the selected manifest fields; this bounded values reference does not renew unrelated global program-output, environment o",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 1440,
+      "route": "understand/worker-core.html",
+      "viewport": 1440,
+      "document": 1440,
+      "main": true,
+      "title": "Worker Core: From Claim To Durable Result · KubeClaw Documentation",
+      "scrollRegions": [
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "DIV",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "DIV",
+          "tabindex": 0,
+          "overflow": true
+        },
+        {
+          "tag": "PRE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        },
+        {
+          "tag": "TABLE",
+          "tabindex": 0,
+          "overflow": false
+        }
+      ],
+      "axe": {
+        "violations": [],
+        "incomplete": [],
+        "passes": 25
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - 'heading \"Worker Core: From Claim To Durable Result\" [level=1]'\n    - group: Page scope and sources\n    - heading \"Purpose\" [level=2]\n    - paragraph: Worker Core runs one bounded attempt. It gives Buster, Prism, and a future specialist engine the same rules for identity, limits, cancellation, logs, evidence, cleanup, and terminal results.\n    - paragraph: Worker Core does not decide which pipeline node runs next. Nova owns that decision. Worker Core also does not understand test policy or design policy. The specialist engine owns that meaning.\n    - paragraph: This separation is deliberate. A memory limit must have the same meaning for a test process and a design process. A test result and a design result must not have the same domain meaning.\n    - blockquote:\n      - paragraph:\n        - strong: Core boundary\n      - paragraph:\n        - link \"The public package exports attempt mechanics, native process controls, ownership, trust helpers, and contract digests\":\n          - /url: https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/src/index.ts#L1-L52\n        - text: .\n      - paragraph:\n        - link \"The operation interface keeps specialist execution behind prepare, execute, terminate, measure, cleanup, evidence, and finalization hooks\":\n          - /url: https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/worker/core/worker/attempt-executor.ts#L30-L93\n        - text: .\n    - heading \"The Two Execution Layers\" [level=2]\n    - paragraph: Worker Core has two related execution layers.\n    - table:\n      - rowgroup:\n        - row \"Layer Responsibility Does not provide\":\n          - columnheader \"Layer\"\n          - columnheader \"Responsibility\"\n          - colum",
+      "treeTruncated": true,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    },
+    {
+      "width": 1440,
+      "route": "search.html",
+      "viewport": 1440,
+      "document": 1440,
+      "main": true,
+      "title": "Search documentation · KubeClaw Documentation",
+      "scrollRegions": [],
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 174
+          }
+        ],
+        "passes": 27
+      },
+      "accessibilityTreeExcerpt": "- main:\n  - article:\n    - heading \"Search documentation\" [level=1]\n    - paragraph: Search every published page, including configuration names and code examples. All search data stays in this documentation artifact.\n    - search:\n      - text: Words or exact identifier\n      - searchbox \"Words or exact identifier\"\n      - button \"Search\"\n    - status\n    - list\n  - text: Documentation source\n  - code: d9cbce8803b4\n  - text: ·\n  - link \"Documentation home\":\n    - /url: README.html",
+      "treeTruncated": false,
+      "documentFits": true,
+      "scrollRegionsFocusable": true
+    }
+  ],
+  "keyboard": [
+    {
+      "width": 320,
+      "skip": {
+        "text": "Skip to content",
+        "outline": "solid",
+        "rect": {
+          "x": 16,
+          "y": 8,
+          "width": 152,
+          "height": 42.390625,
+          "top": 8,
+          "right": 168,
+          "bottom": 50.390625,
+          "left": 16
+        }
+      },
+      "focusedMain": true,
+      "reachedQuery": true,
+      "status": "4 pages found. Showing up to 50.",
+      "resultFocus": {
+        "inResults": true,
+        "text": "Helm, GitOps, And Infrastructure Configuration",
+        "href": "reference/helm-values.html",
+        "outline": "solid"
+      },
+      "destination": "/search.html?q=pullPolicy"
+    },
+    {
+      "width": 768,
+      "skip": {
+        "text": "Skip to content",
+        "outline": "solid",
+        "rect": {
+          "x": 16,
+          "y": 8,
+          "width": 152,
+          "height": 42.390625,
+          "top": 8,
+          "right": 168,
+          "bottom": 50.390625,
+          "left": 16
+        }
+      },
+      "focusedMain": true,
+      "reachedQuery": true,
+      "status": "4 pages found. Showing up to 50.",
+      "resultFocus": {
+        "inResults": true,
+        "text": "Helm, GitOps, And Infrastructure Configuration",
+        "href": "reference/helm-values.html",
+        "outline": "solid"
+      },
+      "destination": "/search.html?q=pullPolicy"
+    },
+    {
+      "width": 1440,
+      "skip": {
+        "text": "Skip to content",
+        "outline": "solid",
+        "rect": {
+          "x": 16,
+          "y": 8,
+          "width": 152,
+          "height": 42.390625,
+          "top": 8,
+          "right": 168,
+          "bottom": 50.390625,
+          "left": 16
+        }
+      },
+      "focusedMain": true,
+      "reachedQuery": true,
+      "status": "4 pages found. Showing up to 50.",
+      "resultFocus": {
+        "inResults": true,
+        "text": "Helm, GitOps, And Infrastructure Configuration",
+        "href": "reference/helm-values.html",
+        "outline": "solid"
+      },
+      "destination": "/search.html?q=pullPolicy"
+    }
+  ],
+  "deniedExternalRequests": [],
+  "limits": "Representative automated real-browser layout, keyboard, accessibility-tree and axe WCAG subset observations only. No human screenreader, participant, whole-corpus or independent acceptance claim.",
+  "browser": "151.0.7922.34",
+  "finishedAt": "2026-10-31T19:44:57.026Z",
+  "layoutPass": true,
+  "axeSubsetPass": true,
+  "keyboardPass": true
+}

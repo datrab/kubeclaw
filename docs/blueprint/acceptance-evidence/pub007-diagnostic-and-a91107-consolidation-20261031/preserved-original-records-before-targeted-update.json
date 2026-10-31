@@ -1,0 +1,163 @@
+[
+  {
+    "id": "MNT-014-whole-native-publication-examples-20261027",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "ca3ba6f7a7449442de39b4e1825382c58dd3f23a1a59bbd09d2a0de36bf2ab02"
+  },
+  {
+    "id": "A99-11-whole-published-example-claims-20261027",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "f673860914d0192de85fb48b01237a26443e9c4e26d812a15012d1a7ce86179c"
+  },
+  {
+    "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "f46221bcd8b6c2586af1e7b849090142b2c1c08cbe6e6f66a51c5848a5711c3f"
+  },
+  {
+    "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "8b8a21914141bf012a7912cb56d3415ae043c3d5c9a1846e9d9f786b025355ee"
+  },
+  {
+    "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "745b6f1a9e96623394502a90ea390657bb01cbcd0fd0f9304c58cfe82a9bf66e"
+  },
+  {
+    "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "2c754a1f6f67c20f47aa45c2cbc8edf2acf1976f5ecaf69c20fe7590e87503e4"
+  },
+  {
+    "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "4c3c2ce223281896c2b15668f095902861b87426887a6dda064a07ad82f235b7"
+  },
+  {
+    "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "628ee12b2f71ddd992589b12010445ba43462728079a03ef04431a51e0cbd601"
+  },
+  {
+    "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "8ebbe4c7e84268f7d0ce4eff1dbc76e8ee8a02017122b87a051ae29b916a6bdc"
+  },
+  {
+    "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "79ae879ac819b28470f5c17e954fba56d441ee9a8e8983330ba94f10317fdf03"
+  },
+  {
+    "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "0aee6f365c5030c3f3fdb365cf0eb1f52185aec730ecf64ea5d829db177106a4"
+  },
+  {
+    "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "fabc8e08d5e9ba762c6f8f180d3e5d28537b5891e65c4d69162df8ea9742a9ec"
+  },
+  {
+    "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "21e40b58f269fe1515663ec24a83005070345a074104450698d8c90385557d71"
+  },
+  {
+    "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "5e306cdbe80cfbe065583d7382624740df024b13ba8a7a3f56552fcabec29447"
+  },
+  {
+    "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "8655440f600a17476053793ddae4900529431fcf9a3ebdc61c22425207190d66"
+  },
+  {
+    "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "4efe580c64865129dbe31380f022a384a7be74f23cfa37c431353c3504d7b469"
+  },
+  {
+    "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "1c2794f6a23642166cb654519f1c4003535da23a7395fd4bd7fd9209d99de1b1"
+  },
+  {
+    "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "6094a7a89b074d84735dfd6ae84c8051cbaac2b93defeca16e0da5c788da45e0"
+  },
+  {
+    "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "4b2f1f8481902fc5e212e91e20ce54cc8ca8d6e41d7d0c27a9009d3664d0a7d5"
+  },
+  {
+    "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "820afb7b84a50891c7140a1ae681c79c41240d7e82a31ca43c37ee076760f2c1"
+  },
+  {
+    "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "139a47bf6daab0ecc765713e458e90f77c11e4b8090e4d610f313ab9d05e31cc"
+  },
+  {
+    "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "570658aa20c386dc3d2ac864d4f93a39757a373bde76f69eea28cc82cb10593f"
+  },
+  {
+    "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+    "priorRevision": "a4b2a51459e0404110d8f9920a80bd35ad10bb9c",
+    "originalMatrixRevision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+    "originalMatrixPath": "docs/blueprint/documentation-completion-matrix.json",
+    "fullRecordSha256": "7d0182bc2e6953adcaf85c7cff9895752253419e0693cef2450a2aa00ec6b2c7"
+  }
+]

@@ -1,0 +1,76 @@
+{
+  "at": "2026-10-31T19:47:49.313133+00:00",
+  "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+  "build": {
+    "exitCode": 0,
+    "elapsedSeconds": 302.14706132397987,
+    "pages": 184,
+    "buildReportSha256": "97fd7f2586ba3a9cbbe5ea567f405cc6388cd1cc884f391f3dda82efdd2d4859",
+    "readerManifestSha256": "8a4246d9caf72c1d29db4f623f308a7dd6eb5fb54a0cbde82e2584b030f45c9e"
+  },
+  "artifactChecks": [
+    {
+      "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-artifact.mjs",
+      "exitCode": 0,
+      "elapsedSeconds": 33.71261560905259,
+      "log": "pub007-current-artifact-20261031.log"
+    },
+    {
+      "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-search.mjs",
+      "exitCode": 0,
+      "elapsedSeconds": 19.12703292805236,
+      "log": "pub007-current-search-20261031.log"
+    },
+    {
+      "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-source-links.mjs",
+      "exitCode": 0,
+      "elapsedSeconds": 275.79384235595353,
+      "log": "pub007-current-source-links-20261031.log"
+    },
+    {
+      "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-source-previews.mjs",
+      "exitCode": 0,
+      "elapsedSeconds": 41.264198202989064,
+      "log": "pub007-current-source-previews-20261031.log"
+    },
+    {
+      "command": "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh node scripts/docs-reader/check-diagrams.mjs",
+      "exitCode": 0,
+      "elapsedSeconds": 20.992870960966684,
+      "log": "pub007-current-diagrams-20261031.log"
+    }
+  ],
+  "responsiveAxe": {
+    "observations": 18,
+    "widths": [
+      320,
+      768,
+      1440
+    ],
+    "documentOverflow": 0,
+    "axeViolations": 0,
+    "contrastIncompleteRetained": true
+  },
+  "keyboard": "Three actual Tab/Enter search-result navigation confirmations, reduced-motion static diagram/alt/focus regions; initial navigation wait ambiguity retained and separately resolved.",
+  "originalPUB007": "NOT_ACCEPTED: actual independent screenreader and participant duties unmet; no automatic accessibility or human contrast acceptance.",
+  "newOriginalGateIds": [
+    "A911-07",
+    "A913-02",
+    "A913-03"
+  ],
+  "newOriginalRequirementIds": [],
+  "pendingConfigurationGateIds": [
+    "A98-10",
+    "A98-11",
+    "A911-02"
+  ],
+  "configurationPendingReason": "New real pre-mutation baseline fails stale uppercase-only ordered-prose matcher. Separate narrow review and actualretry required before adopting configuration gate records.",
+  "priorFailures": [
+    "Original300s timeout",
+    "315.55s uncommitted-source custody rejection",
+    "precommit original checker affectedMNT014 refusal",
+    "preexisting75eventsource vector mismatch",
+    "config mutation prerun case-sensitive matcher failure"
+  ],
+  "sourceDiagnosticsNotRuntimeAcceptance": true
+}

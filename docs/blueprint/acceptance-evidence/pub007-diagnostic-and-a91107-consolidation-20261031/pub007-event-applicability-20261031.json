@@ -1,0 +1,28 @@
+{
+  "schemaVersion": 1,
+  "question": "Does preexisting event source-vector staleness require blanket regeneration before two-file diagnostic Source commit/PUB007 current build?",
+  "conclusion": "No. Separate existing event drift gate, not direct dependency of current docs-publication check/build. Two-file local diagnostic Source commit is eligible after actual applicable checker/review passes, with explicit retained event gate failure and no original acceptance promotion. Root owns commit decision.",
+  "facts": [
+    "All14 complete current event family records equal retained inventory exactly; supporting vector equal; native path has zero event binding references.",
+    "75 changed/added primary inputs vs old inventory; reconstructed pre-WIP vector also mismatches qualification. Narrow diagnostic review cannot qualify entire vector.",
+    "scripts/docs-publication.mjs checkSite invokes docs-publication-examples.mjs; its finite actions and actual generated projection verification do not invoke docs-event-contracts.mjs or compare its broad source vector. build invokes checkSite then Reader/previews/diagrams.",
+    "scripts/docs-governance.mjs lines26,68 names event generator/check for events.md and generated source-map domain references existing event inventory; those map declarations are not execution of event regeneration.",
+    "package.json docs:events:check and docs:drift:event:check directly require current event source-vector qualification; docs:check:generated includes docs:events:check and therefore also fails separately.",
+    "No directly applicable prior qualification for all75 source deltas located by this bounded inspection of runtime current-work top-level closure records and relevant evidence filenames. Absence of located evidence is not assertion none exists."
+  ],
+  "actualChecksRequiringEventFreshness": [
+    "node scripts/docs-event-contracts.mjs --check / npm run docs:events:check",
+    "npm run docs:drift:event:check",
+    "npm run docs:check:generated (aggregate)"
+  ],
+  "notNewMandatoryPrerequisites": [
+    "Blanket event source-vector successor",
+    "Regenerating unrelated accepted event families",
+    "Reopening GOV-002/MNT-001/MNT-009/REF-003 as a new review campaign"
+  ],
+  "acceptanceBoundary": "No exemption: original event/current aggregate gate failures retained. No successful full generated-docs check, whole publication, human screenreader, participant, or PUB007 acceptance claimed. Actual root build/check outcomes remain required.",
+  "relatedEvidence": [
+    "pub007-independent-binding-20261031.json",
+    "pub007-event-source-vector-successor-20261031.json"
+  ]
+}

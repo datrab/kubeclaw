@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 1,
+  "review": "independent finite maintained authority transfer and nested binding qualification",
+  "authority": {
+    "path": "scripts/docs-publication-example-native.mjs",
+    "oldSha256": "75ccb5e8b86cad5395e2dd698aa7de67583c165bd1daa9718ab8e0153c450fa7",
+    "currentSha256": "4b10931357712db448ec49609ea510c274d7a596fe5569e40e6a123453d57ba3",
+    "oldBytes": 28656,
+    "currentBytes": 28690,
+    "completeDiff": "Only line 402 matcher admits JSON Pointer /images/control/pullPolicy as alternative to legacy dotted images.control.pullPolicy. All imports, exports, overlay inputs/render order, selected Deployment/container assertions, nonzero rejection assertion, timeout/error throws, fixture cleanup and cluster/historical boundaries unchanged."
+  },
+  "claimsCensus": {
+    "jsonNodes": 56814,
+    "stringLeaves": 39634,
+    "sections": {
+      "pages": 184,
+      "assets": 28,
+      "checks": 28,
+      "authorities": 83,
+      "contracts": 212
+    },
+    "allTargetAndHashReferences": [
+      {
+        "path": "$.authorities.25.path",
+        "value": "scripts/docs-publication-example-native.mjs"
+      },
+      {
+        "path": "$.authorities.25.sha256",
+        "value": "4b10931357712db448ec49609ea510c274d7a596fe5569e40e6a123453d57ba3"
+      }
+    ],
+    "completeChanges": [
+      {
+        "path": "$.authorities.25.sha256",
+        "old": "75ccb5e8b86cad5395e2dd698aa7de67583c165bd1daa9718ab8e0153c450fa7",
+        "current": "4b10931357712db448ec49609ea510c274d7a596fe5569e40e6a123453d57ba3"
+      }
+    ]
+  },
+  "affectedBindings": {
+    "page": "docs/site/reference/configuration-precedence.md",
+    "blocks": 6,
+    "proseRegions": 7,
+    "nestedAnchors": 17,
+    "contractFields": [
+      "sourceRef",
+      "kind",
+      "scope",
+      "owners",
+      "nativeChecks",
+      "prerequisites",
+      "errors",
+      "effects",
+      "cleanup",
+      "expectedResults",
+      "limits",
+      "execution",
+      "anchors"
+    ],
+    "nativeChecks": [
+      "syntax-instructions",
+      "compact",
+      "helm-overlays"
+    ],
+    "dispatch": {
+      "id": "helm-overlays",
+      "validator": "helm-overlays",
+      "claim": "Actual ordered Helm render/merge and named expected rejection",
+      "limit": "No cluster/deployment proof",
+      "inputs": [
+        "docs/site/reference/configuration-precedence.md#block-2",
+        "docs/site/reference/configuration-precedence.md#block-3",
+        "docs/site/reference/configuration-precedence.md#block-4"
+      ]
+    },
+    "mismatches": [],
+    "priorMismatchesPreserved": true,
+    "assessment": "All affected authored responsibilities, six obligation fields, nested anchors/exact quoted statements, execution/source boundaries and mandatory three-input dispatch unchanged; no quote mentions the diagnostic encoding. Existing block-2 owner wording says resources although native action does not assert resources: preexisting, unchanged, not newly qualified as native proof."
+  },
+  "maintainedConsumers": [
+    {
+      "path": "docs/generated/inventory/event-contracts.json",
+      "references": [
+        {
+          "path": "$.primarySourceVector.1045",
+          "record": {
+            "path": "scripts/docs-publication-example-native.mjs",
+            "sha256": "75ccb5e8b86cad5395e2dd698aa7de67583c165bd1daa9718ab8e0153c450fa7",
+            "bytes": 28656
+          }
+        },
+        {
+          "path": "$.primarySourceVector.1045.path",
+          "value": "scripts/docs-publication-example-native.mjs"
+        },
+        {
+          "path": "$.primarySourceVector.1045.sha256",
+          "value": "75ccb5e8b86cad5395e2dd698aa7de67583c165bd1daa9718ab8e0153c450fa7"
+        }
+      ]
+    },
+    {
+      "path": "docs/generated/inventory/configuration-families.json",
+      "references": [
+        {
+          "path": "$.selectedSources.runtime.294",
+          "value": "scripts/docs-publication-example-native.mjs"
+        }
+      ]
+    },
+    {
+      "path": "docs/generated/inventory/cli-surfaces.json",
+      "references": []
+    },
+    {
+      "path": "docs/config/configuration-family-map.json",
+      "references": [
+        {
+          "path": "$.selectedSources.runtime.294",
+          "value": "scripts/docs-publication-example-native.mjs"
+        }
+      ]
+    },
+    {
+      "path": "docs/config/documentation-tree-classification.json",
+      "references": []
+    }
+  ],
+  "findings": [
+    {
+      "severity": "preexisting-separate-generated-gate",
+      "path": "docs/generated/inventory/event-contracts.json",
+      "detail": "Event inventory retains old native hash/size, but deeper supported collection establishes75 preexisting changed/added source inputs and14 unchanged complete families/supporting authorities. Broad staleness is a separate original event drift gate, not a blanket prerequisite for this two-file diagnostic Source patch or current publication build. See pub007-event-applicability-20261031.json."
+    }
+  ],
+  "verdict": "Authority hash change justified for exact diagnostic-only delta; authored nested binding transfer clean with existing limits preserved. Separate preexisting event source-vector gate unresolved; no final publication acceptance.",
+  "inspectedPaths": [
+    "docs/config/publication-example-claims.json",
+    "scripts/docs-publication-example-native.mjs",
+    "docs/site/reference/configuration-precedence.md",
+    "scripts/lib/docs-publication-example-coverage.mjs",
+    "scripts/lib/docs-publication-claim-contracts.mjs",
+    "scripts/docs-publication-examples.mjs",
+    "scripts/docs-publication-example-projections.mjs",
+    "docs/generated/inventory/event-contracts.json",
+    "docs/generated/inventory/configuration-families.json",
+    "docs/generated/inventory/cli-surfaces.json",
+    "docs/config/configuration-family-map.json",
+    "docs/config/documentation-tree-classification.json",
+    "/home/node/.openclaw/workspace/operations/pr13/evidence/pub007-helm-diagnostic-20261031-review.json"
+  ],
+  "scopeLimits": [
+    "Read-only repository review; no build/native action run.",
+    "No claim of current artifact, responsive/keyboard/accessibility/human screenreader/participant or PUB-007 acceptance.",
+    "All-source census identifies references, not independent re-review of unrelated 212 authored scopes.",
+    "Existing unrelated mismatches not repaired or exempted."
+  ],
+  "originalAccessibilityBoundary": {
+    "catalogueCitation": "docs/blueprint/AP09-completeness-audit.md:390",
+    "catalogueExactText": "Es gibt jedoch keinen finalen Renderer und keine dokumentierte Abnahme f\u00fcr schmale Viewports, Tastatur, Fokus, Kontrast oder Screenreader.",
+    "acceptanceCitation": "docs/blueprint/AP09-acceptance-contract.md:276",
+    "acceptanceExactText": "Automatische Accessibility-Pr\u00fcfung und unabh\u00e4ngige Keyboard-/Screenreader-Probe decken Navigation, Suche, Dialoge, Links, \u00dcberschriften, Fokus, Kontrast, Reduced Motion und Diagrammalternativen ab.",
+    "rejectedSubstitute": "Lighthouse-Score allein oder nur automatischer Axe-Lauf.",
+    "assessment": "Actual browser accessibility-tree, keyboard and automated checks can document finite partial evidence only; they do not execute a screenreader. No substitution/waiver in inspected original text. Separate participant or human obligations remain unfulfilled; this review neither proves nor waives them."
+  }
+}

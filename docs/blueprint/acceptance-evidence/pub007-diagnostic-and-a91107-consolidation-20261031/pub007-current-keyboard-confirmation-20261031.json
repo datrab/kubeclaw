@@ -1,0 +1,106 @@
+{
+  "revision": "d9cbce8803b44afdcc79e8324233eebc0744e742",
+  "observations": [
+    {
+      "width": 320,
+      "queryReachedByTab": true,
+      "resultReachedByTab": true,
+      "enterNavigation": {
+        "url": "/reference/helm-values.html",
+        "h1": "Helm, GitOps, And Infrastructure Configuration"
+      },
+      "diagram": {
+        "reducedMotion": true,
+        "animations": 0,
+        "images": [
+          {
+            "alt": "Which ordered handoffs prepare, execute and clean up one Worker attempt?",
+            "complete": true
+          },
+          {
+            "alt": "Which Worker allocation states permit progress, cleanup or an unresolved stop?",
+            "complete": true
+          }
+        ],
+        "regions": [
+          {
+            "tabindex": 0,
+            "label": "Which ordered handoffs prepare, execute and clean up one Worker attempt?"
+          },
+          {
+            "tabindex": 0,
+            "label": "Which Worker allocation states permit progress, cleanup or an unresolved stop?"
+          }
+        ]
+      }
+    },
+    {
+      "width": 768,
+      "queryReachedByTab": true,
+      "resultReachedByTab": true,
+      "enterNavigation": {
+        "url": "/reference/helm-values.html",
+        "h1": "Helm, GitOps, And Infrastructure Configuration"
+      },
+      "diagram": {
+        "reducedMotion": true,
+        "animations": 0,
+        "images": [
+          {
+            "alt": "Which ordered handoffs prepare, execute and clean up one Worker attempt?",
+            "complete": true
+          },
+          {
+            "alt": "Which Worker allocation states permit progress, cleanup or an unresolved stop?",
+            "complete": true
+          }
+        ],
+        "regions": [
+          {
+            "tabindex": 0,
+            "label": "Which ordered handoffs prepare, execute and clean up one Worker attempt?"
+          },
+          {
+            "tabindex": 0,
+            "label": "Which Worker allocation states permit progress, cleanup or an unresolved stop?"
+          }
+        ]
+      }
+    },
+    {
+      "width": 1440,
+      "queryReachedByTab": true,
+      "resultReachedByTab": true,
+      "enterNavigation": {
+        "url": "/reference/helm-values.html",
+        "h1": "Helm, GitOps, And Infrastructure Configuration"
+      },
+      "diagram": {
+        "reducedMotion": true,
+        "animations": 0,
+        "images": [
+          {
+            "alt": "Which ordered handoffs prepare, execute and clean up one Worker attempt?",
+            "complete": true
+          },
+          {
+            "alt": "Which Worker allocation states permit progress, cleanup or an unresolved stop?",
+            "complete": true
+          }
+        ],
+        "regions": [
+          {
+            "tabindex": 0,
+            "label": "Which ordered handoffs prepare, execute and clean up one Worker attempt?"
+          },
+          {
+            "tabindex": 0,
+            "label": "Which Worker allocation states permit progress, cleanup or an unresolved stop?"
+          }
+        ]
+      }
+    }
+  ],
+  "limits": "Coordinator keyboard/reduced-motion/diagram accessibility-tree observations only. No independent human participant or screenreader acceptance. Earlier harness navigation timing ambiguity retained, not silently rewritten.",
+  "pass": true
+}
