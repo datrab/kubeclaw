@@ -2,6 +2,7 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 resources:
   - resources.yaml
+  - telegram-enrollment.yaml
 configMapGenerator:
   - name: familyclaw-initialization-code
     namespace: kubeclaw-ops
@@ -9,3 +10,7 @@ configMapGenerator:
       - run.mjs
       - argo-sync.mjs
       - runtime-configuration.mjs
+  - name: familyclaw-telegram-enrollment-code
+    namespace: kubeclaw-ops
+    files:
+      - telegram-enrollment.mjs
