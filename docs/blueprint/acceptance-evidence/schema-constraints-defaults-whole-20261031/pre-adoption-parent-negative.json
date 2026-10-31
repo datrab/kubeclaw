@@ -1,0 +1,30 @@
+{
+  "scope": "Existing five bound parents after scalar-first current schema-doc-tool change; no new census",
+  "results": [
+    {
+      "source": "scripts/docs-api-reference.mjs",
+      "status": "FAIL_CURRENT_CHANGED_TOOL_DEPENDENCY",
+      "error": "AssertionError [ERR_ASSERTION]: DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-api-reference.mjs; selected producer/helper/initialization custody changed"
+    },
+    {
+      "source": "scripts/docs-generate.mjs",
+      "status": "FAIL_CURRENT_CHANGED_TOOL_DEPENDENCY",
+      "error": "AssertionError [ERR_ASSERTION]: DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-generate.mjs; selected producer/helper/initialization custody changed"
+    },
+    {
+      "source": "scripts/docs-api-product-scope.mjs",
+      "status": "FAIL_CURRENT_CHANGED_TOOL_DEPENDENCY",
+      "error": "AssertionError [ERR_ASSERTION]: DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-api-product-scope.mjs; selected producer/helper/initialization custody changed"
+    },
+    {
+      "source": "scripts/docs-configuration-inventory.mjs",
+      "status": "FAIL_CURRENT_CHANGED_TOOL_DEPENDENCY",
+      "error": "AssertionError [ERR_ASSERTION]: DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-configuration-inventory.mjs; selected producer/helper/initialization custody changed"
+    },
+    {
+      "source": "scripts/docs-api-output-discovery.mjs",
+      "status": "FAIL_CURRENT_CHANGED_TOOL_DEPENDENCY",
+      "error": "AssertionError [ERR_ASSERTION]: DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: scripts/docs-api-output-discovery.mjs; selected producer/helper/initialization custody changed"
+    }
+  ]
+}

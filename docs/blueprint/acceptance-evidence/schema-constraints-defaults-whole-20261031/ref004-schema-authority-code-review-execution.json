@@ -1,0 +1,28 @@
+{
+  "status": "TERMINAL",
+  "pid": 947839,
+  "startedAt": "2026-10-31T11:55:27.736194+00:00",
+  "snapshot": "/home/node/.openclaw/workspace/tmp/pr13-ref004-schema-code-1070e7u4",
+  "argv": [
+    "bash",
+    "/home/node/.openclaw/agents/main/agent/workshop-skills/autoreview-terra/scripts/run-autoreview.sh",
+    "--mode",
+    "local",
+    "--model",
+    "gpt-5.6-terra",
+    "--thinking",
+    "high",
+    "--codex-bin",
+    "/app/extensions/codex/node_modules/.bin/codex",
+    "--max-priority",
+    "P2",
+    "--dataset",
+    ".pr13-review-context.txt",
+    "--prompt",
+    "P0/P1/P2 corrected affected5file review. First actualP2 raw kept: owned rewritten disclosure not protected after migration. NOW exact one legacy OR current disclosure required; missing/mutated/duplicate rejected. Status and Lastverified also exactone before canonical rewrite, four negative metadata controls. Renderer counts derivefromdata ratherthanduplicates. Three disclosure deletion/change/dup controls and metadata deletion/dup nativePASS. All22 source dispositions separately SourcePASS; no newSourceaudit. Review actualremainingCode, do notreinterpretfirstP2 asclean. P0/P1/P2 affected5file review existing71line schemafield owner extension, exactbinding/indexauthority object, owned reference region and existing meaningful driftcontrols. Not a newcollector/framework or generic schema evaluator. Nativeguard physically binds25actualsource/package/helper/generated/schema inputs,22schema identities/dialect/root/reader/default descriptors, partitions ALL135currentdeclaration entries exactlyinto113priorqualifiedcovered+22newsemanticdispositions with no missing/duplicate/extra; current/fixture/retained/docs originalstatus/schemahash/propertyalgorithms unchanged. Literalcompileddata seal is independent actualSource adjudicateddata binding, not semanticproof byhash; a separate current22Source/naturalowner review suppliesmeaning. Explicitmanual/AJV/generated/declaration-only modes, no observedruntime/deployment boolean canbecome true, telemetrynode mustneverbe runtime consumer. Package/schema/validator replacements fail, hardlinks/redirectedphysicalsources refused, canonicalRoot andwithinRoot paths. PureRender escapespipe/HTML/linebreaks and onlyreplacesonegeneratedregion plus precise oldstatus/date/disclosure/one movedcfgselector sourcecitation; no changesoutsideknownownedmetadata allowed. Native --reference precomputesbothdata/page beforewrites; normal --check (includingexistingpublicationlibrary checker) comparesdata ANDownedreference, sourcebindings first. FullCodeCLI supplied, no truncatedglobalgatecontext. Check marker/end order, falsecoverage/default/activation/currentness claims andsupportedsource bounds; Source-onlysnapshotisnotinstalledproduct and coordinatorcontrolsseparateevidence. Testcorpus nowcopiesactualSourceauthorityinputs+cfgselector so no stuboracle, old19driftguardsretained; newmissing/duplicate/unbound/runtimefalseclaim/telemetryfalseconsumer/AJVvsmanual/data/code/Schema/package/generated-validator/hardlink/regiontamper andrestoredbaseline controlsPASS. Datafields no property/defaultinsertion claimedbyruntime; manualAxe builtins vsSchemaDefaults separate. No actualprismvalidatorregeneration/browser/provider/telemetrydelivery claimed. Review guard/reference implementation ratherthanall274schemas orpreviousclosedREF003world. Noagents/nestedreviews/mutations. Codeclean isnot originalREF004 Source/Reader/Quality/acceptance. Nativepublication/scalar/module-source bindings mayneedonefinalaffectedtransfer aftercurrentCodefreeze; do notdemanddefaultglobalAPI success orrepinunchangedcorpus.",
+    "--json-output",
+    "/home/node/.openclaw/workspace/operations/pr13/evidence/ref004-whole-schema-20261031/ref004-schema-authority-code-review.json"
+  ],
+  "exitCode": 0,
+  "finishedAt": "2026-10-31T11:57:01.025931+00:00"
+}

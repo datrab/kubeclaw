@@ -1,0 +1,36 @@
+{
+  "snapshot": "/home/node/.openclaw/workspace/tmp/pr13-ref004-schema-code-lo7q5c25",
+  "actualRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "actualBaseline": "e3f1cafc3661a1a21b6a88ec9186241f9a55377a",
+  "snapshotBaseline": "6db9a8abff0fb049c88c24995592df02ed236278",
+  "paths": [
+    {
+      "path": "scripts/docs-schema-fields.mjs",
+      "baselineSha256": "b04ec974b484b966e05b302f1f44c18e9826723744b0529d420a327de1b10994",
+      "candidateSha256": "3188f304101e92589b254bd30d0ee2a6bf78a49f57dbefbc5076aae4284e455c"
+    },
+    {
+      "path": "scripts/tests/schema-field-drift.test.mjs",
+      "baselineSha256": "e3ad79780056c971f39890f7ece0a471c1c045dcb82d09998b27ba2a43664681",
+      "candidateSha256": "2a9554268bfb45e8fb28eb8cc23895b619594d803adf03742a0663740ce80eac"
+    },
+    {
+      "path": "docs/config/schema-field-bindings.json",
+      "baselineSha256": "6062ec4ed2f0e61de4fdf9b10f0b4f07c60c0397de7f8377de1e96f28c71e34c",
+      "candidateSha256": "c08f7ac2f8a77cf5cfdf97f4e9c47f1965ad7af6145c8bb789a6240a0c1463b3"
+    },
+    {
+      "path": "docs/generated/inventory/schema-field-drift.json",
+      "baselineSha256": "9997816a871dc910f9639666098e2e20340a8b04f5280b1c5c4c373e34f61ff5",
+      "candidateSha256": "1055d19f5f7cbfd4a223d59b8787ac7daf7476783ad60697759f2307fb389257"
+    },
+    {
+      "path": "docs/site/reference/schemas.md",
+      "baselineSha256": "a8a90161674cc6c8c5d88f20af8aca46720c27f4bca4724cab57618200358af7",
+      "candidateSha256": "33730bd02cf749e539ab74d15af5bf7b2bfd75977e4b15e2dab3aba174e1d1c9"
+    }
+  ],
+  "contextBytes": 125115,
+  "contextSha256": "e33140c3e663deeda1975ca0b00262ff69824c6a06179173c8e55f1e3c84f468",
+  "limits": "Source22meaning separate; no runtime/native3.14/globalAPI or originalwhole award from Codeclean."
+}

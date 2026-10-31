@@ -1,0 +1,190 @@
+{
+  "report": "ref004-existing-source-finite-remainder-verdict.json",
+  "revision": "e3f1cafc3661a1a21b6a88ec9186241f9a55377a",
+  "originalCriterion": {
+    "id": "REF-004",
+    "requirement": "All supported schemas, constraints and defaults with actual semantic consumer coverage.",
+    "historicalFailure": "Supported schema-family and recursive consumer/default coverage was incomplete; a suffix/property inventory alone could not close it."
+  },
+  "existingArtifactAssessment": {
+    "schemaFieldIndex": {
+      "result": "CURRENT_BUT_NOT_WHOLE_PROOF",
+      "evidence": "274 owned JSON-schema files and 7,355 literal property pointers; it explicitly excludes schema validation, reference resolution, applicable runtime fields, and consumer/default semantics."
+    },
+    "configurationSchemas": {
+      "result": "REUSABLE_CURRENT_SUBSET",
+      "evidence": "60 configuration-schema authorities, 857 schema fields, 700 public fields, 698 qualified runtime authorities, zero current schema-meaning/owner/consumer blockers.",
+      "scope": "Registered plugin configuration plus platform configuration; this is strong direct source/consumer/default evidence for that subset, not proof for all 274 files."
+    },
+    "eventContracts": {
+      "result": "REUSABLE_SEPARATE_SCOPE",
+      "evidence": "14 event families preserve schema-reference and activation/retention boundaries.",
+      "scope": "Event schema references and declared/retained distinctions are not automatically semantic coverage for every non-event contract schema."
+    },
+    "schemasPage": {
+      "result": "HONEST_BOUNDED_REFERENCE_NOT_WHOLE",
+      "finding": "The current page expressly says it does not cover every other contracts root, telemetry/API/event authority, host/Codex plugin root, tools/ops/packaging source, dynamic registration, or arbitrary embedded TS/JS schema expression.",
+      "qualityNote": "Its stated 2026-10-15 verification date also cannot serve as current whole-REF-004 delivery evidence."
+    }
+  },
+  "reusableQualifiedCoverage": [
+    {
+      "scope": "60 configuration-schema authorities",
+      "reason": "Existing configuration inventory directly joins schema, registration, consumer/default semantics, and source ownership."
+    },
+    {
+      "scope": "37 stage input/result/checkpoint declaration files",
+      "reason": "The schemas reference identifies declared registration pointers and finite caller classes; source limits remain distinct from execution."
+    },
+    {
+      "scope": "12 named manual/generated companions",
+      "reason": "Existing documentation correctly separates manual parsers/generated companions from automatic JSON-schema loading or parity."
+    },
+    {
+      "scope": "Worker v1/v2/v3, Prism chart, Buster CRD, Nova project, and embedded review authorities",
+      "reason": "Existing explicit authority/consumer sections remain reusable only at their stated validation, generated-output, or no-live-execution limits."
+    },
+    {
+      "scope": "14 Event families and the current runtime_log declaration",
+      "reason": "Existing Event source judgments preserve direct constructor/consumer and retained-declaration boundaries without claiming all declarations execute."
+    }
+  ],
+  "materialFindings": [
+    {
+      "priority": "P1",
+      "id": "REF004-SEMANTIC-AUTHORITY-22",
+      "finding": "22 current-declaration schema files are not represented by the current configuration-schema inventory, Event source vector, or schemas.md authority/consumer route. They therefore lack the complete source-backed constraint/default/semantic-consumer disposition required for REF-004.",
+      "groups": [
+        {
+          "family": "delivery-manifest-v3",
+          "count": 1,
+          "schemas": [
+            "contracts/delivery-manifest/v3/schemas/delivery-manifest.v3.schema.json"
+          ],
+          "knownOwnerInputs": [
+            "contracts/delivery-manifest/v3/src/index.ts",
+            "contracts/delivery-manifest/v3/package.json"
+          ],
+          "requiredMeaning": "Distinguish the exported schema document from create/parse/read manual validation, including whether defaults are inserted and which read/write caller owns each failure."
+        },
+        {
+          "family": "pipeline-test-gate-contract",
+          "count": 5,
+          "schemas": [
+            "contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json",
+            "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+            "contracts/pipeline-test-gate/v1/schemas/lighthouse-settings.v1.schema.json",
+            "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+            "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json"
+          ],
+          "knownOwnerInputs": [
+            "contracts/pipeline-test-gate/v1/src/validation.ts",
+            "skills/buster/plugins/axe/src/provider.js",
+            "skills/buster/plugins/lighthouse/src/provider.js",
+            "skills/buster/plugins/visual/src/provider.js",
+            "skills/buster/plugins/playwright/src/provider.js"
+          ],
+          "requiredMeaning": "Record the direct AJV routes for pipeline/e2e documents separately from provider manual version/shape checks; do not convert test fixtures or provider result construction into runtime execution proof."
+        },
+        {
+          "family": "prism-contract-baseline",
+          "count": 1,
+          "schemas": [
+            "contracts/prism/v1/schemas/baseline-v2.schema.json"
+          ],
+          "knownOwnerInputs": [
+            "contracts/prism/v1/scripts/generate-validators.mjs",
+            "contracts/prism/v1/src/validators.generated.mjs",
+            "contracts/prism/v1/src/index.ts"
+          ],
+          "requiredMeaning": "Document source-schema-to-generated-validator authority, default behavior, and actual selected validation route without claiming validator generation or Prism deployment ran."
+        },
+        {
+          "family": "telemetry-bundle-contracts",
+          "count": 15,
+          "schemas": [
+            "contracts/telemetry/v1/bundle/artifact_published.v1.schema.json",
+            "contracts/telemetry/v1/bundle/composed_prompt.v1.schema.json",
+            "contracts/telemetry/v1/bundle/evaluation_fact.v1.schema.json",
+            "contracts/telemetry/v1/bundle/expected_source_facts.v1.schema.json",
+            "contracts/telemetry/v1/bundle/pipeline_command_evidence.v1.schema.json",
+            "contracts/telemetry/v1/bundle/pipeline_command_request.v1.schema.json",
+            "contracts/telemetry/v1/bundle/pipeline_evidence_export.v1.schema.json",
+            "contracts/telemetry/v1/bundle/pipeline_lifecycle_event.v1.schema.json",
+            "contracts/telemetry/v1/bundle/pipeline_lifecycle_read_models.v1.schema.json",
+            "contracts/telemetry/v1/bundle/producer_health_snapshot.v1.schema.json",
+            "contracts/telemetry/v1/bundle/quarantined_payload.v1.schema.json",
+            "contracts/telemetry/v1/bundle/run_archive_manifest.v1.schema.json",
+            "contracts/telemetry/v1/bundle/run_catalog_entry.v1.schema.json",
+            "contracts/telemetry/v1/bundle/run_manifest.v1.schema.json",
+            "contracts/telemetry/v1/bundle/terminal_closure.v1.schema.json"
+          ],
+          "knownOwnerInputs": [
+            "contracts/telemetry/v1/contract-manifest.json",
+            "contracts/telemetry/v1/bundle-types.ts"
+          ],
+          "requiredMeaning": "Give each declaration an explicit supported consumer or an explicit declared-but-no-proved-runtime-schema-reader status. Do not treat the manifest/type declaration as a runtime validator or infer telemetry delivery. runtime_log.v1 remains separately source-qualified through its actual diagnostic writers."
+        }
+      ],
+      "impact": "The page’s present finite/bounded disclosure is accurate, but it confirms rather than repairs the original all-schema gap."
+    },
+    {
+      "priority": "P2",
+      "id": "REF004-CURRENTNESS-DISCLOSURE",
+      "finding": "schemas.md still carries its older bounded/currentness presentation. A new REF-004 result must be generated from current sealed authority inputs, not relabeled current by the successful field-pointer check."
+    }
+  ],
+  "originalWholeFeasibility": {
+    "verdict": "FEASIBLE_WITH_ONE_COHERENT_EXISTING_OWNER_EXTENSION",
+    "reason": "The residual is a finite 22-schema, four-family authority problem, not a need for a universal schema parser, default-global-API success, or a review of all 274 files.",
+    "notSupported": [
+      "Closing REF-004 from suffixes, pointer counts, current-declaration status, or package paths.",
+      "Calling fixtures, retained declarations, or documentation examples inactive without an explicit authority disposition.",
+      "Claiming runtime default insertion merely because a schema contains default.",
+      "Using Event/contract declaration references as live validation or delivery proof."
+    ]
+  },
+  "oneMinimalCoherentSuccessor": {
+    "owner": "Existing docs-schema-fields/schema-field-bindings plus schemas-reference rendering path",
+    "change": "Extend the existing schema binding contract with an explicit authority disposition for every current-declaration schema not already covered by the qualified configuration, Event, Worker/CRD/chart, or named-companion route. The first required entries are the finite 22 paths above. Render a concise authority table in schemas.md linking schema, exact validator/manual consumer or explicit no-proved-reader state, default-insertion behavior, and source limit.",
+    "requiredProperties": [
+      "Exact source identity and regular/canonical physical input for every authority record.",
+      "Schema pointer/version/dialect and direct consumer symbol or explicit declared-without-proved-reader status.",
+      "Default semantics: annotation-only, validator insertion, resolver insertion, manual fallback, or none.",
+      "Constraint semantics must preserve recursive/reference/branch limits and avoid treating TypeScript shapes as schema validation.",
+      "Current versus retained/fixture/documentation classification remains separate."
+    ],
+    "namedControls": [
+      "Missing, duplicate, extra, or unbound current-declaration authority entry fails.",
+      "Changed schema, validator/manual consumer, registration, package export, or authority status fails before rendering.",
+      "A runtime/default/activation claim without its exact source consumer fails.",
+      "A declared-but-no-proved-reader telemetry entry must remain non-runtime; adding a false consumer fails.",
+      "Pipeline-test-gate AJV and manual-provider routes must remain distinct.",
+      "Prism generated-validator source/validator relationship must reject a substituted schema or generated validator.",
+      "Existing --schemas-only and docs-schema-fields checks remain required; no generic schema evaluator is introduced."
+    ],
+    "requiredAffectedReview": [
+      "Source review of the 22 records and their listed natural owners only.",
+      "Affected generator/reference review for the new authority disposition table.",
+      "Fresh schemas reference generation/check, then independent practical Reader and Quality review."
+    ]
+  },
+  "openHistoricalFindings": {
+    "ids": [
+      "A98-20261012-CANONICAL-REFLECTION-S4",
+      "A98-20261012-CANONICAL-REFLECTION-S5"
+    ],
+    "disposition": "Retained. They are neither evidence for nor a prerequisite to this bounded schema-authority completion unless an included authority route actually depends on them."
+  },
+  "originalREF004Status": {
+    "verdict": "NOT_READY",
+    "reason": "Current artifacts are valuable and current, but the finite 22-schema semantic authority/consumer/default gap means the original all-schema criterion is not yet met.",
+    "nextAction": "Author one bounded existing schema-authority successor for the four listed families, then perform affected Source/code review, guarded native/reference generation, Reader/Quality review, and a separate whole REF-004 decision."
+  },
+  "limits": [
+    "No acceptance from native currentness alone.",
+    "No default-global-API requirement or success claim.",
+    "No generic collector, AST schema evaluator, or all-repository audit.",
+    "No runtime validation, deployment, provider, API, or telemetry-delivery claim."
+  ]
+}

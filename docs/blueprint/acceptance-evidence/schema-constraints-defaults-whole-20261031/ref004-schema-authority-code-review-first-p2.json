@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Validate the rewritten coverage disclosure during reference checks",
+      "body": "The renderer only replaces the pre-change `oldLimit` text. Once the page has been migrated, that text is absent, so editing or deleting the new disclosure makes this replacement a no-op and `renderSchemaAuthorityReference(...)` returns the tampered page unchanged. Consequently `--check` accepts loss or alteration of the stated coverage boundary, unlike the generated region, status, date, and selector citation. Require exactly one expected current disclosure (or otherwise reject an absent/modified disclosure) before returning the page.",
+      "priority": "P2",
+      "confidence": 0.96,
+      "category": "bug",
+      "code_location": {
+        "file_path": "scripts/docs-schema-fields.mjs",
+        "line": 81
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The reference-integrity check does not protect one of the explicitly owned rewritten disclosures, allowing documentation coverage claims to drift without detection.",
+  "overall_confidence": 0.96
+}

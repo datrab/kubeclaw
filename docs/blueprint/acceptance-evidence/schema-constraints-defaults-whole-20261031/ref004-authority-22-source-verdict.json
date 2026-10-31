@@ -1,0 +1,94 @@
+{
+  "report": "ref004-authority-22-source-verdict.json",
+  "verdict": "NOT_READY",
+  "affected22SourceMeaning": "PASS_AT_EXACT_SOURCE_SCOPE",
+  "families": {
+    "deliveryManifestV3": {
+      "records": 1,
+      "verdict": "PASS",
+      "judgment": "The v3 manual create/parse/read path enforces closed shape, digest and immutable clone behavior. It does not load the JSON Schema; the record correctly states no schema/parser-parity or default-population claim and retains the v2 read branch."
+    },
+    "pipelineTestGate": {
+      "records": 5,
+      "verdict": "PASS",
+      "judgment": "AJV is strict/allErrors without useDefaults for the selected gate/e2e routes. Axe, Lighthouse and Visual are bounded manual readers: built-in-profile fallback, omitted-budget null, derived baseline digest, profile/browser/PNG checks are correctly described as consumer behavior, not schema-default insertion or browser execution."
+    },
+    "prismBaseline": {
+      "records": 1,
+      "verdict": "PASS",
+      "judgment": "The generator binds all four named schema inputs with AJV lacking useDefaults; checked-in generated validation is selected only for baselineManifest with prism.baseline-bundle.v2 after complexity checks. No regeneration, parity, or deployment claim is made."
+    },
+    "telemetryV1Bundles": {
+      "records": 15,
+      "verdict": "PASS",
+      "judgment": "The manifest/types/README/generator establish retained declaration assets only. No current runtime JSON-Schema reader, fallback, ingestion, ordering, quarantine, or active-v2 activation is inferred."
+    }
+  },
+  "schemaFacts": {
+    "selectedCurrentDeclarations": 135,
+    "reusedQualifiedCoverage": 113,
+    "newAuthorityRecords": 22,
+    "sealedNaturalInputs": 25,
+    "defaultAnnotationsIn22Schemas": 0,
+    "constraintBoundary": "Whole JSON Schema documents, refs, branches and non-property constraints remain source-bound; the field index is not represented as a validator or runtime applicability proof."
+  },
+  "materialFindings": [
+    {
+      "id": "REF004-P2-REFERENCE-DISCLOSURE-CUSTODY",
+      "location": "scripts/docs-schema-fields.mjs:80-82",
+      "finding": "After migration, oldLimit is absent. Deleting or changing the current coverage-boundary disclosure makes page.replace(oldLimit, newLimit) a no-op, so --check accepts the altered page while preserving the generated authority block.",
+      "impact": "The current page is accurate, but the explicit boundary that prevents overclaiming the authority map is not durably checked.",
+      "finiteRemedy": "Require exactly one current disclosure string in renderSchemaAuthorityReference and add deletion/mutation refusal controls. Regenerate the reference and rerun the existing check."
+    }
+  ],
+  "outputAndReferenceBounds": {
+    "sourceToolMeaning": "documentation metadata/index generation only",
+    "inputs": "Existing schema discovery and registration inputs plus sealed authorityCoverage records and 25 physical authority inputs; the configuration-inventory source is read only to refresh its cited selector location and digest.",
+    "outputs": {
+      "default": [
+        "docs/generated/inventory/schema-field-drift.json"
+      ],
+      "referenceOnly": [
+        "docs/generated/inventory/schema-field-drift.json",
+        "docs/site/reference/schemas.md generated authority region"
+      ],
+      "check": "Read/compare only"
+    },
+    "notGranted": [
+      "JSON-Schema evaluation",
+      "default population",
+      "runtime validation",
+      "browser/provider/telemetry execution",
+      "product configuration, API, compiler, or acquisition authority"
+    ]
+  },
+  "changedDocToolSemanticTransfer": {
+    "verdict": "SUPPORTED_CONDITIONAL_ON_P2_FIX",
+    "currentMeaning": "docs-schema-fields remains an existing documentation-metadata tool. The new authority coverage adds sealed source dispositions and an optional fixed reference-region writer; docs-publication-examples invokes its check path only.",
+    "requiredMetadataHandling": "After the disclosure fix and code freeze, derive one maintained current binding batch for docs-schema-fields.mjs, schema-field-drift.test.mjs, and only actually affected existing owner/parent receipts. Do not pre-approve a native-role result, renew all 45 subjects, or infer metadata fields from hashes."
+  },
+  "controlsEvidence": {
+    "reportedPassing": [
+      "missing/duplicate/unbound authority refusal",
+      "false runtime-observed and telemetry-reader-claim refusal",
+      "AJV/manual-kind distinction",
+      "sealed source/schema/package drift",
+      "hardlink refusal",
+      "generated authority-region tamper refusal"
+    ],
+    "limit": "These controls establish custody and output drift behavior; they do not replace the source judgments above."
+  },
+  "finiteNextAction": [
+    "Correct and test the single disclosure-custody P2.",
+    "Complete the independent affected code review.",
+    "Derive the one ordered changed-tool metadata batch from current frozen sources, then perform its affected metadata review and existing checks.",
+    "Only afterwards perform fresh reference output, Reader/Quality, and original REF-004 whole-topic adjudication."
+  ],
+  "notGranted": [
+    "REF-004 whole acceptance",
+    "Reader or Quality acceptance",
+    "default global API success",
+    "runtime or deployment success",
+    "new generic schema/platform profiling authority"
+  ]
+}

@@ -1,0 +1,64 @@
+{
+  "report": "ref004-whole-original-verdict.json",
+  "revision": "a54c0270bb37f2be1e93e87a16509b0b0aed4833",
+  "requirementId": "REF-004",
+  "originalRequirement": "Alle Schemas, Constraints und Defaults: a usable source-bound reference must cover supported schema declarations, constraints, defaults, versions/surfaces, and actual consumer or explicitly declaration-only boundaries.",
+  "historicalFailureDisposition": "SUPERSEDED_FOR_REF004_SCOPE. The prior failure was not closed by pointer counts: current source-qualified authority coverage now supplies the previously missing 22 declaration records while retaining explicit non-runtime boundaries.",
+  "sourceAccuracy": {
+    "verdict": "PASS",
+    "judgment": "The 274-schema/7355-pointer inventory remains an index, not the proof. Current declarations are covered by 113 previously qualified authorities plus 22 independently assessed records across delivery, pipeline, Prism, and telemetry families. Recursive, branch, and ref constraints remain linked to their authoritative JSON schemas; they are not falsely evaluated as runtime rules. Zero selected schema default annotations, manual defaults, AJV without useDefaults, generated dispatch, and declaration-only telemetry are accurately distinguished."
+  },
+  "readerUsability": {
+    "verdict": "PASS",
+    "basis": "Independent restricted fresh-reader review at this immutable revision passed bounded lookup, consumer/default distinctions, recursive constraints, and retained/declaration-only boundaries.",
+    "limits": "The fresh reader did not assess source correctness, runtime behavior, browser behavior, or general site quality."
+  },
+  "quality": {
+    "verdict": "PASS",
+    "judgment": "The reference is a usable, source-linked authority table with explicit status and scope disclosures. It avoids unsupported runtime, browser, provider, telemetry-reader, deployment, and schema-parity claims. Remaining density and raw-schema navigation friction are non-blocking for the original REF-004 criterion."
+  },
+  "originalDimensionJudgments": {
+    "supportedSchemaDeclarations": "PASS — all 274 owned schema artifacts retain explicit current/retained/fixture/documentation status; 135 current declarations have source-bound authority coverage.",
+    "constraints": "PASS — authoritative JSON-schema constraints, refs, recursion, and branches are linked without pretending a new evaluator ran them.",
+    "defaults": "PASS — schema defaults, manual fallback behavior, AJV no-useDefaults semantics, and omitted-value handling are separated.",
+    "semanticConsumers": "PASS — actual readers are identified where established; declaration-only and retained assets explicitly do not claim an unproved current reader.",
+    "referenceCurrentness": "PASS — normal schema index and owned reference checks pass, as do the corrected 43 meaningful authority/disclosure controls."
+  },
+  "originalWholeVerdict": "PASS",
+  "affectedAcceptedRecordPreservation": {
+    "verdict": "PASS_ORIGINAL_SCOPE_PRESERVED",
+    "coveredRecordIds": [
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-search-reader-gate-20261021",
+      "AP09-rendered-source-bounds-gate-20261021",
+      "AP09-complete-same-source-code-preview-20261021",
+      "AP09-complete-responsive-reader-layout-20261021",
+      "AP09-publication-positive-scope-7ef16585",
+      "AP09-whole-extension-drift-A91014-20261023",
+      "A99-13-original-seven-dimension-drift-20261025",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "MNT-004-whole-source-owned-cli-reference-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "REF003-whole-configuration-families-and-inverse-consumers-20261031"
+    ],
+    "basis": "The exact seven-file candidate changes the schema authority reference and its owned generator/test/custody receipts only. It does not alter the preserved records’ criteria, limits, pages, execution outcomes, or accepted semantic responsibilities. This is preservation, not 18 new awards."
+  },
+  "globalFindingsDisposition": {
+    "A98-20261012-CANONICAL-REFLECTION-S4": "RETAINED_OUTSIDE_REF004_SUPPORTED_CURRENT_AWARD",
+    "A98-20261012-CANONICAL-REFLECTION-S5": "RETAINED_OUTSIDE_REF004_SUPPORTED_CURRENT_AWARD"
+  },
+  "materialFindings": [],
+  "limits": [
+    "No default global API path success is claimed.",
+    "No runtime validation, browser, provider, telemetry execution, deployment, or schema-parity result is claimed.",
+    "No generic tool-source or Python 3.14 closure is inferred.",
+    "REF-003, CFG-011/REF-012, A911-05, and other closed topics are not reopened."
+  ],
+  "finiteNextAction": "Root may register REF-004 only, with the 18 scoped preservation impacts retained as preservation metadata; no gate award follows. Then run the unchanged registration checker and proceed to commit/push/remote verification. Counts remain 71/89 gates and 253/261 requirements until that registration occurs."
+}

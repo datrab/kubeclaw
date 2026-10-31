@@ -1,0 +1,28 @@
+{
+  "originalRequirementIds": [
+    "REF-004"
+  ],
+  "originalWholeVerdict": "PASS",
+  "candidateRevision": "a54c0270bb37f2be1e93e87a16509b0b0aed4833",
+  "actualDecisionSha256": "1788d0e1c92b5fe407439b931e799d91d9c2d66d870b7524a9dcfce071ead03f",
+  "preservationRecordIds": [
+    "AP09-complete-static-reader-search-20261021",
+    "AP09-search-reader-gate-20261021",
+    "AP09-rendered-source-bounds-gate-20261021",
+    "AP09-complete-same-source-code-preview-20261021",
+    "AP09-complete-responsive-reader-layout-20261021",
+    "AP09-publication-positive-scope-7ef16585",
+    "AP09-whole-extension-drift-A91014-20261023",
+    "A99-13-original-seven-dimension-drift-20261025",
+    "MNT-014-whole-native-publication-examples-20261027",
+    "A99-11-whole-published-example-claims-20261027",
+    "QUA-005-whole-published-live-and-completeness-claims-20261027",
+    "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+    "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+    "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+    "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+    "MNT-004-whole-source-owned-cli-reference-20261030",
+    "A91306-QUA002-original-controlled-language-whole-20261030",
+    "REF003-whole-configuration-families-and-inverse-consumers-20261031"
+  ]
+}

@@ -1,0 +1,22 @@
+[
+  {
+    "source": "scripts/docs-api-reference.mjs",
+    "status": "PASS"
+  },
+  {
+    "source": "scripts/docs-generate.mjs",
+    "status": "PASS"
+  },
+  {
+    "source": "scripts/docs-api-product-scope.mjs",
+    "status": "PASS"
+  },
+  {
+    "source": "scripts/docs-configuration-inventory.mjs",
+    "status": "PASS"
+  },
+  {
+    "source": "scripts/docs-api-output-discovery.mjs",
+    "status": "PASS"
+  }
+]

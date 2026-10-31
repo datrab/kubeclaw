@@ -1,0 +1,16 @@
+{
+  "status": "SOURCE_SUPPORTED_CURRENT_TOOL_MEANING_SCALAR_ADOPTED_PARENTS_PENDING",
+  "sourceAuthority": "ref004-authority-22-source-verdict.json",
+  "changedFields": [
+    "reviewedCallerCensusSha256",
+    "reviewedSelectedGraphSha256"
+  ],
+  "beforeSha256": "0139d53f808c81791439517da905c2c168fca7905931f38e8acc87cd7eb71362",
+  "currentSha256": "ced5f4a8ca837fe858548c8461691bd919c0fa679187a104d425eef8cb3e4ab1",
+  "callerCount": 1061,
+  "selectedCount": 1306,
+  "changedInputPaths": [
+    "scripts/docs-schema-fields.mjs"
+  ],
+  "algorithmsUnchanged": true
+}

@@ -1,0 +1,67 @@
+{
+  "report": "ref004-final-affected-metadata-verdict.json",
+  "verdict": "PASS",
+  "p2DisclosureCorrection": {
+    "verdict": "PASS",
+    "judgment": "The renderer now requires exactly one legacy-or-current coverage disclosure, then canonicalizes it; missing, altered, or duplicate current disclosure fails. Status and Last verified likewise require exactly one occurrence.",
+    "evidence": "corrected-schema-authority-controls.log reports 43 passing groups, including three disclosure and four metadata refusals. Corrected affected code review reports no P0-P2 findings."
+  },
+  "preserved22SourceScope": {
+    "verdict": "PASS_REUSED",
+    "limit": "The prior 22-record/four-family source judgments and 25 sealed natural inputs remain unchanged. This is not a renewed schema census, runtime-validation claim, or REF-004 whole award."
+  },
+  "scalarTransfer": {
+    "verdict": "SUPPORTED",
+    "fields": [
+      "reviewedCallerCensusSha256",
+      "reviewedSelectedGraphSha256"
+    ],
+    "basis": "Only scripts/docs-schema-fields.mjs changed among the 1061 caller and 1306 selected vectors; membership and scalar algorithms remain unchanged.",
+    "limit": "This refreshes existing scalar custody only; it grants no product, API, schema-evaluation, or runtime authority."
+  },
+  "fiveParentCandidate": {
+    "verdict": "SUPPORTED_FOR_EXACT_ADOPTION",
+    "sources": [
+      "scripts/docs-api-reference.mjs",
+      "scripts/docs-generate.mjs",
+      "scripts/docs-api-product-scope.mjs",
+      "scripts/docs-configuration-inventory.mjs",
+      "scripts/docs-api-output-discovery.mjs"
+    ],
+    "allowedDelta": "factsDigest only",
+    "verifiedUnchanged": [
+      "selectors",
+      "authorityInputs",
+      "role",
+      "consumer",
+      "subject identity",
+      "entry and CI lifecycle boundaries",
+      "derivation algorithms",
+      "all unaffected roles"
+    ],
+    "sourceMeaning": "Each remains a documentation consumer. The changed schema-field helper produces documentation metadata and, only under --reference, the two fixed owned reference outputs; publication invokes its check path only. No JSON-Schema execution, product configuration, API submission, or acquisition capability is added."
+  },
+  "metadataLimits": {
+    "old45Subjects": "unchanged identities",
+    "schemaFieldDriftTest": "not selected in the maintained native vector",
+    "candidateStatus": "unadopted; this is source support for the exact two-scalar/five-parent candidate, not a claimed native-role pass"
+  },
+  "requiredPostAdoptionChecks": [
+    "Apply only the reviewed scalar and five-parent candidate bytes.",
+    "Run the existing parent/native guards and the bounded schema reference/index checks.",
+    "Preserve the normal global-reference check result as separately observed; no result is claimed here.",
+    "Use an immutable current candidate for restricted Reader and independent Quality review before original REF-004 adjudication."
+  ],
+  "materialFindings": [],
+  "notGranted": [
+    "REF-004 whole acceptance",
+    "Reader or Quality acceptance",
+    "default global API success",
+    "runtime or deployment validation",
+    "new broad metadata or collector authority"
+  ],
+  "countersPreserved": {
+    "gates": "71/89",
+    "requirements": "253/261"
+  }
+}

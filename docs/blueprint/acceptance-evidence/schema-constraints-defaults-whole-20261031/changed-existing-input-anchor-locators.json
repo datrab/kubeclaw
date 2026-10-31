@@ -1,0 +1,18 @@
+{
+  "status": "READONLY_LOCATORS_NOT_REPIN_OR_ACCEPTANCE",
+  "anchors": [
+    {
+      "source": "scripts/docs-schema-fields.mjs",
+      "beforeSha256": "b04ec974b484b966e05b302f1f44c18e9826723744b0529d420a327de1b10994",
+      "currentSha256": "3188f304101e92589b254bd30d0ee2a6bf78a49f57dbefbc5076aae4284e455c",
+      "existingAnchorHits": []
+    },
+    {
+      "source": "scripts/tests/schema-field-drift.test.mjs",
+      "beforeSha256": "e3ad79780056c971f39890f7ece0a471c1c045dcb82d09998b27ba2a43664681",
+      "currentSha256": "2a9554268bfb45e8fb28eb8cc23895b619594d803adf03742a0663740ce80eac",
+      "existingAnchorHits": []
+    }
+  ],
+  "limit": "Do not repair one-by-one; after frozen Code/Source correction derive only necessary existing input/parent metadata together."
+}

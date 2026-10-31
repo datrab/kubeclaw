@@ -1,0 +1,69 @@
+{
+  "id": "REF-004",
+  "title": "Alle Schemas, Constraints und Defaults",
+  "workPackage": "AP09.11",
+  "canonicalTarget": "docs/site/reference/schemas.md",
+  "catalogueOwner": "documentation automation",
+  "pageOwner": null,
+  "readerTask": "Alle Schemas, Constraints und Defaults",
+  "sourceDependencies": [],
+  "sourceVerification": "pending-current-claim-inspection",
+  "contentKind": "not-in-current-map",
+  "generator": null,
+  "automatedChecks": [],
+  "acceptanceIds": [],
+  "packageGateCandidates": [
+    "A911-01",
+    "A911-02",
+    "A911-03",
+    "A911-04",
+    "A911-05",
+    "A911-06",
+    "A911-07",
+    "A911-08",
+    "A911-09",
+    "A911-10",
+    "A911-11",
+    "A911-12"
+  ],
+  "acceptanceMappingState": "pending-individual-mapping",
+  "requiredManualReview": [
+    "source",
+    "reader",
+    "quality",
+    "astra-final"
+  ],
+  "state": "not-accepted",
+  "evidence": [],
+  "reviews": [
+    {
+      "agent": "/root/canonical_entry_reflection_complete_tool_source_fresh",
+      "role": "source",
+      "model": "gpt-6.1-sol",
+      "reasoningEffort": "medium",
+      "forkTurns": "none",
+      "freshContext": true,
+      "initialMode": "read-only",
+      "state": "terminal-complete-assigned-FAIL",
+      "sourceRevision": "95e57db04c9da7c6d3801319ce84328fb51a26b8",
+      "scope": "Complete assigned F1-F10, receiving/default/canonical provenance/consumer/qualification Tool Source; five material findings, not package/global approval.",
+      "report": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh/report.md",
+      "reportSha256": "73bcb8949a2fcf2c0bfb24338f7d0e025cd16d1318ad13e8b058f3c0c8eb690d",
+      "manifestSha256": "89324efe718366c8a64dce8847fba6c01f6e6fd2c71c1a9910549a2a849b4a33",
+      "rootSeal": "/home/node/Documents/Codex/a98-evidence/canonical-entry-reflection-complete-tool-source-fresh-root-seal.json",
+      "verifiedArtifacts": 94,
+      "verifiedInputs": 5773
+    }
+  ],
+  "openFindingIds": [
+    "A98-20261012-CANONICAL-REFLECTION-S4",
+    "A98-20261012-CANONICAL-REFLECTION-S5"
+  ],
+  "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L360",
+  "closureDecision": {
+    "verdict": "FAIL",
+    "revision": "08d8f917b08b3faacd0909ccbda3fa069a094a67",
+    "reason": "Supported schema family and recursive consumer/default coverage remains incomplete.",
+    "campaign": "independent-correction-closeout-20261020"
+  }
+}

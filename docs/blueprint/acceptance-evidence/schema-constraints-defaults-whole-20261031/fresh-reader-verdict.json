@@ -1,0 +1,43 @@
+{
+  "reviewer": "/root/ref004_fresh_reader",
+  "role": "reader-only",
+  "revision": "a54c0270bb37f2be1e93e87a16509b0b0aed4833",
+  "verdict": "PASS",
+  "allowedInputs": "Exact committed docs/site, public schema/configuration field indexes and bindings, declared JSON schemas and registrations only. No implementation, internal reports, matrix, network, help, agents, writes/install/deploy.",
+  "outcomes": {
+    "constraints": "Delivery v3 identity/Draft2020-12 and required schemaVersion located; evidence required array7-390, itemartifactRef->producer->required attemptNumber integer1-9007199254740991, unknownprops rejected. Optional reviewSemanticEncoding constant requires dependent reviewStageId/reviewArtifactEncoding. Externalcoverage refs selectedgate $defs. Telemetry original_sha256 required but nullable oneOf; nullability notomission.",
+    "consumers": "Gate/e2e AJV strict/allErrors/no useDefaults and manual semantic/identity/digest/casecount checks distinguished from Axe/Visual manualprofile readers. Axe desktop/mobile builtins/custom overlays/selectednamefallback, Lighthouse omittedbudgetnull, Visual deriveddigestnotinsertion. Browser viewport width requiredinteger240-3840/browserenum read fromJSONdeclaration, notmanualparity/executionproof.",
+    "deliveryPrism": "Deliverymanualcreate/parse/read notJSONload/parity/defaults; digestimmutableclone/v2compatnotmigration. Prismbaseline-v2 exactid/draft/discriminator and generatedvalidatorselection/complexity/noDefaults; gen/parity/deploymentnotrun.",
+    "telemetry": "artifact_published.v1 declaration relativecorrelation ref/requirednullable clear; retainedasset no provedcurrentreader/default/ingest/quarantine/order/activation, notactivev2.",
+    "statuses": "Current Delivery/Prism/chart vsretainedtelemetryidentity/envelope vsfixtureadminrepair vsdocsminimalstage. Filename/path/propertyhash/statusnotruntime selection. Reviewpolicyv1vs2currentparser example useful."
+  },
+  "discoverability": "PASS",
+  "clarity": "PASS",
+  "sufficiency": "PASS boundedwhole schema lookup",
+  "navigation": [
+    "Initialpwd/rg--filesdocs/siteorientation",
+    "Firstsubstantivedoc docs/site/reference/schemas.md",
+    "Hub125-260 then260-325 aftertruncation",
+    "SearchDelivery/delivery/current-declaration/fixture/retained inhub/schema refs",
+    "ReadJSONPrismbaselinev2,Deliveryv3,telemetryartifactpublished,browserprofilesv1",
+    "Readpublicfieldindexandbindings/statuses",
+    "Readgatev1 gateCoverage/gateCoverageResult/stableIddefs",
+    "Readtelemetrycorrelation_identityJSON",
+    "Reade2e-resultv1 identity/rootrequirements; recheckPrismbinding"
+  ],
+  "firstFailedStep": "No substantive lookupfailure; initialwholepageoutputtruncated, scopedrereadsrecovered.",
+  "outsideAssistance": "none; no prohibitedinputattempt",
+  "blockingFindings": [],
+  "nonblockingFindings": [
+    "Longdensehub; consumerdetails farbelowinitialcatalog",
+    "RawauthoritativeJSONnecessaryforexactbranch/refconstraints, explicitlydirectedbyhub"
+  ],
+  "notClaimed": [
+    "Sourcecorrectness",
+    "Quality",
+    "runtimeexecution",
+    "browserlayout",
+    "fullbootstrap"
+  ],
+  "provenance": "Structured preservation of actual returned fresh Reader report; full original return remains in parent transcript."
+}
