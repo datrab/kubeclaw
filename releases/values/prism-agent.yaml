@@ -1,4 +1,4 @@
-# Generated from release 7d92369c0228cb96d87b0f01c2cfb4ade203b634 and byte-matched source configuration; do not edit.
+# Generated from release 1d3bd9ac4bfbd31d22763a5472ac3f53bba58e61 and byte-matched source configuration; do not edit.
 agentRole: prism
 gateway:
   startupDoctor:
@@ -13,7 +13,7 @@ gateway:
         memory: 4Gi
 image:
   repository: ghcr.io/datrab/kubeclaw-prism-agent
-  digest: sha256:2f21b2c2b79fb7ac2416a342f917b0cce9ece486a3d9ea9bcd580925bdfbf8a5
+  digest: sha256:6c26edac19d07f42fa1190d7391818df67fac7fe3b23279678afd81de3bfd1fd
   tag: ''
   pullPolicy: IfNotPresent
 imagePullSecrets:
@@ -22,13 +22,13 @@ runAsRoot: false
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-41241013304-1/prism-7d92369c0228cb96d87b0f01c2cfb4ade203b634.tgz
-  expectedCommit: 7d92369c0228cb96d87b0f01c2cfb4ade203b634
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-41244431754-1/prism-1d3bd9ac4bfbd31d22763a5472ac3f53bba58e61.tgz
+  expectedCommit: 1d3bd9ac4bfbd31d22763a5472ac3f53bba58e61
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 521c22419ca1c29d407488a420e02e8dd64e6bc0dec3640f251d0a41c0460bfa
+  sha256: 5542f66851be9eea05d79c9f3b0e6f1dc41ab40410c48d8108f3cb1fcede5dab
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-prism
@@ -75,7 +75,7 @@ extraEnv:
     value: https://prism-studio.tail576648.ts.net
 extraContainers:
   - name: prism-agent-bridge
-    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:2f21b2c2b79fb7ac2416a342f917b0cce9ece486a3d9ea9bcd580925bdfbf8a5
+    image: ghcr.io/datrab/kubeclaw-prism-agent@sha256:6c26edac19d07f42fa1190d7391818df67fac7fe3b23279678afd81de3bfd1fd
     imagePullPolicy: Always
     command:
       - node
