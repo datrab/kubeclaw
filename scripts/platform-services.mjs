@@ -86,8 +86,10 @@ export function platformServices(versions, repository) {
       project: 'infra',
       source: {repoURL: repository, targetRevision: 'main', path: 'gitops/platform/familyclaw-repository'},
       destination: {server, namespace: 'argocd'},
-      syncPolicy: {automated: {prune: false, selfHeal: true, allowEmpty: false},
-        syncOptions: ['FailOnSharedResource=true', 'RespectIgnoreDifferences=true']},
+      // Prune superseded bootstrap Jobs/ConfigMaps after the replacement runs;
+      // the repository Secret itself has Prune=false and Delete=false.
+      syncPolicy: {automated: {prune: true, selfHeal: true, allowEmpty: false},
+        syncOptions: ['FailOnSharedResource=true', 'RespectIgnoreDifferences=true', 'PruneLast=true']},
       ignoreDifferences: [{group: '', kind: 'Secret', name: 'familyclaw-repository', namespace: 'argocd', jsonPointers: ['/data']}],
     },
   };

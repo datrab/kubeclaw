@@ -74,3 +74,7 @@ existing GitHub known-host entries. Generated Secret data is ignored during
 subsequent reconciliation and protected from pruning/deletion. The workload
 Application remains manual; repository access does not initialize private
 household configuration or synchronize workloads.
+
+Only this bootstrap Application prunes superseded Jobs/ConfigMaps, after the
+replacement has completed (`PruneLast=true`). Its repository Secret is explicitly
+excluded from pruning and deletion. No household data or workload is in scope.
