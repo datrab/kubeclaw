@@ -563,42 +563,6 @@ function App() {
           </button>
         </div>
       </header>
-      {approvalMessage && (
-        <p role="status" className="approval-status">
-          {approvalMessage}
-        </p>
-      )}
-      {brief&&<section aria-label="Design brief" className="brief"><h2>Brief</h2><p>Prism imported the approved Nova architecture and uses it as the design boundary.</p><dl>{Object.entries((brief.architectureContent&&typeof brief.architectureContent==="object"?brief.architectureContent:brief) as Record<string,unknown>).slice(0,12).map(([key,value])=><React.Fragment key={key}><dt>{key}</dt><dd>{typeof value==="string"?value:JSON.stringify(value)}</dd></React.Fragment>)}</dl></section>}
-      {quality && (
-        <section aria-label="Design quality">
-          <h2>Design quality: {quality.status}</h2>
-          {quality.findings.length === 0 ? (
-            <p>No findings.</p>
-          ) : (
-            quality.findings.map((finding) => (
-              <label key={finding.id}>
-                <input
-                  type="checkbox"
-                  disabled={finding.level !== "review"}
-                  checked={
-                    finding.level === "review" &&
-                    acceptedWarnings.includes(finding.id)
-                  }
-                  onChange={(event) =>
-                    setAcceptedWarnings((current) =>
-                      event.target.checked
-                        ? [...current, finding.id]
-                        : current.filter((id) => id !== finding.id),
-                    )
-                  }
-                />
-                <strong>{finding.level}</strong> {finding.message}
-                {finding.target ? ` (${finding.target})` : ""}
-              </label>
-            ))
-          )}
-        </section>
-      )}
       <aside className="navigator">
         <p className="eyebrow">Experience</p>
         {roundMessage && <p role="status">{roundMessage}</p>}
@@ -676,6 +640,43 @@ function App() {
         ))}
       </aside>
       <section className="workspace">
+        {approvalMessage && (
+          <p role="status" className="approval-status">
+            {approvalMessage}
+          </p>
+        )}
+
+        {quality && (
+          <section aria-label="Design quality">
+            <h2>Design quality: {quality.status}</h2>
+            {quality.findings.length === 0 ? (
+              <p>No findings.</p>
+            ) : (
+              quality.findings.map((finding) => (
+                <label key={finding.id}>
+                  <input
+                    type="checkbox"
+                    disabled={finding.level !== "review"}
+                    checked={
+                      finding.level === "review" &&
+                      acceptedWarnings.includes(finding.id)
+                    }
+                    onChange={(event) =>
+                      setAcceptedWarnings((current) =>
+                        event.target.checked
+                          ? [...current, finding.id]
+                          : current.filter((id) => id !== finding.id),
+                      )
+                    }
+                  />
+                  <strong>{finding.level}</strong> {finding.message}
+                  {finding.target ? ` (${finding.target})` : ""}
+                </label>
+              ))
+            )}
+          </section>
+        )}
+        {brief&&<details aria-label="Design brief" className="brief"><summary>Design brief</summary><p>Prism imported the approved Nova architecture and uses it as the design boundary.</p><dl>{Object.entries((brief.architectureContent&&typeof brief.architectureContent==="object"?brief.architectureContent:brief) as Record<string,unknown>).slice(0,12).map(([key,value])=><React.Fragment key={key}><dt>{key}</dt><dd>{typeof value==="string"?value:JSON.stringify(value)}</dd></React.Fragment>)}</dl></details>}
         {actionError && <p role="alert">{actionError}</p>}
         {revisionPending && <p role="status">Your existing feedback is retained. Reconcile it before sending another request.</p>}
         <div className="workspace-label">
@@ -685,6 +686,7 @@ function App() {
         <div className={`device device-${viewport}`}>
           {mode === "edit" ? (
             <Puck
+              key={`${document.meta.documentId}-${viewport}`}
               config={config}
               data={data}
               onChange={(next) => {

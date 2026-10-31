@@ -21,6 +21,8 @@ test.beforeAll(async()=>{
     response.setHeader('content-type','application/json');
     const reply=(status,value)=>{response.writeHead(status);response.end(JSON.stringify(value));};
     if(pathname==='/v1/session'){reply(200,{csrf:'fixture',userId:'operator'});return;}
+    if(pathname==='/v1/projects/project/brief'){reply(200,{request:{architectureContent:{title:'FamilyClaw',brief:'Architecture boundary '.repeat(300)}}});return;}
+    if(pathname==='/v1/projects/project/directions'){reply(200,{items:[{id:'direction',state:'proposed',source_document_id:'demo',title:'Family direction',summary:'Five templates'}]});return;}
     if(pathname==='/v1/documents/demo'){reply(200,{document});return;}
     if(request.method==='POST'&&['/v1/documents/demo/operations','/v1/documents/demo/engine'].includes(pathname)){
       if(request.headers['x-prism-csrf']!=='fixture'){reply(403,{error:'CSRF rejected'});return;}
@@ -29,6 +31,7 @@ test.beforeAll(async()=>{
         if(rejectSave){reply(409,{error:'Revision conflict'});return;}
         try{document=applyOperation(document,input);operations.push(input);reply(200,document);}catch(error){reply(409,{error:error.message});}return;
       }
+      if(input.operation==='evaluate'){reply(200,{specialistResult:{values:{status:'passed',findings:[]}}});return;}
       feedback.push(input);
       if(failFeedback){failFeedback=false;reply(503,{error:'Feedback connection interrupted'});return;}
       document=applyOperation(document,{type:'node.props.set',baseRevision:input.baseRevision,nodeId:'title',props:{content:'Reviewed layout'}});
@@ -66,6 +69,27 @@ for(const mobile of [false,true])test.describe(mobile?'touch phone':'desktop mou
       await page.mouse.move(from.x,from.y);await page.mouse.down();await page.mouse.move(to.x,to.y,{steps:8});await page.mouse.up();
     }
   }
+  test('project brief stays secondary and viewport controls resize both editing and preview canvases',async({page})=>{
+    await page.goto(`${origin}/?project=project&document=demo`);
+    await expect(page.locator('.brief')).toBeVisible();
+    expect(await page.locator('.brief').evaluate(el=>el.open)).toBe(false);
+    await expect(page.locator('.design-canvas')).toBeInViewport();
+    for(const mode of ['edit','preview']){
+      if(mode==='preview')await page.getByRole('button',{name:'Preview',exact:true}).click();
+      for(const [value,width] of [['compact',390],['regular',768],['wide',1280]]){
+        await page.getByLabel('Viewport',{exact:true}).selectOption(value);
+        await expect(page.locator('.device')).toHaveCSS('width',`${width}px`);
+        if(mode==='edit')await expect(page.locator('.design-canvas iframe')).toHaveCSS('width',`${width}px`);
+        if(mode==='preview')await expect(page.locator('iframe[title="Isolated prototype preview"]')).toHaveCSS('width',`${width}px`);
+      }
+    }
+    await page.getByRole('button',{name:'Check design',exact:true}).click();
+    await expect(page.locator('.workspace').getByRole('region',{name:'Design quality'})).toBeVisible();
+    await expect(page.locator('.plain-preview')).toBeInViewport();
+    await page.locator('.brief summary').click();await expect(page.locator('.brief dd').first()).toBeVisible();
+    await page.locator('.brief summary').click();
+    expect(await page.evaluate(()=>document.documentElement.scrollWidth<=document.documentElement.clientWidth)).toBe(true);
+  });
   test('arbitrary text and sibling order persist through real operations and page reload',async({page},testInfo)=>{
     await page.goto(`${origin}/?document=demo`);
     const tools=page.locator('.layout-tools');await tools.locator('summary').click();
