@@ -1,6 +1,9 @@
 import assert from 'node:assert/strict';
 import {generateKeyPairSync} from 'node:crypto';
 import fs from 'node:fs';
+import os from 'node:os';
+import path from 'node:path';
+import {spawnSync} from 'node:child_process';
 import test from 'node:test';
 import yaml from 'js-yaml';
 import {provision, publicKey, repository} from '../../../gitops/platform/familyclaw-repository/provision-key.mjs';
@@ -8,6 +11,19 @@ import {platformServices} from '../../../scripts/platform-services.mjs';
 
 const resources = yaml.loadAll(fs.readFileSync('gitops/platform/familyclaw-repository/resources.yaml', 'utf8'));
 const seed = () => ({...structuredClone(resources[0]), metadata: {...resources[0].metadata, resourceVersion: '1'}});
+test('a ConfigMap-style symlink executes the CLI and reports missing cluster credentials', () => {
+  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'familyclaw-configmap-'));
+  try {
+    fs.copyFileSync('gitops/platform/familyclaw-repository/provision-key.mjs', path.join(directory, 'actual.mjs'));
+    fs.symlinkSync('actual.mjs', path.join(directory, 'provision-key.mjs'));
+    const result = spawnSync(process.execPath, [path.join(directory, 'provision-key.mjs')], {encoding: 'utf8'});
+    assert.equal(result.status, 1);
+    assert.equal(result.stdout, '');
+    assert.match(result.stderr, /^Repository key provisioning failed; no credential values emitted\./u);
+  } finally {
+    fs.rmSync(directory, {recursive: true, force: true});
+  }
+});
 test('provisioning emits only a public key and preserves the same private key on retries', async () => {
   const secret = seed();
   let patches = 0;

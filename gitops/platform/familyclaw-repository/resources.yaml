@@ -50,7 +50,7 @@ subjects:
 apiVersion: batch/v1
 kind: Job
 metadata:
-  name: familyclaw-repository-bootstrap-v1
+  name: familyclaw-repository-bootstrap-v2
   namespace: argocd
   annotations:
     argocd.argoproj.io/sync-wave: '10'
