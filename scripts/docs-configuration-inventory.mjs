@@ -9958,7 +9958,7 @@ async function verifyRuntimeConsumerSemantics() {
     const field = flattenSchema(JSON.parse(read('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json')).configSchema).find((item) => item.path === `$.${key}`);
     const rule = schemaRuntimeValidationRules('skills/common/plugins/openclaw-agent-observer/openclaw.plugin.json#$.configSchema', field);
     assert(rule?.accepted && rule.omission && rule.empty && rule.failure, `${key}: inline observer runtime contract is incomplete`);
-    assert.match(rule.omission, /Registration configuration.*service configuration.*hook configuration/u);
+    assert.match(rule.omission, /registration configuration.*service configuration.*hook configuration/iu);
   }
   const transport = await importSource('skills/common/plugins/openclaw-agent-observer/src/redis-transport.ts');
   assert.throws(() => transport.resolveRedisTransportConfig({ host: 'localhost', port: 6379 }), /Secure Redis transport policy violation/u);

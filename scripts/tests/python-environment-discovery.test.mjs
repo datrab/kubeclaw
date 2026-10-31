@@ -28,6 +28,7 @@ const sandbox = { nativeSupervisorEnvironmentProducer, helmGatewayCommandProject
   runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings,
   externalProducerContract, assertRuntimeConsumerContract,
   ENVIRONMENT_CONTRACTS: new Map(), ENVIRONMENT_CONSUMER_CONTRACTS: new Map(),
+  acquiredContainerCommandRoutes: new Map(),
   operatorEnvironmentFamilyContract: () => null,
   sourceOwner: () => ({ component: 'operations' }),
 };
@@ -1817,3 +1818,60 @@ test('Python known-name custody retains uppercase facts and unresolved-key denia
   assert.throws(() => sandbox.pythonEnvironmentReads("import os; os.getenv(input())", file),
     error => error.message.includes(file) && error.message.includes('PYTHON_ENVIRONMENT_UNSUPPORTED: unresolved environment key'));
 });
+
+// Original QUA-010 distinct extraction responsibilities. These are source-parser
+// changes/removals, not eight full inventory runs or product runtime executions.
+// The shared native stale-output comparison is exercised separately and joined
+// with these facts and the maintained canonical reader mapping.
+const qua010Python = "#!/usr/bin/env bash\npython3 <<'PY'\nimport os\nprint(os.getenv('AP98_PYTHON_GETENV', '') + os.environ.get('AP98_PYTHON_GET', '') + os.environ['AP98_PYTHON_INDEX'])\nPY\n";
+const qua010YamlProgram = "node <<'NODE'\nconst NODE=1;\nNODE \nconsole.log(process.env.NODE_DELIMITER_NEW);\nNODE\n";
+const qua010EmbeddedCases = [
+  { prefix: 'embedded-node-heredoc', file: 'docker/buster-runtime-entrypoint.sh',
+    text: fs.readFileSync(path.join(root, 'docker/buster-runtime-entrypoint.sh'), 'utf8'),
+    extract: (file, text) => sandbox.embeddedNodeEnvironmentReads(file, text),
+    before: 'const root = process.env.RUNTIME_CONFIG_ROOT;',
+    changed: 'const root = process.env.QUA010_CHANGED_RUNTIME_CONFIG_ROOT;',
+    removed: "const root = '/fixture-owned-root';", oldKey: 'RUNTIME_CONFIG_ROOT', newKey: 'QUA010_CHANGED_RUNTIME_CONFIG_ROOT' },
+  { prefix: 'inline-node-environment', file: 'charts/kubeclaw/templates/deployment.yaml',
+    text: fs.readFileSync(path.join(root, 'charts/kubeclaw/templates/deployment.yaml'), 'utf8'),
+    extract: (file, text) => sandbox.acquiredNodeEnvironmentReads(file, text, 'inline'),
+    before: 'if (process.env.DISCORD_WEBHOOK) config.discord_webhook_url=process.env.DISCORD_WEBHOOK;',
+    changed: 'if (process.env.QUA010_CHANGED_DISCORD_WEBHOOK) config.discord_webhook_url=process.env.QUA010_CHANGED_DISCORD_WEBHOOK;',
+    removed: '/* selected inline webhook reader removed */', oldKey: 'DISCORD_WEBHOOK', newKey: 'QUA010_CHANGED_DISCORD_WEBHOOK' },
+  { prefix: 'embedded-python-heredoc', file: 'docker/ap98-python-heredoc.sh', text: qua010Python,
+    extract: (file, text) => sandbox.embeddedPythonEnvironmentReads(file, text),
+    before: "os.getenv('AP98_PYTHON_GETENV', '')", changed: "os.getenv('QUA010_PYTHON_CHANGED', '')",
+    removed: "''", oldKey: 'AP98_PYTHON_GETENV', newKey: 'QUA010_PYTHON_CHANGED' },
+  { prefix: 'embedded-yaml-javascript', file: 'charts/probe.yaml',
+    // Reuse the existing genuinely acquired command/heredoc custody fixture.
+    // The old ConfigMap cat-only recipe is passive; do not promote it to code.
+    text: `command:\n  - sh\n  - -c\n  - |\n${qua010YamlProgram.split('\n').map(line => `    ${line}`).join('\n')}`,
+    extract: (file, text) => sandbox.embeddedNodeEnvironmentReads(file, text),
+    before: 'console.log(process.env.NODE_DELIMITER_NEW);',
+    changed: 'console.log(process.env.QUA010_YAML_CHANGED);', removed: "console.log('literal');",
+    oldKey: 'NODE_DELIMITER_NEW', newKey: 'QUA010_YAML_CHANGED' },
+];
+for (const fixture of qua010EmbeddedCases) for (const operation of ['change', 'remove']) {
+  test(`QUA010 ${fixture.prefix}:${operation} changes exact production extraction and restores it`, () => {
+    const reader = 'docs/site/reference/environment-variables.md';
+    const pageBefore = fs.readFileSync(path.join(root, reader));
+    const family = JSON.parse(fs.readFileSync(path.join(root, 'docs/config/configuration-family-map.json'), 'utf8'))
+      .families.find(item => item.id === 'process-environment');
+    assert.match(family.route, /\[Environment variables\]\(environment-variables\.md\)/u);
+    const governed = JSON.parse(fs.readFileSync(path.join(root, 'docs/site/reference/generated-documentation-map.json'), 'utf8'));
+    assert(governed.pages.some(page => page.page === reader && page.owner && page.checks.length > 0), 'canonical environment reader is not governed');
+    const extract = text => JSON.parse(JSON.stringify(Array.from(fixture.extract(fixture.file, text))));
+    const baseline = extract(fixture.text);
+    const oldCount = baseline.filter(item => item.name === fixture.oldKey).length;
+    assert(oldCount > 0, `${fixture.prefix}: positive custody fixture was not acquired`);
+    assert.equal(fixture.text.split(fixture.before).length - 1, 1, 'mutation anchor is not unique');
+    const changed = fixture.text.replace(fixture.before, operation === 'change' ? fixture.changed : fixture.removed);
+    const actual = extract(changed);
+    assert.equal(actual.filter(item => item.name === fixture.oldKey).length, 0, 'stale read survived changed source');
+    assert.equal(actual.filter(item => item.name === fixture.newKey).length, operation === 'change' ? oldCount : 0);
+    const unrelated = rows => rows.filter(item => ![fixture.oldKey, fixture.newKey].includes(item.name)).map(item => item.name).sort();
+    assert.deepEqual(unrelated(actual), unrelated(baseline), 'unrelated extracted readers changed');
+    assert.deepEqual(extract(fixture.text), baseline, 'source restoration changed the complete occurrence vector');
+    assert(fs.readFileSync(path.join(root, reader)).equals(pageBefore), 'parser fixture wrote the reader page');
+  });
+}

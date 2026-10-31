@@ -180774,7 +180774,7 @@
       "sensitivity": "ordinary-value",
       "setting": "GOFLAGS",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-go-output-role-adapter.go",
@@ -180802,7 +180802,7 @@
       "sensitivity": "ordinary-value",
       "setting": "GOMODCACHE",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "skills/nova/plugins/lint/src/engine/execution.ts",
@@ -180886,7 +180886,7 @@
       "sensitivity": "ordinary-value",
       "setting": "GOPATH",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-go-output-role-adapter.go",
@@ -180914,7 +180914,7 @@
       "sensitivity": "ordinary-value",
       "setting": "GOWORK",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/check-monitoring.mjs",
@@ -181796,7 +181796,7 @@
       "sensitivity": "ordinary-value",
       "setting": "KUBECLAW_DOCS_GO_BINARY",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
+      "sourceSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -181810,7 +181810,7 @@
       "sensitivity": "ordinary-value",
       "setting": "KUBECLAW_DOCS_GO_BINARY",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-generate.mjs",
@@ -183252,7 +183252,7 @@
       "sensitivity": "ordinary-value",
       "setting": "NODE_OPTIONS",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
+      "sourceSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0"
     },
     {
       "consumer": "charts/kubeclaw/templates/deployment.yaml",
@@ -183448,7 +183448,7 @@
       "sensitivity": "ordinary-value",
       "setting": "npm_execpath",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
+      "sourceSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0"
     },
     {
       "consumer": "charts/kubeclaw/templates/deployment.yaml",
@@ -184260,7 +184260,7 @@
       "sensitivity": "ordinary-value",
       "setting": "PATH",
       "source": "scripts/docs-api-documentation-role-custody.mjs",
-      "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
+      "sourceSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -184274,7 +184274,7 @@
       "sensitivity": "ordinary-value",
       "setting": "PATH",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-publication-embedded-yaml.mjs",
@@ -188222,7 +188222,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--allow-local-helm-authority-maintenance",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-local-helm-authorities.mjs",
@@ -188250,7 +188250,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--allow-semantic-gaps",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -188264,7 +188264,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--allow-sensitivity-fixture",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -188278,7 +188278,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--api-versions",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/align-spire-webhook-order.py",
@@ -188432,7 +188432,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--atomic",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-python-output-adapter.py",
@@ -188600,7 +188600,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--check",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-generate.mjs",
@@ -189006,7 +189006,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--check-environment-coverage-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -189020,7 +189020,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--check-payload-delivery-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "tools/native-worker-nri/main.go",
@@ -189048,7 +189048,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--check-runtime-consumer-semantics-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -189062,7 +189062,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--check-schema-semantics-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/updates/materialize-release.mjs",
@@ -189090,7 +189090,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--cleanup-on-fail",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-inventory.mjs",
@@ -189160,7 +189160,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--configuration-reference-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-api-output-role-classification.mjs",
@@ -189202,7 +189202,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--create-namespace",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -189216,7 +189216,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--debugger",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -189230,7 +189230,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--delete-data",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/remove-qdrant.sh",
@@ -189328,7 +189328,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--describe-discovery",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-product-pipeline-reference.mjs",
@@ -189370,7 +189370,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--disable-openapi-validation",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-python-output-adapter.py",
@@ -189412,7 +189412,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--environment-producer-custody-index-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -189426,7 +189426,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--environment-producer-custody-probe",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -189440,7 +189440,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--eval",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-shell-source-custody.mjs",
@@ -189510,7 +189510,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--experimental-strip-types",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-api-python-ast-v1.py",
@@ -189538,7 +189538,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--force-update",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/pipeline-light-watchdog.sh",
@@ -189566,7 +189566,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--helm-values-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/generate-local-helm-authorities.mjs",
@@ -189594,7 +189594,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--help",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/pipeline-light-watchdog.sh",
@@ -189664,7 +189664,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--history-max",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-shell-source-custody.mjs",
@@ -189762,7 +189762,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--init-file",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "skills/nova/core/test-gates/remote-gate-cli.ts",
@@ -189790,7 +189790,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--kube-version",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-role-classification.mjs",
@@ -189874,7 +189874,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--login",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -189888,7 +189888,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--namespace",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-role-classification.mjs",
@@ -189916,7 +189916,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--native-supervisor-environment-entry",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -189930,7 +189930,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--no-hooks",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -189944,7 +189944,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--no-warnings",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -189958,7 +189958,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--noprofile",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -189972,7 +189972,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--norc",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/pipeline-light-watchdog.sh",
@@ -190112,7 +190112,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--posix",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -190126,7 +190126,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--post-renderer",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -190140,7 +190140,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--post-renderer-args",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/render-postgresql-recovery.mjs",
@@ -190168,7 +190168,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--print",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-shell-source-custody.mjs",
@@ -190266,7 +190266,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--rcfile",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-parity-check.mjs",
@@ -190434,7 +190434,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--restricted",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-generate.mjs",
@@ -190518,7 +190518,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--runtime-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "skills/nova/project_setup/tools/progress-scaffold.ts",
@@ -190546,7 +190546,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--schemas-only",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/platform-surface-source-discovery.mjs",
@@ -190588,7 +190588,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--set",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -190602,7 +190602,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--set-file",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -190616,7 +190616,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--set-json",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -190630,7 +190630,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--set-literal",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -190644,7 +190644,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--set-string",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "skills/nova/core/cli.ts",
@@ -190686,7 +190686,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--skip-crds",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -190700,7 +190700,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--skip-schema-validation",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/pipeline-light-watchdog.sh",
@@ -190756,7 +190756,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--timeout",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "skills/nova/core/test-gates/remote-gate-cli.ts",
@@ -190826,7 +190826,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--v8-options",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/check-monitoring.mjs",
@@ -190854,7 +190854,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--values",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -190868,7 +190868,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--verbose",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -190882,7 +190882,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--version",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/docs-api-output-role-classification.mjs",
@@ -190910,7 +190910,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--version",
       "source": "scripts/docs-configuration-inventory.mjs",
-      "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+      "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
     },
     {
       "consumer": "scripts/scan-runtime-images.sh",
@@ -190938,7 +190938,7 @@
       "sensitivity": "Argument definition only; no supplied value copied.",
       "setting": "--wait",
       "source": "scripts/docs-api-output-discovery.mjs",
-      "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+      "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
     },
     {
       "consumer": "scripts/deploy.sh",
@@ -402733,7 +402733,7 @@
           "sensitivity": "ordinary-value",
           "setting": "KUBECLAW_DOCS_GO_BINARY",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
+          "sourceSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402747,7 +402747,7 @@
           "sensitivity": "ordinary-value",
           "setting": "NODE_OPTIONS",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
+          "sourceSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402761,7 +402761,7 @@
           "sensitivity": "ordinary-value",
           "setting": "npm_execpath",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
+          "sourceSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0"
         },
         {
           "consumer": "scripts/docs-api-documentation-role-custody.mjs",
@@ -402775,7 +402775,7 @@
           "sensitivity": "ordinary-value",
           "setting": "PATH",
           "source": "scripts/docs-api-documentation-role-custody.mjs",
-          "sourceSha256": "dc6cce4fec28c3d262c9db2ca93c1bee96bdb4424f8df3a579b0c821aa346f6e"
+          "sourceSha256": "9c801e73d4adec5c2493b5bb17098136fd9da2c9fae380deb9f9388dfb76feb0"
         }
       ]
     },
@@ -402869,7 +402869,7 @@
           "sensitivity": "ordinary-value",
           "setting": "GOFLAGS",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402883,7 +402883,7 @@
           "sensitivity": "ordinary-value",
           "setting": "GOMODCACHE",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402897,7 +402897,7 @@
           "sensitivity": "ordinary-value",
           "setting": "GOPATH",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402911,7 +402911,7 @@
           "sensitivity": "ordinary-value",
           "setting": "GOWORK",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402925,7 +402925,7 @@
           "sensitivity": "ordinary-value",
           "setting": "KUBECLAW_DOCS_GO_BINARY",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402939,7 +402939,7 @@
           "sensitivity": "ordinary-value",
           "setting": "PATH",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402953,7 +402953,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--api-versions",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402967,7 +402967,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--atomic",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402981,7 +402981,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--cleanup-on-fail",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -402995,7 +402995,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--create-namespace",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403009,7 +403009,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--delete-data",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403023,7 +403023,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--disable-openapi-validation",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403037,7 +403037,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--force-update",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403051,7 +403051,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--history-max",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403065,7 +403065,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--kube-version",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403079,7 +403079,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--namespace",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403093,7 +403093,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--no-hooks",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403107,7 +403107,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--post-renderer",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403121,7 +403121,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--post-renderer-args",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403135,7 +403135,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--set",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403149,7 +403149,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--set-file",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403163,7 +403163,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--set-json",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403177,7 +403177,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--set-literal",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403191,7 +403191,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--set-string",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403205,7 +403205,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--skip-crds",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403219,7 +403219,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--skip-schema-validation",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403233,7 +403233,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--timeout",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403247,7 +403247,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--values",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403261,7 +403261,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--version",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         },
         {
           "consumer": "scripts/docs-api-output-discovery.mjs",
@@ -403275,7 +403275,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--wait",
           "source": "scripts/docs-api-output-discovery.mjs",
-          "sourceSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+          "sourceSha256": "b375e168834dfc068cb374a69e760ce93a79b68bc3bccbab39ede6c49dbe9158"
         }
       ]
     },
@@ -403520,7 +403520,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--allow-local-helm-authority-maintenance",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403534,7 +403534,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--allow-semantic-gaps",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403548,7 +403548,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--allow-sensitivity-fixture",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403562,7 +403562,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--check",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403576,7 +403576,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--check-environment-coverage-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403590,7 +403590,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--check-payload-delivery-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403604,7 +403604,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--check-runtime-consumer-semantics-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403618,7 +403618,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--check-schema-semantics-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403632,7 +403632,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--configuration-reference-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403646,7 +403646,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--debugger",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403660,7 +403660,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--describe-discovery",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403674,7 +403674,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--environment-producer-custody-index-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403688,7 +403688,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--environment-producer-custody-probe",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403702,7 +403702,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--eval",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403716,7 +403716,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--experimental-strip-types",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403730,7 +403730,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--helm-values-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403744,7 +403744,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--help",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403758,7 +403758,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--init-file",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403772,7 +403772,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--login",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403786,7 +403786,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--native-supervisor-environment-entry",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403800,7 +403800,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--no-warnings",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403814,7 +403814,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--noprofile",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403828,7 +403828,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--norc",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403842,7 +403842,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--posix",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403856,7 +403856,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--print",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403870,7 +403870,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--rcfile",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403884,7 +403884,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--restricted",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403898,7 +403898,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--runtime-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403912,7 +403912,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--schemas-only",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403926,7 +403926,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--v8-options",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403940,7 +403940,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--verbose",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         },
         {
           "consumer": "scripts/docs-configuration-inventory.mjs",
@@ -403954,7 +403954,7 @@
           "sensitivity": "Argument definition only; no supplied value copied.",
           "setting": "--version",
           "source": "scripts/docs-configuration-inventory.mjs",
-          "sourceSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+          "sourceSha256": "d9f5f8860d5f727c9f6d865bd88a0a03bca5f80cec13a8c23d1fed5b3fafa60f"
         }
       ]
     },

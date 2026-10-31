@@ -20,7 +20,7 @@ if (args.some((arg) => arg !== '--check') || new Set(args).size !== args.length)
     const census = collectEventSourceVector(root);
     if (typeof bindings.qualifiedSourceVectorSha256 !== 'string'
       || bindings.qualifiedSourceVectorSha256 !== census.sourceSetSha256) {
-      throw new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}`);
+      throw new Error(`EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED:source-vector:${census.sourceSetSha256}; reader=${pagePath}`);
     }
     const inventory = collectBoundEventReference(root, census, bindings);
     const outputs = new Map([
