@@ -93,5 +93,24 @@ export function platformServices(versions, repository) {
       ignoreDifferences: [{group: '', kind: 'Secret', name: 'familyclaw-repository', namespace: 'argocd', jsonPointers: ['/data']}],
     },
   };
-  return [identity, storage, ...applications, litellm, novaArgoAccess, familyclawRepository];
+  const familyclawInitializationProject = project('familyclaw-initialization', repository,
+    ['argocd', 'familyclaw'], [['', 'Namespace']]);
+  familyclawInitializationProject.spec.sourceRepos = [repository];
+  familyclawInitializationProject.spec.namespaceResourceWhitelist = [
+    ['', 'ConfigMap'], ['', 'ServiceAccount'], ['rbac.authorization.k8s.io', 'Role'],
+    ['rbac.authorization.k8s.io', 'RoleBinding'], ['batch', 'Job'],
+  ].map(([group, kind]) => ({group, kind}));
+  const familyclawInitialization = {
+    apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',
+    metadata: {name: 'familyclaw-initialization', namespace: 'argocd'},
+    spec: {
+      project: 'familyclaw-initialization',
+      source: {repoURL: repository, targetRevision: 'main', path: 'gitops/platform/familyclaw-initialization'},
+      destination: {server, namespace: 'argocd'},
+      syncPolicy: {automated: {prune: false, selfHeal: true, allowEmpty: false},
+        syncOptions: ['FailOnSharedResource=true']},
+    },
+  };
+  return [identity, storage, ...applications, litellm, novaArgoAccess, familyclawRepository,
+    familyclawInitializationProject, familyclawInitialization];
 }
