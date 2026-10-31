@@ -229,6 +229,19 @@ const authorityPolicyFields = Object.freeze(['recordKind', 'primaryMechanicalAut
 // These are relation invariants. They neither qualify a new inventory nor
 // execute its source-freshness check. Actual adapter meanings remain subject to
 // affected Source review and the named owning checks.
+// Keep declared docs-generate ownership separate from the bounded inventory.
+export function generatedPageFreshnessChecks(page, configurationPages, generatedReferencePages, configurationRevision) {
+  if (page === 'docs/site/reference/configuration.md') {
+    assert(/^[0-9a-f]{40}$/u.test(configurationRevision ?? ''), 'configuration hub lacks its reviewed source/inventory revision');
+    return [
+    'node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check',
+    `node scripts/docs-generate.mjs --only configuration-hub --revision ${configurationRevision} --check`,
+    ];
+  }
+  return configurationPages.has(page) || generatedReferencePages.has(page)
+    ? ['npm run docs:generate:check'] : [];
+}
+
 export function assertAuthorityMatrix(matrix) {
   assert.equal(matrix.schemaVersion, 'source-authority-matrix.v1');
   if (matrix.authorityPolicies) for (const [key, policy] of Object.entries(matrix.authorityPolicies)) {
@@ -317,6 +330,24 @@ export function assertAuthorityMatrix(matrix) {
     const primary = primaries.get(record.primaryIdentity);
     assert(primary && primary.sourceAuthority === record.sourceAuthority,
       `authority-matrix orphan or competing primary authority: ${record.normalizedIdentity}`);
+  }
+  // The availability join is retained independently of the rendered records:
+  // removing a typed relation must not silently turn it into a manual family.
+  for (const family of families.values()) {
+    const available = family.authorityAvailability;
+    assert(available && Array.isArray(available.typedIdentities),
+      `authority-matrix missing typed-authority availability disposition: ${family.id}`);
+    const actual = resolvedRecords.filter(record => record.recordKind !== 'manual-review-route' && record.surFamily === family.id)
+      .map(record => record.normalizedIdentity).sort();
+    assert.deepEqual(available.typedIdentities, actual,
+      `authority-matrix available typed authority cannot be replaced by manual route: ${family.id}`);
+    if (actual.length) assert.equal(available.disposition, 'named-admitted-typed-authorities');
+    else {
+      assert.equal(available.disposition, 'no-admitted-typed-inventory-for-high-level-surface');
+      assert(typeof available.reason === 'string' && available.reason.trim()
+        && Array.isArray(available.selectedInventories) && available.selectedInventories.length,
+        `authority-matrix manual-only family lacks bounded inventory disposition: ${family.id}`);
+    }
   }
   assert.deepEqual([...represented].sort(), [...families.keys()].sort(),
     'authority-matrix SUR family has neither typed identities nor an explicit manual route');
@@ -480,6 +511,17 @@ export function buildAuthorityMatrix(root, pages, domains, additionalRecords = [
   for (const record of records) {
     if (!inverse.has(record.canonicalTarget)) inverse.set(record.canonicalTarget, []);
     inverse.get(record.canonicalTarget).push(record.normalizedIdentity);
+  }
+  const selectedInventories = [...new Set(records.filter(record => record.primaryMechanicalAuthority)
+    .map(record => record.inventory))].sort();
+  for (const family of families) {
+    const typedIdentities = records.filter(record => record.recordKind !== 'manual-review-route'
+      && record.surFamily === family.id).map(record => record.normalizedIdentity).sort();
+    family.authorityAvailability = typedIdentities.length
+      ? { disposition: 'named-admitted-typed-authorities', typedIdentities }
+      : { disposition: 'no-admitted-typed-inventory-for-high-level-surface', typedIdentities,
+        selectedInventories,
+        reason: `${family.id} (${family.title}) is an authored high-level surface. The explicitly selected inventory adapters assign no typed identity to this whole surface; its named guide/source review remains required. This bounded disposition does not assert that no other repository source or future typed inventory exists.` };
   }
   return compactAuthorityMatrix({
     schemaVersion: 'source-authority-matrix.v1',
@@ -723,6 +765,6 @@ export function renderAuthorityMatrixSummary(matrix, text) {
     const records = matrix.records.filter(record => record.surFamily.split('-')[1] === group).map(resolve);
     return `| ${group} | ${families.length} | ${records.filter(record => record.primaryMechanicalAuthority).length} | ${records.filter(record => record.recordKind === 'projection-reference').length} | ${records.filter(record => record.recordKind === 'manual-review-route').length} |`;
   });
-  const block = `${start}\n\n## Current source and reader relations\n\nThe [full identity index](reference/generated-documentation-map.json) is under \`sourceSurfaceMap.authorityMatrix\`. Start with a SUR family above or search an exact source path in \`sourceAuthority\`. Each \`normalizedIdentity\` names its SUR family, source authority, canonical reader target and documentation owner. Resolve its \`policyRef\` in \`authorityPolicies\` for the owning inventory, generator or manual route, required check, consumer boundary and classification. Shared policies avoid copying competing ownership rules.\n\nFor the reverse direction, find a canonical page/anchor in \`inverse\` and follow its exact identities. Configuration view identities retain the native ordered record position: repeated or conditional projections are not unique schema branch pointers. Open the owning schema/consumer reference for applicability and default behavior.\n\n| SUR group | Families | Source-bound declarations/relations | Projection references | Manual review routes |\n| --- | --- | --- | --- | --- |\n${rows.join('\n')}\n\nThese are index relations, **not counts of active public runtime features**. Explicit fixture, retained, private, candidate and declaration-only classifications remain in their owning policies. A manual route assigns a named source/consumer review and documentation owner; it does not claim generated freshness, completed semantic review or source-discovery completeness. Historical source links and guide-depth labels in the navigation tables are not current mechanical authorities.\n\nRun the required owning checks before relying on current facts, then the governance check for this complete relation. Neither this join nor a successful structural check proves runtime validation, default insertion, deployment, browser/provider execution or a previously unknown public launch.\n\n${end}`;
+  const block = `${start}\n\n## Current source and reader relations\n\nThe [full identity index](reference/generated-documentation-map.json) is under \`sourceSurfaceMap.authorityMatrix\`. Start with a SUR family above or search an exact source path in \`sourceAuthority\`. Each \`normalizedIdentity\` names its SUR family, source authority, canonical reader target and documentation owner. Resolve its \`policyRef\` in \`authorityPolicies\` for the owning inventory, generator or manual route, required check, consumer boundary and classification. Shared policies avoid copying competing ownership rules.\n\nEach family also has an \`authorityAvailability\` disposition: named admitted typed identities, or an explicit bounded reason that the selected inventories do not cover that whole high-level surface. A projection retains its actual primary authority even when assigned to a different family. This disposition is not proof of repository-wide source discovery.\n\nFor the reverse direction, find a canonical page/anchor in \`inverse\` and follow its exact identities. Configuration view identities retain the native ordered record position: repeated or conditional projections are not unique schema branch pointers. Open the owning schema/consumer reference for applicability and default behavior.\n\n| SUR group | Families | Source-bound declarations/relations | Projection references | Manual review routes |\n| --- | --- | --- | --- | --- |\n${rows.join('\n')}\n\nThese are index relations, **not counts of active public runtime features**. Explicit fixture, retained, private, candidate and declaration-only classifications remain in their owning policies. A manual route assigns a named source/consumer review and documentation owner; it does not claim generated freshness, completed semantic review or source-discovery completeness. Historical source links and guide-depth labels in the navigation tables are not current mechanical authorities.\n\nRun the required owning checks before relying on current facts, then the governance check for this complete relation. Neither this join nor a successful structural check proves runtime validation, default insertion, deployment, browser/provider execution or a previously unknown public launch.\n\n${end}`;
   return text.slice(0, a) + block + text.slice(b + end.length);
 }

@@ -6,7 +6,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
 import { buildSourceSurfaceMap, assertSourceSurfaceMap, assertAuthorityMatrix,
-  requiredSurfaceFamilies } from '../lib/docs-source-surface-map.mjs';
+  requiredSurfaceFamilies, generatedPageFreshnessChecks } from '../lib/docs-source-surface-map.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const mapFile = path.join(root, 'docs/site/reference/generated-documentation-map.json');
@@ -17,8 +17,9 @@ const build = (file, mutate, pages = committed.pages) => buildSourceSurfaceMap(r
   if (candidate === file) mutate(value);
   return value;
 });
-const baseline = buildSourceSurfaceMap(root, committed.pages);
-const stale = changed => assert.throws(() => assertSourceSurfaceMap(typeof changed === 'function' ? changed() : changed, baseline), /source-map stale\/orphan|authority-matrix/u);
+let baselineCache;
+const currentBaseline = () => baselineCache ??= buildSourceSurfaceMap(root, committed.pages);
+const stale = changed => assert.throws(() => assertSourceSurfaceMap(typeof changed === 'function' ? changed() : changed, currentBaseline()), /source-map stale\/orphan|authority-matrix/u);
 
 function authorityFixture() {
   const families = requiredSurfaceFamilies.map(id => ({ id, title: id,
@@ -41,6 +42,14 @@ function authorityFixture() {
     inventory: 'fixture/schema-index.json', factsSha256: '1'.repeat(64),
     recordKind: 'source-bound-fact', primaryMechanicalAuthority: true,
     classification: 'declaration-only', classificationBasis: 'Explicit fixture declaration.' });
+  for (const family of families) {
+    const typedIdentities = records.filter(record => record.recordKind !== 'manual-review-route'
+      && record.surFamily === family.id).map(record => record.normalizedIdentity).sort();
+    family.authorityAvailability = typedIdentities.length
+      ? { disposition: 'named-admitted-typed-authorities', typedIdentities }
+      : { disposition: 'no-admitted-typed-inventory-for-high-level-surface', typedIdentities,
+        selectedInventories: ['fixture/schema-index.json'], reason: 'Fixture inventory covers schema properties only, not this high-level family.' };
+  }
   const inverse = new Map();
   for (const record of records) {
     if (!inverse.has(record.canonicalTarget)) inverse.set(record.canonicalTarget, []);
@@ -50,6 +59,32 @@ function authorityFixture() {
     inverse: [...inverse].sort(([a], [b]) => a.localeCompare(b, 'en'))
       .map(([canonicalTarget, identities]) => ({ canonicalTarget, identities: identities.sort() })) };
 }
+
+test('generated page freshness preserves declared generator and bounded configuration classes', () => {
+  const configuration = new Set(['docs/site/reference/environment-variables.md']);
+  const generated = new Set(['cli', 'workflows', 'verification-commands', 'sdk-exports', 'configuration']
+    .map(name => `docs/site/reference/${name}.md`));
+  for (const page of [...configuration, ...generated].filter(page => !page.endsWith('/configuration.md'))) {
+    assert.deepEqual(generatedPageFreshnessChecks(page, configuration, generated), ['npm run docs:generate:check']);
+  }
+  const bounded = generatedPageFreshnessChecks('docs/site/reference/configuration.md', configuration, generated, 'a'.repeat(40));
+  assert.equal(bounded.length, 2);
+  assert(bounded[0].includes('--configuration-reference-only --check'));
+  assert(bounded[1].includes('--only configuration-hub'));
+  assert.deepEqual(generatedPageFreshnessChecks('docs/site/product-surfaces.md', configuration, generated), []);
+});
+
+test('manual route cannot replace an available selected typed authority', () => {
+  assertAuthorityMatrix(authorityFixture());
+  const missing = authorityFixture();
+  const removed = missing.records.pop();
+  missing.inverse = missing.inverse.filter(row => row.canonicalTarget !== removed.canonicalTarget);
+  assert.throws(() => assertAuthorityMatrix(missing), /available typed authority cannot be replaced/u);
+  const undisposed = authorityFixture(); delete undisposed.families[0].authorityAvailability;
+  assert.throws(() => assertAuthorityMatrix(undisposed), /availability disposition/u);
+  const unsupported = authorityFixture(); unsupported.families[0].authorityAvailability.reason = '';
+  assert.throws(() => assertAuthorityMatrix(unsupported), /bounded inventory disposition/u);
+});
 
 test('authority matrix cannot promote a manual route to generated or mechanical proof', () => {
   assertAuthorityMatrix(authorityFixture());
@@ -168,12 +203,12 @@ test('prompt library routes through the actual governance owner and rejects miss
 });
 
 test('current inventory join and inverse bindings match the generated map', () => {
-  assertSourceSurfaceMap(committed.sourceSurfaceMap, baseline);
-  for (const domain of baseline.domains) {
+  assertSourceSurfaceMap(committed.sourceSurfaceMap, currentBaseline());
+  for (const domain of currentBaseline().domains) {
     assert(domain.readerTask && domain.generator && domain.checks.length);
     for (const surface of domain.surfaces) {
       assert(surface.source && surface.owner);
-      assert(baseline.pageSources.find(page => page.page === surface.target.split('#')[0]).sourceIds.includes(surface.sourceId));
+      assert(currentBaseline().pageSources.find(page => page.page === surface.target.split('#')[0]).sourceIds.includes(surface.sourceId));
     }
   }
 });
@@ -214,10 +249,10 @@ for (const [name, collection, rename, change] of cases) {
 }
 
 test('internal workflow and each package route to their actual owning reader page', () => {
-  const workflows = baseline.domains.find(item => item.domain === 'workflow');
+  const workflows = currentBaseline().domains.find(item => item.domain === 'workflow');
   assert(workflows.surfaces.filter(item => item.source === '.github/workflows/docs-checks.yaml')
     .every(item => item.target === 'docs/site/extend/documentation-maintenance.md#generate-only-owned-facts-then-check'));
-  const plugins = baseline.domains.find(item => item.domain === 'plugin');
+  const plugins = currentBaseline().domains.find(item => item.domain === 'plugin');
   for (const item of read('docs/generated/inventory/plugin-system.json').packages) {
     assert(plugins.surfaces.some(surface => surface.source === item.manifest && surface.target === `docs/site/extend/plugin-catalogue/${item.id}.md#package-reference`));
   }
@@ -225,7 +260,7 @@ test('internal workflow and each package route to their actual owning reader pag
 
 test('complete SDK support closure keeps declarations, members and qualified reference destinations', () => {
   const inventory = read('docs/generated/inventory/sdk-reference.json');
-  const support = baseline.domains.find(item => item.domain === 'sdk-support');
+  const support = currentBaseline().domains.find(item => item.domain === 'sdk-support');
   assert.equal(support.surfaces.length, inventory.supportTypes.reduce((count, item) =>
     count + 1 + item.members.length + item.referencedSupport.length, 0));
   const declarations = new Map(support.surfaces.filter(item => item.sourceId.includes(':declaration:'))
@@ -275,31 +310,31 @@ test('new undocumented SDK support, forged identity, unresolved edge and named-e
 });
 
 test('wrong existing SDK support destination and inverse omission remain detectable', () => {
-  const bad = structuredClone(baseline);
+  const bad = structuredClone(currentBaseline());
   const support = bad.domains.find(item => item.domain === 'sdk-support');
   const wrongTarget = support.surfaces.find(item => item.target !== support.surfaces[0].target).target;
   support.surfaces[0].target = wrongTarget;
   stale(bad);
-  const inverse = structuredClone(baseline);
+  const inverse = structuredClone(currentBaseline());
   const page = inverse.pageSources.find(item => item.page === 'docs/site/reference/sdk-exports.md');
   page.sourceIds = page.sourceIds.filter(sourceId => !sourceId.startsWith('sdk-support:'));
   stale(inverse);
 });
 
 test('wrong existing page, valid existing source ID, member omission and inverse omission fail', () => {
-  let bad = structuredClone(baseline);
+  let bad = structuredClone(currentBaseline());
   bad.domains[0].surfaces[0].target = 'docs/site/reference/cli.md#defined-flags';
   stale(bad);
-  bad = structuredClone(baseline);
+  bad = structuredClone(currentBaseline());
   bad.domains[0].surfaces[0].sourceId = bad.domains[0].surfaces[1].sourceId;
   stale(bad);
-  bad = structuredClone(baseline);
+  bad = structuredClone(currentBaseline());
   const sdk = bad.domains.find(item => item.domain === 'sdk');
   sdk.surfaces.splice(sdk.surfaces.findIndex(item => item.sourceId.includes(':member:')), 1);
   // All present lengths/counts can be refreshed; exact membership still differs.
   bad.pageSources = bad.pageSources.map(page => ({ ...page, sourceIds: page.sourceIds.filter(sourceId => sdk.surfaces.some(item => item.sourceId === sourceId) || !sourceId.startsWith('sdk:')) }));
   stale(bad);
-  bad = structuredClone(baseline);
+  bad = structuredClone(currentBaseline());
   bad.pageSources[0].sourceIds.pop();
   stale(bad);
 });
@@ -318,4 +353,42 @@ test('orphan source binding, removed canonical page, missing anchor and duplicat
     data.endpoints.identityTargets[Object.keys(data.endpoints.identityTargets)[0]] = 'docs/site/reference/cli.md#not-an-existing-anchor';
   }), /source-map orphan anchor/u);
   assert.throws(() => build('docs/generated/inventory/workflows.json', data => data.workflows.push(structuredClone(data.workflows[0]))), /source-map duplicate source identity/u);
+});
+
+// Finite added adapters: changing actual typed facts must invalidate the same
+// owner output. These do not requalify the underlying source parsers.
+for (const [file, collection, rename, change] of [
+  ['docs/generated/inventory/configuration-families.json', data => data.facts,
+    item => { item.setting += '.mutation'; }, item => { item.consumer += ' changed'; }],
+  ['docs/generated/inventory/schema-field-drift.json', data => data.schemas,
+    item => { item.path = 'package.json'; }, item => { item.status = 'changed-declaration-status'; }],
+  ['docs/generated/inventory/cli-surfaces.json', data => data.sources,
+    item => { item.path = 'package.json'; }, item => { item.ownership.boundary += ' changed'; }],
+  ['docs/config/common-error-catalogue.json', data => data.entries,
+    item => { item.id += '.mutation'; }, item => { item.consumer += ' changed'; }],
+  ['packaging/runtime/package-ownership.json', data => data.packages,
+    item => { item.id += '.mutation'; }, item => { item.owner += '-changed'; }],
+  ['docs/operator-tasks.json', data => data.tasks,
+    item => { item.taskId += '.mutation'; }, item => { item.owner += '-changed'; }],
+]) test(`${file}: added authority adapter detects add/change/remove`, () => {
+  for (const mutation of [data => { const item = structuredClone(collection(data)[0]); rename(item); collection(data).push(item); },
+    data => change(collection(data)[0]), data => { collection(data).splice(0, 1); }]) {
+    stale(() => build(file, mutation));
+  }
+});
+
+test('source disagreement and native fixture/profile forgery fail closed', () => {
+  const inconsistent = authorityFixture();
+  inconsistent.records[0].sourceBindingSha256 = '1'.repeat(64);
+  inconsistent.records[1].sourceBindingSha256 = '2'.repeat(64);
+  assert.throws(() => assertAuthorityMatrix(inconsistent), /source snapshot disagreement/u);
+  for (const mutation of [item => { item.activationState = 'public'; },
+    item => { item.evidenceLocation = 'unqualified'; }, item => { item.profile = 'unknown-profile'; }]) {
+    assert.throws(() => build('docs/generated/inventory/platform-surfaces.json', data => {
+      const items = Object.values(data).filter(Array.isArray).flat();
+      const fixture = items.find(item => item?.source === 'helm:fixture/buster-runtime-registry');
+      assert(fixture, 'real bounded fixture record is required by this control');
+      mutation(fixture);
+    }), /authority-matrix orphan source/u);
+  }
 });

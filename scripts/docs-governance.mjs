@@ -2,7 +2,7 @@
 
 import fs from 'node:fs';
 import { createHash } from 'node:crypto';
-import { buildSourceSurfaceMap, assertSourceSurfaceMap, renderAuthorityMatrixSummary } from './lib/docs-source-surface-map.mjs';
+import { buildSourceSurfaceMap, assertSourceSurfaceMap, renderAuthorityMatrixSummary, generatedPageFreshnessChecks } from './lib/docs-source-surface-map.mjs';
 import { assertRouteContinuity } from './lib/docs-route-continuity.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -56,14 +56,13 @@ function publicRoute(item) {
   return `/${siteRelative.slice(0, -'.md'.length)}/`;
 }
 
-function checksFor(page) {
+function checksFor(page, text) {
   const checks = ['npm run docs:governance:check', 'npm run docs:publication:check', 'npm run docs:check:refs'];
   if (page.startsWith('docs/site/extend/deep-guides/')) checks.unshift('npm run docs:plugin-complexity:check');
   if (page === 'docs/site/status/open-issues.md') checks.unshift('npm run docs:status:check');
   if (page === promptContractPage) checks.unshift(...promptContractChecks);
-  if (configurationPages.has(page) || generatedReferencePages.has(page)) {
-    checks.unshift('node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check');
-  }
+  checks.unshift(...generatedPageFreshnessChecks(page, configurationPages, generatedReferencePages,
+    text.match(/^Source snapshot: `([0-9a-f]{40})`$/mu)?.[1]));
   if (/^docs\/site\/reference\/common-errors(?:-[a-z]+)?\.md$/u.test(page)) checks.unshift('npm run docs:errors:check');
   if (page === 'docs/site/reference/schemas.md') checks.unshift('node scripts/docs-schema-fields.mjs --check --reference');
   if (page === 'docs/site/reference/events.md') checks.unshift('npm run docs:events:check');
@@ -132,7 +131,7 @@ const pages = walk(siteRoot)
       appliesTo: values['Applies to'],
       lastVerified: values['Last verified'],
       sourceDependencies: [...new Set(generator ? [generator, ...evidence] : evidence)],
-      checks: checksFor(page),
+      checks: checksFor(page, text),
     };
   });
 
