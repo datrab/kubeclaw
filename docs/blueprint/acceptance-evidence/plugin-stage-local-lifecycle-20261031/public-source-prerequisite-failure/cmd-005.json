@@ -1,0 +1,12 @@
+{
+  "id": 5,
+  "argv": [
+    "bash",
+    "-c",
+    "git rev-parse HEAD; sha256sum docs/site/extend/examples/minimal-stage/plugin.json docs/site/extend/examples/minimal-stage/package.json docs/site/extend/examples/minimal-stage/schemas/*.json docs/site/extend/examples/minimal-stage/src/stage.js docs/site/extend/examples/minimal-stage/tests/stage.test.mjs"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "start": 1793485394.869868,
+  "end": 1793485394.8749735,
+  "exit": 0
+}

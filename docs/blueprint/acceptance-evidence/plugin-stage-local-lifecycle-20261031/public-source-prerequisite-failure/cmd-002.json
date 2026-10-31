@@ -1,0 +1,14 @@
+{
+  "id": 2,
+  "argv": [
+    "sha256sum",
+    "docs/site/README.md",
+    "docs/site/extend/first-plugin.md",
+    "docs/site/extend/developer-handbook.md",
+    "docs/site/use/quickstart.md"
+  ],
+  "cwd": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "start": 1793485316.3212292,
+  "end": 1793485316.3234687,
+  "exit": 0
+}

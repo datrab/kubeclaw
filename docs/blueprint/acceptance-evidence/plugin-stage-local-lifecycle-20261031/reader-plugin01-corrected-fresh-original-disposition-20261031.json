@@ -1,0 +1,92 @@
+{
+  "schemaVersion": "reader-plugin01-independent-original-disposition.v1",
+  "role": "independent reviewer of a different actor; not a fresh participant and not a gate award",
+  "case": "READER-PLUGIN-01",
+  "disposition": "NOT_ALL_ORIGINAL_CONDITIONS_EVIDENCED",
+  "actorReceiptPreserved": true,
+  "authority": "kubeclaw-pr13-recovery/docs/blueprint/AP09-acceptance-fixtures.json readerTasks READER-PLUGIN-01",
+  "reviewedEvidenceRoot": "operations/pr13/evidence/reader-plugin01-corrected-fresh-20261031/participant",
+  "originalExplicitCondition": "The package-local contract and behavior commands named by the guide exit zero before activation.",
+  "outcomes": [
+    {
+      "id": "plugin-tests-pass",
+      "status": "NOT_MET",
+      "evidence": [
+        "command-010.stdout",
+        "command-011.stdout",
+        "command-index.md",
+        "original-minimal-stage/package.json",
+        "extend__first-plugin.md"
+      ],
+      "finding": "Package-local behavior command exited zero before first helper activation. The maintained package exposes only test=node --test tests/stage.test.mjs, with two direct behavior tests. No package-local schema/contract command is supplied or observed before activation. Shared lifecycle/registry baselines and schema validation inside the activation helper are not package-local contract commands. The original wording requires contract AND behavior; absence of a contract command cannot vacuously satisfy that requirement."
+    },
+    {
+      "id": "activation-proven",
+      "status": "SUPPORTED",
+      "evidence": [
+        "command-011.stdout",
+        "command-018.stdout",
+        "command-015.stdout"
+      ],
+      "finding": "Exit-zero maintained helper checks exact snapshot package example.greeting and stage example.greeting.say; JSON identifies registration example.greeting:say and successful activation. Package/registration identity is not inferred solely from a manifest."
+    },
+    {
+      "id": "replacement-proven",
+      "status": "SUPPORTED",
+      "evidence": [
+        "command-011.stdout",
+        "command-018.stdout",
+        "command-015.stdout"
+      ],
+      "finding": "Reported baseline digest sha256:bfd27d6450123863c993f115cf5f902d207db7210432f84f5f83c00aeaafb341 differs from replacement sha256:3e4d06a76cf099c4805a9a347c1bbc3de40e002e0884dfd9c516a973bde0e07d. Helper asserts only replacement package root, one activated stage, version 2.0.0 and Hello-v2 behavior; rollback restores original digest/behavior. Exact state.read unrequested policy grant rejected and empty grant restored."
+    },
+    {
+      "id": "removal-state-inspected",
+      "status": "SUPPORTED_WITH_LOCAL_LIMITS",
+      "evidence": [
+        "command-015.stdout",
+        "command-018.stdout",
+        "command-021.stdout",
+        "bundle-manifest.json",
+        "cleanup-result.json",
+        "REPORT.md"
+      ],
+      "finding": "Helper explicitly checks absent package/stage in disabled discovery and missing-owner resolution after each package removal. It rereads four nonempty complete memory journals and compares serialized bytes after both removals. Report inventories memory-only journals, transient snapshots/scratch, retained output/package/bundle manifest, no plugin-owned persistent state or effects, and cleanup. Original condition does not demand exporting memory journals to disk or preserving all read stdout. Persistent recovery/deployment is not proved or claimed."
+    }
+  ],
+  "participantRules": {
+    "finding": "Retained report and command records support fresh independent MODEL plugin-developer eligibility at start, isolated clean a9f9902dc853a352c17f303e69c896080a1b4d8c checkout selected by corrected public guide, allowed named tools, no facilitator command correction or forbidden-source fallback, and bounded owned cleanup. Command timestamps place recorded execution within 120 minutes. This is not human acceptance. Freshness is a participant declaration, not independently reconstructible from shell proof.",
+    "evidence": [
+      "REPORT.md",
+      "command-001.json",
+      "command-001.stdout",
+      "command-index.md",
+      "cleanup-open-references.json",
+      "cleanup-result.json"
+    ]
+  },
+  "recordingDistinction": {
+    "originalCriterion": "No original four-outcome/participant-rule wording mandates a standalone timing/archive record for every documentation read.",
+    "actualLoss": "Actor reports two overwritten read records and initial reads preceding wrapper; meaningful install/test/activation/replacement/removal outputs remain recorded.",
+    "judgment": "These read-record losses do not independently invalidate the original Source/Reader criterion. Do not invent a full-per-read archive protocol or change the actor FAIL receipt. Its blanket claim that no documentation defect was observed is too strong given the unmet package-local contract requirement."
+  },
+  "oldAndCurrentProcedure": {
+    "oldPublishedEntry": "1b77a655882fe5105a9bd812a773e540007d008e originally lacked explicit stage source/replacement/mutation recipe (my prior independent task observed this); not used to judge corrected runtime as if it followed that old procedure.",
+    "correctedActorAndCurrentGuide": "Retained corrected guide and currently read first-plugin both pin a9f9902dc853a352c17f303e69c896080a1b4d8c and document exact same-ID version2 replacement and unrequested state.read policy grant. Both retain prerequisite invocation of the full activation helper and only two behavior tests; neither supplies a package-local contract gate first."
+  },
+  "finiteCorrection": [
+    "Add a meaningful package-local contract/schema check to the maintained minimal-stage package, documented alongside its behavior command; validate declared config/input/result boundary including rejection cases rather than relabeling two behavior tests.",
+    "Order both package-local commands before the first activation helper call, including in Prerequisites; require both zero before proceeding.",
+    "Commit/pin the complete changed Source and corresponding public guide. Obtain a new fresh independent reader execution for a whole original case PASS; this consumed actor can validate a correction but cannot become fresh again. Do not retroactively graft a later contract result onto its earlier activation."
+  ],
+  "reusableActualParts": [
+    "Locked dependency and host/source preparation",
+    "Package behavior results",
+    "Role omission/inclusion and bundle record",
+    "Identity/activation and exact unrequested-grant denial",
+    "Replacement digest/exclusive-root behavior and rollback",
+    "Disable/removal and complete in-memory retained-journal assertions",
+    "Focused verification and bounded owned cleanup"
+  ],
+  "limits": "Read-only review; no tests or loop replay; no source/docs/current-work edits; only this disposition file created. No gate awarded."
+}

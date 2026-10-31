@@ -142,7 +142,15 @@ export const embeddedProgramBindings = [
     "mode": "module"
   },
   {
-    "ref": "docs/site/extend/first-plugin.md#block-15",
+    "ref": "docs/site/extend/first-plugin.md#block-1",
+    "start": 73,
+    "length": 1580,
+    "sha256": "6180f2e5a0e3ac695dac5aba24bc1e0022fd8ba0ec0c4aa83d6f6db2f5e1d1d5",
+    "language": "javascript",
+    "mode": "module"
+  },
+  {
+    "ref": "docs/site/extend/first-plugin.md#block-16",
     "start": 32,
     "length": 282,
     "sha256": "93ad74113f1d17d33e84fae1503d1ad9d4599361ac70d35f616c3e8cf3c8f478",

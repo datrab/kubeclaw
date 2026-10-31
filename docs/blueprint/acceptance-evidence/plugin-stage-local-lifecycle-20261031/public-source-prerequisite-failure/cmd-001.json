@@ -1,0 +1,13 @@
+{
+  "id": 1,
+  "argv": [
+    "git",
+    "clone",
+    "https://github.com/datrab/kubeclaw.git",
+    "reader-plugin01-fresh-20261031"
+  ],
+  "cwd": "/tmp",
+  "start": 1793485305.4074607,
+  "end": 1793485361.8189147,
+  "exit": 0
+}

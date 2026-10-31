@@ -1,0 +1,12 @@
+{
+  "id": 3,
+  "argv": [
+    "bash",
+    "-c",
+    "set -eu; git checkout --detach a9f9902dc853a352c17f303e69c896080a1b4d8c; git status --short; git rev-parse HEAD; git switch -c reader-plugin01-fresh; node --version; npm --version; git --version; /usr/bin/flock --version; cc --version; bash --version; tar --version"
+  ],
+  "cwd": "/tmp/reader-plugin01-fresh-20261031",
+  "start": 1793485366.332035,
+  "end": 1793485366.335968,
+  "exit": 128
+}

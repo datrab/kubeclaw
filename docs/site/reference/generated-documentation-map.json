@@ -411,7 +411,7 @@
       "audience": "plugin author, maintainer",
       "owner": "plugin-foundation",
       "appliesTo": "one capability-free `pipeline-plugin-v2` stage in the Nova role and the separately pinned local observer companion",
-      "lastVerified": "original stage source/local check on 2026-09-16. Observer source/local journey on 2026-10-26",
+      "lastVerified": "stage source/local lifecycle checks on 2026-10-31. Observer source/local journey on 2026-10-26",
       "sourceDependencies": [
         "docs/site/extend/examples/minimal-stage",
         "docs/site/extend/examples/observer-lifecycle",

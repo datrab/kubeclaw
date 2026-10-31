@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Stop before activation when the contract check fails",
+      "body": "The newly added contract check, package test, and activation journey are separate shell commands with no `set -e` or `&&` chaining. If manifest/schema validation fails, the shell continues to `npm test` and then activates the plugin, contradicting the stated requirement that contract and behavior checks pass before activation. Make this fence fail fast (for example, add `set -e` or chain the commands).",
+      "priority": "P2",
+      "confidence": 0.96,
+      "category": "bug",
+      "code_location": {
+        "file_path": "docs/site/extend/first-plugin.md",
+        "line": 107
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The documented pre-activation contract gate does not actually prevent the activation command from running after a failed validation.",
+  "overall_confidence": 0.96
+}

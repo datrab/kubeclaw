@@ -1,0 +1,126 @@
+{
+  "recordedAt": "2026-10-31T22:32:28.210234+00:00",
+  "scope": "Actual bounded local evidence, not new original whole acceptance",
+  "files": [
+    {
+      "path": "reader-plugin01-actual-failfast-negative-20261031.json",
+      "bytes": 493,
+      "sha256": "940192966df1d105154c92de7d2938afa1cec42763a80bdd002a3a59b48aee37"
+    },
+    {
+      "path": "reader-plugin01-map-date-pinned-review-20261031.json",
+      "bytes": 398,
+      "sha256": "a9773b756df036ea7f565c83d69ece965e200a74ce856a5f52b8e40e7fb8d3c6"
+    },
+    {
+      "path": "README.md",
+      "bytes": 1820,
+      "sha256": "8daea57380dfa435f009af9877962e3f10747e66d9c7359d0181514655e6204d"
+    },
+    {
+      "path": "reader-plugin01-v4-failfast-pinned-review-20261031.json",
+      "bytes": 355,
+      "sha256": "b09be6c4f9230d3636e1f08c8c17d80619593062fd516f1b03e336d7165df83b"
+    },
+    {
+      "path": "reader-plugin01-remedy-custody-controls-20261031.log",
+      "bytes": 1233,
+      "sha256": "d5e79af6a4b672b93893e7ea5e59c5adda01ef6c8dc6c4cd17484f92f24d14a2"
+    },
+    {
+      "path": "reader-plugin01-corrected-fresh-original-disposition-20261031.json",
+      "bytes": 6868,
+      "sha256": "7a16842e2a9603a99e4a2e8b699a6f704d8ac606e5ee42b894da2b5f77a46f0b"
+    },
+    {
+      "path": "reader-plugin01-actual-governance-map-delta-20261031.json",
+      "bytes": 736,
+      "sha256": "e79773bf6e008121a5aab4b83d3e058163a456ad0752d0f7ef7bc80f60ab0139"
+    },
+    {
+      "path": "reader-plugin01-actual-failfast-positive-20261031.log",
+      "bytes": 1688,
+      "sha256": "c41c613a197cb4c45087c56d89983b2b59b890f1f307b7b73ea252bb55911464"
+    },
+    {
+      "path": "reader-plugin01-actual-failfast-positive-20261031.json",
+      "bytes": 269,
+      "sha256": "3ae1ac723c21aac163b759340dea9d568a582ddfd300b9e9175b34a7ac2dce06"
+    },
+    {
+      "path": "reader-plugin01-actual-failfast-negative-20261031.log",
+      "bytes": 1544,
+      "sha256": "41504632d63d539d9df23643bdff4ab40e2cf02f1e754a13edb357bd45ddceba"
+    },
+    {
+      "path": "reader-plugin01-remedy-final-pinned-review-20261031.json",
+      "bytes": 326,
+      "sha256": "8e74f57c78eb9f1233d57655a5877830bb889ef91720e7d021fcfaa58727febb"
+    },
+    {
+      "path": "reader-plugin01-v3-coherent-pinned-review-20261031.json",
+      "bytes": 953,
+      "sha256": "5908fa9db01e4c730a1c0eb874bf072e72231a4aa2503a0aaabaee0960048439"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-005.output.txt",
+      "bytes": 922,
+      "sha256": "40e94b56ef27184a6dd437e7ea35a5018be12e2a54633eb97fc464a2b0c4112c"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-002.output.txt",
+      "bytes": 384,
+      "sha256": "9c4e849c622a7dbae7814f933d2349321344ee548a77e5880dc2a5502bc145f9"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-001.json",
+      "bytes": 227,
+      "sha256": "0d677b900d215378b0e344feeed5fa05353169d7e5d31f11dfd523b64e75ebab"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-002.json",
+      "bytes": 333,
+      "sha256": "cdf229ac9eef05dff9ae0277e8b35baaf80262f6315d6c06053e720d53208373"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-003.output.txt",
+      "bytes": 73,
+      "sha256": "87af14e2ecad3ec3460e9d2cf542bc0ef41db8544750795269192018cc11b08f"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-004.json",
+      "bytes": 1067,
+      "sha256": "c323e5d56ec01eca9ad43b5411bb66e74571a88823591b31ec67e31ba3a0a12b"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-004.output.txt",
+      "bytes": 187,
+      "sha256": "f54862222707bcbc4610f3bee25fabc08257525cf9449289bb0606f0be75df81"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-003.json",
+      "bytes": 445,
+      "sha256": "ad4137baf65e5adc9df24b544f19474858c6549feee97bc6588e60b82e887da4"
+    },
+    {
+      "path": "public-source-prerequisite-failure/report.md",
+      "bytes": 3304,
+      "sha256": "3bae537be3db56e8658b28db264b683e733bff146e669b89f6f68def42940654"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-005.json",
+      "bytes": 500,
+      "sha256": "e931db53adbf0f6f41846baec88d6c583092ba0816eb4af3fae8a6617a675e8c"
+    },
+    {
+      "path": "public-source-prerequisite-failure/eligibility.txt",
+      "bytes": 334,
+      "sha256": "4e75cce3aef4e26d6e399a96531f7056d6a000ec8c7660693be1685411197c75"
+    },
+    {
+      "path": "public-source-prerequisite-failure/cmd-001.output.txt",
+      "bytes": 49,
+      "sha256": "01e39fd4ff267d57fb5ca89a58d7a510315064092e515230a98c001bf62ccc81"
+    }
+  ]
+}

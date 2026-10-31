@@ -6,7 +6,7 @@ Owner: plugin-foundation
 Evidence: docs/site/extend/examples/minimal-stage; docs/site/extend/examples/observer-lifecycle; package.json; skills/common/plugin-runtime/contracts/plugin-system/v2/plugin-system-v2.schema.json; packaging/runtime/roles/nova.json
 Evidence revision: `bcf032f241b432bf920baa9ee5f727947921447d`
 Applies to: one capability-free `pipeline-plugin-v2` stage in the Nova role and the separately pinned local observer companion
-Last verified: original stage source/local check on 2026-09-16. Observer source/local journey on 2026-10-26
+Last verified: stage source/local lifecycle checks on 2026-10-31. Observer source/local journey on 2026-10-26
 
 ## Objective
 
@@ -85,9 +85,11 @@ project adds a dedicated development-only runtime role.
 
 Before you start, do these steps:
 
-- Start from a clean checkout of the product revision that you plan to extend.
-  A pinned source link can show an earlier verified revision. Use that link as
-  evidence, but edit and test the files in your selected product revision.
+- For this stage journey, select source commit `a9f9902dc853a352c17f303e69c896080a1b4d8c`
+  in a disposable branch before installing dependencies. Follow
+  [Prepare a clean checkout](developer-handbook.md#prepare-a-clean-checkout)
+  with this explicit commit, not the handbook's inspected baseline or a historical
+  source-link revision. Record `git rev-parse HEAD` and require the value above.
 - Install Node.js major version 24.
 - Complete the canonical [Locked Dependency Installation](../use/quickstart.md#locked-dependency-installation) in a disposable checkout.
   Then retain its sanitized evidence.
@@ -98,13 +100,47 @@ Before you start, do these steps:
 Confirm the starting state:
 
 ```bash
+set -e
 git status --short
 node --version
+node --input-type=module <<'JS'
+import assert from 'node:assert/strict';
+import fs from 'node:fs';
+import { parsePluginManifest, validateReferencedSchema } from './skills/common/plugin-runtime/foundation/registry/schema.ts';
+const packageRoot = 'docs/site/extend/examples/minimal-stage';
+const manifestPath = `${packageRoot}/plugin.json`;
+const manifest = parsePluginManifest(fs.readFileSync(manifestPath, 'utf8'), manifestPath);
+assert.throws(() => parsePluginManifest(JSON.stringify({ ...manifest, id: '' }), manifestPath),
+  error => error?.code === 'REGISTRY_MANIFEST_INVALID');
+const cases = {
+  config: { valid: [{ prefix: 'Hello' }], invalid: {} },
+  input: { valid: [{ name: 'KubeClaw' }], invalid: {} },
+  result: { valid: [
+    { schemaVersion: 'stage-result.v2', outcome: 'passed', artifacts: [], facts: { 'tutorial.greeting': 'Hello, KubeClaw!' } },
+    { schemaVersion: 'stage-result.v2', outcome: 'failed', reason: { code: 'tutorial.requested_failure', message: 'Requested failure.' }, artifacts: [] },
+  ], invalid: { schemaVersion: 'stage-result.v2', outcome: 'unknown', artifacts: [] } },
+};
+for (const [name, values] of Object.entries(cases)) {
+  const schemaPath = `${packageRoot}/schemas/${name}.schema.json`;
+  const validator = validateReferencedSchema(fs.readFileSync(schemaPath, 'utf8'), schemaPath);
+  for (const value of values.valid) validator.validate(value);
+  assert.throws(() => validator.validate(values.invalid),
+    error => error?.code === 'REGISTRY_RESULT_INVALID');
+}
+console.log('Package manifest, config, input and both result contracts passed; invalid values rejected.');
+JS
+npm test --prefix docs/site/extend/examples/minimal-stage
 npm run docs:extensions:minimal-plugin:check
 ```
 
-The last command uses a temporary installation root.
-It does not add the tutorial plugin to the checked-out Nova role.
+Require the package manifest and three schema contracts to pass, then require
+the two package behavior tests to pass before running the activation journey.
+The contract command uses the canonical manifest parser and referenced-schema
+validator. It accepts valid configuration and input, accepts both result branches,
+and requires the exact manifest or value error for each invalid case. It does not
+import or activate the plugin. The final journey command
+uses a temporary installation root. It does not add the tutorial plugin to the
+checked-out Nova role.
 
 ## Understand The Package Before You Copy It
 
@@ -272,6 +308,61 @@ The recorded local result came from a host with BusyBox `flock` and no timeout s
 The persistent file journal requires `flock --timeout`. Registry, grants, activation, schema checks, `PipelineRunner`,
 stage execution, lifecycle reduction, and role validation use production code.
 Persistent file-lock and recovery verification remain outside this local result.
+
+### 5a. Replace, deny an undeclared grant, and disable the local stage
+
+Use the source revision pinned in Prerequisites. The Evidence revision and
+historical source links above cover the original stage explanation, not these
+additional stage cases.
+The same journey command above also performs the following bounded stage cases.
+It changes only private fixture copies, never the canonical example or a released
+package. Package behavior tests remain separate from its schema and runtime checks.
+
+The replacement keeps package ID `example.greeting`, registration ID
+`example.greeting:say` and stage type `example.greeting.say`. Its package version
+is `2.0.0`. In a separate installation root, its copied module returns
+`Hello-v2, KubeClaw!` for the same `Hello` prefix and `KubeClaw` input. The helper
+selects only this root for the replacement. It checks that the registry snapshot
+digest changes, exactly one stage is activated, and the new fact is returned.
+It then selects the untouched original root and requires the original snapshot
+digest and `Hello, KubeClaw!` fact again. A version number alone is not proof of
+replacement behavior. Discovering both copies together is not a supported upgrade.
+
+The exact permission mutation leaves `requiredCapabilities: []` unchanged and
+adds `state.read: {}` to the policy grants for `example.greeting:say`. Foundation
+must reject that unrequested grant with `REGISTRY_CAPABILITY_UNREQUESTED` before
+activation. The helper selects no state provider and does not invoke `state.read`.
+It restores the empty grant policy and verifies the original snapshot again.
+Do not add a capability to the package manifest to make this negative test pass.
+
+For stage disablement, the helper selects an empty installation root, verifies
+that discovery has neither the package nor its stage, and requires admission of
+the old definition to fail with `PIPELINE_STAGE_OWNER_MISSING`. Removing a grant
+alone does not disable a discovered stage. After the owned runs are terminal, the
+helper removes its private replacement package and repeats the missing-owner
+check. The original success, failure, replacement and rollback journals must still
+be readable after both package copies are removed.
+
+Require these additional output fields from the same command:
+
+```text
+"undeclaredGrant":"REGISTRY_CAPABILITY_UNREQUESTED"
+"grantRestored":true
+"packageVersion":"2.0.0"
+"successFact":"Hello-v2, KubeClaw!"
+"rollback":"original-snapshot-and-behavior"
+"disabled":"package-and-stage-absent"
+"replacementRemoval":"stage-owner-missing"
+"retainedRunJournals":4
+```
+
+The two snapshot digests must differ; their actual values depend on the selected
+source bytes. Save the complete command output before the helper removes its
+private temporary tree. These are real local Registry, Foundation and Core
+observations with an in-memory journal, not a deployed service update, persistent
+recovery, arbitrary upgrade compatibility or an operator install/remove command.
+A nonzero exit is a failed step: retain its error instead of accepting a different
+failure as the expected denial.
 
 ### 6. Read The Result As A Runtime Contract
 

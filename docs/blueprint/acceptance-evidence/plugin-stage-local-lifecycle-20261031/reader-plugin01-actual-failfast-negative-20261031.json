@@ -1,0 +1,16 @@
+{
+  "start": "2026-10-31T22:25:01.125123+00:00",
+  "end": "2026-10-31T22:25:01.533297+00:00",
+  "guideSha256": "31ce4e5bb6f05d51eff25bae63c2052e72540f8adafec46efc03c1bae697652b",
+  "shellFlags": [
+    "--noprofile",
+    "--norc",
+    "-c"
+  ],
+  "exactFirstFence": true,
+  "exitCode": 1,
+  "manifestError": true,
+  "npmInvoked": false,
+  "scope": "Owned invalidmanifest fixture, documented set-e itself must stop before packagebehavior/nativeactivation; no fake npm success",
+  "pass": true
+}

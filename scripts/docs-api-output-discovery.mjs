@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "b1bac949ca1e9b4ac442afb1b86de2b9e6f129bfed6ab9f9c0ebaf1b79c7ed12"
+      "sha256": "e2e9217c75e738b369ff8f4e9631f09fb262ce809600ae489ea0c95c0bc5ebb4"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3424,7 +3424,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "b1bac949ca1e9b4ac442afb1b86de2b9e6f129bfed6ab9f9c0ebaf1b79c7ed12"
+      "sha256": "e2e9217c75e738b369ff8f4e9631f09fb262ce809600ae489ea0c95c0bc5ebb4"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3484,7 +3484,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/extend/first-plugin.md",
-      "sha256": "245efa0f563d4b3a9675aa7d995bd484f1ed6e44f31697d922641f6969e502be"
+      "sha256": "31ce4e5bb6f05d51eff25bae63c2052e72540f8adafec46efc03c1bae697652b"
     },
     {
       "path": "docs/site/reference/buster-runtime-configuration.md",
@@ -3504,7 +3504,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
-      "sha256": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223"
+      "sha256": "ad7fa661d665dcad5553b881e749e4bfbbba39e6cb2f2487c767e0b702ecd09a"
     },
     {
       "path": "docs/site/reference/helm-values.md",

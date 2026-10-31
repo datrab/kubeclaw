@@ -1,0 +1,7 @@
+{
+  "exitCode": 0,
+  "guideSha256": "31ce4e5bb6f05d51eff25bae63c2052e72540f8adafec46efc03c1bae697652b",
+  "exactFirstFence": true,
+  "shellExtraErrexitFlag": false,
+  "scope": "Valid actualpackage contract positive+negative,behavior2,nativefulljourney; rootnotfresh"
+}

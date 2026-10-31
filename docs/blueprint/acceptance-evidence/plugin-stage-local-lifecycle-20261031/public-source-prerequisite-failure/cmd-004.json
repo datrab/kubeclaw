@@ -1,0 +1,12 @@
+{
+  "id": 4,
+  "argv": [
+    "python3",
+    "-c",
+    "import os,pathlib,shutil; target=pathlib.Path(\"/tmp/reader-plugin01-fresh-20261031\"); print(\"owned clone:\",target,\"exists:\",target.is_dir()); users=[]; me=os.getpid(); parent=os.getppid();\nfor p in pathlib.Path(\"/proc\").iterdir():\n if not p.name.isdigit() or int(p.name) in (me,parent): continue\n try:\n  cwd=os.readlink(p/\"cwd\"); refs=[str(x.resolve()) for x in (p/\"fd\").iterdir()]; cmd=(p/\"cmdline\").read_bytes().replace(bytes([0]),b\" \").decode(errors=\"replace\")\n  if cwd.startswith(str(target)) or any(x.startswith(str(target)) for x in refs) or (str(target) in cmd and \"exec_command\" not in cmd): users.append((p.name,cwd,cmd))\n except (OSError,PermissionError): pass\nprint(\"active users/processes:\",users); assert not users; shutil.rmtree(target); print(\"clone absent:\",not target.exists()); print(\"cache allocated: none; bundle allocated: none; dependency tree installed: none\")"
+  ],
+  "cwd": "/tmp",
+  "start": 1793485376.678926,
+  "end": 1793485377.1870975,
+  "exit": 0
+}
