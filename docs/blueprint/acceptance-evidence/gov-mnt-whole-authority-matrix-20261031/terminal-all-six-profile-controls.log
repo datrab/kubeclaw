@@ -1,0 +1,77 @@
+node:internal/child_process:1191
+    result.error = new ErrnoException(result.error, 'spawnSync ' + options.file);
+                   ^
+
+<ref *1> Error: spawnSync go ENOENT
+    at Object.spawnSync (node:internal/child_process:1191:20)
+    at spawnSync (node:child_process:929:24)
+    at execFileSync (node:child_process:972:15)
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/tests/api-output-cli-native-protocol-custody.test.mjs:21:21
+    at ModuleJob.run (node:internal/modules/esm/module_job:561:25)
+    at async node:internal/modules/esm/loader:647:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5) {
+  errno: -2,
+  code: 'ENOENT',
+  syscall: 'spawnSync go',
+  path: 'go',
+  spawnargs: [
+    'run',
+    '/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-api-go-output-role-adapter.go'
+  ],
+  error: [Circular *1],
+  status: null,
+  signal: null,
+  output: null,
+  pid: 0,
+  stdout: undefined,
+  stderr: undefined
+}
+
+Node.js v24.22.1
+✖ scripts/tests/api-output-cli-native-protocol-custody.test.mjs (24671.582563ms)
+✔ only the exact existing seven Markdown receivers acquire a private non-api purpose while raw role stays UNKNOWN (403.73823ms)
+✔ source loop sink content branch and helper changes cannot borrow the exact renderer profile (5.294637ms)
+✔ catalogue and section map added missing reordered renamed traversal data plus manifest changes refuse (649.724123ms)
+✔ existing complete source-surface guard rejects changed removed and newly selected production members (850.649219ms)
+✔ root cwd package extra argv public entry and imported callback stay closed (493.952658ms)
+✔ actual sealed Map-loop check compares without writes and default keeps API-looking samples only in Markdown files (303.38429ms)
+✔ exact two documentation targets and distinct writer/failure receipts preserve all raw classifications (300.849245ms)
+✔ original fixed inventory creation is permitted but physical aliases and hardlinks refuse (738.337489ms)
+✔ added missing reordered renamed traversal callback and outside maps plus source guard relaxation cannot borrow purpose (7.752901ms)
+✔ helper binding page and raw descriptor changes refuse without a census or source-vector update (1618.123573ms)
+✔ canonical native root/cwd three package commands compound drift and caller edges stay closed (494.904933ms)
+✔ actual sealed mode program uses fake inputs only: invalid argv/check/default/source guard and partial failure boundaries (4.778434ms)
+✔ exact physical normal publication route seeds only the child for analysis (421.199063ms)
+✔ changed executable path argv cwd limits mode root and result guard are refused (2.813483ms)
+✔ child self-main root callback and direct package/export changes refuse purpose (192.367974ms)
+✔ an unselected parent alternate caller incoming import and alias cannot inherit seed (767.047203ms)
+✔ physical symlinks and stale acquired context refuse while unrelated roots receive no seed (194.466228ms)
+✔ actual parent receipt gate rejects failures malformed partial false and wrong-ID results (374.01424ms)
+(node:1354222) Warning: Keys with collection values will be stringified due to JS Object restrictions: "{ .Values | toJson | quote }". Set mapAsMap: true to use object keys.
+(Use `node --trace-warnings ...` to show where the warning was created)
+✔ four actual callers ten raw slots and API-shaped private chart remain validation-only (2909.363041ms)
+✔ exact caller bodies operations paths tools and no-start boundary cannot be borrowed (2067.962113ms)
+✔ native graph all four edges aliases root physical identities and slot mutations fail closed (21748.367128ms)
+✔ actual private-chart body fake Helm and filesystem preserve API shape and cleanup attempt only (10.561974ms)
+✔ actual overlay source fake Helm verifies four ordered renders Prism negative branch and version only (6.426027ms)
+✔ actual Buster construction and Prism blocked path never start recover or invoke (3.166162ms)
+✔ separate schema and genuinely Kubernetes-shaped specimen purposes retain raw UNKNOWN and no admission grant (1407.812682ms)
+✔ changed IDs order path joins prefix outside paths callbacks argv and cleanup cannot borrow exact source slots (11.988651ms)
+✔ block ordinals substitutions input identities authorities selectors and raw slots stay sealed (8712.512209ms)
+✔ normal publication caller only: root package public alias incoming edge and second-argument changes reject (8078.220872ms)
+✔ actual sealed materialization body uses only fake FS/validator: three IDs six local paths and cleanup (18.047868ms)
+✔ known corruption and write/status/parser/summary failures attempt owned cleanup without rollback guarantee (28.746895ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 30
+ℹ fail 1
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 76917.716616
+
+✖ failing tests:
+
+test at scripts/tests/api-output-cli-native-protocol-custody.test.mjs:1:1
+✖ scripts/tests/api-output-cli-native-protocol-custody.test.mjs (24671.582563ms)
+  'test failed'
