@@ -80,7 +80,7 @@ RUN set -eux; \
 ARG RUFF_VERSION=0.15.22
 ARG MYPY_VERSION=2.3.0
 ARG PIP_AUDIT_VERSION=2.10.1
-ARG SEMGREP_VERSION=1.170.1
+ARG SEMGREP_VERSION=1.183.0
 COPY docker/python-tools/buster.txt /opt/kubeclaw-python-locks/buster.txt
 RUN grep -F "ruff==${RUFF_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
     && grep -F "mypy==${MYPY_VERSION} " /opt/kubeclaw-python-locks/buster.txt \
