@@ -1,0 +1,1 @@
+node -e 'const fs=require("fs"),p="/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/";for(const f of ["project/project.json","project/compiled.json","project/operator-selected-lint-policy.json","compiled-platform.local-providers.json"]) {console.log("FILE "+f);console.log(fs.readFileSync(p+f,"utf8"))}'

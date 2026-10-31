@@ -70951,6 +70951,123 @@
       ],
       "openIssues": [],
       "verdict": "PASS"
+    },
+    {
+      "id": "QUA007-independent-actual-operator-six-facets-20261031",
+      "revision": "9abba46ece3063df72f3db16d0a27a83446a0088",
+      "author": "PR13 sole integration owner",
+      "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-007"
+      ],
+      "pages": [
+        "docs/site/README.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/status/acceptance.md",
+        "docs/site/use/diagnose.md",
+        "docs/site/use/install.md",
+        "docs/site/use/operate.md",
+        "docs/site/use/recovery.md",
+        "docs/site/use/workflows/README.md",
+        "docs/site/use/workflows/interruption-recovery.md"
+      ],
+      "sources": [
+        "docs/blueprint/AP09-acceptance-contract.md",
+        "docs/blueprint/AP09-completeness-audit.md",
+        "docs/site/use/workflows/examples/compiled-project-input.mjs",
+        "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+        "docs/site/use/workflows/examples/compiled-project.mjs"
+      ],
+      "summary": "Actual fresh independent model operator: central docs only, documented authority-safe installation STOP, configuration, same eight-stage compiled pipeline with ten original artifacts/221 events, observed diagnosis, checkpoint recovery and three external-effect safe stops, verified cleanup. Distinct nonauthor original whole judgement PASS.",
+      "checks": [
+        {
+          "command": "Fresh registered operator: source-select",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=2.2480309009552"
+        },
+        {
+          "command": "Fresh registered operator: dependencies",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=48.446250438690186"
+        },
+        {
+          "command": "Fresh registered operator: baseline",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=3.658071756362915"
+        },
+        {
+          "command": "Fresh registered operator: prepare",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=4.817793607711792"
+        },
+        {
+          "command": "Fresh registered operator: configuration-inspection",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=0.028982877731323242"
+        },
+        {
+          "command": "Fresh registered operator: actual-run",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=53.44036650657654"
+        },
+        {
+          "command": "Fresh registered operator: verify",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=1.6257328987121582"
+        },
+        {
+          "command": "Fresh registered operator: recovery",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=13.564807891845703"
+        },
+        {
+          "command": "Fresh registered operator: cleanup-journey",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=1.54628586769104"
+        },
+        {
+          "command": "Fresh registered operator: cleanup-scratch",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=2.585331439971924"
+        },
+        {
+          "command": "Fresh registered operator: retained-proof-check",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=0.034828901290893555"
+        },
+        {
+          "command": "Fresh registered operator: session-owner-state",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=0.10652565956115723"
+        },
+        {
+          "command": "Fresh registered operator: session-status-check",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=2.2714457511901855"
+        },
+        {
+          "command": "Fresh registered operator: session-cleanup-check",
+          "exitCode": 0,
+          "observation": "Actual terminal execution; elapsedSeconds=0.14857172966003418"
+        }
+      ],
+      "review": {
+        "sourceAccuracy": "PASS",
+        "readerUsability": "PASS",
+        "quality": "PASS"
+      },
+      "limits": [
+        "PUB-007/human assistive/screenreader acceptance stillunmet.",
+        "A99-12/A912-12/A913-04/A913-05 unchanged registeredmultirole/runtimefixtures not inferredpassed.",
+        "No liveinstall/productionrelease/trust/lifecycle/denial/restore/RPO-RTO/cgroup/readiness acceptance.",
+        "No genericAPI/defaultglobalSource/findingsclosure or AP10parity/deletion award.",
+        "Selected executable baseline da43fa58743934a7a98dc8f2fb6205b062e83870 as prescribed by current guide; not current helper execution. Installation supported authority STOP, no live cluster install. Model participant, not human.",
+        "First Semgrep EROFS and immutable pre-cleanup pending state preserved; successful subsequent preparation and cleanup separately evidenced.",
+        "Existing native publication/artifact checks at 5390bc45 reused for unchanged public content; no new build claimed."
+      ],
+      "openIssues": [],
+      "verdict": "PASS"
     }
   ],
   "purpose": "Internal planning and observed findings; not an acceptance ledger and not reader documentation.",
@@ -93840,7 +93957,7 @@
         ".github/workflows/remediation-native.yaml",
         "tests/verification/contracts/check-production-receipt-attestation.mjs"
       ],
-      "sourceVerification": "pending-current-claim-inspection",
+      "sourceVerification": "independent-current-whole-operator-Source-Reader-Quality-PASS; see completionRecord",
       "contentKind": "authored",
       "generator": null,
       "automatedChecks": [
@@ -93870,8 +93987,14 @@
         "quality",
         "astra-final"
       ],
-      "state": "not-accepted",
-      "evidence": [],
+      "state": "accepted",
+      "evidence": [
+        {
+          "path": "docs/blueprint/acceptance-evidence/qua007-independent-operator-20261031/independent-original-decision.json",
+          "revision": "9abba46ece3063df72f3db16d0a27a83446a0088",
+          "scope": "PASS_AT_SUPPORTED_DOCUMENTATION_OPERATOR_READER_SCOPE"
+        }
+      ],
       "reviews": [
         {
           "agent": "/root/core_complete_corrected_quality_fresh",
@@ -93922,16 +94045,34 @@
           "report": "/home/node/Documents/Codex/a98-evidence/capacity-corrected-complete-reader-fresh/REPORT.md",
           "reportSha256": "afe0358c6e90eb1208ad1640cb4c5e0ca564849d435172d16ee1ddf477e9cb6f",
           "scopeLimit": "Complete current candidate static content and necessary declared task contexts only. Formal execution/clean checkout/render/search/practical/global gates remain unawarded."
+        },
+        {
+          "role": "source",
+          "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/qua007-independent-operator-20261031/independent-original-decision.json"
+        },
+        {
+          "role": "reader",
+          "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/qua007-independent-operator-20261031/independent-original-decision.json"
+        },
+        {
+          "role": "quality",
+          "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
+          "verdict": "PASS",
+          "report": "docs/blueprint/acceptance-evidence/qua007-independent-operator-20261031/independent-original-decision.json"
         }
       ],
       "openFindingIds": [],
       "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L426",
       "closureDecision": {
-        "verdict": "NOT_READY",
-        "revision": "96daf5b514f5088b609f3e0f8a5d533d076b4a19",
-        "reason": "Actual full independent operator role task execution remains unestablished. Current complete guide/topic observations retain their original source/reader limits; no live runtime or participant success inferred.",
-        "requiresAffectedRereview": true,
-        "currentScopeNote": "Current executing original point disposition; all earlier reasons/reports/negatives preserved. No acceptance added.",
+        "verdict": "PASS",
+        "revision": "9abba46ece3063df72f3db16d0a27a83446a0088",
+        "completionRecord": "QUA007-independent-actual-operator-six-facets-20261031",
+        "report": "docs/blueprint/acceptance-evidence/qua007-independent-operator-20261031/independent-original-decision.json",
+        "reason": "Actual independent model operator six-facet task and distinct independent original whole Source/Reader/Quality judgement. Frozen documented da43 execution; installation authority STOP, not live installation or human participation.",
         "campaign": "consolidated-original-closure-20261031"
       },
       "closureDecisionHistory": [
@@ -93942,8 +94083,17 @@
           "requiresAffectedRereview": true,
           "currentScopeNote": "Historical integrated review; later scoped fixes and first-project example are separately accepted. Remaining whole requirement needs affected re-review, not automatic promotion.",
           "campaign": "independent-ready-topics-20261020"
+        },
+        {
+          "verdict": "NOT_READY",
+          "revision": "96daf5b514f5088b609f3e0f8a5d533d076b4a19",
+          "reason": "Actual full independent operator role task execution remains unestablished. Current complete guide/topic observations retain their original source/reader limits; no live runtime or participant success inferred.",
+          "requiresAffectedRereview": true,
+          "currentScopeNote": "Current executing original point disposition; all earlier reasons/reports/negatives preserved. No acceptance added.",
+          "campaign": "consolidated-original-closure-20261031"
         }
-      ]
+      ],
+      "completionRecord": "QUA007-independent-actual-operator-six-facets-20261031"
     },
     {
       "id": "QUA-008",

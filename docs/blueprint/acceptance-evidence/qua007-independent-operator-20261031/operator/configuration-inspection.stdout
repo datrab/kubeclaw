@@ -1,0 +1,1636 @@
+FILE project/project.json
+{
+  "schemaVersion": "nova-project.v2",
+  "id": "first-project",
+  "runId": "run:first-project-001",
+  "repositoryRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+  "workspaceRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces",
+  "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+  "architecture": {
+    "ref": "0a5fe67da59445c7645e42df262277db960bb391",
+    "requiredFiles": [
+      "README.md"
+    ]
+  },
+  "modules": [
+    {
+      "id": "app",
+      "dependsOn": [],
+      "task": "Correct app/greeting.mjs so greeting returns hello, not goodbye. Run node --test app/greeting.test.mjs and report its successful check and actual changed path.",
+      "ownedPaths": [
+        "app"
+      ],
+      "requirements": [
+        {
+          "id": "greeting",
+          "statement": "The greeting function returns hello."
+        }
+      ],
+      "implementation": {
+        "agent": "forge"
+      },
+      "lint": {
+        "policyPath": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/operator-selected-lint-policy.json",
+        "policyProject": "first-project"
+      },
+      "blueprint": {
+        "modulePath": "modules/app",
+        "serveDockerfile": null,
+        "apiSpecFile": null
+      },
+      "test": {
+        "testAgentEnabled": false,
+        "requiredChecks": [
+          {
+            "checkId": "greeting",
+            "requirementRefs": [
+              {
+                "moduleId": "app",
+                "requirementId": "greeting"
+              }
+            ],
+            "nodeIds": [
+              "greeting"
+            ]
+          }
+        ],
+        "providerPlan": {
+          "repositoryId": "first-project",
+          "plan": {
+            "schemaVersion": "resolved-test-plan.v1",
+            "coverage": {
+              "policy": {
+                "schemaVersion": "gate-coverage.v1",
+                "projectId": "first-project",
+                "kind": "module",
+                "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+                "modules": [
+                  {
+                    "moduleId": "app",
+                    "ownedPaths": [
+                      "app"
+                    ],
+                    "requirements": [
+                      {
+                        "id": "greeting",
+                        "statement": "The greeting function returns hello."
+                      }
+                    ]
+                  }
+                ],
+                "integrationRequirements": [],
+                "requiredChecks": [
+                  {
+                    "checkId": "greeting",
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "greeting"
+                      }
+                    ],
+                    "nodeIds": [
+                      "greeting"
+                    ]
+                  }
+                ],
+                "policyDigest": "sha256:1b1abe6dd7c2c1dcb7c8047f6b98c9719a2e0c926750277c9783457d5c64a29b"
+              },
+              "excludedNodeIds": []
+            },
+            "planId": "plan:first-project:module",
+            "runId": "run:first-project-001",
+            "project": "first-project",
+            "scope": {
+              "moduleId": "app",
+              "gateId": null
+            },
+            "registrySnapshotDigest": "sha256:c8f12329923dcd47af3a8e14ef171be9e77404986c5f43d875bd614f7a543867",
+            "createdAt": "2026-10-20T00:00:00Z",
+            "suites": [],
+            "nodes": [
+              {
+                "id": "greeting",
+                "executionId": "plan:first-project:module:greeting",
+                "testIdentity": "test:f672ff2ef2342cf46e23bd3cb5fb603062d18f2a9eebb95c41ec500d13eec43e",
+                "suiteInstanceId": null,
+                "kind": "test",
+                "provider": {
+                  "packageId": "kubeclaw.direct-command",
+                  "packageVersion": "1.0.0",
+                  "contentDigest": "sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675",
+                  "registrationId": "command",
+                  "contractId": "kubeclaw.direct-command@1"
+                },
+                "reportAdapters": [
+                  {
+                    "adapterId": "junit",
+                    "format": "junit",
+                    "contractVersion": 1,
+                    "package": {
+                      "packageId": "kubeclaw.junit-report",
+                      "packageVersion": "1.0.0",
+                      "contentDigest": "sha256:752375a1b7f10da48ee60c5e8f6baf745c24beb5e7b920ed80d0499cc46f22b9"
+                    }
+                  }
+                ],
+                "mode": "blocking",
+                "reviewAgent": null,
+                "configuration": {
+                  "schemaVersion": "provider-configuration.v1",
+                  "contractId": "kubeclaw.direct-command@1",
+                  "schemaDigest": "sha256:8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+                  "values": {
+                    "executable": "node",
+                    "args": [
+                      "--test",
+                      "app/greeting.test.mjs"
+                    ],
+                    "workingDirectory": ".",
+                    "resultMode": "exit-code"
+                  }
+                },
+                "dependencies": [],
+                "timeoutMs": 30000,
+                "limits": {
+                  "cpuMillis": 30000,
+                  "memoryBytes": 536870912,
+                  "logBytes": 1048576,
+                  "artifactBytes": 1048576,
+                  "artifactFiles": 16,
+                  "processes": 16
+                },
+                "retryCount": 0,
+                "concurrencyGroup": null,
+                "parentNodeId": null,
+                "variation": {},
+                "evidence": {
+                  "onPass": [
+                    "log",
+                    "test-report",
+                    "coverage",
+                    "artifact"
+                  ],
+                  "onFail": [
+                    "log",
+                    "test-report",
+                    "coverage",
+                    "artifact"
+                  ],
+                  "onError": [
+                    "log",
+                    "test-report",
+                    "coverage",
+                    "artifact"
+                  ]
+                },
+                "skipReason": null
+              }
+            ],
+            "links": [],
+            "concurrencyLimits": {},
+            "planDigest": "sha256:60db8c127ab4cee0d3dd36a39c139b9bae985255dd8a4ae94f9dd61293bebdc2"
+          },
+          "grants": {
+            "greeting": [
+              "command.execute"
+            ]
+          },
+          "maximumConcurrency": 1,
+          "submittedAt": "2026-10-20T00:00:00Z",
+          "timeoutMs": 60000
+        }
+      }
+    }
+  ],
+  "final": {
+    "lint": {
+      "policyPath": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/operator-selected-lint-policy.json",
+      "policyProject": "first-project"
+    },
+    "integrationRequirements": [],
+    "test": {
+      "testAgentEnabled": false,
+      "requiredChecks": [
+        {
+          "checkId": "integrated",
+          "requirementRefs": [
+            {
+              "moduleId": "app",
+              "requirementId": "greeting"
+            }
+          ],
+          "nodeIds": [
+            "integrated"
+          ]
+        }
+      ],
+      "providerPlan": {
+        "repositoryId": "first-project",
+        "plan": {
+          "schemaVersion": "resolved-test-plan.v1",
+          "coverage": {
+            "policy": {
+              "schemaVersion": "gate-coverage.v1",
+              "projectId": "first-project",
+              "kind": "cumulative",
+              "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+              "modules": [
+                {
+                  "moduleId": "app",
+                  "ownedPaths": [
+                    "app"
+                  ],
+                  "requirements": [
+                    {
+                      "id": "greeting",
+                      "statement": "The greeting function returns hello."
+                    }
+                  ]
+                }
+              ],
+              "integrationRequirements": [],
+              "requiredChecks": [
+                {
+                  "checkId": "integrated",
+                  "requirementRefs": [
+                    {
+                      "moduleId": "app",
+                      "requirementId": "greeting"
+                    }
+                  ],
+                  "nodeIds": [
+                    "integrated"
+                  ]
+                }
+              ],
+              "policyDigest": "sha256:3266987f37886a56a63366f915b614d8fd236a22d766b0b61e0ae337f185f376"
+            },
+            "excludedNodeIds": []
+          },
+          "planId": "plan:first-project:cumulative",
+          "runId": "run:first-project-001",
+          "project": "first-project",
+          "scope": {
+            "moduleId": null,
+            "gateId": "final-test"
+          },
+          "registrySnapshotDigest": "sha256:c8f12329923dcd47af3a8e14ef171be9e77404986c5f43d875bd614f7a543867",
+          "createdAt": "2026-10-20T00:00:00Z",
+          "suites": [],
+          "nodes": [
+            {
+              "id": "integrated",
+              "executionId": "plan:first-project:cumulative:integrated",
+              "testIdentity": "test:161bf7d087aaceac9ee567fac6907e9eba145a905a0686e84039b25a0f37dd14",
+              "suiteInstanceId": null,
+              "kind": "test",
+              "provider": {
+                "packageId": "kubeclaw.direct-command",
+                "packageVersion": "1.0.0",
+                "contentDigest": "sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675",
+                "registrationId": "command",
+                "contractId": "kubeclaw.direct-command@1"
+              },
+              "reportAdapters": [
+                {
+                  "adapterId": "junit",
+                  "format": "junit",
+                  "contractVersion": 1,
+                  "package": {
+                    "packageId": "kubeclaw.junit-report",
+                    "packageVersion": "1.0.0",
+                    "contentDigest": "sha256:752375a1b7f10da48ee60c5e8f6baf745c24beb5e7b920ed80d0499cc46f22b9"
+                  }
+                }
+              ],
+              "mode": "blocking",
+              "reviewAgent": null,
+              "configuration": {
+                "schemaVersion": "provider-configuration.v1",
+                "contractId": "kubeclaw.direct-command@1",
+                "schemaDigest": "sha256:8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+                "values": {
+                  "executable": "node",
+                  "args": [
+                    "--test",
+                    "app/greeting.test.mjs"
+                  ],
+                  "workingDirectory": ".",
+                  "resultMode": "exit-code"
+                }
+              },
+              "dependencies": [],
+              "timeoutMs": 30000,
+              "limits": {
+                "cpuMillis": 30000,
+                "memoryBytes": 536870912,
+                "logBytes": 1048576,
+                "artifactBytes": 1048576,
+                "artifactFiles": 16,
+                "processes": 16
+              },
+              "retryCount": 0,
+              "concurrencyGroup": null,
+              "parentNodeId": null,
+              "variation": {},
+              "evidence": {
+                "onPass": [
+                  "log",
+                  "test-report",
+                  "coverage",
+                  "artifact"
+                ],
+                "onFail": [
+                  "log",
+                  "test-report",
+                  "coverage",
+                  "artifact"
+                ],
+                "onError": [
+                  "log",
+                  "test-report",
+                  "coverage",
+                  "artifact"
+                ]
+              },
+              "skipReason": null
+            }
+          ],
+          "links": [],
+          "concurrencyLimits": {},
+          "planDigest": "sha256:b241a061528f3392e52ed6b22c5c52981961ccc3359e7826fa96b659a0ee2739"
+        },
+        "grants": {
+          "integrated": [
+            "command.execute"
+          ]
+        },
+        "maximumConcurrency": 1,
+        "submittedAt": "2026-10-20T00:00:00Z",
+        "timeoutMs": 60000
+      }
+    }
+  }
+}
+
+FILE project/compiled.json
+{"id":"project:first-project","maxConcurrency":1,"schemaVersion":"pipeline-definition.v2","stages":[{"config":{},"dependsOn":[],"execution":{"maxAttempts":1,"maxRemediationCycles":0,"timeoutMs":120000},"id":"source-preflight","input":{"contract":{"baseRevision":"0a5fe67da59445c7645e42df262277db960bb391","modules":[{"apiSpecFile":null,"moduleId":"app","modulePath":"modules/app","ownedPaths":["app"],"serveDockerfile":null}],"policy":{"integrationRequirements":[],"modules":[{"dependsOn":[],"moduleId":"app","requiredChecks":[{"checkId":"greeting","nodeIds":["greeting"],"requirementRefs":[{"moduleId":"app","requirementId":"greeting"}]}],"requirements":[{"id":"greeting","statement":"The greeting function returns hello."}],"task":"Correct app/greeting.mjs so greeting returns hello, not goodbye. Run node --test app/greeting.test.mjs and report its successful check and actual changed path."}],"requiredChecks":[{"checkId":"integrated","nodeIds":["integrated"],"requirementRefs":[{"moduleId":"app","requirementId":"greeting"}]}]},"projectId":"first-project","requiredFiles":["README.md"]},"source":{"architectureRef":"0a5fe67da59445c7645e42df262277db960bb391","identityEncoding":"kubeclaw-json.utf16.v1","paths":["README.md","modules/app/FORGE.md"],"projectId":"first-project","repositoryRoot":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"}},"type":"kubeclaw.validate.source-preflight"},{"config":{},"dependsOn":["source-preflight"],"execution":{"maxAttempts":1,"maxRemediationCycles":0,"timeoutMs":120000},"id":"blueprint-sync","input":{"blueprintId":"first-project","branchRef":"0a5fe67da59445c7645e42df262277db960bb391","controlPaths":["README.md","modules/app/FORGE.md"],"repositoryRoot":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository","sourceBinding":{"identityEncoding":"kubeclaw-json.utf16.v1","inputDigest":"sha256:069464af0826e1fe2398a98f7f2a1a9bfcd034a5c40636d858fac049172a003b","stageId":"source-preflight"}},"type":"kubeclaw.generate.blueprint-sync"},{"config":{"agent":"forge"},"dependsOn":["blueprint-sync"],"execution":{"maxAttempts":7,"maxRemediationCycles":5,"maxTechnicalRetries":1,"repairBudget":{"categories":{"lint":2,"test":2},"maximumOrchestratorOrders":1},"timeoutMs":1800000},"id":"implement-app","input":{"attempt":1,"headBefore":"0a5fe67da59445c7645e42df262277db960bb391","moduleId":"app","runId":"run:first-project-001","sourceBinding":{"identityEncoding":"kubeclaw-json.utf16.v1","inputDigest":"sha256:069464af0826e1fe2398a98f7f2a1a9bfcd034a5c40636d858fac049172a003b","stageId":"source-preflight"},"task":"Correct app/greeting.mjs so greeting returns hello, not goodbye. Run node --test app/greeting.test.mjs and report its successful check and actual changed path.\n\nRead the source-bound Forge blueprint(s) under modules/app.\nOwned paths: app\nRequirements:\n[{\"id\":\"greeting\",\"statement\":\"The greeting function returns hello.\"}]","workspace":{"baseRef":"HEAD","branch":"nova/first-project/c465c21c667d59a2/app","commitMessage":"[forge:app] first-project","mergeTarget":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository","repositoryRoot":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository","workspacePath":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces/c465c21c667d59a2/app"}},"type":"kubeclaw.agent.implementation"},{"config":{"policyPath":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/operator-selected-lint-policy.json","policyProject":"first-project"},"dependsOn":["implement-app"],"execution":{"maxAttempts":7,"maxRemediationCycles":5,"maxTechnicalRetries":1,"repairCategory":"lint","timeoutMs":1800000},"id":"lint-app","input":{"project":"first-project","sourceStageId":"implement-app","workingDirectory":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"},"on":{"request_fix":"implement-app"},"type":"kubeclaw.lint.full"},{"config":{"agent":"buster","testAgentEnabled":false},"dependsOn":["lint-app"],"execution":{"maxAttempts":7,"maxRemediationCycles":5,"maxTechnicalRetries":1,"repairCategory":"test","timeoutMs":1800000},"id":"test-app","input":{"expectedCoverage":{"baseRevision":"0a5fe67da59445c7645e42df262277db960bb391","integrationRequirements":[],"kind":"module","modules":[{"moduleId":"app","ownedPaths":["app"],"requirements":[{"id":"greeting","statement":"The greeting function returns hello."}]}],"policyDigest":"sha256:1b1abe6dd7c2c1dcb7c8047f6b98c9719a2e0c926750277c9783457d5c64a29b","projectId":"first-project","requiredChecks":[{"checkId":"greeting","nodeIds":["greeting"],"requirementRefs":[{"moduleId":"app","requirementId":"greeting"}]}],"schemaVersion":"gate-coverage.v1"},"gateId":"test-app","providerPlan":{"grants":{"greeting":["command.execute"]},"maximumConcurrency":1,"plan":{"concurrencyLimits":{},"coverage":{"excludedNodeIds":[],"policy":{"baseRevision":"0a5fe67da59445c7645e42df262277db960bb391","integrationRequirements":[],"kind":"module","modules":[{"moduleId":"app","ownedPaths":["app"],"requirements":[{"id":"greeting","statement":"The greeting function returns hello."}]}],"policyDigest":"sha256:1b1abe6dd7c2c1dcb7c8047f6b98c9719a2e0c926750277c9783457d5c64a29b","projectId":"first-project","requiredChecks":[{"checkId":"greeting","nodeIds":["greeting"],"requirementRefs":[{"moduleId":"app","requirementId":"greeting"}]}],"schemaVersion":"gate-coverage.v1"}},"createdAt":"2026-10-20T00:00:00Z","links":[],"nodes":[{"concurrencyGroup":null,"configuration":{"contractId":"kubeclaw.direct-command@1","schemaDigest":"sha256:8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8","schemaVersion":"provider-configuration.v1","values":{"args":["--test","app/greeting.test.mjs"],"executable":"node","resultMode":"exit-code","workingDirectory":"."}},"dependencies":[],"evidence":{"onError":["log","test-report","coverage","artifact"],"onFail":["log","test-report","coverage","artifact"],"onPass":["log","test-report","coverage","artifact"]},"executionId":"plan:first-project:module:greeting","id":"greeting","kind":"test","limits":{"artifactBytes":1048576,"artifactFiles":16,"cpuMillis":30000,"logBytes":1048576,"memoryBytes":536870912,"processes":16},"mode":"blocking","parentNodeId":null,"provider":{"contentDigest":"sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675","contractId":"kubeclaw.direct-command@1","packageId":"kubeclaw.direct-command","packageVersion":"1.0.0","registrationId":"command"},"reportAdapters":[{"adapterId":"junit","contractVersion":1,"format":"junit","package":{"contentDigest":"sha256:752375a1b7f10da48ee60c5e8f6baf745c24beb5e7b920ed80d0499cc46f22b9","packageId":"kubeclaw.junit-report","packageVersion":"1.0.0"}}],"retryCount":0,"reviewAgent":null,"skipReason":null,"suiteInstanceId":null,"testIdentity":"test:f672ff2ef2342cf46e23bd3cb5fb603062d18f2a9eebb95c41ec500d13eec43e","timeoutMs":30000,"variation":{}}],"planDigest":"sha256:60db8c127ab4cee0d3dd36a39c139b9bae985255dd8a4ae94f9dd61293bebdc2","planId":"plan:first-project:module","project":"first-project","registrySnapshotDigest":"sha256:c8f12329923dcd47af3a8e14ef171be9e77404986c5f43d875bd614f7a543867","runId":"run:first-project-001","schemaVersion":"resolved-test-plan.v1","scope":{"gateId":null,"moduleId":"app"},"suites":[]},"repositoryId":"first-project","repositoryRoot":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository","sourceStageId":"implement-app","submittedAt":"2026-10-20T00:00:00Z","timeoutMs":60000},"task":"Correct app/greeting.mjs so greeting returns hello, not goodbye. Run node --test app/greeting.test.mjs and report its successful check and actual changed path."},"on":{"request_fix":"implement-app"},"type":"kubeclaw.test.quality-evaluation"},{"config":{"policyPath":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/operator-selected-lint-policy.json","policyProject":"first-project"},"dependsOn":["test-app"],"execution":{"maxAttempts":2,"maxRemediationCycles":0,"maxTechnicalRetries":1,"timeoutMs":1800000},"id":"final-lint","input":{"project":"first-project","sourceStageId":"implement-app","workingDirectory":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"},"type":"kubeclaw.lint.full"},{"config":{"agent":"buster","testAgentEnabled":false},"dependsOn":["final-lint"],"execution":{"maxAttempts":2,"maxRemediationCycles":0,"maxTechnicalRetries":1,"timeoutMs":1800000},"id":"final-test","input":{"expectedCoverage":{"baseRevision":"0a5fe67da59445c7645e42df262277db960bb391","integrationRequirements":[],"kind":"cumulative","modules":[{"moduleId":"app","ownedPaths":["app"],"requirements":[{"id":"greeting","statement":"The greeting function returns hello."}]}],"policyDigest":"sha256:3266987f37886a56a63366f915b614d8fd236a22d766b0b61e0ae337f185f376","projectId":"first-project","requiredChecks":[{"checkId":"integrated","nodeIds":["integrated"],"requirementRefs":[{"moduleId":"app","requirementId":"greeting"}]}],"schemaVersion":"gate-coverage.v1"},"gateId":"final-test","providerPlan":{"grants":{"integrated":["command.execute"]},"maximumConcurrency":1,"plan":{"concurrencyLimits":{},"coverage":{"excludedNodeIds":[],"policy":{"baseRevision":"0a5fe67da59445c7645e42df262277db960bb391","integrationRequirements":[],"kind":"cumulative","modules":[{"moduleId":"app","ownedPaths":["app"],"requirements":[{"id":"greeting","statement":"The greeting function returns hello."}]}],"policyDigest":"sha256:3266987f37886a56a63366f915b614d8fd236a22d766b0b61e0ae337f185f376","projectId":"first-project","requiredChecks":[{"checkId":"integrated","nodeIds":["integrated"],"requirementRefs":[{"moduleId":"app","requirementId":"greeting"}]}],"schemaVersion":"gate-coverage.v1"}},"createdAt":"2026-10-20T00:00:00Z","links":[],"nodes":[{"concurrencyGroup":null,"configuration":{"contractId":"kubeclaw.direct-command@1","schemaDigest":"sha256:8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8","schemaVersion":"provider-configuration.v1","values":{"args":["--test","app/greeting.test.mjs"],"executable":"node","resultMode":"exit-code","workingDirectory":"."}},"dependencies":[],"evidence":{"onError":["log","test-report","coverage","artifact"],"onFail":["log","test-report","coverage","artifact"],"onPass":["log","test-report","coverage","artifact"]},"executionId":"plan:first-project:cumulative:integrated","id":"integrated","kind":"test","limits":{"artifactBytes":1048576,"artifactFiles":16,"cpuMillis":30000,"logBytes":1048576,"memoryBytes":536870912,"processes":16},"mode":"blocking","parentNodeId":null,"provider":{"contentDigest":"sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675","contractId":"kubeclaw.direct-command@1","packageId":"kubeclaw.direct-command","packageVersion":"1.0.0","registrationId":"command"},"reportAdapters":[{"adapterId":"junit","contractVersion":1,"format":"junit","package":{"contentDigest":"sha256:752375a1b7f10da48ee60c5e8f6baf745c24beb5e7b920ed80d0499cc46f22b9","packageId":"kubeclaw.junit-report","packageVersion":"1.0.0"}}],"retryCount":0,"reviewAgent":null,"skipReason":null,"suiteInstanceId":null,"testIdentity":"test:161bf7d087aaceac9ee567fac6907e9eba145a905a0686e84039b25a0f37dd14","timeoutMs":30000,"variation":{}}],"planDigest":"sha256:b241a061528f3392e52ed6b22c5c52981961ccc3359e7826fa96b659a0ee2739","planId":"plan:first-project:cumulative","project":"first-project","registrySnapshotDigest":"sha256:c8f12329923dcd47af3a8e14ef171be9e77404986c5f43d875bd614f7a543867","runId":"run:first-project-001","schemaVersion":"resolved-test-plan.v1","scope":{"gateId":"final-test","moduleId":null},"suites":[]},"repositoryId":"first-project","repositoryRoot":"/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository","sourceStageId":"implement-app","submittedAt":"2026-10-20T00:00:00Z","timeoutMs":60000},"task":"Test the complete integrated project, including declared interactions."},"type":"kubeclaw.test.quality-evaluation"},{"config":{"deliveryManifestEncoding":"delivery-manifest.utf16-v1"},"dependsOn":["final-test"],"execution":{"maxAttempts":2,"maxRemediationCycles":0,"maxTechnicalRetries":1,"timeoutMs":1800000},"id":"project-summary","input":{"final":{"expectedCoverage":{"baseRevision":"0a5fe67da59445c7645e42df262277db960bb391","integrationRequirements":[],"kind":"cumulative","modules":[{"moduleId":"app","ownedPaths":["app"],"requirements":[{"id":"greeting","statement":"The greeting function returns hello."}]}],"policyDigest":"sha256:3266987f37886a56a63366f915b614d8fd236a22d766b0b61e0ae337f185f376","projectId":"first-project","requiredChecks":[{"checkId":"integrated","nodeIds":["integrated"],"requirementRefs":[{"moduleId":"app","requirementId":"greeting"}]}],"schemaVersion":"gate-coverage.v1"},"lintStageId":"final-lint","sourceStageId":"implement-app","testStageId":"final-test"},"modules":[{"expectedCoverage":{"baseRevision":"0a5fe67da59445c7645e42df262277db960bb391","integrationRequirements":[],"kind":"module","modules":[{"moduleId":"app","ownedPaths":["app"],"requirements":[{"id":"greeting","statement":"The greeting function returns hello."}]}],"policyDigest":"sha256:1b1abe6dd7c2c1dcb7c8047f6b98c9719a2e0c926750277c9783457d5c64a29b","projectId":"first-project","requiredChecks":[{"checkId":"greeting","nodeIds":["greeting"],"requirementRefs":[{"moduleId":"app","requirementId":"greeting"}]}],"schemaVersion":"gate-coverage.v1"},"moduleId":"app","sourceStageId":"implement-app","testStageId":"test-app"}],"projectId":"first-project"},"type":"kubeclaw.report.project-summary"}]}
+
+FILE project/operator-selected-lint-policy.json
+{
+  "schema_version": "pipeline_lint_policy.v7",
+  "baseline_path": "lint-baseline.json",
+  "experimental_tools": [
+    "eslint-type-evidence-production",
+    "eslint-type-evidence-tests",
+    "eslint-type-evidence-generated"
+  ],
+  "kubernetes_policy_packs": [],
+  "projects": [
+    {
+      "id": "first-project",
+      "root": ".",
+      "discovery_max_depth": 4,
+      "languages": [
+        "javascript"
+      ],
+      "language_evidence": {
+        "javascript": [
+          "app/*.mjs"
+        ]
+      },
+      "go": {
+        "modules": []
+      },
+      "terraform": {
+        "roots": []
+      }
+    }
+  ],
+  "global_exclusions": [
+    ".git/**",
+    ".swarm/**",
+    "**/node_modules/**",
+    "**/dist/**",
+    "**/build/**",
+    "**/coverage/**",
+    "**/vendor/**",
+    "**/generated/**"
+  ],
+  "architecture": {
+    "layers": [
+      {
+        "id": "app",
+        "roots": [
+          "app"
+        ],
+        "may_depend_on": [
+          "app"
+        ]
+      }
+    ]
+  },
+  "rule_admission": {
+    "historical_commits": [
+      "c33020319b13ac0054622812eb454a828b0d5f74",
+      "c73802816dc86b0d4a84c2dcd64109db85ea26c4",
+      "ffd21d25af8e0e3547f948c83210c7bd62d53353"
+    ],
+    "rules": [
+      {
+        "tool": "eslint",
+        "code": "complexity",
+        "principle": "Keep decision paths small and obvious.",
+        "remediation": "Extract cohesive decisions without moving branches mechanically.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "gocyclo",
+        "code": "go-complexity",
+        "principle": "Keep decision paths small and obvious.",
+        "remediation": "Extract cohesive Go decisions without moving branches mechanically.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "max-depth",
+        "principle": "Keep control flow shallow.",
+        "remediation": "Use guard clauses or extract one coherent operation.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "max-params",
+        "principle": "Keep interfaces explicit and cohesive.",
+        "remediation": "Replace parameter bundles with one typed request object.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "max-lines-per-function",
+        "principle": "Keep functions focused on one responsibility.",
+        "remediation": "Split complete responsibilities, not arbitrary line ranges.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "max-lines",
+        "principle": "Keep files cohesive and narrow.",
+        "remediation": "Move a complete concern behind an explicit interface.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "discipline/no-direct-env-access",
+        "principle": "Read infrastructure environment only at declared boundaries.",
+        "remediation": "Parse and validate environment input in an approved adapter.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "discipline/no-env-default",
+        "principle": "Keep application settings in canonical configuration.",
+        "remediation": "Require validated configuration instead of a hardcoded environment fallback.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "discipline/no-fallback-chain",
+        "principle": "Use one explicit authority path.",
+        "remediation": "Remove compatibility and guessed candidates, leaving one explicit fallback at most.",
+        "historical_changed_sets": 3,
+        "false_positives": 47,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "discipline/no-dynamic-module-loading",
+        "principle": "Keep dependencies explicit.",
+        "remediation": "Use a static import or a centrally declared loader boundary.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "discipline/no-top-level-mutable-state",
+        "principle": "Avoid invisible shared state.",
+        "remediation": "Move mutable state into an explicit lifecycle owner.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "discipline/no-swallowed-error",
+        "principle": "Handle errors intentionally.",
+        "remediation": "Return a typed failure or rethrow with context.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "discipline/filename-case",
+        "principle": "Use predictable naming.",
+        "remediation": "Rename source files to lowercase kebab-case and update imports.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      },
+      {
+        "tool": "eslint",
+        "code": "no-console",
+        "principle": "Use structured logging.",
+        "remediation": "Use the canonical logger with level and context.",
+        "historical_changed_sets": 3,
+        "false_positives": 0,
+        "approved_by": "pipeline-maintainers",
+        "approved_on": "2026-07-20"
+      }
+    ]
+  },
+  "tools": [
+    {
+      "id": "tsc",
+      "required": true,
+      "category": "types",
+      "scope": "affected-projects",
+      "tier": "pre-check",
+      "timeout_ms": 60000,
+      "blocking_severity": "warning",
+      "languages": [
+        "typescript"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.ts",
+        "**/*.tsx"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "gofmt",
+      "required": true,
+      "category": "format",
+      "scope": "changed-files",
+      "tier": "pre-check",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "go"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.go"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "go-vet",
+      "required": true,
+      "category": "lint",
+      "scope": "affected-projects",
+      "tier": "pre-check",
+      "timeout_ms": 60000,
+      "blocking_severity": "warning",
+      "languages": [
+        "go"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.go",
+        "go.mod",
+        "go.sum"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "gocyclo",
+      "required": true,
+      "category": "architecture",
+      "scope": "affected-projects",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "go"
+      ],
+      "config_path": null,
+      "arguments": [
+        "-over",
+        "10",
+        "-ignore",
+        "(^|/)(node_modules|vendor|generated)/"
+      ],
+      "targets": [],
+      "include": [
+        "**/*.go",
+        "go.mod",
+        "go.sum"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "shellcheck",
+      "required": true,
+      "category": "lint",
+      "scope": "changed-files",
+      "tier": "pre-check",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "shell"
+      ],
+      "config_path": null,
+      "arguments": [
+        "--severity=warning"
+      ],
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.sh"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "shfmt",
+      "required": true,
+      "category": "format",
+      "scope": "changed-files",
+      "tier": "pre-check",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "shell"
+      ],
+      "config_path": null,
+      "arguments": [
+        "-s",
+        "-i",
+        "2",
+        "-ci"
+      ],
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.sh"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "ruff",
+      "required": true,
+      "category": "lint",
+      "scope": "changed-files",
+      "tier": "pre-check",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "python"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.py"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "eslint",
+      "required": true,
+      "category": "lint",
+      "scope": "changed-files",
+      "tier": "full",
+      "timeout_ms": 60000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/eslint.config.mjs",
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mjs",
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "eslint-type-evidence-production",
+      "required": true,
+      "category": "lint",
+      "scope": "repository",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mjs",
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts"
+      ],
+      "exclude": [
+        "**/*.test.*",
+        "**/*.spec.*",
+        "**/test/**",
+        "**/tests/**",
+        "**/__tests__/**",
+        "**/fixtures/**"
+      ]
+    },
+    {
+      "id": "eslint-type-evidence-tests",
+      "required": true,
+      "category": "lint",
+      "scope": "repository",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.test.js",
+        "**/*.test.jsx",
+        "**/*.test.ts",
+        "**/*.test.tsx",
+        "**/*.test.mjs",
+        "**/*.test.cjs",
+        "**/*.test.mts",
+        "**/*.test.cts",
+        "**/*.spec.js",
+        "**/*.spec.jsx",
+        "**/*.spec.ts",
+        "**/*.spec.tsx",
+        "**/*.spec.mjs",
+        "**/*.spec.cjs",
+        "**/*.spec.mts",
+        "**/*.spec.cts",
+        "**/test/**/*.js",
+        "**/test/**/*.jsx",
+        "**/test/**/*.ts",
+        "**/test/**/*.tsx",
+        "**/test/**/*.mjs",
+        "**/test/**/*.cjs",
+        "**/test/**/*.mts",
+        "**/test/**/*.cts",
+        "**/tests/**/*.js",
+        "**/tests/**/*.jsx",
+        "**/tests/**/*.ts",
+        "**/tests/**/*.tsx",
+        "**/tests/**/*.mjs",
+        "**/tests/**/*.cjs",
+        "**/tests/**/*.mts",
+        "**/tests/**/*.cts",
+        "**/__tests__/**/*.js",
+        "**/__tests__/**/*.jsx",
+        "**/__tests__/**/*.ts",
+        "**/__tests__/**/*.tsx",
+        "**/__tests__/**/*.mjs",
+        "**/__tests__/**/*.cjs",
+        "**/__tests__/**/*.mts",
+        "**/__tests__/**/*.cts",
+        "**/fixtures/**/*.js",
+        "**/fixtures/**/*.jsx",
+        "**/fixtures/**/*.ts",
+        "**/fixtures/**/*.tsx",
+        "**/fixtures/**/*.mjs",
+        "**/fixtures/**/*.cjs",
+        "**/fixtures/**/*.mts",
+        "**/fixtures/**/*.cts"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "eslint-type-evidence-generated",
+      "required": true,
+      "category": "lint",
+      "scope": "repository",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mjs",
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "knip",
+      "required": true,
+      "category": "architecture",
+      "scope": "repository",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/knip.json",
+      "targets": [
+        "app"
+      ],
+      "include": [],
+      "exclude": []
+    },
+    {
+      "id": "dependency-cruiser",
+      "required": true,
+      "category": "architecture",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "javascript",
+        "typescript"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mjs",
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "jscpd",
+      "required": true,
+      "category": "duplication",
+      "scope": "repository",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/jscpd.json",
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mjs",
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts",
+        "**/*.go",
+        "**/*.py",
+        "**/*.sh",
+        "**/Dockerfile",
+        "**/Dockerfile.*",
+        "**/*.tf"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "mypy",
+      "required": true,
+      "category": "types",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 60000,
+      "blocking_severity": "warning",
+      "languages": [
+        "python"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.py"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "go-imports",
+      "required": true,
+      "category": "architecture",
+      "scope": "affected-projects",
+      "tier": "full",
+      "timeout_ms": 60000,
+      "blocking_severity": "warning",
+      "languages": [
+        "go"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.go",
+        "go.mod",
+        "go.sum"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "staticcheck",
+      "required": true,
+      "category": "lint",
+      "scope": "affected-projects",
+      "tier": "full",
+      "timeout_ms": 60000,
+      "blocking_severity": "warning",
+      "languages": [
+        "go"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.go",
+        "go.mod",
+        "go.sum"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "govulncheck",
+      "required": true,
+      "category": "dependencies",
+      "scope": "affected-projects",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "go"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.go",
+        "go.mod",
+        "go.sum"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "terraform-fmt",
+      "required": true,
+      "category": "format",
+      "scope": "changed-files",
+      "tier": "pre-check",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "terraform"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.tf",
+        "**/*.tfvars"
+      ],
+      "exclude": [
+        "**/.terraform/**",
+        "**/*.tfstate",
+        "**/*.tfstate.*"
+      ]
+    },
+    {
+      "id": "terraform-validate",
+      "required": true,
+      "category": "lint",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 60000,
+      "blocking_severity": "warning",
+      "languages": [
+        "terraform"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.tf",
+        ".terraform.lock.hcl"
+      ],
+      "exclude": [
+        "**/.terraform/**"
+      ]
+    },
+    {
+      "id": "tflint",
+      "required": true,
+      "category": "lint",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 60000,
+      "blocking_severity": "warning",
+      "languages": [
+        "terraform"
+      ],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/.tflint.hcl",
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.tf",
+        "**/*.tfvars"
+      ],
+      "exclude": [
+        "**/.terraform/**"
+      ]
+    },
+    {
+      "id": "trivy-terraform",
+      "required": true,
+      "category": "security",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "terraform"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [],
+      "include": [
+        "**/*.tf",
+        "**/*.tfvars"
+      ],
+      "exclude": [
+        "**/.terraform/**",
+        "**/*.tfstate",
+        "**/*.tfstate.*"
+      ]
+    },
+    {
+      "id": "semgrep",
+      "required": true,
+      "category": "security",
+      "scope": "changed-files",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/.semgrep.yml",
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.js",
+        "**/*.jsx",
+        "**/*.ts",
+        "**/*.tsx",
+        "**/*.mjs",
+        "**/*.cjs",
+        "**/*.mts",
+        "**/*.cts",
+        "**/*.py"
+      ],
+      "exclude": [
+        "scripts/docs-check-refs.mjs"
+      ]
+    },
+    {
+      "id": "hadolint",
+      "required": true,
+      "category": "lint",
+      "scope": "changed-files",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "docker"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/Dockerfile",
+        "**/Dockerfile.*",
+        "**/*.dockerfile"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "helm-lint",
+      "required": true,
+      "category": "manifests",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "helm"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/Chart.yaml"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "kubeconform",
+      "required": true,
+      "category": "manifests",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "helm"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.yaml",
+        "**/*.yml"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "kubernetes-policy",
+      "required": true,
+      "category": "manifests",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "helm",
+        "yaml"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.yaml",
+        "**/*.yml"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "kubernetes-schema",
+      "required": true,
+      "category": "manifests",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "helm",
+        "yaml"
+      ],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.yaml",
+        "**/*.yml"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "trivy-kubernetes",
+      "required": true,
+      "category": "security",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 120000,
+      "blocking_severity": "warning",
+      "languages": [
+        "helm"
+      ],
+      "config_path": null,
+      "arguments": [],
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.yaml",
+        "**/*.yml"
+      ],
+      "exclude": []
+    },
+    {
+      "id": "yamllint",
+      "required": true,
+      "category": "lint",
+      "scope": "changed-files",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [
+        "yaml"
+      ],
+      "config_path": "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/.yamllint.yml",
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/*.yaml",
+        "**/*.yml"
+      ],
+      "exclude": [
+        "**/templates/**"
+      ]
+    },
+    {
+      "id": "openapi-contract",
+      "required": true,
+      "category": "lint",
+      "scope": "project",
+      "tier": "full",
+      "timeout_ms": 30000,
+      "blocking_severity": "warning",
+      "languages": [],
+      "config_path": null,
+      "targets": [
+        "app"
+      ],
+      "include": [
+        "**/openapi.json",
+        "**/openapi.yaml",
+        "**/openapi.yml"
+      ],
+      "exclude": []
+    }
+  ]
+}
+
+FILE compiled-platform.local-providers.json
+{
+  "schemaVersion": "pipeline-platform.v2",
+  "storageRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/compiled-state",
+  "installationRoots": [
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/nova/plugins",
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/common/plugins"
+  ],
+  "trustedBuiltinRoots": [
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/nova/plugins",
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/common/plugins"
+  ],
+  "externalTrust": {
+    "allowedSourceDigests": {},
+    "verifiedAttestations": {}
+  },
+  "providers": {
+    "git.repository.read": "kubeclaw.repository-adapter:repository",
+    "artifacts.write": "kubeclaw.artifact-store:artifact-store",
+    "telemetry.emit": "kubeclaw.telemetry-store:telemetry",
+    "git.sync": "kubeclaw.git-workspace:git",
+    "git.commit": "kubeclaw.git-workspace:git",
+    "git.merge": "kubeclaw.git-workspace:git",
+    "git.workspace.create": "kubeclaw.git-workspace:git",
+    "git.workspace.remove": "kubeclaw.git-workspace:git",
+    "state.append": "kubeclaw.state-store:state",
+    "lint.execute": "kubeclaw.lint:executor",
+    "artifacts.read": "kubeclaw.artifact-store:artifact-store"
+  },
+  "grants": {
+    "kubeclaw.preflight-contract:source": {
+      "git.repository.read": {
+        "allowedPrefixes": [
+          "README.md",
+          "modules/app",
+          "app"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.project-summary:summary": {
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.blueprint-sync:sync": {
+      "git.sync": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "git.commit": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "state.append": {
+        "allowedNamespaces": [
+          "kubeclaw.blueprint-sync"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.implementation-agent:implementation": {
+      "runtime.dispatch": {
+        "allowedAgents": [
+          "forge"
+        ]
+      },
+      "git.workspace.create": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+        ],
+        "allowedWorkspaceRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "git.workspace.remove": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+        ],
+        "allowedWorkspaceRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "git.commit": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "git.merge": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.buster-quality-gate:quality": {
+      "test.plan.execute": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+        ]
+      },
+      "runtime.dispatch": {
+        "allowedAgents": [
+          "forge"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.lint:full": {
+      "lint.execute": {
+        "allowedProjects": [
+          "first-project"
+        ],
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+        ],
+        "allowedPolicyRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    }
+  },
+  "adapters": {
+    "kubeclaw.repository-adapter:repository": {
+      "repositoryRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+      "expectedHead": "0a5fe67da59445c7645e42df262277db960bb391",
+      "maxFileBytes": 65536
+    },
+    "kubeclaw.artifact-store:artifact-store": {
+      "artifactRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/local/artifacts",
+      "maxArtifactBytes": 65536,
+      "maximumRecords": 100,
+      "maximumStoreBytes": 1048576
+    },
+    "kubeclaw.telemetry-store:telemetry": {
+      "root": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/local/telemetry",
+      "maxRecordBytes": 65536,
+      "maximumRecords": 256,
+      "maximumStoreBytes": 4194304
+    },
+    "kubeclaw.git-workspace:git": {
+      "allowedRepositoryRoots": [
+        "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+      ],
+      "workspaceRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces",
+      "gitExecutable": "/usr/bin/git",
+      "authorName": "Documentation Example",
+      "authorEmail": "example@example.invalid",
+      "maxExecutionMs": 30000,
+      "maxOutputBytes": 1048576,
+      "terminationGraceMs": 1000
+    },
+    "kubeclaw.state-store:state": {
+      "root": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/state-store",
+      "maxEntryBytes": 1048576,
+      "maximumRecords": 1000,
+      "maximumStoreBytes": 16777216
+    },
+    "kubeclaw.lint:executor": {
+      "allowedRepositoryRoots": [
+        "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+      ],
+      "allowedPolicyRoots": [
+        "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project"
+      ]
+    }
+  },
+  "activeAdapters": [],
+  "observers": {},
+  "shutdownTimeoutMs": 1000,
+  "orchestratorIssuerId": "local:operator",
+  "administrativeDecisionIssuers": []
+}
+

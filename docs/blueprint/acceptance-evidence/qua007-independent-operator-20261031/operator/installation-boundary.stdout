@@ -1,0 +1,11 @@
+{
+  "task": "install-preflight",
+  "source": "9abba46ece3063df72f3db16d0a27a83446a0088",
+  "clusterAuthoritySupplied": false,
+  "releaseSelectionSupplied": false,
+  "receiptAuthoritySupplied": false,
+  "mutationAuthorized": false,
+  "result": "stopped-before-cluster-binding",
+  "owner": "platform operations and release engineering",
+  "resume": "Supply independent dedicated kubeconfig/context/API/namespace UIDs, reviewed release selection and production receipt/lifecycle evidence; restart canonical Plan and Install prereflight before any mutation"
+}

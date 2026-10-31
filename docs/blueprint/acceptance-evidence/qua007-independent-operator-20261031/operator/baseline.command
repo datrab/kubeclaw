@@ -1,0 +1,1 @@
+set -euo pipefail; npm run versions:check; npm run plugin-system:sdk:check; npm run verify:runtime-packaging:ownership; node tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs; node tests/verification/contracts/check-plugin-system-v2-registry.mjs

@@ -1,0 +1,12 @@
+{"ok":true,"contract":"plugin-system-v2-checkpoint-recovery"}
+✔ before-receipt cannot silently repeat a real external mutation (2698.197ms)
+✔ after-receipt cannot silently repeat a real external mutation (2396.558579ms)
+✔ lost-response cannot silently repeat a real external mutation (2572.108881ms)
+ℹ tests 3
+ℹ suites 0
+ℹ pass 3
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 8142.323009

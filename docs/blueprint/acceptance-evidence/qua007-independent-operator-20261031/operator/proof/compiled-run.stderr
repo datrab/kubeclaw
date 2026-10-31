@@ -1,0 +1,36 @@
+{"ts":"2026-10-31T21:08:28.421Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"app/*.mjs"}}}
+{"ts":"2026-10-31T21:08:28.421Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-10-31T21:08:28.422Z","level":"INFO","component":"lint-report","msg":"Running 6 tools (tier: full)","data":{"tools":["eslint","knip","dependency-cruiser","jscpd","semgrep","openapi-contract"]}}
+{"ts":"2026-10-31T21:08:28.422Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+{"ts":"2026-10-31T21:08:28.431Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/eslint.config.mjs"}
+{"ts":"2026-10-31T21:08:28.654Z","level":"INFO","component":"lint-report","msg":"ESLint: 2 files scanned"}
+{"ts":"2026-10-31T21:08:28.655Z","level":"OK","component":"lint-report","msg":"ESLint: 0 errors, 0 warnings (233ms)"}
+{"ts":"2026-10-31T21:08:28.655Z","level":"STEP","component":"lint-report","msg":"Running: Knip"}
+{"ts":"2026-10-31T21:08:29.041Z","level":"OK","component":"lint-report","msg":"Knip: 0 errors, 0 warnings (386ms)"}
+{"ts":"2026-10-31T21:08:29.041Z","level":"STEP","component":"lint-report","msg":"Running: Dependency Cruiser"}
+{"ts":"2026-10-31T21:08:29.517Z","level":"OK","component":"lint-report","msg":"Dependency Cruiser: 0 errors, 0 warnings (475ms)"}
+{"ts":"2026-10-31T21:08:29.517Z","level":"STEP","component":"lint-report","msg":"Running: JSCPD"}
+{"ts":"2026-10-31T21:08:29.613Z","level":"OK","component":"lint-report","msg":"JSCPD: 0 errors, 0 warnings (96ms)"}
+{"ts":"2026-10-31T21:08:29.613Z","level":"STEP","component":"lint-report","msg":"Running: Semgrep"}
+{"ts":"2026-10-31T21:08:29.623Z","level":"INFO","component":"lint-report","msg":"Semgrep using config: /home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/.semgrep.yml"}
+{"ts":"2026-10-31T21:08:31.297Z","level":"OK","component":"lint-report","msg":"Semgrep: 0 errors, 0 warnings (1684ms)"}
+{"ts":"2026-10-31T21:08:31.297Z","level":"STEP","component":"lint-report","msg":"Running: OpenAPI contract validation"}
+{"ts":"2026-10-31T21:08:31.306Z","level":"OK","component":"lint-report","msg":"OpenAPI contract validation: 0 errors, 0 warnings (9ms)"}
+{"ts":"2026-10-31T21:08:35.638Z","level":"INFO","component":"lint-report","msg":"Detected project types: javascript","data":{"markers":{"javascript":"app/*.mjs"}}}
+{"ts":"2026-10-31T21:08:35.638Z","level":"INFO","component":"lint-report","msg":"Scope: full repo"}
+{"ts":"2026-10-31T21:08:35.638Z","level":"INFO","component":"lint-report","msg":"Running 6 tools (tier: full)","data":{"tools":["eslint","knip","dependency-cruiser","jscpd","semgrep","openapi-contract"]}}
+{"ts":"2026-10-31T21:08:35.638Z","level":"STEP","component":"lint-report","msg":"Running: ESLint"}
+{"ts":"2026-10-31T21:08:35.647Z","level":"INFO","component":"lint-report","msg":"ESLint using config: /home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/eslint.config.mjs"}
+{"ts":"2026-10-31T21:08:35.834Z","level":"INFO","component":"lint-report","msg":"ESLint: 2 files scanned"}
+{"ts":"2026-10-31T21:08:35.835Z","level":"OK","component":"lint-report","msg":"ESLint: 0 errors, 0 warnings (197ms)"}
+{"ts":"2026-10-31T21:08:35.835Z","level":"STEP","component":"lint-report","msg":"Running: Knip"}
+{"ts":"2026-10-31T21:08:36.207Z","level":"OK","component":"lint-report","msg":"Knip: 0 errors, 0 warnings (372ms)"}
+{"ts":"2026-10-31T21:08:36.207Z","level":"STEP","component":"lint-report","msg":"Running: Dependency Cruiser"}
+{"ts":"2026-10-31T21:08:36.633Z","level":"OK","component":"lint-report","msg":"Dependency Cruiser: 0 errors, 0 warnings (426ms)"}
+{"ts":"2026-10-31T21:08:36.633Z","level":"STEP","component":"lint-report","msg":"Running: JSCPD"}
+{"ts":"2026-10-31T21:08:36.713Z","level":"OK","component":"lint-report","msg":"JSCPD: 0 errors, 0 warnings (80ms)"}
+{"ts":"2026-10-31T21:08:36.713Z","level":"STEP","component":"lint-report","msg":"Running: Semgrep"}
+{"ts":"2026-10-31T21:08:36.721Z","level":"INFO","component":"lint-report","msg":"Semgrep using config: /home/node/.openclaw/workspace/tmp/qua007-fresh/source/charts/kubeclaw/files/config/.semgrep.yml"}
+{"ts":"2026-10-31T21:08:38.372Z","level":"OK","component":"lint-report","msg":"Semgrep: 0 errors, 0 warnings (1659ms)"}
+{"ts":"2026-10-31T21:08:38.373Z","level":"STEP","component":"lint-report","msg":"Running: OpenAPI contract validation"}
+{"ts":"2026-10-31T21:08:38.382Z","level":"OK","component":"lint-report","msg":"OpenAPI contract validation: 0 errors, 0 warnings (9ms)"}

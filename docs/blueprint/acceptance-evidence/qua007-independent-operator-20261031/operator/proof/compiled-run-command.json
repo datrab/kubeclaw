@@ -1,0 +1,13 @@
+{
+  "executable": "/usr/local/bin/node",
+  "args": [
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/nova/core/cli.ts",
+    "--platform",
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/compiled-platform.complete.json",
+    "--pipeline",
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/compiled.json",
+    "--run-id",
+    "run:first-project-001"
+  ],
+  "compiledSha256": "0c6513b09ff95b2b747fd42da0417497e0be4f0e225221c8d9fe06c781f96ffa"
+}

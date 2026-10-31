@@ -1,0 +1,6 @@
+{"checked":45,"changed":[]}
+{"inputs":4,"locks":5}
+{"changed":false,"version":"0.162.0"}
+{"ok":true,"phase":"5.6-B","packages":18,"sharedPlugins":18,"legacyCoreUnits":24}
+{"ok":true,"contract":"plugin-system-v2-lifecycle"}
+{"ok":true,"contract":"plugin-system-v2-registry"}

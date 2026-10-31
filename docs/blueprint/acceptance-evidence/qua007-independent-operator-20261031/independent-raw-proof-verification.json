@@ -1,0 +1,89 @@
+{
+  "checksumEntries": 40,
+  "rawManifestFiles": 26,
+  "allChecksumsPass": true,
+  "journalNativeParserPass": true,
+  "events": 221,
+  "journalHead": "sha256:fb00cc08a42a8ea076b602c62d09daa674e530a4e57bd85d4d68aef571c4c97e",
+  "auditDigest": "sha256:26596a23d06aef8c56073ec3bd3f79fb26fbad3199d381c69b0ec69aa8a4ee07",
+  "auditDigestAndAllSourceRecordHashesVerified": true,
+  "normalizedSameCompilerGraph": true,
+  "compiledDigest": "sha256:0c6513b09ff95b2b747fd42da0417497e0be4f0e225221c8d9fe06c781f96ffa",
+  "stages": 8,
+  "allStagesSucceededFirstAttempt": true,
+  "originalArtifacts": 10,
+  "allOriginalArtifactBytesDigestValueVerified": true,
+  "nativeTestDecisions": 2,
+  "allNativeTestDecisionsPassed": true,
+  "lintReports": 2,
+  "allLintBlockingAndToolFailuresZero": true,
+  "sourceBindings": [
+    {
+      "path": "docs/site/README.md",
+      "currentSha256": "4301425464181be552e9509083c3d5ef5b7011664f51b9736c9ab4ee3da060c0",
+      "publicationSha256": "4301425464181be552e9509083c3d5ef5b7011664f51b9736c9ab4ee3da060c0",
+      "selectedDa43Sha256": "4763cdcb5b2c025e5669cb733a1f42797258e7515e12c77dd69ad5cfd984eadc"
+    },
+    {
+      "path": "docs/site/use/install.md",
+      "currentSha256": "498df5af42f9e8757687a0ba28d659d21bedf63dbbde3c090950aa93512701f7",
+      "publicationSha256": "498df5af42f9e8757687a0ba28d659d21bedf63dbbde3c090950aa93512701f7",
+      "selectedDa43Sha256": "0274984265a85091605c7ec8f8b7e7a8f270eb364a79048c1c1c2c2aa7d9e99e"
+    },
+    {
+      "path": "docs/site/use/operate.md",
+      "currentSha256": "eceeb467c5a78e3d587955cff2a795d059700339483efe38040a70628e374483",
+      "publicationSha256": "eceeb467c5a78e3d587955cff2a795d059700339483efe38040a70628e374483",
+      "selectedDa43Sha256": "bb2973932c6750da060670b27a10a136b38c59d0aa2c96dc337c8d3d8a783c79"
+    },
+    {
+      "path": "docs/site/use/diagnose.md",
+      "currentSha256": "0429e50c4852dc82b091eda209e06da6408d401b2fc648a7f720372d79b78ab3",
+      "publicationSha256": "0429e50c4852dc82b091eda209e06da6408d401b2fc648a7f720372d79b78ab3",
+      "selectedDa43Sha256": "dee4a18a94c13fde032c1d4eb07141567b00a677d5485fee05ac4428971e9940"
+    },
+    {
+      "path": "docs/site/use/recovery.md",
+      "currentSha256": "14f37c6459053864321a9e57f7c38bffed603573a0a45684472486611a86c008",
+      "publicationSha256": "14f37c6459053864321a9e57f7c38bffed603573a0a45684472486611a86c008",
+      "selectedDa43Sha256": "c627fdcfcfa4fb0f964b5bddf9f836432842e5737d9229615f07a1a21b0a66f7"
+    },
+    {
+      "path": "docs/site/use/workflows/README.md",
+      "currentSha256": "92c29a3fcbddcf66133d648ab9159bd3ed7c8c2bfb5763b31f17ec98d80963da",
+      "publicationSha256": "92c29a3fcbddcf66133d648ab9159bd3ed7c8c2bfb5763b31f17ec98d80963da",
+      "selectedDa43Sha256": "49e8884d44e8d38ede8c26a02071056d71bc1ee5355c4c9dfc06339bbdbb353e"
+    },
+    {
+      "path": "docs/site/use/workflows/interruption-recovery.md",
+      "currentSha256": "ad832e449dcceb5a5377d5817ca486bad7072bc5395fb78476e0618fe2e0bfaf",
+      "publicationSha256": "ad832e449dcceb5a5377d5817ca486bad7072bc5395fb78476e0618fe2e0bfaf",
+      "selectedDa43Sha256": "b61a37d28ad9f9305cd0d69ebdb199ddfed6ab8168c843b4f299efc2298097e0"
+    },
+    {
+      "path": "docs/site/extend/developer-handbook.md",
+      "currentSha256": "bb2d586fc555a3230581052a91785bf22b6d7791927fb61d15cdb49966360f47",
+      "publicationSha256": "bb2d586fc555a3230581052a91785bf22b6d7791927fb61d15cdb49966360f47",
+      "selectedDa43Sha256": "c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project.mjs",
+      "currentSha256": "a25552b997a071342fb6e2003ab2ee8b3e9cd963cbc63ce11edb38a5aa075240",
+      "publicationSha256": "a25552b997a071342fb6e2003ab2ee8b3e9cd963cbc63ce11edb38a5aa075240",
+      "selectedDa43Sha256": "d43b9c96b43c7af9c141f882342a548d6603d44f21382c02c3a8202f662cd3de"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project-input.mjs",
+      "currentSha256": "5e6248abc70806f463293b14193a402a24f6168ab12344762d993d0a99f202da",
+      "publicationSha256": "5e6248abc70806f463293b14193a402a24f6168ab12344762d993d0a99f202da",
+      "selectedDa43Sha256": "534cd37c8b4b26ea08df27a9c88360bcaf6f1e4080a164ece80bbca4f9f6fe92"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+      "currentSha256": "3341ba042e0e8bb42a4554c41bee38ab5986ae39afded23c74bd01ac9bbf3ed2",
+      "publicationSha256": "3341ba042e0e8bb42a4554c41bee38ab5986ae39afded23c74bd01ac9bbf3ed2",
+      "selectedDa43Sha256": "320037f605100ed6650501a44049c6ffa82b43a5202b0441d5a672e4a22a2674"
+    }
+  ],
+  "reviewerAcquisitionCorrection": "Initial read-only verifier selected .run-mutation-locks directory rather than actual run; ENOENT no filewrites. Corrected to select existing events.jsonl; no product/runtime proof changed."
+}

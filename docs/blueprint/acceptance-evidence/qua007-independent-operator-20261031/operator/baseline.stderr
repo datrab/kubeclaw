@@ -1,0 +1,6 @@
+npm notice run versions:check
+npm notice run node scripts/versions.mjs --check && node scripts/sync-codex-lock.mjs --check
+npm notice run plugin-system:sdk:check
+npm notice run node scripts/generate-plugin-sdk-types.mjs --check
+npm notice run verify:runtime-packaging:ownership
+npm notice run node scripts/check-runtime-package-ownership.mjs

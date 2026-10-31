@@ -1,0 +1,18 @@
+{
+  "incident": "owned Semgrep host preparation",
+  "operator": "fresh independent operator agent",
+  "target": "owned hash-locked semgrep1.170.0 venv",
+  "source": "da43fa58743934a7a98dc8f2fb6205b062e83870",
+  "windowStartUTC": "2026-10-31T21:06:40.201993+00:00",
+  "windowEndUTC": "2026-10-31T21:07:19.814326+00:00",
+  "contextNamespaceImages": "not applicable: no cluster selected or authorized",
+  "runStageAttempt": "pre-runtime tool probe; no run yet",
+  "symptom": "semgrep --version exit1 EROFS /home/node/.semgrep",
+  "cause": "operator omitted documented SEMGREP_SETTINGS_FILE/SEMGREP_LOG_FILE exports before first version probe",
+  "action": "set exact documented variables to owned writable runtime parent; repeat probe",
+  "probeResult": "exit0;1.170.0",
+  "endConsumer": "subsequent actual compiled run executes Semgrep at both lint gates, zero errors/warnings",
+  "externalEffectReconciliation": "none accepted by failed version probe; no runtime run existed yet",
+  "cleanupOwner": "this operator; only tmp/qua007-fresh scratch",
+  "limits": "canonical cluster incident snapshot is inapplicable without independently supplied cluster binding; no cluster diagnosis or production recovery claim"
+}

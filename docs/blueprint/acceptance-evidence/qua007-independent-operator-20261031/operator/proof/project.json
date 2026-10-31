@@ -1,0 +1,373 @@
+{
+  "schemaVersion": "nova-project.v2",
+  "id": "first-project",
+  "runId": "run:first-project-001",
+  "repositoryRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+  "workspaceRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces",
+  "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+  "architecture": {
+    "ref": "0a5fe67da59445c7645e42df262277db960bb391",
+    "requiredFiles": [
+      "README.md"
+    ]
+  },
+  "modules": [
+    {
+      "id": "app",
+      "dependsOn": [],
+      "task": "Correct app/greeting.mjs so greeting returns hello, not goodbye. Run node --test app/greeting.test.mjs and report its successful check and actual changed path.",
+      "ownedPaths": [
+        "app"
+      ],
+      "requirements": [
+        {
+          "id": "greeting",
+          "statement": "The greeting function returns hello."
+        }
+      ],
+      "implementation": {
+        "agent": "forge"
+      },
+      "lint": {
+        "policyPath": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/operator-selected-lint-policy.json",
+        "policyProject": "first-project"
+      },
+      "blueprint": {
+        "modulePath": "modules/app",
+        "serveDockerfile": null,
+        "apiSpecFile": null
+      },
+      "test": {
+        "testAgentEnabled": false,
+        "requiredChecks": [
+          {
+            "checkId": "greeting",
+            "requirementRefs": [
+              {
+                "moduleId": "app",
+                "requirementId": "greeting"
+              }
+            ],
+            "nodeIds": [
+              "greeting"
+            ]
+          }
+        ],
+        "providerPlan": {
+          "repositoryId": "first-project",
+          "plan": {
+            "schemaVersion": "resolved-test-plan.v1",
+            "coverage": {
+              "policy": {
+                "schemaVersion": "gate-coverage.v1",
+                "projectId": "first-project",
+                "kind": "module",
+                "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+                "modules": [
+                  {
+                    "moduleId": "app",
+                    "ownedPaths": [
+                      "app"
+                    ],
+                    "requirements": [
+                      {
+                        "id": "greeting",
+                        "statement": "The greeting function returns hello."
+                      }
+                    ]
+                  }
+                ],
+                "integrationRequirements": [],
+                "requiredChecks": [
+                  {
+                    "checkId": "greeting",
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "greeting"
+                      }
+                    ],
+                    "nodeIds": [
+                      "greeting"
+                    ]
+                  }
+                ],
+                "policyDigest": "sha256:1b1abe6dd7c2c1dcb7c8047f6b98c9719a2e0c926750277c9783457d5c64a29b"
+              },
+              "excludedNodeIds": []
+            },
+            "planId": "plan:first-project:module",
+            "runId": "run:first-project-001",
+            "project": "first-project",
+            "scope": {
+              "moduleId": "app",
+              "gateId": null
+            },
+            "registrySnapshotDigest": "sha256:c8f12329923dcd47af3a8e14ef171be9e77404986c5f43d875bd614f7a543867",
+            "createdAt": "2026-10-20T00:00:00Z",
+            "suites": [],
+            "nodes": [
+              {
+                "id": "greeting",
+                "executionId": "plan:first-project:module:greeting",
+                "testIdentity": "test:f672ff2ef2342cf46e23bd3cb5fb603062d18f2a9eebb95c41ec500d13eec43e",
+                "suiteInstanceId": null,
+                "kind": "test",
+                "provider": {
+                  "packageId": "kubeclaw.direct-command",
+                  "packageVersion": "1.0.0",
+                  "contentDigest": "sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675",
+                  "registrationId": "command",
+                  "contractId": "kubeclaw.direct-command@1"
+                },
+                "reportAdapters": [
+                  {
+                    "adapterId": "junit",
+                    "format": "junit",
+                    "contractVersion": 1,
+                    "package": {
+                      "packageId": "kubeclaw.junit-report",
+                      "packageVersion": "1.0.0",
+                      "contentDigest": "sha256:752375a1b7f10da48ee60c5e8f6baf745c24beb5e7b920ed80d0499cc46f22b9"
+                    }
+                  }
+                ],
+                "mode": "blocking",
+                "reviewAgent": null,
+                "configuration": {
+                  "schemaVersion": "provider-configuration.v1",
+                  "contractId": "kubeclaw.direct-command@1",
+                  "schemaDigest": "sha256:8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+                  "values": {
+                    "executable": "node",
+                    "args": [
+                      "--test",
+                      "app/greeting.test.mjs"
+                    ],
+                    "workingDirectory": ".",
+                    "resultMode": "exit-code"
+                  }
+                },
+                "dependencies": [],
+                "timeoutMs": 30000,
+                "limits": {
+                  "cpuMillis": 30000,
+                  "memoryBytes": 536870912,
+                  "logBytes": 1048576,
+                  "artifactBytes": 1048576,
+                  "artifactFiles": 16,
+                  "processes": 16
+                },
+                "retryCount": 0,
+                "concurrencyGroup": null,
+                "parentNodeId": null,
+                "variation": {},
+                "evidence": {
+                  "onPass": [
+                    "log",
+                    "test-report",
+                    "coverage",
+                    "artifact"
+                  ],
+                  "onFail": [
+                    "log",
+                    "test-report",
+                    "coverage",
+                    "artifact"
+                  ],
+                  "onError": [
+                    "log",
+                    "test-report",
+                    "coverage",
+                    "artifact"
+                  ]
+                },
+                "skipReason": null
+              }
+            ],
+            "links": [],
+            "concurrencyLimits": {},
+            "planDigest": "sha256:60db8c127ab4cee0d3dd36a39c139b9bae985255dd8a4ae94f9dd61293bebdc2"
+          },
+          "grants": {
+            "greeting": [
+              "command.execute"
+            ]
+          },
+          "maximumConcurrency": 1,
+          "submittedAt": "2026-10-20T00:00:00Z",
+          "timeoutMs": 60000
+        }
+      }
+    }
+  ],
+  "final": {
+    "lint": {
+      "policyPath": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/operator-selected-lint-policy.json",
+      "policyProject": "first-project"
+    },
+    "integrationRequirements": [],
+    "test": {
+      "testAgentEnabled": false,
+      "requiredChecks": [
+        {
+          "checkId": "integrated",
+          "requirementRefs": [
+            {
+              "moduleId": "app",
+              "requirementId": "greeting"
+            }
+          ],
+          "nodeIds": [
+            "integrated"
+          ]
+        }
+      ],
+      "providerPlan": {
+        "repositoryId": "first-project",
+        "plan": {
+          "schemaVersion": "resolved-test-plan.v1",
+          "coverage": {
+            "policy": {
+              "schemaVersion": "gate-coverage.v1",
+              "projectId": "first-project",
+              "kind": "cumulative",
+              "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+              "modules": [
+                {
+                  "moduleId": "app",
+                  "ownedPaths": [
+                    "app"
+                  ],
+                  "requirements": [
+                    {
+                      "id": "greeting",
+                      "statement": "The greeting function returns hello."
+                    }
+                  ]
+                }
+              ],
+              "integrationRequirements": [],
+              "requiredChecks": [
+                {
+                  "checkId": "integrated",
+                  "requirementRefs": [
+                    {
+                      "moduleId": "app",
+                      "requirementId": "greeting"
+                    }
+                  ],
+                  "nodeIds": [
+                    "integrated"
+                  ]
+                }
+              ],
+              "policyDigest": "sha256:3266987f37886a56a63366f915b614d8fd236a22d766b0b61e0ae337f185f376"
+            },
+            "excludedNodeIds": []
+          },
+          "planId": "plan:first-project:cumulative",
+          "runId": "run:first-project-001",
+          "project": "first-project",
+          "scope": {
+            "moduleId": null,
+            "gateId": "final-test"
+          },
+          "registrySnapshotDigest": "sha256:c8f12329923dcd47af3a8e14ef171be9e77404986c5f43d875bd614f7a543867",
+          "createdAt": "2026-10-20T00:00:00Z",
+          "suites": [],
+          "nodes": [
+            {
+              "id": "integrated",
+              "executionId": "plan:first-project:cumulative:integrated",
+              "testIdentity": "test:161bf7d087aaceac9ee567fac6907e9eba145a905a0686e84039b25a0f37dd14",
+              "suiteInstanceId": null,
+              "kind": "test",
+              "provider": {
+                "packageId": "kubeclaw.direct-command",
+                "packageVersion": "1.0.0",
+                "contentDigest": "sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675",
+                "registrationId": "command",
+                "contractId": "kubeclaw.direct-command@1"
+              },
+              "reportAdapters": [
+                {
+                  "adapterId": "junit",
+                  "format": "junit",
+                  "contractVersion": 1,
+                  "package": {
+                    "packageId": "kubeclaw.junit-report",
+                    "packageVersion": "1.0.0",
+                    "contentDigest": "sha256:752375a1b7f10da48ee60c5e8f6baf745c24beb5e7b920ed80d0499cc46f22b9"
+                  }
+                }
+              ],
+              "mode": "blocking",
+              "reviewAgent": null,
+              "configuration": {
+                "schemaVersion": "provider-configuration.v1",
+                "contractId": "kubeclaw.direct-command@1",
+                "schemaDigest": "sha256:8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+                "values": {
+                  "executable": "node",
+                  "args": [
+                    "--test",
+                    "app/greeting.test.mjs"
+                  ],
+                  "workingDirectory": ".",
+                  "resultMode": "exit-code"
+                }
+              },
+              "dependencies": [],
+              "timeoutMs": 30000,
+              "limits": {
+                "cpuMillis": 30000,
+                "memoryBytes": 536870912,
+                "logBytes": 1048576,
+                "artifactBytes": 1048576,
+                "artifactFiles": 16,
+                "processes": 16
+              },
+              "retryCount": 0,
+              "concurrencyGroup": null,
+              "parentNodeId": null,
+              "variation": {},
+              "evidence": {
+                "onPass": [
+                  "log",
+                  "test-report",
+                  "coverage",
+                  "artifact"
+                ],
+                "onFail": [
+                  "log",
+                  "test-report",
+                  "coverage",
+                  "artifact"
+                ],
+                "onError": [
+                  "log",
+                  "test-report",
+                  "coverage",
+                  "artifact"
+                ]
+              },
+              "skipReason": null
+            }
+          ],
+          "links": [],
+          "concurrencyLimits": {},
+          "planDigest": "sha256:b241a061528f3392e52ed6b22c5c52981961ccc3359e7826fa96b659a0ee2739"
+        },
+        "grants": {
+          "integrated": [
+            "command.execute"
+          ]
+        },
+        "maximumConcurrency": 1,
+        "submittedAt": "2026-10-20T00:00:00Z",
+        "timeoutMs": 60000
+      }
+    }
+  }
+}

@@ -1,0 +1,11 @@
+{
+  "schemaVersion": "compiled-project-journey.v1",
+  "root": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey",
+  "sourceRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/source",
+  "sourceRevision": "da43fa58743934a7a98dc8f2fb6205b062e83870",
+  "uid": 0,
+  "preparedInputDigests": {
+    "project.json": "4a0a71867032eddec0846db3ee382d078a3e8224320689eed539933bc298dc89",
+    "compiled.json": "0c6513b09ff95b2b747fd42da0417497e0be4f0e225221c8d9fe06c781f96ffa"
+  }
+}

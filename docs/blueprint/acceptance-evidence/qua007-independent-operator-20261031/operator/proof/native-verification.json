@@ -1,0 +1,1226 @@
+{
+  "status": "verified-actual-compiled-workflow",
+  "runId": "run:first-project-001",
+  "compiledDigest": "sha256:0c6513b09ff95b2b747fd42da0417497e0be4f0e225221c8d9fe06c781f96ffa",
+  "stageCount": 8,
+  "artifactCount": 10,
+  "eventCount": 221,
+  "journalHead": "sha256:fb00cc08a42a8ea076b602c62d09daa674e530a4e57bd85d4d68aef571c4c97e",
+  "auditDigest": "sha256:26596a23d06aef8c56073ec3bd3f79fb26fbad3199d381c69b0ec69aa8a4ee07",
+  "allOriginalArtifactsVerified": true,
+  "rawBytesPreservedBeforeAudit": true,
+  "cleanup": "pending",
+  "artifacts": [
+    {
+      "reference": {
+        "artifactId": "source-preflight",
+        "digest": "sha256:2da0d8b7f5fdb77579269cf512fd4f74b59de7c3f882cd2343b9fb06f395d49c",
+        "encoding": "kubeclaw-json.utf16.v1",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.preflight-contract",
+        "producer": {
+          "attemptId": "attempt:eac9556a-53e8-4cc7-9bb6-1d1041e45aa4",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "source-preflight"
+        },
+        "sizeBytes": 2163
+      },
+      "value": {
+        "contract": {
+          "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+          "modules": [
+            {
+              "apiSpecFile": null,
+              "moduleId": "app",
+              "modulePath": "modules/app",
+              "ownedPaths": [
+                "app"
+              ],
+              "serveDockerfile": null
+            }
+          ],
+          "policy": {
+            "integrationRequirements": [],
+            "modules": [
+              {
+                "dependsOn": [],
+                "moduleId": "app",
+                "requiredChecks": [
+                  {
+                    "checkId": "greeting",
+                    "nodeIds": [
+                      "greeting"
+                    ],
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "greeting"
+                      }
+                    ]
+                  }
+                ],
+                "requirements": [
+                  {
+                    "id": "greeting",
+                    "statement": "The greeting function returns hello."
+                  }
+                ],
+                "task": "Correct app/greeting.mjs so greeting returns hello, not goodbye. Run node --test app/greeting.test.mjs and report its successful check and actual changed path."
+              }
+            ],
+            "requiredChecks": [
+              {
+                "checkId": "integrated",
+                "nodeIds": [
+                  "integrated"
+                ],
+                "requirementRefs": [
+                  {
+                    "moduleId": "app",
+                    "requirementId": "greeting"
+                  }
+                ]
+              }
+            ]
+          },
+          "projectId": "first-project",
+          "requiredFiles": [
+            "README.md"
+          ]
+        },
+        "outcome": "passed",
+        "schemaVersion": "source-preflight.v1",
+        "subject": {
+          "architectureRef": "0a5fe67da59445c7645e42df262277db960bb391",
+          "architectureRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+          "digest": "sha256:fb0b6009f74952944281d667f599baebd35f514535e2eaa40f32fed640404c22",
+          "files": [
+            {
+              "content": "# First project\n\nA disposable task for the compiled workflow; execution is recorded separately.\n",
+              "digest": "sha256:b9d75d9c4153f38296d80b2213cfc23b5b2b947855391cf563bf3128bd2ee1fc",
+              "mode": "100644",
+              "path": "README.md",
+              "sizeBytes": 96
+            },
+            {
+              "content": "# Application blueprint\n\nKeep the greeting function returning hello.\n\n```kubeclaw-deliverables\n{\"schemaVersion\":\"forge-deliverables.v1\",\"moduleId\":\"app\",\"substep\":null,\"deliverables\":[]}\n```\n",
+              "digest": "sha256:ea6725cbea6220fa01953ec01cd76697080f30e0640932b4b18f2d11c867e1d0",
+              "mode": "100644",
+              "path": "modules/app/FORGE.md",
+              "sizeBytes": 191
+            }
+          ],
+          "identityEncoding": "kubeclaw-json.utf16.v1",
+          "inputDigest": "sha256:069464af0826e1fe2398a98f7f2a1a9bfcd034a5c40636d858fac049172a003b",
+          "paths": [
+            "README.md",
+            "modules/app/FORGE.md"
+          ],
+          "projectId": "first-project",
+          "repositoryRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "runId": "run:first-project-001",
+          "sourceRevision": "0a5fe67da59445c7645e42df262277db960bb391"
+        }
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "blueprint-sync:first-project",
+        "digest": "sha256:42a0373a70ff01845f38230f788d70c548b1f44c22363e018196d65f3f5b36c7",
+        "encoding": "kubeclaw-json.utf16.v1",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.blueprint-sync",
+        "producer": {
+          "attemptId": "attempt:f472ec23-44b1-4cf3-a05c-2a3a667586a3",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "blueprint-sync"
+        },
+        "sizeBytes": 487
+      },
+      "value": {
+        "architectureRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+        "blueprintId": "first-project",
+        "branchRef": "0a5fe67da59445c7645e42df262277db960bb391",
+        "missing": [],
+        "repositoryRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+        "sourceBefore": "0a5fe67da59445c7645e42df262277db960bb391",
+        "sourceRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+        "subjectDigest": "sha256:fb0b6009f74952944281d667f599baebd35f514535e2eaa40f32fed640404c22",
+        "synced": []
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "implementation:app:1",
+        "digest": "sha256:ee842744721710474692cc7562f0341156f596f281bf98ac55ead541740110ee",
+        "encoding": "kubeclaw-json.utf16.v1",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.implementation-agent",
+        "producer": {
+          "attemptId": "attempt:2f6e804f-e513-4682-905b-6308291213a2",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "implement-app"
+        },
+        "sizeBytes": 781
+      },
+      "value": {
+        "attempt": 1,
+        "changedPaths": [
+          "app/greeting.mjs"
+        ],
+        "checks": [
+          {
+            "name": "node --test app/greeting.test.mjs",
+            "passed": true
+          }
+        ],
+        "headBefore": "0a5fe67da59445c7645e42df262277db960bb391",
+        "moduleId": "app",
+        "runId": "run:first-project-001",
+        "session": {
+          "completedAt": "2026-10-31T21:08:26.819Z",
+          "handoffs": 0,
+          "sessionId": "agent:main:subagent:2e3b7c08-1ddc-4c13-baec-214a9924350f",
+          "startedAt": "2026-10-31T21:08:05.084Z",
+          "termination": "completed",
+          "transcriptDigest": "8ee36cf00b506a073d1e9cd2a51b632663cb376f4786b350e9cf72a426d954c2"
+        },
+        "sourceRevision": "534beab5d96f5d564cfed09d7d6975469bd3f364",
+        "status": "ready_for_testing",
+        "subjectDigest": "sha256:fb0b6009f74952944281d667f599baebd35f514535e2eaa40f32fed640404c22",
+        "summary": "Updated the greeting function to return hello; the required Node test passed."
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "lint:full:first-project",
+        "digest": "sha256:1fdc6e0a9ddadf4b66a49a6e1b5087e65f7ac22fd77e1f7960f53cf74e673d62",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.lint",
+        "producer": {
+          "attemptId": "attempt:8ed7faab-7ec9-4339-b506-8044075e703a",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "lint-app"
+        },
+        "sizeBytes": 3791
+      },
+      "value": {
+        "changed_files": [],
+        "detected_types": [
+          "javascript"
+        ],
+        "diagnostics": [],
+        "policy": {
+          "baseline_digest": "b6d475ee43518718cdb3cb3d6eb19ac6ab100645d06ee0e975a000daed9356b2",
+          "config_digests": {
+            "eslint": "48f84d692981b4dbddda863d3cb95d907021f1261eb940106878c9acb2c64b6b",
+            "eslint-type-evidence-generated": "09530ef3214cb9186fb421e38898b7421576d87942f2fdb4784a87314c9cacae",
+            "eslint-type-evidence-production": "224c23972669a3bf2fc06cfb16a16826a5fa9ec034deceaa56b3cd0aa15b6728",
+            "eslint-type-evidence-tests": "ad76b2e0987bc7f8f8df9480d2fc11d8e123b229293811b0f2c4871b7884e138",
+            "jscpd": "0dc8789cd2cbf1341eed9bc43ae4991c60e80bb9825ecd843c0b6bc594fe6af9",
+            "knip": "fd3fbed1f81f78f16563dbd1b044e20d9716fdc4dbecf0eeb2f3d9513a3bf04e",
+            "semgrep": "430adf26f8a72db1275e92061d33a2e1c66ef29199fcde647e3ac34ec51de58d",
+            "tflint": "47c7d922abb5f4d1704e291c92964491dc74dae658b9278245a5341aad954b8a",
+            "yamllint": "32e922f3c1c45cbef3d46fe40a476460a10ee1c44794436bd8a3d3f10f62513c"
+          },
+          "digest": "b4704da4504911bfe8838650488a7ae0642d4e03061e5d798c84b60fa8a24eb5",
+          "effective_targets": {
+            "dependency-cruiser": [
+              "app"
+            ],
+            "eslint": [
+              "app"
+            ],
+            "eslint-type-evidence-generated": [
+              "app"
+            ],
+            "eslint-type-evidence-production": [
+              "app"
+            ],
+            "eslint-type-evidence-tests": [
+              "app"
+            ],
+            "go-imports": [
+              "."
+            ],
+            "go-vet": [
+              "."
+            ],
+            "gocyclo": [
+              "."
+            ],
+            "gofmt": [
+              "."
+            ],
+            "govulncheck": [
+              "."
+            ],
+            "hadolint": [
+              "app"
+            ],
+            "helm-lint": [
+              "app"
+            ],
+            "jscpd": [
+              "app"
+            ],
+            "knip": [
+              "app"
+            ],
+            "kubeconform": [
+              "app"
+            ],
+            "kubernetes-policy": [
+              "app"
+            ],
+            "kubernetes-schema": [
+              "app"
+            ],
+            "mypy": [
+              "app"
+            ],
+            "openapi-contract": [
+              "app"
+            ],
+            "ruff": [
+              "app"
+            ],
+            "semgrep": [
+              "app"
+            ],
+            "shellcheck": [
+              "app"
+            ],
+            "shfmt": [
+              "app"
+            ],
+            "staticcheck": [
+              "."
+            ],
+            "terraform-fmt": [
+              "."
+            ],
+            "terraform-validate": [
+              "."
+            ],
+            "tflint": [
+              "."
+            ],
+            "trivy-kubernetes": [
+              "app"
+            ],
+            "trivy-terraform": [
+              "."
+            ],
+            "tsc": [
+              "app"
+            ],
+            "yamllint": [
+              "app"
+            ]
+          },
+          "policy_pack_digests": {},
+          "project": "first-project",
+          "schema_version": "pipeline_lint_policy.v7"
+        },
+        "project": "first-project",
+        "schema_version": "pipeline_lint_report.v7",
+        "scope": "full",
+        "sourceRevision": "534beab5d96f5d564cfed09d7d6975469bd3f364",
+        "summary": {
+          "tools_failed": 0,
+          "tools_not_applicable": 0,
+          "tools_ok": 6,
+          "total_baselined": 0,
+          "total_blocking": 0,
+          "total_errors": 0,
+          "total_experimental": 0,
+          "total_warnings": 0
+        },
+        "tier": "full",
+        "timestamp": "2026-10-31T21:08:31.306Z",
+        "tools": {
+          "dependency-cruiser": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "architecture",
+            "duration_ms": 475,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "project",
+            "status": "ok",
+            "warnings": 0
+          },
+          "eslint": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "lint",
+            "duration_ms": 233,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "changed-files",
+            "status": "ok",
+            "warnings": 0
+          },
+          "jscpd": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "duplication",
+            "duration_ms": 96,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "repository",
+            "status": "ok",
+            "warnings": 0
+          },
+          "knip": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "architecture",
+            "duration_ms": 386,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "repository",
+            "status": "ok",
+            "warnings": 0
+          },
+          "openapi-contract": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "lint",
+            "duration_ms": 9,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "project",
+            "status": "ok",
+            "warnings": 0
+          },
+          "semgrep": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "security",
+            "duration_ms": 1684,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "changed-files",
+            "status": "ok",
+            "warnings": 0
+          }
+        },
+        "visibility": {
+          "debt": false,
+          "experimental": false
+        }
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "buster-quality:test-app:decision:1",
+        "digest": "sha256:fec74a2ac0b4e066baeb8d63f6c3670552f676d3b84020b07c72b20d77140012",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.buster-quality-gate",
+        "producer": {
+          "attemptId": "attempt:1ac205fd-ec30-466a-8c33-ab717010243d",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "test-app"
+        },
+        "sizeBytes": 1635
+      },
+      "value": {
+        "coverage": {
+          "archiveContentDigest": "sha256:94215071e766e3423526759b0685d2b9ffa130fc992d5466926f5ab290b0ed6b",
+          "checks": [
+            {
+              "checkId": "greeting",
+              "declarationId": "greeting",
+              "nodeId": "greeting",
+              "state": "passed"
+            }
+          ],
+          "coverageDigest": "sha256:175e46c4733121a8b02a8db85980d0f241cf123a559a48c120ffa56458c1158a",
+          "pipelineStageId": "test-app",
+          "planDigest": "sha256:60db8c127ab4cee0d3dd36a39c139b9bae985255dd8a4ae94f9dd61293bebdc2",
+          "policy": {
+            "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+            "integrationRequirements": [],
+            "kind": "module",
+            "modules": [
+              {
+                "moduleId": "app",
+                "ownedPaths": [
+                  "app"
+                ],
+                "requirements": [
+                  {
+                    "id": "greeting",
+                    "statement": "The greeting function returns hello."
+                  }
+                ]
+              }
+            ],
+            "policyDigest": "sha256:1b1abe6dd7c2c1dcb7c8047f6b98c9719a2e0c926750277c9783457d5c64a29b",
+            "projectId": "first-project",
+            "requiredChecks": [
+              {
+                "checkId": "greeting",
+                "nodeIds": [
+                  "greeting"
+                ],
+                "requirementRefs": [
+                  {
+                    "moduleId": "app",
+                    "requirementId": "greeting"
+                  }
+                ]
+              }
+            ],
+            "schemaVersion": "gate-coverage.v1"
+          },
+          "schemaVersion": "gate-coverage-result.v1",
+          "sourceRevision": "git:534beab5d96f5d564cfed09d7d6975469bd3f364",
+          "sourceTree": "git:8cade15274cb61bfbaf9151e6e73a2400c4588ba"
+        },
+        "decisionDigest": "sha256:992ff402e0ef8d49d28c78628eeee1dd0a8cd28d0ab35d6bfc303cc45d5bb048",
+        "jobId": "job:3d02fc6bf24e3fa551baf1fa8937d17c0dd05601d99444bfdd37677ac9801064",
+        "nodes": [
+          {
+            "effect": "passed",
+            "kind": "test",
+            "mode": "blocking",
+            "nodeId": "greeting",
+            "reason": "all declared checks passed"
+          }
+        ],
+        "planId": "plan:first-project:module",
+        "resultDigest": "sha256:af1701c2e99d6ad88bd1ac2f0b355cc7f87e75419b36db243b51359d9ade5798",
+        "reviews": [],
+        "runId": "run:first-project-001",
+        "schemaVersion": "test-gate-decision.v2",
+        "state": "passed"
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "buster-quality:test-app:1",
+        "digest": "sha256:647a1105742de8516787a4341a2f4e5b7494cfbde1ef790cadfb4653f9c1568a",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.buster-quality-gate",
+        "producer": {
+          "attemptId": "attempt:1ac205fd-ec30-466a-8c33-ab717010243d",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "test-app"
+        },
+        "sizeBytes": 207
+      },
+      "value": {
+        "decisionDigest": "sha256:992ff402e0ef8d49d28c78628eeee1dd0a8cd28d0ab35d6bfc303cc45d5bb048",
+        "nativeOutcome": "passed",
+        "sourceRevision": "534beab5d96f5d564cfed09d7d6975469bd3f364",
+        "testAgent": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "lint:full:first-project",
+        "digest": "sha256:f31b41b7c1a4173f4c33ca4f43c48fd650ff89024572d69750d729c1106e8d96",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.lint",
+        "producer": {
+          "attemptId": "attempt:fdef8368-5808-4c5d-9a9d-9282dd4254cd",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "final-lint"
+        },
+        "sizeBytes": 3791
+      },
+      "value": {
+        "changed_files": [],
+        "detected_types": [
+          "javascript"
+        ],
+        "diagnostics": [],
+        "policy": {
+          "baseline_digest": "b6d475ee43518718cdb3cb3d6eb19ac6ab100645d06ee0e975a000daed9356b2",
+          "config_digests": {
+            "eslint": "48f84d692981b4dbddda863d3cb95d907021f1261eb940106878c9acb2c64b6b",
+            "eslint-type-evidence-generated": "09530ef3214cb9186fb421e38898b7421576d87942f2fdb4784a87314c9cacae",
+            "eslint-type-evidence-production": "224c23972669a3bf2fc06cfb16a16826a5fa9ec034deceaa56b3cd0aa15b6728",
+            "eslint-type-evidence-tests": "ad76b2e0987bc7f8f8df9480d2fc11d8e123b229293811b0f2c4871b7884e138",
+            "jscpd": "0dc8789cd2cbf1341eed9bc43ae4991c60e80bb9825ecd843c0b6bc594fe6af9",
+            "knip": "fd3fbed1f81f78f16563dbd1b044e20d9716fdc4dbecf0eeb2f3d9513a3bf04e",
+            "semgrep": "430adf26f8a72db1275e92061d33a2e1c66ef29199fcde647e3ac34ec51de58d",
+            "tflint": "47c7d922abb5f4d1704e291c92964491dc74dae658b9278245a5341aad954b8a",
+            "yamllint": "32e922f3c1c45cbef3d46fe40a476460a10ee1c44794436bd8a3d3f10f62513c"
+          },
+          "digest": "b4704da4504911bfe8838650488a7ae0642d4e03061e5d798c84b60fa8a24eb5",
+          "effective_targets": {
+            "dependency-cruiser": [
+              "app"
+            ],
+            "eslint": [
+              "app"
+            ],
+            "eslint-type-evidence-generated": [
+              "app"
+            ],
+            "eslint-type-evidence-production": [
+              "app"
+            ],
+            "eslint-type-evidence-tests": [
+              "app"
+            ],
+            "go-imports": [
+              "."
+            ],
+            "go-vet": [
+              "."
+            ],
+            "gocyclo": [
+              "."
+            ],
+            "gofmt": [
+              "."
+            ],
+            "govulncheck": [
+              "."
+            ],
+            "hadolint": [
+              "app"
+            ],
+            "helm-lint": [
+              "app"
+            ],
+            "jscpd": [
+              "app"
+            ],
+            "knip": [
+              "app"
+            ],
+            "kubeconform": [
+              "app"
+            ],
+            "kubernetes-policy": [
+              "app"
+            ],
+            "kubernetes-schema": [
+              "app"
+            ],
+            "mypy": [
+              "app"
+            ],
+            "openapi-contract": [
+              "app"
+            ],
+            "ruff": [
+              "app"
+            ],
+            "semgrep": [
+              "app"
+            ],
+            "shellcheck": [
+              "app"
+            ],
+            "shfmt": [
+              "app"
+            ],
+            "staticcheck": [
+              "."
+            ],
+            "terraform-fmt": [
+              "."
+            ],
+            "terraform-validate": [
+              "."
+            ],
+            "tflint": [
+              "."
+            ],
+            "trivy-kubernetes": [
+              "app"
+            ],
+            "trivy-terraform": [
+              "."
+            ],
+            "tsc": [
+              "app"
+            ],
+            "yamllint": [
+              "app"
+            ]
+          },
+          "policy_pack_digests": {},
+          "project": "first-project",
+          "schema_version": "pipeline_lint_policy.v7"
+        },
+        "project": "first-project",
+        "schema_version": "pipeline_lint_report.v7",
+        "scope": "full",
+        "sourceRevision": "534beab5d96f5d564cfed09d7d6975469bd3f364",
+        "summary": {
+          "tools_failed": 0,
+          "tools_not_applicable": 0,
+          "tools_ok": 6,
+          "total_baselined": 0,
+          "total_blocking": 0,
+          "total_errors": 0,
+          "total_experimental": 0,
+          "total_warnings": 0
+        },
+        "tier": "full",
+        "timestamp": "2026-10-31T21:08:38.382Z",
+        "tools": {
+          "dependency-cruiser": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "architecture",
+            "duration_ms": 426,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "project",
+            "status": "ok",
+            "warnings": 0
+          },
+          "eslint": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "lint",
+            "duration_ms": 197,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "changed-files",
+            "status": "ok",
+            "warnings": 0
+          },
+          "jscpd": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "duplication",
+            "duration_ms": 80,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "repository",
+            "status": "ok",
+            "warnings": 0
+          },
+          "knip": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "architecture",
+            "duration_ms": 372,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "repository",
+            "status": "ok",
+            "warnings": 0
+          },
+          "openapi-contract": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "lint",
+            "duration_ms": 9,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "project",
+            "status": "ok",
+            "warnings": 0
+          },
+          "semgrep": {
+            "baselined_findings": 0,
+            "blocking_findings": 0,
+            "blocking_severity": "warning",
+            "category": "security",
+            "duration_ms": 1659,
+            "errors": 0,
+            "evidence": [],
+            "experimental_findings": 0,
+            "findings": [],
+            "mode": "blocking",
+            "scope": "changed-files",
+            "status": "ok",
+            "warnings": 0
+          }
+        },
+        "visibility": {
+          "debt": false,
+          "experimental": false
+        }
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "buster-quality:final-test:decision:1",
+        "digest": "sha256:6fd1318003db19868603fa30eeb88aeed47f763db5c4ae3d807ad24e82aed16b",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.buster-quality-gate",
+        "producer": {
+          "attemptId": "attempt:2dc02f99-72f8-48ce-98ec-4b36546beb92",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "final-test"
+        },
+        "sizeBytes": 1657
+      },
+      "value": {
+        "coverage": {
+          "archiveContentDigest": "sha256:94215071e766e3423526759b0685d2b9ffa130fc992d5466926f5ab290b0ed6b",
+          "checks": [
+            {
+              "checkId": "integrated",
+              "declarationId": "integrated",
+              "nodeId": "integrated",
+              "state": "passed"
+            }
+          ],
+          "coverageDigest": "sha256:43245af2edc3b08b1b2e8b8e8d05815af2eb9ac1914d6c2d312cd88b713b2bb6",
+          "pipelineStageId": "final-test",
+          "planDigest": "sha256:b241a061528f3392e52ed6b22c5c52981961ccc3359e7826fa96b659a0ee2739",
+          "policy": {
+            "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+            "integrationRequirements": [],
+            "kind": "cumulative",
+            "modules": [
+              {
+                "moduleId": "app",
+                "ownedPaths": [
+                  "app"
+                ],
+                "requirements": [
+                  {
+                    "id": "greeting",
+                    "statement": "The greeting function returns hello."
+                  }
+                ]
+              }
+            ],
+            "policyDigest": "sha256:3266987f37886a56a63366f915b614d8fd236a22d766b0b61e0ae337f185f376",
+            "projectId": "first-project",
+            "requiredChecks": [
+              {
+                "checkId": "integrated",
+                "nodeIds": [
+                  "integrated"
+                ],
+                "requirementRefs": [
+                  {
+                    "moduleId": "app",
+                    "requirementId": "greeting"
+                  }
+                ]
+              }
+            ],
+            "schemaVersion": "gate-coverage.v1"
+          },
+          "schemaVersion": "gate-coverage-result.v1",
+          "sourceRevision": "git:534beab5d96f5d564cfed09d7d6975469bd3f364",
+          "sourceTree": "git:8cade15274cb61bfbaf9151e6e73a2400c4588ba"
+        },
+        "decisionDigest": "sha256:78dc11a98f1c3c994b604581b98a523f9f74d780f0152f982866d699461998cc",
+        "jobId": "job:4d1705014bb237d6b6d248dd92cad23ed77864c4cfcd323b4af70225216198ad",
+        "nodes": [
+          {
+            "effect": "passed",
+            "kind": "test",
+            "mode": "blocking",
+            "nodeId": "integrated",
+            "reason": "all declared checks passed"
+          }
+        ],
+        "planId": "plan:first-project:cumulative",
+        "resultDigest": "sha256:6a04c7f5c088b268870f57eea02d7e0645c6d3d9fcc8c9200f64efb24f26eae2",
+        "reviews": [],
+        "runId": "run:first-project-001",
+        "schemaVersion": "test-gate-decision.v2",
+        "state": "passed"
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "buster-quality:final-test:1",
+        "digest": "sha256:ec976260cfe351645f4aa1de486c1c8d20f63fbec9da206e11ff93f08cff797b",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.buster-quality-gate",
+        "producer": {
+          "attemptId": "attempt:2dc02f99-72f8-48ce-98ec-4b36546beb92",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "final-test"
+        },
+        "sizeBytes": 207
+      },
+      "value": {
+        "decisionDigest": "sha256:78dc11a98f1c3c994b604581b98a523f9f74d780f0152f982866d699461998cc",
+        "nativeOutcome": "passed",
+        "sourceRevision": "534beab5d96f5d564cfed09d7d6975469bd3f364",
+        "testAgent": {
+          "enabled": false
+        }
+      }
+    },
+    {
+      "reference": {
+        "artifactId": "project-summary:run:first-project-001",
+        "digest": "sha256:bda79c3fca054d2e47cdca7df051a4f35effb9c61cf2d048688420b4ed150db8",
+        "encoding": "kubeclaw-json.utf16.v1",
+        "mediaType": "application/json",
+        "namespace": "kubeclaw.project-summary",
+        "producer": {
+          "attemptId": "attempt:731bda38-4483-40d3-8054-9ce4bbe800ae",
+          "attemptNumber": 1,
+          "runId": "run:first-project-001",
+          "stageId": "project-summary"
+        },
+        "sizeBytes": 6867
+      },
+      "value": {
+        "digest": "sha256:4e7a4bb60da0b0c91bc937f85bff6880df7980609c8bcf473811b623b44ac387",
+        "evidence": [
+          {
+            "artifactId": "implementation:app:1",
+            "digest": "sha256:ee842744721710474692cc7562f0341156f596f281bf98ac55ead541740110ee",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.implementation-agent",
+            "producer": {
+              "attemptId": "attempt:2f6e804f-e513-4682-905b-6308291213a2",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "implement-app"
+            },
+            "sizeBytes": 781
+          },
+          {
+            "artifactId": "buster-quality:test-app:decision:1",
+            "digest": "sha256:fec74a2ac0b4e066baeb8d63f6c3670552f676d3b84020b07c72b20d77140012",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:1ac205fd-ec30-466a-8c33-ab717010243d",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "test-app"
+            },
+            "sizeBytes": 1635
+          },
+          {
+            "artifactId": "buster-quality:test-app:1",
+            "digest": "sha256:647a1105742de8516787a4341a2f4e5b7494cfbde1ef790cadfb4653f9c1568a",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:1ac205fd-ec30-466a-8c33-ab717010243d",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "test-app"
+            },
+            "sizeBytes": 207
+          },
+          {
+            "artifactId": "implementation:app:1",
+            "digest": "sha256:ee842744721710474692cc7562f0341156f596f281bf98ac55ead541740110ee",
+            "encoding": "kubeclaw-json.utf16.v1",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.implementation-agent",
+            "producer": {
+              "attemptId": "attempt:2f6e804f-e513-4682-905b-6308291213a2",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "implement-app"
+            },
+            "sizeBytes": 781
+          },
+          {
+            "artifactId": "buster-quality:final-test:decision:1",
+            "digest": "sha256:6fd1318003db19868603fa30eeb88aeed47f763db5c4ae3d807ad24e82aed16b",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:2dc02f99-72f8-48ce-98ec-4b36546beb92",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "final-test"
+            },
+            "sizeBytes": 1657
+          },
+          {
+            "artifactId": "buster-quality:final-test:1",
+            "digest": "sha256:ec976260cfe351645f4aa1de486c1c8d20f63fbec9da206e11ff93f08cff797b",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.buster-quality-gate",
+            "producer": {
+              "attemptId": "attempt:2dc02f99-72f8-48ce-98ec-4b36546beb92",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "final-test"
+            },
+            "sizeBytes": 207
+          },
+          {
+            "artifactId": "lint:full:first-project",
+            "digest": "sha256:f31b41b7c1a4173f4c33ca4f43c48fd650ff89024572d69750d729c1106e8d96",
+            "mediaType": "application/json",
+            "namespace": "kubeclaw.lint",
+            "producer": {
+              "attemptId": "attempt:fdef8368-5808-4c5d-9a9d-9282dd4254cd",
+              "attemptNumber": 1,
+              "runId": "run:first-project-001",
+              "stageId": "final-lint"
+            },
+            "sizeBytes": 3791
+          }
+        ],
+        "final": {
+          "coverage": {
+            "archiveContentDigest": "sha256:94215071e766e3423526759b0685d2b9ffa130fc992d5466926f5ab290b0ed6b",
+            "checks": [
+              {
+                "checkId": "integrated",
+                "declarationId": "integrated",
+                "nodeId": "integrated",
+                "state": "passed"
+              }
+            ],
+            "coverageDigest": "sha256:43245af2edc3b08b1b2e8b8e8d05815af2eb9ac1914d6c2d312cd88b713b2bb6",
+            "pipelineStageId": "final-test",
+            "planDigest": "sha256:b241a061528f3392e52ed6b22c5c52981961ccc3359e7826fa96b659a0ee2739",
+            "policy": {
+              "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+              "integrationRequirements": [],
+              "kind": "cumulative",
+              "modules": [
+                {
+                  "moduleId": "app",
+                  "ownedPaths": [
+                    "app"
+                  ],
+                  "requirements": [
+                    {
+                      "id": "greeting",
+                      "statement": "The greeting function returns hello."
+                    }
+                  ]
+                }
+              ],
+              "policyDigest": "sha256:3266987f37886a56a63366f915b614d8fd236a22d766b0b61e0ae337f185f376",
+              "projectId": "first-project",
+              "requiredChecks": [
+                {
+                  "checkId": "integrated",
+                  "nodeIds": [
+                    "integrated"
+                  ],
+                  "requirementRefs": [
+                    {
+                      "moduleId": "app",
+                      "requirementId": "greeting"
+                    }
+                  ]
+                }
+              ],
+              "schemaVersion": "gate-coverage.v1"
+            },
+            "schemaVersion": "gate-coverage-result.v1",
+            "sourceRevision": "git:534beab5d96f5d564cfed09d7d6975469bd3f364",
+            "sourceTree": "git:8cade15274cb61bfbaf9151e6e73a2400c4588ba"
+          },
+          "decisionDigest": "sha256:78dc11a98f1c3c994b604581b98a523f9f74d780f0152f982866d699461998cc",
+          "expectedCoverage": {
+            "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+            "integrationRequirements": [],
+            "kind": "cumulative",
+            "modules": [
+              {
+                "moduleId": "app",
+                "ownedPaths": [
+                  "app"
+                ],
+                "requirements": [
+                  {
+                    "id": "greeting",
+                    "statement": "The greeting function returns hello."
+                  }
+                ]
+              }
+            ],
+            "policyDigest": "sha256:3266987f37886a56a63366f915b614d8fd236a22d766b0b61e0ae337f185f376",
+            "projectId": "first-project",
+            "requiredChecks": [
+              {
+                "checkId": "integrated",
+                "nodeIds": [
+                  "integrated"
+                ],
+                "requirementRefs": [
+                  {
+                    "moduleId": "app",
+                    "requirementId": "greeting"
+                  }
+                ]
+              }
+            ],
+            "schemaVersion": "gate-coverage.v1"
+          },
+          "lintStageId": "final-lint",
+          "resultDigest": "sha256:6a04c7f5c088b268870f57eea02d7e0645c6d3d9fcc8c9200f64efb24f26eae2",
+          "sourceRevision": "534beab5d96f5d564cfed09d7d6975469bd3f364",
+          "sourceStageId": "implement-app",
+          "testStageId": "final-test"
+        },
+        "modules": [
+          {
+            "coverage": {
+              "archiveContentDigest": "sha256:94215071e766e3423526759b0685d2b9ffa130fc992d5466926f5ab290b0ed6b",
+              "checks": [
+                {
+                  "checkId": "greeting",
+                  "declarationId": "greeting",
+                  "nodeId": "greeting",
+                  "state": "passed"
+                }
+              ],
+              "coverageDigest": "sha256:175e46c4733121a8b02a8db85980d0f241cf123a559a48c120ffa56458c1158a",
+              "pipelineStageId": "test-app",
+              "planDigest": "sha256:60db8c127ab4cee0d3dd36a39c139b9bae985255dd8a4ae94f9dd61293bebdc2",
+              "policy": {
+                "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+                "integrationRequirements": [],
+                "kind": "module",
+                "modules": [
+                  {
+                    "moduleId": "app",
+                    "ownedPaths": [
+                      "app"
+                    ],
+                    "requirements": [
+                      {
+                        "id": "greeting",
+                        "statement": "The greeting function returns hello."
+                      }
+                    ]
+                  }
+                ],
+                "policyDigest": "sha256:1b1abe6dd7c2c1dcb7c8047f6b98c9719a2e0c926750277c9783457d5c64a29b",
+                "projectId": "first-project",
+                "requiredChecks": [
+                  {
+                    "checkId": "greeting",
+                    "nodeIds": [
+                      "greeting"
+                    ],
+                    "requirementRefs": [
+                      {
+                        "moduleId": "app",
+                        "requirementId": "greeting"
+                      }
+                    ]
+                  }
+                ],
+                "schemaVersion": "gate-coverage.v1"
+              },
+              "schemaVersion": "gate-coverage-result.v1",
+              "sourceRevision": "git:534beab5d96f5d564cfed09d7d6975469bd3f364",
+              "sourceTree": "git:8cade15274cb61bfbaf9151e6e73a2400c4588ba"
+            },
+            "decisionDigest": "sha256:992ff402e0ef8d49d28c78628eeee1dd0a8cd28d0ab35d6bfc303cc45d5bb048",
+            "expectedCoverage": {
+              "baseRevision": "0a5fe67da59445c7645e42df262277db960bb391",
+              "integrationRequirements": [],
+              "kind": "module",
+              "modules": [
+                {
+                  "moduleId": "app",
+                  "ownedPaths": [
+                    "app"
+                  ],
+                  "requirements": [
+                    {
+                      "id": "greeting",
+                      "statement": "The greeting function returns hello."
+                    }
+                  ]
+                }
+              ],
+              "policyDigest": "sha256:1b1abe6dd7c2c1dcb7c8047f6b98c9719a2e0c926750277c9783457d5c64a29b",
+              "projectId": "first-project",
+              "requiredChecks": [
+                {
+                  "checkId": "greeting",
+                  "nodeIds": [
+                    "greeting"
+                  ],
+                  "requirementRefs": [
+                    {
+                      "moduleId": "app",
+                      "requirementId": "greeting"
+                    }
+                  ]
+                }
+              ],
+              "schemaVersion": "gate-coverage.v1"
+            },
+            "moduleId": "app",
+            "resultDigest": "sha256:af1701c2e99d6ad88bd1ac2f0b355cc7f87e75419b36db243b51359d9ade5798",
+            "sourceRevision": "534beab5d96f5d564cfed09d7d6975469bd3f364",
+            "sourceStageId": "implement-app",
+            "testStageId": "test-app"
+          }
+        ],
+        "projectId": "first-project",
+        "runId": "run:first-project-001",
+        "schemaVersion": "delivery-manifest.v3",
+        "sourceRevision": "534beab5d96f5d564cfed09d7d6975469bd3f364"
+      }
+    }
+  ]
+}

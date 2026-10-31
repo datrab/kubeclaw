@@ -1,0 +1,194 @@
+{
+  "schemaVersion": 1,
+  "requirementId": "QUA-007",
+  "originalWholeVerdict": "PASS_AT_SUPPORTED_DOCUMENTATION_OPERATOR_READER_SCOPE",
+  "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
+  "publicationRevision": "9abba46ece3063df72f3db16d0a27a83446a0088",
+  "publicContentBuildSourceRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+  "selectedExecutableBaseline": "da43fa58743934a7a98dc8f2fb6205b062e83870",
+  "originalAuthorities": [
+    {
+      "path": "docs/blueprint/AP09-completeness-audit.md:426",
+      "criterion": "Independent Operator installation/configuration/examplepipeline/diagnosis/recovery/cleanup solely centraldocs."
+    },
+    {
+      "path": "docs/blueprint/AP09-acceptance-contract.md:1\u20134,117",
+      "criterion": "Truthful supportedscope/complete prerequisites/authority/safe-stops, actualclaimappropriate checks; no automatic liveoperator prerequisite or Source/runtimefiction; independent nonauthor coherent topic review."
+    },
+    {
+      "path": "docs/site/decisions/acceptance.md:19\u201349",
+      "criterion": "D12 locallive separation, remaining environmentproof explicit rather than falselypassed."
+    },
+    {
+      "path": "operations/pr13/evidence/alternate-qua007-whole-feasibility-1807.json",
+      "disposition": "Earlier conditionalfeasibility NOT receipt of completion. Its freshoperator+sixfacet conditions now independently checked against this NEW actualexercise; not reused QUA006participant."
+    }
+  ],
+  "participant": {
+    "type": "MODEL_OPERATOR_PARTICIPANT_NOT_HUMAN",
+    "freshContextEligibility": "Root preregistered new contextisolated /root/qua007_fresh_operator_20261031 with only centralentry and explicit operator runtime inputs; registered2026-10-31T21:04:53.804693+00:00 before instrumentedexecution. Participant report/notes state no prior transcripts/proofs/blueprints/productimplementation fallback and no nativechild spawned. Actual Gateway implementation dispatch is sampleproduct behavior, not review delegation.",
+    "suppliedInputsBoundary": "Endpoint/existing credential reference/agent/model are predeclared operational inputs, not hidden task answers or successfulrunprobes; credentialvalue not copied into report."
+  },
+  "review": {
+    "sourceAccuracy": "PASS",
+    "readerUsability": "PASS",
+    "quality": "PASS"
+  },
+  "facets": [
+    {
+      "facet": "installation",
+      "verdict": "PASS_DOCUMENTED_SUPPORTED_AUTHORITY_STOP_NOT_LIVE_INSTALL",
+      "actual": "Independent operator navigated central install/preflight/release/trust chain; no cluster/release/receipt authority or mutation authorization supplied; installation-boundary.stdout records exact missing authority, owning platform/release/trust operators and resume action. Source install.md3/30\u201355 explicitly stops before mutation and even disposable probe until lifecycle/denial authority resolved. Separately exact documented sourceclone, declaredtools/lockednpm/Semgrep/sandbox and five handbook baseline checks actually0.",
+      "limit": "No live cluster install, currentrelease qualification or platformreadiness claim."
+    },
+    {
+      "facet": "configuration",
+      "verdict": "PASS_ACTUAL_SUPPORTED_CONFIGURATION",
+      "actual": "Central operate\u2192platform configuration/workflow chain; prepare0 yields complete eightstage project/compiledgraph/ownerlintpolicy/narrowprovider+grant localplatform. Exact compiler input/output held in owner digests and raw proofs; actualmaterialized configuration inspection retained.",
+      "limit": "Not deployed effective configuration, broad grants or productionsecrets observation."
+    },
+    {
+      "facet": "examplePipeline",
+      "verdict": "PASS_ACTUAL_SAME_COMPILED_GRAPH_RUNTIME_AND_ORIGINAL_PROOF",
+      "actual": "New sample Gateway implementation dispatch actuallyexecuted, run0/53.4403665s, verify0/1.6257329s. Independent rawverification validates same normalized compilergraph,8successful firstattemptstages,221hashchained events,10originalartifact blob bytes+digest+size+decodedvalue,2native module/cumulative testdecisions and2lintreports with zeroblocking/toolerrors. Not compileonly or graphsubstitution.",
+      "limit": "Fixed da43 executable Source exactly prescribed by current guide; not execution of current9abba helperbodies/currentproductrelease."
+    },
+    {
+      "facet": "diagnosis",
+      "verdict": "PASS_ACTUAL_OBSERVED_FAULT_DOCUMENTED_CORRECTION_AND_END_CONSUMER",
+      "actual": "First Semgrep1.170.0 probe actualexit1/EROFS was operator omission of documented own writable settings/log exports. Firsterror preserved; only guidevariables applied, correctedprobe0 and subsequent actualrun both lintgates tool0/blocking0. Incident diagnosis.json has actual window, target, no-run-yet/effect status, cause, action, endconsumer and cleanupowner.",
+      "limit": "No productdefect invented, clusterincident or sourcefix claimed; unsupported clustersnapshot correctly identified."
+    },
+    {
+      "facet": "recovery",
+      "verdict": "PASS_ACTUAL_LOCAL_CORE_RECOVERY_AND_THREE_EXTERNAL_EFFECT_SAFE_STOPS",
+      "actual": "Direct published interruption-recovery commands actually0/13.5648079s; real ownedchild durablecheckpoint interruption then originalidentity Core recover succeeds; three loopbackmutations before-receipt/after-receipt/lostresponse allpass0skip. Rawstdout exactexpected contract and3test summary. Guide explicitly owns fixture lifetime; no terminal compiledrun re-recovery attempted.",
+      "limit": "Not nativeWorker supervision, arbitraryexternaloperation replay, productionbackup/restore or retained fullincidentarchive; no need to execute every alternative recoveryrecipe to complete this original facet."
+    },
+    {
+      "facet": "cleanup",
+      "verdict": "PASS_ACTUAL_OWNED_CLEANUP_WITH_ORIGINAL_PROOF_RETAINED",
+      "actual": "Originalproof copiedoutside deletionroot before cleanup. Helpercleanup0/verified-owned-cleanup after originalverifier; journeyabsent. Sessions-owner rawJSONlines statusdone, metadataretained not falselydeleted. Source/worktree checks and /proc cwd/exe/fd no ownedusers before scratchremoval; actualownedScratchRemovedtrue, reviewer confirms scratchabsent. All40retainedchecksums/26rawmanifestfiles verified.",
+      "limit": "Cleanup pending field in immutable native-verification is prior precleanup verification state, not failedcleanup; later original cleanupstdout/result0 establishes completion without rewriting oldrecord."
+    }
+  ],
+  "independentRawProof": {
+    "receipt": "independent-raw-proof-verification.json",
+    "checksumEntries": 40,
+    "rawManifestFiles": 26,
+    "events": 221,
+    "stages": 8,
+    "artifacts": 10,
+    "compiledDigest": "sha256:0c6513b09ff95b2b747fd42da0417497e0be4f0e225221c8d9fe06c781f96ffa",
+    "auditDigest": "sha256:26596a23d06aef8c56073ec3bd3f79fb26fbad3199d381c69b0ec69aa8a4ee07",
+    "journalHead": "sha256:fb00cc08a42a8ea076b602c62d09daa674e530a4e57bd85d4d68aef571c4c97e",
+    "allIndependentChecksPassed": true,
+    "method": "Read-only actual retained bytes through native journalparser+graphsnapshot+canonicalauditdigest and blobhash/size/value checks. Did NOT rerun workflow/helper, rewrite verificationreceipt, or rely on modelsummaryalone."
+  },
+  "sourceBindingJudgment": {
+    "receipt": "independent-raw-proof-verification.json#sourceBindings",
+    "currentPagesEqualActualPublication": true,
+    "guideBaselineIntentional": "Current workflowguide193\u2013219 explicitly fixes da43executablebaseline and forbids substituting handbookbaseline; all3selectedhelperSHAs and distinctcurrentpublicationSHAs retained. No claim currenthelperbodies were executed. Source-selection command checked exactdetachedrevision+cleanworkingtree+all3helpers before runtime.",
+    "sameCurrentNativeSemanticGraphVerification": true
+  },
+  "technicalChecks": [
+    {
+      "step": "source-select",
+      "exitCode": 0,
+      "elapsedSeconds": 2.2480309009552
+    },
+    {
+      "step": "dependencies",
+      "exitCode": 0,
+      "elapsedSeconds": 48.446250438690186
+    },
+    {
+      "step": "baseline",
+      "exitCode": 0,
+      "elapsedSeconds": 3.658071756362915
+    },
+    {
+      "step": "prepare",
+      "exitCode": 0,
+      "elapsedSeconds": 4.817793607711792
+    },
+    {
+      "step": "configuration-inspection",
+      "exitCode": 0,
+      "elapsedSeconds": 0.028982877731323242
+    },
+    {
+      "step": "actual-run",
+      "exitCode": 0,
+      "elapsedSeconds": 53.44036650657654
+    },
+    {
+      "step": "verify",
+      "exitCode": 0,
+      "elapsedSeconds": 1.6257328987121582
+    },
+    {
+      "step": "recovery",
+      "exitCode": 0,
+      "elapsedSeconds": 13.564807891845703
+    },
+    {
+      "step": "cleanup-journey",
+      "exitCode": 0,
+      "elapsedSeconds": 1.54628586769104
+    },
+    {
+      "step": "cleanup-scratch",
+      "exitCode": 0,
+      "elapsedSeconds": 2.585331439971924
+    },
+    {
+      "step": "retained-proof-check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.034828901290893555
+    },
+    {
+      "step": "session-owner-state",
+      "exitCode": 0,
+      "elapsedSeconds": 0.10652565956115723
+    },
+    {
+      "step": "session-status-check",
+      "exitCode": 0,
+      "elapsedSeconds": 2.2714457511901855
+    },
+    {
+      "step": "session-cleanup-check",
+      "exitCode": 0,
+      "elapsedSeconds": 0.14857172966003418
+    }
+  ],
+  "preservedNegatives": [
+    "First SemgrepEROFS exit1 retained; corrected documentedpreparation success separate.",
+    "Clone exit0 observed with retained stdout/stderr but elapsedtime notinstrumented; no inventedcloneduration.",
+    "Initial reviewer read-only rawproof selection chose .run-mutation-locks directory and ENOENT; correctedreadselection only, no productproofchange.",
+    "Nativeverification immutable cleanup:pending predates actualcleanup0; never rewritten to imply pastcleanup."
+  ],
+  "credentialHandling": {
+    "reviewerExactInheritedOperatorBearerScanFiles": 122,
+    "bearerValueOccurrences": 0,
+    "privatePemOccurrences": 0,
+    "noCredentialValueInThisDecision": true
+  },
+  "openIssues": [],
+  "registrationRecommendation": {
+    "requirementIds": [
+      "QUA-007"
+    ],
+    "gateIds": [],
+    "condition": "Rootsoleintegrator only after coherent exactreviewed registration+unchangedoriginalchecker+push/exactremote; thisreview doesnotmutate matrix orclaim remotecompletion."
+  },
+  "finalRole": "Actual independent nonauthor wholeoriginal Source/Reader/Quality/finalintegration judgement under AP09sections1\u20134. Legacy astra-final label, if retained, is not a new Astra-model run.",
+  "remainingSeparateObligations": [
+    "PUB-007/human assistive/screenreader acceptance stillunmet.",
+    "A99-12/A912-12/A913-04/A913-05 unchanged registeredmultirole/runtimefixtures not inferredpassed.",
+    "No liveinstall/productionrelease/trust/lifecycle/denial/restore/RPO-RTO/cgroup/readiness acceptance.",
+    "No genericAPI/defaultglobalSource/findingsclosure or AP10parity/deletion award."
+  ],
+  "noRepoOrCurrentWorkMutation": true
+}

@@ -1,0 +1,11 @@
+{
+  "executable": "/usr/bin/script",
+  "args": [
+    "-q",
+    "-e",
+    "-c",
+    "'/usr/local/bin/node' '/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/nova/core/cli.ts' '--platform' '/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/compiled-platform.complete.json' '--audit' 'run:first-project-001'",
+    "/dev/null"
+  ],
+  "exitCode": 0
+}

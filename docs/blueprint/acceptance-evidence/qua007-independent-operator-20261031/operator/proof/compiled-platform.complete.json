@@ -1,0 +1,364 @@
+{
+  "schemaVersion": "pipeline-platform.v2",
+  "storageRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/compiled-state",
+  "installationRoots": [
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/nova/plugins",
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/common/plugins"
+  ],
+  "trustedBuiltinRoots": [
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/nova/plugins",
+    "/home/node/.openclaw/workspace/tmp/qua007-fresh/source/skills/common/plugins"
+  ],
+  "externalTrust": {
+    "allowedSourceDigests": {},
+    "verifiedAttestations": {}
+  },
+  "providers": {
+    "git.repository.read": "kubeclaw.repository-adapter:repository",
+    "artifacts.write": "kubeclaw.artifact-store:artifact-store",
+    "telemetry.emit": "kubeclaw.telemetry-store:telemetry",
+    "git.sync": "kubeclaw.git-workspace:git",
+    "git.commit": "kubeclaw.git-workspace:git",
+    "git.merge": "kubeclaw.git-workspace:git",
+    "git.workspace.create": "kubeclaw.git-workspace:git",
+    "git.workspace.remove": "kubeclaw.git-workspace:git",
+    "state.append": "kubeclaw.state-store:state",
+    "lint.execute": "kubeclaw.lint:executor",
+    "artifacts.read": "kubeclaw.artifact-store:artifact-store",
+    "runtime.dispatch": "kubeclaw.runtime-dispatch:openclaw",
+    "test.plan.execute": "kubeclaw.remote-test-gate:plan",
+    "secrets.read": "kubeclaw.secret-resolver:secrets",
+    "network.http": "kubeclaw.network-http:http"
+  },
+  "grants": {
+    "kubeclaw.preflight-contract:source": {
+      "git.repository.read": {
+        "allowedPrefixes": [
+          "README.md",
+          "modules/app",
+          "app"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.project-summary:summary": {
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.blueprint-sync:sync": {
+      "git.sync": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "git.commit": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "state.append": {
+        "allowedNamespaces": [
+          "kubeclaw.blueprint-sync"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.implementation-agent:implementation": {
+      "runtime.dispatch": {
+        "allowedAgents": [
+          "forge"
+        ]
+      },
+      "git.workspace.create": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+        ],
+        "allowedWorkspaceRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "git.workspace.remove": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+        ],
+        "allowedWorkspaceRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "git.commit": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "git.merge": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces"
+        ]
+      },
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.buster-quality-gate:quality": {
+      "test.plan.execute": {
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+        ]
+      },
+      "runtime.dispatch": {
+        "allowedAgents": [
+          "forge"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.lint:full": {
+      "lint.execute": {
+        "allowedProjects": [
+          "first-project"
+        ],
+        "allowedRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+        ],
+        "allowedPolicyRoots": [
+          "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project"
+        ]
+      },
+      "artifacts.write": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      },
+      "artifacts.read": {
+        "allowedNamespaces": [
+          "kubeclaw.preflight-contract",
+          "kubeclaw.blueprint-sync",
+          "kubeclaw.implementation-agent",
+          "kubeclaw.lint",
+          "kubeclaw.buster-quality-gate",
+          "kubeclaw.project-summary"
+        ]
+      }
+    },
+    "kubeclaw.runtime-dispatch:openclaw": {
+      "git.repository.read": {
+        "allowedPrefixes": [
+          "README.md",
+          "modules/app",
+          "app"
+        ]
+      },
+      "network.http": {
+        "allowedOrigins": [
+          "http://127.0.0.1:18789"
+        ]
+      },
+      "secrets.read": {
+        "allowedNames": [
+          "a9906-gateway"
+        ]
+      }
+    },
+    "kubeclaw.remote-test-gate:plan": {
+      "secrets.read": {
+        "allowedNames": [
+          "a9906-buster",
+          "a9906-source"
+        ]
+      }
+    }
+  },
+  "adapters": {
+    "kubeclaw.repository-adapter:repository": {
+      "repositoryRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+      "expectedHead": "0a5fe67da59445c7645e42df262277db960bb391",
+      "maxFileBytes": 65536
+    },
+    "kubeclaw.artifact-store:artifact-store": {
+      "artifactRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/local/artifacts",
+      "maxArtifactBytes": 65536,
+      "maximumRecords": 100,
+      "maximumStoreBytes": 1048576
+    },
+    "kubeclaw.telemetry-store:telemetry": {
+      "root": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/local/telemetry",
+      "maxRecordBytes": 65536,
+      "maximumRecords": 256,
+      "maximumStoreBytes": 4194304
+    },
+    "kubeclaw.git-workspace:git": {
+      "allowedRepositoryRoots": [
+        "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+      ],
+      "workspaceRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces",
+      "gitExecutable": "/usr/bin/git",
+      "authorName": "Documentation Example",
+      "authorEmail": "example@example.invalid",
+      "maxExecutionMs": 30000,
+      "maxOutputBytes": 1048576,
+      "terminationGraceMs": 1000
+    },
+    "kubeclaw.state-store:state": {
+      "root": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/state-store",
+      "maxEntryBytes": 1048576,
+      "maximumRecords": 1000,
+      "maximumStoreBytes": 16777216
+    },
+    "kubeclaw.lint:executor": {
+      "allowedRepositoryRoots": [
+        "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+      ],
+      "allowedPolicyRoots": [
+        "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project"
+      ]
+    },
+    "kubeclaw.secret-resolver:secrets": {
+      "environment": {
+        "a9906-gateway": "A9906_GATEWAY_AUTH",
+        "a9906-buster": "A9906_BUSTER_AUTH",
+        "a9906-source": "A9906_SOURCE_PRIVATE"
+      }
+    },
+    "kubeclaw.network-http:http": {
+      "allowedOrigins": [
+        "http://127.0.0.1:18789"
+      ],
+      "allowedMethods": [
+        "POST"
+      ],
+      "allowedHeaders": [
+        "accept",
+        "content-type",
+        "authorization",
+        "idempotency-key"
+      ],
+      "maxRequestBytes": 1048576,
+      "maxResponseBytes": 1048576,
+      "timeoutMs": 30000
+    },
+    "kubeclaw.runtime-dispatch:openclaw": {
+      "targets": {
+        "forge": {
+          "endpoint": "http://127.0.0.1:18789/tools/invoke",
+          "tokenSecret": "a9906-gateway",
+          "runtime": "subagent",
+          "agentId": "main",
+          "model": "openai/gpt-6.1-sol",
+          "cwd": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "repositoryRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository",
+          "workspaceRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/workspaces",
+          "resultPathPrefix": ".kubeclaw-results",
+          "sessionTimeoutMs": 300000,
+          "maxPolls": 300
+        }
+      }
+    },
+    "kubeclaw.remote-test-gate:plan": {
+      "endpoint": "http://127.0.0.1:37803",
+      "authentication": "bearer",
+      "tokenSecret": "a9906-buster",
+      "sourcePrivateKeySecret": "a9906-source",
+      "sourceAuthority": "local:documentation",
+      "stateRoot": "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/nova-test-state",
+      "allowedRepositoryRoots": [
+        "/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey/project/repository"
+      ]
+    }
+  },
+  "activeAdapters": [],
+  "observers": {},
+  "shutdownTimeoutMs": 1000,
+  "orchestratorIssuerId": "local:operator",
+  "administrativeDecisionIssuers": []
+}

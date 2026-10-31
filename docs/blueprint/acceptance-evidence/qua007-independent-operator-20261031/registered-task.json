@@ -1,0 +1,29 @@
+{
+  "registeredAt": "2026-10-31T21:04:53.804693+00:00",
+  "requirement": "QUA-007",
+  "originalCriterion": "Independent operator completes installation/configuration/example pipeline/diagnosis/recovery/cleanup solely with central documentation. Actual supported observations and correct source-backed safe stops; never invented live success.",
+  "publicationRevision": "9abba46ece3063df72f3db16d0a27a83446a0088",
+  "publicContentBuildSourceRevision": "5390bc45224b9cff0205f499e6b4f82690a42bbb",
+  "participantEligibility": "New native context-isolated child, no prior contribution or prior task/evidence outcomes; actual role task, not preparatory page review.",
+  "entry": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site/README.md",
+  "facets": [
+    "installation",
+    "configuration",
+    "actual example pipeline and original verification",
+    "diagnosis",
+    "actual supported recovery",
+    "owned cleanup and preserved original proof"
+  ],
+  "suppliedOperatorInputs": {
+    "sourceCheckout": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery (read-only integration checkout; own isolated source checkout only if docs require)",
+    "runtime": "Node24; prepared existing workspace dependencies available, exact tools per central developer handbook must be checked/prepared, not assumed passed",
+    "COMPILED_GATEWAY_ENDPOINT": "http://127.0.0.1:18789/tools/invoke",
+    "COMPILED_GATEWAY_TOKEN": "Use inherited existing operator-set OPENCLAW_GATEWAY_TOKEN without ever printing or persisting it; no supplied value in registration",
+    "COMPILED_AGENT_ID": "main",
+    "COMPILED_MODEL": "openai/gpt-6.1-sol",
+    "gatewayHealthProbe": "Existing approved local Gateway health HTTP200; not evidence pipeline executes"
+  },
+  "effectsAuthorization": "Private owned fixture checkouts/dirs/repos/worktrees, local documented test services and this sample Gateway dispatch only. No cluster/deployment/image mutation, production effect, broad grant changes, new external messaging, real credentials changes, source fixes or integration repo writes.",
+  "observations": "For every facet retain exact page/command/source selection/prerequisite/outcome/raw redacted stdout+exit/expected result comparison/remaining owner-action-resume. Report actual first failure; safe stop is not unexecuted supported action success.",
+  "exit": "All six observed at actual supported scope and owned cleanup, or exact genuine missing input/action/resume. Parent original-contract adjudication remains separate; no self-awarded gate/requirement."
+}

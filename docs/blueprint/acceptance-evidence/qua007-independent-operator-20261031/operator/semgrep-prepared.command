@@ -1,0 +1,1 @@
+set -euo pipefail; export SEMGREP_SETTINGS_FILE=/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/semgrep-settings.yml; export SEMGREP_LOG_FILE=/home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/semgrep.log; /home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/semgrep/bin/semgrep --version

@@ -1,0 +1,1 @@
+set -euo pipefail; node docs/site/use/workflows/examples/compiled-project.mjs cleanup /home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey; test ! -e /home/node/.openclaw/workspace/tmp/qua007-fresh/runtime/journey
