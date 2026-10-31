@@ -8,6 +8,8 @@ import YAML from 'yaml';
 const source = 'scripts/versions.mjs';
 const authorityPath = 'scripts/docs-api-versions-map-output-authority.json';
 const authoritySha256 = 'd29fad9dcecad5c4883092514292fd1bbc73860a56d06f09785cde85e65c5769';
+// Current package identity only; the captured producer output stays historical.
+const currentPackageBinding20261031 = Object.freeze({"path":"package.json","sha256":"0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef","bytes":54287,"historicalSha256":"4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3","historicalBytes":53756});
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const receipts = new WeakSet();
 const descriptor = role => Object.fromEntries(['line', 'sink', 'expression', 'sinkContract', 'role'].map(key => [key, role[key] ?? null]));
@@ -31,9 +33,18 @@ export function checkedVersionsMapOutputs(root, graph, classify, sources) {
   if (hash(raw) !== authoritySha256) fail('immutable original observation');
   const authority = JSON.parse(raw), buffers = new Map();
   if (authority.schemaVersion !== 'versions-map-original-output-profile.v1' || authority.source !== source) fail('owner');
+  const binding = currentPackageBinding20261031;
+  const historicalPackage = authority.inputs.filter(input => input.path === 'package.json');
+  if (!binding || binding.path !== 'package.json'
+    || JSON.stringify(Object.keys(binding).sort()) !== JSON.stringify(['bytes','historicalBytes','historicalSha256','path','sha256'])
+    || historicalPackage.length !== 1 || historicalPackage[0].sha256 !== binding.historicalSha256
+    || historicalPackage[0].bytes !== binding.historicalBytes) fail('explicit current package binding');
+  const currentPackageBindingDigest = hash(JSON.stringify(binding));
+  const currentInputDigest = hash(JSON.stringify([authoritySha256, currentPackageBindingDigest]));
   for (const input of authority.inputs) {
     const bytes = read(input.path);
-    if (bytes.length !== input.bytes || hash(bytes) !== input.sha256 || buffers.has(input.path)) fail(`input ${input.path}`);
+    const expected = input.path === 'package.json' ? binding : input;
+    if (bytes.length !== expected.bytes || hash(bytes) !== expected.sha256 || buffers.has(input.path)) fail(`input ${input.path}`);
     buffers.set(input.path, bytes);
   }
   if (hash(buffers.get(source)) !== authority.sourceSha256) fail('original producer');
@@ -104,7 +115,8 @@ export function checkedVersionsMapOutputs(root, graph, classify, sources) {
         outputs.push({value, context: {apiVersion: value.apiVersion, kind: value.kind, path: source, line: 181,
           document: outputs.length, producer: 'node-original-finite-output-profile', profile: 'current-versions-map-member',
           sourceDigest: authority.sourceSha256, publicOutput: member.path, memberOrdinal: index,
-          memberDocument: document, memberPointer: pointer, inputDigest: authoritySha256,
+          memberDocument: document, memberPointer: pointer, inputDigest: currentInputDigest,
+          historicalWitnessDigest: authoritySha256, currentPackageBindingDigest, observationsHistorical: true,
           outputBytesDigest: member.sha256, outputDigest: hash(JSON.stringify(value)),
           runtimeExecutionAuthorized: false, apiApplyAuthorized: false,
           executionLimit: 'Original pure Map observation and exact current member equality only; writer, schema, supported-version, lock, apply and runtime unexecuted.'}});
@@ -117,7 +129,8 @@ export function checkedVersionsMapOutputs(root, graph, classify, sources) {
   if (!equal(apiRoots, authority.apiRoots) || native.terminal.memberCount !== members.length
     || native.terminal.apiRoots !== apiRoots.length) fail('complete ordered member/API vector');
   for (const output of outputs) output.context.inputs = [authorityPath, ...buffers.keys()];
-  const receipt = freeze({witnessDigest: authoritySha256, inputDigest: hash(raw), outputs, members,
+  const receipt = freeze({witnessDigest: authoritySha256, inputDigest: currentInputDigest, outputs, members,
+    currentPackageBinding: binding, currentPackageBindingDigest, observationsHistorical: true,
     dependencies: [authorityPath, ...buffers.keys()], descriptors: authority.descriptors,
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false});
   receipts.add(receipt); return receipt;
@@ -131,5 +144,6 @@ export function selectedVersionsMapOutput(sourcePath, role, receipt) {
   if (role.line !== 181) return null;
   return freeze({purpose: 'Original complete mixed versions Map: actual API streams plus exact typed code/config/requirements members',
     canonicalRawRole: 'unknown', witnessDigest: receipt.witnessDigest, inputDigest: receipt.inputDigest,
+    currentPackageBindingDigest: receipt.currentPackageBindingDigest, observationsHistorical: true,
     members: receipt.members, runtimeExecutionAuthorized: false, apiApplyAuthorized: false});
 }

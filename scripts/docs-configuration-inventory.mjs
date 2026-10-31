@@ -10284,7 +10284,7 @@ export function configurationDiscoveryDeclaration() {
           selection: 'externalProducerContract selects finite scope.assembly paths through reviewedProducerCustody; assertImageAssembly checks reviewedImageAssembly and reviewedImageRecipeBytes before source-shaped instruction parsing.',
           boundary: 'The finite reviewed image-assembly registry includes Dockerfiles outside the primary suffix list. These and configured-resolver schema/manifest authorities are supporting fail-closed validation inputs, not additional primary environment/CLI census or proof of runtime values.',
         },
-        modes: { describeDiscovery: 'Declarations only, no runtime parser execution.', runtimeOnly: 'Empty supplied YAML inventory.', schemasOnly: 'Runtime owner not called.', default: 'buildYamlInventory, buildSchemaInventory and buildRuntimeInputInventory(yaml).' },
+        modes: { describeDiscovery: 'Declarations only, no runtime parser execution.', runtimeOnly: 'Selected YAML authority and receiver inventory supplied to runtime environment/Secret extraction; executable program-output API discovery excluded.', configurationReferenceOnly: 'Selected YAML, schema and runtime inventories plus the exact finite source-family/inverse-consumer map; global default API generation remains unclaimed.', schemasOnly: 'Runtime owner not called.', default: 'buildYamlInventory, buildSchemaInventory and buildRuntimeInputInventory(yaml).' },
         qualification: 'Selection/acquisition composition only. Existing static parser limitations, unqualified receivers, failed generation and runtime/output-role boundaries remain; no emitted-row or general parser-correctness approval.',
       },
     },
@@ -10309,7 +10309,105 @@ if (argv.includes('--describe-discovery')) {
   process.exit(0);
 }
 
+// A configuration-domain composition, not a successful global API inventory.
+// The finite map is a reviewed input, never a generic output-role exemption.
+function buildConfigurationFamilyReference() {
+  assert(!argv.some(value => ['--helm-values-only','--runtime-only','--schemas-only','--allow-semantic-gaps','--allow-local-helm-authority-maintenance'].includes(value)),
+    'CONFIGURATION_REFERENCE_MODE_CONFLICT');
+  const mapPath = 'docs/config/configuration-family-map.json';
+  const mapBytes = fs.readFileSync(path.join(root, mapPath));
+  assert.equal(crypto.createHash('sha256').update(mapBytes).digest('hex'), 'c03d4c3c93cf51c9ccd8c061716c218f64b6757eb6aca84102bc207022d0315e', 'CONFIGURATION_FAMILY_MAP_IDENTITY');
+  const map = JSON.parse(mapBytes);
+  assert.equal(map.schemaVersion, 'kubeclaw.configuration-family-map.v1');
+  const unique = (rows, key) => { const values = rows.map(row => row[key]); assert.equal(new Set(values).size, values.length, 'CONFIGURATION_FAMILY_MAP_DUPLICATE'); return values; };
+  const selected = { yaml: yamlSources(), schemas: schemaSources(), runtime: runtimeTextSources() };
+  assert.deepEqual(map.selectedSources, selected, 'CONFIGURATION_FAMILY_SELECTED_SOURCE_DRIFT');
+  assert.equal(map.sources.length, 47, 'CONFIGURATION_FAMILY_MATERIAL_SOURCE_SET');
+  unique(map.sources, 'source'); unique(map.families, 'id');
+  const unresolved = map.sources.filter(row => row.disposition === 'unresolved');
+  assert.equal(unresolved.length, 0, 'CONFIGURATION_FAMILY_MAP_UNRESOLVED: '+unresolved.map(row=>row.source).join(', '));
+  const familyIds = new Set(map.families.map(row=>row.id));
+  for(const family of map.families)for(const key of ['title','owner','consumer','defaultAndPrecedence','reloadOrRetention','sensitivity','route'])assert(typeof family[key]==='string'&&family[key].trim(),'CONFIGURATION_FAMILY_LOOKUP_MISSING: '+family.id+':'+key);
+  for (const row of [...map.sources, ...map.families.flatMap(family=>family.authorities), ...map.sources.flatMap(source=>source.authorityInputs??[])]) {
+    const file = path.join(root, row.source);
+    assert(fs.lstatSync(file).isFile() && fs.lstatSync(file).nlink === 1 && fs.realpathSync(file) === file,
+      'CONFIGURATION_FAMILY_PHYSICAL_SOURCE: '+row.source);
+    assert.equal(crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'),row.sha256,
+      'CONFIGURATION_FAMILY_SOURCE_IDENTITY: '+row.source);
+  }
+  const required = ['setting','family','owner','consumer','defaultAndPrecedence','reloadOrRetention','sensitivity','source'];
+  for (const row of map.sources) {
+    assert(['configuration-producer','configuration-consumer','validation-output','documentation-output','runtime-state-output'].includes(row.disposition), 'CONFIGURATION_FAMILY_MAP_DISPOSITION');
+    assert(typeof row.boundary==='string'&&row.boundary.length>30,'CONFIGURATION_FAMILY_BOUNDARY_MISSING');
+    for(const fact of row.facts) {
+      for(const key of required)assert(typeof fact[key]==='string'&&fact[key].trim(),'CONFIGURATION_FAMILY_FACT_MISSING: '+row.source+':'+key);
+      assert(familyIds.has(fact.family),'CONFIGURATION_FAMILY_FACT_UNKNOWN_FAMILY');
+      assert.equal(fact.source,row.source,'CONFIGURATION_FAMILY_FACT_SOURCE');
+      assert(fs.lstatSync(path.join(root,fact.consumer)).isFile(),'CONFIGURATION_FAMILY_INVERSE_CONSUMER_MISSING');
+    }
+    if(['configuration-producer','configuration-consumer'].includes(row.disposition))assert(row.facts.length,'CONFIGURATION_FAMILY_FACTS_EMPTY');
+  }
+  // The ordinary YAML, field, schema, receiver, external-input and Secret guards
+  // are unchanged. Only unrelated executable program-output API discovery is absent.
+  assertLocalHelmAuthorityRegistry(root);
+  const yaml = buildYamlInventory({ selectedYamlOnly: true });
+  const schemas = buildSchemaInventory();
+  const runtime = buildRuntimeInputInventory(yaml);
+  for (const [label, inventory, keys] of [
+    ['yaml',yaml,['activeMeaningBlockers','collectionMeaningBlockers','unknownConsumer','unknownRuntimeOwner']],
+    ['schemas',schemas,['schemaMeaningBlockers','unknownConsumer','unknownRuntimeOwner']],
+    ['runtime',runtime,['environmentMeaningBlockers','secretAuthorityBlockers','unqualifiedEnvironmentProducerPairs','unqualifiedEnvironmentReaderPairs','unknownConsumer','unknownRuntimeOwner']],
+  ]) for(const key of keys)assert.equal(inventory.totals[key],0,'CONFIGURATION_REFERENCE_BLOCKER: '+label+':'+key);
+  runtime.discovery.composition = {scope:'configuration-reference selected-YAML environment/Secret composition',yamlSourceMode:'buildYamlInventory({ selectedYamlOnly: true })',yamlSources:yaml.files.map(file=>file.path),exclusion:'executable program-output API discovery; the default global API/configuration path is not certified'};
+  const facts = map.families.map(family=>({kind:'family-boundary',setting:family.title,family:family.id,source:family.authorities[0].source,sourceSha256:family.authorities[0].sha256,owner:family.owner,consumer:family.consumer,defaultAndPrecedence:family.defaultAndPrecedence,reloadOrRetention:family.reloadOrRetention,sensitivity:family.sensitivity,reference:family.route}));
+  facts.push(...map.sources.flatMap(row=>row.facts.map(fact=>({kind:'direct-source-boundary',...fact,sourceSha256:row.sha256}))));
+  // Invert actual existing field/receiver contracts, not the list of candidate
+  // consumer files. Registration, transport and runtime evidence retain their roles.
+  const fieldSourceDigests=new Map();
+  const append = (kind,family,source,setting,owner,consumers,defaultRule,effect,sensitivity) => {
+    assert(typeof owner==='string'&&owner.trim(),'CONFIGURATION_FIELD_OWNER_MISSING: '+source+':'+setting);
+    if(!consumers.length) {
+      assert(setting==='$'&&kind==='yaml-field','CONFIGURATION_FIELD_INVERSE_CONSUMER_MISSING: '+source+':'+setting);
+      return; // A document envelope is not an independent configurable field.
+    }
+    if(!fieldSourceDigests.has(source)) {
+      const file=path.join(root,source.split('#')[0]);
+      assert(fs.realpathSync(file)===file&&fs.lstatSync(file).isFile(),'CONFIGURATION_FIELD_SOURCE_INVALID: '+source);
+      fieldSourceDigests.set(source,crypto.createHash('sha256').update(fs.readFileSync(file)).digest('hex'));
+    }
+    for(const consumer of consumers) {
+      const identity=typeof consumer==='string'?consumer:consumer?.path;
+      assert(typeof identity==='string'&&identity,'CONFIGURATION_FIELD_INVERSE_CONSUMER_MISSING: '+source+':'+setting);
+      facts.push({kind,family,source,sourceSha256:fieldSourceDigests.get(source),setting,owner,consumer:identity,consumerRole:typeof consumer==='object'?consumer.access??consumer.kind??'declared-consumer':'declared-authority',defaultAndPrecedence:String(defaultRule),reloadOrRetention:String(effect),sensitivity,reference:map.families.find(row=>row.id===family).route});
+    }
+  };
+  for(const file of schemas.files)for(const field of file.fields) {
+    const family=file.sourceClass==='pipeline-platform-schema'?'platform':file.registrationEvidence.some(row=>row.pointer?.startsWith('$.testProviders'))?'test-provider':'registered-plugin';
+    const receivers=[...(field.consumers??[]).map(path=>({path,kind:file.sourceClass==='pipeline-platform-schema'?'declared-platform-loader':'registration-declaration'})),...new Set([...(field.meaning.implementationEvidence?[field.meaning.implementationEvidence]:[]),...(field.meaning.additionalImplementationEvidence??[])])].map(value=>typeof value==='string'?{path:value,kind:'implementation-evidence-not-runtime-observation'}:value);
+    append('schema-field',family,file.path,field.path,field.ownerRole,receivers,field.meaning.defaultBehavior??'Schema structure; no runtime default inferred.',field.meaning.changeImpact??'Follow the owning consumer contract.','Schema/source metadata only; no runtime value copied.');
+  }
+  for(const file of yaml.files)for(const document of file.documents)for(const field of document.fields) {
+    append('yaml-field','deployment-values',file.path,field.path,field.runtimeOwner,field.consumers??[],JSON.stringify({defaultKind:field.defaultKind,precedence:field.precedence}),field.changeImpact,'Only qualified source metadata; effective values are not copied into the inverse index.');
+  }
+  for(const entry of runtime.environment)for(const consumer of entry.consumerContracts) {
+    append('environment-field','process-environment',consumer.path,entry.name,consumer.owner,[consumer],consumer.defaultBehavior+' '+consumer.precedence,consumer.impact,entry.sensitivityClass);
+  }
+  for(const flag of runtime.cliFlags)append('cli-field','owned-cli-maintenance',flag.path,flag.name,flag.runtimeOwner,flag.consumers,JSON.stringify({default:flag.default,precedence:flag.precedence,duplicates:flag.duplicateOptionBehavior}),flag.changeImpact,'Argument definition only; no supplied value copied.');
+  if(schemas.swarm)for(const field of schemas.swarm.fields)append('swarm-source-field','compact-profile',schemas.swarm.path,field.path,field.runtimeOwner,field.consumers,JSON.stringify({defaultKind:field.defaultKind,precedence:field.precedence}),field.changeImpact,'Authored source metadata only; image-owned runtime field behavior is not inferred.');
+  for(const payload of schemas.deployedPayloads)append('deployed-payload-delivery','host-routing',payload.path,'whole-file delivery',payload.readerBoundary,payload.consumers,payload.selectionPrecedence,payload.readerBoundary,'No payload contents copied; reader-bound and image/tool-owned boundaries stay distinct.');
+  for(const payload of schemas.undeployedPayloads)append('undeployed-payload-reference','lint-policy',payload.path,'checked-in reference without chart delivery','lint policy / explicit loader refusal',payload.references,'No working deployed default or delivery is inferred.',payload.deliveryGap,'Reference metadata only; this is not a working operator option.');
+  for(const receiver of runtime.configuredEnvironmentReceivers)append('configured-environment-selector','process-environment',receiver.path,receiver.configurationField,receiver.function,[receiver],receiver.defaultBehavior,receiver.impact,'Selected environment variable name, never selected secret contents.');
+  for(const value of runtime.derivedValues)append('derived-shell-input','owned-cli-maintenance',value.path,value.name,value.ownerComponent,value.consumers,JSON.stringify({classification:value.classification,inputs:value.inputs,precedence:value.precedence}),value.changeImpact,'Source dependency metadata only; expression is not evaluated.');
+  for(const secret of runtime.secrets)append('secret-reference','process-environment',secret.path,secret.name,secret.rotationOwner,secret.consumers.length?secret.consumers:[{path:secret.consumerAuthority,kind:'declared-secret-consumer-authority-not-local-reader-proof'}],JSON.stringify({producer:secret.producer,requiredWhen:secret.requiredWhen,optionalState:secret.optionalState}),secret.rotation+' '+secret.failure,'Secret reference and rotation contract only; no credential contents.');
+  for(const family of map.families)assert(facts.some(fact=>fact.family===family.id),'CONFIGURATION_FAMILY_WITHOUT_FACTS: '+family.id);
+
+  const inverseConsumers=[...new Set(facts.map(fact=>fact.consumer))].sort().map(consumer=>({consumer,facts:facts.filter(fact=>fact.consumer===consumer)}));
+  const reference={schemaVersion:'kubeclaw.configuration-family-reference.v1',generatedBy:'scripts/docs-configuration-inventory.mjs --configuration-reference-only',composition:{yaml:'configuration-helm-values.json',schemas:'configuration-schemas.json',runtime:'configuration-runtime-inputs.json',globalApiDiscoveryPassed:false},mapSha256:crypto.createHash('sha256').update(fs.readFileSync(path.join(root,mapPath))).digest('hex'),checkedInDate:map.checkedInDate,families:map.families,sources:map.sources,facts,inverseConsumers,selectedSources:selected,payloadBoundaries:[...schemas.deployedPayloads,...schemas.undeployedPayloads].map(({path,behaviorClassification,readerBoundary,deliveryGap,executableBehaviorProved})=>({path,behaviorClassification,readerBoundary,deliveryGap,executableBehaviorProved})),limits:map.limits};
+  return new Map([['configuration-helm-values.json',yaml],['configuration-schemas.json',schemas],['configuration-runtime-inputs.json',runtime],['configuration-families.json',reference]]);
+}
+
 export function buildConfigurationInventories() {
+  if (argv.includes('--configuration-reference-only')) return buildConfigurationFamilyReference();
   if (argv.includes('--helm-values-only')) return new Map([
     ['configuration-helm-values.json', buildYamlInventory({ selectedYamlOnly: true })],
   ]);

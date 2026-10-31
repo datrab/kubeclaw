@@ -1,0 +1,97 @@
+[
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "--version"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+    "exit": 0,
+    "stdout": "v24.22.1\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "--permission",
+      "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+      "--input-type=commonjs",
+      "-e",
+      "try{require('node:fs').writeFileSync(process.argv[1],'blocked');process.exitCode=9;}catch(error){if(error.code!=='ERR_ACCESS_DENIED')throw error;console.log(error.code);process.exitCode=1;}",
+      "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/unpermitted-write"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+    "exit": 1,
+    "stdout": "ERR_ACCESS_DENIED\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "--permission",
+      "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+      "--input-type=commonjs",
+      "-e",
+      "try{require('node:child_process').execFileSync(process.execPath,['-e','process.exit(0)']);process.exitCode=9;}catch(error){if(error.code!=='ERR_ACCESS_DENIED')throw error;console.log(error.code);process.exitCode=1;}"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+    "exit": 1,
+    "stdout": "ERR_ACCESS_DENIED\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "--permission",
+      "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+      "--input-type=commonjs",
+      "-e",
+      "try{new (require('node:worker_threads').Worker)('0',{eval:true});process.exitCode=9;}catch(error){if(error.code!=='ERR_ACCESS_DENIED')throw error;console.log(error.code);process.exitCode=1;}"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+    "exit": 1,
+    "stdout": "ERR_ACCESS_DENIED\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "--permission",
+      "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+      "--input-type=commonjs",
+      "-e",
+      "try{require('node:fs').readFileSync(process.argv[1],'utf8');process.exitCode=9;}catch(error){if(error.code!=='ERR_ACCESS_DENIED')throw error;console.log(error.code);process.exitCode=1;}",
+      "/home/node/.openclaw/workspace/tmp/argocd-current-outside-9eo100ox/owned-outside-probe.txt"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+    "exit": 1,
+    "stdout": "ERR_ACCESS_DENIED\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "--permission",
+      "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+      "--input-type=module",
+      "-e",
+      "console.log(import.meta.resolve('js-yaml'))"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/scripts",
+    "exit": 0,
+    "stdout": "file:///home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/node_modules/js-yaml/dist/js-yaml.mjs\n",
+    "stderr": ""
+  },
+  {
+    "argv": [
+      "/usr/local/bin/node",
+      "--permission",
+      "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+      "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/scripts/argocd-self-management.mjs",
+      "--check"
+    ],
+    "cwd": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+    "exit": 0,
+    "stdout": "",
+    "stderr": ""
+  }
+]

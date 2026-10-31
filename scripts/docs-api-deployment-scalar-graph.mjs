@@ -11,7 +11,7 @@ const reviewedGraph = {
   "scripts/bundle-override-values.mjs": "81fcc460046007538475e5ac02048f9855674d1dc70556fba2ddf4ac5587d51a",
   "node_modules/js-yaml/package.json": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847",
   "node_modules/js-yaml/dist/js-yaml.mjs": "33e98d04719e7a7fc8e0433803ad4b26a6f72d4545d279a5b053d45bd7871c7a",
-  "package.json": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+  "package.json": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
 };
 const reviewedSinks = [
   {

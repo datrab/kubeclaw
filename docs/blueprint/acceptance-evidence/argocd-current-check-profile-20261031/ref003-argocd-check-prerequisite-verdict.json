@@ -1,0 +1,81 @@
+{
+  "report": "ref003-argocd-check-prerequisite-verdict.json",
+  "candidateRevision": "63c787e7e8dc1b85461300f28e8ee63cf3441faf",
+  "verdict": "PASS_SOURCE_PREREQUISITE__CURRENT_WITNESS_REQUIRED",
+  "observedStop": {
+    "status": "PRESERVED",
+    "location": "scripts/argocd-self-management.mjs",
+    "reason": "API_PRODUCT_CHECKED_ARTIFACT_UNQUALIFIED because the checked-artifact authority still pins the older package.json identity.",
+    "scope": "This is one immutable original read-only checked-artifact profile, not a new producer or output family."
+  },
+  "actualSourceAndEffects": {
+    "verdict": "PASS_FOR_FINITE_REOBSERVATION",
+    "sourceClosure": [
+      "scripts/argocd-self-management.mjs",
+      "scripts/platform-services.mjs",
+      "scripts/updates/deployment-release.mjs",
+      "scripts/updates/code-release.mjs",
+      "scripts/updates/runtime-inputs.mjs"
+    ],
+    "currentIdentityComparison": "All declared source, data, loader, and checked-artifact bytes remain exact except package.json. The 21 checked artifact bytes and parsed API identities remain exact.",
+    "packageDelta": {
+      "meaning": "The current package.json delta changes only documentation script commands, including event/error documentation commands and expanded documentation test/check composition.",
+      "notChanged": [
+        "package type/module boundary",
+        "main or exports",
+        "dependencies and devDependencies",
+        "package manager and engines",
+        "package-lock and installed js-yaml resolution inputs"
+      ],
+      "effectOnProfile": "The fixed direct Node entry imports local .mjs modules and js-yaml; these script-command additions are not reached by the exact --check argv and do not alter its ESM or js-yaml resolution."
+    },
+    "checkBehavior": "The selected --check branch compares every one of the 21 generated artifact contents and does not take the mkdir/write branch. Its imported helper CLI modes remain false under the fixed entry argv."
+  },
+  "historicalObservationDisposition": {
+    "verdict": "PRESERVE_AS_HISTORICAL_ONLY",
+    "oldObservation": "The original witness, including its Node 24.21.0 identity and exit-0 result, remains a historical observation and must not be rewritten or represented as current.",
+    "currentNode": "The current Node 24.22.1 identity is unqualified for this profile until a new bounded observer records it.",
+    "networkLimit": "The Source review identifies no reached network operation in the fixed closure. This is a closure finding, not a claim that filesystem permission mode provides a network sandbox."
+  },
+  "finiteExistingProfileSuccessor": {
+    "verdict": "SUPPORTED_AFTER_INDEPENDENT_WITNESS_REVIEW",
+    "design": [
+      "Keep the original immutable observation and all prior negative/history records unchanged.",
+      "Add a separately named current re-observation to the same checked-artifact authority, rather than replacing the old observation.",
+      "Bind the current exact package.json identity together with the unchanged 35-file closure, 21 checked outputs, parsed API values, private checkout layout, js-yaml 4.3.1 resolution, fixed direct argv, and current absolute Node identity.",
+      "Update the checked-artifact authority digest and only downstream documentation-role facts that the maintained derivation proves depend on that authority, after independent review of the completed witness."
+    ],
+    "notAuthorized": [
+      "No blind package or global dependency repin.",
+      "No new producer, entry point, output, caller, loader, or API role.",
+      "No normal generator mode, helper CLI mode, API apply, cluster operation, or deployment claim."
+    ]
+  },
+  "requiredBoundedObserver": {
+    "inputConstruction": "Use a private canonical regular-file checkout containing exactly the 35 declared closure/input/output bytes, with no symlink/root escape and with the original absent package boundaries still absent.",
+    "command": "Invoke the absolute current Node binary directly with only the existing original entry and --check mode under Node permission mode.",
+    "environment": "Use the scrubbed exact PATH, LANG, and TZ values; remove ambient NODE_OPTIONS, NODE_PATH, preload/import/loader injection, and other inherited runtime options.",
+    "requiredObservation": [
+      "Record the current Node path, version, and executable identity.",
+      "Record argv, environment, selected js-yaml package/export/bundle resolution, and the complete copied input/output identities.",
+      "Observe exit 0 with captured stdout/stderr, then prove all 21 artifacts remain byte-identical and retain the same parsed API identities.",
+      "Retain the source/effects review and runtime witness as durable, separately named current evidence."
+    ],
+    "requiredPermissionControls": [
+      "Write denial",
+      "Child-process denial",
+      "Worker denial",
+      "Outside-private-root read denial",
+      "Changed selected source/module/data/output/package byte refusal",
+      "Changed js-yaml resolution or loader metadata refusal",
+      "Ambient loader/preload option refusal"
+    ]
+  },
+  "materialFindings": [],
+  "limits": [
+    "No current --check was executed or claimed by this review.",
+    "The historical Node 24.21.0 result is not promoted to Node 24.22.1.",
+    "This does not approve the default full configuration path, API discovery generally, current generated output, or original REF003 complete-family/inverse-consumer documentation."
+  ],
+  "finiteNextAction": "Root may perform the one authorized private read-only current observer described above, obtain independent witness review, then derive the narrowly necessary immutable-authority and dependent documentation-role metadata successor through maintained mechanisms before retrying the unchanged full configuration path."
+}

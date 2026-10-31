@@ -1,0 +1,17 @@
+{
+  "status": "PASS_CURRENT_BOUNDED_ORIGINAL_CHECK",
+  "pid": 515808,
+  "startedAt": "2026-10-31T03:11:05.741754+00:00",
+  "privateRoot": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+  "outsideProbeRoot": "/home/node/.openclaw/workspace/tmp/argocd-current-outside-9eo100ox",
+  "nativeNode": {
+    "path": "/usr/local/bin/node",
+    "version": "v24.22.1",
+    "sha256": "e32e2d16081cf644f88392934288086e7662529d0d43277c34f7aad2207cfafb"
+  },
+  "declaredFiles": 35,
+  "checkedOutputs": 21,
+  "privateTreesActiveUsers": [],
+  "privateTreesRemoved": true,
+  "finishedAt": "2026-10-31T03:11:06.166555+00:00"
+}

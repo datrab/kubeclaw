@@ -7,6 +7,7 @@ import {
   generatedEnd,
   generatedNotice,
   renderCli,
+  renderConfigurationFamilyHub,
   renderSecrets,
   renderWorkflowTable,
   table,
@@ -35,8 +36,8 @@ const invocationRoot = process.cwd();
 const root = path.resolve(option('--root', invocationRoot));
 const checkOnly = argv.includes('--check');
 const only = option('--only', null);
-if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'environment', 'secrets', 'native-supervisor-environment', 'cli', 'helm-values'].includes(only)) {
-  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification, configuration, environment, secrets, native-supervisor-environment, cli or helm-values');
+if (argv.includes('--only') && !['workflows', 'plugin-configuration', 'retained-configuration-language', 'endpoints', 'verification', 'configuration', 'configuration-hub', 'environment', 'secrets', 'native-supervisor-environment', 'cli', 'helm-values'].includes(only)) {
+  throw new Error('--only supports workflows, plugin-configuration, retained-configuration-language, endpoints, verification, configuration, configuration-hub, environment, secrets, native-supervisor-environment, cli or helm-values');
 }
 if (only && argv.includes('--update-source-revision')) {
   throw new Error('bounded generation must not update the shared source revision lock');
@@ -201,6 +202,16 @@ function stableWriteMap() {
             + retainedSemanticNotice(semanticContext), meaningEvidence }));
     }
     return outputs;
+  }
+
+  if (only === 'configuration-hub') {
+    if (!argv.includes('--revision')) throw new Error('configuration-hub requires --revision naming the reviewed source and inventory commit');
+    for (const source of ['scripts/docs-configuration-inventory.mjs','scripts/docs-generate.mjs','scripts/docs-generate-core.mjs','docs/config/configuration-family-map.json','docs/generated/inventory/configuration-families.json']) {
+      const committed = execFileSync('git', ['show', `${sourceRevision}:${source}`], { cwd: invocationRoot, maxBuffer: 64 * 1024 * 1024 });
+      if (!committed.equals(fs.readFileSync(path.join(root, source)))) throw new Error(`CONFIGURATION_HUB_SOURCE_SNAPSHOT_DRIFT:${source}`);
+    }
+    return new Map([['docs/site/reference/configuration.md', renderConfigurationFamilyHub(
+      readJson('docs/generated/inventory/configuration-families.json'), pinnedSourceUrl, {sourceRevision})]]);
   }
 
   // A schema-only correction has its own complete publication boundary. Keep

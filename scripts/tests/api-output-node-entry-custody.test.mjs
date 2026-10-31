@@ -81,10 +81,10 @@ test('reviewed refs fixture and copied CLI still reject changed authority with w
 
 function globFixture(run){fixture(context=>{context.write('package.json',JSON.stringify({scripts:Object.fromEntries(reviewedRootNodeEntryRecipes.wildcards.map(recipe=>[recipe.script,recipe.command]))}));for(const recipe of reviewedRootNodeEntryRecipes.wildcards)for(const item of recipe.selectedSources)context.write(item.source,'export {};\n');run(context);});}
 function globArgs(recipe){return {name:recipe.script,command:recipe.command,word:{value:recipe.pattern,raw:recipe.pattern},nativeTest:true};}
-test('bounded4 native POSIX package globs acquire every142 source and no harness roles',()=>globFixture(({root})=>{
+test('bounded native POSIX globs retain142 product sources and exactly5 documentation harnesses',()=>globFixture(({root})=>{
  const admitted=[];
  for(const recipe of reviewedRootNodeEntryRecipes.wildcards){const actual=expandReviewedNodePackageGlob(root,globArgs(recipe));assert.deepEqual(actual,[...recipe.selectedSources.map(x=>x.source)].sort());admitted.push(...actual);}
- assert.equal(admitted.length,142);assert.equal(new Set(admitted).size,142);assert(admitted.every(source=>!reviewedRootNodeEntryRecipes.entries[source]));
+ assert.equal(admitted.length,147);assert.equal(new Set(admitted).size,147);const harnesses=admitted.filter(source=>reviewedRootNodeEntryRecipes.entries[source]);assert.equal(harnesses.length,5);assert(harnesses.every(source=>source.startsWith('scripts/tests/docs-event-')));
 }));
 
 test('glob quoted/custom/dynamic callers and added/renamed/removed/aliased sources fail before acceptance',()=>{
@@ -115,4 +115,31 @@ test('a known wildcard-selected test is an ordinary native API producer, not a f
  const nativeTest=spawnSync(process.execPath,['--test',path.join(root,source)],{encoding:'utf8',env:childEnvironment});assert.equal(nativeTest.status,0,nativeTest.stderr);assert.match(nativeTest.stdout,/\"kind\":\"Secret\"/);
  assert(discoverScriptApiOutputs(root).some(output=>output.context.path===source&&output.value.kind==='Secret'));
  write(source,'process.stdout.write(process.argv[2]);');assert.throws(()=>discoverScriptApiOutputs(root),new RegExp('OUTPUT_ROLE_UNQUALIFIED.*'+source.replaceAll('.','\\.')));
+}));
+
+// The prefix glob is a finite documentation-harness admission, not a general glob rule.
+test('docs-event prefix selection rejects changed set, caller, quoting, shell and canonical cwd',()=>{
+ const recipe=reviewedRootNodeEntryRecipes.wildcards.find(x=>x.script==='docs:events:test');
+ globFixture(({root,write})=>{
+  const args=globArgs(recipe);assert.equal(expandReviewedNodePackageGlob(root,args).length,5);
+  for(const changed of [{name:'docs:other:test'},{command:'cd elsewhere && '+recipe.command},{word:{value:recipe.pattern,raw:"'"+recipe.pattern+"'"}},{word:{value:recipe.pattern,raw:'$EVENT_TESTS'}},{nativeTest:false}])assert.throws(()=>expandReviewedNodePackageGlob(root,{...args,...changed}),/unknown\/quoted\/dynamic/);
+  write('.npmrc','script-shell=/bin/bash\n');assert.throws(()=>expandReviewedNodePackageGlob(root,args),/script-shell authority/);fs.rmSync(path.join(root,'.npmrc'));
+  const alias=root+'-alias';try{fs.symlinkSync(root,alias);assert.throws(()=>expandReviewedNodePackageGlob(alias,args),/cwd must be canonical/);}finally{fs.rmSync(alias,{force:true});}
+  const first=path.join(root,recipe.selectedSources[0].source),old=fs.readFileSync(first);
+  fs.rmSync(first);assert.throws(()=>expandReviewedNodePackageGlob(root,args),/source-set changed/);fs.writeFileSync(first,old);
+  const renamed=first.replace('.test.mjs','-renamed.test.mjs');fs.renameSync(first,renamed);assert.throws(()=>expandReviewedNodePackageGlob(root,args),/source-set changed/);fs.renameSync(renamed,first);
+  write('scripts/tests/docs-event-unqualified.test.mjs',emit);assert.throws(()=>expandReviewedNodePackageGlob(root,args),/source-set changed/);
+ });
+});
+test('docs-event harness exports and product package callers revoke the finite fixture purpose',()=>harnessFixture(({root,write})=>{
+ const source='scripts/tests/docs-event-reference.test.mjs',entries=allHarnessEntries.filter(x=>x.name==='docs:events:test'),definition={scripts:{'docs:events:test':'node --test scripts/tests/docs-event-*.test.mjs'}};write('package.json',JSON.stringify(definition));assert.equal(qualifiedRootNodeHarnessSources(root,definition,entries).size,5);
+ const changed={scripts:{...definition.scripts,'run:product':'node '+source}};write('package.json',JSON.stringify(changed));assert.throws(()=>qualifiedRootNodeHarnessSources(root,changed,[...entries,{name:'run:product',command:'node '+source,source}]),/unreviewed direct\/package harness caller/);write('package.json',JSON.stringify(definition));
+ write(source,fs.readFileSync(path.join(root,source),'utf8')+'\nexport const productEntry=true;\n');assert.throws(()=>qualifiedRootNodeHarnessSources(root,definition,entries),/product-facing exports/);
+}));
+
+test('a product import cannot acquire a docs-event fixture harness',()=>harnessFixture(({root,write})=>{
+ const source='scripts/tests/docs-event-reference.test.mjs',definition={scripts:{'docs:events:test':'node --test scripts/tests/docs-event-*.test.mjs'}};
+ write('package.json',JSON.stringify(definition));
+ write('scripts/000-public.mjs',"import './tests/docs-event-reference.test.mjs';\n");
+ assert.throws(()=>discoverScriptApiOutputs(root),error=>error.message.includes(source)&&/synthetic native test acquired by/u.test(error.message));
 }));

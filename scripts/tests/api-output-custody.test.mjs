@@ -273,7 +273,12 @@ test('two source-bound resolver terminals classify only source-location metadata
   ['const core = await import','const extra = createRequire(import.meta.url);\nconst core = await import'],
  ]){assert(bytes.includes(before),before);assert.throws(()=>qualify(bytes.replace(before,after)),/RESOLUTION_METADATA_UNQUALIFIED|DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED/);}
  const helper='tests/verification/lib/module-graph.mjs',original=fs.readFileSync(path.join(root,helper),'utf8');write(helper,original+'\nexport const addedLoader = true;\n');assert.throws(()=>qualify(),/bound bytes/);write(helper,original);
- const manifest=JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8'));manifest.scripts['verify:migration:package-boundaries']+=' --import ./foreign-loader.mjs';write('package.json',JSON.stringify(manifest));assert.throws(()=>qualify(),/bound bytes/);
+ const packageBytes=fs.readFileSync(path.join(root,'package.json'),'utf8');
+ for(const name of ['docs:check','docs:publish-check','verify:contracts','verify:migration:package-boundaries','verify:migration:workflow','verify:pipeline','verify:plugin-system-v2','verify:product'])for(const mode of ['change','remove']){
+  const manifest=JSON.parse(packageBytes);assert.equal(typeof manifest.scripts[name],'string');if(mode==='change')manifest.scripts[name]+=' --import ./foreign-loader.mjs';else delete manifest.scripts[name];write('package.json',JSON.stringify(manifest));assert.throws(()=>qualify(),/bound bytes/);write('package.json',packageBytes);
+ }
+ const manifest=JSON.parse(packageBytes);manifest.scripts['new:unreviewed']='node other.mjs';write('package.json',JSON.stringify(manifest));assert.throws(()=>qualify(),/bound bytes/);
+
 }));
 
 test('source/archive compiler metadata binds both callers, extraction branch, package mapping and helper transfer',()=>fixture(({root,write})=>{

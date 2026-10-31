@@ -16,12 +16,12 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "docs/site/reference/capabilities.md",
         "canonical": "docs/site/reference/capabilities.md",
-        "sha256": "1785cb37214915c9a52658cb68426fcb7d4ae1acd576052b5b7a398f50a9dfd4"
+        "sha256": "bda8980cbbd060a24f1b0e7c26cd5a5ff7aee5683c9c81dbdced48a849ba7d3d"
       },
       {
         "path": "package.json",
         "canonical": "package.json",
-        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
       },
       {
         "path": "scripts/check-capability-registrations-drift.mjs",
@@ -92,7 +92,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "package.json",
         "canonical": "package.json",
-        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
       },
       {
         "path": "scripts/check-capability-drift-mutations.mjs",
@@ -282,12 +282,12 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": ".github/workflows/docs-checks.yaml",
         "canonical": ".github/workflows/docs-checks.yaml",
-        "sha256": "464f8b4ce8aacba8d175307e03b959dc2763f1d3b80c31079c24c085076860c5"
+        "sha256": "7c8470352aec69b2f26bf8c60b1a5fb93be0c8f1cc8ece2b432cbf88f4c665a8"
       },
       {
         "path": "package.json",
         "canonical": "package.json",
-        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
       }
     ],
     "allowedSelectedAncestors": [
@@ -319,12 +319,12 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "docs/site/extend/documentation-maintenance.md",
         "canonical": "docs/site/extend/documentation-maintenance.md",
-        "sha256": "d9f11973f90ee2996a7777bb1b6a6e40067dbf970320c9aeb33b2da43177ac42"
+        "sha256": "b69b82c5e9dcd20a1c14c76639a109d959fe6b394525d13a9b6166627bfddfab"
       },
       {
         "path": "package.json",
         "canonical": "package.json",
-        "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
       },
       {
         "path": "scripts/docs-external-helm-authority-lock.json",
@@ -411,7 +411,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "scripts/docs-publication.mjs",
       "canonical": "scripts/docs-publication.mjs",
-      "sha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
+      "sha256": "c96741df38af067044811d38e0c0513dd9512e383493d08e984cf62e538b1bd5"
     },
     {
       "path": "scripts/docs-reader/renderer.mjs",
@@ -426,7 +426,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": ".github/workflows/docs-checks.yaml",
       "canonical": ".github/workflows/docs-checks.yaml",
-      "sha256": "464f8b4ce8aacba8d175307e03b959dc2763f1d3b80c31079c24c085076860c5"
+      "sha256": "7c8470352aec69b2f26bf8c60b1a5fb93be0c8f1cc8ece2b432cbf88f4c665a8"
     },
     {
       "path": "scripts/tests/docs-reader-page-records.test.mjs",
@@ -436,7 +436,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "scripts/tests/docs-reader.test.mjs",
       "canonical": "scripts/tests/docs-reader.test.mjs",
-      "sha256": "abd6a6431110a7b8a1486bbbce4648a118d31fe6f517813c4d9d6ed2e6177e28"
+      "sha256": "80c9811c0e1805412c0fdd70840a036f5a891a907983214a46725638b6c04120"
     },
     {
       "path": "scripts/tests/docs-reader-redirects.test.mjs",
@@ -446,17 +446,17 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "docs/site/reference/documentation-site.md",
       "canonical": "docs/site/reference/documentation-site.md",
-      "sha256": "c0c4b55949be05d571aa4ea5b353c5ab479caeafd3ebbcdeb70ebec0ca10a1e0"
+      "sha256": "a1851910ffb2832775a4a4888ee0f3d9e474d5940dcdbbfb46c6d20a861e29cb"
     },
     {
       "path": "package.json",
       "canonical": "package.json",
-      "sha256": "4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
     },
     {
       "path": "scripts/lib/docs-publication-assets.mjs",
       "canonical": "scripts/lib/docs-publication-assets.mjs",
-      "sha256": "71764219d05fd7f4ea0c715d2414315eb5869834f4ebe9eb5d9ce2d22153c295"
+      "sha256": "c0d58d0680bb42186370cb13a346e72e739e3ff64e146541c9f36c5dfd2ab294"
     },
     {
       "path": "scripts/lib/docs-route-continuity.mjs",
@@ -466,12 +466,12 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "scripts/docs-reader/metadata.mjs",
       "canonical": "scripts/docs-reader/metadata.mjs",
-      "sha256": "51e0b027356401a68c52a3b8b1fe4d6c6ed35070dfcb300067dd1b9af8da0abc"
+      "sha256": "30807bc74e508e1310d35322add932ae5119df375794ec577763412e241dd100"
     },
     {
       "path": "scripts/plugin-registration-dependencies.mjs",
       "canonical": "scripts/plugin-registration-dependencies.mjs",
-      "sha256": "0e5cc4599edcd642b3c7c6190be62b869d8f57aa5fc45d0acd9bd5a78e7e28b2"
+      "sha256": "7f473538623aedb9f0c49477c72c54b5eda5a3e20456074becfd7ef73cd5ccca"
     }
   ],
   "ciRunLine": "run: npm run docs:publication:check && node --test scripts/tests/docs-reader.test.mjs scripts/tests/docs-reader-page-records.test.mjs scripts/tests/docs-reader-redirects.test.mjs scripts/tests/docs-reader-source-links.test.mjs scripts/tests/docs-reader-source-previews.test.mjs scripts/tests/docs-reader-diagrams.test.mjs && node scripts/tests/docs-reader-redirects.browser.mjs && npm run docs:publication:build && node --max-old-space-size=4096 scripts/docs-reader/check-artifact.mjs && node scripts/docs-reader/check-search.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-links.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-source-previews.mjs && node --max-old-space-size=4096 scripts/docs-reader/check-diagrams.mjs",
@@ -523,4 +523,78 @@ export function addReaderArtifactExternalCiSeed(proof,graph,docsReachable){
   'DOCUMENTATION_READER_CI_PURPOSE_UNQUALIFIED: new selected verifier importer');
  for(const source of selected)docsReachable.add(source);
  return selected.length>0;
+}
+
+// One actual publication child route, not an output exemption or child collector.
+const publicationExampleChildPurpose=freeze({
+  "kind": "exact-publication-example-child-analysis-purpose/v1",
+  "parent": "scripts/docs-publication.mjs",
+  "source": "scripts/docs-publication-examples.mjs",
+  "inputs": [
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "c96741df38af067044811d38e0c0513dd9512e383493d08e984cf62e538b1bd5"
+    },
+    {
+      "path": "scripts/docs-publication-examples.mjs",
+      "sha256": "b55c0e9addce76c121f4f5aedd5863493d581dca0a0d90be69a420b7b942c262"
+    },
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "sha256": "8f83c70619ea13af7423175f8ecd6cd5e8cac7d672ba8a4774d23e813d87139f"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    }
+  ],
+  "callSyntax": "execFileSync(process.execPath,\n        [path.join(root, 'scripts/docs-publication-examples.mjs')], {\n          cwd: root, encoding: 'utf8', timeout: 300000, maxBuffer: 16 * 1024 * 1024,\n        })",
+  "resultGateSyntax": "if (errors.length === 0) {\n    try {\n      const result = JSON.parse(execFileSync(process.execPath,\n        [path.join(root, 'scripts/docs-publication-examples.mjs')], {\n          cwd: root, encoding: 'utf8', timeout: 300000, maxBuffer: 16 * 1024 * 1024,\n        }));\n      const claims = JSON.parse(fs.readFileSync(path.join(root, 'docs/config/publication-example-claims.json'), 'utf8'));\n      const expected = claims.checks.map(check => check.id).sort();\n      const actual = result.results?.map(item => item.id).sort();\n      if (result.schemaVersion !== 'kubeclaw-publication-example-results.v1' || result.ok !== true\n        || result.pages !== pages.length || result.assets !== publicationAssets(siteRoot).length\n        || result.blocks !== claims.pages.reduce((count, page) => count + page.blocks.length, 0)\n        || expected.length === 0 || JSON.stringify(actual) !== JSON.stringify(expected)) {\n        throw new Error('native publication examples returned missing or partial results');\n      }\n    } catch (error) { errors.push(`Publication example validation failed: ${error.message}`); }\n  }",
+  "parentRootSyntax": "const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');",
+  "childRootSyntax": "validatePublicationExamples(path.resolve(import.meta.dirname, '..'))",
+  "mainGuardSyntax": "if (process.argv[1] && path.resolve(process.argv[1]) === fileURLToPath(import.meta.url))",
+  "modeSyntax": [
+    "const command = process.argv[2] ?? 'check';",
+    "else if (command === 'generate') generate();",
+    "else if (command === 'check') checkSite();",
+    "else if (command === 'build') await build();",
+    "async function build() {\n  const pages = checkSite();\n  if (errors.length) return;"
+  ],
+  "commands": {
+    "docs:publication:check": "npm run docs:publication:test && node scripts/docs-publication.mjs check",
+    "docs:publication:build": "node scripts/docs-publication.mjs build"
+  },
+  "scope": "Normal check/default/build child analysis provenance only. Owned native fixture validation is not live deployment, API output, module initialization, publishing or whole-documentation acceptance. Generate does not invoke this child."
+});
+const publicationExampleChildProofs=new WeakMap();
+export function qualifyPublicationExampleChildInputs(inputs) {
+ const profile=publicationExampleChildPurpose,fail=detail=>assert.fail('DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: '+detail);
+ for(const pin of profile.inputs)if(typeof inputs[pin.path]!=='string'||sha(inputs[pin.path])!==pin.sha256)fail('bound input '+pin.path);
+ const parent=inputs[profile.parent],child=inputs[profile.source],definition=JSON.parse(inputs['package.json']),claims=JSON.parse(inputs['docs/config/publication-example-claims.json']);
+ if(!parent.includes(profile.callSyntax)||!parent.includes(profile.resultGateSyntax)||parent.split("path.join(root, 'scripts/docs-publication-examples.mjs')").length!==2||!parent.includes(profile.parentRootSyntax)||!parent.includes(profile.mainGuardSyntax))fail('exact parent invocation/result gate/root/main');
+ if(!profile.modeSyntax.every(s=>parent.includes(s))||!child.includes(profile.mainGuardSyntax)||!child.includes(profile.childRootSyntax))fail('check/build/default versus generate and child main/root');
+ for(const [name,command]of Object.entries(profile.commands))if(definition.scripts?.[name]!==command)fail('normal package route '+name);
+ if(Object.values(definition.scripts??{}).some(c=>typeof c==='string'&&c.includes(profile.source)))fail('child is not a direct package script');
+ const targets=value=>typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(targets):[];
+ if([definition.bin,definition.exports,definition.main].flatMap(targets).some(p=>path.posix.normalize(p.startsWith('./')?p.slice(2):p)===profile.source))fail('child package public target');
+ if(!Array.isArray(claims.checks)||!claims.checks.length||new Set(claims.checks.map(c=>c.id)).size!==claims.checks.length)fail('exact nonempty claim ID set');
+ return Object.freeze({kind:profile.kind,parent:profile.parent,source:profile.source,authority:'normal-publication-child-analysis-only'});
+}
+export function assertPublicationExampleChildPurpose(root) {
+ root=path.resolve(root);const profile=publicationExampleChildPurpose,present=p=>{try{fs.lstatSync(path.join(root,p));return true;}catch(error){if(error.code==='ENOENT'||error.code==='ENOTDIR')return false;throw error;}};
+ if(!present(profile.parent)&&!present(profile.source))return null;
+ assert.equal(fs.realpathSync(root),root,'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: canonical root');
+ const inputs={};for(const pin of profile.inputs){const file=path.join(root,pin.path);assert(fs.existsSync(file)&&fs.lstatSync(file).isFile()&&fs.realpathSync(file)===file,'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: physical input '+pin.path);inputs[pin.path]=fs.readFileSync(file,'utf8');}
+ for(const source of [profile.parent,profile.source])assert.equal(path.resolve(path.dirname(path.join(root,source)),'..'),root,'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: module root relationship');
+ const proof=qualifyPublicationExampleChildInputs(inputs);publicationExampleChildProofs.set(proof,root);return proof;
+}
+export function addPublicationExampleChildSeed(proof,graph,docsReachable) {
+ if(proof===null)return false;
+ assert(publicationExampleChildProofs.has(proof),'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_UNQUALIFIED: unacquired proof');
+ const root=publicationExampleChildProofs.get(proof),profile=publicationExampleChildPurpose;assert(assertPublicationExampleChildPurpose(root)!==null,'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: removed acquired context');
+ assert(Array.isArray(graph?.executableSources)&&Array.isArray(graph.edges)&&Array.isArray(graph.publicEntries)&&docsReachable instanceof Set,'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_UNQUALIFIED: selected graph context');
+ assert(graph.executableSources.includes(profile.parent)&&graph.executableSources.includes(profile.source)&&docsReachable.has(profile.parent),'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_UNQUALIFIED: exact selected reachable parent and child');
+ assert(!graph.edges.some(e=>e.target===profile.source),'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_UNQUALIFIED: new child module importer');
+ assert(!graph.publicEntries.some(e=>([profile.parent,profile.source].includes(e.path)||[profile.parent,profile.source].includes(e.canonicalSource))&&e.path!==e.canonicalSource),'DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_UNQUALIFIED: aliased child/parent entry');
+ docsReachable.add(profile.source);return true; // only this child; ordinary closure/guards follow
 }

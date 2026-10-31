@@ -1,3 +1,6 @@
+import './configuration-family-reference.test.mjs';
+import './api-output-publication-native-custody.test.mjs';
+import './api-output-publication-child-custody.test.mjs';
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';

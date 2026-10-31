@@ -456,5 +456,507 @@
       "No automatic role/API adapter admission or global acceptance from this observation."
     ],
     "verificationScriptSha256": "b88e82b70c752b0f5d14d5bb8f5bd3b8fab7653cd047f6a7e9a1aa4b5399c7e4"
-  }
+  },
+  "currentReadOnlyObservation20261031": {
+    "sourceRevision": "63c787e7e8dc1b85461300f28e8ee63cf3441faf",
+    "sourceEffectReview": "docs/blueprint/acceptance-evidence/argocd-current-check-profile-20261031/ref003-argocd-check-prerequisite-verdict.json",
+    "node": {
+      "path": "/usr/local/bin/node",
+      "version": "v24.22.1",
+      "sha256": "e32e2d16081cf644f88392934288086e7662529d0d43277c34f7aad2207cfafb"
+    },
+    "argv": [
+      "--permission",
+      "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+      "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/scripts/argocd-self-management.mjs",
+      "--check"
+    ],
+    "environment": {
+      "PATH": "/usr/local/bin:/usr/bin:/bin",
+      "LANG": "C.UTF-8",
+      "TZ": "UTC"
+    },
+    "loaderResolution": "file:///home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/node_modules/js-yaml/dist/js-yaml.mjs",
+    "loaderResolutionProbe": {
+      "argv": [
+        "/usr/local/bin/node",
+        "--permission",
+        "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+        "--input-type=module",
+        "-e",
+        "console.log(import.meta.resolve('js-yaml'))"
+      ],
+      "cwd": "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/scripts",
+      "exit": 0,
+      "stdout": "file:///home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/node_modules/js-yaml/dist/js-yaml.mjs\n",
+      "stderr": ""
+    },
+    "jsYamlVersion": "4.3.1",
+    "originalCheck": {
+      "exit": 0,
+      "stdout": "",
+      "stderr": ""
+    },
+    "inputsAndCheckedOutputs": [
+      {
+        "path": "scripts/argocd-self-management.mjs",
+        "sha256": "79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26"
+      },
+      {
+        "path": "scripts/platform-services.mjs",
+        "sha256": "8318de0a9d541e7729ea7851989dc804455fddef32ec4f3a47fd18bdcc326ead"
+      },
+      {
+        "path": "scripts/updates/deployment-release.mjs",
+        "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3"
+      },
+      {
+        "path": "scripts/updates/code-release.mjs",
+        "sha256": "bedd4f2a8668a27b675e53aa415451a4b428543e6fc6a99bc88988355bff3259"
+      },
+      {
+        "path": "scripts/updates/runtime-inputs.mjs",
+        "sha256": "2381e5d7398f48fa8e15d3d582c8db6e6bc37de2bfb690f8aebeccc437f791f7"
+      },
+      {
+        "path": "versions.json",
+        "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1"
+      },
+      {
+        "path": "charts/gitops/files/application-health.lua",
+        "sha256": "51b93a1c1c7a46ff5d5b25977194b9c946d59f5c9e0a24c287f992d7de51d9e5"
+      },
+      {
+        "path": "releases/ops-images.json",
+        "sha256": "abf971a716595c8ce93f6d689be8b517717c08a7f97205856c5e2fa6bfa1c435"
+      },
+      {
+        "path": "gitops/platform/values/codex-ops.yaml",
+        "sha256": "3a3fe462c285c48c6bc54e6fffc9ff6640daec3507e5dfdb5a382e16605c8e02"
+      },
+      {
+        "path": "gitops/platform/bootstrap/infra-project.yaml",
+        "sha256": "af21e05ff744cf9db78d2801827b0250af4bd3ce36c3e23062c43be234a58097"
+      },
+      {
+        "path": "gitops/platform/bootstrap/data-project.yaml",
+        "sha256": "a64e95139407ba0008268b6ad6640d78a005b18680a3c79e3c7ffd3bb4a4f534"
+      },
+      {
+        "path": "gitops/platform/bootstrap/argocd.yaml",
+        "sha256": "9e1413fbdc243cfbb0a4ac5d31ec806f3a4f2f28c2ec8d996629aa83fa8cd4f2"
+      },
+      {
+        "path": "gitops/platform/bootstrap/tailscale-operator.yaml",
+        "sha256": "9e3ffe47b3650d62633debc56b5dcf71b2f4d123b1e4c733e51ee3d7333dfb11"
+      },
+      {
+        "path": "gitops/platform/bootstrap/codex-ops.yaml",
+        "sha256": "7b5f813ecf6e5c6e5a99b0ce7e1545abd30c7a283b3a06b63d78f701703d9bac"
+      },
+      {
+        "path": "gitops/platform/bootstrap/redis.yaml",
+        "sha256": "79b2c61df2d6feee7a3946da486ebaefc64af6365c5655600c514971bc4dc47d"
+      },
+      {
+        "path": "gitops/platform/bootstrap/postgresql.yaml",
+        "sha256": "97755ce4b6dfe852cf5492d27c8ab7e33a7dd3d9278cb755d184b72239ea0256"
+      },
+      {
+        "path": "gitops/platform/bootstrap/registry-mirror.yaml",
+        "sha256": "8e8122ad4994b2dbd4690303caf7e2d0cb0f02c92cae7d35dff39c3e101c7f3e"
+      },
+      {
+        "path": "gitops/platform/bootstrap/registry-local.yaml",
+        "sha256": "8218528022125386b1c9c86f0bf07c2e2f8856d9689d47ad8eca3d252e766e7b"
+      },
+      {
+        "path": "gitops/platform/bootstrap/monitoring-project.yaml",
+        "sha256": "80c720536148b9d3be29f334611bb7dc07c272651e8284a8b013011c3c23cc11"
+      },
+      {
+        "path": "gitops/platform/bootstrap/prometheus.yaml",
+        "sha256": "d9c81c5644d744237997d336031cce970159da626024f3573cd7b4d0b55a7d44"
+      },
+      {
+        "path": "gitops/platform/bootstrap/loki.yaml",
+        "sha256": "2b3721a57154eb14e92ebccd1e9cabf82499cddf9c98369b88b195e042958c6e"
+      },
+      {
+        "path": "gitops/platform/bootstrap/alloy.yaml",
+        "sha256": "b2c06f6acba94c24edd5b30980376675ba920a9ea6f92c403577d2a236073434"
+      },
+      {
+        "path": "gitops/platform/bootstrap/promtail.yaml",
+        "sha256": "f6d4fe2568c154f4db415d404cb9c4087d05ea373492eb7fa7160830de169855"
+      },
+      {
+        "path": "gitops/platform/bootstrap/identity-project.yaml",
+        "sha256": "c602ae37208eed48b471e01f1e0bf6393fb243ef8f21f2ca947d450172e6a3b3"
+      },
+      {
+        "path": "gitops/platform/bootstrap/storage-drivers-project.yaml",
+        "sha256": "9e8f462b13b16a35a76e6c31d68941cf9d87f23d6d71751871bf2bd38e919d50"
+      },
+      {
+        "path": "gitops/platform/bootstrap/spire-crds.yaml",
+        "sha256": "0e4d2e2b54c905eaa372749b99a8a2a65585a238875e5fa7c5ea880869276278"
+      },
+      {
+        "path": "gitops/platform/bootstrap/spire.yaml",
+        "sha256": "b6bb6863509706131898ce576c14249e1d483209ce99f201142dc758ba3521dd"
+      },
+      {
+        "path": "gitops/platform/bootstrap/csi-driver-smb.yaml",
+        "sha256": "ce561dc5a9a2b5f8b06fbb80c59f5590fcab9b43906a6acc5df12ca62122c99e"
+      },
+      {
+        "path": "gitops/platform/bootstrap/litellm.yaml",
+        "sha256": "f2fef2026978872c4b27bcef37722e981c3498e816514feff66bf989acb858f6"
+      },
+      {
+        "path": "gitops/platform/platform.yaml",
+        "sha256": "8b7cc6f48adfa4a2fab21b93fefb54136fccecfb66a9aea005e4fe873b4ba65d"
+      },
+      {
+        "path": "package.json",
+        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+      },
+      {
+        "path": "package-lock.json",
+        "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe"
+      },
+      {
+        "path": "node_modules/.package-lock.json",
+        "sha256": "5de787895573574c33b442fa83a469c616269de39ed7941662031b5b6d638474"
+      },
+      {
+        "path": "node_modules/js-yaml/package.json",
+        "sha256": "82b932c87c5da7901c6a8f984698c57912570146fffd3156dcdc96a6c210d847"
+      },
+      {
+        "path": "node_modules/js-yaml/dist/js-yaml.mjs",
+        "sha256": "33e98d04719e7a7fc8e0433803ad4b26a6f72d4545d279a5b053d45bd7871c7a"
+      }
+    ],
+    "outputs": [
+      {
+        "path": "gitops/platform/bootstrap/infra-project.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "AppProject",
+        "name": "infra",
+        "outputSha256": "af21e05ff744cf9db78d2801827b0250af4bd3ce36c3e23062c43be234a58097",
+        "valueSha256": "8f0c69a379da8c6697cd119d3156fa51bcdf30666abb0b7648564ddd7ada739d"
+      },
+      {
+        "path": "gitops/platform/bootstrap/data-project.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "AppProject",
+        "name": "data-services",
+        "outputSha256": "a64e95139407ba0008268b6ad6640d78a005b18680a3c79e3c7ffd3bb4a4f534",
+        "valueSha256": "e4e13a2603ebf6b5667a3651bde86784eed178b54ac040882ace10f3a78602d9"
+      },
+      {
+        "path": "gitops/platform/bootstrap/argocd.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "argocd",
+        "outputSha256": "9e1413fbdc243cfbb0a4ac5d31ec806f3a4f2f28c2ec8d996629aa83fa8cd4f2",
+        "valueSha256": "61b074659f67387533e7343a2bb363b7cee8603589981ff67a2ebdb012b35831"
+      },
+      {
+        "path": "gitops/platform/bootstrap/tailscale-operator.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "tailscale-operator",
+        "outputSha256": "9e3ffe47b3650d62633debc56b5dcf71b2f4d123b1e4c733e51ee3d7333dfb11",
+        "valueSha256": "484c810eff590b0f37b24df40f64702538bf9d7f55474cf9459c238a24349a44"
+      },
+      {
+        "path": "gitops/platform/bootstrap/codex-ops.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "codex-ops",
+        "outputSha256": "7b5f813ecf6e5c6e5a99b0ce7e1545abd30c7a283b3a06b63d78f701703d9bac",
+        "valueSha256": "1effcfa77bc07a21866336ae03a3ed2cfb9d31a71012ac369f328b648255ab9c"
+      },
+      {
+        "path": "gitops/platform/bootstrap/redis.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "redis",
+        "outputSha256": "79b2c61df2d6feee7a3946da486ebaefc64af6365c5655600c514971bc4dc47d",
+        "valueSha256": "aa416a4f3059bef7a04c926eb6ddb7ce33ea19ebcc3bb557b8d7447c8bc55e50"
+      },
+      {
+        "path": "gitops/platform/bootstrap/postgresql.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "postgresql",
+        "outputSha256": "97755ce4b6dfe852cf5492d27c8ab7e33a7dd3d9278cb755d184b72239ea0256",
+        "valueSha256": "f94bc32bfada0bbdada294357643851140c57d24a62d9c45bc6bca546c583df8"
+      },
+      {
+        "path": "gitops/platform/bootstrap/registry-mirror.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "registry-mirror",
+        "outputSha256": "8e8122ad4994b2dbd4690303caf7e2d0cb0f02c92cae7d35dff39c3e101c7f3e",
+        "valueSha256": "31a5566610e5fd1264c161cb05e9896312d350fe4375eeeee84d41a6d6532bc4"
+      },
+      {
+        "path": "gitops/platform/bootstrap/registry-local.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "registry-local",
+        "outputSha256": "8218528022125386b1c9c86f0bf07c2e2f8856d9689d47ad8eca3d252e766e7b",
+        "valueSha256": "8c2b3257c7796770e97be83056571c575ab5a87c07628806dac0d34eea3e6fb6"
+      },
+      {
+        "path": "gitops/platform/bootstrap/monitoring-project.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "AppProject",
+        "name": "monitoring",
+        "outputSha256": "80c720536148b9d3be29f334611bb7dc07c272651e8284a8b013011c3c23cc11",
+        "valueSha256": "944fabad8d8995d323cbf02f41cb188fad0195ddf11c6bd2809261a78e43cf1f"
+      },
+      {
+        "path": "gitops/platform/bootstrap/prometheus.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "prometheus",
+        "outputSha256": "d9c81c5644d744237997d336031cce970159da626024f3573cd7b4d0b55a7d44",
+        "valueSha256": "4d722a284c91505047a1e008a497a84aa5a99a1cb3afa23e1cf4cfc30b5a81f1"
+      },
+      {
+        "path": "gitops/platform/bootstrap/loki.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "loki",
+        "outputSha256": "2b3721a57154eb14e92ebccd1e9cabf82499cddf9c98369b88b195e042958c6e",
+        "valueSha256": "9ece2eaabffe9e7f11a6fe2e55ca890ba3e8f1f3bc05d1bd1ccc5e0788b5c328"
+      },
+      {
+        "path": "gitops/platform/bootstrap/alloy.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "alloy",
+        "outputSha256": "b2c06f6acba94c24edd5b30980376675ba920a9ea6f92c403577d2a236073434",
+        "valueSha256": "d15a57f82bca392a3ed38c1ae1ccf4a51143d9f039b6dc6cbbc96d71d66f7b26"
+      },
+      {
+        "path": "gitops/platform/bootstrap/promtail.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "promtail",
+        "outputSha256": "f6d4fe2568c154f4db415d404cb9c4087d05ea373492eb7fa7160830de169855",
+        "valueSha256": "0217b56ac5b8529705941fe4baec1b8adf0156c3d053f839fef1a8612169809a"
+      },
+      {
+        "path": "gitops/platform/bootstrap/identity-project.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "AppProject",
+        "name": "identity",
+        "outputSha256": "c602ae37208eed48b471e01f1e0bf6393fb243ef8f21f2ca947d450172e6a3b3",
+        "valueSha256": "cfe24fa5cc46acf3bc22b1a8415fc800391e64fd03e4eb0d098e9baf35f2ef27"
+      },
+      {
+        "path": "gitops/platform/bootstrap/storage-drivers-project.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "AppProject",
+        "name": "storage-drivers",
+        "outputSha256": "9e8f462b13b16a35a76e6c31d68941cf9d87f23d6d71751871bf2bd38e919d50",
+        "valueSha256": "5bf0215b77e0dfc05584caec775b473367f82e32182b07ea2072fa366ea9b892"
+      },
+      {
+        "path": "gitops/platform/bootstrap/spire-crds.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "spire-crds",
+        "outputSha256": "0e4d2e2b54c905eaa372749b99a8a2a65585a238875e5fa7c5ea880869276278",
+        "valueSha256": "4f046f144fd4c3408b87c88e11ca8f448b177c2d553872c157c940c3af115586"
+      },
+      {
+        "path": "gitops/platform/bootstrap/spire.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "spire",
+        "outputSha256": "b6bb6863509706131898ce576c14249e1d483209ce99f201142dc758ba3521dd",
+        "valueSha256": "d6eb2f396c410050efc7ae93a5a95c1e741184c925c17dc4c67fa67028da1847"
+      },
+      {
+        "path": "gitops/platform/bootstrap/csi-driver-smb.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "csi-driver-smb",
+        "outputSha256": "ce561dc5a9a2b5f8b06fbb80c59f5590fcab9b43906a6acc5df12ca62122c99e",
+        "valueSha256": "773fbd4896b5e581cc8c515112456abf3416a7de1d2be75a489ad8853cc31e39"
+      },
+      {
+        "path": "gitops/platform/bootstrap/litellm.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "litellm",
+        "outputSha256": "f2fef2026978872c4b27bcef37722e981c3498e816514feff66bf989acb858f6",
+        "valueSha256": "7a59d3ce424294cdf254f515db0dc10a0b81e3f9258de4c6706ad3f67e7b8592"
+      },
+      {
+        "path": "gitops/platform/platform.yaml",
+        "apiVersion": "argoproj.io/v1alpha1",
+        "kind": "Application",
+        "name": "platform",
+        "outputSha256": "8b7cc6f48adfa4a2fab21b93fefb54136fccecfb66a9aea005e4fe873b4ba65d",
+        "valueSha256": "6c959a277d5d9b2d40615c8ba75214ece2950700200844d0dff77d78aeb78962"
+      }
+    ],
+    "controls": [
+      {
+        "name": "changed-byte-refused",
+        "path": "scripts/argocd-self-management.mjs",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "changed-byte-refused",
+        "path": "scripts/platform-services.mjs",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "changed-byte-refused",
+        "path": "versions.json",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "changed-byte-refused",
+        "path": "gitops/platform/bootstrap/argocd.yaml",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "changed-byte-refused",
+        "path": "package.json",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "changed-byte-refused",
+        "path": "node_modules/js-yaml/dist/js-yaml.mjs",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "changed-byte-refused",
+        "path": "node_modules/js-yaml/package.json",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "changed-loader-package-boundary-refused",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "ambient-loader-environment-refused",
+        "key": "NODE_OPTIONS",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "ambient-loader-environment-refused",
+        "key": "NODE_PATH",
+        "pass": true,
+        "producerExecuted": false
+      },
+      {
+        "name": "write-denied",
+        "exit": 1,
+        "errorCode": "ERR_ACCESS_DENIED",
+        "pass": true,
+        "argv": [
+          "/usr/local/bin/node",
+          "--permission",
+          "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+          "--input-type=commonjs",
+          "-e",
+          "try{require('node:fs').writeFileSync(process.argv[1],'blocked');process.exitCode=9;}catch(error){if(error.code!=='ERR_ACCESS_DENIED')throw error;console.log(error.code);process.exitCode=1;}",
+          "/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn/unpermitted-write"
+        ],
+        "stdout": "ERR_ACCESS_DENIED\n",
+        "stderr": ""
+      },
+      {
+        "name": "child-denied",
+        "exit": 1,
+        "errorCode": "ERR_ACCESS_DENIED",
+        "pass": true,
+        "argv": [
+          "/usr/local/bin/node",
+          "--permission",
+          "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+          "--input-type=commonjs",
+          "-e",
+          "try{require('node:child_process').execFileSync(process.execPath,['-e','process.exit(0)']);process.exitCode=9;}catch(error){if(error.code!=='ERR_ACCESS_DENIED')throw error;console.log(error.code);process.exitCode=1;}"
+        ],
+        "stdout": "ERR_ACCESS_DENIED\n",
+        "stderr": ""
+      },
+      {
+        "name": "worker-denied",
+        "exit": 1,
+        "errorCode": "ERR_ACCESS_DENIED",
+        "pass": true,
+        "argv": [
+          "/usr/local/bin/node",
+          "--permission",
+          "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+          "--input-type=commonjs",
+          "-e",
+          "try{new (require('node:worker_threads').Worker)('0',{eval:true});process.exitCode=9;}catch(error){if(error.code!=='ERR_ACCESS_DENIED')throw error;console.log(error.code);process.exitCode=1;}"
+        ],
+        "stdout": "ERR_ACCESS_DENIED\n",
+        "stderr": ""
+      },
+      {
+        "name": "outside-read-denied",
+        "exit": 1,
+        "errorCode": "ERR_ACCESS_DENIED",
+        "pass": true,
+        "argv": [
+          "/usr/local/bin/node",
+          "--permission",
+          "--allow-fs-read=/home/node/.openclaw/workspace/tmp/argocd-current-readonly-d5k12hvn",
+          "--input-type=commonjs",
+          "-e",
+          "try{require('node:fs').readFileSync(process.argv[1],'utf8');process.exitCode=9;}catch(error){if(error.code!=='ERR_ACCESS_DENIED')throw error;console.log(error.code);process.exitCode=1;}",
+          "/home/node/.openclaw/workspace/tmp/argocd-current-outside-9eo100ox/owned-outside-probe.txt"
+        ],
+        "stdout": "ERR_ACCESS_DENIED\n",
+        "stderr": ""
+      }
+    ],
+    "allCopiesByteIdentical": true,
+    "allFilesUnchangedAfterCheck": true,
+    "startedAt": "2026-10-31T03:11:05.741754+00:00",
+    "finishedAt": "2026-10-31T03:11:06.157410+00:00",
+    "limits": [
+      "Fresh isolated unchanged --check only, no generation/helper CLI/API apply/cluster/deployment.",
+      "Node permission mode denies writes/children/workers/outside reads; network absence is separately Source-reviewed closure property, not a claimed generic network sandbox.",
+      "Historical Node24.21 observation remains unchanged; this is separately named current Node24.22.1 evidence.",
+      "Output bytes/declared parsed API identities remain exact; maintained receiver reparsing is still required after actual witness qualification."
+    ],
+    "verificationScriptSha256": "f67f30b2c679222243765afcc485661c0a500bb1b53dadf51f6ee05769ce7488",
+    "privateTreesRemoved": true,
+    "freshMaintainedOutputParse": {
+      "report": "docs/blueprint/acceptance-evidence/argocd-current-check-profile-20261031/ref003-argocd-current-output-parse.json",
+      "reportSha256": "35aa0b7fe2915774b3418ea347b04ee2ddb64302ded6e5459edb5fe90e38895e",
+      "executionReport": "docs/blueprint/acceptance-evidence/argocd-current-check-profile-20261031/ref003-argocd-current-output-parse-execution.json",
+      "outputs": 21,
+      "allCurrentParsedApiIdentitiesExact": true,
+      "parserVersion": "2.9.0"
+    }
+  },
+  "historicalObservationDisposition": "observation is unchanged historical Node24.21 evidence; currentReadOnlyObservation20261031 is the separately named fresh bounded check and requires independent qualification.",
+  "currentWitnessReview20261031": "docs/blueprint/acceptance-evidence/argocd-current-check-profile-20261031/ref003-argocd-current-witness-verdict.json"
 }

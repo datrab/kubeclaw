@@ -1,7 +1,7 @@
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
 import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose} from './docs-api-top-level-script-purpose.mjs';
-import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed} from './docs-documentation-owner-purpose-custody.mjs';
+import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed} from './docs-documentation-owner-purpose-custody.mjs';
 import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
 import {deploymentScalarOccurrenceCustody, selectedDeploymentScalarOccurrences} from './docs-deployment-scalar-occurrence-custody.mjs';
 import {deploymentConfigOutputCustody, deploymentConfigOutputRole} from './docs-deployment-config-output-custody.mjs';
@@ -18,10 +18,12 @@ import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
 import ts from 'typescript';
 import { shellHeredocCustody, shellCommandAcquisitions, shellNativeNodeEntries } from './docs-shell-source-custody.mjs';
-import { documentationExecutableRoleRecipes, assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget, reviewedImporterResolutionOperation } from './docs-api-documentation-role-custody.mjs';
-import { createSerializedOutputRoleClassifier } from './docs-api-output-role-classification.mjs';
+import { documentationExecutableRoleRecipes, assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget, reviewedCliNativeCompilerCapability, cliNativeCompilerTarget, assertCliNativeCompilerGraphPurpose, reviewedCliTypedFixtureCapability, cliTypedFixtureCompilerTarget, assertCliTypedFixtureGraphPurpose, cliTypedFixtureAnalysisSeed, reviewedPublicationParserCapability, verifyPublicationParserProvenance, assertPublicationParserGraphPurpose, reviewedImporterResolutionOperation } from './docs-api-documentation-role-custody.mjs';
+import { createSerializedOutputRoleClassifier, deriveNativeOperationFacts, nativeOperationFactDigest } from './docs-api-output-role-classification.mjs';
+import { checkCatalogueInputSurface } from './lib/docs-catalogue-input-surface.mjs';
 
-const isRootSelectedCompilerCapability=value=>value?.kind==='root-selected-compiler-require';
+const isSelectedCompilerCapability=value=>['root-selected-compiler-require','cli-native-static-compiler-require','cli-typed-fixture-compiler-require'].includes(value?.kind);
+const installedCompilerTarget=(root,capability,recordDependency)=>capability.kind==='cli-typed-fixture-compiler-require'?cliTypedFixtureCompilerTarget(root,capability,recordDependency):capability.kind==='cli-native-static-compiler-require'?cliNativeCompilerTarget(root,capability,recordDependency):rootSelectedCompilerTarget(root,capability,recordDependency);
 const isImporterResolutionMetadata=value=>value?.kind==='importer-relative-resolution-only-metadata';
 const hash = bytes => createHash('sha256').update(bytes).digest('hex');
 const syntheticDigest = 'a'.repeat(64);
@@ -43,87 +45,135 @@ const reviewedNodeModuleNamedImports=new Set(['createRequire','Module','default'
 // authority requires a Source-reviewed recipe change here, not a JSON digest
 // refresh. These recipes never permit unsupported capability custody.
 const reviewedDocumentationModuleInputRecipes = [
-  {"source":"tests/verification/reliability/observability-replay.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"8d9f863836f788f635bf723e924e5d948b0444884281fb9b16b0ebde214636c0"},
-  {"source":"tests/verification/reliability/review-cache-legacy-prefix.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"6f413bf1ad81995e4e20a560d9b4ef1f6d91fae4be1a8a393f13f64b6f2ac459"},
-  {"source":"tests/verification/reliability/review-evidence-compiler-recovery.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"544a1caf48d4998475035c62113ba70ecc962cdd5edcdc9c87c48096ba4d3219"},
-  {"source":"tests/verification/reliability/review-report-compiler-recovery.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"f35b84c7ecf59fa24c96205036f9338343f3df38315fff7ca1d81d76fcc624be"},
-  {"source":"tests/verification/reliability/review-report-locale-child.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"2a6bea6008709eec7c819d830305a529b229080de18320c039e9d412866edce6"},
-  {"source":"tests/verification/reliability/runtime-dispatch-native-profile.test.mjs","semanticClass":"native-reliability-replay-selected-module-metadata","recipeSha256":"b973349c3579793c20fb2e2cf1f25f5b6e0aa7e40b7677908ff5287b49a6a0ae"},
-  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"ebea539060c95d3a3063954832a7e5b471d0b95b57b44c54e2dfc1ebf979088c"},
-  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"d9462d1b9d03294905247d000641821df2da02e21ebdb00eb5667484beae19ce"},
-  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"023b1562b0e551d475a2c7297f5be712897c09f6fdb5b8e5536639f200c26184"},
-  {"source":"tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs","semanticClass":"historical-environment-root-module-input-metadata","recipeSha256":"5c2172b21621127ca4f7cb4b3b6da70a32802f9b113cd1ba084db8b11ed9b00f"},
-  {"source":"tests/verification/contracts/check-project-compiler.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"3fa355ffbf821a33853363fe08130ed0abab5105b7bcc42fe6c1095b8b50954d"},
-  {"source":"tests/verification/contracts/project-legacy-import-cases.mts","semanticClass":"caller-bound-project-compiler-source-or-archive-metadata","recipeSha256":"b406032ae4d8d0fbd57baa826adf0be60a49a247b962d223af54760c9a706a78"},
+  {
+    "source": "tests/verification/reliability/observability-replay.test.mjs",
+    "semanticClass": "native-reliability-replay-selected-module-metadata",
+    "recipeSha256": "7550b30dcf5b366526f48c9c535aaab2ef8a7bc43911b3c20e10bd2489c9125f"
+  },
+  {
+    "source": "tests/verification/reliability/review-cache-legacy-prefix.test.mjs",
+    "semanticClass": "native-reliability-replay-selected-module-metadata",
+    "recipeSha256": "d30745ddc5c514ecef234839d2e5e06ca98a9c0d9228c479003ef9983bc78a5b"
+  },
+  {
+    "source": "tests/verification/reliability/review-evidence-compiler-recovery.test.mjs",
+    "semanticClass": "native-reliability-replay-selected-module-metadata",
+    "recipeSha256": "ad5f1a28d10e57b1fa3338642da5ccedce5f6d969fe7b7620a17de46b7bbcbb0"
+  },
+  {
+    "source": "tests/verification/reliability/review-report-compiler-recovery.test.mjs",
+    "semanticClass": "native-reliability-replay-selected-module-metadata",
+    "recipeSha256": "f4ba4fc8cff5e9ab365709d875220a89901dbe564418b97aada9e22f1ebdccdf"
+  },
+  {
+    "source": "tests/verification/reliability/review-report-locale-child.mjs",
+    "semanticClass": "native-reliability-replay-selected-module-metadata",
+    "recipeSha256": "2a6bea6008709eec7c819d830305a529b229080de18320c039e9d412866edce6"
+  },
+  {
+    "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
+    "semanticClass": "native-reliability-replay-selected-module-metadata",
+    "recipeSha256": "78a2e75044fd184db259118cbe65c2c0ece53c291b8ab75b94295bb6d296f80e"
+  },
+  {
+    "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-compiler-recovery-independent.test.mjs",
+    "semanticClass": "historical-environment-root-module-input-metadata",
+    "recipeSha256": "f36cb14611f10a3fdb585d0f1548f67e96b149ebd2cc9d3845b08a499eb59350"
+  },
+  {
+    "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-contract-independent.test.mjs",
+    "semanticClass": "historical-environment-root-module-input-metadata",
+    "recipeSha256": "28685a3ed378201c6b13ff7fdbaefd2e9954299ce257a025727536f432ad9c4c"
+  },
+  {
+    "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v3-summary-mode-independent.test.mjs",
+    "semanticClass": "historical-environment-root-module-input-metadata",
+    "recipeSha256": "69a681df3a09160adef746cebdf98ce8230b0090af7fb451ecec3bcbe06fc48b"
+  },
+  {
+    "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs",
+    "semanticClass": "historical-environment-root-module-input-metadata",
+    "recipeSha256": "5c2172b21621127ca4f7cb4b3b6da70a32802f9b113cd1ba084db8b11ed9b00f"
+  },
+  {
+    "source": "tests/verification/contracts/check-project-compiler.mts",
+    "semanticClass": "caller-bound-project-compiler-source-or-archive-metadata",
+    "recipeSha256": "783d11a71f120fc26318970da81628cba0d6534fb948860465cc18bce3607415"
+  },
+  {
+    "source": "tests/verification/contracts/project-legacy-import-cases.mts",
+    "semanticClass": "caller-bound-project-compiler-source-or-archive-metadata",
+    "recipeSha256": "bd80e9afb37760069808f05c75099d1d424d43678867c1b1138b2df2a2e33521"
+  },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-phase11.mts",
     "semanticClass": "fixed-repository-root-module-contract-check",
-    "recipeSha256": "a58ab41552271a655e1dddd2c1ded8c251464074281866bb4f85d4c68071efe9"
+    "recipeSha256": "e577e854c0f05209b09ce954771885c16ca8f2e803fc111afaa6a1682178eb63"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-external-engine.mjs",
     "semanticClass": "fixed-repository-module-contract-check",
-    "recipeSha256": "1f6adaedfae5fbe6c392b426c04219c2d5e70a66b2e761154e46414bc8611f22"
+    "recipeSha256": "6448560d82d0706e3c21b1074c3d7180970908530530990bea31ea1adc7cf358"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-isolation.mjs",
     "semanticClass": "fixed-repository-module-contract-check",
-    "recipeSha256": "dea2d41fc21cf1602acf8a884c5b07eb3086b05d8a8948987864b9b11ec96e93"
+    "recipeSha256": "a4026b94971cd17e756da03b8deb7cc55b03dd1619a531bea1d2a1065e92a9a4"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-capability-security.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "f5f87b689af79ed00e5afba7b8ffde66811d038532dc15ccea11cd547104a00c"
+    "recipeSha256": "cd897b3ba6dc72cbedecf0097ed458cfffe86608e8c82843df05252e279c46c9"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-phase6.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "50a330ffcf89823cfe4073edc70dc769f5cd73f1b2a5a4e9bbef73b1828f9b29"
+    "recipeSha256": "a4205e27aa41143e969bc3d92e5bfb1a3a4fab57489f12c0dc92475ad79455f3"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-phase7.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "0197bfab3de682becd99840673bd2e271b25b83031d6acd9b89e009803d29220"
+    "recipeSha256": "d41ea2b34010e82fd77703e776bc1fe658a7c1f60913051007d1ef2583980067"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-capability-runtime.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "a838751fac47f3d710901b8c5c57f30dc271c628fa7dfdc9181e04f61f93c147"
+    "recipeSha256": "a5461ce4ebc1732191f50bf7331de78d2b9363664985d19c2e10d1d93d0a86b3"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-e2e.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "29989142d2f407428fc85ea920a8d8f459f8c83e91e8f436230f8bf450b4c653"
+    "recipeSha256": "dbd2b70a4d52ce295d2dc38f8b47b6888badd08f6beb2561e0558a50a0dc27b8"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-import-safety.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "fde9b0d36e787b7234b4b1b94f7b0b3dff3bf608a6f89735138d47f5f7d1fa8f"
+    "recipeSha256": "967c52601d6c0277b07022f9dc35fd2e8e13a8cbb834fc9aac9ab299677ff3af"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-installation.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "093c25ea32613a16df2f92f493576eb4e84691fa79da1d6f33a5f7a050c7b6f1"
+    "recipeSha256": "de136fa3410ec2cb6d8564f6c02219371675e2dbbf94e80e52aaac2a419c8a11"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-lifecycle.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "6b0c13bed5e3b4da54f4fabefa642f9ed7a0a13b9d06a6884104911c707672bf"
+    "recipeSha256": "29b781463c51dda61f480458dd68d1073fcfb58f1c40fe92e806cfd99508be87"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-platform-config.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "6104a9831dabb65aaec6ed5064bfffe077819304b0633028a01943da8defbd52"
+    "recipeSha256": "3093980dc7a3fdc0651dc3620230680ff4f1ce482410ea69bfc73c281c9adcc7"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-registry.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "6c834fe123c032a9d848c23174d62b9f4d025b8d2f7335f14a416fa8cab2bc79"
+    "recipeSha256": "eae7faab4a6cb316e53cdd9a8f1691d249d418a6ae550bcf70da78315523f845"
   },
   {
     "source": "tests/verification/contracts/check-plugin-system-v2-boundaries.mjs",
     "semanticClass": "fixed-repository-core-contract-check",
-    "recipeSha256": "a5d333ab32d8b8ded2a9ac5071d54d4a79cfea7a78e9acecb78f34bbdd623613"
+    "recipeSha256": "c491f407e5f39b2c94d579d04376ec30dee58c17341b06fbff2920128a0a8688"
   },
   {
     "source": "tests/verification/contracts/check-pipeline-visual-legacy-comparison.mts",
@@ -163,17 +213,17 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/check-platform-specialist-guides.mjs",
     "semanticClass": "finite-repository-modules",
-    "recipeSha256": "fa9ddf7f7a774deadf78a0c1ad77a88136e8259a5f6e8b13aeed23345c32d2d0"
+    "recipeSha256": "d8abe8d8898172b7d78374c3cdbb3dbee99821aeb203a2eb68d88b69e6567672"
   },
   {
     "source": "scripts/docs-configuration-inventory.mjs",
     "semanticClass": "finite-documentation-runtime-semantics",
-    "recipeSha256": "d1f132c3954645292abf00192ffd38702639689a40421293cc0e9e383494e440"
+    "recipeSha256": "9e3563efd98bf3a3d5a37fb96547602355297a67d16e53b27542f4d9215b4226"
   },
   {
     "source": "scripts/docs-lint-policy-reference.mjs",
     "semanticClass": "finite-repository-modules",
-    "recipeSha256": "6b2621b4148a1f076fc31de00dcfd861aca37de1b4653bdf4b1661a0994a2a39"
+    "recipeSha256": "ed02610b1b3c53927e50345b82e9e9bf082a3eca1894dda973b9bce3431c4fdf"
   },
   {
     "source": "scripts/updates/check-renovate.mjs",
@@ -240,11 +290,13 @@ export function documentationModuleInputAuthority(root,boundary,graph) {
     facts.push({source:operation.source,sourceSha256:metadata.sourceSha256,
       owner:metadata.owner,terminalSha256:metadata.terminalSha256,qualification});
   }
+  for(const record of graph.parserProvenance??[])facts.push(verifyPublicationParserProvenance(root,record));
+  assertPublicationParserGraphPurpose(root,graph);
   for(const dependency of graph.installedFoundationDependencies??[]) {
-    assert(dependency.capabilityKind==='root-selected-compiler-require'&&dependency.runtimeAcquisitionAuthorized===false,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: installed foundation boundary`);
+    assert(['root-selected-compiler-require','cli-native-static-compiler-require','cli-typed-fixture-compiler-require'].includes(dependency.capabilityKind)&&dependency.runtimeAcquisitionAuthorized===false,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: installed foundation boundary`);
     const {operation,...recorded}=dependency;
     const capability={...recorded,kind:dependency.capabilityKind};
-    const actual=rootSelectedCompilerTarget(root,capability,()=>{});
+    const actual=installedCompilerTarget(root,capability,()=>{});
     assert.deepEqual(actual,recorded,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: installed foundation evidence changed`);
     facts.push(dependency);
   }
@@ -285,7 +337,7 @@ function nodeModuleInputClass(source,kind) {
 const reviewedSyntheticNodeTests=[{
   source:'skills/prism/integration/corpus-pool.mts',sha256:'993e49c853527500253108753d94178855a6ef019203ac8dd1b012e50de6d8c7',
   package:'skills/prism/package.json',script:'test:corpus-pool',command:'node integration/corpus-pool.mts',
-  authorityInputs:[{path:'skills/prism/package.json',sha256:'19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c'},{path:'scripts/docs-runtime-consumer-contracts.mjs',sha256:'61e79704a061ac9e752b6c72e5f5332692062a16874be532f32cd2a962f6aba8'}]
+  authorityInputs:[{path:'skills/prism/package.json',sha256:'19457da92aed9c48e1bc81e082463bba0e406c662adeaff7699e0c674b45709c'},{path:'scripts/docs-runtime-consumer-contracts.mjs',sha256:'ede974a5e5ed1d6b0d2ec859501df18263f5f9576fcc4c6e0d2f17740558e94d'}]
 },{
   source:'skills/prism/integration/engine-capture-retention.mts',sha256:'83e1cbdd48b997c5fd0d59f183bd6057d82e10df9ba25e2e7e7f4162a0eac74a',
   package:'skills/prism/package.json',script:'test:engine:native-retention',command:'node --expose-gc integration/engine-capture-retention.mts',
@@ -350,6 +402,8 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
   // These are actual finite loader inputs from reviewed recipes. Include their
   // module bytes and imports even when they live outside the execution roots.
   const finiteClosure=new Set(),seedAliases=[],seedPaths=new Set();
+  const typedFixtureSeed=cliTypedFixtureAnalysisSeed(root,rootSources);
+  if(typedFixtureSeed){admit(typedFixtureSeed,'analysis-only-fixture');seedPaths.add(typedFixtureSeed);finiteClosure.add(typedFixtureSeed);if(!files.includes(typedFixtureSeed))files.push(typedFixtureSeed);}
   for(const recipe of boundary.unresolvedModuleInputAuthorities??[])if(reviewedDocumentationModuleInputRecipes.some(anchor=>anchor.source===recipe.source&&anchor.semanticClass===recipe.semanticClass&&anchor.recipeSha256===hash(JSON.stringify(recipe))))for(const source of recipe.inputConstraints.modulePaths??[])if(fs.existsSync(path.join(root,source))) {
     const canonical=path.relative(root,fs.realpathSync(path.join(root,source))).replaceAll(path.sep,'/');
     assert(!canonical.startsWith('../')&&!path.isAbsolute(canonical)&&!canonical.split('/').some(part=>['node_modules','vendor','.git'].includes(part)),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${recipe.source}; finite selected module escapes repository authority: ${source}`);
@@ -385,9 +439,9 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
   const dependencyFacts=paths=>[...paths].sort().map(source=>{const file=path.join(root,source);return fs.existsSync(file)?[source,canonicalDependency(source),fs.statSync(file).isDirectory()?'directory':hash(fs.readFileSync(file))]:[source,null];});
   function installedFoundationFacts(dependencies) {
     return dependencies.map(dependency=>{
-      assert(dependency.inputClass==='source-owned-installed-compiler-foundation'&&dependency.kind==='installedFoundationDependency'&&dependency.capabilityKind==='root-selected-compiler-require',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: unsupported installed foundation input class`);
+      assert(dependency.inputClass==='source-owned-installed-compiler-foundation'&&dependency.kind==='installedFoundationDependency'&&['root-selected-compiler-require','cli-native-static-compiler-require','cli-typed-fixture-compiler-require'].includes(dependency.capabilityKind),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: unsupported installed foundation input class`);
       const {operation,...recorded}=dependency;
-      const actual=rootSelectedCompilerTarget(root,{...recorded,kind:dependency.capabilityKind});
+      const actual=installedCompilerTarget(root,{...recorded,kind:dependency.capabilityKind});
       assert.deepEqual(actual,recorded,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: cached installed foundation evidence changed`);
       return {...actual,operation};
     }).sort((a,b)=>JSON.stringify(a).localeCompare(JSON.stringify(b)));
@@ -396,7 +450,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
   function reusableDocumentationGraph(cached,selected) {
     if(!cached)return null;
     const currentKey=graphKey(selected,cached.dependencyPaths,cached.installedFoundationDependencies??[]);
-    return cached.inputKey===currentKey?cached:null;
+    if(cached.inputKey!==currentKey)return null;assertCliNativeCompilerGraphPurpose(root,cached);assertCliTypedFixtureGraphPurpose(root,cached);assertPublicationParserGraphPurpose(root,cached);return cached;
   }
   const cached=documentationGraphCache.get(root);
   // A cached closure must still bind every bridge's current bytes and canonical
@@ -405,7 +459,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
   const cacheInputs=[...inputs];
   if(cached)for(const source of cached.closureSources)if(!files.includes(source)&&fs.existsSync(path.join(root,source))){canonicalDependency(source);cacheInputs.push([source,fs.readFileSync(path.join(root,source))]);}
   const reusable=reusableDocumentationGraph(cached,cacheInputs);if(reusable)return reusable;
-  const edges=[],installedFoundationDependencies=[],installedFoundationDependencyPaths=new Set(),dynamicOperations=[],resolutionOnlyOperations=[],unresolvedLocalOperations=[],aliases=[...directoryAliases,...rootAliases,...seedAliases],dependencyPaths=new Set([...seedPaths,...rootPaths]);
+  const edges=[],parserProvenance=[],installedFoundationDependencies=[],installedFoundationDependencyPaths=new Set(),dynamicOperations=[],resolutionOnlyOperations=[],unresolvedLocalOperations=[],aliases=[...directoryAliases,...rootAliases,...seedAliases],dependencyPaths=new Set([...seedPaths,...rootPaths]);
   // The calling module's nearest package is the sole self-reference authority.
   // Missing intervening package files are cache inputs too: adding a boundary
   // must invalidate an already admitted closure.
@@ -420,9 +474,14 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
   }
   const isPackageSelfReference=(source,specifier)=>{const {definition}=packageScope(source);return typeof definition.name==='string'&&definition.name.length>0&&(specifier===definition.name||specifier.startsWith(definition.name+'/'));};
   function targetFor(source,specifier,kind,capability=null) {
-    if(isRootSelectedCompilerCapability(capability)) {
-      assert(source===capability.source&&kind==='root-selected-compiler-require'&&specifier==='typescript',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler specifier/call`);
-      return rootSelectedCompilerTarget(root,capability,dependency=>installedFoundationDependencyPaths.add(dependency));
+    if(capability?.kind==='publication-example-parser-require'){
+      assert(source===capability.source&&kind==='require'&&specifier==='markdown-it','DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: publication parser exact load');
+      const record=verifyPublicationParserProvenance(root,capability,dependency=>dependencyPaths.add(dependency));if(!parserProvenance.some(r=>r.source===source))parserProvenance.push(record);
+      return null; // Ordinary bare external import: no local graph edge or compiler grant.
+    }
+    if(isSelectedCompilerCapability(capability)) {
+      assert(source===capability.source&&kind===capability.kind&&specifier==='typescript',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler specifier/call`);
+      return installedCompilerTarget(root,capability,dependency=>installedFoundationDependencyPaths.add(dependency));
     }
     const observerTarget=resolveObserverDocumentationImport(root,source,specifier,kind,dependency=>dependencyPaths.add(dependency));
     if(observerTarget){admit(observerTarget,kind);if(!files.includes(observerTarget)){files.push(observerTarget);inputs.push([observerTarget,fs.readFileSync(path.join(root,observerTarget))]);}return observerTarget;}
@@ -519,7 +578,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
       if(ts.isCallExpression(node)&&node.expression.kind===ts.SyntaxKind.ImportKeyword&&['module','node:module'].includes(literal(node.arguments[0])))return 'node-module-promise';
       if(ts.isIdentifier(node)) {
         const binding=bindingFor(node),initial=binding?intrinsicModuleVar(binding.value.parent)&&ts.isIdentifier(binding.value)&&binding.value.text==='module'?'commonjs-module':loaderCapability(binding.value,seen):importCapabilities.get(node.text)??(node.text==='require'?'require':node.text==='module'&&!moduleIsShadowed(node)?'commonjs-module':null);
-        if(isRootSelectedCompilerCapability(initial)) {
+        if(isSelectedCompilerCapability(initial)) {
           assert(!binding?.property&&node.text==='require'&&!assignedValues(node).length&&(binding.value.parent.name===node||ts.isCallExpression(node.parent)&&node.parent.expression===node),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler alias/projection/write`);
           return initial;
         }
@@ -529,7 +588,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
       if(propertyOf(node)==='require'&&loaderCapability(node.expression,seen)==='commonjs-module')return 'module-require';
       if(propertyOf(node)==='createRequire'&&loaderCapability(node.expression,seen)==='node-module')return 'create-require';
       if(['default','Module'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='node-module')return 'node-module';
-      if(['call','apply','bind'].includes(propertyOf(node))&&isRootSelectedCompilerCapability(loaderCapability(node.expression,seen)))assert.fail(`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler forwarding`);
+      if(['call','apply','bind'].includes(propertyOf(node))&&isSelectedCompilerCapability(loaderCapability(node.expression,seen)))assert.fail(`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler forwarding`);
       if(['call','apply','bind'].includes(propertyOf(node))&&['require','module-require'].includes(loaderCapability(node.expression,seen)))return 'require-forwarder';
       if(['call','apply','bind'].includes(propertyOf(node))&&loaderCapability(node.expression,seen)==='create-require')return 'create-require-forwarder';
       if(ts.isCallExpression(node)) {
@@ -543,7 +602,10 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
           const base=forwarding==='call'?node.arguments[1]:forwarding==='apply'&&node.arguments[1]&&ts.isArrayLiteralExpression(node.arguments[1])&&!node.arguments[1].elements.some(ts.isSpreadElement)?node.arguments[1].elements[0]:node.arguments[0];
           if(forwarding!=='call'&&forwarding!=='apply'&&forwarding!=='bind'&&capability==='create-require'&&!(base&&ts.isPropertyAccessExpression(base)&&base.name.text==='url'&&ts.isMetaProperty(base.expression))) {
             if(source==='tests/verification/contracts/check-plugin-system-v2-boundaries.mjs')return reviewedImporterResolutionOperation(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
+            if(source==='scripts/lib/docs-publication-example-coverage.mjs'&&fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery')return reviewedPublicationParserCapability(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
             if(source==='scripts/docs-sdk-reference.mjs')return reviewedRootSelectedCompilerCapability(source,bytes,tree,node);
+            if(source==='scripts/lib/cli/cli-native-driver.mjs')return reviewedCliNativeCompilerCapability(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
+            if(source==='scripts/lib/cli/typed-cli-ast.mjs'&&fs.realpathSync(root)==='/home/node/.openclaw/workspace/kubeclaw-pr13-recovery')return reviewedCliTypedFixtureCapability(root,source,bytes,tree,node,dependency=>dependencyPaths.add(dependency));
             // Unknown owners retain the ordinary factory-base rejection below;
             // they cannot enter another source's specialized provenance recipe.
           }
@@ -557,7 +619,13 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     }
     function requireArgument(node) {
       const direct=loaderCapability(node.expression);
-      if(isRootSelectedCompilerCapability(direct)) {
+      if(direct?.kind==='publication-example-parser-require'){
+        assert(ts.isCallExpression(node.expression)&&hash(node.expression.getText(tree))===direct.factorySha256&&hash(node.getText(tree))===direct.consumerSha256&&node.arguments.length===1&&ts.isStringLiteral(node.arguments[0])&&node.arguments[0].text==='markdown-it','DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: publication parser exact consumer');return node.arguments[0];
+      }
+      if(direct?.kind==='cli-typed-fixture-compiler-require'){
+        assert(ts.isCallExpression(node.expression)&&hash(node.expression.getText(tree))===direct.factorySha256&&hash(node.getText(tree))===direct.consumerSha256&&node.arguments.length===1&&ts.isStringLiteral(node.arguments[0])&&node.arguments[0].text==='typescript',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; exact fixture compiler consumer`);return node.arguments[0];
+      }
+      if(isSelectedCompilerCapability(direct)) {
         assert(ts.isIdentifier(node.expression)&&node.expression.text==='require'&&node.arguments.length===1&&ts.isStringLiteral(node.arguments[0])&&node.arguments[0].text==='typescript',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: ${source}; root compiler consumer`);
         return node.arguments[0];
       }
@@ -578,7 +646,9 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     function capabilityCustodyQualified(node,capability) {
       const parent=node.parent;if(!parent)return false;
       if(isImporterResolutionMetadata(capability))return ts.isCallExpression(node)&&ts.isPropertyAccessExpression(parent)&&parent.expression===node&&parent.name.text==='resolve'&&ts.isCallExpression(parent.parent)&&parent.parent.expression===parent&&hash(parent.parent.getText(tree))===capability.terminalSha256;
-      if(isRootSelectedCompilerCapability(capability)) {
+      if(capability?.kind==='publication-example-parser-require')return ts.isCallExpression(node)&&hash(node.getText(tree))===capability.factorySha256&&ts.isCallExpression(parent)&&parent.expression===node&&hash(parent.getText(tree))===capability.consumerSha256;
+      if(capability?.kind==='cli-typed-fixture-compiler-require')return ts.isCallExpression(node)&&hash(node.getText(tree))===capability.factorySha256&&ts.isCallExpression(parent)&&parent.expression===node&&hash(parent.getText(tree))===capability.consumerSha256;
+      if(isSelectedCompilerCapability(capability)) {
         if(ts.isVariableDeclaration(parent)&&parent.name===node)return ts.isIdentifier(node)&&node.text==='require';
         if(ts.isVariableDeclaration(parent)&&parent.initializer===node)return ts.isIdentifier(parent.name)&&parent.name.text==='require'&&ts.isCallExpression(node);
         return ts.isIdentifier(node)&&node.text==='require'&&ts.isCallExpression(parent)&&parent.expression===node&&syntaxHashForCompilerConsumer(parent,capability);
@@ -628,8 +698,8 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
       if(ts.isCallExpression(node)) {
         const requireInput=requireArgument(node);
         if(node.expression.kind===ts.SyntaxKind.ImportKeyword){argument=node.arguments[0];kind='dynamic-import';}
-        else if(requireInput!==undefined&&!(propertyOf(node.expression)==='bind'&&requireInput===null)){argument=requireInput;kind=isRootSelectedCompilerCapability(loaderCapability(node.expression))?'root-selected-compiler-require':'require';}
-        else if(!(propertyOf(node.expression)==='bind'&&requireInput===null)&&node.arguments.some(argument=>isRootSelectedCompilerCapability(loaderCapability(argument))||['commonjs-module','node-module','create-require','create-require-forwarder','require','module-require','require-forwarder'].includes(loaderCapability(argument)))){argument=null;kind='require-capability-escape';}
+        else if(requireInput!==undefined&&!(propertyOf(node.expression)==='bind'&&requireInput===null)){argument=requireInput;kind=isSelectedCompilerCapability(loaderCapability(node.expression))?loaderCapability(node.expression).kind:'require';}
+        else if(!(propertyOf(node.expression)==='bind'&&requireInput===null)&&node.arguments.some(argument=>isSelectedCompilerCapability(loaderCapability(argument))||['commonjs-module','node-module','create-require','create-require-forwarder','require','module-require','require-forwarder'].includes(loaderCapability(argument)))){argument=null;kind='require-capability-escape';}
       }
       if(kind) {
         const specifier=literal(argument),target=specifier===null?null:targetFor(source,specifier,kind,ts.isCallExpression(node)?loaderCapability(node.expression):null);
@@ -658,7 +728,7 @@ function documentationModuleGraph(root,packageBytes,boundary={}) {
     }}
   }
   dynamicOperations.push(...unresolvedLocalOperations.filter(operation=>finiteClosure.has(operation.source)));
-  const graph={inputKey:graphKey(inputs,dependencyPaths,installedFoundationDependencies),edges,installedFoundationDependencies,installedFoundationDependencyPaths:[...installedFoundationDependencyPaths].sort(),dynamicOperations,resolutionOnlyOperations,aliases,publicEntries,closureSources:[...files],executableSources:files.filter(source=>sourceClasses.get(source)!=='passive-json'),dependencyPaths:[...dependencyPaths]};documentationGraphCache.set(root,graph);return graph;
+  const graph={inputKey:graphKey(inputs,dependencyPaths,installedFoundationDependencies),edges,parserProvenance,installedFoundationDependencies,installedFoundationDependencyPaths:[...installedFoundationDependencyPaths].sort(),dynamicOperations,resolutionOnlyOperations,aliases,publicEntries,closureSources:[...files],executableSources:files.filter(source=>sourceClasses.get(source)!=='passive-json'),dependencyPaths:[...dependencyPaths]};assertCliNativeCompilerGraphPurpose(root,graph);assertCliTypedFixtureGraphPurpose(root,graph);assertPublicationParserGraphPurpose(root,graph);documentationGraphCache.set(root,graph);return graph;
 }
 const documentationEdgeOrder=(a,b)=>a.source.localeCompare(b.source)||a.target.localeCompare(b.target)||a.kind.localeCompare(b.kind)||a.operation.localeCompare(b.operation);
 // A mutable registry records reviewed facts; it cannot authorize a new output
@@ -696,6 +766,7 @@ function assertDocumentationToolQualifications(root,boundary,packageBytes) {
   const qualificationKey=hash(JSON.stringify([graph.inputKey,inputAuthorityKey,boundary]));if(documentationQualificationCache.get(root)===qualificationKey)return;
   const docsReachable=new Set(entries.map(entry=>entry.source));
   addReaderArtifactExternalCiSeed(assertReaderArtifactExternalCiPurpose(root),graph,docsReachable);
+  addPublicationExampleChildSeed(assertPublicationExampleChildPurpose(root),graph,docsReachable);
   let changed=true;
   while(changed){changed=false;for(const edge of graph.edges)if(docsReachable.has(edge.source)&&!docsReachable.has(edge.target)){docsReachable.add(edge.target);changed=true;}}
   for(const record of records) {
@@ -783,6 +854,7 @@ export function discoverScriptInputAcquisition(root) {
     dynamicOperations:graph.dynamicOperations,
     resolutionOnlyOperations:graph.resolutionOnlyOperations,
     dependencyPaths:graph.dependencyPaths,
+    parserProvenance:graph.parserProvenance,
     installedFoundationDependencies:graph.installedFoundationDependencies,
     installedFoundationDependencyPaths:graph.installedFoundationDependencyPaths,
     documentationEntries:documentationEntryPoints(scripts,true,root),
@@ -812,6 +884,422 @@ function documentationToolSources(root) {
   for(const source of [...result].reverse())assertDocumentationExecutableRole(root,source,new Set((boundary.qualifications??[]).filter(record=>record.kind==='static-receiver-descriptions/v1').map(record=>record.source)));
   return result;
 }
+// Two exact existing MNT004 protocols, not source/module exemptions.
+// Imported-state observations retain UNKNOWN and no dependency/effect authority.
+const reviewedCliStaticAstProtocols = Object.freeze({
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "producerDirectory": "scripts/lib/cli",
+  "fixedInputs": [
+    {
+      "path": "scripts/lib/cli/cli-native-driver.mjs",
+      "sha256": "ea2104b5a7ec4dfdee7b5c48a4ef21d330ca2100c82b6b3407019b4ac4df5f5a"
+    },
+    {
+      "path": "scripts/docs-inventory.mjs",
+      "sha256": "14b898112d48b29fb6ae66f1a455d48db565e67b36e18503cc05f2c37ffd799c"
+    },
+    {
+      "path": "scripts/lib/cli/typed-cli-ast.mjs",
+      "sha256": "d4ad0857158d5676472568b3032a200109015854b90238eecdc5c01702794299"
+    },
+    {
+      "path": "scripts/lib/cli/cli-semantic-composition.mjs",
+      "sha256": "54a091b9556b14f677b588d77175511a054e255280cf7643d6bbcfdcd9fc7a1d"
+    },
+    {
+      "path": "scripts/lib/cli/cli-source-model.mjs",
+      "sha256": "8bb0840f8cdb58ef4be04ebdc194aab2b2cb9b1c7250b333bc5b43d47f983792"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    },
+    {
+      "path": "package-lock.json",
+      "sha256": "9a75a764e3a27a2163736ec097e99b305a05d9ec2748cb7e38a19b8f88d7fafe"
+    },
+    {
+      "path": "versions.json",
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1"
+    },
+    {
+      "path": "scripts/docs-api-python-output-adapter.py",
+      "sha256": "48ca523a3385bc1c9a1e166b1f2aa41c7d47d3d2ecd16da92f39da8ac65b2c2b"
+    },
+    {
+      "path": "scripts/docs-api-python-ast-v1.py",
+      "sha256": "8ad32b060c582612b70824705a8199d8c57a0305dc45692068da307aa55e4c53"
+    },
+    {
+      "path": "scripts/docs-api-go-output-role-adapter.go",
+      "sha256": "a519b565ac0f821489d9c31743f3febefd065ba3e95e767909a7e9caeef792d4"
+    },
+    {
+      "path": "scripts/lib/cli/python_cli_ast.py",
+      "sha256": "5c76a87bb3c9725086daa28e8a06cf2849e4107f1d2c035b5fd8a202f8a4b2a3"
+    },
+    {
+      "path": "scripts/lib/cli/go_cli_ast.go",
+      "sha256": "ef7c1ced42aeb627626e7fdb39c47b306cf8d69f1be79fa0f8572ad494b3e948"
+    }
+  ],
+  "profiles": {
+    "python": {
+      "source": "scripts/lib/cli/python_cli_ast.py",
+      "sourceSha256": "5c76a87bb3c9725086daa28e8a06cf2849e4107f1d2c035b5fd8a202f8a4b2a3",
+      "completeObservedDescriptors": [
+        {
+          "line": 304,
+          "function": "main",
+          "expression": "json.dump({'sources': [extract_source(x) for x in request['sources']]}, sys.stdout, ensure_ascii=False)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "247893f64135cb00244c779335d93030acf4bb7cb4abaf802d1b1145762b2833",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": null,
+          "sourcePath": null
+        },
+        {
+          "line": 3,
+          "function": "<module>",
+          "expression": "import ast",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 4,
+          "function": "<module>",
+          "expression": "import copy",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 47,
+          "function": "<module>",
+          "expression": "import sysconfig",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 29,
+          "function": "qualify_argparse_stdlib_source",
+          "expression": "getattr(classes.get(cls), 'body', [])",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "b738d63291aa60969909c014af6dcff2f686d3d56299345d44542e6345bf6fc5",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 291,
+          "function": "statements",
+          "expression": "getattr(node, field, None)",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "2bb69afdc9f7e12c910cbcd5604c0051a6f8b8b71d424ea7c269618c6adc3b23",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 77,
+          "function": "site",
+          "expression": "type(ancestor).__name__",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "85340726c670cc99f51541cc295f6fc1e407cd89248c66d6d780b3433fbb66f7",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 77,
+          "function": "site",
+          "expression": "type(ancestor).__name__",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "85340726c670cc99f51541cc295f6fc1e407cd89248c66d6d780b3433fbb66f7",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        }
+      ],
+      "serializerDescriptors": [
+        {
+          "line": 304,
+          "function": "main",
+          "expression": "json.dump({'sources': [extract_source(x) for x in request['sources']]}, sys.stdout, ensure_ascii=False)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "247893f64135cb00244c779335d93030acf4bb7cb4abaf802d1b1145762b2833",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": null,
+          "sourcePath": null
+        }
+      ],
+      "unqualifiedStateObservations": [
+        {
+          "line": 3,
+          "function": "<module>",
+          "expression": "import ast",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 4,
+          "function": "<module>",
+          "expression": "import copy",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 47,
+          "function": "<module>",
+          "expression": "import sysconfig",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 29,
+          "function": "qualify_argparse_stdlib_source",
+          "expression": "getattr(classes.get(cls), 'body', [])",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "b738d63291aa60969909c014af6dcff2f686d3d56299345d44542e6345bf6fc5",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 291,
+          "function": "statements",
+          "expression": "getattr(node, field, None)",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "2bb69afdc9f7e12c910cbcd5604c0051a6f8b8b71d424ea7c269618c6adc3b23",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 77,
+          "function": "site",
+          "expression": "type(ancestor).__name__",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "85340726c670cc99f51541cc295f6fc1e407cd89248c66d6d780b3433fbb66f7",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        },
+        {
+          "line": 77,
+          "function": "site",
+          "expression": "type(ancestor).__name__",
+          "role": "unknown",
+          "gap": "imported-capability-state-unqualified",
+          "operationSha256": "85340726c670cc99f51541cc295f6fc1e407cd89248c66d6d780b3433fbb66f7",
+          "dependencyFactsDigest": null,
+          "authorityQualified": null,
+          "serializationProtocol": "docs-python-ast-v1",
+          "sourceIdentity": "scripts/lib/cli/python_cli_ast.py",
+          "sourcePath": null
+        }
+      ]
+    },
+    "go": {
+      "source": "scripts/lib/cli/go_cli_ast.go",
+      "sourceSha256": "ef7c1ced42aeb627626e7fdb39c47b306cf8d69f1be79fa0f8572ad494b3e948",
+      "completeObservedDescriptors": [
+        {
+          "line": 367,
+          "function": "main",
+          "expression": "fmt.Fprintln(os.Stderr, err)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "74059d50d4e1a0c404cea63259a647c43e83f649e7e096919632ab15cbc5515c",
+          "dependencyFactsDigest": "8d0958b87330d488732a45f4d8da80f87ca59e92b05879a836a43df8b8fcafb7",
+          "authorityQualified": true,
+          "serializationProtocol": null,
+          "sourceIdentity": null,
+          "sourcePath": "scripts/lib/cli/go_cli_ast.go"
+        },
+        {
+          "line": 376,
+          "function": "main",
+          "expression": "json.NewEncoder(os.Stdout).Encode(out)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "74059d50d4e1a0c404cea63259a647c43e83f649e7e096919632ab15cbc5515c",
+          "dependencyFactsDigest": "8d0958b87330d488732a45f4d8da80f87ca59e92b05879a836a43df8b8fcafb7",
+          "authorityQualified": true,
+          "serializationProtocol": null,
+          "sourceIdentity": null,
+          "sourcePath": "scripts/lib/cli/go_cli_ast.go"
+        },
+        {
+          "line": 376,
+          "function": "main",
+          "expression": "json.NewEncoder(os.Stdout)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "74059d50d4e1a0c404cea63259a647c43e83f649e7e096919632ab15cbc5515c",
+          "dependencyFactsDigest": "8d0958b87330d488732a45f4d8da80f87ca59e92b05879a836a43df8b8fcafb7",
+          "authorityQualified": true,
+          "serializationProtocol": null,
+          "sourceIdentity": null,
+          "sourcePath": "scripts/lib/cli/go_cli_ast.go"
+        },
+        {
+          "line": 377,
+          "function": "main",
+          "expression": "fmt.Fprintln(os.Stderr, err)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "74059d50d4e1a0c404cea63259a647c43e83f649e7e096919632ab15cbc5515c",
+          "dependencyFactsDigest": "8d0958b87330d488732a45f4d8da80f87ca59e92b05879a836a43df8b8fcafb7",
+          "authorityQualified": true,
+          "serializationProtocol": null,
+          "sourceIdentity": null,
+          "sourcePath": "scripts/lib/cli/go_cli_ast.go"
+        }
+      ],
+      "serializerDescriptors": [
+        {
+          "line": 367,
+          "function": "main",
+          "expression": "fmt.Fprintln(os.Stderr, err)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "74059d50d4e1a0c404cea63259a647c43e83f649e7e096919632ab15cbc5515c",
+          "dependencyFactsDigest": "8d0958b87330d488732a45f4d8da80f87ca59e92b05879a836a43df8b8fcafb7",
+          "authorityQualified": true,
+          "serializationProtocol": null,
+          "sourceIdentity": null,
+          "sourcePath": "scripts/lib/cli/go_cli_ast.go"
+        },
+        {
+          "line": 376,
+          "function": "main",
+          "expression": "json.NewEncoder(os.Stdout).Encode(out)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "74059d50d4e1a0c404cea63259a647c43e83f649e7e096919632ab15cbc5515c",
+          "dependencyFactsDigest": "8d0958b87330d488732a45f4d8da80f87ca59e92b05879a836a43df8b8fcafb7",
+          "authorityQualified": true,
+          "serializationProtocol": null,
+          "sourceIdentity": null,
+          "sourcePath": "scripts/lib/cli/go_cli_ast.go"
+        },
+        {
+          "line": 376,
+          "function": "main",
+          "expression": "json.NewEncoder(os.Stdout)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "74059d50d4e1a0c404cea63259a647c43e83f649e7e096919632ab15cbc5515c",
+          "dependencyFactsDigest": "8d0958b87330d488732a45f4d8da80f87ca59e92b05879a836a43df8b8fcafb7",
+          "authorityQualified": true,
+          "serializationProtocol": null,
+          "sourceIdentity": null,
+          "sourcePath": "scripts/lib/cli/go_cli_ast.go"
+        },
+        {
+          "line": 377,
+          "function": "main",
+          "expression": "fmt.Fprintln(os.Stderr, err)",
+          "role": "unknown",
+          "gap": null,
+          "operationSha256": "74059d50d4e1a0c404cea63259a647c43e83f649e7e096919632ab15cbc5515c",
+          "dependencyFactsDigest": "8d0958b87330d488732a45f4d8da80f87ca59e92b05879a836a43df8b8fcafb7",
+          "authorityQualified": true,
+          "serializationProtocol": null,
+          "sourceIdentity": null,
+          "sourcePath": "scripts/lib/cli/go_cli_ast.go"
+        }
+      ],
+      "unqualifiedStateObservations": []
+    }
+  }
+});
+function cliStaticAstDescriptor(root, output) {
+ const dependencies=output.dependencies?.map(fact=>({...fact,path:path.relative(root,fact.path)}));
+ return {line:output.line,function:output.function,expression:output.expression,role:output.role,gap:output.gap??null,
+  operationSha256:hash(output.operation??''),dependencyFactsDigest:dependencies?hash(JSON.stringify(dependencies)):null,
+  authorityQualified:output.authorityQualified??null,serializationProtocol:output.serializationProtocol??null,
+  sourceIdentity:output.sourceIdentity&&path.isAbsolute(output.sourceIdentity)&&path.join(root,path.relative(root,output.sourceIdentity))===output.sourceIdentity?path.relative(root,output.sourceIdentity):output.sourceIdentity??null,
+  sourcePath:output.path&&path.join(root,path.relative(root,output.path))===output.path?path.relative(root,output.path):output.path??null};
+}
+function assertCliStaticAstSourcePurpose(root, source) {
+ const r=reviewedCliStaticAstProtocols,p=Object.values(r.profiles).find(p=>p.source===source);
+ assert(p,'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: source');
+ assert(root===r.root&&process.cwd()===r.root&&fs.realpathSync(root)===root,'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: canonical root/cwd');
+ for(const input of r.fixedInputs){const file=path.join(root,input.path);assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.lstatSync(file).isFile()&&hash(fs.readFileSync(file))===input.sha256,'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: bound input '+input.path);}
+ const graph=documentationGraphCache.get(root);
+ assert(graph?.installedFoundationDependencies?.some(d=>d.capabilityKind==='cli-native-static-compiler-require'),'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: existing injected compiler/caller route');
+ assertCliNativeCompilerGraphPurpose(root,graph);
+ return p;
+}
+function assertCliStaticAstOutputVector(root, source, outputs) {
+ const p=assertCliStaticAstSourcePurpose(root,source);
+ assert.deepEqual(outputs.map(output=>cliStaticAstDescriptor(root,output)),p.completeObservedDescriptors,'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: complete raw descriptor vector');
+ return p;
+}
 function assertNativeSerializationRoles(root,source,bytes,language) {
   const authority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');
   const contracts=fs.existsSync(authority)?JSON.parse(fs.readFileSync(authority,'utf8')).nativeLanguageSerializationContracts??[]:[];
@@ -820,6 +1308,11 @@ function assertNativeSerializationRoles(root,source,bytes,language) {
     const parsed=spawnSync('python3',[new URL('./docs-api-python-output-adapter.py',import.meta.url).pathname,path.join(root,source),'--classify'],{encoding:'utf8',env:{PATH:process.env.PATH}});
     assert.equal(parsed.status,0,`API_PRODUCT_PYTHON_SERIALIZATION_PARSE_FAILED: ${source}: ${parsed.stderr}`);
     const outputs=JSON.parse(parsed.stdout);
+    const cliProtocol=source==='scripts/lib/cli/python_cli_ast.py'?assertCliStaticAstOutputVector(root,source,outputs):null;
+    // These are retained diagnostic observations, never serializer contracts.
+    const cliUnqualifiedState=output=>cliProtocol&&output.role==='unknown'
+      &&output.gap==='imported-capability-state-unqualified'
+      &&cliProtocol.unqualifiedStateObservations.some(expected=>JSON.stringify(expected)===JSON.stringify(cliStaticAstDescriptor(root,output)));
     assert(outputs.every(output=>output.serializationProtocol==='docs-python-ast-v1'),`API_PRODUCT_PYTHON_SERIALIZATION_PROTOCOL_UNQUALIFIED: ${source}`);
     let bootstrapAudit;
     if(source==='ops/pod/bootstrap.py'){
@@ -833,7 +1326,7 @@ function assertNativeSerializationRoles(root,source,bytes,language) {
       const flow=output.bootstrapFlow;
       return flow?.qualified===true&&flow.producerLine>0&&flow.consumerLine>0&&typeof flow.expression==='string'&&flow.expression&&((flow.kind==='config-info'&&flow.selectedEntryPoint==='discover'&&output.role==='non-api')||(flow.kind==='credential-submission'&&flow.selectedEntryPoint==='secrets'&&output.role==='api')||(flow.kind==='credential-diagnostic'&&flow.selectedEntryPoint==='secrets'&&output.role==='non-api'))&&Array.isArray(flow.dependencies)&&flow.dependencies.length&&flow.dependencies.every(fact=>fact.qualified===true&&bootstrapAudit.dependencies.some(selected=>JSON.stringify(selected)===JSON.stringify(fact)));
     };
-    assert(outputs.every(output=>bootstrapAudit?auditedBootstrap(output):(output.role==='non-api'||output.role==='api-patch'&&output.patchReceiver?.apiVersion&&output.patchReceiver?.kind&&output.patchReceiver?.resource&&output.patchReceiver?.name&&output.patchReceiver.patchType==='json'&&Array.isArray(output.patchOperations)||nativeOutputConsumerMatches(output,nativeOutputs,root))),`API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
+    assert(outputs.every(output=>bootstrapAudit?auditedBootstrap(output):(cliUnqualifiedState(output)||output.role==='non-api'||output.role==='api-patch'&&output.patchReceiver?.apiVersion&&output.patchReceiver?.kind&&output.patchReceiver?.resource&&output.patchReceiver?.name&&output.patchReceiver.patchType==='json'&&Array.isArray(output.patchOperations)||nativeOutputConsumerMatches(cliProtocol?{...output,cliStaticAstOwner:source}:output,nativeOutputs,root))),`API_PRODUCT_PYTHON_SERIALIZED_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
     return outputs;
   }
 }
@@ -915,6 +1408,19 @@ const reviewedRuntimeAdoptionDiagnostics = {
 // distinct from resource-object construction. Exact complete source plus each
 // selected operation remains bound; external runtime effects are not approved.
 const reviewedAuxiliaryPythonConsumers = {
+  "scripts/lib/cli/python_cli_ast.py": {
+  "source": "scripts/lib/cli/python_cli_ast.py",
+  "inputClass": "private-static-cli-ast-fact-protocol",
+  "sha256": "5c76a87bb3c9725086daa28e8a06cf2849e4107f1d2c035b5fd8a202f8a4b2a3",
+  "cliStaticAstProtocol": true,
+  "outputs": [
+    {
+      "function": "main",
+      "expressionSha256": "fe19673755eb9bce54319a6c1b662a38b40773c49b819ae4ab80cb90b58bccbb",
+      "operationSha256": "247893f64135cb00244c779335d93030acf4bb7cb4abaf802d1b1145762b2833"
+    }
+  ]
+},
   "scripts/docs-api-python-ast-v1.py": {
     "source": "scripts/docs-api-python-ast-v1.py",
     "inputClass": "finite-source-ast-receipt-protocol",
@@ -1071,6 +1577,7 @@ export function nativeOutputConsumerMatches(output,contracts,root) {
   switch(consumer.kind){
    case 'python-source-owned-auxiliary-protocol':{
     const recipe=reviewedAuxiliaryPythonConsumers[consumer.source];if(!recipe)return false;
+    if(recipe.cliStaticAstProtocol){if(output.gap||output.cliStaticAstOwner!==recipe.source)return false;assertCliStaticAstSourcePurpose(root,recipe.source);}
     const file=path.join(root,recipe.source);
     return output.role==='unknown'&&fs.existsSync(file)&&fs.realpathSync(file)===path.resolve(file)
       &&hash(fs.readFileSync(file))===recipe.sha256
@@ -1083,6 +1590,11 @@ export function nativeOutputConsumerMatches(output,contracts,root) {
       &&fs.realpathSync(file)===path.resolve(file)&&hash(fs.readFileSync(file))===recipe.sha256
       &&recipe.outputs.some(selected=>selected.function===output.function
         &&selected.expressionSha256===hash(output.expression)&&selected.operationSha256===hash(operation));
+   }
+   case 'go-cli-static-ast-protocol':{
+    if(consumer.source!=='scripts/lib/cli/go_cli_ast.go'||output.role!=='unknown'||output.authorityQualified!==true)return false;
+    const profile=assertCliStaticAstSourcePurpose(root,consumer.source);
+    return profile.completeObservedDescriptors.some(expected=>JSON.stringify(expected)===JSON.stringify(cliStaticAstDescriptor(root,output)));
    }
    case 'go-error-stderr':return output.diagnosticQualified===true&&output.authorityQualified===true&&/^fmt\.Fprintln\(os\.Stderr, err(?:\.Error\(\))?\)$/u.test(expression)&&/if (?:[^\n]+;\s*)?err != nil\s*\{/u.test(operation)&&consumer.errorOrigins?.some(origin=>operation.includes(origin))&&/os\.Exit\(1\)/u.test(operation);
    case 'go-digest':return /^json\.Marshal\(/u.test(expression)&&/sha256\.Sum256\(/u.test(operation)&&resultName&&new RegExp(`(?:Sum256|Transform)\\(${resultName}\\)`, 'u').test(operation);
@@ -1467,10 +1979,32 @@ const reviewedDiagnosticOutputSources={
 // checked artifacts. Inventory only reads the witness; it never executes the
 // producer. Changing mutable metadata cannot extend this Source-owned profile.
 const reviewedArgocdArtifactProfile=Object.freeze({
-  source:'scripts/argocd-self-management.mjs',
-  sourceSha256:'79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26',
-  authority:'scripts/docs-api-argocd-checked-artifact-authority.json',
-  authoritySha256:'6fd8f7e67a865129f9274575fc81477cda1ea6f0f68baac5b5904c896da23d76',
+  "source": "scripts/argocd-self-management.mjs",
+  "sourceSha256": "79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26",
+  "authority": "scripts/docs-api-argocd-checked-artifact-authority.json",
+  "authoritySha256": "ebabd27fea509b6f1a094ffe06cdae4c73379911792bd97f44af90802b8ff6ec",
+  "nodeIdentity": {
+    "path": "/usr/local/bin/node",
+    "version": "v24.22.1",
+    "sha256": "e32e2d16081cf644f88392934288086e7662529d0d43277c34f7aad2207cfafb"
+  },
+  "historicalObservationSha256": "7b4d2b0526fe7d035bd81ee45ecd2c359f861312771e0b6d9beacaf60a7935ca",
+  "currentControlKeys": [
+    "changed-byte-refused:scripts/argocd-self-management.mjs",
+    "changed-byte-refused:scripts/platform-services.mjs",
+    "changed-byte-refused:versions.json",
+    "changed-byte-refused:gitops/platform/bootstrap/argocd.yaml",
+    "changed-byte-refused:package.json",
+    "changed-byte-refused:node_modules/js-yaml/dist/js-yaml.mjs",
+    "changed-byte-refused:node_modules/js-yaml/package.json",
+    "changed-loader-package-boundary-refused:",
+    "ambient-loader-environment-refused:NODE_OPTIONS",
+    "ambient-loader-environment-refused:NODE_PATH",
+    "write-denied:",
+    "child-denied:",
+    "worker-denied:",
+    "outside-read-denied:"
+  ]
 });
 export function checkedArgocdArtifactOutputs(root,source,sourceBytes) {
   const profile=reviewedArgocdArtifactProfile;
@@ -1486,12 +2020,31 @@ export function checkedArgocdArtifactOutputs(root,source,sourceBytes) {
   const authorityBytes=read(profile.authority);
   if(hash(authorityBytes)!==profile.authoritySha256)fail('immutable witness digest');
   const authority=JSON.parse(authorityBytes);
-  if(authority.source!==source||authority.sourceSha256!==profile.sourceSha256||authority.observation.originalCheck.exit!==0)fail('producer observation');
+  const observation=authority.currentReadOnlyObservation20261031;
+  if(authority.schemaVersion!=='original-generator-checked-artifacts.v1'||authority.profile!=='original-read-only-check-no-ambient-loaders'
+    ||authority.source!==source||authority.sourceSha256!==profile.sourceSha256||!observation
+    ||hash(JSON.stringify(authority.observation))!==profile.historicalObservationSha256)fail('explicit current producer observation/history');
+  if(JSON.stringify(observation.node)!==JSON.stringify(profile.nodeIdentity))fail('current qualified Node identity');
+  const argv=observation.argv,privateRoot=Array.isArray(argv)&&typeof argv[2]==='string'?path.dirname(path.dirname(argv[2])):null;
+  if(!privateRoot||!path.isAbsolute(privateRoot)||path.normalize(privateRoot)!==privateRoot
+    ||JSON.stringify(argv)!==JSON.stringify(['--permission','--allow-fs-read='+privateRoot,path.join(privateRoot,source),'--check']))fail('exact private read-only check argv');
+  if(JSON.stringify(observation.environment)!==JSON.stringify({PATH:'/usr/local/bin:/usr/bin:/bin',LANG:'C.UTF-8',TZ:'UTC'})
+    ||observation.loaderResolution!==pathToFileURL(path.join(privateRoot,'node_modules/js-yaml/dist/js-yaml.mjs')).href
+    ||observation.jsYamlVersion!=='4.3.1')fail('scrubbed environment/locked ESM loader');
+  if(observation.originalCheck?.exit!==0||observation.originalCheck.stdout!==''||observation.originalCheck.stderr!==''
+    ||observation.allCopiesByteIdentical!==true||observation.allFilesUnchangedAfterCheck!==true||observation.privateTreesRemoved!==true)fail('current successful nonmutating check');
+  if(observation.inputsAndCheckedOutputs?.length!==35||observation.outputs?.length!==21
+    ||JSON.stringify(observation.inputsAndCheckedOutputs.map(f=>f.path))!==JSON.stringify(authority.observation.inputsAndCheckedOutputs.map(f=>f.path))
+    ||JSON.stringify(observation.outputs)!==JSON.stringify(authority.observation.outputs))fail('exact current input/output roster');
+  if(!Array.isArray(observation.controls)||observation.controls.some(c=>c.pass!==true)
+    ||JSON.stringify(observation.controls.map(c=>c.name+':'+(c.path??c.key??'')))!==JSON.stringify(profile.currentControlKeys)
+    ||['write-denied','child-denied','worker-denied','outside-read-denied'].some(name=>!observation.controls.some(c=>c.name===name&&c.exit===1&&c.errorCode==='ERR_ACCESS_DENIED'))
+    ||observation.freshMaintainedOutputParse?.outputs!==21||observation.freshMaintainedOutputParse.allCurrentParsedApiIdentitiesExact!==true)fail('current named controls/fresh parsed identities');
   for(const file of authority.absentPackageBoundaries){
     try{fs.lstatSync(path.join(root,file));fail(`new package boundary ${file}`);}catch(error){if(error.code!=='ENOENT')throw error;}
   }
   const buffers=new Map();
-  for(const fact of authority.observation.inputsAndCheckedOutputs){
+  for(const fact of observation.inputsAndCheckedOutputs){
     const bytes=read(fact.path);
     if(hash(bytes)!==fact.sha256)fail(`changed input or checked artifact ${fact.path}`);
     buffers.set(fact.path,bytes);
@@ -1499,7 +2052,7 @@ export function checkedArgocdArtifactOutputs(root,source,sourceBytes) {
   if(!buffers.get(source)?.equals(Buffer.from(sourceBytes)))fail('selected source snapshot');
   const dependencies=[profile.authority,...buffers.keys()];
   const inputDigest=hash(authorityBytes);
-  const outputs=authority.observation.outputs.map((record,index)=>{
+  const outputs=observation.outputs.map((record,index)=>{
     const bytes=buffers.get(record.path);
     if(!bytes||hash(bytes)!==record.outputSha256)fail(`output identity ${record.path}`);
     const value=YAML.parse(bytes.toString('utf8'));
@@ -1543,6 +2096,8 @@ function assertReviewedDiagnosticOutputSources(root) {
 const reviewedGitOpsProfile = Object.freeze({
   authority: 'scripts/docs-api-gitops-output-profile-authority.json',
   authoritySha256: '1f5316ad9c99959473cb938a79c44b8bee01f8a5399a95d2df36fcd9a17d17ca',
+  // Current source binding only; the sealed observations remain historical.
+  currentPackageBinding20261031: Object.freeze({"path":"package.json","sha256":"0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef","bytes":54287,"historicalSha256":"4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3","historicalBytes":53756}),
   activationSource: 'scripts/gitops-continuous.mjs',
   activationSha256: 'f2b35d956ffaa40dc9644f7f3c22c3d7e6f34747e890f1c139de8211cd2e3734',
 });
@@ -1566,9 +2121,17 @@ export function checkedGitOpsOutputProfiles(root, graph) {
   const bytes = read(profile.authority);
   if (hash(bytes) !== profile.authoritySha256) fail('immutable witness digest');
   const authority = JSON.parse(bytes), buffers = new Map();
+  const binding = profile.currentPackageBinding20261031;
+  if (!binding || binding.path !== 'package.json'
+    || JSON.stringify(Object.keys(binding).sort()) !== JSON.stringify(['bytes','historicalBytes','historicalSha256','path','sha256'])) fail('explicit package-only current binding');
+  const historicalPackage = authority.inputs.filter(fact => fact.path === 'package.json');
+  if (historicalPackage.length !== 1 || historicalPackage[0].sha256 !== binding.historicalSha256
+    || historicalPackage[0].bytes !== binding.historicalBytes) fail('historical package input identity');
+  const currentPackageBindingDigest = hash(JSON.stringify(binding));
   for (const fact of authority.inputs) {
     const content = read(fact.path);
-    if (hash(content) !== fact.sha256 || content.length !== fact.bytes) fail(`changed input ${fact.path}`);
+    const expected = fact.path === 'package.json' ? binding : fact;
+    if (hash(content) !== expected.sha256 || content.length !== expected.bytes) fail(`changed input ${fact.path}`);
     buffers.set(fact.path, content);
   }
   for (const [source, digest] of Object.entries(authority.sourcePins)) {
@@ -1622,6 +2185,7 @@ export function checkedGitOpsOutputProfiles(root, graph) {
           profile: observation.id, observationRevision: authority.sourceRevision,
           ...(observation.fixtureCommits ? {observationFixtureCommits: observation.fixtureCommits} : {}),
           publicOutput: stream.destination, inputs: dependencies, inputDigest: profile.authoritySha256,
+          currentPackageBindingDigest, observationsHistorical: true,
           outputDigest: hash(JSON.stringify(value)), outputBytesDigest: stream.payload.sha256,
           executionLimit: 'Sealed historical output snapshot only, not a renewed current Git/history/loader/environment or original-command-success claim. Finite original bootstrap/check and isolated read-only planner observations; no inventory execution, apply, preflight, live ownership/adoption, healthy rollback or unobserved caller/configuration profile.'}});
       });
@@ -1629,7 +2193,8 @@ export function checkedGitOpsOutputProfiles(root, graph) {
   }
   const result = Object.freeze({sources: Object.freeze(sources), dependencies: Object.freeze(dependencies),
     outputs: Object.freeze(outputs), outputMembers: Object.freeze(outputMembers.map(Object.freeze)),
-    descriptors: Object.freeze(authority.descriptors.map(Object.freeze)), witnessDigest: profile.authoritySha256});
+    descriptors: Object.freeze(authority.descriptors.map(Object.freeze)), witnessDigest: profile.authoritySha256,
+    currentPackageBinding: binding, currentPackageBindingDigest, observationsHistorical: true});
   qualifiedGitOpsProfiles.add(result);
   return result;
 }
@@ -1657,6 +2222,8 @@ const reviewedInfrastructureProfile = Object.freeze({
   authority: 'scripts/docs-api-infrastructure-output-profile-authority.json',
   authoritySha256: '70708daefa080386068281c154cddb581ee9fc76cfe3b5fa817bfb2a417d6fbe',
   sources: Object.freeze(['scripts/infrastructure-chart.mjs', 'scripts/infrastructure-release.mjs']),
+  // Separate current package binding; all nine observations remain historical.
+  currentPackageBinding20261031: Object.freeze({"path":"package.json","sha256":"0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef","bytes":54287,"historicalSha256":"4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3","historicalBytes":53756}),
   activationSource: 'scripts/infrastructure-chart.mjs',
   activationSha256: '6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25',
 });
@@ -1680,9 +2247,17 @@ export function checkedInfrastructureOutputProfiles(root, graph) {
   const bytes = read(profile.authority);
   if (hash(bytes) !== profile.authoritySha256) fail('immutable witness digest');
   const authority = JSON.parse(bytes), buffers = new Map();
+  const binding = profile.currentPackageBinding20261031;
+  if (!binding || binding.path !== 'package.json'
+    || JSON.stringify(Object.keys(binding).sort()) !== JSON.stringify(['bytes','historicalBytes','historicalSha256','path','sha256'])) fail('explicit package-only current binding');
+  const historicalPackage = authority.inputs.filter(fact => fact.path === 'package.json');
+  if (historicalPackage.length !== 1 || historicalPackage[0].sha256 !== binding.historicalSha256
+    || historicalPackage[0].bytes !== binding.historicalBytes) fail('historical package input identity');
+  const currentPackageBindingDigest = hash(JSON.stringify(binding));
   for (const fact of authority.inputs) {
     const content = read(fact.path);
-    if (hash(content) !== fact.sha256 || content.length !== fact.bytes) fail(`changed input ${fact.path}`);
+    const expected = fact.path === 'package.json' ? binding : fact;
+    if (hash(content) !== expected.sha256 || content.length !== expected.bytes) fail(`changed input ${fact.path}`);
     buffers.set(fact.path, content);
   }
   for (const [source, digest] of Object.entries(authority.sourcePins)) {
@@ -1722,6 +2297,7 @@ export function checkedInfrastructureOutputProfiles(root, graph) {
       || observation.stdout !== observation.historicalArchivePath + '\n') fail('historical complete filename');
   }
   const receipt = Object.freeze({witnessDigest: profile.authoritySha256,
+    currentPackageBinding: binding, currentPackageBindingDigest, observationsHistorical: true,
     descriptors: Object.freeze(authority.descriptors.map(Object.freeze)),
     dependencies: Object.freeze([profile.authority, operation.source, ...buffers.keys()]),
     executionAuthority: false});
@@ -1794,6 +2370,3088 @@ export function selectedDisabledRegistrationOutput(source, role, witness) {
   return true;
 }
 
+
+// Exact existing A911-05 Markdown receiver purpose only; content acceptance is separate.
+const reviewedCommonErrorMarkdownOutput = Object.freeze({
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "source": "scripts/docs-common-error-catalogue.mjs",
+  "helper": "scripts/lib/docs-catalogue-input-surface.mjs",
+  "dataPath": "docs/config/common-error-catalogue.json",
+  "surfacePath": "docs/config/common-error-input-surface.json",
+  "fixedInputs": [
+    {
+      "path": "scripts/docs-common-error-catalogue.mjs",
+      "sha256": "be1acad9f710455012c5f885339ef2fe085fa6c84e4907505d86705c6299af5d"
+    },
+    {
+      "path": "scripts/lib/docs-catalogue-input-surface.mjs",
+      "sha256": "fa142e37ea7e2f5a6a72fdf7d89e8715666d0c6138b34513118098020b5ef54c"
+    },
+    {
+      "path": "docs/config/common-error-catalogue.json",
+      "sha256": "d2ce4bac9405d0833c4fe59f604a4cdf2804a94fc8996e5b41d6f48e3e1d70f5"
+    },
+    {
+      "path": "docs/config/common-error-input-surface.json",
+      "sha256": "d32fdcef972d2531b2f3c69ae1b8e7e1e2b9e0e718337cb0bc90042b1be9e7a2"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    }
+  ],
+  "sections": [
+    "foundation",
+    "nova",
+    "worker",
+    "prism",
+    "platform",
+    "configuration"
+  ],
+  "outputs": [
+    "docs/site/reference/common-errors.md",
+    "docs/site/reference/common-errors-foundation.md",
+    "docs/site/reference/common-errors-nova.md",
+    "docs/site/reference/common-errors-worker.md",
+    "docs/site/reference/common-errors-prism.md",
+    "docs/site/reference/common-errors-platform.md",
+    "docs/site/reference/common-errors-configuration.md"
+  ],
+  "callers": {
+    "docs:errors:generate": "node scripts/docs-common-error-catalogue.mjs",
+    "docs:errors:check": "node scripts/docs-common-error-catalogue.mjs --check"
+  },
+  "selectors": [
+    {
+      "expression": "outputs"
+    }
+  ],
+  "factsDigest": "90f6d9b9db8a40ad1f56df494e0bdbeb1fcfe4cbc5498b440653673942cec0b0",
+  "descriptors": [
+    {
+      "line": 82,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "outputs",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 84,
+      "sink": "console.log",
+      "role": "non-api",
+      "expression": null,
+      "basis": "fixed-source-root-properties",
+      "keys": [
+        "check",
+        "families",
+        "pages",
+        "sourceBindingsChecked"
+      ],
+      "sinkContract": null
+    }
+  ],
+  "writeRole": {
+    "line": 82,
+    "sink": "fs.writeFileSync",
+    "role": "unknown",
+    "expression": "outputs"
+  }
+});
+const commonErrorMarkdownReceipts = new WeakSet();
+function commonErrorOutputDescriptor(role) {
+  return Object.fromEntries(['line','sink','role','expression','basis','keys','sinkContract'].map(key=>[key,role[key]??null]));
+}
+function checkedCommonErrorMarkdownOutput(root,graph,classify,sources) {
+  const profile=reviewedCommonErrorMarkdownOutput;
+  if(!sources.includes(profile.source))return null;
+  const fail=detail=>assert.fail('API_PRODUCT_COMMON_ERROR_MARKDOWN_PURPOSE_UNQUALIFIED: '+detail);
+  if(root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+  const physical=relative=>{
+    if(path.posix.normalize(relative)!==relative||path.isAbsolute(relative)||relative.split('/').includes('..'))fail('path boundary');
+    const file=path.join(root,relative);
+    for(let current=file;current!==root;current=path.dirname(current)){
+      if(!fs.existsSync(current)||fs.realpathSync(current)!==current||fs.lstatSync(current).isSymbolicLink())fail('physical path '+relative);
+    }
+    if(!fs.lstatSync(file).isFile())fail('regular file '+relative);
+    return fs.readFileSync(file);
+  };
+  for(const input of profile.fixedInputs)if(hash(physical(input.path))!==input.sha256)fail('fixed source/data '+input.path);
+  const scripts=JSON.parse(physical('package.json')).scripts??{};
+  for(const[name,command]of Object.entries(profile.callers))if(scripts[name]!==command)fail('exact package caller '+name);
+  const entries=documentationEntryPoints(scripts,true,root).filter(entry=>entry.source===profile.source);
+  const expectedEntries=Object.entries(profile.callers).map(([name,command])=>({name,command,source:profile.source})).sort((a,b)=>a.name.localeCompare(b.name));
+  if(JSON.stringify(entries)!==JSON.stringify(expectedEntries))fail('exact original documentation caller vector');
+  const publicEntries=graph?.publicEntries?.filter(entry=>entry.path===profile.source||entry.canonicalSource===profile.source);
+  if(JSON.stringify(publicEntries)!==JSON.stringify([{path:profile.source,canonicalSource:profile.source}]))fail('new public writer alias');
+  if(graph.edges.some(edge=>edge.target===profile.source))fail('new imported/callback writer entry');
+  const data=JSON.parse(physical(profile.dataPath)),surface=JSON.parse(physical(profile.surfacePath));
+  if(JSON.stringify(data.sections.map(section=>section.id))!==JSON.stringify(profile.sections))fail('ordered section vector');
+  const outputs=['docs/site/reference/common-errors.md',...data.sections.map(section=>'docs/site/reference/common-errors-'+section.id+'.md')];
+  if(JSON.stringify(outputs)!==JSON.stringify(profile.outputs)||new Set(outputs).size!==7)fail('seven-output vector');
+  for(const output of outputs)physical(output);
+  // Existing accepted source-surface admission; no new source discovery algorithm.
+  checkCatalogueInputSurface(root,surface.files);
+  const facts=deriveNativeOperationFacts(root,profile.source,profile.selectors);
+  if(!facts||nativeOperationFactDigest(facts)!==profile.factsDigest)fail('complete selected native facts');
+  const roles=classify(profile.source);
+  if(JSON.stringify(roles.map(commonErrorOutputDescriptor))!==JSON.stringify(profile.descriptors))fail('complete original raw output descriptors');
+  const receipt=Object.freeze({source:profile.source,role:'non-api',purpose:'Exact default Markdown Map writer; --check equality branch never writes',outputs:Object.freeze([...outputs]),descriptors:Object.freeze(roles.map(commonErrorOutputDescriptor)),dependencies:Object.freeze([...profile.fixedInputs.map(input=>input.path),'package.json',...Object.keys(surface.files)]),inputDigest:hash(JSON.stringify({fixed:profile.fixedInputs,surface:surface.files,callers:profile.callers,outputs})),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,defaultGenerationIsWriter:true});
+  commonErrorMarkdownReceipts.add(receipt);return receipt;
+}
+function selectedCommonErrorMarkdownOutput(source,role,receipt) {
+  if(source!==reviewedCommonErrorMarkdownOutput.source)return false;
+  assert(receipt&&commonErrorMarkdownReceipts.has(receipt),'API_PRODUCT_COMMON_ERROR_MARKDOWN_PURPOSE_UNQUALIFIED: unacquired receipt');
+  const slot=reviewedCommonErrorMarkdownOutput.writeRole;
+  if(role.sink!==slot.sink)return false;
+  assert.equal(JSON.stringify(commonErrorOutputDescriptor(role)),JSON.stringify(receipt.descriptors.find(item=>item.line===slot.line&&item.sink===slot.sink)),'API_PRODUCT_COMMON_ERROR_MARKDOWN_PURPOSE_UNQUALIFIED: changed Map writer slot');
+  return true;
+}
+
+
+// Only this existing event documentation writer and its catch diagnostic.
+// Existing qualifiedSourceVector guard is preserved, never recomputed or repinned here.
+const reviewedEventContractDocumentationOutput = Object.freeze({
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "source": "scripts/docs-event-contracts.mjs",
+  "fixedInputs": [
+    {
+      "path": "scripts/docs-event-contracts.mjs",
+      "sha256": "d501c2a0fd3d2e81d214aa8eadd7128af2b840f4b483c48ee5303d9e394a57bf"
+    },
+    {
+      "path": "scripts/lib/docs-event-contracts.mjs",
+      "sha256": "ddb1ae2642ebcbcd89ed4789bd91816e2241b57fedc2cbe322c9bd71af386389"
+    },
+    {
+      "path": "scripts/lib/docs-event-reference-collector.mjs",
+      "sha256": "a724f665b9480aef94c06350c92140cbc7a0331fc7a818239c4a9908a03a3475"
+    },
+    {
+      "path": "scripts/lib/docs-event-reference.mjs",
+      "sha256": "9e06d15781c2ed3865cf4ae95a029b7bb65ef9981c22ae6010945ae22037779d"
+    },
+    {
+      "path": "docs/config/event-reference-bindings.json",
+      "sha256": "ecc03af8ccd80a02f2c519500918889de174e5265dcad5dfd26f59781bc10633"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    },
+    {
+      "path": "docs/site/reference/events.md",
+      "sha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34"
+    }
+  ],
+  "targets": [
+    "docs/generated/inventory/event-contracts.json",
+    "docs/site/reference/events.md"
+  ],
+  "callers": {
+    "docs:events:generate": "node scripts/docs-event-contracts.mjs",
+    "docs:events:check": "node scripts/docs-event-contracts.mjs --check",
+    "docs:drift:event:check": "node scripts/docs-event-contracts.mjs --check && node scripts/docs-platform-surface-inventory.mjs --check"
+  },
+  "selectors": [
+    {
+      "expression": "outputs"
+    },
+    {
+      "expression": "`${error.message}\\n`"
+    }
+  ],
+  "factsDigest": "2ae525f9af7ac12b7e06fba9e55a8f57ccf5cda25033cd7c7c2084c2971a68a2",
+  "descriptors": [
+    {
+      "line": 11,
+      "sink": "process.stderr.write",
+      "role": "non-api",
+      "expression": null,
+      "basis": "literal-scalar",
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 38,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "outputs",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 40,
+      "sink": "process.stdout.write",
+      "role": "non-api",
+      "expression": null,
+      "basis": "resolved-template-spans",
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 42,
+      "sink": "process.stderr.write",
+      "role": "unknown",
+      "expression": "`${error.message}\\n`",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    }
+  ],
+  "slots": [
+    {
+      "line": 38,
+      "sink": "fs.writeFileSync",
+      "kind": "two-member-documentation-map-writer"
+    },
+    {
+      "line": 42,
+      "sink": "process.stderr.write",
+      "kind": "source-owned-failure-diagnostic"
+    }
+  ]
+});
+const eventContractDocumentationReceipts = new WeakSet();
+function eventContractOutputDescriptor(role) {
+  return Object.fromEntries(['line','sink','role','expression','basis','keys','sinkContract'].map(key=>[key,role[key]??null]));
+}
+function checkedEventContractDocumentationOutputs(root,graph,classify,sources) {
+  const profile=reviewedEventContractDocumentationOutput;
+  if(!sources.includes(profile.source))return null;
+  const fail=detail=>assert.fail('API_PRODUCT_EVENT_DOCUMENTATION_PURPOSE_UNQUALIFIED: '+detail);
+  if(root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+  const physicalTarget=relative=>{
+    if(path.isAbsolute(relative)||path.posix.normalize(relative)!==relative||relative.split('/').includes('..'))fail('path boundary');
+    const file=path.join(root,relative);
+    for(let current=file;current!==root;current=path.dirname(current)){
+      let stat;
+      try{stat=fs.lstatSync(current);}catch(error){if(error.code==='ENOENT')continue;throw error;}
+      if(stat.isSymbolicLink()||fs.realpathSync(current)!==current)fail('alias/symlink '+relative);
+      if(current===file? !stat.isFile()||stat.nlink!==1:!stat.isDirectory())fail('physical target '+relative);
+    }
+    return file;
+  };
+  for(const input of profile.fixedInputs){
+    const file=physicalTarget(input.path);
+    if(!fs.existsSync(file)||!fs.lstatSync(file).isFile()||hash(fs.readFileSync(file))!==input.sha256)fail('fixed source/input '+input.path);
+  }
+  const scripts=JSON.parse(fs.readFileSync(path.join(root,'package.json'))).scripts??{};
+  for(const[name,command]of Object.entries(profile.callers))if(scripts[name]!==command)fail('original package caller '+name);
+  const entries=documentationEntryPoints(scripts,true,root).filter(entry=>entry.source===profile.source);
+  const expected=Object.entries(profile.callers).map(([name,command])=>({name,command,source:profile.source})).sort((a,b)=>a.name.localeCompare(b.name));
+  if(JSON.stringify(entries)!==JSON.stringify(expected))fail('exact native caller vector');
+  const publicEntries=graph?.publicEntries?.filter(entry=>entry.path===profile.source||entry.canonicalSource===profile.source);
+  if(JSON.stringify(publicEntries)!==JSON.stringify([{path:profile.source,canonicalSource:profile.source}]))fail('canonical public entry');
+  if(graph.edges.some(edge=>edge.target===profile.source))fail('incoming import/callback');
+  // The first target may be absent: original default generation creates its directory/file.
+  for(const target of profile.targets)physicalTarget(target);
+  const facts=deriveNativeOperationFacts(root,profile.source,profile.selectors);
+  if(!facts||nativeOperationFactDigest(facts)!==profile.factsDigest)fail('complete native facts');
+  const roles=classify(profile.source);
+  if(JSON.stringify(roles.map(eventContractOutputDescriptor))!==JSON.stringify(profile.descriptors))fail('complete four-slot raw vector');
+  const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line&&row.sink===slot.sink)),role:'non-api',runtimeExecutionAuthorized:false,apiApplyAuthorized:false})));
+  const receipt=Object.freeze({source:profile.source,slots,targets:Object.freeze([...profile.targets]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({fixed:profile.fixedInputs,targets:profile.targets,callers:profile.callers})),qualifiedSourceVectorSatisfaction:'not-observed',sourceVectorGuardPreserved:true,currentEventSemanticClosureGranted:false,defaultMayPartiallyWrite:true,checkModeNeverWrites:true});
+  eventContractDocumentationReceipts.add(receipt);return receipt;
+}
+function selectedEventContractDocumentationOutput(source,role,receipt) {
+  if(source!==reviewedEventContractDocumentationOutput.source)return false;
+  assert(receipt&&eventContractDocumentationReceipts.has(receipt),'API_PRODUCT_EVENT_DOCUMENTATION_PURPOSE_UNQUALIFIED: unacquired receipt');
+  const slot=receipt.slots.find(item=>item.line===role.line&&item.sink===role.sink);
+  if(!slot)return false;
+  assert.equal(JSON.stringify(eventContractOutputDescriptor(role)),JSON.stringify(slot.descriptor),'API_PRODUCT_EVENT_DOCUMENTATION_PURPOSE_UNQUALIFIED: altered slot');
+  return slot;
+}
+
+
+// Exact publication validation inputs, not a generic temporary-file or fixture exemption.
+const reviewedPublicationYamlValidationInputs = Object.freeze({
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "source": "scripts/docs-publication-embedded-yaml.mjs",
+  "caller": "scripts/docs-publication-examples.mjs",
+  "incomingEdge": {
+    "source": "scripts/docs-publication-examples.mjs",
+    "target": "scripts/docs-publication-embedded-yaml.mjs",
+    "kind": "import",
+    "operation": "import { validateEmbeddedYaml } from './docs-publication-embedded-yaml.mjs';"
+  },
+  "fixedInputs": [
+    {
+      "path": "scripts/docs-publication-embedded-yaml.mjs",
+      "sha256": "4ec435e5e80ca0b2e4a99dd328df0d4d8d603f8e41587fe16a86069dce7c16eb"
+    },
+    {
+      "path": "scripts/lib/docs-publication-example-coverage.mjs",
+      "sha256": "5217aa0f2bd0303d614a0b94a29b8d78f3e1473433ad413cd5e19749fa660dda"
+    },
+    {
+      "path": "scripts/docs-publication-examples.mjs",
+      "sha256": "b55c0e9addce76c121f4f5aedd5863493d581dca0a0d90be69a420b7b942c262"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "c96741df38af067044811d38e0c0513dd9512e383493d08e984cf62e538b1bd5"
+    },
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "sha256": "8f83c70619ea13af7423175f8ecd6cd5e8cac7d672ba8a4774d23e813d87139f"
+    },
+    {
+      "path": "docs/site/use/diagnose.md",
+      "sha256": "0429e50c4852dc82b091eda209e06da6408d401b2fc648a7f720372d79b78ab3"
+    },
+    {
+      "path": "docs/site/use/install.md",
+      "sha256": "498df5af42f9e8757687a0ba28d659d21bedf63dbbde3c090950aa93512701f7"
+    },
+    {
+      "path": "versions.json",
+      "sha256": "04281d9b2addd93073bd548293ea9ba6e1d88c2a18fff0f34cbdbc14ca7fe2c1"
+    },
+    {
+      "path": "scripts/docs-api-authority-lock.json",
+      "sha256": "961ab61ec84a0a9491e24d6d863068f5a6bf3779891957a5cc428ac55e70f549"
+    },
+    {
+      "path": "scripts/vendor/api-authorities/483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446.json.gz",
+      "sha256": "18490bca3cabfffbc5d28b3d3643d26440d7aed6e070387591ad92b837a4a80d"
+    },
+    {
+      "path": "scripts/vendor/api-authorities/62c6de8f358da125b94468d39187edb1cea157d79503fdc50ccec8a6aaa79a76.yaml.gz",
+      "sha256": "b1ec72616d49d7ba59ae600c23a51d94d33b87011417af08812d6c74f251f9ed"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    }
+  ],
+  "authorityRecords": [
+    {
+      "compressedSha256": "18490bca3cabfffbc5d28b3d3643d26440d7aed6e070387591ad92b837a4a80d",
+      "compressedSize": 277432,
+      "contentSha256": "483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446",
+      "path": "scripts/vendor/api-authorities/483500149ee52ce5753d75f5639101d985bb4f5e902cc05b1ba7627465d62446.json.gz",
+      "source": "https://raw.githubusercontent.com/kubernetes/kubernetes/v1.35.0/api/openapi-spec/swagger.json",
+      "version": "v1.35.0"
+    },
+    {
+      "compressedSha256": "b1ec72616d49d7ba59ae600c23a51d94d33b87011417af08812d6c74f251f9ed",
+      "compressedSize": 52459,
+      "contentSha256": "62c6de8f358da125b94468d39187edb1cea157d79503fdc50ccec8a6aaa79a76",
+      "path": "scripts/vendor/api-authorities/62c6de8f358da125b94468d39187edb1cea157d79503fdc50ccec8a6aaa79a76.yaml.gz",
+      "source": "https://raw.githubusercontent.com/cilium/cilium/v1.20.1/pkg/k8s/apis/cilium.io/client/crds/v2/ciliumnetworkpolicies.yaml"
+    }
+  ],
+  "materials": [
+    "cilium-denial-template",
+    "pvc-probe-template",
+    "pod-probe-template"
+  ],
+  "temporaryPrefix": "kubeclaw-embedded-yaml-",
+  "temporaryFileNames": [
+    "cilium-denial-template.json",
+    "cilium-denial-template.yaml",
+    "pvc-probe-template.json",
+    "pvc-probe-template.yaml",
+    "pod-probe-template.json",
+    "pod-probe-template.yaml"
+  ],
+  "selectors": [
+    {
+      "expression": "item.schema ?? { $schema: 'http://json-schema.org/draft-04/schema#',\n        $ref: `#/definitions/io.k8s.api.core.v1.${item.definition}`, definitions: kubernetes.definitions }"
+    },
+    {
+      "expression": "YAML.stringify(value)"
+    }
+  ],
+  "factsDigest": "79dea1473f089d01718925c668685976c1dabfca5a056e851b15795089fcdf0b",
+  "descriptors": [
+    {
+      "line": 52,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "item.schema ?? { $schema: 'http://json-schema.org/draft-04/schema#',\n        $ref: `#/definitions/io.k8s.api.core.v1.${item.definition}`, definitions: kubernetes.definitions }",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 53,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "YAML.stringify(value)",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    }
+  ],
+  "slots": [
+    {
+      "line": 52,
+      "kind": "schema-validation-input",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 53,
+      "kind": "kubernetes-example-validation-specimen",
+      "kubernetesShapedPayload": true
+    }
+  ]
+});
+const publicationYamlValidationReceipts = new WeakSet();
+function publicationYamlValidationDescriptor(role) {
+  return Object.fromEntries(['line','sink','role','expression','basis','keys','sinkContract'].map(key=>[key,role[key]??null]));
+}
+function checkedPublicationYamlValidationInputs(root,graph,classify,sources) {
+  const profile=reviewedPublicationYamlValidationInputs;
+  if(!sources.includes(profile.source))return null;
+  const fail=detail=>assert.fail('API_PRODUCT_PUBLICATION_YAML_INPUT_PURPOSE_UNQUALIFIED: '+detail);
+  if(root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+  for(const input of profile.fixedInputs){
+    const file=path.join(root,input.path);
+    for(let current=file;current!==root;current=path.dirname(current)){
+      if(!fs.existsSync(current)||fs.realpathSync(current)!==current||fs.lstatSync(current).isSymbolicLink())fail('physical input '+input.path);
+      const stat=fs.lstatSync(current);
+      if(current===file?!stat.isFile()||stat.nlink!==1:!stat.isDirectory())fail('regular input '+input.path);
+    }
+    if(hash(fs.readFileSync(file))!==input.sha256)fail('fixed source/input '+input.path);
+  }
+  const callerProof=assertPublicationExampleChildPurpose(root);
+  if(!callerProof||callerProof.source!==profile.caller)fail('existing normal publication child');
+  const scripts=JSON.parse(fs.readFileSync(path.join(root,'package.json'))).scripts??{};
+  if(documentationEntryPoints(scripts,false,root).some(entry=>entry.source===profile.source))fail('helper package/public invocation');
+  const definition=JSON.parse(fs.readFileSync(path.join(root,'package.json')));
+  const targets=value=>typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(targets):[];
+  if([definition.bin,definition.exports,definition.main].flatMap(targets).some(value=>path.posix.normalize(value.startsWith('./')?value.slice(2):value)===profile.source))fail('helper public package target');
+  if(JSON.stringify(graph?.edges?.filter(edge=>edge.target===profile.source))!==JSON.stringify([profile.incomingEdge]))fail('exact sole publication consumer');
+  const entries=graph?.publicEntries?.filter(entry=>entry.path===profile.source||entry.canonicalSource===profile.source);
+  if(JSON.stringify(entries)!==JSON.stringify([{path:profile.source,canonicalSource:profile.source}]))fail('helper public alias');
+  if(graph.edges.some(edge=>edge.target===profile.caller)||graph.publicEntries.some(entry=>entry.canonicalSource===profile.caller&&entry.path!==profile.caller))fail('normal publication child graph boundary');
+  // This checks only the current base. The future owned directory/files are not observed.
+  const base=os.tmpdir();
+  if(!path.isAbsolute(base)||fs.realpathSync(base)!==base||!fs.lstatSync(base).isDirectory()||fs.lstatSync(base).isSymbolicLink())fail('canonical temporary base');
+  const facts=deriveNativeOperationFacts(root,profile.source,profile.selectors);
+  if(!facts||nativeOperationFactDigest(facts)!==profile.factsDigest)fail('complete selected native facts');
+  const roles=classify(profile.source);
+  if(JSON.stringify(roles.map(publicationYamlValidationDescriptor))!==JSON.stringify(profile.descriptors))fail('complete raw schema/specimen vector');
+  const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line)),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,schemaSemanticsNewlyApproved:false})));
+  const receipt=Object.freeze({source:profile.source,slots,materials:Object.freeze([...profile.materials]),temporaryFileNames:Object.freeze([...profile.temporaryFileNames]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,materials:profile.materials,files:profile.temporaryFileNames})),nativeValidatorSuccessObserved:false,newBinaryProvenanceGranted:false,futureTemporaryPathStateObserved:false,sourceAttemptsFinallyCleanup:true,cleanupOrRollbackGuaranteed:false,scope:'Only exact normal publication action; optional corrupt controls are not a new caller grant'});
+  publicationYamlValidationReceipts.add(receipt);return receipt;
+}
+function selectedPublicationYamlValidationInput(source,role,receipt) {
+  if(source!==reviewedPublicationYamlValidationInputs.source)return false;
+  assert(receipt&&publicationYamlValidationReceipts.has(receipt),'API_PRODUCT_PUBLICATION_YAML_INPUT_PURPOSE_UNQUALIFIED: unacquired receipt');
+  const slot=receipt.slots.find(item=>item.line===role.line&&item.descriptor.sink===role.sink);
+  assert(slot,'API_PRODUCT_PUBLICATION_YAML_INPUT_PURPOSE_UNQUALIFIED: new slot');
+  assert.equal(JSON.stringify(publicationYamlValidationDescriptor(role)),JSON.stringify(slot.descriptor),'API_PRODUCT_PUBLICATION_YAML_INPUT_PURPOSE_UNQUALIFIED: altered slot');
+  return slot;
+}
+
+
+// Exact four-caller mixed validation helper. Raw API/UNKNOWN roles are retained.
+const reviewedPublicationNativeValidation = Object.freeze({
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "source": "scripts/docs-publication-example-native.mjs",
+  "caller": "scripts/docs-publication-examples.mjs",
+  "incomingEdges": [
+    {
+      "source": "scripts/docs-publication-example-assets.mjs",
+      "target": "scripts/docs-publication-example-native.mjs",
+      "kind": "import",
+      "operation": "import * as native from './docs-publication-example-native.mjs';"
+    },
+    {
+      "source": "scripts/docs-publication-example-projections.mjs",
+      "target": "scripts/docs-publication-example-native.mjs",
+      "kind": "import",
+      "operation": "import { validateHelmOptionTemplates } from './docs-publication-example-native.mjs';"
+    },
+    {
+      "source": "scripts/docs-publication-examples.mjs",
+      "target": "scripts/docs-publication-example-native.mjs",
+      "kind": "import",
+      "operation": "import * as native from './docs-publication-example-native.mjs';"
+    },
+    {
+      "source": "scripts/tests/docs-publication-examples.test.mjs",
+      "target": "scripts/docs-publication-example-native.mjs",
+      "kind": "import",
+      "operation": "import { validateWaitTemplate, validateProjectFactories } from '../docs-publication-example-native.mjs';"
+    }
+  ],
+  "publicEntries": [
+    {
+      "path": "scripts/docs-publication-example-native.mjs",
+      "canonicalSource": "scripts/docs-publication-example-native.mjs"
+    }
+  ],
+  "packageHarness": "node --test scripts/tests/docs-publication-assets.test.mjs scripts/tests/docs-publication-links.test.mjs scripts/tests/docs-publication-examples.test.mjs",
+  "fixedInputs": [
+    {
+      "path": "charts/kubeclaw/Chart.yaml",
+      "sha256": "07500eebfb03ffb4b9fc4cd67b5cb5d50edb94147111f5fcb11d313a89483521"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/.semgrep.yml",
+      "sha256": "430adf26f8a72db1275e92061d33a2e1c66ef29199fcde647e3ac34ec51de58d"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/.tflint.hcl",
+      "sha256": "47c7d922abb5f4d1704e291c92964491dc74dae658b9278245a5341aad954b8a"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/.yamllint.yml",
+      "sha256": "32e922f3c1c45cbef3d46fe40a476460a10ee1c44794436bd8a3d3f10f62513c"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+      "sha256": "224c23972669a3bf2fc06cfb16a16826a5fa9ec034deceaa56b3cd0aa15b6728"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
+      "sha256": "09530ef3214cb9186fb421e38898b7421576d87942f2fdb4784a87314c9cacae"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+      "sha256": "ad76b2e0987bc7f8f8df9480d2fc11d8e123b229293811b0f2c4871b7884e138"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/eslint.config.mjs",
+      "sha256": "688ce808afd2c7f69024ce80d8d82ba1c3642a3daeb8187863464db83b3a3670"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/jscpd-tests.json",
+      "sha256": "ad5863319bfcde746150cdd37f36664d82a84e075b0bdc341ff151a81b9838b5"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/jscpd.json",
+      "sha256": "0dc8789cd2cbf1341eed9bc43ae4991c60e80bb9825ecd843c0b6bc594fe6af9"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/knip.json",
+      "sha256": "a4cdaefa215be97e2852da29b16bdbf663666fa46bf9239d5ae31f8b65e77bbc"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+      "sha256": "3c0e2815bc1154e89fdeca2623adbc5018a4b6348f966bdec6dadf82cbc32781"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/lint-baseline.json",
+      "sha256": "de99dfe709e8779d55b1079334cea0415b661f3933cc32bd36260fb3bc393ed7"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/lint-policy.json",
+      "sha256": "2c3a9eb507d31524d8718febaed5df780e12438037e0e61fcedf438748802993"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/swarm.config.json",
+      "sha256": "e7331f631ed85b4c85ca6b4ab5fccd62a1381e40f973e441888d8aa59cb3f678"
+    },
+    {
+      "path": "charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+      "sha256": "e80eaa390bc2b0887e7f9d2380f38a1f9d394ec7bfab3f268cd3643b5cc95160"
+    },
+    {
+      "path": "charts/kubeclaw/files/reset-managed-plugin-projects.mjs",
+      "sha256": "1adfc6882e9b24ed713ea2dddfad45da0106a39af4d786d91a0d94ccf50fad93"
+    },
+    {
+      "path": "charts/kubeclaw/files/restore-managed-plugin-config.mjs",
+      "sha256": "5f4f670ee9aca49bc17a13265c867cd6100ed08fc28544f61e91ea566201b44f"
+    },
+    {
+      "path": "charts/kubeclaw/templates/NOTES.txt",
+      "sha256": "9beb978bc26b4432f319992574860cce2fa041e5d3d5554415a59e2b6091a3cc"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_demo-ready-client.tpl",
+      "sha256": "ac285eb2f3f3527bada6abc5338cf9b2d7c73b0518215281a8cbb614babe6536"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_helpers.tpl",
+      "sha256": "69986722975a973479b9fb1a2c35ab1a1ecb972662e8c19dd03718ac441f5103"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_registry-clients.tpl",
+      "sha256": "7419b2dc94cacf93f15867249ce82fe02f62b6ea2b7df504103d527b561f2b46"
+    },
+    {
+      "path": "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+      "sha256": "f2a66ef5c8228675daa1ad16d29ffd71e298d9c65fefde19aa6588e457e4b67c"
+    },
+    {
+      "path": "charts/kubeclaw/templates/archviewer.yaml",
+      "sha256": "5a89affd7b25f63ff38a0de9bec61388927e06b5d20a7075f6af0a92d4c7cb2a"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+      "sha256": "760a82838ffce8fbf2a29f17914a1395b5dbaac61b71742155e378f962ccaee3"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+      "sha256": "405866681db66cc38aa8b9018cfdb18bff2fd6a56137ee39632b9eebd808b62d"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+      "sha256": "5dff68d75c46476c582e8bb5d677b758574ecd1a2a0676363ef11eb188cb83f8"
+    },
+    {
+      "path": "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
+      "sha256": "cacf352b9b0ea8daa2f7d47f59ca00256cc8997621075441a22966da0aca8279"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-gateway.yaml",
+      "sha256": "7282446c984679ad226222708c98d716c310686bfb39d8dd75a1ccd32af3feda"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-skills.yaml",
+      "sha256": "0147b857c5c3659cfad74bf410a39e81f6187d5d1b7df2ebdb8d23c7595f7a6c"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+      "sha256": "f8ad0d8be50e5aef97a57523811b74b71efb8405b1872ab5ec89b11974b52999"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+      "sha256": "23ccc1eca6b30efcc57f32e0689a06a5be1ad4fbee967b3632750a95e5d6e7be"
+    },
+    {
+      "path": "charts/kubeclaw/templates/configmap-workspace.yaml",
+      "sha256": "0b84da5dcaa5c5a3c698f7b53b343882eeedb7cfda3275d2ee5e71fb94a2b647"
+    },
+    {
+      "path": "charts/kubeclaw/templates/demo-ready-service.yaml",
+      "sha256": "770f0e10f731ec8881c879654147fd62b12b3c549e2f88288c561101956be5f1"
+    },
+    {
+      "path": "charts/kubeclaw/templates/deployment.yaml",
+      "sha256": "8e780bc0033c3da5c0a3d4db53e8ba9e0753200a072ce0ed63a598c461231883"
+    },
+    {
+      "path": "charts/kubeclaw/templates/pvc.yaml",
+      "sha256": "315dfd8674eb45996769d61323f268bbb77e33b48ee138f8dd227b8761343fa9"
+    },
+    {
+      "path": "charts/kubeclaw/templates/rbac.yaml",
+      "sha256": "66bde2d8f04e0e77e373cbd6e7722c00fb98345afa1042487a2b60f777914f3d"
+    },
+    {
+      "path": "charts/kubeclaw/templates/secret.yaml",
+      "sha256": "33a2926486d301371ffc741826079277a2a48daddbabe209d2b466f44c19a01f"
+    },
+    {
+      "path": "charts/kubeclaw/templates/service-extra-nodeports.yaml",
+      "sha256": "19a2c1d76de9c77a291036042a8d92b9c9f4df7d8b990d7e669217c98b1fcd17"
+    },
+    {
+      "path": "charts/kubeclaw/templates/service.yaml",
+      "sha256": "76a347213feffadad635311cc89fdbfb896c6a3f800e8e92528ec9efee280cc2"
+    },
+    {
+      "path": "charts/kubeclaw/templates/serviceaccount.yaml",
+      "sha256": "7b7b2e4ba4dc139f6d4953fa242ed70ea20de090bbe30287215f5c7f1349a13f"
+    },
+    {
+      "path": "charts/kubeclaw/values.yaml",
+      "sha256": "2bff3214d88e912445b1c435b6353cfb438cd5184124b3eb0cc9f7394dfc05aa"
+    },
+    {
+      "path": "charts/prism/Chart.yaml",
+      "sha256": "3c164739e59867d636915b3b32b5a10c1450c883ee4074f919cce96473e6ef19"
+    },
+    {
+      "path": "charts/prism/ci-values.yaml",
+      "sha256": "ab6d6dad564f99e90c2a9ec4260bc55640aa7e6bb39300922500f3e346cc290b"
+    },
+    {
+      "path": "charts/prism/files/prism-backup.sh",
+      "sha256": "6823dff4e65d056a82676d7970474921d55cd9573960a82344f15dd0eeaffece"
+    },
+    {
+      "path": "charts/prism/templates/_helpers.tpl",
+      "sha256": "33d5044abeae2faabd1202e544aeb33b34a30fb7afe9300b4bfb11d7ef914e49"
+    },
+    {
+      "path": "charts/prism/templates/_product-decisions.tpl",
+      "sha256": "bf5fb46a70cc33359e8cb08011c36ebdf27ca195960d4911ff49fc92ed1eee2c"
+    },
+    {
+      "path": "charts/prism/templates/_worker-trust-readiness.tpl",
+      "sha256": "9240a98b2ae24fa5002147972c6aa4eb8c11b89fab7f4ac392b692e4705fccd7"
+    },
+    {
+      "path": "charts/prism/templates/backup-storage-check.yaml",
+      "sha256": "7c17c21949a6cce79f47f2646f4beca3d85a9baa73bfaae58a450b7fc76a5a06"
+    },
+    {
+      "path": "charts/prism/templates/backup.yaml",
+      "sha256": "8b22353f1a790233a269e462ee52fd72d8fc1faec73885f7fbe5ffddf0e7a406"
+    },
+    {
+      "path": "charts/prism/templates/configmap-worker-trust.yaml",
+      "sha256": "61d7e98c21c7f9ae69fc7a5bbeec145fff6c8c85123763cb8cdd8fb562c1ebd6"
+    },
+    {
+      "path": "charts/prism/templates/ingestion.yaml",
+      "sha256": "73f19bc39066d2f6f0944846c2784c193a4d1e59202ed737d3a6c6ff8ec77f98"
+    },
+    {
+      "path": "charts/prism/templates/jobs.yaml",
+      "sha256": "ed074c7d460591a458e2bfe3967e93ea4632588f460500d2e7965d68324140da"
+    },
+    {
+      "path": "charts/prism/templates/networkpolicy.yaml",
+      "sha256": "45aa5b3b5de8b05f698c104633c9411bc91a55818361cbf13f479200e65dc208"
+    },
+    {
+      "path": "charts/prism/templates/postgresql.yaml",
+      "sha256": "e81248bfa623695e0e79f36ddf347ad75a1d7bc449a4250287a96a80e17742c1"
+    },
+    {
+      "path": "charts/prism/templates/product-decisions-networkpolicy.yaml",
+      "sha256": "1a0764020a197daa59c240b2292e3317bedd9695817a2a48c819dcb344e88c7c"
+    },
+    {
+      "path": "charts/prism/templates/serviceaccounts.yaml",
+      "sha256": "314f1d925e667fc98e5000486599431ea2ce7e189f420576378264c10e0f02be"
+    },
+    {
+      "path": "charts/prism/templates/services.yaml",
+      "sha256": "c09a05501eca8a1876e44c1d70898fb5dd6770210e777353d6eff0ee9cd9ae1b"
+    },
+    {
+      "path": "charts/prism/templates/workloads.yaml",
+      "sha256": "9bb2865f5d232b2cc5fac39259c8957e573decc891d2c9b25d7554da01148739"
+    },
+    {
+      "path": "charts/prism/values.schema.json",
+      "sha256": "8fecbef39b64b952a273b004e49106fb50e51d2fdfdad3f62a0b0892b2bb348f"
+    },
+    {
+      "path": "charts/prism/values.yaml",
+      "sha256": "add69f96f117b8faed83b42133b7804eacca58ef850ef7428ea039842028d298"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/package.json",
+      "sha256": "9aca27855f2ebe49f7bdebc16b1e19f40d9f9d3d0c8bdd48f21b1bd26f34887f"
+    },
+    {
+      "path": "contracts/delivery-manifest/v3/src/index.ts",
+      "sha256": "5293ab3d5813e814487011bd80cad516bc3d1f5faec1181c86675505fa8ba294"
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/package.json",
+      "sha256": "54a92a1b6802019a8654ee4224a12abaad3fcc580f4b01d6baaaec91ba7c687a"
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/canonical-json.ts",
+      "sha256": "378c3ba35ca88e40527e3912dfc0f897e6d5cbdc1dfd40b3a825fbf1241e9177"
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/index.ts",
+      "sha256": "f4f928c9b1b8c1345c829a44b89d05f847b057051aff05ce6d8cd8b98ed897c2"
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/types.ts",
+      "sha256": "667337c76a94709fa5b4b817adfd112859397924e163fc5bca3bacf50c5287f9"
+    },
+    {
+      "path": "contracts/pipeline-observability/v1/src/validation.ts",
+      "sha256": "7901db9ca3d9253e1edfb9b816034334b1d4f763fca197b64e6249f86bfc5977"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/a11y-config.json",
+      "sha256": "6b8c6b88291f1dd613c663aa73fb71f134d7107c92ee064255e2fb052ddf0eb5"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/api-flow-config.json",
+      "sha256": "3a2a4e5fc4196347ef30b70285ed229d30f907ef59eb17a60467d6f3b5c97750"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/api-suite.json",
+      "sha256": "7bffd67986e5973678980b0f84373324812a88bc6c8c94a2c84bdfd00ce03d89"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/browser-profiles.json",
+      "sha256": "bc337e46e47306272fca7e6d52756df642da78740d45bce36e01498565e6598a"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json",
+      "sha256": "48a622ea73abb998a1752fd00f3f13714c2d5c85765959e8f451b6eecd486bf1"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/e2e-playwright.json",
+      "sha256": "8692f1b6c9fcbe969d0548d4de48bbf9f51091ded062b64907f36ef2e9230f7e"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/e2e-result-cypress.json",
+      "sha256": "a3599bfedf2e0a7dbd33b00f85a3699cac7b89ef9b20e2652471cecfabf2c601"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/http.json",
+      "sha256": "a7ea2b9f2eafa3e7f070c57596fc79429496fd41a929891f8fa6d205532edd9f"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/kubernetes-fixture.json",
+      "sha256": "f122b79d53496ed965bee7cdd01bdd4fc0346a58cc3b029b8b9cfd64ba0d98d1"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/lighthouse-performance-config.json",
+      "sha256": "a261bee932439f80f320c094caecc281390ed95dc4c1f8d6bda50c251597969a"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/lighthouse-settings.json",
+      "sha256": "9f6737c9e8976aa9fbbbd7e0e47112d70508822b400e41e70b2f3f6e348d1c27"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/openapi-config.json",
+      "sha256": "29f2c83c1916747bdfd989f487a5a8801f01092d67e98080ac38a390e704370c"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/security-config.json",
+      "sha256": "0e5eb051681889239aa8bbb1b06b694acb7bcdd53f5f65650a19d9dc1d425eef"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/size-budget-growth.json",
+      "sha256": "2d3d71aaa043d66dd375cf38b4ea06029a91170e0c3f27a70f4d1407c3909ef0"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/size-budget-tar.json",
+      "sha256": "fe92786c69a485688c90385ba42ac6c77e13f1102033f360b59eb2e67d668bc1"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/tailscale-exposure.json",
+      "sha256": "fe19207f0984964c058a8c05198010b9dedcf143eba841830dde633dc84713de"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/unit-suite-blocking.json",
+      "sha256": "6c405f044793d7cae65f7da556ee45d0c799e2acc392970055f28cf3becd7166"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/unit-suite-with-coverage.json",
+      "sha256": "df5f0185869e59d7579f842712f9be843b1f79201b8686a1d81214f4c124401c"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/visual-baselines.json",
+      "sha256": "2dd9d80a8cde2b086dd974f3e13570b8c46dff4165553a97791a595e3c248326"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples/visual-config.json",
+      "sha256": "09af4ca2ab315a354a2c3aff3f18169f8103326eaf2c8a1b7a1a37676a8776b3"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/package.json",
+      "sha256": "234fe885078a92ec896b1f32675a20c3bbbe427cfdb1e3fd684932cc6291d48f"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json",
+      "sha256": "64403da87f9401086dddcaee5ce7ab499fe07170e1d7eae005a485422a866a39"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+      "sha256": "fec4bcd487eb09590dee3c6d6228d6088963c5476747c8731db4d3a53a114637"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/lighthouse-settings.v1.schema.json",
+      "sha256": "2cf38765e6ec83870f92204613330a0cce235d0925c8b3e6995950f972d93c96"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+      "sha256": "e97aedc52818a5f89f2fc88090b99e7b7339966603f686b64c69459270a655df"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json",
+      "sha256": "6e3b24ecebee45556a69a26b04e24503ce2ba75ddc5ddf35878defc89c9a65e4"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/coverage-expectation.ts",
+      "sha256": "5eda774f82255ff6f370296498cba229de7b2bbd057d7872c1731f105cbc6c04"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/coverage-result.ts",
+      "sha256": "654b5a308de7de6e07eae48f8061ff826d746e2f577b77494788ceab08ce6052"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/coverage.ts",
+      "sha256": "bd5a20ccbefab393453dc9072ceb72343ee40741776909007d3a084578b0855d"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/digest.ts",
+      "sha256": "ee29d0b95e09ae305b9b79d1f289514100c08b4badbd427057cdfeed2fdfa762"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/gate-decision.ts",
+      "sha256": "3b2351f0da524a6063897d52e2df02d3f58322b363b8d22f8e7bb8c2c225ef24"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/index.ts",
+      "sha256": "d07da1c8e237c2f5b110221d03c4b6fbabb1cddd564a7b71cde1133a6bd86224"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/remote.ts",
+      "sha256": "7f02db208c0728dabdcf51604e149f97b018666019e51b8e2853338e9f7bf9b8"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/types.ts",
+      "sha256": "704d87007fce75e3f6d8eafd73273478de08c0bf6b1d0ee753f3da31b9fc010c"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/src/validation.ts",
+      "sha256": "0932fe19bc79f5dba2a63842cf7892ac6ae0ea6885ed2efb36ac4f2e70b4b69a"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/a11y.v1.json",
+      "sha256": "282abd3758498ac1906207fee2ef7c7174a5c3593ed045cfb8820faa0db32cd1"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/api.v1.json",
+      "sha256": "6fe84be884aa1ef55e53f911ae26ff3b961fe9556f05a879e0e692c29b9e07aa"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/container-build.v1.json",
+      "sha256": "24b15b4c1ad52bac14fefdc050675dfeeb52e1d8f3533809b15bc7ff4d35c87e"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/e2e.v1.json",
+      "sha256": "733ec045c8c33512522e71a38c1ac5e180c01d554b4d993461ba3564fe2599c4"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/http.v1.json",
+      "sha256": "46d5c420cdaf6f0506a1be5877cbebd10c72fe4e965a0ee1170f50d95dcb2959"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/kubernetes-fixture.v1.json",
+      "sha256": "e7525aa2cb4464a83fd1a2f4844192c6d1feedc3b50ec102bf4f76bd03d3d320"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/perf.v1.json",
+      "sha256": "8f7c2eedf5aed38f3655b1551dc3698d718f020c66107b0b6b129b914bb6b985"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/security.v1.json",
+      "sha256": "c80ba0003edd39789a185293a4e49722314f233f78608c836bec9b01fc3d9177"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/size-budget.v1.json",
+      "sha256": "fda75b7935aa53f1994e27bcfd300a526fe77dbeea36d063282245f7564843f2"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/tailscale-exposure.v1.json",
+      "sha256": "84620d85f16f8efded52fc8fb5cd37de76ef4f33763afe7ad7898f49e6e5fd34"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/unit.v1.json",
+      "sha256": "f89c12bee9794dccd0779621911ee96fc2cbb1398d5bb3e699a34e9cfaa27af7"
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites/visual.v1.json",
+      "sha256": "8e2489f267882c482c45830a6e0f876d07f4043ae33a6433ad85518d625a3bdf"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/package.json",
+      "sha256": "40d234e5ba169853c0c1ca4dcab3590373163c6b7189461157ff569a7aa42df5"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/digest.ts",
+      "sha256": "10c61ec122ca6e65c7deef2c059a19ad70627cf65bdf1eb65f0ac2539457d780"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/index.ts",
+      "sha256": "013609ae51e836644640820de878378c0cbc797d6c299f06d926925790676c72"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-types-v2.ts",
+      "sha256": "e75e058344978e1a94856c05caf03cfcff92ccb67e6fefe5c91249d4bc3e5fc8"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-types-v3.ts",
+      "sha256": "37133709e46db3c537178b2ce4ec0666317e9b461360f25b4c349e71f5adab36"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v2.ts",
+      "sha256": "9c75271a9830c86faa484acaaa52e042d03a56c53b027d4aeae5f8531d06e54e"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts",
+      "sha256": "00332a01a4674616f0859a83d704771b497d0c0d4220629a35b9a7414f924784"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/trust.ts",
+      "sha256": "c650fdbe7f43b422f36d050df291d2a00fdd4bc694a1dae5d6236b4814743cd5"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/types.ts",
+      "sha256": "399e42c696f561fbea8f38305252f873179f1b71115f7eacd961f7b5f899ec43"
+    },
+    {
+      "path": "contracts/pipeline-worker-core/v1/src/validation.ts",
+      "sha256": "a4caf6147b58a5a68e49ed02bbe6ed75ce7f84f8d5baca4243b3519aecaa3147"
+    },
+    {
+      "path": "contracts/prism/v1/package.json",
+      "sha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f"
+    },
+    {
+      "path": "contracts/prism/v1/schemas/prism-v1.schema.json",
+      "sha256": "7e8e248ffbc3753ee462d8e4f1d8de98499c02df94f07f0bcfc28367886bf99b"
+    },
+    {
+      "path": "contracts/prism/v1/src/baseline-archive.ts",
+      "sha256": "7017d8472863ec34449a725300f5c92707aa3dce13371f5e982621cce9b25237"
+    },
+    {
+      "path": "contracts/prism/v1/src/complexity.ts",
+      "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df"
+    },
+    {
+      "path": "contracts/prism/v1/src/document-semantics.ts",
+      "sha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2"
+    },
+    {
+      "path": "contracts/prism/v1/src/index.ts",
+      "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18"
+    },
+    {
+      "path": "contracts/prism/v1/src/node-catalog.ts",
+      "sha256": "6c005e8a54eb395677727023fe8bb659c223cd252baac6d1e628112172127104"
+    },
+    {
+      "path": "contracts/prism/v1/src/validators.generated.mjs",
+      "sha256": "26e790a95b065b5b77538f501863a09a90f2ccd67e1c76cf617c8fff2dc09f41"
+    },
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "sha256": "8f83c70619ea13af7423175f8ecd6cd5e8cac7d672ba8a4774d23e813d87139f"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/package.json",
+      "sha256": "858afd76f0e8f9d21fac54b22cb409b5c11effd93b5530c91eb40bc4b9907a39"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/plugin.json",
+      "sha256": "ffcd1ea2b759081d86a9812ea05b37a347ce13bd1a68a2640bf1e0a29146bd73"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
+      "sha256": "ecb4659a0d13372817eb167c4af7a0eaba08e1b8f3ccf496dbb6fa287cc992ad"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
+      "sha256": "39dcacb7784aaf29e76304fb161c03c4d050a4abff4f080b4bd39f604ee486c4"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
+      "sha256": "1b312c6f2a9601239a47a3ad6ebc7d3ff67c5e377b1b2a905e743298e9d35859"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/src/stage.js",
+      "sha256": "c57349a102e2a549c270e3a9062460fce887ab642f330a9b78980611272322e0"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
+      "sha256": "075a2ade71a516359dc13ed2bda42afb4360e12e532f06f2bec6d872beb4e80f"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/journey.mjs",
+      "sha256": "be2ca59fb8bd6f2571ba2a27ee176241ef76436dac5d1ae07cd73354134e2d06"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/package.json",
+      "sha256": "19024f350c83619ca208e044bea042455517084566e099270ac9a0e0a2b50dd9"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/plugin.json",
+      "sha256": "42c68ce5ae6ec703393d16617e5ec3884f2e7a0453891e9e8924eb065ee0425a"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
+      "sha256": "8076bdee81e673be6e14805339f1f28a3d2cf294c0d56254463a74fabb031008"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
+      "sha256": "2630fff1d6be622bfc3ab96f4f9a3960d0e5afdaae53528416ca13b6b19b1b3a"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/src/observer.js",
+      "sha256": "886992a473fc3a1d0401d16fd6a5b1ed214976e5a46297e5e644508b06069041"
+    },
+    {
+      "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "sha256": "5c180f77204e94677376d6aa0e286c4f6109fcb45480098d5c4d6e68b5bdcc26"
+    },
+    {
+      "path": "docs/site/extend/first-plugin.md",
+      "sha256": "245efa0f563d4b3a9675aa7d995bd484f1ed6e44f31697d922641f6969e502be"
+    },
+    {
+      "path": "docs/site/reference/buster-runtime-configuration.md",
+      "sha256": "630e5513c5b3f13c736368b311b3c8b23f3dc0bcb4f215e81cff072c82116a5d"
+    },
+    {
+      "path": "docs/site/reference/capabilities.md",
+      "sha256": "bda8980cbbd060a24f1b0e7c26cd5a5ff7aee5683c9c81dbdced48a849ba7d3d"
+    },
+    {
+      "path": "docs/site/reference/configuration-precedence.md",
+      "sha256": "507a6da536dc050dbc64eb2d39528af33bd64255a5586be20cf0346c1d6dfa04"
+    },
+    {
+      "path": "docs/site/reference/documentation-route-registry.json",
+      "sha256": "7e5e283c02677c552eda930da2e65baa2fb4076182f8b48b607876fff10fc8f7"
+    },
+    {
+      "path": "docs/site/reference/generated-documentation-map.json",
+      "sha256": "a0f5e47a4d8620e717d1a02d8a114d46400dec04dd4cf44ff7101ae966aa6673"
+    },
+    {
+      "path": "docs/site/reference/helm-values.md",
+      "sha256": "2b353ec62d140afddf3d8caaa0610fd70d7104cb79915678dbc1aedd7a0b19db"
+    },
+    {
+      "path": "docs/site/reference/host-and-prism-configuration.md",
+      "sha256": "f4cb0d8a77902249345dc75804a7d54d4b7b56106d4287c0ea62637f8b5198b6"
+    },
+    {
+      "path": "docs/site/reference/nova-project.md",
+      "sha256": "e1b616ff78668582570727541b5d0acf4869d3341a96899512ee5c450e35e03f"
+    },
+    {
+      "path": "docs/site/reference/pipeline-definition.md",
+      "sha256": "2883069bd568fb73f47d6524680eae63a03494a5b52f0afced88a4d7674383da"
+    },
+    {
+      "path": "docs/site/reference/pipeline-json.md",
+      "sha256": "e4bbbcde519911fb512acd60b1b4d3945b480b0cc9b8312d757faa96361ea128"
+    },
+    {
+      "path": "docs/site/reference/pipeline-platform.md",
+      "sha256": "53a81b42c1dfbde0f0d0a0a8c61eaabfa36975325e8b1c5cd10653541d0909de"
+    },
+    {
+      "path": "docs/site/reference/project-pipeline-publication.md",
+      "sha256": "28c71320dc54ca369b91d8135d61a109bdf8c4c8f7fd06e20b8cb95ffd7898f9"
+    },
+    {
+      "path": "docs/site/use/operate.md",
+      "sha256": "eceeb467c5a78e3d587955cff2a795d059700339483efe38040a70628e374483"
+    },
+    {
+      "path": "docs/site/use/prism-studio.md",
+      "sha256": "292e32670549f7740e762a0f1da39aaf87f3d576fcd23d5f7595c606ea8d7f6a"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project-input.mjs",
+      "sha256": "5e6248abc70806f463293b14193a402a24f6168ab12344762d993d0a99f202da"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+      "sha256": "3341ba042e0e8bb42a4554c41bee38ab5986ae39afded23c74bd01ac9bbf3ed2"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project.mjs",
+      "sha256": "a25552b997a071342fb6e2003ab2ee8b3e9cd963cbc63ce11edb38a5aa075240"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/first-project.mjs",
+      "sha256": "a6c7965165ad093a109c1c5210802914c1382585dd315afea8ddec79c4e08442"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/local-core.mjs",
+      "sha256": "3e54567536d0b13090f2ea37f1b04b4fad725415767c70e24533419eba985744"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "sha256": "bd7def69bea092fe006ada1efc331b5c049c97c0768bf0ece7d4aedca9c0d18f"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+      "sha256": "9ea32431ccb8979cb625a6c487fd39e348a49e2fe3bd332a647cdc3a9c89e239"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/request-trace-success.json",
+      "sha256": "e2f92f057f5e2c7d1f8bd9d8c9faebdf826d1f818bf0c44405a9d0efe5b07ed7"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume.md",
+      "sha256": "1b89a8bb14787210a9dfdb390c1be232c917e5b5724b843898436d9c9269677c"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "sha256": "c1532f9bec42468e078856298a4ff697b7691c81d6fd728f9a53fde897f64adb"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "sha256": "bb56a824887fc969186e48babe5744a5050fb143099a19e065b00cfbe7c19567"
+    },
+    {
+      "path": "package.json",
+      "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    },
+    {
+      "path": "scripts/docs-publication-example-assets.mjs",
+      "sha256": "0d4aef98781cc9bf1f38302b1de373062556f21ad12e41aef6f20e9ed1ec3d25"
+    },
+    {
+      "path": "scripts/docs-publication-example-native.mjs",
+      "sha256": "75ccb5e8b86cad5395e2dd698aa7de67583c165bd1daa9718ab8e0153c450fa7"
+    },
+    {
+      "path": "scripts/docs-publication-example-projections.mjs",
+      "sha256": "35e335eb3b478af86fedfae12c180a722cd2993cf9b1fbc9f6d028c8f09aee71"
+    },
+    {
+      "path": "scripts/docs-publication-examples.mjs",
+      "sha256": "b55c0e9addce76c121f4f5aedd5863493d581dca0a0d90be69a420b7b942c262"
+    },
+    {
+      "path": "scripts/docs-publication.mjs",
+      "sha256": "c96741df38af067044811d38e0c0513dd9512e383493d08e984cf62e538b1bd5"
+    },
+    {
+      "path": "scripts/lib/docs-publication-example-coverage.mjs",
+      "sha256": "5217aa0f2bd0303d614a0b94a29b8d78f3e1473433ad413cd5e19749fa660dda"
+    },
+    {
+      "path": "scripts/tests/docs-publication-examples.test.mjs",
+      "sha256": "91072953045370980097bb0a051d7b5d4035922910d45084db8b0c4c81ada693"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/artifacts.ts",
+      "sha256": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-axe-runtime.ts",
+      "sha256": "7370bdf54556875b996cc0ac4c4219a8c9ddc11d25dfb72875f41806e82482c8"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-lighthouse-runtime.ts",
+      "sha256": "a7af35a6b7df314129cf9150c3d44d2017c2bf47b9e529ef1ff6962129966b75"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-playwright-runtime.ts",
+      "sha256": "20e32c52051339237e14cf1bed0da9c690ece23297bec9bb77a628e8df211917"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/browser-visual-runtime.ts",
+      "sha256": "197b89c97cf756a90cbf2effd3485391f8cdbe494829ef6c668e527f0f695382"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/buildkit-readiness.ts",
+      "sha256": "7f50b4c1c6c1e661319dd2f9ba1afecf27dd19a26c06ac51ef52abc0d97703f3"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/composite-capability-runtime.ts",
+      "sha256": "fbd71da7e0fe2e53801e60e36c3c13636b4fcb5be0e43503ef66571820b0810f"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/container-build-runtime.ts",
+      "sha256": "9316f1e642640c768f268aa7f236f075e9290516543ded5148869914e91f907e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/dependency-process.ts",
+      "sha256": "c1f305fd3281328e1cd5714b1366cb946907e2a96af2bf6c3f629c2ab4ed354b"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/direct-command-runtime.ts",
+      "sha256": "eaacae3a6c4b3110039b7134378b8eb114dc8cb2161c4bc593c405c967afa006"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-generation.ts",
+      "sha256": "cbaed4e6debf9e225c0c5aab51ecc8383bed69ff3b5dc4f7fe7c18a0ee02a360"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/exposure-handoff.ts",
+      "sha256": "4e725c913e11f5eb11a4444c9a96373e423c06b2da33287e5269fbe1401b9e83"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/fixture-authority.ts",
+      "sha256": "b3fac0a68c4cab2d3c1abfabf10b38848cc6917512a6684e80a030656ee0a1f5"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/generated-demo-credentials.ts",
+      "sha256": "0df7b344a3ccb3c27322a0381ca8f2cf891feca22140c9a5e1899fa520ae10da"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-fixture-runtime.ts",
+      "sha256": "b9f8bee4d6ed977daf39be3dd91ba8e8323e5b625ff630b53ed1aa923a989833"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-manifest.ts",
+      "sha256": "42f3533feab2fcf98a60e4fe570d9980c6d008785d65df6e73e15e3f2f54dc85"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/kubernetes-runtime-security.ts",
+      "sha256": "01da0c323776cc8f9f4778d9ed2afb198133b79f7f2afbfa0850f657dda357b0"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/network-http-runtime.ts",
+      "sha256": "b0dfbf0ba6ef2333572754d5a3f0510b8b5c825e47e208e519c2d4a90f99168d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input-lifecycle.ts",
+      "sha256": "b45b50d0cfd2ae6a0aa091ba1e1edcb936b868490ae2a579f3ac561d24f8394e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/process-input.ts",
+      "sha256": "3b34b84511ab198baf9d982799149288565c63f42d1ffc5a83256e4bf6209620"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/production.ts",
+      "sha256": "79c47d55e525f5ebb5e7e05a9c52e18514f9e464401c51e7def38dcec7f646a3"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-capabilities.ts",
+      "sha256": "b7dc5260ba57dd177fcb2e1e40f85f39554bf261f3e99388a6d91d17d24879b1"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/provider-loader.ts",
+      "sha256": "8453535b799916c74d2f036ca09a5bc973f600eb402ade0da57f93ab24ab6c85"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/registry-health-access.ts",
+      "sha256": "34f7cab5f360c415f5817ad0d5a0fcc76835c6046018d3779f185b2ad33c3f8c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-compaction.ts",
+      "sha256": "e74b3fe2e8dca0157d22c6bd1b50f5cc69df91ec29eedbdbaef86d4ff05a42de"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-http.ts",
+      "sha256": "21b63692a2049718b49bcbdec03033642fc25d4e6206fa0330c753615ca036ff"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-runtime.ts",
+      "sha256": "dae94180e4c734b9fbd853329c9fa8b8dcf6e90fa71fee96255123384e45ea8c"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/remote-plan-service.ts",
+      "sha256": "3be9e75c8619da96c22bfaabd7fbab548bc07085787d092a83ba1f20130434f9"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-adapter-runtime.ts",
+      "sha256": "0675902bcfebf7842d10eade9965c1b49d21e2083acaa9a7b7e6f03c248e24a9"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/report-finalizer.ts",
+      "sha256": "8cc0ff2562fd8b530c2a2e1b32b13aaccdec1a2ea9f398df0e7cd350b2cb9b7e"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/runner.ts",
+      "sha256": "d6695dc52cd1919a88f7feed8051a543bdd9cee260b95afb829cbcee6f254919"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/security-scan-runtime.ts",
+      "sha256": "087b2f1a242b0d8ad1025011ec5a6e9cc82b17652eb7775370a2e57208d9c0e9"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/tailscale-exposure-runtime.ts",
+      "sha256": "0144b279f77977b7285231852e32ceacbc70c7598121c24fa8be6f96acd52c9d"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/terminal-workspace.ts",
+      "sha256": "ede9e4ffd51edd40de683eade25ba313b5b2395d6a7bbcf5ce50e583f7940c59"
+    },
+    {
+      "path": "skills/buster/engine/test-gates/trivy-database.ts",
+      "sha256": "240997c417ef7ab27716b482c7b698abed6249c8c8b6f303f9264875347224cf"
+    },
+    {
+      "path": "skills/buster/plugins/README.buster.md",
+      "sha256": "d297201a9a272223f25e2e94c8357fb28cd0cc764ce082e5e18bfd2e21eb945a"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/README.md",
+      "sha256": "fdb4520d8d9a12e25a79787a5f2dd219a5bbc98d95ef0c22c204ee82d668a55e"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/package.json",
+      "sha256": "445b9e460b6bff419d952b72f5a0fa1edf0c9676aeebda22c7d10808a0c7c3be"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/plugin.json",
+      "sha256": "d6c8f75a90ab142a4273893cd0e0bcf12a1d377432a42eb8f65127c177bbe536"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/schemas/config.schema.json",
+      "sha256": "8f22f22a553bc7d12daca18756c1394596e0f953de909ad4569aef77119e9ebc"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+      "sha256": "b4b30b26fbc0719f8438cb422124a1898691dd3b05af47d010d786b1400d76aa"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/src/provider.js",
+      "sha256": "eac6cd1ba2bf5ddf2e5d73369015286ce4f528870008fe782c130dd8aa4dcb4b"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+      "sha256": "ebb550bcd20b7177e483b073601a6d55dcf4ff2916ce63a5c3b226b766072650"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+      "sha256": "78bc3bd731052a460fe70a118ba4868ab848715f1be46cedeba59116db79b280"
+    },
+    {
+      "path": "skills/buster/plugins/api-flow/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/axe/README.md",
+      "sha256": "1ab2a74127ab6340c77b01a9dcca756486c4b9a9ecec19e03e88bab05cb44a6a"
+    },
+    {
+      "path": "skills/buster/plugins/axe/package.json",
+      "sha256": "327f3ef9454c30b8ad08063077c3e54c9d4d7bab92c567cdc0ce19fac90c0e6a"
+    },
+    {
+      "path": "skills/buster/plugins/axe/plugin.json",
+      "sha256": "178f07330165f84e5f6ac7be7876b74318eb939c97d5a560f5289d313fbbd0d7"
+    },
+    {
+      "path": "skills/buster/plugins/axe/schemas/config.schema.json",
+      "sha256": "c3c0c64faf7194753f51dc73e40cf59d465889ae0bdbee691a8acba0b1f6cd6d"
+    },
+    {
+      "path": "skills/buster/plugins/axe/src/provider.js",
+      "sha256": "3943f787c2d7fc1f2215268c043135f0a6d6425fd6e09b26d48bb2171e87c472"
+    },
+    {
+      "path": "skills/buster/plugins/axe/tests/live-function.test.ts",
+      "sha256": "162a6c598cdd19f4add0d723a0f5081baa319a2e91ddcd93922e501876188376"
+    },
+    {
+      "path": "skills/buster/plugins/axe/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/README.md",
+      "sha256": "9f717d5483450ff8aa9e01f95694bbe54165b6ee18f0014ece1fa6de77a892d3"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/package.json",
+      "sha256": "41ce5c62fe46dae75e978b0527c0df92e5a4229afaa08a97e6132b6697c60198"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/plugin.json",
+      "sha256": "6a43c756b8707be3a5efb3851ed8869a17e376658a30503bf9d51697a7e9c011"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/schemas/config.schema.json",
+      "sha256": "2ee424bde723532cea47009ad63b3d59ae422cd60ac8a3ba375396abb1f6dae9"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/src/provider.js",
+      "sha256": "1204d07c75942e9def8b703748bf97510e933b2cfb33b85f84c485d42b89c847"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/tests/deadline.test.mts",
+      "sha256": "954aeb0a42c50f5fb10c9dacf5a693ee591c0792aff608cee712b7c2300a8a7e"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/tests/live-function.test.ts",
+      "sha256": "af27438a323433963b4cea1f89debd7b44efc0e093c6b09238f5d947d6b9b31f"
+    },
+    {
+      "path": "skills/buster/plugins/container-build/tsconfig.json",
+      "sha256": "5eb88565fa82210b6087aa1a49848ff556f1a1ff1db0d8aa840c6811afd56526"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/README.md",
+      "sha256": "2a8f2e52e59f5ee7be788636a86a36a0fa37306d65fc273caacf84494e47c217"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/package.json",
+      "sha256": "e71eed1e45b7b06141991a11a5388bd4f1d5d1fcf16ec3b1c264a1ab1e46ec44"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/plugin.json",
+      "sha256": "0f0ae38312005bf70de5b8da45dd96122be24614b05079b2ed410248e9166067"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+      "sha256": "72fc0422bb8f35b01b44405d217a3a1a4d62c4f875ddbe3bce1ddb814126025f"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/src/provider.js",
+      "sha256": "3e76c0b48e6728a195de48f8c7325e517e0681e8e0e169e7adb129bd0752430b"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+      "sha256": "9a94bc174399e298b53d980665fdd0f2052d1bb9120f79c1ec327887d9b63ae1"
+    },
+    {
+      "path": "skills/buster/plugins/coverage-budget/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/README.md",
+      "sha256": "3230e842192813df317830d44228dae9836152ce7bddde9e65c2c4a7a9a37631"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/package.json",
+      "sha256": "5a84a7836083284bf650f603fe2927226e6d7656ffade1d9fcae9a028daeb25d"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/plugin.json",
+      "sha256": "a7dc11d0cd73886181c787be579552ed8f26eba3a4b364e87361ca6eff0db194"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+      "sha256": "5e0d5ea09c2070375cc558bca0f21484646c98b0de18023438cc29b830ad642e"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+      "sha256": "ad6e68ed8182ef787d8a77d612bf1b1c5faf6e1beb86cf06e02f61bc588fe35b"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+      "sha256": "21e239a33d59c5849d8b9acef7ac0d6eba70b5652f885a430eefd82063f07c30"
+    },
+    {
+      "path": "skills/buster/plugins/demo-auth-smoke/tsconfig.json",
+      "sha256": "e12d6baaab845a1c094cf7ba25bd8970b15c7d70c39df733d1c0f4a16afb0d39"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/README.md",
+      "sha256": "6e1ec48fd7d145c7ab3cc9aff1c48c46c99a6ca07745a96535fa4d5bb4d3f4f9"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/package.json",
+      "sha256": "716cc8390d5e277df7c1b73cd02c32660f97940ac1c4f243c6585817ea000b9e"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/plugin.json",
+      "sha256": "649466714d77ce1afe3a753f48e1a77481aa757fb46a325f3ea05c0c3ed2835a"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/schemas/config.schema.json",
+      "sha256": "8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/src/provider.js",
+      "sha256": "825182b963d34c1414fd779b5c523d00cc354fb38d6e8669cc68aa0b40261667"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/tests/live-function.test.ts",
+      "sha256": "afff58d4690e877f8c99f3bc4edb27b0e2afbcde5731da34a49436cfc52d8689"
+    },
+    {
+      "path": "skills/buster/plugins/direct-command/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/http/README.md",
+      "sha256": "d1e5043fc7de143d939eac59d9472ccd230fbe54e745ceb628b820d7bd759105"
+    },
+    {
+      "path": "skills/buster/plugins/http/package.json",
+      "sha256": "446771fd3e7d99eda5000f892e3ebf58bf2c604979243819d0537e97548e718c"
+    },
+    {
+      "path": "skills/buster/plugins/http/plugin.json",
+      "sha256": "be8c584b93172cc05d88c547f43d351dd00a0570475bad0c2a6bfbebc6792453"
+    },
+    {
+      "path": "skills/buster/plugins/http/schemas/config.schema.json",
+      "sha256": "56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f"
+    },
+    {
+      "path": "skills/buster/plugins/http/src/provider.js",
+      "sha256": "180a9af85671f8f27b3a4042adb7b21dc00a78d0d298bccf78d2403a74a99186"
+    },
+    {
+      "path": "skills/buster/plugins/http/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/README.md",
+      "sha256": "012b7603d9ff50ed2299576c94031c9c69d7359bf05a40bc3811f9e3adfe5cdf"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/package.json",
+      "sha256": "e26791d42a992c8ed0262d177f2fe0301b0c3baba808a75281bcaa0b0f0b96af"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/plugin.json",
+      "sha256": "9787400a76dea54fbfe31a6371c1724f60fdacb7fc544fa33c0c454132e92b77"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+      "sha256": "dceb8492b6f03b31c9c57190cdff836e4d6917b33ab49480fe8001c02e247736"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs",
+      "sha256": "7eb05515a38bce0beabffb8a0a931c3a56d8f3ff7f9f0038f5a7e2e5a8d81edf"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts",
+      "sha256": "14d1030b8a9d68828865ef1d84d8999daff41b8241bcb27c04d540135f826ea3"
+    },
+    {
+      "path": "skills/buster/plugins/junit-report-adapter/tsconfig.json",
+      "sha256": "3994ccda4ebd201e7b93a2fa111aafbac4ce780513732428f62c5b4769c104b4"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/README.md",
+      "sha256": "30cbdad838949b74272a02f1712169a5c1ec4856015ab024ece60ad2cce10e37"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/package.json",
+      "sha256": "debc7dcd104cd84691e588d7d3cc40ae9363d6d9cf02f082c410cd262afcd64a"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/plugin.json",
+      "sha256": "9c658fd6807beea11340609d22483ffac429a5e9184e74233a145774ec92feea"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+      "sha256": "b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+      "sha256": "4af5c60de7d010bc6956e81429ee10cbbca38fcf25636c348e0ef4fbb0f2d50e"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+      "sha256": "59f85c44388dd5e8ae8659a88b4f6edd8585bd5afc0a154d52f9cbe21406c6eb"
+    },
+    {
+      "path": "skills/buster/plugins/kubernetes-fixture/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/README.md",
+      "sha256": "747d7478d270fb9b8c2c9103ff0f10783627d4a619ce0206afd675c7eaca9bca"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/package.json",
+      "sha256": "12149f172e9fede4aacd1bc838b8ded0b49280df47e62a4dedf421154d412d99"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/plugin.json",
+      "sha256": "3c7fa93d06001f1b627aab1f161e90d19124028172b347ce7a64ccb369d2aaf1"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+      "sha256": "4aa52aca72efc6b1921838626717543b915dbe8c454223408a88ac89f739b958"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/src/provider.js",
+      "sha256": "8858c30f362574414d16d8dcd99b963382b79e3195a670145c2e67d63dfa85a5"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+      "sha256": "7b6404af53e7442b1d716d2ddb559ecbe294c5a09886f2e41295169ff20d5e93"
+    },
+    {
+      "path": "skills/buster/plugins/lighthouse/tsconfig.json",
+      "sha256": "7ea156239ab42e02f03ca507403f02f79f8147e862f5a95ad88c08cf65994a79"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/README.md",
+      "sha256": "afc989c4127027ad0f66ec95dea04953020f688b231427a77dff0714c9b1159a"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/package.json",
+      "sha256": "81a46bbcf2e779ac724874adb3d18a6b86768a5abab6c9c0ef4913019a8bc3b3"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/plugin.json",
+      "sha256": "ea64826e4be0b75620a11de0d375abb6ef0361492488adaa5c3b839e49fbf3af"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/schemas/config.schema.json",
+      "sha256": "7f52e048a57a7527c47c02f6018af113cdb60a8e63cc446f1b9017f425bdab29"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/provider.js",
+      "sha256": "cabeb560867f9dc802a7e936c0efc1fb6f900f211b5563414b6016c780f48cca"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/src/schema-support.js",
+      "sha256": "05e27ae54dfd00cb9f1344eb171699a6e4fa87801f5c5f8ff97be18910377e4b"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/tests/live-function.test.ts",
+      "sha256": "9caf53c6a77db03bb58a798c3bfc9fd6dd8e73f2bc91333a148dfa57ff081a33"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/tests/remediation.test.ts",
+      "sha256": "0c157e593df364b8837168f42e3a6eb6a3aa2ac8c8ec0d8766fb41071ae5fbbd"
+    },
+    {
+      "path": "skills/buster/plugins/openapi/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/README.md",
+      "sha256": "9b370d17fcf2a99824fe1506b703790bf149b26a73008a0f4fe628ce79b4e346"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/package.json",
+      "sha256": "cde18f5dffba2e429f1f8e9cca99a23a72c1e7b75fad9b77cc5ef1a5e333cf6e"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/plugin.json",
+      "sha256": "897cbd8bfbd302d7ed00d01340f18578fe9d3778c45bba95c6eff1c8951cf1c9"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/schemas/config.schema.json",
+      "sha256": "82f37247278e500d4a9e5d0c210fe135766a9417b64b9b595cc92385377cc977"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/src/provider.js",
+      "sha256": "7a380ecfc9dd2b42751ecd451222779f606f82668274cdc66e7b9136f1f988e8"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/tests/fixture/playwright.config.ts",
+      "sha256": "7c55fb6ed9bc55a2bd9df23aa752fda7be2090bf14ac92dca4ffe0647458ce42"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts",
+      "sha256": "8c82f2af60c14339036326de17304c698fe6f7c4d1e336ffae9881dc93ddd2f0"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/tests/live-function.test.ts",
+      "sha256": "e1ad40bfd668ed5a6b3aad21397d09b1b96f5d3d8ad378c818b287e25777b52a"
+    },
+    {
+      "path": "skills/buster/plugins/playwright/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/README.md",
+      "sha256": "97f0db9adda62d1b15cfa518816547b15ad66b1c38f35010c75d6d5797f5cd20"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/package.json",
+      "sha256": "16c52f7be8292eb52291e14b8aec97fd9ebcedd421f52647df5dc5cd876b7f10"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/plugin.json",
+      "sha256": "14d1e66e0ee7a0063964555222332d7345bf172bfc8186f9a12fdca7d2c9d510"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+      "sha256": "e28b92a94df642a3527df914c9406a215684fb099bf98ded536d1e5743873ee4"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+      "sha256": "d85b934ca0577f4ca2ac170efbe9157e7ccb46a1bae36cca3e36843f336e0191"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/image.schema.json",
+      "sha256": "1215ea1d598f31ebe569812962c66b1a75f506fd1d63eeecee5ec523beb1b9ca"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+      "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+      "sha256": "8dece95ab9c5062a62269a6dc85528017fe7b65f71433b612058a52b7e4ff6ea"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/common.js",
+      "sha256": "74fd765615fdee3f5876cfffa0b7baca6405b57fc3830e39dd56293fdc8d04b3"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/database-evidence.js",
+      "sha256": "2aa34c8cfe07618191408a280ca7e9b36169056f33cf441e233cae6bba4dad57"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/dependency.js",
+      "sha256": "e44c6d32e9609c914493108ecbbe14de459d0eb57f917cdbe95c9ff81836af55"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/headers.js",
+      "sha256": "7799951ab8165572b3779b0a97306e33597115069de51400f7476df03ac2b7e7"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/image.js",
+      "sha256": "7e54a7a0140628c26d2e81572ef8959fb0816cd5cd9cb663759c4b175bc71588"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+      "sha256": "aac3c6388e4238df46b5cc9b59f62b6fd0df4192061d29ff5be6625f26f392fd"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+      "sha256": "0694947eb3fcfb8637ad8a80be41e7b9985fae79df1b348a5279b9c6959203c5"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+      "sha256": "e37ea6086143c335c70c0fcc5ea7839b4e149a012fd6efbc22dd374c1af958c7"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+      "sha256": "0581bde77436534084542396ff836e417532c9fffa314af56d52f8b094248162"
+    },
+    {
+      "path": "skills/buster/plugins/security-providers/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/README.md",
+      "sha256": "9cab80aae3f14c2c1dac300c3875ffa561dda4e64bdec0bfcec530e1e1ceb7a4"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/package.json",
+      "sha256": "381c7472b565616bf9d29567a726c3de521a873917ed71d4c920014ae92eb269"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/plugin.json",
+      "sha256": "5f9a11dad63edf557454124ae8a71a6382ddac5212dbeaf064e86019fe28a737"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/schemas/config.schema.json",
+      "sha256": "e20a56b4cb1bba2d69355a3da142db17bb9d254d8276b86809c8b32994dbd894"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/src/provider.js",
+      "sha256": "844fe21d0451386ecbbea5aca7be66fb643e12089b0e7cf1b22b4ba3fc91a3ce"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+      "sha256": "0db789a82964e2676582e0bee7afd31e046d6f4b6e9604ccaf63474f78207408"
+    },
+    {
+      "path": "skills/buster/plugins/size-budget/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/README.md",
+      "sha256": "7fcb51b8fb8d22dddab78d9e5aa09abe37f547aa8385e0e9d22cfcfcf88db4df"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/package.json",
+      "sha256": "3918395fcd44dfcba85323354798768a11c9d4219e4284769579f02913d84f9d"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/plugin.json",
+      "sha256": "c61695a3a068a240a335949e27287829fa8183b465bd648662525da67fc9648b"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+      "sha256": "0ffe60c3f3b2ab2fa054a239892663c20bb59621b9e5fdbf05541d862a986ccd"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/src/provider.js",
+      "sha256": "7e8f092bf66aac62bcd7ffd01b80710ccdd97c87f1ceec126139ba23d08ca1f0"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
+      "sha256": "3e2524bee3df8bec94f757d87e03122395280c0fc7a80d42776669430f142c56"
+    },
+    {
+      "path": "skills/buster/plugins/tailscale-exposure/tsconfig.json",
+      "sha256": "a8cbf09fc2b6d9f3b362a769e869aeff9cfc8fe43cd06b366076f0e45ae9b792"
+    },
+    {
+      "path": "skills/buster/plugins/visual/README.md",
+      "sha256": "96654f60f76342f316b001db5e94b9a730938bed691808f729f3ce970cc95ac4"
+    },
+    {
+      "path": "skills/buster/plugins/visual/package.json",
+      "sha256": "790b09a88f930ce966cb8001f6e911f1809e9fe0ed4ec83413ca112179ff713a"
+    },
+    {
+      "path": "skills/buster/plugins/visual/plugin.json",
+      "sha256": "3f637455f6577136024318784f35e724a04abfe43e24406f31e37ded4f6f5a90"
+    },
+    {
+      "path": "skills/buster/plugins/visual/schemas/config.schema.json",
+      "sha256": "b7804886b708d164ddade0d54585337e508ba0a869756d39f1eb561db28ea7da"
+    },
+    {
+      "path": "skills/buster/plugins/visual/src/browser-identity.js",
+      "sha256": "44ab23cb793d764710dae28b0a3a4c340ae57aeeb6e36dc7bfae192c05c265d3"
+    },
+    {
+      "path": "skills/buster/plugins/visual/src/provider.js",
+      "sha256": "1a321386019f583561a20297bf8ad1ff57599aac2e906ed1f48bada2f08419b1"
+    },
+    {
+      "path": "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+      "sha256": "84249a40bd69166a6c052e8654fb3b384201c536a818713768e55806e0fea6a3"
+    },
+    {
+      "path": "skills/buster/plugins/visual/tests/live-function.test.ts",
+      "sha256": "c8dfbac810f6b1be0db10368b203eb5731f9ebdb6ab2afde87171748cd4f7109"
+    },
+    {
+      "path": "skills/buster/plugins/visual/tsconfig.json",
+      "sha256": "7ea156239ab42e02f03ca507403f02f79f8147e862f5a95ad88c08cf65994a79"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/platform.ts",
+      "sha256": "4bce96fe0b9556266c7586aa7803f6ff790dfd7f74e4952ddc5ebd25f9ebc7e8"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "sha256": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/cgroup.ts",
+      "sha256": "054104fb7041d0712721b94da5985a0f93540c0457bfe06ce601ce985a450737"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/memory-limit.ts",
+      "sha256": "2ee1b41fa611fcecd63b69e0d21c899644982e37fc4eac897f86e8b9bed09165"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/protocol.ts",
+      "sha256": "48563d1740ff46022fc85132706e20c9a418bc185891704fca08b417df42e820"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/runner.ts",
+      "sha256": "36c9c5e668f4599f46524f5599898037bdb0600d4fdca7527985ef809af7587b"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/isolation/session.ts",
+      "sha256": "79bc9adc0cacb9fe00e27a567142377db46af92049abb685d5b2a61f6ba4cc7c"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/admission-retirement.ts",
+      "sha256": "11172dcc4e8704ab48da4a0ec9c36c889b52672e201f9a5c729fda551e5b8b1a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-projection.ts",
+      "sha256": "4e7e1217ec7142f3e414c7c93f3b187e77b74768901da310118db939b2bb4523"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/attempt-replay.ts",
+      "sha256": "f0d7de829604fdb1650abf10f6b0fa5c65db018a579f6fd43367e7ac98befd91"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-attempts.ts",
+      "sha256": "4c0fe1e20bafcddcb21997eb56de19dfcb1ceedeaf0df134c1c19b48781da750"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-blob-read.ts",
+      "sha256": "5b736d337407890d27b547bc07bd514d378478589d4f56092ca9e5742fe2d285"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "sha256": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "sha256": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/hash-journal.ts",
+      "sha256": "b00c2271bb662055d7250ca193f842d1e6346edf22dfa713b33df1b637ce957a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/record-retirement.ts",
+      "sha256": "00a081bdccc917067eeabea36d6438615aada22c637e4d7f42e3852285647681"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/observability/replay-validation.ts",
+      "sha256": "8e11ae8d57a44f7a0947ee9f81a794630eab3c5cbdfcde38673ba1e41e62cbbc"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/package.json",
+      "sha256": "d2639c87351035eb4ed0d34569934d18151b4024ec81a7604680ad3a6ae71ae2"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/processes/linux-process-group.ts",
+      "sha256": "4dd81ccecacfc3b71848d2cca20c4e83e31f14223d4320ba30c83c4650592388"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/activation.ts",
+      "sha256": "2d1ba3633fd9ba8549488f953a21909fdebd7d70c056fad1c688316d2ca8ee67"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/build.ts",
+      "sha256": "c65248d6d4dc09dcfe762e9cddd6dd27d5864cbdab7cc421d87256e712873867"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capabilities.ts",
+      "sha256": "eeebd66fcb6a813fdad60188261e14d530c5d09f6c61f9972bc0428ecff151b6"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/capability-vocabulary.ts",
+      "sha256": "147fae4d867752edcb4cb1bf9966ed62372e77a5e90402a9f8fac9a8ab170fa0"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/configuration.ts",
+      "sha256": "94f711ce386148d0aa3e114512afb3fcf8b69ef41c14b7e5215d17881fe66a2f"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/digest.ts",
+      "sha256": "000539ceae6719b16ac795ef1cfb90877aa44e81c26b4335c17f85912b4076e4"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/discovery.ts",
+      "sha256": "1f2742573de8a2f37067238bc53edcb4b031e881f04da94519687c79eb758a87"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/errors.ts",
+      "sha256": "148025829782ddac5d15ea25736b4ec7a3faefcfabdce152809baf8ed807ce25"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/frozen-map.ts",
+      "sha256": "b4d3f268b79917e962959420a6b7a9a598086ac5d3d87cfb5bc0f8ee2a7583f7"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/frozen-set.ts",
+      "sha256": "94b7eb7f0ba2bd7ddb23d0e0dceb701395a5c2aa17bc67a14d8f53d0e9dce753"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/import-audit.ts",
+      "sha256": "764ca496cd9bf406a26eed400777d61b239c6130fdf3b94204c4006d132458f3"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/schema.ts",
+      "sha256": "eb665b9db83e0d0d1bd15fbe5c6f916f479bf8a9c049de6d90b2d6f9f59cc557"
+    },
+    {
+      "path": "skills/common/plugin-runtime/foundation/registry/types.ts",
+      "sha256": "6667bd4389377d33ba41c2c7166f3488c40f0cad1fc0e7c067fb37a6f2eca291"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/package.json",
+      "sha256": "e1f4ad759281d02de47f86d066cc372192ae919f8034b167f20fe09b38488770"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/artifact-json.ts",
+      "sha256": "1185d6f1b3423a280c298815b41b66b1a3d2fc521ccb83889eaa764e4b37b743"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/generated/contracts.ts",
+      "sha256": "8ade81b1f64c78b4cf2198f7ae7dc0c726fb4cec3ffa553986310d353dbc71c1"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/index.ts",
+      "sha256": "464a94399315ad25f40511b8d1ee93c76b3535a82cd90fbde06bf0a58aa0cc9a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/review-cache-profile.ts",
+      "sha256": "27db2d023371d14446fb971fdbe216e3a4ce6bb9f0b8ca296e94ba805575e44f"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/review-subject.ts",
+      "sha256": "da9b32a8da9d0d53fc11b79685ef3ff8cddd2f2b299f846fc2072224c6dc7719"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-agent-task.ts",
+      "sha256": "a2b18a4fd9655b88fc4e13d785a1671849779c90bd2ed7dc02c5735c609e6113"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-dispatch-profile.ts",
+      "sha256": "13f61a984922b7fa815e084b6a5a20238fd0da67aed5959bdc8b061a8e3173fb"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime-workspace.ts",
+      "sha256": "b5e40fc049bbf3467267a14ca38a7996b866cc089ff4ef555d701c63faa326e9"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/runtime.ts",
+      "sha256": "d4f0ee5d8960b4ff619bf5d45064b069a39f75b978cf831837de08cb5900d6e4"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/source-approval.ts",
+      "sha256": "fbe79e4cec0cffeb4b1038aac2d168a7b329296a6f180c24960e2c659c61c3c4"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/source-preflight.ts",
+      "sha256": "af3e4601e9d8d4f3ec8e3757f347d430b9a2f923fb22da3c4e7df09159e4fa82"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/source-revision.ts",
+      "sha256": "d7ee56bc4fb2197e1198909226be3dc09358fbf4552972973f0ffa2d48bf484a"
+    },
+    {
+      "path": "skills/common/plugin-runtime/sdk/src/values.ts",
+      "sha256": "b91ec914fb8ce1eaccc40751f9693689694e455389eb8742d7f275fdeb24571f"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/package.json",
+      "sha256": "10c4fa83d2434f83f2334c0fb779f1e08e950c632b51ec06492f86d1f7721bc2"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/cgroup.ts",
+      "sha256": "163b671691e314418a9c2c28a1b7bdbfe84e04e5162409e98607ff29d64f36da"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/execution.ts",
+      "sha256": "b08ca224ab8b6a6276c002152cc54814f236d2dcda84a7faebb2b4463fce2ee0"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/process-facts.ts",
+      "sha256": "d6220a90dc0cf14612e1e693c5ac708f3783d9d0d10fc6d451f052259a95742a"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/process-group.ts",
+      "sha256": "b58ed6ee068546fa44561a7875aee21633e02a4148dedb0104b15c441b8a3002"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/runner.ts",
+      "sha256": "3cf07ec2c39b3caa50419c48ce49119d37491abb83398d637d400f06ebf5e2ad"
+    },
+    {
+      "path": "skills/common/plugins/command-runner/src/types.ts",
+      "sha256": "b6c616b30b31e0eab97685c9698674579cfac2762b43657536f08eb5ea70e3e7"
+    },
+    {
+      "path": "skills/common/plugins/operator-messaging/src/receiver.ts",
+      "sha256": "3701e839cc513812a790a4a794ebdd2dc71bf56ab1def0854250c38494cf3ab1"
+    },
+    {
+      "path": "skills/nova/core/effects/contracts.ts",
+      "sha256": "2214fa4a761a7e2b427df8b7578c76373377d27a021176e13a14e05e5ef606d3"
+    },
+    {
+      "path": "skills/nova/core/effects/coordinator.ts",
+      "sha256": "e0a3408e2102507c5b8b0ffdc6833e2901afdf41c5bc1ef7fa22e98d7506ac89"
+    },
+    {
+      "path": "skills/nova/core/effects/dependency-identity.ts",
+      "sha256": "13d0c12129bdd1bdc6eb5d8a4d103752bf266e459fcb20a672ee3c42fdfc2f81"
+    },
+    {
+      "path": "skills/nova/core/effects/dependency-journal.ts",
+      "sha256": "dc0e567a573b822afb54353b04a4b58cd93fad1b155067d1173957ae6a5035a3"
+    },
+    {
+      "path": "skills/nova/core/effects/durable-invocation.ts",
+      "sha256": "6856d2c2761cb9c8e974d0f8683e0083571ed91b25740832921d32341e70d3f2"
+    },
+    {
+      "path": "skills/nova/core/effects/identity.ts",
+      "sha256": "8d3e2f32b4fdb98f6159c989b41fe926fd5b518791b4b02246d633dff847bcb9"
+    },
+    {
+      "path": "skills/nova/core/effects/journal.ts",
+      "sha256": "1ab8839b77c51008973975a324d675af129e8aa45152ae0fde97c954d5af3b95"
+    },
+    {
+      "path": "skills/nova/core/effects/locks.ts",
+      "sha256": "7ca675286800ee88314919f7c0d524c7b5cde99928b9e93c8036e566ecc4b793"
+    },
+    {
+      "path": "skills/nova/core/effects/memory-locks.ts",
+      "sha256": "4e7a78b0c8ac9242c9ce5333e7c3fcc620cc4f174b4a9018509da3f3931e5797"
+    },
+    {
+      "path": "skills/nova/core/effects/resource-acquisition.ts",
+      "sha256": "d48a8c272050b230d9d83b9b8254df158454b6c0e7fb0eab950d0e89ff4cfb1c"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-invocation-phase.ts",
+      "sha256": "eaae9f5fd571a476b1b7ddbec709f1389c95e71189143ea23a87faa52847ae5f"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-startup.ts",
+      "sha256": "9bb8a0c27dfa199756cbe16a6898e7fb4d3a43c6ca59af144026bbb135a44619"
+    },
+    {
+      "path": "skills/nova/core/execution/adapter-support.ts",
+      "sha256": "2eb72fdc7d7731b105807495697647b049c00c39e84b695db29a219a2ac1156d"
+    },
+    {
+      "path": "skills/nova/core/execution/adapters.ts",
+      "sha256": "293011e7313155b08f33bbef4ce0e910d00c7feef88fd6c585b040bb2cadbc24"
+    },
+    {
+      "path": "skills/nova/core/execution/artifact-checkpoints.ts",
+      "sha256": "77272b94fa7a2c5c4968753fff902ff3ac88deb5f3ef2da4c87580fae5bc78f7"
+    },
+    {
+      "path": "skills/nova/core/execution/authorization.ts",
+      "sha256": "3f04309435d4fe3eebe5a73bac5247b0d3c981ffd4a9580e52974cf46cf3942d"
+    },
+    {
+      "path": "skills/nova/core/execution/context.ts",
+      "sha256": "3f61fc7b2e18d6c36bf9eaff5173a06d31dd06d14a07b05c6d8be7320098a288"
+    },
+    {
+      "path": "skills/nova/core/execution/effect-recovery.ts",
+      "sha256": "06ee56bce5fedf57518e39858b700278c33b81d4edb2177587007f392b0ce186"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-runtime.ts",
+      "sha256": "de279faaeffc78713d3b3049d43a2efb9add45e4ad05a89c0f4efde1dbe120ec"
+    },
+    {
+      "path": "skills/nova/core/execution/engine-snapshots.ts",
+      "sha256": "50dfe92e656875658b7604f30012f8493564729473f6ddd65b64960ecf9946fd"
+    },
+    {
+      "path": "skills/nova/core/execution/graph-build.ts",
+      "sha256": "75ce0387330d8acc6d7217aa8539a41c7796fcfd1522c079c8585c55e765adc6"
+    },
+    {
+      "path": "skills/nova/core/execution/graph-repair-budget.ts",
+      "sha256": "f5cd06815a0d7d631276b256fd80bcbd57e018f68326909d69b424f2e08a284e"
+    },
+    {
+      "path": "skills/nova/core/execution/graph.ts",
+      "sha256": "680077697180d4ef2df70e823391eaef710d49fb721338663f8f73d65973b2af"
+    },
+    {
+      "path": "skills/nova/core/execution/lease.ts",
+      "sha256": "1f2164d57fdfb15dd5d67f04398f1cc42366a11c862083a30eba7de1ac03e13b"
+    },
+    {
+      "path": "skills/nova/core/execution/pipeline-loop.ts",
+      "sha256": "129a77125e5d88a118b9d3cefb06d1bedf734924cabd32be607063a33d985530"
+    },
+    {
+      "path": "skills/nova/core/execution/run-decisions.ts",
+      "sha256": "a509f00aa74367e90d396f338db55acff2610075ac0063d14fa8bec4ba9d1171"
+    },
+    {
+      "path": "skills/nova/core/execution/runner.ts",
+      "sha256": "9a34098cd68460f42e220ada2f3e7bef37fcc9eb5fdd351db2cd1585fe6a5cc6"
+    },
+    {
+      "path": "skills/nova/core/execution/stage-executor.ts",
+      "sha256": "4c846993c679c9ce663f7dda0e8de78fd26101e83948dd17211e62f83ea2eafb"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/reducer.ts",
+      "sha256": "13982ba82b9b619f5df89dc0b9932c7802f0b78968e450263ab302726d4f552d"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/remediation.ts",
+      "sha256": "49c26f15b12f2281bf86a10c5b21669f7e8ab423c5d0f7ce317ce546e1254535"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/repair-budget.ts",
+      "sha256": "6bd3d5f44d67edf626ce45301a716d5a6ea06d1f0f870b47d6f071b7930872d4"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/repair-projection.ts",
+      "sha256": "9721b421a4fa07f9da5c33915fe1ea3ea1b0daa9e8f299ca49547d89ece22c24"
+    },
+    {
+      "path": "skills/nova/core/lifecycle/wait-request.ts",
+      "sha256": "0e9f41bd8e4a5ceb6e43d53e713e3fbbdacca2540ff31134d0409745252419de"
+    },
+    {
+      "path": "skills/nova/core/state/file-mutex.ts",
+      "sha256": "d6d347d6b615796ff761c0c608ed6a4d9f4f834bea92ddd2870d2312b5d04c7c"
+    },
+    {
+      "path": "skills/nova/core/state/journal.ts",
+      "sha256": "25be25a991c93c0e523178e3c45e2f7fb15ecad6e1a03566fca241d6b27f40bf"
+    },
+    {
+      "path": "skills/nova/core/state/json-value.ts",
+      "sha256": "c99b7a8c16e3c8c6860e7e469d9feb454448fab311f8d5f7bbf6dd690e59a58b"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-delivery.ts",
+      "sha256": "d80f67ca85cafee41eb41d228be7a8d3aff820b556ccf21efa6f0a9845afd1fc"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observer-recovery.ts",
+      "sha256": "9d97600debff727243d62fbad6c4a4616b056a4e4afb1098e1e19bbaa5f3edcb"
+    },
+    {
+      "path": "skills/nova/core/telemetry/observers.ts",
+      "sha256": "b46b9a70b190bf8541d96188221a63acc1e9c03ff6204a9e94b37c944306aafd"
+    },
+    {
+      "path": "skills/nova/core/test-gates/pipeline.ts",
+      "sha256": "8e17514a8b9699f2f921f07b6f450b3c4357903ec4726f72099644d1703cd2ed"
+    },
+    {
+      "path": "skills/nova/core/test-gates/resolver.ts",
+      "sha256": "56eab5e577fe39e157a2117ad4fddd96d5282d4ff5a8270a3677ee0361a385c3"
+    },
+    {
+      "path": "skills/nova/core/test-gates/types.ts",
+      "sha256": "560f3edc4024f8c65d6857f90df837454f6554be9cc3c29c6d09b320af4f28a2"
+    },
+    {
+      "path": "skills/nova/plugins/human-approval/src/approval.ts",
+      "sha256": "5798d5bddb20d62a320114387f3f8df4275b83972f1cb41d9e4a823e92fee99d"
+    },
+    {
+      "path": "skills/nova/plugins/preflight-contract/src/declarations.ts",
+      "sha256": "deb342dd39f6612567e5d67fc708a02a0db42ae9ff20027bb448a594c7cee309"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/architecture.ts",
+      "sha256": "bb4fab2431b51d68a787fefdaec95649678e86ede9961bc2fb1ad168b7eed10f"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/archive.ts",
+      "sha256": "8875fcaa4c6efafa2f231c8e3fcc522dcd1ae1f23850a4d8941a89358726383e"
+    },
+    {
+      "path": "skills/nova/plugins/prism-design/src/stage.ts",
+      "sha256": "20bee389c4868070dc7450d366b85745c2f26acb88e8d526463c3cb5a599db88"
+    },
+    {
+      "path": "skills/nova/project/compiler.ts",
+      "sha256": "9d8ccdb3a1ccc56c58c1ec510aed54473f7db6d4135d28b2e265bbf90d7f1ef5"
+    },
+    {
+      "path": "skills/nova/project/coverage.ts",
+      "sha256": "6ad22387d588ec783ddfd12a45d1aea735785f3a065254d0fc00b1820ee01f2b"
+    },
+    {
+      "path": "skills/nova/project/delivery-manifest.ts",
+      "sha256": "4c518954177f1801f3ba15ea27b60218ec8eef62b974df5be85bae23d34776b1"
+    },
+    {
+      "path": "skills/nova/project/demo.ts",
+      "sha256": "fa1aeed1f47f817fde79905a97b565191be5e4279b83ee8752c36f45531aa566"
+    },
+    {
+      "path": "skills/nova/project/review-semantics.ts",
+      "sha256": "6eaef989be2bdd8b262bd07fde598c739eaab5c9e8e28e63e089bac5f348baf8"
+    },
+    {
+      "path": "skills/nova/project/source.ts",
+      "sha256": "f652f5bda01a9a39ea7015ddbf12867ff81f989b0fbe2e0cadcff1a4b4ae2cd0"
+    },
+    {
+      "path": "skills/prism/studio/dev-fixture.ts",
+      "sha256": "4f0fca3d14d924eb2844660aa80ec8f70d8ece82585f181ea2ccd7b792e6a9d4"
+    },
+    {
+      "path": "skills/worker/core/package.json",
+      "sha256": "115273bab79eb997cff67343773f542c33924227ef9e172c742a807843fe34ac"
+    },
+    {
+      "path": "skills/worker/core/src/index.ts",
+      "sha256": "2e17c3e33d5c47c2c7e8f4a03c8eda3120dfd123e7c0145e5685741efe28c00e"
+    },
+    {
+      "path": "skills/worker/core/worker/attempt-executor.ts",
+      "sha256": "2ae7f5897a79042c601d58da5af682baba0e416e0c4ab302108386e3b619db42"
+    },
+    {
+      "path": "skills/worker/core/worker/digest.ts",
+      "sha256": "d8c005287076f3ca2a6e84daf386c17ff77858ba5dc22cfebd3b9063d48ef402"
+    },
+    {
+      "path": "skills/worker/core/worker/local-runtime.ts",
+      "sha256": "02876cafd08f35c84b67d3c8972e45167074c226c928c53a81b190bd67071435"
+    },
+    {
+      "path": "skills/worker/core/worker/log-decoder.ts",
+      "sha256": "7f777b5cd5f9544c6eb2f5933613d8d8379633742edf45cd235428805e7dea88"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-executor.ts",
+      "sha256": "bddc68aa370648c86e7b7301f4f31a083504217dd89bac7694c36c344a8e23a3"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-journal.ts",
+      "sha256": "9115ef644c440d5024745149613f63b971ba444ac54147b750f405e1ac2167e4"
+    },
+    {
+      "path": "skills/worker/core/worker/native-attempt-recovery.ts",
+      "sha256": "fc55712ec3a5237e0131969d4aa190fcf994541525521210e8598ec63c950769"
+    },
+    {
+      "path": "skills/worker/core/worker/native-control-channel.ts",
+      "sha256": "253ecc17f153e13e6e00aad3f842565ad17a01e85cac15db910d9b4b2ea9edc8"
+    },
+    {
+      "path": "skills/worker/core/worker/native-journal-state.ts",
+      "sha256": "caca74b468a134faf29da1f74d0a69443f495e63fbbf8fb39692ff9de0ba8111"
+    },
+    {
+      "path": "skills/worker/core/worker/native-node-identity.ts",
+      "sha256": "6ea78a96f82fa25ad27b26a2a48911e1e7a625fe9c0b25db76af39f49f2394f3"
+    },
+    {
+      "path": "skills/worker/core/worker/native-output-spool.ts",
+      "sha256": "da9b2bdd9f5b8f9418e98a451eb3275aadec117a9ee7ca733566e571870898c7"
+    },
+    {
+      "path": "skills/worker/core/worker/native-pool-policy.ts",
+      "sha256": "3b64878629a5ee897e8dd71ae6b592bc1c89df36677fc2860f8d7f4bb4227307"
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-cancellation.ts",
+      "sha256": "1a3295c2220b82b3c06047151df0a6ca4e126f747f5eaabb57ddb5a753cd1bf5"
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-control.ts",
+      "sha256": "3cfd56d48a2f70fb80072692a133fb0c8490bd94ec79d5270b771dd2e2717d2e"
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-launches.ts",
+      "sha256": "4b4ea9b64584e43f2f791d97872430f0d2dcf917d5ada11c0a8bb2ecd4456155"
+    },
+    {
+      "path": "skills/worker/core/worker/native-process-output.ts",
+      "sha256": "5f7a4e1cdd9424fefe249775886a34019da38f7a76c486b38005c5d727f14350"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-accounting.ts",
+      "sha256": "c92b1246dd5b924b71147314257063eba2478838abe4ddcb3a9453a2e9abe448"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-observation.ts",
+      "sha256": "903fe22c2b9c51c908111361bb0423819a32ce1a4bf99b49b08cb39f490b976c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-pool.ts",
+      "sha256": "2a002b796bae216210186f258d32f5dd267ec10a4940f4d0fc2f12ea72bd93ee"
+    },
+    {
+      "path": "skills/worker/core/worker/native-resource-scope.ts",
+      "sha256": "2aa1a46145ff77451e85796c1ce13ade3c4eaf7beba5063cabf0acb081190d4c"
+    },
+    {
+      "path": "skills/worker/core/worker/native-result.ts",
+      "sha256": "11c8074a973fec8f764e64668e29c7d4907a5b9e605b6bad04cbfa0454d318bd"
+    },
+    {
+      "path": "skills/worker/core/worker/native-runtime-identity.ts",
+      "sha256": "4bb8600bf48477411e75148e6edbd0dae345809316d60a3d3cd4b8ad6f8a057e"
+    },
+    {
+      "path": "skills/worker/core/worker/native-supervisor-authority.ts",
+      "sha256": "2a710c00d935777144fc2055e435f1610bc66a01976a002047de751862e18650"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-ownership.ts",
+      "sha256": "e297616eae31d0c14a0e319c18f1c64090bd39e42603bb661c0ea096c4dc8bfd"
+    },
+    {
+      "path": "skills/worker/core/worker/native-worker-process.ts",
+      "sha256": "d43bc3ce05976d77579dbc624cae8be1d3209732b023124e3eb6f0a8fd9860da"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-state.ts",
+      "sha256": "fb56676102eadf6a00d3a138cacab4ff945ba5974ba78786c3840ba18faed05a"
+    },
+    {
+      "path": "skills/worker/core/worker/ownership-store.ts",
+      "sha256": "d784b4196a6103a0ad1e1eaa086640d89ea3205db74be0b0d569045183d20b79"
+    },
+    {
+      "path": "skills/worker/core/worker/phase-deadline.ts",
+      "sha256": "13ead2817f0277f8bb7a45b09f42df228bc62e8a0d43e26eabbcbc4f2365e456"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-accounting.ts",
+      "sha256": "eaed91f776bfdbf1daac4faa7b2e56848b5f1b1f83d2737622048cd4426837ef"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-reservations.ts",
+      "sha256": "781ba82f68942a44ba3c40652adffb76d8ceb369c279909dc826fbc361fd63e9"
+    },
+    {
+      "path": "skills/worker/core/worker/resource-result-fields.ts",
+      "sha256": "d109f3aedf33fca9a84eab376d96ae714ea4134af5cfebf7c495cb7db89e218f"
+    },
+    {
+      "path": "skills/worker/core/worker/trust.ts",
+      "sha256": "722f48ca75fb8546dbc4f4c9cc8eab8e31dfdfeafec7ea7aab587045e78b23fe"
+    },
+    {
+      "path": "tests/verification/e2e/support/optional-absence.ts",
+      "sha256": "09944ef955b43f0d1bd2e33ceed7d1655c1fc0bff100fc9c7e8053651b84a7d4"
+    },
+    {
+      "path": "tests/verification/e2e/support/platform-config.ts",
+      "sha256": "e05530e73fe5ea3a853defe8db219af79aa56d86a14a56eb5170bc214a5f8ba6"
+    }
+  ],
+  "directoryRosters": [
+    {
+      "path": "charts/kubeclaw",
+      "files": [
+        "charts/kubeclaw/Chart.yaml",
+        "charts/kubeclaw/files/config/.semgrep.yml",
+        "charts/kubeclaw/files/config/.tflint.hcl",
+        "charts/kubeclaw/files/config/.yamllint.yml",
+        "charts/kubeclaw/files/config/eslint-type-evidence-config.mjs",
+        "charts/kubeclaw/files/config/eslint-type-evidence-generated-config.mjs",
+        "charts/kubeclaw/files/config/eslint-type-evidence-tests-config.mjs",
+        "charts/kubeclaw/files/config/eslint.config.mjs",
+        "charts/kubeclaw/files/config/jscpd-tests.json",
+        "charts/kubeclaw/files/config/jscpd.json",
+        "charts/kubeclaw/files/config/knip.json",
+        "charts/kubeclaw/files/config/kubernetes-policy-pack-default.json",
+        "charts/kubeclaw/files/config/lint-baseline.json",
+        "charts/kubeclaw/files/config/lint-policy.json",
+        "charts/kubeclaw/files/config/swarm.config.json",
+        "charts/kubeclaw/files/config/type-evidence-eslint-plugin.mjs",
+        "charts/kubeclaw/files/reset-managed-plugin-projects.mjs",
+        "charts/kubeclaw/files/restore-managed-plugin-config.mjs",
+        "charts/kubeclaw/templates/NOTES.txt",
+        "charts/kubeclaw/templates/_demo-ready-client.tpl",
+        "charts/kubeclaw/templates/_helpers.tpl",
+        "charts/kubeclaw/templates/_registry-clients.tpl",
+        "charts/kubeclaw/templates/_worker-trust-readiness.tpl",
+        "charts/kubeclaw/templates/archviewer.yaml",
+        "charts/kubeclaw/templates/buster-namespace-controller.yaml",
+        "charts/kubeclaw/templates/buster-namespace-fence.yaml",
+        "charts/kubeclaw/templates/buster-namespace-lease-crd.yaml",
+        "charts/kubeclaw/templates/buster-runtime-pvc.yaml",
+        "charts/kubeclaw/templates/configmap-gateway.yaml",
+        "charts/kubeclaw/templates/configmap-skills.yaml",
+        "charts/kubeclaw/templates/configmap-swarm-config.yaml",
+        "charts/kubeclaw/templates/configmap-worker-trust.yaml",
+        "charts/kubeclaw/templates/configmap-workspace.yaml",
+        "charts/kubeclaw/templates/demo-ready-service.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/kubeclaw/templates/pvc.yaml",
+        "charts/kubeclaw/templates/rbac.yaml",
+        "charts/kubeclaw/templates/secret.yaml",
+        "charts/kubeclaw/templates/service-extra-nodeports.yaml",
+        "charts/kubeclaw/templates/service.yaml",
+        "charts/kubeclaw/templates/serviceaccount.yaml",
+        "charts/kubeclaw/values.yaml"
+      ]
+    },
+    {
+      "path": "charts/prism",
+      "files": [
+        "charts/prism/Chart.yaml",
+        "charts/prism/ci-values.yaml",
+        "charts/prism/files/prism-backup.sh",
+        "charts/prism/templates/_helpers.tpl",
+        "charts/prism/templates/_product-decisions.tpl",
+        "charts/prism/templates/_worker-trust-readiness.tpl",
+        "charts/prism/templates/backup-storage-check.yaml",
+        "charts/prism/templates/backup.yaml",
+        "charts/prism/templates/configmap-worker-trust.yaml",
+        "charts/prism/templates/ingestion.yaml",
+        "charts/prism/templates/jobs.yaml",
+        "charts/prism/templates/networkpolicy.yaml",
+        "charts/prism/templates/postgresql.yaml",
+        "charts/prism/templates/product-decisions-networkpolicy.yaml",
+        "charts/prism/templates/serviceaccounts.yaml",
+        "charts/prism/templates/services.yaml",
+        "charts/prism/templates/workloads.yaml",
+        "charts/prism/values.schema.json",
+        "charts/prism/values.yaml"
+      ]
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/examples",
+      "files": [
+        "contracts/pipeline-test-gate/v1/examples/a11y-config.json",
+        "contracts/pipeline-test-gate/v1/examples/api-flow-config.json",
+        "contracts/pipeline-test-gate/v1/examples/api-suite.json",
+        "contracts/pipeline-test-gate/v1/examples/browser-profiles.json",
+        "contracts/pipeline-test-gate/v1/examples/container-build-dockerfile.json",
+        "contracts/pipeline-test-gate/v1/examples/e2e-playwright.json",
+        "contracts/pipeline-test-gate/v1/examples/e2e-result-cypress.json",
+        "contracts/pipeline-test-gate/v1/examples/http.json",
+        "contracts/pipeline-test-gate/v1/examples/kubernetes-fixture.json",
+        "contracts/pipeline-test-gate/v1/examples/lighthouse-performance-config.json",
+        "contracts/pipeline-test-gate/v1/examples/lighthouse-settings.json",
+        "contracts/pipeline-test-gate/v1/examples/openapi-config.json",
+        "contracts/pipeline-test-gate/v1/examples/security-config.json",
+        "contracts/pipeline-test-gate/v1/examples/size-budget-growth.json",
+        "contracts/pipeline-test-gate/v1/examples/size-budget-tar.json",
+        "contracts/pipeline-test-gate/v1/examples/tailscale-exposure.json",
+        "contracts/pipeline-test-gate/v1/examples/unit-suite-blocking.json",
+        "contracts/pipeline-test-gate/v1/examples/unit-suite-with-coverage.json",
+        "contracts/pipeline-test-gate/v1/examples/visual-baselines.json",
+        "contracts/pipeline-test-gate/v1/examples/visual-config.json"
+      ]
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/schemas",
+      "files": [
+        "contracts/pipeline-test-gate/v1/schemas/browser-profiles.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/schemas/e2e-result.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/schemas/lighthouse-settings.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/schemas/pipeline-test-gate.v1.schema.json",
+        "contracts/pipeline-test-gate/v1/schemas/visual-baselines.v2.schema.json"
+      ]
+    },
+    {
+      "path": "contracts/pipeline-test-gate/v1/suites",
+      "files": [
+        "contracts/pipeline-test-gate/v1/suites/a11y.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/api.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/container-build.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/e2e.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/http.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/kubernetes-fixture.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/perf.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/security.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/size-budget.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/tailscale-exposure.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/unit.v1.json",
+        "contracts/pipeline-test-gate/v1/suites/visual.v1.json"
+      ]
+    },
+    {
+      "path": "skills/buster/plugins",
+      "files": [
+        "skills/buster/plugins/README.buster.md",
+        "skills/buster/plugins/api-flow/README.md",
+        "skills/buster/plugins/api-flow/package.json",
+        "skills/buster/plugins/api-flow/plugin.json",
+        "skills/buster/plugins/api-flow/schemas/config.schema.json",
+        "skills/buster/plugins/api-flow/schemas/flow.schema.json",
+        "skills/buster/plugins/api-flow/src/provider.js",
+        "skills/buster/plugins/api-flow/tests/live-function.test.ts",
+        "skills/buster/plugins/api-flow/tests/remediation.test.ts",
+        "skills/buster/plugins/api-flow/tsconfig.json",
+        "skills/buster/plugins/axe/README.md",
+        "skills/buster/plugins/axe/package.json",
+        "skills/buster/plugins/axe/plugin.json",
+        "skills/buster/plugins/axe/schemas/config.schema.json",
+        "skills/buster/plugins/axe/src/provider.js",
+        "skills/buster/plugins/axe/tests/live-function.test.ts",
+        "skills/buster/plugins/axe/tsconfig.json",
+        "skills/buster/plugins/container-build/README.md",
+        "skills/buster/plugins/container-build/package.json",
+        "skills/buster/plugins/container-build/plugin.json",
+        "skills/buster/plugins/container-build/schemas/config.schema.json",
+        "skills/buster/plugins/container-build/src/provider.js",
+        "skills/buster/plugins/container-build/tests/deadline.test.mts",
+        "skills/buster/plugins/container-build/tests/live-function.test.ts",
+        "skills/buster/plugins/container-build/tsconfig.json",
+        "skills/buster/plugins/coverage-budget/README.md",
+        "skills/buster/plugins/coverage-budget/package.json",
+        "skills/buster/plugins/coverage-budget/plugin.json",
+        "skills/buster/plugins/coverage-budget/schemas/config.schema.json",
+        "skills/buster/plugins/coverage-budget/src/provider.js",
+        "skills/buster/plugins/coverage-budget/tests/live-function.test.ts",
+        "skills/buster/plugins/coverage-budget/tsconfig.json",
+        "skills/buster/plugins/demo-auth-smoke/README.md",
+        "skills/buster/plugins/demo-auth-smoke/package.json",
+        "skills/buster/plugins/demo-auth-smoke/plugin.json",
+        "skills/buster/plugins/demo-auth-smoke/schemas/config.schema.json",
+        "skills/buster/plugins/demo-auth-smoke/src/protocol.js",
+        "skills/buster/plugins/demo-auth-smoke/src/provider.js",
+        "skills/buster/plugins/demo-auth-smoke/tsconfig.json",
+        "skills/buster/plugins/direct-command/README.md",
+        "skills/buster/plugins/direct-command/package.json",
+        "skills/buster/plugins/direct-command/plugin.json",
+        "skills/buster/plugins/direct-command/schemas/config.schema.json",
+        "skills/buster/plugins/direct-command/src/provider.js",
+        "skills/buster/plugins/direct-command/tests/live-function.test.ts",
+        "skills/buster/plugins/direct-command/tsconfig.json",
+        "skills/buster/plugins/http/README.md",
+        "skills/buster/plugins/http/package.json",
+        "skills/buster/plugins/http/plugin.json",
+        "skills/buster/plugins/http/schemas/config.schema.json",
+        "skills/buster/plugins/http/src/provider.js",
+        "skills/buster/plugins/http/tsconfig.json",
+        "skills/buster/plugins/junit-report-adapter/README.md",
+        "skills/buster/plugins/junit-report-adapter/package.json",
+        "skills/buster/plugins/junit-report-adapter/plugin.json",
+        "skills/buster/plugins/junit-report-adapter/src/adapter.js",
+        "skills/buster/plugins/junit-report-adapter/tests/adapter.test.mjs",
+        "skills/buster/plugins/junit-report-adapter/tests/live-function.test.ts",
+        "skills/buster/plugins/junit-report-adapter/tsconfig.json",
+        "skills/buster/plugins/kubernetes-fixture/README.md",
+        "skills/buster/plugins/kubernetes-fixture/package.json",
+        "skills/buster/plugins/kubernetes-fixture/plugin.json",
+        "skills/buster/plugins/kubernetes-fixture/schemas/config.schema.json",
+        "skills/buster/plugins/kubernetes-fixture/src/provider.js",
+        "skills/buster/plugins/kubernetes-fixture/tests/live-function.test.ts",
+        "skills/buster/plugins/kubernetes-fixture/tsconfig.json",
+        "skills/buster/plugins/lighthouse/README.md",
+        "skills/buster/plugins/lighthouse/package.json",
+        "skills/buster/plugins/lighthouse/plugin.json",
+        "skills/buster/plugins/lighthouse/schemas/config.schema.json",
+        "skills/buster/plugins/lighthouse/src/provider.js",
+        "skills/buster/plugins/lighthouse/tests/live-function.test.ts",
+        "skills/buster/plugins/lighthouse/tsconfig.json",
+        "skills/buster/plugins/openapi/README.md",
+        "skills/buster/plugins/openapi/package.json",
+        "skills/buster/plugins/openapi/plugin.json",
+        "skills/buster/plugins/openapi/schemas/config.schema.json",
+        "skills/buster/plugins/openapi/src/provider.js",
+        "skills/buster/plugins/openapi/src/schema-support.js",
+        "skills/buster/plugins/openapi/tests/live-function.test.ts",
+        "skills/buster/plugins/openapi/tests/remediation.test.ts",
+        "skills/buster/plugins/openapi/tsconfig.json",
+        "skills/buster/plugins/playwright/README.md",
+        "skills/buster/plugins/playwright/package.json",
+        "skills/buster/plugins/playwright/plugin.json",
+        "skills/buster/plugins/playwright/schemas/config.schema.json",
+        "skills/buster/plugins/playwright/src/provider.js",
+        "skills/buster/plugins/playwright/tests/fixture/playwright.config.ts",
+        "skills/buster/plugins/playwright/tests/fixture/specs/home.spec.ts",
+        "skills/buster/plugins/playwright/tests/live-function.test.ts",
+        "skills/buster/plugins/playwright/tsconfig.json",
+        "skills/buster/plugins/security-providers/README.md",
+        "skills/buster/plugins/security-providers/package.json",
+        "skills/buster/plugins/security-providers/plugin.json",
+        "skills/buster/plugins/security-providers/schemas/dependency.schema.json",
+        "skills/buster/plugins/security-providers/schemas/headers.schema.json",
+        "skills/buster/plugins/security-providers/schemas/image.schema.json",
+        "skills/buster/plugins/security-providers/schemas/kubernetes-policy.schema.json",
+        "skills/buster/plugins/security-providers/schemas/kubernetes-runtime.schema.json",
+        "skills/buster/plugins/security-providers/src/common.js",
+        "skills/buster/plugins/security-providers/src/database-evidence.js",
+        "skills/buster/plugins/security-providers/src/dependency.js",
+        "skills/buster/plugins/security-providers/src/headers.js",
+        "skills/buster/plugins/security-providers/src/image.js",
+        "skills/buster/plugins/security-providers/src/kubernetes-policy.js",
+        "skills/buster/plugins/security-providers/src/kubernetes-runtime.js",
+        "skills/buster/plugins/security-providers/tests/database-freshness.test.mts",
+        "skills/buster/plugins/security-providers/tests/live-function.test.ts",
+        "skills/buster/plugins/security-providers/tsconfig.json",
+        "skills/buster/plugins/size-budget/README.md",
+        "skills/buster/plugins/size-budget/package.json",
+        "skills/buster/plugins/size-budget/plugin.json",
+        "skills/buster/plugins/size-budget/schemas/config.schema.json",
+        "skills/buster/plugins/size-budget/src/provider.js",
+        "skills/buster/plugins/size-budget/tests/live-function.test.ts",
+        "skills/buster/plugins/size-budget/tsconfig.json",
+        "skills/buster/plugins/tailscale-exposure/README.md",
+        "skills/buster/plugins/tailscale-exposure/package.json",
+        "skills/buster/plugins/tailscale-exposure/plugin.json",
+        "skills/buster/plugins/tailscale-exposure/schemas/config.schema.json",
+        "skills/buster/plugins/tailscale-exposure/src/provider.js",
+        "skills/buster/plugins/tailscale-exposure/tests/live-function.test.ts",
+        "skills/buster/plugins/tailscale-exposure/tsconfig.json",
+        "skills/buster/plugins/visual/README.md",
+        "skills/buster/plugins/visual/package.json",
+        "skills/buster/plugins/visual/plugin.json",
+        "skills/buster/plugins/visual/schemas/config.schema.json",
+        "skills/buster/plugins/visual/src/browser-identity.js",
+        "skills/buster/plugins/visual/src/provider.js",
+        "skills/buster/plugins/visual/tests/browser-identity.test.mjs",
+        "skills/buster/plugins/visual/tests/live-function.test.ts",
+        "skills/buster/plugins/visual/tsconfig.json"
+      ]
+    }
+  ],
+  "selectors": [
+    {
+      "symbol": "withExampleDirectory"
+    },
+    {
+      "symbol": "withAsyncExampleDirectory"
+    },
+    {
+      "symbol": "registryFor"
+    },
+    {
+      "symbol": "validateTestScopeExample"
+    },
+    {
+      "symbol": "validateWaitTemplate"
+    },
+    {
+      "symbol": "validatePublishedPairExample"
+    },
+    {
+      "symbol": "validateReceiverExample"
+    },
+    {
+      "symbol": "validateApprovalSignalExample"
+    },
+    {
+      "symbol": "validatePublishedPairManifestTemplate"
+    },
+    {
+      "symbol": "validateReceiverReceiptTemplate"
+    },
+    {
+      "symbol": "validateProjectFactories"
+    },
+    {
+      "symbol": "validateManifestExample"
+    },
+    {
+      "symbol": "validateGraphExample"
+    },
+    {
+      "symbol": "validatePlatformExample"
+    },
+    {
+      "symbol": "validateCompactExamples"
+    },
+    {
+      "symbol": "validateBusterExample"
+    },
+    {
+      "symbol": "validatePrismDevelopmentDocument"
+    },
+    {
+      "symbol": "validatePrismPayloadTemplate"
+    },
+    {
+      "symbol": "validateHelmOverlayExamples"
+    },
+    {
+      "symbol": "validateDeliverablesExample"
+    },
+    {
+      "symbol": "validateHelmOptionTemplates"
+    },
+    {
+      "symbol": "validateBrowserCompanions"
+    }
+  ],
+  "factsDigest": "bf226417f8311315304773b9d4f158955489a1d323f2f1ff85b122c26905857c",
+  "descriptors": [
+    {
+      "line": 62,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "value",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 63,
+      "sink": "fs.writeFileSync",
+      "role": "non-api",
+      "expression": null,
+      "basis": "source-bound-static-json-input",
+      "keys": [],
+      "sinkContract": null
+    },
+    {
+      "line": 122,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "JSON.stringify(value)",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 275,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "value",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 307,
+      "sink": "fs.writeFileSync",
+      "role": "non-api",
+      "expression": null,
+      "basis": "fixed-source-root-properties",
+      "keys": [
+        "activeAdapters",
+        "adapters",
+        "administrativeDecisionIssuers",
+        "externalTrust",
+        "grants",
+        "installationRoots",
+        "observers",
+        "orchestratorIssuerId",
+        "providers",
+        "schemaVersion",
+        "shutdownTimeoutMs",
+        "storageRoot",
+        "trustedBuiltinRoots"
+      ],
+      "sinkContract": null
+    },
+    {
+      "line": 310,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "value",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 367,
+      "sink": "fs.writeFileSync",
+      "role": "unknown",
+      "expression": "text",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 422,
+      "sink": "fs.writeFileSync",
+      "role": "non-api",
+      "expression": null,
+      "basis": "literal-scalar",
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 423,
+      "sink": "fs.writeFileSync",
+      "role": "api",
+      "expression": null,
+      "basis": "literal-yaml-api-identity",
+      "keys": null,
+      "sinkContract": null
+    },
+    {
+      "line": 150,
+      "sink": "native-file-writer-call",
+      "role": "unknown",
+      "expression": "values",
+      "basis": null,
+      "keys": null,
+      "sinkContract": null
+    }
+  ],
+  "slots": [
+    {
+      "line": 62,
+      "kind": "pipeline-test-scope-input",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 63,
+      "kind": "fixed-progress-companion",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 122,
+      "kind": "wait-platform-input",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 275,
+      "kind": "platform-example-input",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 307,
+      "kind": "fixed-buster-platform-input",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 310,
+      "kind": "buster-construction-input",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 367,
+      "kind": "ordered-helm-overlay-input",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 422,
+      "kind": "private-chart-metadata",
+      "kubernetesShapedPayload": false
+    },
+    {
+      "line": 423,
+      "kind": "private-helm-api-shaped-key-parser-template",
+      "kubernetesShapedPayload": true
+    },
+    {
+      "line": 150,
+      "kind": "published-pair-fixture",
+      "kubernetesShapedPayload": false
+    }
+  ],
+  "actionBoundary": [
+    {
+      "source": "scripts/docs-publication-example-assets.mjs",
+      "use": [
+        "validateProjectFactories",
+        "validateTestScopeExample(matrix)",
+        "validateApprovalSignalExample",
+        "validateBrowserCompanions"
+      ],
+      "limit": "Existing assets-native validation only; no independent package entry or runtime grant."
+    },
+    {
+      "source": "scripts/docs-publication-example-projections.mjs",
+      "use": [
+        "validateHelmOptionTemplates"
+      ],
+      "limit": "Existing Helm-key projection only; no chart deployment, schema, or release admission grant."
+    },
+    {
+      "source": "scripts/docs-publication-examples.mjs",
+      "use": [
+        "existing named publication actions, including manifest, Buster construction, platform, wait, graph, compact, overlays, test-scope, pair, receiver, approval, deliverables, Prism payload/development, assets, and Helm-option actions"
+      ],
+      "limit": "The existing normal publication-child proof remains applicable only to check/default/build child provenance and its existing source/result boundary."
+    },
+    {
+      "source": "scripts/tests/docs-publication-examples.test.mjs",
+      "use": [
+        "validateWaitTemplate",
+        "validateProjectFactories"
+      ],
+      "limit": "Exact existing docs:publication:test harness uses only these two named calls; it is not a normal-child or product entry grant."
+    }
+  ]
+});
+const publicationNativeValidationReceipts = new WeakSet();
+function publicationNativeValidationDescriptor(role) {
+ return Object.fromEntries(['line','sink','role','expression','basis','keys','sinkContract'].map(key=>[key,role[key]??null]));
+}
+function checkedPublicationNativeValidation(root,graph,classify,sources) {
+ const profile=reviewedPublicationNativeValidation;
+ if(!sources.includes(profile.source))return null;
+ const fail=detail=>assert.fail('API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: '+detail);
+ if(root!==profile.root||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+ for(const input of profile.fixedInputs){
+  const file=path.join(root,input.path);
+  for(let current=file;current!==root;current=path.dirname(current)){
+   if(!fs.existsSync(current)||fs.realpathSync(current)!==current||fs.lstatSync(current).isSymbolicLink())fail('physical input '+input.path);
+   const stat=fs.lstatSync(current);
+   if(current===file?!stat.isFile()||stat.nlink!==1:!stat.isDirectory())fail('regular input '+input.path);
+  }
+  if(hash(fs.readFileSync(file))!==input.sha256)fail('fixed source/input '+input.path);
+ }
+ // These are only the finite directories enumerated or rendered by this helper.
+ const files=relative=>{
+  const result=[];
+  for(const entry of fs.readdirSync(path.join(root,relative),{withFileTypes:true})){
+   const child=path.posix.join(relative,entry.name);
+   if(entry.isSymbolicLink())fail('directory alias '+child);
+   if(entry.isDirectory())result.push(...files(child));
+   else if(entry.isFile())result.push(child);else fail('directory member '+child);
+  }
+  return result.sort();
+ };
+ for(const roster of profile.directoryRosters)if(JSON.stringify(files(roster.path))!==JSON.stringify(roster.files))fail('selected directory roster '+roster.path);
+ const child=assertPublicationExampleChildPurpose(root);
+ if(!child||child.source!==profile.caller)fail('existing normal publication child');
+ const definition=JSON.parse(fs.readFileSync(path.join(root,'package.json'))),scripts=definition.scripts??{};
+ if(scripts['docs:publication:test']!==profile.packageHarness)fail('exact separate test harness');
+ if(documentationEntryPoints(scripts,false,root).some(entry=>entry.source===profile.source))fail('helper package invocation');
+ const targets=value=>typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(targets):[];
+ if([definition.bin,definition.exports,definition.main].flatMap(targets).some(value=>path.posix.normalize(value.startsWith('./')?value.slice(2):value)===profile.source))fail('helper public target');
+ if(JSON.stringify(graph?.edges?.filter(edge=>edge.target===profile.source))!==JSON.stringify(profile.incomingEdges))fail('exact four caller edges');
+ if(JSON.stringify(graph?.publicEntries?.filter(entry=>entry.path===profile.source||entry.canonicalSource===profile.source))!==JSON.stringify(profile.publicEntries))fail('helper entry alias');
+ const base=os.tmpdir();
+ if(!path.isAbsolute(base)||fs.realpathSync(base)!==base||!fs.lstatSync(base).isDirectory()||fs.lstatSync(base).isSymbolicLink())fail('canonical temporary base');
+ const facts=deriveNativeOperationFacts(root,profile.source,profile.selectors);
+ if(!facts||nativeOperationFactDigest(facts)!==profile.factsDigest)fail('complete native operation facts');
+ const roles=classify(profile.source);
+ if(JSON.stringify(roles.map(publicationNativeValidationDescriptor))!==JSON.stringify(profile.descriptors))fail('complete ten-slot raw vector');
+ const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line)),runtimeExecutionAuthorized:false,apiApplyAuthorized:false})));
+ const receipt=Object.freeze({source:profile.source,slots,dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,rosters:profile.directoryRosters,edges:profile.incomingEdges,slots:profile.descriptors})),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,toolSuccessObserved:false,newBinaryProvenanceGranted:false,networkAbsenceProved:false,futureTemporaryStateObserved:false,cleanupAttemptOnly:true,cleanupOrRollbackGuaranteed:false,productOutputs:Object.freeze([])});
+ publicationNativeValidationReceipts.add(receipt);return receipt;
+}
+function selectedPublicationNativeValidation(source,role,receipt) {
+ if(source!==reviewedPublicationNativeValidation.source)return false;
+ assert(receipt&&publicationNativeValidationReceipts.has(receipt),'API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: unacquired receipt');
+ const slot=receipt.slots.find(item=>item.line===role.line&&item.descriptor.sink===role.sink);
+ assert(slot,'API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: new slot');
+ assert.equal(JSON.stringify(publicationNativeValidationDescriptor(role)),JSON.stringify(slot.descriptor),'API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: altered slot');
+ return slot;
+}
+
 export function discoverScriptApiOutputs(root) {
   assertReviewedDiagnosticOutputSources(root);
   // Qualification includes graph metadata (for example directory symlinks)
@@ -1826,6 +5484,10 @@ export function discoverScriptApiOutputs(root) {
   const disabledRegistration=checkedDisabledRegistrationOutput(root,documentationGraphCache.get(root),gitOpsProfile);
   const sourcePurposeSources=executableSources.filter(file=>!validatedDocumentationTools.has(file));
   const sourcePurposeClassifier=createSerializedOutputRoleClassifier(root,sourcePurposeSources);
+  const commonErrorMarkdown=checkedCommonErrorMarkdownOutput(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
+  const eventContractOutputs=checkedEventContractDocumentationOutputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
+  const publicationYamlInputs=checkedPublicationYamlValidationInputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
+  const publicationNative=checkedPublicationNativeValidation(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const probe39=checkedOriginalProbe39Output(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
@@ -1833,10 +5495,10 @@ export function discoverScriptApiOutputs(root) {
     ?checkedReleaseRendererOutputs(root,topLevelPurposes):null;
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,topLevelPurposes?.inputDigest??null,probe39?.inputDigest??null,versionsMap?.inputDigest??null,releaseRenderer?.inputDigest??null,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,publicationNative?.inputDigest??null,publicationYamlInputs?.inputDigest??null,eventContractOutputs?.inputDigest??null,commonErrorMarkdown?.inputDigest??null,topLevelPurposes?.inputDigest??null,probe39?.inputDigest??null,versionsMap?.inputDigest??null,releaseRenderer?.inputDigest??null,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
-  const classifiedDependencies=new Set([...(probe39?.dependencies??[]),...(topLevelPurposes?.dependencies??[]),...(versionsMap?.dependencies??[]),...(releaseRenderer?.dependencies??[]),...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
+  const classifiedDependencies=new Set([...(publicationNative?.dependencies??[]),...(publicationYamlInputs?.dependencies??[]),...(eventContractOutputs?.dependencies??[]),...(commonErrorMarkdown?.dependencies??[]),...(probe39?.dependencies??[]),...(topLevelPurposes?.dependencies??[]),...(versionsMap?.dependencies??[]),...(releaseRenderer?.dependencies??[]),...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
   const result=[];
   for(const source of walkProductSources(root,producerRoots,file=>!executableSourceSet.has(path.relative(root,fs.realpathSync(path.join(root,file))).replaceAll(path.sep,'/'))&&!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -1897,7 +5559,7 @@ export function discoverScriptApiOutputs(root) {
   for(const source of sources) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
-    if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes))assertProducerAdapterAuthority(root,[source]);
+    if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes)&&!(source===reviewedPublicationNativeValidation.source&&publicationNative&&publicationNativeValidationReceipts.has(publicationNative)))assertProducerAdapterAuthority(root,[source]);
     const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
     const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null)).map(role=>minimalPluginFixtureOutputRole(role,source===minimalPluginSource?minimalPlugin:null));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
@@ -1907,6 +5569,10 @@ export function discoverScriptApiOutputs(root) {
     for(const role of outputRoles) {
       // Evaluate the sealed-source check before any ordinary role fallback:
       // mutable contracts cannot relabel these two raw pathname slots.
+      const publicationNativePurpose=selectedPublicationNativeValidation(source,role,publicationNative);
+      const publicationYamlPurpose=selectedPublicationYamlValidationInput(source,role,publicationYamlInputs);
+      const eventContractPurpose=selectedEventContractDocumentationOutput(source,role,eventContractOutputs);
+      const commonErrorMarkdownSlot=selectedCommonErrorMarkdownOutput(source,role,commonErrorMarkdown);
       const topLevelPurpose=selectedTopLevelScriptPurpose(source,role,topLevelPurposes);
       const probe39Slot=selectedOriginalProbe39Output(source,role,probe39);
       const versionsMapPurpose=selectedVersionsMapOutput(source,role,versionsMap);
@@ -1915,9 +5581,11 @@ export function discoverScriptApiOutputs(root) {
       const disabledRegistrationSlot=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
       assert(scalarOccurrences.has(source)
         ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source))
-        :probe39Slot||topLevelPurpose||versionsMapPurpose||releaseRendererSlot||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
+        :publicationNativePurpose||publicationYamlPurpose||eventContractPurpose||commonErrorMarkdownSlot||probe39Slot||topLevelPurpose||versionsMapPurpose||releaseRendererSlot||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
         `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     }
+    // Only the fully acquired ten-slot validation consumer, not a product emitter.
+    if(source===reviewedPublicationNativeValidation.source&&publicationNative&&publicationNativeValidationReceipts.has(publicationNative))continue;
     if(source==='scripts/render-kubernetes-api-probe.mjs'&&probe39){result.push(...probe39.outputs);continue;}
     if(witness){result.push(...witness.outputs);continue;}
     if(gitOpsProfile?.sources.includes(source)){result.push(...gitOpsProfile.outputs.filter(output=>output.context.path===source));continue;}
@@ -2177,6 +5845,8 @@ export function discoverGoApiOutputs(root) {
   const authorityFile='scripts/docs-api-producer-adapter-authorities.json';
   const cacheInputs=[...sources,authorityFile,'package.json','charts/kubeclaw/templates/buster-namespace-lease-crd.yaml'].filter(source=>fs.existsSync(path.join(root,source)));
   const documentationTools=documentationToolSources(root);
+  // Revalidate the closed caller/stdio/other-helper profile even on a warm Go cache.
+  if(sources.includes('scripts/lib/cli/go_cli_ast.go'))assertCliStaticAstSourcePurpose(root,'scripts/lib/cli/go_cli_ast.go');
   const modulePaths=new Set();
   for(const source of sources)for(let directory=path.dirname(path.join(root,source));true;directory=path.dirname(directory)){for(const name of ['go.mod','go.sum','go.work','go.work.sum'])modulePaths.add(path.join(directory,name));if(path.dirname(directory)===directory)break;}
   const cached=goOutputCache.get(root);for(const file of [...cached?.dependencyPaths??[],...cached?.externalAuthorityDependencies??[]])modulePaths.add(file);
@@ -2187,6 +5857,9 @@ export function discoverGoApiOutputs(root) {
   const nativeAuthority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const nativeContracts=fs.existsSync(nativeAuthority)?JSON.parse(fs.readFileSync(nativeAuthority,'utf8')).nativeLanguageSerializationContracts??[]:[];
   const roles=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('./docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>({path:path.join(root,source)}))),encoding:'utf8',maxBuffer:16*1024*1024});assert.equal(roles.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${roles.error?.message??roles.stderr}`);
   const parsedRoles=JSON.parse(roles.stdout);
+  const cliGoRoles=parsedRoles.filter(role=>role.path===path.join(root,'scripts/lib/cli/go_cli_ast.go'));
+  if(cliGoRoles.length)assertCliStaticAstOutputVector(root,'scripts/lib/cli/go_cli_ast.go',cliGoRoles);
+
   // Inspect the original response-root control independently of an earlier
   // unsupported error publication; neither surface can hide the other.
   if(parsedRoles.some(role=>role.function==='productHandler'&&/^json\.NewEncoder\(w\)/u.test(role.expression)))assertNativeProductResponseSchemaAuthority(root);

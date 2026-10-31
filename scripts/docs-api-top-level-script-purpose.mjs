@@ -5,6 +5,23 @@ import {createHash} from 'node:crypto';
 
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
 const authoritySha256 = 'a0cf010ffc16a1c952879698d9ede2ce38364807ec3a4996cf68c8fed26d0d1b';
+const currentPurposeInputBindings20261031 = Object.freeze([
+  {
+    "path": "docs/site/extend/lint.md",
+    "sha256": "a1c0a7ba491dcb60690e38e50d813d477ce33894492a43629b10e12c60cbd53e",
+    "historicalSha256": "8e84ad80f6b9fff4557073d77796f64e6374c170ad23d261c1a3ae6b0dac461e"
+  },
+  {
+    "path": "scripts/plugin-registration-dependencies.mjs",
+    "sha256": "7f473538623aedb9f0c49477c72c54b5eda5a3e20456074becfd7ef73cd5ccca",
+    "historicalSha256": "0e5cc4599edcd642b3c7c6190be62b869d8f57aa5fc45d0acd9bd5a78e7e28b2"
+  },
+  {
+    "path": "scripts/docs-publication.mjs",
+    "sha256": "c96741df38af067044811d38e0c0513dd9512e383493d08e984cf62e538b1bd5",
+    "historicalSha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
+  }
+].map(Object.freeze));
 const hash = value => createHash('sha256').update(value).digest('hex');
 const receipts = new WeakSet();
 const selectedSources = Object.freeze([
@@ -49,11 +66,23 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources) {
   const authority = JSON.parse(bytes);
   if (JSON.stringify(Object.keys(authority.sourcePins)) !== JSON.stringify(selectedSources)) fail('source roster');
   if (!selectedSources.every(source => sources.includes(source))) fail('missing selected source from native census');
+  const approvedCurrentPaths = ["docs/site/extend/lint.md", "scripts/plugin-registration-dependencies.mjs", "scripts/docs-publication.mjs"];
+  const bindings = currentPurposeInputBindings20261031;
+  if (JSON.stringify(bindings.map(binding => binding?.path)) !== JSON.stringify(approvedCurrentPaths)) fail('current binding exact ordered roster');
+  for (const binding of bindings) {
+    if (!binding || JSON.stringify(Object.keys(binding).sort()) !== JSON.stringify(['historicalSha256','path','sha256'])
+      || !/^[a-f0-9]{64}$/u.test(binding.sha256) || !/^[a-f0-9]{64}$/u.test(binding.historicalSha256)) fail('current binding shape');
+    const historical = authority.inputs.filter(input => input.path === binding.path);
+    if (historical.length !== 1 || historical[0].sha256 !== binding.historicalSha256) fail('current binding historical identity');
+  }
+  const currentPurposeInputBindingDigest = hash(JSON.stringify(bindings));
   const facts = [];
   for (const input of authority.inputs) {
     const content = read(input.path);
-    if (hash(content) !== input.sha256) fail(`changed Source/caller/receiver/input ${input.path}`);
-    facts.push(input);
+    const binding = bindings.find(binding => binding.path === input.path);
+    const expected = binding ? binding.sha256 : input.sha256;
+    if (hash(content) !== expected) fail(`changed Source/caller/receiver/input ${input.path}`);
+    facts.push({...input, sha256: expected});
   }
   for (const source of selectedSources) if (hash(read(source)) !== authority.sourcePins[source]) fail(`producer Source ${source}`);
   for (const relative of authority.absentPackageBoundaries) {
@@ -65,7 +94,7 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources) {
   const actual = selectedSources.flatMap(source => classify(source).map(role => ({source, ...descriptor(role)})));
   if (JSON.stringify(actual) !== JSON.stringify(authority.descriptors)) fail('canonical native slot/role roster; registry relabel or missing/new slot');
   const receipt = Object.freeze({
-    witnessDigest: authoritySha256, inputDigest: hash(JSON.stringify(facts)),
+    witnessDigest: authoritySha256, inputDigest: hash(JSON.stringify(facts)), currentPurposeInputBindingDigest,
     dependencies: Object.freeze([authorityPath, ...facts.map(input => input.path)]),
     descriptors: Object.freeze(authority.descriptors.map(Object.freeze)),
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false,
@@ -83,6 +112,7 @@ export function selectedTopLevelScriptPurpose(source, role, receipt) {
   const purpose = purposes[`${source}:${role.line}`];
   if (!purpose) return null; // Raw/API/mixed streams still need their own finite adapters.
   return Object.freeze({purpose, canonicalRawRole: role.role, witnessDigest: receipt.witnessDigest, inputDigest: receipt.inputDigest,
+    currentPurposeInputBindingDigest: receipt.currentPurposeInputBindingDigest,
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false,
     limit: 'Source-owned output purpose only; runtime inputs/results unobserved; arbitrary embedded tool/status bytes are not globally non-API.'});
 }

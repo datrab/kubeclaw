@@ -1,0 +1,17 @@
+{
+  "argv": [
+    "/usr/local/bin/node",
+    "--permission",
+    "--allow-fs-read=/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+    "--allow-fs-read=/home/node/.openclaw/workspace/operations/pr13/evidence/cfg011-ref012-current-20261030/parse-ref003-argocd-current-outputs.mjs",
+    "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg011-ref012-current-20261030/parse-ref003-argocd-current-outputs.mjs"
+  ],
+  "environment": {
+    "PATH": "/usr/local/bin:/usr/bin:/bin",
+    "LANG": "C.UTF-8",
+    "TZ": "UTC"
+  },
+  "exit": 0,
+  "stderr": "",
+  "scope": "Separate readonly parse of identical current21outputbytes by exact same YAML.parse/JSONdigest expression as maintained receiving adapter, not a second producer check."
+}

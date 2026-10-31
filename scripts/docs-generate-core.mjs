@@ -273,3 +273,154 @@ export function renderWorkflowTable(workflows) {
   workflow.commandAndActionRefs.map((ref) => `\`${ref}\``).join('<br>'),
 ]));
 }
+
+/** Current configuration hub; no retained snapshot or program-output API award. */
+export function renderConfigurationFamilyHub(reference, sourceLink, {sourceRevision=null}={}) {
+  if (reference.schemaVersion !== 'kubeclaw.configuration-family-reference.v1'
+    || reference.composition.globalApiDiscoveryPassed !== false
+    || typeof sourceLink !== 'function') throw new Error('CONFIGURATION_HUB_INPUT_INVALID');
+  const relationKey = fact => JSON.stringify([fact.kind,fact.family,fact.source,fact.setting,fact.owner,fact.consumer,fact.defaultAndPrecedence,fact.reloadOrRetention,fact.sensitivity,fact.sourceSha256??null,fact.consumerRole??null]);
+  if (!Array.isArray(reference.inverseConsumers)
+    || reference.inverseConsumers.some(group => !Array.isArray(group.facts) || group.facts.some(fact => fact.consumer !== group.consumer))
+    || JSON.stringify(reference.facts.map(relationKey).sort()) !== JSON.stringify(reference.inverseConsumers.flatMap(group => group.facts.map(relationKey)).sort())) {
+    throw new Error('CONFIGURATION_HUB_INVERSE_RELATION_MISSING');
+  }
+  const snapshot = sourceRevision ? '`' + sourceRevision + '`' : 'working-source candidate; publication snapshot pending';
+  const families = reference.families;
+  for (const family of families) {
+    if (!reference.facts.some(fact => fact.family === family.id)
+      || !family.owner || !family.consumer || !family.defaultAndPrecedence || !family.reloadOrRetention) {
+      throw new Error(`CONFIGURATION_HUB_FAMILY_LOOKUP_MISSING:${family.id}`);
+    }
+  }
+  const source = name => '[`' + name + '`](' + sourceLink(name, 1, 1) + ')';
+  const boundaries = reference.facts.filter(fact => ['family-boundary', 'direct-source-boundary'].includes(fact.kind));
+  const inverse = [...new Set(boundaries.map(fact => fact.consumer))].sort().map(consumer => {
+    const rows = boundaries.filter(fact => fact.consumer === consumer);
+    const ids = [...new Set(rows.map(fact => fact.family))];
+    return [source(consumer), ids.map(id => families.find(family => family.id === id).title).join('; '),
+      [...new Set(rows.map(fact => fact.reference ?? families.find(family => family.id === fact.family).route))].join('<br>')];
+  });
+  const payloadBoundaries = reference.payloadBoundaries.filter(item => !item.executableBehaviorProved);
+  return `# Configuration
+
+Status: generated checked-in configuration reference; consumer boundaries below
+Audience: operator, project author, plugin author, maintainer
+Owner: documentation; each named consumer owns its setting semantics
+Evidence: docs/generated/inventory/configuration-families.json; docs/config/configuration-family-map.json; scripts/docs-configuration-inventory.mjs
+Applies to: current selected configuration families, source contracts and inverse-consumer routes
+Last verified: ${reference.checkedInDate}; guarded source inventory, not a deployment or live-reload observation
+Source snapshot: ${snapshot}
+
+${generatedNotice(['docs/generated/inventory/configuration-families.json', 'docs/config/configuration-family-map.json'])}
+## Find the setting before changing it
+
+Start with the process or artifact that consumes the value, not its filename.
+A Helm value, a platform grant and a stage setting can share a name without
+sharing authority. Changing one does not override the other two.
+
+1. Find the family or consuming component in the tables below.
+2. Open its detailed reference and identify the exact field, version and default rule.
+3. Follow that consumer's validation, change and recovery boundary before activation.
+
+For input, result and checkpoint contracts that are not configuration settings,
+use [Schema authorities](schemas.md). For a package versus a caller grant or
+native-host permission, use [Roles and package ownership](roles-and-package-ownership.md).
+
+## Select the configuration family
+
+The detailed route supplies field-specific contracts. A schema shape, copied
+file, generated result or successful compilation is not proof of activation.
+
+${table(['Family / artifact', 'Selection', 'Consumer and authority', 'Defaults and override boundary', 'Detailed route'], families.map(family => [family.title, family.selection, family.consumerSummary, family.defaultAndPrecedence, family.route]))}
+
+## Start from a consumer
+
+Use the consumer below to return to its configuration family. The complete index of recorded
+field contracts and whole-file delivery boundaries, including registration, transport, runtime and
+explicit non-delivery roles, is in ${source('docs/generated/inventory/configuration-families.json')}.
+A registration declaration or ConfigMap copy remains distinct from a runtime reader.
+A payload source tree is not field-level runtime behavior: delivery of a whole file
+does not prove that its tool or image reads every key or inserts a default.
+
+${table(['Consuming source', 'Configuration family', 'Detailed route'], inverse)}
+
+## Determine the effective value
+
+There is no global last-writer-wins rule. Record the family first, then use
+[Configuration precedence](configuration-precedence.md).
+
+${table(['Input state', 'What to establish', 'Do not infer'], [
+ ['Omitted field', 'Exact schema requirement and actual resolver/consumer fallback.', 'A displayed schema default is inserted by every caller.'],
+ ['Empty string', 'Whether the receiver permits it, uses a nullish fallback or requires nonempty text.', 'Empty equals omitted.'],
+ ['null, false or zero', 'The exact type/branch and the consumer condition.', 'All false-like values disable or clear a setting.'],
+ ['Object or array', 'This family’s merge, replacement and resolution rules.', 'Helm, compact profiles and plugin configuration share one merge algorithm.'],
+ ['Relative path', 'The loader’s canonical input and path origin.', 'Every path is relative to the current shell directory.'],
+ ['Secret reference', 'Named Secret/key/file and the actual receiving process.', 'A reference proves contents, authorization or successful authentication.'],
+])}
+
+### Example: a provider default
+
+Identify the contract ID and field in [Provider configuration](buster-provider-configuration.md).
+Check whether the caller only validates or resolves provider configuration.
+Ordinary validation does not insert defaults. Resolution clones values and
+validates with default insertion; it does not install, grant or execute a provider.
+Retain the non-secret contract/schema identity and selected field, not the resolved object.
+
+### Example: an empty Prism URL
+
+The control loader uses \`PRISM_WORKER_URL ?? 'http://prism-worker:8080'\`.
+Omission selects that fallback; an empty string does not. It must still be a
+valid URL. Composition captures the process environment before asynchronous
+loading, so editing a Secret does not update an already captured configuration.
+Use [Environment variables](environment-variables.md) and the exact receiving contract.
+
+## Change and reload boundaries
+
+A setting is hot only when its named consumer explicitly watches or rereads it.
+Use [Configuration change impact](configuration-change-impact.md) for the procedure.
+
+${table(['Configuration family', 'Change / retention boundary'], families.map(family => [family.title, family.reloadOrRetention]))}
+
+## Diagnose without exposing secrets
+
+1. Retain the first diagnostic, input version, canonical source and redacted owner identity.
+2. Follow the family’s schema, registration, grant and receiver route. Do not widen unrelated authority.
+3. Keep the prior working generation and unresolved cleanup state if activation fails.
+4. Verify the actual receiving process before retiring a prior Secret or input generation.
+
+Use [Common errors](common-errors.md) for a named diagnostic and
+[Secrets](secrets.md) for redacted source/consumer/rotation boundaries.
+
+## Source coverage and explicit limits
+
+The current composition retains the selected YAML/Helm authority and receiver
+checks, registered schemas, deployed and undeployed payload boundaries,
+owned runtime/CLI inputs, configured environment selectors and direct host,
+publication and durable-storage source contracts. The inverse index records
+actual field contracts rather than promoting every candidate source file to a reader.
+
+Local validation fixtures and documentation output do not become configuration
+emitters because their bytes happen to be JSON, YAML or Kubernetes-shaped.
+Dynamic or external input without qualified provenance is not evaluated as a
+working setting. Generic acquisition limitations do not supply facts or defaults:
+the included facts require their direct source and receiving contracts.
+
+The broad executable program-output API discovery path is separate and is not
+certified by this composition. It does not replace [API fields](api-object-updates.md),
+prove a deployed effective value or establish successful reload, admission or rotation.
+
+${payloadBoundaries.length ? `### Payloads without a proved checked-in runtime reader or delivery\n\n${table(['Source payload', 'Declared boundary'], payloadBoundaries.map(payload => [source(payload.path), payload.deliveryGap ?? payload.readerBoundary ?? payload.behaviorClassification]))}\n\nA source file or stored payload is not a working operator option when its reader or delivery is unproved.\n` : ''}
+## Maintain this reference
+
+Generate the guarded configuration artifacts with
+\`node scripts/docs-configuration-inventory.mjs --configuration-reference-only\`,
+then the hub with \`node scripts/docs-generate.mjs --only configuration-hub --revision COMMIT\`.
+Use a reviewed commit containing the current source, map and inventory bytes.
+This bounded route does not advance the shared documentation source lock.
+Use their \`--check\` modes for drift. A changed selected source, missing family,
+inverse consumer or source authority is a stop, not permission to relabel unknown data.
+These commands do not claim the normal global configuration/API command passed.
+
+${generatedEnd()}`;
+}

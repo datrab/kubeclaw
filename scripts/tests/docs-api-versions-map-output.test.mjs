@@ -31,6 +31,10 @@ test('native current classifier retains mixed UNKNOWN while all original member/
  const classify=createSerializedOutputRoleClassifier(repository,[source]);
  const before=classify(source);const receipt=checkedVersionsMapOutputs(repository,graph,classify,[source]);
  assert.equal(receipt.members.length,45);assert.equal(receipt.outputs.length,14);
+ assert.equal(receipt.observationsHistorical,true);assert.equal(receipt.currentPackageBinding.path,'package.json');
+ assert.notEqual(receipt.currentPackageBinding.sha256,receipt.currentPackageBinding.historicalSha256);
+ assert.notEqual(receipt.inputDigest,receipt.witnessDigest);
+ assert(receipt.outputs.every(output=>output.context.observationsHistorical&&output.context.historicalWitnessDigest===receipt.witnessDigest&&output.context.currentPackageBindingDigest===receipt.currentPackageBindingDigest));
  assert.equal(new Set(receipt.outputs.map(x=>x.context.publicOutput)).size,11);
  assert.deepEqual(receipt.outputs.map(x=>[x.value.apiVersion,x.value.kind]),authority.apiRoots.map(x=>[x.apiVersion,x.kind]));
  const registry=receipt.outputs.filter(x=>x.context.publicOutput==='my-values/infra/registry-mirror.yaml');
@@ -44,7 +48,7 @@ test('native current classifier retains mixed UNKNOWN while all original member/
 
 test('warm validation rejects whole versions whitespace and unchanged-value input/source/parser drift',()=>fixture(({root,write,acquire})=>{
  acquire();acquire();
- for(const file of ['versions.json','scripts/versions.mjs','scripts/runtime-tool-locks.mjs','node_modules/js-yaml/dist/js-yaml.mjs','node_modules/yaml/dist/parse/parser.js','charts/kubeclaw/values.yaml','gitops/platform/bootstrap/spire.yaml']){
+ for(const {path:file} of authority.inputs){
   const bytes=fs.readFileSync(path.join(root,file));write(file,Buffer.concat([bytes,Buffer.from('\n ')]));
   assert.throws(()=>acquire(),rejected,file);write(file,bytes);
  }
@@ -111,5 +115,31 @@ console.log(JSON.stringify({outputs:receipt.outputs.length,replicas:receipt.outp
   fs.writeFileSync(actual,bytes.replace(marker,marker+"\n        if (res?.kind === 'Deployment') res.spec.replicas = 777;"));
   const changed=invoke();assert.equal(changed.status,1,changed.stdout);
   assert.match(changed.stderr,/API_PRODUCT_VERSIONS_MAP_OUTPUT_UNQUALIFIED: actual parser input node_modules\/yaml\/dist\/doc\/Document.js/u);
+ }finally{fs.rmSync(runtime,{recursive:true,force:true});}
+}));
+
+test('private versions package binding refuses missing extra foreign current and historical fields',()=>fixture(({root})=>{
+ const runtime=fs.mkdtempSync(path.join(os.tmpdir(),'versions-map-binding-importer-'));
+ try{
+  fs.mkdirSync(path.join(runtime,'scripts'));
+  const adapter=path.join(runtime,'scripts/docs-api-versions-map-output.mjs');
+  fs.copyFileSync(path.join(repository,'scripts/docs-api-versions-map-output.mjs'),adapter);
+  for(const input of authority.inputs.filter(x=>x.path.startsWith('node_modules/yaml/'))){
+   const target=path.join(runtime,input.path);fs.mkdirSync(path.dirname(target),{recursive:true});fs.copyFileSync(path.join(repository,input.path),target);
+  }
+  const runner=path.join(runtime,'run.mjs');
+  fs.writeFileSync(runner,`import fs from 'node:fs';import {checkedVersionsMapOutputs} from ${JSON.stringify(pathToFileURL(adapter).href)};
+const {root,graph,roles}=JSON.parse(fs.readFileSync(0,'utf8'));checkedVersionsMapOutputs(root,graph,()=>roles,['scripts/versions.mjs']);`);
+  const code=fs.readFileSync(adapter,'utf8'),prefix='const currentPackageBinding20261031 = Object.freeze(';
+  const start=code.indexOf(prefix)+prefix.length,end=code.indexOf(');',start);
+  assert(start>=prefix.length&&end>start);const binding=JSON.parse(code.slice(start,end));
+  const variants=[{}, {path:binding.path,sha256:binding.sha256}, {...binding,path:'scripts/versions.mjs'},
+   {...binding,extraPath:'unbound.json'}, {...binding,sha256:'0'.repeat(64)}, {...binding,historicalSha256:'0'.repeat(64)},
+   {...binding,bytes:binding.bytes+1}, {...binding,historicalBytes:binding.historicalBytes+1}];
+  for(const changed of variants){
+   fs.writeFileSync(adapter,code.slice(0,start)+JSON.stringify(changed)+code.slice(end));
+   const result=spawnSync(process.execPath,[runner],{input:JSON.stringify({root,graph,roles:nativeRoles}),encoding:'utf8'});
+   assert.equal(result.status,1,result.stdout);assert.match(result.stderr,/API_PRODUCT_VERSIONS_MAP_OUTPUT_UNQUALIFIED/u);
+  }
  }finally{fs.rmSync(runtime,{recursive:true,force:true});}
 }));

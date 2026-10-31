@@ -8,7 +8,8 @@ import { spawnSync } from 'node:child_process';
 import YAML from 'yaml';
 import ts from 'typescript';
 import { shellHeredocCustody, shellCommandAcquisitions } from '../docs-shell-source-custody.mjs';
-import { helmEnvironmentHelperProjectionPlans } from '../docs-helm-environment-projections.mjs';
+import { helmEnvironmentHelperProjectionPlans, helmGatewayCommandProjection } from '../docs-helm-environment-projections.mjs';
+import { nativeSupervisorEnvironmentProducer } from '../lib/docs-owned-process-environment.mjs';
 import { runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings,
   externalProducerContract, assertRuntimeConsumerContract } from '../docs-runtime-consumer-contracts.mjs';
 
@@ -23,7 +24,7 @@ function declaration(name) {
   assert.ok(end > start);
   return source.slice(start, end);
 }
-const sandbox = { helmEnvironmentHelperProjectionPlans, shellHeredocCustody, shellCommandAcquisitions, crypto, ts, assert, Buffer, spawnSync, process, path, console, YAML, fs, root,
+const sandbox = { nativeSupervisorEnvironmentProducer, helmGatewayCommandProjection, helmEnvironmentHelperProjectionPlans, shellHeredocCustody, shellCommandAcquisitions, crypto, ts, assert, Buffer, spawnSync, process, path, console, YAML, fs, root,
   runtimeConsumerContract, maintainedEnvironmentBindings, qualifiedProducerBindings,
   externalProducerContract, assertRuntimeConsumerContract,
   ENVIRONMENT_CONTRACTS: new Map(), ENVIRONMENT_CONSUMER_CONTRACTS: new Map(),
@@ -43,6 +44,30 @@ for (const name of ['configuredSecretResolverFacts', 'configuredEnvironmentRecei
   'environmentProducerOccurrences', 'environmentOccurrences', 'environmentReaderContract', 'verifyEnvironmentConsumerCoverage']) {
   vm.runInContext(declaration(name), sandbox, { filename: `production:${name}` });
 }
+// The production coverage guard also requires the real owned-launcher receiver.
+// Keep that prerequisite in every focused fixture instead of bypassing the guard.
+const ownedReceiverSource = 'skills/worker/core/worker/native-worker-launcher.c';
+const productionInventoryTree = ts.createSourceFile('docs-configuration-inventory.mjs', source, ts.ScriptTarget.Latest, true);
+const ownedReceiverContractCall = productionInventoryTree.statements
+  .filter(ts.isExpressionStatement).map(statement => statement.expression)
+  .find(node => ts.isCallExpression(node) && node.expression.getText(productionInventoryTree) === 'addEnvironmentConsumerContract'
+    && node.arguments[0]?.text === 'KUBECLAW_NATIVE_SUPERVISOR_PID' && node.arguments[1]?.text === ownedReceiverSource);
+assert(ownedReceiverContractCall, 'missing real owned receiver contract');
+vm.runInContext('ENVIRONMENT_CONSUMER_CONTRACTS.set(' + JSON.stringify('KUBECLAW_NATIVE_SUPERVISOR_PID:' + ownedReceiverSource)
+  + ', ' + ownedReceiverContractCall.arguments[2].getText(productionInventoryTree) + ');', sandbox);
+
+const productionEnvironmentOccurrences = sandbox.environmentOccurrences;
+const productionVerifyEnvironmentConsumerCoverage = sandbox.verifyEnvironmentConsumerCoverage;
+sandbox.verifyEnvironmentConsumerCoverage = () => {
+  const fixtureSources = sandbox.runtimeTextSources, fixtureRead = sandbox.read, fixtureOccurrences = sandbox.environmentOccurrences;
+  sandbox.runtimeTextSources = () => [...new Set([...fixtureSources(), ownedReceiverSource])];
+  sandbox.read = sourcePath => sourcePath === ownedReceiverSource
+    ? fs.readFileSync(path.join(root, sourcePath), 'utf8') : fixtureRead(sourcePath);
+  sandbox.environmentOccurrences = (sourcePath, text) => sourcePath === ownedReceiverSource
+    ? productionEnvironmentOccurrences(sourcePath, text) : fixtureOccurrences(sourcePath, text);
+  try { return productionVerifyEnvironmentConsumerCoverage(); }
+  finally { sandbox.runtimeTextSources = fixtureSources; sandbox.read = fixtureRead; sandbox.environmentOccurrences = fixtureOccurrences; }
+};
 const reads = (text) => JSON.parse(JSON.stringify(sandbox.pythonEnvironmentReads(text)));
 const names = (text) => [...new Set(reads(text).map(item => item.name))].sort();
 

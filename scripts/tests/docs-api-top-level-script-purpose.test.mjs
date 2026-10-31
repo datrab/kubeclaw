@@ -32,6 +32,8 @@ test('current real native parser agrees with complete reviewed26-slot seal', () 
   assert.equal(receipt.descriptors.length, 26);
   assert.equal(receipt.runtimeExecutionAuthorized, false);
   assert.equal(receipt.apiApplyAuthorized, false);
+  assert.match(receipt.currentPurposeInputBindingDigest, /^[a-f0-9]{64}$/u);
+  assert.equal(receipt.witnessDigest, createHash('sha256').update(fs.readFileSync(path.join(repository, authorityPath))).digest('hex'));
   for (const source of sources) for (const role of classify(source)) {
     const before = structuredClone(role);
     const purpose = selectedTopLevelScriptPurpose(source, role, receipt);
@@ -241,3 +243,36 @@ test('aggregate fixed-file occurrence preserves UNKNOWN and rejects receiver/cal
   write(source, changed);
   assert.throws(() => acquire(), /changed Source\/caller\/receiver\/input/);
 }));
+
+// Exercise the exact private table via isolated copies of this pure receiver,
+// never through an extra production binding interface or a product command.
+test('exact three current purpose bindings reject missing duplicate reordered extra malformed and historical drift', async t => {
+  const root = fs.mkdtempSync(path.join(os.tmpdir(), 'top-purpose-current-bindings-'));
+  t.after(() => fs.rmSync(root, {recursive: true, force: true}));
+  for (const file of [authorityPath, ...authority.inputs.map(input => input.path)]) {
+    fs.mkdirSync(path.dirname(path.join(root, file)), {recursive: true});
+    fs.copyFileSync(path.join(repository, file), path.join(root, file));
+  }
+  const code = fs.readFileSync(path.join(repository, 'scripts/docs-api-top-level-script-purpose.mjs'), 'utf8');
+  const prefix = 'const currentPurposeInputBindings20261031 = Object.freeze(';
+  const start = code.indexOf(prefix) + prefix.length;
+  const end = code.indexOf('.map(Object.freeze));', start);
+  assert(start >= prefix.length && end > start);
+  const bindings = JSON.parse(code.slice(start, end));
+  assert.equal(bindings.length, 3);
+  for (const mutate of [
+    rows => rows.slice(1),
+    rows => [rows[0], rows[0], rows[2]],
+    rows => [...rows].reverse(),
+    rows => [...rows, {...rows[0], path: 'scripts/unapproved.mjs'}],
+    rows => rows.map((row, i) => i ? row : {...row, path: 'scripts/unapproved.mjs'}),
+    rows => rows.map((row, i) => i ? row : {...row, extra: true}),
+    rows => rows.map((row, i) => i ? row : {...row, sha256: 'not-a-digest'}),
+    rows => rows.map((row, i) => i ? row : {...row, historicalSha256: '0'.repeat(64)}),
+    rows => rows.map((row, i) => i ? row : {...row, sha256: '0'.repeat(64)}),
+  ]) {
+    const candidate = code.slice(0, start) + JSON.stringify(mutate(structuredClone(bindings))) + code.slice(end);
+    const receiver = await import('data:text/javascript;base64,' + Buffer.from(candidate).toString('base64'));
+    assert.throws(() => receiver.checkedTopLevelScriptPurposes(root, graph, original, sources), diagnostic);
+  }
+});

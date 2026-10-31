@@ -11,14 +11,19 @@ const authorityPath = 'scripts/docs-api-argocd-checked-artifact-authority.json';
 const authorityBytes = fs.readFileSync(path.join(repository, authorityPath));
 const authority = JSON.parse(authorityBytes);
 
-test('original checked-artifact witness retains API objects and rejects changed authority or inputs', t => {
+test('original checked-artifact current witness preserves history and rejects changed authority or inputs', t => {
+  const current = authority.currentReadOnlyObservation20261031;
+  assert(current, 'current admission must not fall back to historical observation');
+  assert.equal(authority.observation.node.version, 'v24.21.0');
+  assert.equal(current.node.version, 'v24.22.1');
+  assert.notEqual(authority.observation.inputsAndCheckedOutputs.find(f => f.path === 'package.json').sha256, current.inputsAndCheckedOutputs.find(f => f.path === 'package.json').sha256);
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'argocd-checked-artifacts-'));
   t.after(() => fs.rmSync(root, { recursive: true, force: true }));
   const write = (file, bytes) => {
     fs.mkdirSync(path.dirname(path.join(root, file)), { recursive: true });
     fs.writeFileSync(path.join(root, file), bytes);
   };
-  for (const fact of authority.observation.inputsAndCheckedOutputs) {
+  for (const fact of current.inputsAndCheckedOutputs) {
     write(fact.path, fs.readFileSync(path.join(repository, fact.path)));
   }
   write(authorityPath, authorityBytes);
@@ -31,7 +36,7 @@ test('original checked-artifact witness retains API objects and rejects changed 
   assert(result.outputs.every(output => output.value.apiVersion === 'argoproj.io/v1alpha1'));
   assert(result.outputs.every(output => output.context.producer === 'node-original-checked-artifact'));
 
-  for (const file of ['versions.json', 'scripts/platform-services.mjs',
+  for (const file of ['package.json', 'versions.json', 'scripts/platform-services.mjs',
     'gitops/platform/bootstrap/argocd.yaml', 'node_modules/js-yaml/dist/js-yaml.mjs']) {
     const bytes = fs.readFileSync(path.join(root, file));
     write(file, Buffer.concat([bytes, Buffer.from('\n')]));
@@ -94,6 +99,12 @@ test('finite original GitOps snapshots retain API roots and closed mixed members
   const first = read();
   assert.deepEqual(read(), first);
   assert.equal(first.outputs.length, 14);
+  assert.equal(first.observationsHistorical, true);
+  assert.equal(first.currentPackageBinding.path, 'package.json');
+  assert.notEqual(first.currentPackageBinding.sha256, first.currentPackageBinding.historicalSha256);
+  assert(first.outputs.every(output => output.context.observationsHistorical
+    && output.context.currentPackageBindingDigest === first.currentPackageBindingDigest));
+  assert.deepEqual(fs.readFileSync(path.join(repository, witnessPath)), bytes);
   // Match the actual docs-api-product-scope receiver, which does not include
   // publicOutput in identity. Multiple streams must not reset document=0.
   const receiverKey = output => JSON.stringify([output.context.path, output.context.profile,
@@ -114,7 +125,7 @@ test('finite original GitOps snapshots retain API roots and closed mixed members
   assert.deepEqual(rollback.map(member => member.role).sort(),
     ['api', 'api', 'helm-values', 'helm-values', 'helm-values', 'helm-values',
       'runtime-code-receipt', 'runtime-image-receipt', 'selection-metadata'].sort());
-  for (const file of ['gitops/production/config.json', 'releases/runtime-images.json',
+  for (const file of ['package.json', 'gitops/production/config.json', 'releases/runtime-images.json',
     'releases/runtime-code.json', 'releases/values/buster.yaml', 'scripts/gitops.mjs',
     'scripts/gitops-continuous.mjs', 'scripts/gitops-rollback.mjs', 'scripts/gitops-owner.mjs',
     'scripts/install/register-runtime-argo.mjs', 'node_modules/js-yaml/dist/js-yaml.mjs',
@@ -147,6 +158,10 @@ test('finite original GitOps snapshots retain API roots and closed mixed members
   fs.unlinkSync(path.join(root, selected));
   write(selected, fs.readFileSync(path.join(repository, selected)));
   for (const mutate of [
+    value => { value.profiles[0].exitCode = 1; },
+    value => { value.profiles[0].streams[0].payload.bytes = 'not: [yaml'; },
+    value => { value.descriptors[0].role = 'non-api'; },
+    value => { value.currentPackageBindings = [{path: 'unbound.json'}]; },
     value => value.profiles[2].streams.pop(),
     value => value.profiles[2].streams.push(value.profiles[2].streams[0]),
     value => { value.profiles[2].streams[0].role = 'api'; },
@@ -199,6 +214,10 @@ test('infrastructure historical profile stays private and rejects input, caller 
   const first = read();
   assert.deepEqual(read(), first);
   assert.equal(first.executionAuthority, false);
+  assert.equal(first.observationsHistorical, true);
+  assert.equal(first.currentPackageBinding.path, 'package.json');
+  assert.notEqual(first.currentPackageBinding.sha256, first.currentPackageBinding.historicalSha256);
+  assert.deepEqual(fs.readFileSync(path.join(repository, witnessPath)), bytes);
   const sources = Object.keys(authority.sourcePins);
   const classify = createSerializedOutputRoleClassifier(root, sources);
   for (const source of sources) {
@@ -247,6 +266,10 @@ test('infrastructure historical profile stays private and rejects input, caller 
   assert.throws(() => acquire(root, {...graph, publicEntries: [...graph.publicEntries,
     {path: 'tools/alias.mjs', canonicalSource: sources[0]}]}), /entry context/u);
   for (const mutate of [
+    a => {a.profiles[0].exitCode = 1;},
+    a => {a.profiles[0].verifiedReceipt.sha256 = 'a'.repeat(64);},
+    a => {a.profiles[1].historicalArchivePath += '-foreign';},
+    a => {a.currentPackageBindings = [{path: 'extra.json'}];},
     a => {a.profiles.pop(); a.profileOrder.pop();},
     a => {a.profiles.reverse();},
     a => {a.profiles[0] = a.profiles[3];},

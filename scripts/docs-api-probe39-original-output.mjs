@@ -9,6 +9,8 @@ const source = 'scripts/render-kubernetes-api-probe.mjs';
 const helper = 'scripts/kubernetes-api-probe.mjs';
 const authorityPath = 'scripts/docs-api-probe39-original-authority.json';
 const authoritySha256 = '9456ac654f9f28d3891889f906b37d2f91e421c884b9707ff0c0778742f097cc';
+// Current package identity only; the captured producer output stays historical.
+const currentPackageBinding20261031 = Object.freeze({"path":"package.json","sha256":"0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef","historicalSha256":"4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3"});
 const hash = value => createHash('sha256').update(value).digest('hex');
 const receipts = new WeakSet();
 const descriptor = role => Object.fromEntries(['source', 'line', 'sink', 'expression', 'sinkContract', 'role'].map(key => [key, role[key] ?? null]));
@@ -28,7 +30,15 @@ export function checkedOriginalProbe39Output(root, graph, classify, sources) {
   const bytes = read(authorityPath);
   if (hash(bytes) !== authoritySha256) fail('immutable original capture and fixture authority');
   const authority = JSON.parse(bytes);
-  for (const [file, digest] of Object.entries(authority.inputs)) if (hash(read(file)) !== digest) fail('changed original source/input/parser ' + file);
+  const binding = currentPackageBinding20261031;
+  if (!binding || binding.path !== 'package.json'
+    || JSON.stringify(Object.keys(binding).sort()) !== JSON.stringify(['historicalSha256','path','sha256'])
+    || authority.inputs['package.json'] !== binding.historicalSha256) fail('explicit current package binding');
+  const currentPackageBindingDigest = hash(JSON.stringify(binding));
+  for (const [file, digest] of Object.entries(authority.inputs)) {
+    const expected = file === 'package.json' ? binding.sha256 : digest;
+    if (hash(read(file)) !== expected) fail('changed original source/input/parser ' + file);
+  }
   // Fixtures may live in another physical root; bind the parser actually loaded
   // by THIS adapter as well as the supplied root's pinned parser bytes.
   const parser = fileURLToPath(import.meta.resolve('js-yaml'));
@@ -57,16 +67,18 @@ export function checkedOriginalProbe39Output(root, graph, classify, sources) {
     || values.length !== 2 || values[0]?.apiVersion !== 'v1' || values[0]?.kind !== 'ConfigMap'
     || values[1]?.apiVersion !== 'batch/v1' || values[1]?.kind !== 'Job') fail('ordered actual original members');
   if (values[0].data['probe.mjs'] !== read(helper).toString('utf8')) fail('embedded original helper');
-  const inputDigest = hash(bytes), dependencies = [authorityPath, ...Object.keys(authority.inputs)];
+  const inputDigest = hash(JSON.stringify([authoritySha256, currentPackageBindingDigest])), dependencies = [authorityPath, ...Object.keys(authority.inputs)];
   const outputs = values.map((value, index) => ({value, context: {
     apiVersion: value.apiVersion, kind: value.kind, path: source, line: 39, document: index,
     producer: 'node-original-captured-stdout', profile: authority.profile,
     sourceDigest: authority.inputs[source], inputs: dependencies, inputDigest,
+    historicalWitnessDigest: authoritySha256, currentPackageBindingDigest, observationsHistorical: true,
     outputDigest: hash(JSON.stringify(value)), originalStreamDigest: observation.result.stdoutSha256,
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false, actualPodObserved: false,
     executionLimit: authority.limits.join(' '),
   }}));
-  const receipt = freeze({descriptor: authority.descriptor, outputs, dependencies, inputDigest,
+  const receipt = freeze({witnessDigest: authoritySha256, currentPackageBinding: binding, currentPackageBindingDigest, observationsHistorical: true,
+    descriptor: authority.descriptor, outputs, dependencies, inputDigest,
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false});
   receipts.add(receipt);
   return receipt;

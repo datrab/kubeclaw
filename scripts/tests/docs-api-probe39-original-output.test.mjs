@@ -17,6 +17,11 @@ async function fixture(run){const root=fs.mkdtempSync(path.join(os.tmpdir(),'pro
 test('actual canonical UNKNOWN and original ordered capture; no execution or live Pod claim',()=>{
  const classify=createSerializedOutputRoleClassifier(repository,sources),role=classify(source)[0];assert.equal(role.role,'unknown');
  const witness=checkedOriginalProbe39Output(repository,graph,classify,sources);assert.equal(selectedOriginalProbe39Output(source,role,witness),witness);
+ assert.equal(witness.observationsHistorical,true);assert.equal(witness.currentPackageBinding.path,'package.json');
+ assert.equal(witness.currentPackageBinding.historicalSha256,authority.inputs['package.json']);
+ assert.notEqual(witness.currentPackageBinding.sha256,witness.currentPackageBinding.historicalSha256);
+ assert.notEqual(witness.inputDigest,witness.witnessDigest);
+ assert(witness.outputs.every(output=>output.context.observationsHistorical&&output.context.historicalWitnessDigest===witness.witnessDigest&&output.context.currentPackageBindingDigest===witness.currentPackageBindingDigest));
  assert.equal(role.role,'unknown');assert.equal(witness.outputs.length,2);assert.deepEqual(witness.outputs.map(x=>x.value.kind),['ConfigMap','Job']);
  assert.deepEqual(witness.outputs.map(x=>x.value),authority.observation.parsedValues);
  for(const output of witness.outputs){assert.equal(output.context.line,39);assert.equal(output.context.actualPodObserved,false);assert.equal(output.context.runtimeExecutionAuthorized,false);assert.equal(output.context.apiApplyAuthorized,false);}
@@ -47,5 +52,25 @@ test('parser actually loaded by adapter is pinned even for a different supplied 
   const acquire=()=>actual.checkedOriginalProbe39Output(root,graph,original,sources);
   acquire();const file=path.join(importer,'node_modules/js-yaml/dist/js-yaml.mjs');fs.appendFileSync(file,'\n ');
   assert.throws(()=>acquire(),/actual loaded parser closure/u);
+ }finally{fs.rmSync(importer,{recursive:true,force:true});}
+}));
+
+test('private Probe39 package binding refuses missing extra foreign current and historical fields',()=>fixture(async({root})=>{
+ const importer=fs.mkdtempSync(path.join(os.tmpdir(),'probe39-binding-importer-'));
+ try{
+  const adapter=path.join(importer,'scripts/docs-api-probe39-original-output.mjs');
+  for(const relative of ['scripts/docs-api-probe39-original-output.mjs','node_modules/js-yaml/package.json','node_modules/js-yaml/dist/js-yaml.mjs']){
+   const file=path.join(importer,relative);fs.mkdirSync(path.dirname(file),{recursive:true});fs.copyFileSync(path.join(repository,relative),file);
+  }
+  const code=fs.readFileSync(adapter,'utf8'),prefix='const currentPackageBinding20261031 = Object.freeze(';
+  const start=code.indexOf(prefix)+prefix.length,end=code.indexOf(');',start);
+  assert(start>=prefix.length&&end>start);const binding=JSON.parse(code.slice(start,end));
+  const variants=[{}, {path:binding.path,sha256:binding.sha256}, {...binding,path:'scripts/kubernetes-api-probe.mjs'},
+   {...binding,extraPath:'unbound.json'}, {...binding,sha256:'0'.repeat(64)}, {...binding,historicalSha256:'0'.repeat(64)}];
+  for(const [index,changed]of variants.entries()){
+   fs.writeFileSync(adapter,code.slice(0,start)+JSON.stringify(changed)+code.slice(end));
+   const actual=await import(pathToFileURL(adapter).href+'?binding='+index);
+   assert.throws(()=>actual.checkedOriginalProbe39Output(root,graph,original,sources),/API_PRODUCT_PROBE39_ORIGINAL_OUTPUT_UNQUALIFIED/u);
+  }
  }finally{fs.rmSync(importer,{recursive:true,force:true});}
 }));

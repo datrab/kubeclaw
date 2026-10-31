@@ -45,7 +45,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 49,
+          "line": 50,
           "path": "scripts/docs-generate.mjs"
         }
       ],
@@ -56,7 +56,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 49,
+      "line": 50,
       "name": "--allow-detached-source-root",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-generate.mjs",
@@ -96,7 +96,7 @@
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
       "line": 55,
       "name": "--allow-local-helm-authority-maintenance",
-      "occurrenceCount": 1,
+      "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
       "ownerEvidence": "scripts/docs-configuration-inventory.mjs",
       "path": "scripts/docs-configuration-inventory.mjs",
@@ -172,7 +172,7 @@
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
       "line": 50,
       "name": "--allow-semantic-gaps",
-      "occurrenceCount": 1,
+      "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
       "ownerEvidence": "scripts/docs-configuration-inventory.mjs",
       "path": "scripts/docs-configuration-inventory.mjs",
@@ -235,7 +235,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3449,
+          "line": 7122,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -246,7 +246,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3449,
+      "line": 7122,
       "name": "--api-versions",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -653,7 +653,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3438,
+          "line": 7111,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -664,7 +664,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3438,
+      "line": 7111,
       "name": "--atomic",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -1147,7 +1147,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 36,
+          "line": 37,
           "path": "scripts/docs-generate.mjs"
         }
       ],
@@ -1158,7 +1158,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 36,
+      "line": 37,
       "name": "--check",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-generate.mjs",
@@ -2249,7 +2249,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 10338,
+          "line": 10436,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -2260,7 +2260,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 10338,
+      "line": 10436,
       "name": "--check-payload-delivery-only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
@@ -2439,7 +2439,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3438,
+          "line": 7111,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -2450,7 +2450,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3438,
+      "line": 7111,
       "name": "--cleanup-on-fail",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -2629,6 +2629,44 @@
       "consumers": [
         {
           "kind": "argument-parser",
+          "line": 10410,
+          "path": "scripts/docs-configuration-inventory.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 10410,
+      "name": "--configuration-reference-only",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
+      "ownerEvidence": "scripts/docs-configuration-inventory.mjs",
+      "path": "scripts/docs-configuration-inventory.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-configuration-inventory.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
           "line": 799,
           "path": "scripts/docs-api-output-role-classification.mjs"
         }
@@ -2705,7 +2743,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3438,
+          "line": 7111,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -2716,7 +2754,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3438,
+      "line": 7111,
       "name": "--create-namespace",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -2781,7 +2819,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 2942,
+          "line": 6615,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -2792,7 +2830,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument comparison",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 2942,
+      "line": 6615,
       "name": "--delete-data",
       "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -3161,7 +3199,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3451,
+          "line": 7124,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -3172,7 +3210,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3451,
+      "line": 7124,
       "name": "--disable-openapi-validation",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -3617,7 +3655,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3614,
+          "line": 7287,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -3628,7 +3666,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument comparison",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3614,
+      "line": 7287,
       "name": "--force-update",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -3693,7 +3731,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 10313,
+          "line": 10411,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -3704,9 +3742,9 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 10313,
+      "line": 10411,
       "name": "--helm-values-only",
-      "occurrenceCount": 1,
+      "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
       "ownerEvidence": "scripts/docs-configuration-inventory.mjs",
       "path": "scripts/docs-configuration-inventory.mjs",
@@ -3959,7 +3997,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3440,
+          "line": 7113,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -3970,7 +4008,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3440,
+      "line": 7113,
       "name": "--history-max",
       "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -4301,7 +4339,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3449,
+          "line": 7122,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -4312,7 +4350,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3449,
+      "line": 7122,
       "name": "--kube-version",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -4567,7 +4605,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3442,
+          "line": 7115,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -4578,7 +4616,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3442,
+      "line": 7115,
       "name": "--namespace",
       "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -4681,7 +4719,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3451,
+          "line": 7124,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -4692,7 +4730,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3451,
+      "line": 7124,
       "name": "--no-hooks",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -4871,7 +4909,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 38,
+          "line": 39,
           "path": "scripts/docs-generate.mjs"
         }
       ],
@@ -4882,7 +4920,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 38,
+      "line": 39,
       "name": "--only",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-generate.mjs",
@@ -5213,7 +5251,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3486,
+          "line": 7159,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -5224,7 +5262,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument comparison",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3486,
+      "line": 7159,
       "name": "--post-renderer",
       "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -5251,7 +5289,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3488,
+          "line": 7161,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -5262,7 +5300,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument comparison",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3488,
+      "line": 7161,
       "name": "--post-renderer-args",
       "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6049,6 +6087,44 @@
       "consumers": [
         {
           "kind": "argument-parser",
+          "line": 208,
+          "path": "scripts/docs-generate.mjs"
+        }
+      ],
+      "default": "false/not selected",
+      "documentationAuthority": null,
+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+      "documentationStatus": "not-required-in-operator-handbook",
+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+      "evidence": "argument membership check",
+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+      "line": 208,
+      "name": "--revision",
+      "occurrenceCount": 1,
+      "ownerComponent": "operator script scripts/docs-generate.mjs",
+      "ownerEvidence": "scripts/docs-generate.mjs",
+      "path": "scripts/docs-generate.mjs",
+      "precedence": [
+        "explicit command-line flag",
+        "parser-specific duplicate handling",
+        "environment or source default when the consumer declares one",
+        "built-in behavior"
+      ],
+      "required": "conditional",
+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+      "runtimeOwner": "operator script scripts/docs-generate.mjs",
+      "surface": "documentation-internal",
+      "type": "boolean switch or command selector",
+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+      "valueTaking": false
+    },
+    {
+      "aliasFor": null,
+      "changeImpact": "Selects the parser branch or value used by this command.",
+      "classification": "definition",
+      "consumers": [
+        {
+          "kind": "argument-parser",
           "line": 27,
           "path": "scripts/docs-platform-surface-inventory.mjs"
         }
@@ -6201,7 +6277,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 10316,
+          "line": 10414,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -6212,9 +6288,9 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 10316,
+      "line": 10414,
       "name": "--runtime-only",
-      "occurrenceCount": 1,
+      "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
       "ownerEvidence": "scripts/docs-configuration-inventory.mjs",
       "path": "scripts/docs-configuration-inventory.mjs",
@@ -6277,7 +6353,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 10329,
+          "line": 10427,
           "path": "scripts/docs-configuration-inventory.mjs"
         }
       ],
@@ -6288,9 +6364,9 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 10329,
+      "line": 10427,
       "name": "--schemas-only",
-      "occurrenceCount": 1,
+      "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-configuration-inventory.mjs",
       "ownerEvidence": "scripts/docs-configuration-inventory.mjs",
       "path": "scripts/docs-configuration-inventory.mjs",
@@ -6391,7 +6467,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3444,
+          "line": 7117,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -6402,7 +6478,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3444,
+      "line": 7117,
       "name": "--set",
       "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6429,7 +6505,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3445,
+          "line": 7118,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -6440,7 +6516,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument comparison",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3445,
+      "line": 7118,
       "name": "--set-file",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6467,7 +6543,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3444,
+          "line": 7117,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -6478,7 +6554,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3444,
+      "line": 7117,
       "name": "--set-json",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6505,7 +6581,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3444,
+          "line": 7117,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -6516,7 +6592,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3444,
+      "line": 7117,
       "name": "--set-literal",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6543,7 +6619,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3444,
+          "line": 7117,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -6554,7 +6630,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3444,
+      "line": 7117,
       "name": "--set-string",
       "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6657,7 +6733,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3450,
+          "line": 7123,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -6668,7 +6744,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument comparison",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3450,
+      "line": 7123,
       "name": "--skip-crds",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6695,7 +6771,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3451,
+          "line": 7124,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -6706,7 +6782,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3451,
+      "line": 7124,
       "name": "--skip-schema-validation",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6847,7 +6923,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3440,
+          "line": 7113,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -6858,7 +6934,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3440,
+      "line": 7113,
       "name": "--timeout",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -6999,7 +7075,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 41,
+          "line": 42,
           "path": "scripts/docs-generate.mjs"
         }
       ],
@@ -7010,7 +7086,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument membership check",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 41,
+      "line": 42,
       "name": "--update-source-revision",
       "occurrenceCount": 2,
       "ownerComponent": "operator script scripts/docs-generate.mjs",
@@ -7113,7 +7189,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3443,
+          "line": 7116,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -7124,7 +7200,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3443,
+      "line": 7116,
       "name": "--values",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -7189,7 +7265,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3441,
+          "line": 7114,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -7200,7 +7276,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "argument comparison",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3441,
+      "line": 7114,
       "name": "--version",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -7341,7 +7417,7 @@
       "consumers": [
         {
           "kind": "argument-parser",
-          "line": 3438,
+          "line": 7111,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -7352,7 +7428,7 @@
       "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
       "evidence": "parser allow-list",
       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
-      "line": 3438,
+      "line": 7111,
       "name": "--wait",
       "occurrenceCount": 1,
       "ownerComponent": "operator script scripts/docs-api-output-discovery.mjs",
@@ -11818,8 +11894,8 @@
   ],
   "discovery": {
     "composition": {
-      "exclusion": "executable program-output API discovery; no full-configuration/API-output success claimed",
-      "scope": "complete selected environment and Secret inputs, including YAML-document sources",
+      "exclusion": "executable program-output API discovery; the default global API/configuration path is not certified",
+      "scope": "configuration-reference selected-YAML environment/Secret composition",
       "yamlSourceMode": "buildYamlInventory({ selectedYamlOnly: true })",
       "yamlSources": [
         "charts/gitops/values.yaml",
@@ -49631,7 +49707,7 @@
           "failure": "Discovery stops at the explicit source-specific authority diagnostic; no flags normalization or permissive fallback is supplied.",
           "impact": "Prevents native compilation flags from changing the reviewed helper/source authority or bypassing current policy through warmed discovery.",
           "invalidBehavior": "Every non-empty value fails API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED with the first selected Go source path, before any documentation qualifier can invoke a native helper.",
-          "line": 2175,
+          "line": 5843,
           "owner": "scripts/docs-api-output-discovery.mjs",
           "owningSurface": "scripts/docs-api-output-discovery.mjs:discoverGoApiOutputs",
           "path": "scripts/docs-api-output-discovery.mjs",
@@ -49648,7 +49724,7 @@
         },
         {
           "access": "node-process-env",
-          "line": 2175,
+          "line": 5843,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -49680,7 +49756,7 @@
         },
         {
           "access": "node-process-env",
-          "line": 2175,
+          "line": 5843,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -49750,7 +49826,7 @@
           "failure": "Unqualified or unavailable native authority fails the owning API_PRODUCT Go producer check; a new cache key alone grants no qualification.",
           "impact": "Changes discovery cache reuse and the module source path inherited by native adapters, not the accepted external module authority.",
           "invalidBehavior": "This cache-key reader does not reject malformed text; native Go launch or source-authority validation can reject the resulting selection.",
-          "line": 2184,
+          "line": 5854,
           "owner": "scripts/docs-api-output-discovery.mjs",
           "owningSurface": "scripts/docs-api-output-discovery.mjs:discoverGoApiOutputs",
           "path": "scripts/docs-api-output-discovery.mjs",
@@ -49806,7 +49882,7 @@
         },
         {
           "access": "node-process-env",
-          "line": 2184,
+          "line": 5854,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
@@ -49843,7 +49919,7 @@
         },
         {
           "access": "node-process-env",
-          "line": 2184,
+          "line": 5854,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
@@ -50780,7 +50856,7 @@
           "failure": "Unqualified or unavailable native authority fails the owning API_PRODUCT Go producer check; a new cache key alone grants no qualification.",
           "impact": "Changes discovery cache reuse and the module source path inherited by native adapters, not the accepted external module authority.",
           "invalidBehavior": "This cache-key reader does not reject malformed text; native Go launch or source-authority validation can reject the resulting selection.",
-          "line": 2184,
+          "line": 5854,
           "owner": "scripts/docs-api-output-discovery.mjs",
           "owningSurface": "scripts/docs-api-output-discovery.mjs:discoverGoApiOutputs",
           "path": "scripts/docs-api-output-discovery.mjs",
@@ -50797,7 +50873,7 @@
         },
         {
           "access": "node-process-env",
-          "line": 2184,
+          "line": 5854,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -50829,7 +50905,7 @@
         },
         {
           "access": "node-process-env",
-          "line": 2184,
+          "line": 5854,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -50899,7 +50975,7 @@
           "failure": "The JavaScript guard or child role qualification rejects unsupported workspace authority.",
           "impact": "Changes workspace selection available to Go and the local cache identity; it does not authorize arbitrary module authority.",
           "invalidBehavior": "Other non-empty text fails API_PRODUCT_GO_MODULE_AUTHORITY_UNQUALIFIED before adapter execution; auto can fail the stricter child import-authority guard.",
-          "line": 2183,
+          "line": 5853,
           "owner": "scripts/docs-api-output-discovery.mjs",
           "owningSurface": "scripts/docs-api-output-discovery.mjs:discoverGoApiOutputs",
           "path": "scripts/docs-api-output-discovery.mjs",
@@ -50921,12 +50997,12 @@
         },
         {
           "access": "node-process-env",
-          "line": 2183,
+          "line": 5853,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 2184,
+          "line": 5854,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -50969,12 +51045,12 @@
         },
         {
           "access": "node-process-env",
-          "line": 2183,
+          "line": 5853,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 2184,
+          "line": 5854,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -84219,7 +84295,7 @@
           "failure": "Qualification stops with DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED on child or custody failure.",
           "impact": "Changes the local compiler/runner used for the finite documentation adapter check; it does not grant an output-role exemption.",
           "invalidBehavior": "A missing executable, failed Go adapter, malformed receipt or receipt mismatch rejects documentation-tool qualification.",
-          "line": 11133,
+          "line": 11717,
           "owner": "scripts/docs-api-documentation-role-custody.mjs",
           "owningSurface": "scripts/docs-api-documentation-role-custody.mjs:native Go custody runner",
           "path": "scripts/docs-api-documentation-role-custody.mjs",
@@ -84237,7 +84313,7 @@
           "failure": "An empty command throws a Node launch-argument error before parsing. A missing or unsuccessful executable stops discovery with API_PRODUCT_GO_PRODUCER_PARSE_FAILED. Both failures stop generation. This setting does not select the product runtime Go executable.",
           "impact": "Changing this setting changes the local tool that runs the offline Go parsing helpers. Select a trusted tool compatible with the repository.",
           "invalidBehavior": "A missing, non-executable, incompatible or unsuccessful Go command fails the helper parse check.",
-          "line": 2188,
+          "line": 5858,
           "owner": "operator script scripts/docs-api-output-discovery.mjs",
           "owningSurface": "The receiving setting or command in scripts/docs-api-output-discovery.mjs; see the exact source and its producer bindings.",
           "path": "scripts/docs-api-output-discovery.mjs",
@@ -84249,17 +84325,17 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 11133,
+          "line": 11717,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 2188,
+          "line": 5858,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 2195,
+          "line": 5868,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -84269,7 +84345,7 @@
       "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
       "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
       "meaning": "The meaning of KUBECLAW_DOCS_GO_BINARY differs by receiving process. Use the contract attached to the exact consumer source.",
-      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:11133",
+      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:11717",
       "meaningStatus": "authored-consumer-specific-contracts",
       "name": "KUBECLAW_DOCS_GO_BINARY",
       "precedence": [
@@ -84286,17 +84362,17 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 11133,
+          "line": 11717,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 2188,
+          "line": 5858,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 2195,
+          "line": 5868,
           "path": "scripts/docs-api-output-discovery.mjs"
         }
       ],
@@ -84347,7 +84423,7 @@
           "failure": "The tool exits with an error when the stated input or consistency check fails.",
           "impact": "Changes whether this development tool accepts --root different from the current Git worktree root.",
           "invalidBehavior": "Any other token leaves permission disabled. A --root different from the current Git worktree root is rejected unless both opt-ins are present; the value does not bypass revision validation.",
-          "line": 68,
+          "line": 69,
           "owner": "scripts/docs-generate.mjs",
           "owningSurface": "scripts/docs-generate.mjs:development tool process environment",
           "path": "scripts/docs-generate.mjs",
@@ -84383,7 +84459,7 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 68,
+          "line": 69,
           "path": "scripts/docs-generate.mjs"
         },
         {
@@ -84398,7 +84474,7 @@
       "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
       "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
       "meaning": "The meaning of KUBECLAW_DOCS_ISOLATED_MUTATION differs by receiving process. Use the contract attached to the exact consumer source.",
-      "meaningEvidence": "scripts/docs-generate.mjs:68",
+      "meaningEvidence": "scripts/docs-generate.mjs:69",
       "meaningStatus": "authored-consumer-specific-contracts",
       "name": "KUBECLAW_DOCS_ISOLATED_MUTATION",
       "precedence": [
@@ -84415,7 +84491,7 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 68,
+          "line": 69,
           "path": "scripts/docs-generate.mjs"
         },
         {
@@ -133419,7 +133495,7 @@
           "failure": "Qualification stops with DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED.",
           "impact": "Prevents the reviewed native caller acquisition from silently using additional Node loader/options authority.",
           "invalidBehavior": "Any non-empty text rejects acquisition, including whitespace.",
-          "line": 31213,
+          "line": 32586,
           "owner": "scripts/docs-api-documentation-role-custody.mjs",
           "owningSurface": "scripts/docs-api-documentation-role-custody.mjs:assertNativeNpmPosixAuthority",
           "path": "scripts/docs-api-documentation-role-custody.mjs",
@@ -133628,7 +133704,7 @@
         },
         {
           "access": "node-process-env",
-          "line": 31213,
+          "line": 32586,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         }
       ],
@@ -133638,7 +133714,7 @@
       "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
       "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
       "meaning": "The meaning of NODE_OPTIONS differs by receiving process. Use the contract attached to the exact consumer source.",
-      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:31213",
+      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32586",
       "meaningStatus": "authored-consumer-specific-contracts",
       "name": "NODE_OPTIONS",
       "precedence": [
@@ -133780,7 +133856,7 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 31213,
+          "line": 32586,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         }
       ],
@@ -135253,7 +135329,7 @@
           "failure": "Qualification stops with DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED or a filesystem error.",
           "impact": "Rejects an active npm caller identity outside the narrowly reviewed command location.",
           "invalidBehavior": "A non-empty missing path or different real path rejects; filesystem errors can also stop qualification.",
-          "line": 31217,
+          "line": 32590,
           "owner": "scripts/docs-api-documentation-role-custody.mjs",
           "owningSurface": "scripts/docs-api-documentation-role-custody.mjs:assertNativeNpmPosixAuthority",
           "path": "scripts/docs-api-documentation-role-custody.mjs",
@@ -135265,7 +135341,7 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 31217,
+          "line": 32590,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         }
       ],
@@ -135275,7 +135351,7 @@
       "failureMeaning": "Qualification stops with DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED or a filesystem error.",
       "invalidBehavior": "A non-empty missing path or different real path rejects; filesystem errors can also stop qualification.",
       "meaning": "Checks an optional active npm caller executable identity independently of PATH acquisition. Owner: `scripts/docs-api-documentation-role-custody.mjs`. Owning setting: `scripts/docs-api-documentation-role-custody.mjs` — assertNativeNpmPosixAuthority. Boundary: development native caller authority.",
-      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:31217",
+      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32590",
       "meaningStatus": "authored-consumer-specific-contract",
       "name": "npm_execpath",
       "precedence": [
@@ -135292,7 +135368,7 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 31217,
+          "line": 32590,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         }
       ],
@@ -142587,7 +142663,7 @@
           "failure": "Qualification stops with DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED when identity or required configuration fails.",
           "impact": "Changes which local command identities are checked and which npm executable reads the required configuration.",
           "invalidBehavior": "Unavailable executables or first regular candidates with different real paths reject. This guard does not prove executable behavior or version.",
-          "line": 31214,
+          "line": 32587,
           "owner": "scripts/docs-api-documentation-role-custody.mjs",
           "owningSurface": "scripts/docs-api-documentation-role-custody.mjs:assertNativeNpmPosixAuthority",
           "path": "scripts/docs-api-documentation-role-custody.mjs",
@@ -142605,7 +142681,7 @@
           "failure": "The corresponding API_PRODUCT helper parse or operation error stops generation. No live Kubernetes command is authorized by this setting.",
           "impact": "Changing the path can select different local tools and change discovery results. Use trusted, compatible tools when generating documentation.",
           "invalidBehavior": "A path that cannot resolve the required Python or Go executable causes helper launch or parsing to fail.",
-          "line": 820,
+          "line": 1308,
           "owner": "operator script scripts/docs-api-output-discovery.mjs",
           "owningSurface": "The receiving setting or command in scripts/docs-api-output-discovery.mjs; see the exact source and its producer bindings.",
           "path": "scripts/docs-api-output-discovery.mjs",
@@ -142784,47 +142860,47 @@
       "consumers": [
         {
           "access": "node-process-env",
-          "line": 31214,
+          "line": 32587,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 31218,
+          "line": 32591,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 820,
+          "line": 1308,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 826,
+          "line": 1319,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 1120,
+          "line": 1632,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 1124,
+          "line": 1636,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 1882,
+          "line": 5544,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 3152,
+          "line": 6825,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 3324,
+          "line": 6997,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
@@ -142869,7 +142945,7 @@
       "failureMeaning": "Use the exact consumer failure below; a single merged symptom would be incorrect.",
       "invalidBehavior": "Varies by receiving process; use the exact reader validation below.",
       "meaning": "The meaning of PATH differs by receiving process. Use the contract attached to the exact consumer source.",
-      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:31214",
+      "meaningEvidence": "scripts/docs-api-documentation-role-custody.mjs:32587",
       "meaningStatus": "authored-consumer-specific-contracts",
       "name": "PATH",
       "precedence": [
@@ -142886,47 +142962,47 @@
       "readers": [
         {
           "access": "node-process-env",
-          "line": 31214,
+          "line": 32587,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 31218,
+          "line": 32591,
           "path": "scripts/docs-api-documentation-role-custody.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 820,
+          "line": 1308,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 826,
+          "line": 1319,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 1120,
+          "line": 1632,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 1124,
+          "line": 1636,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 1882,
+          "line": 5544,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 3152,
+          "line": 6825,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
           "access": "node-process-env",
-          "line": 3324,
+          "line": 6997,
           "path": "scripts/docs-api-output-discovery.mjs"
         },
         {
@@ -231854,10 +231930,10 @@
     }
   ],
   "totals": {
-    "cliDefinitions": 207,
-    "cliFlags": 207,
+    "cliDefinitions": 209,
+    "cliFlags": 209,
     "cliInvocations": 0,
-    "cliOccurrences": 265,
+    "cliOccurrences": 272,
     "configurationConsumerSources": 275,
     "configuredEnvironmentReceivers": 5,
     "derivedValues": 47,
