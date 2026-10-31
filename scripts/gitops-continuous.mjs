@@ -52,6 +52,24 @@ export function continuousApplications(manifest, config = {}) {
   return documents;
 }
 
+// Network-only recovery is independent of immutable runtime image receipts.
+// Keep this explicit so routine runtime promotions cannot drop the access path.
+export function appendPrismControlAccess(documents, config, repository) {
+  if (config.prismControlAccess !== true) return documents;
+  if (config.namespace !== 'kubeclaw' || config.prismNamespace !== 'kubeclaw') throw new Error('PRISM_CONTROL_ACCESS_NAMESPACE_MISMATCH');
+  return [...documents, {
+    apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',
+    metadata: { name: `${config.naming.rootName}-prism-control-access`, namespace: config.argoNamespace },
+    spec: {
+      project: config.naming.workloadProject,
+      source: { repoURL: repository, targetRevision: 'main',
+        path: 'gitops/production/prism-control-access', directory: { include: 'resources.yaml' } },
+      destination: { server: 'https://kubernetes.default.svc', namespace: config.namespace },
+      syncPolicy: { automated: { prune: false, selfHeal: true, allowEmpty: false }, syncOptions: ['FailOnSharedResource=true'] },
+    },
+  }];
+}
+
 // Keep an unchanged child's immutable path. A promotion of another role must
 // not create an Argo sync for byte-identical resources.
 export function retainUnchangedApplications(repository, documents) {
@@ -130,7 +148,7 @@ export function renderContinuousEnvironment(repository, directory, url, revision
     const rendered = execFileSync('helm', ['template', 'runtime', path.join(repository, 'charts/gitops'),
       '-n', config.argoNamespace, '-f', values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });
     return { result: { ...result, documents: continuousDocuments(result, config.argoNamespace, config) },
-      files: { 'apps/applications.yaml': dump(appendHouseholdApplications(repository, retainUnchangedApplications(repository, retainBaselineApplications(repository, continuousApplications(rendered, config), config, baselineDirectory)), config.argoNamespace)),
+      files: { 'apps/applications.yaml': dump(appendPrismControlAccess(appendHouseholdApplications(repository, retainUnchangedApplications(repository, retainBaselineApplications(repository, continuousApplications(rendered, config), config, baselineDirectory)), config.argoNamespace), config, url)),
         'bootstrap.yaml': dump(continuousDocuments(result, config.argoNamespace, config)),
         'selection.json': JSON.stringify({ directory }, null, 2) + '\n' } };
   } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
