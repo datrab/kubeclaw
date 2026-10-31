@@ -10,7 +10,7 @@
   "buildArgs": {
     "ARCHVIEWER_BASE": "docker.io/library/nginx:1.30-alpine@sha256:0e52bd054126cdc040b1276c0af347aeb02a41b9cfe305d6094767ac30e97949",
     "BUILDKIT_BASE": "moby/buildkit:v0.34.1-rootless@sha256:f68752a5a94acfcdad2d07867b7075601a421638e17fc5f28efc1c814d0c4f89",
-    "BUSTER_NODE_BASE": "node:24.21.0-bookworm-slim@sha256:d6aa754f16b3197301076f047b5def2f02ea1dbbc2ca920407d46d7ec7f87b20",
+    "BUSTER_NODE_BASE": "node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c",
     "CONTROLLER_GO_BASE": "golang:1.26.10-alpine3.24@sha256:a2012b4a1d1f9f7e9f44e0d39b805a901e856b1dd80b4e6ee4338db547050308",
     "CONTROLLER_RUNTIME_BASE": "gcr.io/distroless/static-debian12:nonroot@sha256:afa5c872c891853ca7fcf1f12c3edb23f7eeef36189728842dd51042ff57f7ab",
     "DEBIAN_SNAPSHOT": "20261025T000000Z",
@@ -27,7 +27,7 @@
     "KUBECTL_VERSION": "1.35.10",
     "KUBERNETES_JSON_SCHEMA_COMMIT": "47163ead3738a996c3e30be9691bb37b8071d9d3",
     "MYPY_VERSION": "2.3.0",
-    "NODE_BASE": "node:24.21.0-bookworm-slim@sha256:d6aa754f16b3197301076f047b5def2f02ea1dbbc2ca920407d46d7ec7f87b20",
+    "NODE_BASE": "node:24.22.2-bookworm-slim@sha256:c86ecead9e55a5210ac1727de38a4ca840bf03dcaf34dc9749addbf383b1920c",
     "OPS_MCP_NODE_BASE": "node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2",
     "OPS_NODE_BASE": "node:24.21.0-alpine3.24@sha256:be80f76cf40ec8e42b9bec49f60a55e0660f30af58d3e5a25530785b30ea67e2",
     "PIP_AUDIT_VERSION": "2.10.1",
