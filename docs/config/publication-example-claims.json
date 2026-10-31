@@ -44450,7 +44450,7 @@
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
-      "sha256": "0a8a8ef6d4ebae384deae861354d94f340db3ffea061a3c67fe0a2eee9db8223",
+      "sha256": "5748b2cc329429e1f746b12687997c8a46e5c2d8d75ad6bb7bed631ebcaed59f",
       "owner": "publication metadata",
       "claim": "generated ownership/route data, not teaching runtime examples",
       "executionBoundary": "retain actual governance/route native owner checks; exclude only on explicit producer/consumer/purpose, not extension or parseability",
