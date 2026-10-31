@@ -10581,9 +10581,12 @@ export function reviewedCliNativeCompilerCaller(source,bytes) {
  if(tree.parseDiagnostics.length||imports.length!==1||calls.length!==1||calls[0].getText(tree)!==r.callerSyntax||references.length!==2)fail('exact default-only inventory caller');
  if(!tree.statements.some(n=>ts.isVariableStatement(n)&&n.getText(tree)==='const root = process.cwd();'))fail('inventory cwd root');
 }
+function isReviewedPracticalReaderRoot(root) {
+ return root===reviewedPracticalReaderCompilerInput.root&&fs.realpathSync(root)===root;
+}
 function assertCliNativeCompilerInputs(root,recordDependency=()=>{}) {
  const r=reviewedCliNativeCompilerRecipe,fail=detail=>assert.fail(`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: CLI compiler purpose: ${detail}`);
- if(root!==r.root||fs.realpathSync(root)!==root||fs.realpathSync(process.cwd())!==root)fail('canonical recovery root/cwd');
+ if((root!==r.root&&!isReviewedPracticalReaderRoot(root))||fs.realpathSync(root)!==root||fs.realpathSync(process.cwd())!==root)fail('canonical recovery root/cwd');
  for(const input of r.inputs){const file=path.join(root,input.path);recordDependency(input.path);if(!fs.existsSync(file)||fs.realpathSync(file)!==file||!fs.statSync(file).isFile())fail('physical source/caller/injection authority '+input.path);qualifyCliNativeCompilerInput(input.path,fs.readFileSync(file));}
  reviewedCliNativeCompilerCaller(r.caller,fs.readFileSync(path.join(root,r.caller),'utf8'));return r;
 }
@@ -10656,7 +10659,7 @@ export function cliTypedFixtureCompilerTarget(root,capability,recordDependency=(
 }
 export function cliTypedFixtureAnalysisSeed(root,selectedSources) {
  const r=reviewedCliTypedFixtureRecipe;
- if(root!==r.root||!selectedSources.includes(r.driver)||!selectedSources.includes(r.source))return null;
+ if((root!==r.root&&!isReviewedPracticalReaderRoot(root))||!selectedSources.includes(r.driver)||!selectedSources.includes(r.source))return null;
  assertCliTypedFixtureInputs(root);return r.fixture; // analysis input, never a public/native entry
 }
 export function assertCliTypedFixtureGraphPurpose(root,graph) {
@@ -10756,7 +10759,7 @@ export function qualifyPublicationParserInput(source,bytes) {
 }
 function assertPublicationParserInputs(root,recordDependency=()=>{}) {
  const r=reviewedPublicationParserRecipe;
- assert(root===r.root&&fs.realpathSync(root)===root,'DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: publication parser canonical root');
+ assert((root===r.root||isReviewedPracticalReaderRoot(root))&&fs.realpathSync(root)===root,'DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: publication parser canonical root');
  for(const input of [...r.inputs,...r.installedInputs]){
   const file=path.join(root,input.path);assert(fs.existsSync(file)&&fs.lstatSync(file).isFile()&&fs.realpathSync(file)===file,`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: publication parser regular input ${input.path}`);
   qualifyPublicationParserInput(input.path,fs.readFileSync(file));
