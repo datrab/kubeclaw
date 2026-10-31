@@ -7,6 +7,12 @@ household Secrets/ConfigMaps, read PVC names for the existing initializer's safe
 checks, and request a non-pruning sync of exactly `argocd/familyclaw`. It cannot
 overwrite or delete household credentials, mutate workloads, or administer Paperless.
 
+The Job runs in `kubeclaw-ops`, reusing its existing `ghcr-secret` image-pull
+binding. It reads only the named Argo repository Secret and known-host ConfigMap
+to obtain the immutable source. No registry credential is copied to another
+namespace. Superseded bootstrap artifacts are pruned after the replacement
+finishes; the household Namespace is explicitly protected.
+
 The Job checks out immutable Familyclaw commit
 `1a872d74bedc4a0dc37fb619c8d72378ef32cc04` using the read-only repository key
 and executes that repository's existing `initializeHousehold` implementation.

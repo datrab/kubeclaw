@@ -44,9 +44,11 @@ async function main() {
     contexts: [{name: context, context: {cluster: context, user: context, namespace}}],
   }), {mode: 0o600});
   // The deployment repository key is read-only and is never logged.
-  fs.copyFileSync('/repository/sshPrivateKey', `${base}/repository-key`);
-  fs.chmodSync(`${base}/repository-key`, 0o600);
-  const env = {...process.env, GIT_SSH_COMMAND: `ssh -i ${base}/repository-key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=/known-hosts/ssh_known_hosts`};
+  const repositorySecret = JSON.parse(kubectl(['-n', 'argocd', 'get', 'secret', 'familyclaw-repository', '-o', 'json']));
+  const knownHosts = JSON.parse(kubectl(['-n', 'argocd', 'get', 'configmap', 'argocd-ssh-known-hosts-cm', '-o', 'json']));
+  fs.writeFileSync(`${base}/repository-key`, Buffer.from(repositorySecret.data.sshPrivateKey, 'base64'), {mode: 0o600});
+  fs.writeFileSync(`${base}/known-hosts`, knownHosts.data.ssh_known_hosts, {mode: 0o600});
+  const env = {...process.env, GIT_SSH_COMMAND: `ssh -i ${base}/repository-key -o IdentitiesOnly=yes -o StrictHostKeyChecking=yes -o UserKnownHostsFile=${base}/known-hosts`};
   const git = args => execFileSync('git', args, {env, stdio: 'pipe', timeout: 60000});
   git(['init', `${base}/source`]);
   git(['-C', `${base}/source`, 'fetch', '--depth=1', 'ssh://git@ssh.github.com:443/datrab/Familyclaw.git', revision]);
