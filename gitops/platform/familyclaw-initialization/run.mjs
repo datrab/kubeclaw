@@ -3,8 +3,9 @@ import {execFileSync} from 'node:child_process';
 import {generateKeyPairSync, privateDecrypt, createDecipheriv, constants, X509Certificate} from 'node:crypto';
 import {setTimeout} from 'node:timers/promises';
 import {requestHouseholdSync} from './argo-sync.mjs';
+import {ensureRuntimeConfiguration} from './runtime-configuration.mjs';
 
-const revision = '48d181270ff4cda90f2d9e0506d98df73720cd55';
+const revision = '4666d431aed675c2896f5b33d4b409dd90004bcc';
 const namespace = 'familyclaw';
 const context = 'familyclaw-initialization';
 const endpoint = 'http://paperless-ngx.paperless.svc.cluster.local:8000';
@@ -55,7 +56,7 @@ async function main() {
   git(['-C', `${base}/source`, 'fetch', '--depth=1', 'ssh://git@ssh.github.com:443/datrab/Familyclaw.git', revision]);
   git(['-C', `${base}/source`, 'checkout', '--detach', 'FETCH_HEAD']);
   fs.rmSync(`${base}/repository-key`, {force: true});
-  const {initializeHousehold, createBundle} = await import(`${base}/source/tools/deployment/initialize-household.mjs`);
+  const {initializeHousehold, createBundle, paperlessApiEndpoint} = await import(`${base}/source/tools/deployment/initialize-household.mjs`);
   const binding = {context, namespace, paperlessUrl: endpoint};
   let transferred;
   if (!client.get('Secret', 'familyclaw-initialization')) {
@@ -81,6 +82,7 @@ async function main() {
   const result = initializeHousehold(binding, client, () => transferred.token,
     (actualBinding, token) => createBundle(actualBinding, token, () => transferred.tls));
   console.log(JSON.stringify(result));
+  console.log(JSON.stringify(ensureRuntimeConfiguration(client, paperlessApiEndpoint)));
   console.log(JSON.stringify(await requestHouseholdSync(revision, kubectl, setTimeout)));
 }
 

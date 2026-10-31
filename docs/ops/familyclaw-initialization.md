@@ -14,7 +14,7 @@ namespace. Superseded bootstrap artifacts are pruned after the replacement
 finishes; the household Namespace is explicitly protected.
 
 The Job checks out immutable Familyclaw commit
-`48d181270ff4cda90f2d9e0506d98df73720cd55` using the read-only repository key
+`4666d431aed675c2896f5b33d4b409dd90004bcc` using the read-only repository key
 and executes that repository's existing `initializeHousehold` implementation.
 It keeps the durable create-only seed and refuses unmanaged or differing objects.
 The stable bootstrap context binding is `familyclaw-initialization`.
@@ -49,3 +49,10 @@ storage and the database Service dependency. If a previous revision is still
 syncing, the bootstrap uses Argo's normal `Terminating` state and waits for the
 controller to stop it before requesting the new non-pruning sync. It never
 replaces an active operation if termination does not complete.
+
+Before syncing the current production profile, create the private
+`familyclaw-configuration-api` ConfigMap from the preserved original bootstrap
+configuration with only the Paperless API base corrected. The durable seed,
+original configuration, household identity and all credentials stay unchanged.
+The projection is create-only, checks its ownership and refuses a differing
+existing value. Firefly uses the TLS certificate's namespace-qualified DB host.
