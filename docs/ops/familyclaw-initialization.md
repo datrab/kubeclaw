@@ -14,7 +14,7 @@ namespace. Superseded bootstrap artifacts are pruned after the replacement
 finishes; the household Namespace is explicitly protected.
 
 The Job checks out immutable Familyclaw commit
-`1a872d74bedc4a0dc37fb619c8d72378ef32cc04` using the read-only repository key
+`48d181270ff4cda90f2d9e0506d98df73720cd55` using the read-only repository key
 and executes that repository's existing `initializeHousehold` implementation.
 It keeps the durable create-only seed and refuses unmanaged or differing objects.
 The stable bootstrap context binding is `familyclaw-initialization`.
@@ -43,3 +43,9 @@ one Argo sync at the pinned revision without pruning. Infrastructure startup is
 separate from native model/channel onboarding. Verify Argo sync/health, database
 migration completion, workload readiness and authenticated read-only Paperless
 access from the actual Core Pod; a successful bootstrap Job alone is insufficient.
+
+The current revision fixes first-start Argo waves for WaitForFirstConsumer
+storage and the database Service dependency. If a previous revision is still
+syncing, the bootstrap uses Argo's normal `Terminating` state and waits for the
+controller to stop it before requesting the new non-pruning sync. It never
+replaces an active operation if termination does not complete.

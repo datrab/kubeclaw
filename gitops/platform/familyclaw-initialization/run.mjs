@@ -2,8 +2,9 @@ import fs from 'node:fs';
 import {execFileSync} from 'node:child_process';
 import {generateKeyPairSync, privateDecrypt, createDecipheriv, constants, X509Certificate} from 'node:crypto';
 import {setTimeout} from 'node:timers/promises';
+import {requestHouseholdSync} from './argo-sync.mjs';
 
-const revision = '1a872d74bedc4a0dc37fb619c8d72378ef32cc04';
+const revision = '48d181270ff4cda90f2d9e0506d98df73720cd55';
 const namespace = 'familyclaw';
 const context = 'familyclaw-initialization';
 const endpoint = 'http://paperless-ngx.paperless.svc.cluster.local:8000';
@@ -80,12 +81,7 @@ async function main() {
   const result = initializeHousehold(binding, client, () => transferred.token,
     (actualBinding, token) => createBundle(actualBinding, token, () => transferred.tls));
   console.log(JSON.stringify(result));
-  // Explicit one-shot Argo operation; no automatic workload pruning or sync.
-  const operation = {operation: {initiatedBy: {username: 'familyclaw-initialization'}, sync: {revision, prune: false, syncStrategy: {apply: {}}}}};
-  // This patch contains no credential. /dev/stdin cannot be reopened when
-  // execFileSync supplies fd0 through its Unix socket pair (ENXIO).
-  kubectl(['-n', 'argocd', 'patch', 'application', 'familyclaw', '--type=merge', '--patch', JSON.stringify(operation)]);
-  console.log(JSON.stringify({argoSyncRequested: true, revision}));
+  console.log(JSON.stringify(await requestHouseholdSync(revision, kubectl, setTimeout)));
 }
 
 try {await main();} catch {

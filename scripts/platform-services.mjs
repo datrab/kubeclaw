@@ -107,7 +107,7 @@ export function platformServices(versions, repository) {
       project: 'familyclaw-initialization',
       source: {repoURL: repository, targetRevision: 'main', path: 'gitops/platform/familyclaw-initialization'},
       destination: {server, namespace: 'argocd'},
-      syncPolicy: {automated: {prune: true, selfHeal: true, allowEmpty: false},
+      syncPolicy: {automated: {prune: true, selfHeal: true, allowEmpty: false}, retry: {limit: 0},
         syncOptions: ['FailOnSharedResource=true', 'PruneLast=true']},
     },
   };
