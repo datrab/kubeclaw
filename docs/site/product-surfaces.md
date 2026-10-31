@@ -1,16 +1,18 @@
 # Product Surface Map
 
-Status: implemented inventory with stated depth limits
+Status: source-derived identity relations with explicit manual-review and declaration limits
 Audience: reader, operator, plugin author, maintainer, documentation owner
 Owner: documentation architecture
 Evidence: package.json; packaging/runtime/package-ownership.json; packaging/runtime/roles; skills/common/plugin-runtime; skills/nova; skills/worker; skills/buster; skills/prism; contracts; charts; scripts
 Applies to: current repository product and platform surfaces
-Last verified: source and contract inspection on 2026-09-19; inventory-boundary paragraph refreshed 2026-10-21 only; family-row depth labels not requalified
+Last verified: relation model refreshed 2026-10-31; generation does not requalify family-guide depth labels or runtime readiness
 
 ## Purpose
 
 This map lists every public surface family that needs documentation.
-It gives each family one reading destination and one source authority.
+The family tables provide high-level reading destinations. The generated relation
+index below identifies current mechanical authorities and explicit manual review
+boundaries; historical table links alone are not current source qualification.
 
 This page is a coverage map, not a replacement for the linked guides.
 A detailed page explains behavior and procedures.
@@ -160,6 +162,35 @@ The pipeline does not require them when another supported component supplies the
 | SUR-EXT-09 | Runtime roles and deployable package sets | [Host and engine boundaries](extend/host-and-engine.md) | [Runtime role manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/packaging/runtime/roles) | Partial |
 | SUR-EXT-10 | Core and Foundation changes | [Extension decision guide](extend/README.md) | [Plugin foundation](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills/common/plugin-runtime/foundation) | Partial |
 | SUR-EXT-11 | Installed extension packages and registrations | [Plugin catalog](extend/plugin-catalogue/README.md) | [Installed package manifests](https://github.com/datrab/kubeclaw/tree/d8c38328ae305d431574aed008c4e1333e4b49f5/skills) | Detailed |
+
+<!-- BEGIN GENERATED: source authority matrix -->
+
+## Current source and reader relations
+
+The [full identity index](reference/generated-documentation-map.json) is under `sourceSurfaceMap.authorityMatrix`. Start with a SUR family above or search an exact source path in `sourceAuthority`. Each `normalizedIdentity` names its SUR family, source authority, canonical reader target and documentation owner. Resolve its `policyRef` in `authorityPolicies` for the owning inventory, generator or manual route, required check, consumer boundary and classification. Shared policies avoid copying competing ownership rules.
+
+For the reverse direction, find a canonical page/anchor in `inverse` and follow its exact identities. Configuration view identities retain the native ordered record position: repeated or conditional projections are not unique schema branch pointers. Open the owning schema/consumer reference for applicability and default behavior.
+
+| SUR group | Families | Source-bound declarations/relations | Projection references | Manual review routes |
+| --- | --- | --- | --- | --- |
+| CTL | 7 | 18 | 0 | 7 |
+| SPC | 6 | 4 | 0 | 6 |
+| CFG | 8 | 20565 | 0 | 8 |
+| API | 11 | 22981 | 9 | 11 |
+| COM | 4 | 0 | 0 | 4 |
+| DAT | 6 | 0 | 0 | 6 |
+| TEL | 3 | 0 | 0 | 3 |
+| SEC | 7 | 0 | 0 | 7 |
+| DEP | 10 | 697 | 0 | 10 |
+| OPT | 5 | 8 | 0 | 5 |
+| OPS | 6 | 13 | 0 | 6 |
+| EXT | 11 | 119 | 0 | 11 |
+
+These are index relations, **not counts of active public runtime features**. Explicit fixture, retained, private, candidate and declaration-only classifications remain in their owning policies. A manual route assigns a named source/consumer review and documentation owner; it does not claim generated freshness, completed semantic review or source-discovery completeness. Historical source links and guide-depth labels in the navigation tables are not current mechanical authorities.
+
+Run the required owning checks before relying on current facts, then the governance check for this complete relation. Neither this join nor a successful structural check proves runtime validation, default insertion, deployment, browser/provider execution or a previously unknown public launch.
+
+<!-- END GENERATED: source authority matrix -->
 
 ## Inventory Boundaries
 

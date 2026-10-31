@@ -2,7 +2,7 @@
 
 import fs from 'node:fs';
 import { createHash } from 'node:crypto';
-import { buildSourceSurfaceMap, assertSourceSurfaceMap } from './lib/docs-source-surface-map.mjs';
+import { buildSourceSurfaceMap, assertSourceSurfaceMap, renderAuthorityMatrixSummary } from './lib/docs-source-surface-map.mjs';
 import { assertRouteContinuity } from './lib/docs-route-continuity.mjs';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -19,6 +19,12 @@ const operatorPages = new Set(JSON.parse(fs.readFileSync(path.join(root, 'docs/o
   .tasks.map((task) => task.canonical.split('#')[0]));
 const generatedReferencePages = new Set(['cli', 'secrets', 'helm-values', 'environment-variables', 'plugin-configuration', 'endpoints', 'verification-commands', 'workflows', 'sdk-exports']
   .map((name) => `docs/site/reference/${name}.md`));
+generatedReferencePages.add('docs/site/reference/configuration.md');
+const markedRegionOwners = new Map([
+  ['docs/site/product-surfaces.md', 'scripts/docs-governance.mjs'],
+  ['docs/site/reference/schemas.md', 'scripts/docs-schema-fields.mjs'],
+  ['docs/site/reference/events.md', 'scripts/docs-event-contracts.mjs'],
+]);
 const platformInventoryPage = 'docs/site/reference/platform-surfaces-generated.md';
 const platformInventoryGenerator = 'scripts/docs-platform-surface-inventory.mjs';
 const promptContractPage = 'docs/site/extend/contracts.md';
@@ -56,9 +62,10 @@ function checksFor(page) {
   if (page === 'docs/site/status/open-issues.md') checks.unshift('npm run docs:status:check');
   if (page === promptContractPage) checks.unshift(...promptContractChecks);
   if (configurationPages.has(page) || generatedReferencePages.has(page)) {
-    checks.unshift('npm run docs:inventory:config:check', 'npm run docs:generate:check', 'npm run docs:drift:config:mutations');
+    checks.unshift('node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check');
   }
   if (/^docs\/site\/reference\/common-errors(?:-[a-z]+)?\.md$/u.test(page)) checks.unshift('npm run docs:errors:check');
+  if (page === 'docs/site/reference/schemas.md') checks.unshift('node scripts/docs-schema-fields.mjs --check --reference');
   if (page === 'docs/site/reference/events.md') checks.unshift('npm run docs:events:check');
   if (page === platformInventoryPage) {
     checks.unshift('npm run docs:ap09:platform-inventory:check', 'npm run docs:ap09:platform-drift:mutations');
@@ -80,6 +87,7 @@ function checksFor(page) {
 }
 
 function contentKind(page, text) {
+  if (markedRegionOwners.has(page)) return 'authored-with-generated-region';
   if (page === 'docs/site/extend/deep-guides/README.md') return 'generated';
   if (page === platformInventoryPage || metadata(text, 'Generator') || generatedReferencePages.has(page)) return 'generated';
   if (page === 'docs/site/status/open-issues.md'
@@ -110,6 +118,7 @@ const pages = walk(siteRoot)
     if (missing.length) throw new Error(`${page} lacks metadata: ${missing.join(', ')}`);
     const evidence = values.Evidence.split(';').map((value) => value.trim());
     const generator = metadata(text, 'Generator')
+      ?? markedRegionOwners.get(page)
       ?? (page === platformInventoryPage ? platformInventoryGenerator
         : page === 'docs/site/extend/deep-guides/README.md' ? 'scripts/docs-plugin-complexity.mjs'
         : generatedReferencePages.has(page) ? 'scripts/docs-generate.mjs' : null);
@@ -164,6 +173,9 @@ if (createHash('sha256').update(baselineBytes).digest('hex') !== 'c9fd21962ade06
 assertRouteContinuity(JSON.parse(baselineBytes), pages, routeRegistry);
 
 const sourceSurfaceMap = buildSourceSurfaceMap(root, pages);
+const productSurfacePath = path.join(siteRoot, 'product-surfaces.md');
+const productSurfaceText = fs.readFileSync(productSurfacePath, 'utf8');
+const productSurfaceOutput = renderAuthorityMatrixSummary(sourceSurfaceMap.authorityMatrix, productSurfaceText);
 const output = `${JSON.stringify({
   schemaVersion: 'kubeclaw-documentation-map.v1',
   authority: 'Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.',
@@ -176,7 +188,8 @@ const output = `${JSON.stringify({
 
 if (check) {
   if (fs.existsSync(target)) assertSourceSurfaceMap(JSON.parse(fs.readFileSync(target, 'utf8')).sourceSurfaceMap, sourceSurfaceMap);
-  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== output) {
+  if (!fs.existsSync(target) || fs.readFileSync(target, 'utf8') !== output
+    || productSurfaceText !== productSurfaceOutput) {
     console.error(`${relative(target)} is stale. Run npm run docs:governance:generate.`);
     process.exit(1);
   }
@@ -184,5 +197,6 @@ if (check) {
 } else {
   fs.mkdirSync(path.dirname(target), { recursive: true });
   fs.writeFileSync(target, output);
+  fs.writeFileSync(productSurfacePath, productSurfaceOutput);
   console.log(`generated ${relative(target)} (${pages.length} pages)`);
 }

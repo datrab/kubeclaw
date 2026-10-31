@@ -5,7 +5,8 @@ import { spawnSync } from 'node:child_process';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { test } from 'node:test';
-import { buildSourceSurfaceMap, assertSourceSurfaceMap } from '../lib/docs-source-surface-map.mjs';
+import { buildSourceSurfaceMap, assertSourceSurfaceMap, assertAuthorityMatrix,
+  requiredSurfaceFamilies } from '../lib/docs-source-surface-map.mjs';
 
 const root = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '../..');
 const mapFile = path.join(root, 'docs/site/reference/generated-documentation-map.json');
@@ -17,7 +18,72 @@ const build = (file, mutate, pages = committed.pages) => buildSourceSurfaceMap(r
   return value;
 });
 const baseline = buildSourceSurfaceMap(root, committed.pages);
-const stale = changed => assert.throws(() => assertSourceSurfaceMap(changed, baseline), /source-map stale\/orphan/u);
+const stale = changed => assert.throws(() => assertSourceSurfaceMap(typeof changed === 'function' ? changed() : changed, baseline), /source-map stale\/orphan|authority-matrix/u);
+
+function authorityFixture() {
+  const families = requiredSurfaceFamilies.map(id => ({ id, title: id,
+    canonicalTarget: 'docs/site/product-surfaces.md', owner: 'fixture documentation owner' }));
+  const records = families.map(family => ({ normalizedIdentity: `manual:${family.id}`,
+    surFamily: family.id, sourceAuthority: 'fixture/current-source-boundary',
+    consumerBoundary: 'Authored family explanation; actual consumer review required.',
+    canonicalTarget: family.canonicalTarget, owner: family.owner,
+    scopeLimit: 'Manual review route only, not generated or runtime evidence.',
+    checks: ['independent affected source/reader/quality review'], generator: null,
+    recordKind: 'manual-review-route', primaryMechanicalAuthority: false,
+    freshness: 'manual-review-required', classification: 'authored-high-level-surface',
+    classificationBasis: 'Explicit fixture review route; no source discovery claim.' }));
+  records.push({ normalizedIdentity: 'schema-property:fixture/schema.json:/properties/timeout',
+    surFamily: 'SUR-API-03', sourceAuthority: 'fixture/schema.json',
+    consumerBoundary: 'Declared schema annotation, not consumer insertion.',
+    canonicalTarget: 'docs/site/reference/schemas.md', owner: 'fixture schema owner',
+    scopeLimit: 'Declaration only; no runtime or validation execution.',
+    checks: ['fixture schema owner check'], generator: 'fixture schema owner',
+    inventory: 'fixture/schema-index.json', factsSha256: '1'.repeat(64),
+    recordKind: 'source-bound-fact', primaryMechanicalAuthority: true,
+    classification: 'declaration-only', classificationBasis: 'Explicit fixture declaration.' });
+  const inverse = new Map();
+  for (const record of records) {
+    if (!inverse.has(record.canonicalTarget)) inverse.set(record.canonicalTarget, []);
+    inverse.get(record.canonicalTarget).push(record.normalizedIdentity);
+  }
+  return { schemaVersion: 'source-authority-matrix.v1', families, records,
+    inverse: [...inverse].sort(([a], [b]) => a.localeCompare(b, 'en'))
+      .map(([canonicalTarget, identities]) => ({ canonicalTarget, identities: identities.sort() })) };
+}
+
+test('authority matrix cannot promote a manual route to generated or mechanical proof', () => {
+  assertAuthorityMatrix(authorityFixture());
+  for (const change of [record => { record.generator = 'fictional generator'; },
+    record => { record.primaryMechanicalAuthority = true; },
+    record => { record.freshness = 'current-and-complete'; }]) {
+    const matrix = authorityFixture(); change(matrix.records[0]);
+    assert.throws(() => assertAuthorityMatrix(matrix), /authority-matrix manual route/u);
+  }
+});
+
+test('authority matrix refuses unowned or ambiguous facts rather than silently excluding them', () => {
+  for (const field of ['sourceAuthority', 'consumerBoundary', 'canonicalTarget', 'owner',
+    'scopeLimit', 'checks', 'generator', 'inventory', 'classificationBasis']) {
+    const matrix = authorityFixture(); delete matrix.records.at(-1)[field];
+    assert.throws(() => assertAuthorityMatrix(matrix), /authority-matrix/u, field);
+  }
+  const duplicate = authorityFixture(); duplicate.records.push(structuredClone(duplicate.records.at(-1)));
+  assert.throws(() => assertAuthorityMatrix(duplicate), /duplicate identity\/primary authority/u);
+  const ambiguous = authorityFixture(); ambiguous.records.at(-1).surFamily = ['SUR-API-02', 'SUR-API-03'];
+  assert.throws(() => assertAuthorityMatrix(ambiguous), /ambiguous or missing SUR assignment/u);
+  const missingFamily = authorityFixture(); missingFamily.families.pop();
+  assert.throws(() => assertAuthorityMatrix(missingFamily), /missing SUR family/u);
+});
+
+test('authority matrix retains exact inverse and one real primary for projection references', () => {
+  const staleInverse = authorityFixture(); staleInverse.inverse[0].identities.pop();
+  assert.throws(() => assertAuthorityMatrix(staleInverse), /inverse identity relation/u);
+  const competing = authorityFixture();
+  competing.records.push({ ...competing.records.at(-1), normalizedIdentity: 'projection:timeout',
+    recordKind: 'projection-reference', primaryMechanicalAuthority: false,
+    primaryIdentity: competing.records.at(-1).normalizedIdentity, sourceAuthority: 'fixture/competing.json' });
+  assert.throws(() => assertAuthorityMatrix(competing), /orphan or competing primary authority/u);
+});
 
 test('prompt library routes through the actual governance owner and rejects missing source, owner or package check', (t) => {
   const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'prompt-owner-route-'));
@@ -30,6 +96,16 @@ test('prompt library routes through the actual governance owner and rejects miss
   }
   fs.mkdirSync(path.join(temporary, 'skills/common/plugins'), { recursive: true });
   fs.cpSync(path.join(root, 'skills/common/plugins/prompt-contract'), path.join(temporary, 'skills/common/plugins/prompt-contract'), { recursive: true });
+  for (const name of fs.readdirSync(path.join(root, 'skills'))) {
+    if (name !== 'common') fs.symlinkSync(path.join(root, 'skills', name), path.join(temporary, 'skills', name));
+  }
+  for (const name of fs.readdirSync(path.join(root, 'skills/common'))) {
+    if (name !== 'plugins') fs.symlinkSync(path.join(root, 'skills/common', name), path.join(temporary, 'skills/common', name));
+  }
+  for (const name of fs.readdirSync(path.join(root, 'skills/common/plugins'))) {
+    if (name !== 'prompt-contract') fs.symlinkSync(path.join(root, 'skills/common/plugins', name), path.join(temporary, 'skills/common/plugins', name));
+  }
+
   fs.mkdirSync(path.join(temporary, 'docs'));
   for (const entry of fs.readdirSync(path.join(root, 'docs'), { withFileTypes: true })) {
     const source = path.join(root, 'docs', entry.name), target = path.join(temporary, 'docs', entry.name);
@@ -37,7 +113,9 @@ test('prompt library routes through the actual governance owner and rejects miss
     else fs.symlinkSync(source, target);
   }
   fs.mkdirSync(path.join(temporary, 'scripts'));
-  for (const name of ['lib', 'docs-published-route-baseline.json']) fs.symlinkSync(path.join(root, 'scripts', name), path.join(temporary, 'scripts', name));
+  for (const name of fs.readdirSync(path.join(root, 'scripts'))) {
+    if (name !== 'docs-governance.mjs') fs.symlinkSync(path.join(root, 'scripts', name), path.join(temporary, 'scripts', name));
+  }
   const ownerPath = path.join(temporary, 'scripts/docs-governance.mjs');
   const guidePath = path.join(temporary, 'docs/site/extend/contracts.md');
   const owner = fs.readFileSync(path.join(root, 'scripts/docs-governance.mjs'), 'utf8');
@@ -104,10 +182,10 @@ test('current inventory join and inverse bindings match the generated map', () =
 // suites. Each adapter consumes the real inventory shape and owning page roster.
 const cases = [
   ['sdk-reference', data => data.exports, item => { item.name += 'Mutation'; }, item => { item.signature += ' mutation'; }],
-  ['platform-surfaces', data => data.endpoints, item => { item.source += '.mutation'; }, item => { item.activationCondition = 'changed condition'; }],
+  ['platform-surfaces', data => data.endpoints, item => { item.source = 'package.json'; }, item => { item.activationCondition = 'changed condition'; }],
   ['workflows', data => data.workflows, item => { item.path += '.mutation'; }, item => { item.triggers.push('mutation'); }],
   ['plugin-system', data => data.registrations, item => { item.id += '.mutation'; item.registrationId += '.mutation'; }, item => { item.kind += '.mutation'; }],
-  ['configuration-values', data => data.files[0].documents[0].fields, item => { item.path += '.mutation'; }, item => { item.type = 'mutation'; }],
+  ['configuration-helm-values', data => data.files[0].documents[0].fields, item => { item.path += '.mutation'; }, item => { item.type = 'mutation'; }],
   ['configuration-schemas', data => data.files[0].fields, item => { item.path += '.mutation'; }, item => { item.type = 'mutation'; }],
   ['configuration-runtime-inputs', data => data.cliFlags, item => { item.name += '-mutation'; item.surface = 'operator-runtime'; }, item => { item.default += ' mutation'; }],
 ];
@@ -116,18 +194,18 @@ for (const [name, collection, rename, change] of cases) {
   test(`${name}: add/change/remove modifies the join without count shortcuts`, () => {
     // The SDK name determines its real anchor. Add another entrypoint for an
     // existing name to exercise addition while keeping the target valid.
-    stale(build(file, data => {
+    stale(() => build(file, data => {
       const item = structuredClone(collection(data)[0]);
       if (name === 'sdk-reference') item.entrypoint += '/mutation';
       else rename(item);
       collection(data).push(item);
     }));
-    stale(build(file, data => {
+    stale(() => build(file, data => {
       const item = name === 'configuration-runtime-inputs'
         ? collection(data).find(item => item.surface === 'operator-runtime') : collection(data)[0];
       change(item);
     }));
-    stale(build(file, data => {
+    stale(() => build(file, data => {
       const list = collection(data);
       const index = name === 'configuration-runtime-inputs' ? list.findIndex(item => item.surface === 'operator-runtime') : list.length - 1;
       list.splice(index, 1);
@@ -167,13 +245,13 @@ test('complete SDK support closure keeps declarations, members and qualified ref
 
 test('SDK support member changes/removal and complete declaration removal are not count-only matches', () => {
   const file = 'docs/generated/inventory/sdk-reference.json';
-  stale(build(file, data => { data.supportTypes[0].members[0].signature += ' | null'; }));
-  stale(build(file, data => { data.supportTypes[0].members.pop(); }));
+  stale(() => build(file, data => { data.supportTypes[0].members[0].signature += ' | null'; }));
+  stale(() => build(file, data => { data.supportTypes[0].members.pop(); }));
   const data = read(file);
   const referenced = new Set(data.supportTypes.flatMap(item => item.referencedSupport));
   const removable = data.supportTypes.find(item => !referenced.has(item.qualifiedName));
   assert(removable, 'control requires a reachable declaration without incoming support edges');
-  stale(build(file, value => {
+  stale(() => build(file, value => {
     value.supportTypes = value.supportTypes.filter(item => item.qualifiedName !== removable.qualifiedName);
   }));
 });

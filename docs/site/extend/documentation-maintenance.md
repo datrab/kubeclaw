@@ -190,6 +190,29 @@ a global write or discovery run merely to complete the bounded procedure.
 For prose-only maintenance changes, retain the qualified source snapshot and
 check its existing outputs rather than regenerating unrelated families.
 
+### Reconcile a source identity with its reader owner
+
+The [Product Surface Map](../product-surfaces.md#current-source-and-reader-relations)
+links to the full `sourceSurfaceMap.authorityMatrix` in the generated page map.
+Use a SUR family or exact source path to find a normalized identity. Follow its
+canonical page and documentation owner; resolve `policyRef` in `authorityPolicies`
+for the mechanical source, generator or manual route, consumer boundary and
+required freshness check. For a changed reader page, use `inverse` to find its
+incoming identities. A declaration-only or fixture record is not a runtime grant.
+
+Change the owning source and its qualified inventory first. Review new identities,
+selectors, consumer/default meanings and canonical targets before changing their
+adapters. Retain explicit classifications and all selected store/caller or schema
+branch boundaries. A manual review route cannot substitute for an available typed
+inventory or claim generated source freshness. Then run the owning check and
+`npm run docs:governance:generate`, followed by `npm run docs:governance:check`.
+This owner writes the machine relation and only the marked summary on the Product
+Surface Map. Inspect both outputs together; do not patch either generated view.
+A changed SUR row, duplicate authority, orphan source/target or missing owner/check
+is a stop for reconciliation, not permission to invent a generator or refresh a
+binding without review. These relation checks do not replace the owning source
+checks or independent source, reader and quality review.
+
 ### Common-error input drift
 
 The common-error check reports `CATALOGUE_INPUT_SURFACE_DRIFT` with `added`,
