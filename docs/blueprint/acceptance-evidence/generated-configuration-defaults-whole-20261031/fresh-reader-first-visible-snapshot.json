@@ -1,0 +1,884 @@
+{
+  "revision": "dff795db733437b8f91120599486bfedff1053ff",
+  "snapshot": "/home/node/.openclaw/workspace/tmp/pr13-mnt003-reader-dff795db",
+  "allowedInputs": "Exact committed docs/site and public configuration/schema inventories and bindings only. No product implementation source, internal evidence/reports/matrix or expected answers.",
+  "files": [
+    {
+      "path": "docs/config/configuration-family-map.json",
+      "sha256": "c03d4c3c93cf51c9ccd8c061716c218f64b6757eb6aca84102bc207022d0315e"
+    },
+    {
+      "path": "docs/config/schema-field-bindings.json",
+      "sha256": "c08f7ac2f8a77cf5cfdf97f4e9c47f1965ad7af6145c8bb789a6240a0c1463b3"
+    },
+    {
+      "path": "docs/generated/inventory/configuration-families.json",
+      "sha256": "655842ddfdd88189629526d6d56fd6354a9917b39d5efe6229e8838b679b71b1"
+    },
+    {
+      "path": "docs/generated/inventory/configuration-helm-values.json",
+      "sha256": "85e0463ba92eead94091cef8f2e5ad14e5658ad485fa7c67b0a6abd8c6bfb841"
+    },
+    {
+      "path": "docs/generated/inventory/configuration-runtime-inputs.json",
+      "sha256": "1e511d5181a616d2155784b2f106774521e10cd20f985b746e0c7b1298b69983"
+    },
+    {
+      "path": "docs/generated/inventory/configuration-schemas.json",
+      "sha256": "d6d539677e89ed0c41c964c0f983588a8eef23d1e4ff272c237d3d9ebb5c7206"
+    },
+    {
+      "path": "docs/generated/inventory/schema-field-drift.json",
+      "sha256": "1055d19f5f7cbfd4a223d59b8787ac7daf7476783ad60697759f2307fb389257"
+    },
+    {
+      "path": "docs/site/README.md",
+      "sha256": "4301425464181be552e9509083c3d5ef5b7011664f51b9736c9ab4ee3da060c0"
+    },
+    {
+      "path": "docs/site/decisions/README.md",
+      "sha256": "cd78b422eb28571afe370e674f209f25d8c89215f6f3dbf9516b02bdbf09e2d6"
+    },
+    {
+      "path": "docs/site/decisions/acceptance.md",
+      "sha256": "ad96afc285aa50af1883bb243eb55e2550d9115cbfd96fd6de674a6ad2cd4054"
+    },
+    {
+      "path": "docs/site/decisions/core-and-plugins.md",
+      "sha256": "1d3bb330ed993112ef0a7ee337b8407c9616516553cf81714d8149857e5e3dea"
+    },
+    {
+      "path": "docs/site/decisions/echo.md",
+      "sha256": "44e78ff68fe2253fe80bb1a43353633c6b68ac81fd5d11e5abf06500ca3c57e1"
+    },
+    {
+      "path": "docs/site/decisions/implementation.md",
+      "sha256": "4222e227b91677785a1d5de888bcf5ba814afc6d01eedcc644a6ae4bee772e0e"
+    },
+    {
+      "path": "docs/site/decisions/prism.md",
+      "sha256": "103d4e61ecab63b7f3650a284af1dd27da0b3cd29a56d15659fdea1e56f5f379"
+    },
+    {
+      "path": "docs/site/decisions/runtime-and-operations.md",
+      "sha256": "f1b4d597ad534d8b64142e14535b8f6ef822c75af8a663335eabc313e78f9616"
+    },
+    {
+      "path": "docs/site/decisions/test-gate.md",
+      "sha256": "5d7e9e72e114ae7eae179e09cc731234fef8ee7a2e17b88736f6ce556d82707b"
+    },
+    {
+      "path": "docs/site/extend/README.md",
+      "sha256": "dce42e4f653e4b6b3520d226e667c68eb395e9383348d37bb085b645a6ba8307"
+    },
+    {
+      "path": "docs/site/extend/buster.md",
+      "sha256": "6644c3455fbb7cbb45d52a3f536d51b41be42d1a71aeee65fad994c775137b1f"
+    },
+    {
+      "path": "docs/site/extend/contracts.md",
+      "sha256": "c2eabf5dce1c820047106ebfeb460574d1b2ba3e4932bbf012fb080109eea3ad"
+    },
+    {
+      "path": "docs/site/extend/deep-guides/README.md",
+      "sha256": "2831a451dc42a4bf013d5ae45501cba24d2a2fd08b6d16f64951a65fdf02016c"
+    },
+    {
+      "path": "docs/site/extend/deep-guides/demo-handoff.md",
+      "sha256": "4fd6ea7010e67019221c67f64c8db2cc2c18ea0acda14e176e4099778143f16a"
+    },
+    {
+      "path": "docs/site/extend/deep-guides/reports.md",
+      "sha256": "33f09a7d33806dac7d2ba3f480a393b570addd6fa7a3f9eb3534e389a2c11274"
+    },
+    {
+      "path": "docs/site/extend/developer-handbook.md",
+      "sha256": "bb2d586fc555a3230581052a91785bf22b6d7791927fb61d15cdb49966360f47"
+    },
+    {
+      "path": "docs/site/extend/documentation-maintenance.md",
+      "sha256": "c79414f51620131bed9954c00c8ba1da9dfd566a61f36f0620feb0b923526d8d"
+    },
+    {
+      "path": "docs/site/extend/effectful-plugin.md",
+      "sha256": "c6e3f5cebee2fb9b4df5b01c2ea29dac6d883e2572faf157c289040888bca78c"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/package.json",
+      "sha256": "858afd76f0e8f9d21fac54b22cb409b5c11effd93b5530c91eb40bc4b9907a39"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/plugin.json",
+      "sha256": "ffcd1ea2b759081d86a9812ea05b37a347ce13bd1a68a2640bf1e0a29146bd73"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/schemas/config.schema.json",
+      "sha256": "ecb4659a0d13372817eb167c4af7a0eaba08e1b8f3ccf496dbb6fa287cc992ad"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/schemas/input.schema.json",
+      "sha256": "39dcacb7784aaf29e76304fb161c03c4d050a4abff4f080b4bd39f604ee486c4"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/schemas/result.schema.json",
+      "sha256": "1b312c6f2a9601239a47a3ad6ebc7d3ff67c5e377b1b2a905e743298e9d35859"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/src/stage.js",
+      "sha256": "c57349a102e2a549c270e3a9062460fce887ab642f330a9b78980611272322e0"
+    },
+    {
+      "path": "docs/site/extend/examples/minimal-stage/tests/stage.test.mjs",
+      "sha256": "075a2ade71a516359dc13ed2bda42afb4360e12e532f06f2bec6d872beb4e80f"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/journey.mjs",
+      "sha256": "be2ca59fb8bd6f2571ba2a27ee176241ef76436dac5d1ae07cd73354134e2d06"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/package.json",
+      "sha256": "19024f350c83619ca208e044bea042455517084566e099270ac9a0e0a2b50dd9"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/plugin.json",
+      "sha256": "42c68ce5ae6ec703393d16617e5ec3884f2e7a0453891e9e8924eb065ee0425a"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/checkpoint.schema.json",
+      "sha256": "8076bdee81e673be6e14805339f1f28a3d2cf294c0d56254463a74fabb031008"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/schemas/config.schema.json",
+      "sha256": "2630fff1d6be622bfc3ab96f4f9a3960d0e5afdaae53528416ca13b6b19b1b3a"
+    },
+    {
+      "path": "docs/site/extend/examples/observer-lifecycle/plugin/src/observer.js",
+      "sha256": "886992a473fc3a1d0401d16fd6a5b1ed214976e5a46297e5e644508b06069041"
+    },
+    {
+      "path": "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "sha256": "5c180f77204e94677376d6aa0e286c4f6109fcb45480098d5c4d6e68b5bdcc26"
+    },
+    {
+      "path": "docs/site/extend/first-plugin.md",
+      "sha256": "245efa0f563d4b3a9675aa7d995bd484f1ed6e44f31697d922641f6969e502be"
+    },
+    {
+      "path": "docs/site/extend/host-and-engine.md",
+      "sha256": "3cd6dfc903a00c4012d2e8df3c8841a27ae7ee834c6798a7ed28eb088fc4bf0d"
+    },
+    {
+      "path": "docs/site/extend/lint.md",
+      "sha256": "a1c0a7ba491dcb60690e38e50d813d477ce33894492a43629b10e12c60cbd53e"
+    },
+    {
+      "path": "docs/site/extend/nova.md",
+      "sha256": "c5a458ba98dbaa9f6ee0a461358faf56bc470432f7715ab2425f87c55ea6da12"
+    },
+    {
+      "path": "docs/site/extend/platform/README.md",
+      "sha256": "c3b3de1d6e4f6decfb6ba85fddfb9b87e87fb7435be30ddf2d72a3a56c316366"
+    },
+    {
+      "path": "docs/site/extend/platform/buster.md",
+      "sha256": "8d713ef5fb569d6ebd221924660091ba8568b7cc77de512fb0707d714fc9f32b"
+    },
+    {
+      "path": "docs/site/extend/platform/prism.md",
+      "sha256": "68617f325359f0f51374ee8ea7aba136d1e2691b73a772bd2516c2010720bfac"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/README.md",
+      "sha256": "2dfd13b8c05c16753b0936251656d46e20b802dc5246e66de188f100117c90f6"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md",
+      "sha256": "e5c5f17564b54d0641d193689d5e82e81fd865765cc411811ceb13a4ada118ba"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw-ops.md",
+      "sha256": "f91fe77c9a8c72a0cb460113ae1e4102601dffc7834002ae6d09152d38bbd857"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw-prism.md",
+      "sha256": "cea583e819dd361d1f471415607cb8cea86fb02eac9352e836c123c3bb253e11"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md",
+      "sha256": "e92335d5bf7089b0a7b552bc0011f9929e71e4284ba82c07392adc92c4287af3"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md",
+      "sha256": "6e7ad97c1a720115f5c6fa0d2bf7f360ac33b02788dc3b9353888a3e28062345"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md",
+      "sha256": "c1428af92845539e844619f29315a9a81f7d557f989d282da41e3cb455fee375"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md",
+      "sha256": "237f68730b62076b0d77440c38ae1f98c5ccbfb566079981052e224271065068"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.axe.md",
+      "sha256": "4e5352449a96ad692006dd7186ba1feb1c3e20a4f10c41246eab17a4ce5534ba"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md",
+      "sha256": "7e0802bb8394a903c7a347b7e50a4a259b740ae64468ec450d73efc19428d235"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md",
+      "sha256": "f0b193354043f6c37b9b22ab0ded09481879ae59a1a7c64b9a12933046bd4590"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md",
+      "sha256": "a0fa5f90f7bfafe5767c70557e91ff1f04febfbe90e73d03f46c23a4c5455ee9"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md",
+      "sha256": "7d4eebc68fba311d5906b6408b470590aa64b50fccd7a48d8df3e330c44a3c7f"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md",
+      "sha256": "9fbf8f369af2c9cea12b1d960986d935ebe400ce5cd33315f91ee013200c3f47"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md",
+      "sha256": "117a07c04742126e65f0b8fc3565697e7e5e90861444b1546f5f72fa9bfd6593"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md",
+      "sha256": "ac43f2f7c0bbbff2b8fb6c241c0b42b0f0b12ac8d2448007ff266e9783b60b24"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md",
+      "sha256": "089ecd88f27274174aa61bce67407618803ef7995f1c717c751cf9d24b2cb97c"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md",
+      "sha256": "01caf7c8954f0ab0f241bc845515a4ba033399edb4332773c37673d01bbdf85a"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md",
+      "sha256": "0209e82dc217f0f9af00d93d06bb255230a3f64c1da73e1b749383e1cd76cd5e"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md",
+      "sha256": "11316c75cf1740c0c205be28a738068c6df376b33d0d86143bf1d9c0ca757133"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.http.md",
+      "sha256": "39b3c80f25ae35890773bf0f79d0a53bbb7ea5b457f34803006b32226d71a668"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md",
+      "sha256": "ebbbba47bf8974d84d00a2b0024732e35a6cb088129d45ea3bb01ec9896406c0"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md",
+      "sha256": "202ae3b570e1b37f51648af889c7161ad7ea927693e804896609fcfc1f56cca5"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md",
+      "sha256": "5a76fa3b0dc5989163d0df2b1045e39a8da6c402b1d57d2f34e95938d1c4cef8"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md",
+      "sha256": "7d8b80edf43ea3721ed9c306454c84c158460482025e891fb06df5824bb3f639"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md",
+      "sha256": "9e6901ac8683bc99faecc2bd59354c0d984a5d2ffde57248cc661010936a1c03"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.lint.md",
+      "sha256": "8ddf21106374d7ca8360085e65d4f71bd1379396e332b3b442e588aa8b9136f5"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md",
+      "sha256": "f48283913f24d25a77cf0c85d009cfb37f360799513ed48eca6e93e4a4397732"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md",
+      "sha256": "d07a05910dfa2f585037a7c94f888c84390ef1f1af29151a3e1c6c1f96686c4f"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md",
+      "sha256": "6523c5353f4a8ba4014e621f3dc7d0e49bf280195a87847464ffba608e782293"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md",
+      "sha256": "752efc225db906d84a479b5dd7f3e6adb59776fc59babefffe064611a7311c15"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md",
+      "sha256": "60d1d22ff13cba03a612bd272fc98a543b80c38ce1a9f57985a9948ea01aff72"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md",
+      "sha256": "44bfc3eed39ccd7632bce87b0c2c4da556d60148c55491587f7255e7f5e461a0"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md",
+      "sha256": "362faf191a6b13cf2cbe06bc89b8d89d8befd41908b51a3118219e33408b67b0"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md",
+      "sha256": "5409f3c7c289f7f8019d9f63ca04ae990dce930e7e598372e77ee1144ae4533a"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md",
+      "sha256": "fee39c80318b37bafd7f8b9726e26018ee311c2052c1b4b16b872c2041385c49"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md",
+      "sha256": "72b6ec848569c33b062742196fbecda528dedf2075cd77d5dc5ea4beb583b053"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md",
+      "sha256": "ff63108a1a0597018d6238c7ff9cf3fc401ccb150e4bd2574da1aa8e121fdfb4"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md",
+      "sha256": "d1919efcffc18851340e3df0d408bd40ddf91c69fde8484d25bb729040c54315"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md",
+      "sha256": "42efea6b52e2caf7c854cae2d9544e674ec9558b555a97584f18b80348c752f1"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.review.md",
+      "sha256": "edf8d27e9c4d9c1cbc34449e5ef5023c680df2fdc485e18363bd32e92150eae8"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md",
+      "sha256": "4cd986b977408255fe1b29c20a9b23cc1c71245cdee11b18c8478ff99f0e5f0a"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md",
+      "sha256": "3bdcc6950ec80402e2e567ca67155f713e2c54f158b1d7bb6ce043d505600a33"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md",
+      "sha256": "ace169e1c08887ae8f94b22f597a8685b8a7b03ee30b51f826e0b6ef76b6c859"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md",
+      "sha256": "53a0bbe084008d1a68cc325743544f0ac8737803f194e84bb57e68db0b9560bd"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md",
+      "sha256": "686ce2939ac098879a9d168c5b04dd3c9f98449592161210d6569d9b706a952d"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md",
+      "sha256": "97cde31b39ee78e1cf7808a829ad58c2baf9a7ba5426906434ecbfee3d0f9f64"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md",
+      "sha256": "560654bfe06deca4aa31ff3c8f5a001003a58fb350ae2adeeb5914b95af5fa73"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md",
+      "sha256": "dadc292c4e1ee082ef040d2ee3c815f59289c1031b96a45e64fc8900a451c966"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md",
+      "sha256": "9d79b7720cb274ccbf827c6c4301299dbab95e5c19e6b04e4afca015607675f5"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.visual.md",
+      "sha256": "b30ca717a36b98a4ca0071096990baa5aa91cd02c14fe412b2e873521a4212e0"
+    },
+    {
+      "path": "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md",
+      "sha256": "7deb4a2679abe83a8d516edabe32b3e54ad2182172af2dd69b28d3bfa45629fe"
+    },
+    {
+      "path": "docs/site/extend/testing.md",
+      "sha256": "225588df122e1c8c5cf6e4ea82f9c6830f048fc9547aa79f5acd065cc7403819"
+    },
+    {
+      "path": "docs/site/product-surfaces.md",
+      "sha256": "1879234e345cfbe1634f37bc57777098d5c161deab2ae541ee64949abdd818ac"
+    },
+    {
+      "path": "docs/site/reference/README.md",
+      "sha256": "29c4555a53e9cd5a3e7a2f744268ca5fa3c22890547ab8853f7bddfe6a78b201"
+    },
+    {
+      "path": "docs/site/reference/api-object-updates.md",
+      "sha256": "79fba7526353f900dbc22e87ada41c2bfa17c7883f6a25e4b2e405e4779c35d1"
+    },
+    {
+      "path": "docs/site/reference/buster-error-codes.md",
+      "sha256": "f46941e5f8b0ab9a173b6b023216bdbbb61c3c3a7f4849c75b31f11ce6be22fe"
+    },
+    {
+      "path": "docs/site/reference/buster-namespace-lease.md",
+      "sha256": "9cf4192a642baec4ce17a39b32e0fd9200303dd9608c432f59403aef77f3db9d"
+    },
+    {
+      "path": "docs/site/reference/buster-provider-configuration.md",
+      "sha256": "c4f620d5681aafa7f9811322c67f3e82703a3a66cebbd0e3de5a25e9f76bdb4a"
+    },
+    {
+      "path": "docs/site/reference/buster-runtime-configuration.md",
+      "sha256": "630e5513c5b3f13c736368b311b3c8b23f3dc0bcb4f215e81cff072c82116a5d"
+    },
+    {
+      "path": "docs/site/reference/buster-suites.md",
+      "sha256": "be59314bbf8fb2847f0af2ce32a50e11030dc62a43208d64c71bf2e178b4d7a9"
+    },
+    {
+      "path": "docs/site/reference/capabilities.md",
+      "sha256": "bda8980cbbd060a24f1b0e7c26cd5a5ff7aee5683c9c81dbdced48a849ba7d3d"
+    },
+    {
+      "path": "docs/site/reference/cli.md",
+      "sha256": "d0dbda7ba9dc346098a2a1a61525c435f923bbfd96dbc96c82851bdcea1858cc"
+    },
+    {
+      "path": "docs/site/reference/common-errors-configuration.md",
+      "sha256": "0605db2a590209f73d6831495dddca2c7cf1ba5ebf734f405f28b163e8280934"
+    },
+    {
+      "path": "docs/site/reference/common-errors-foundation.md",
+      "sha256": "035707aff2e75d832c6386ec19e8ffa382730b53afb95cf565d5e3ec7320d53d"
+    },
+    {
+      "path": "docs/site/reference/common-errors-nova.md",
+      "sha256": "34a5ec941293dceb884ec3c2b92a08ebfe1291e852f5649895ca1dec2fb257bc"
+    },
+    {
+      "path": "docs/site/reference/common-errors-platform.md",
+      "sha256": "cfd0a3ede00bfc5bc1fec16afc507294fac4f5e1e7705c88a4d23e77bfa0af7f"
+    },
+    {
+      "path": "docs/site/reference/common-errors-prism.md",
+      "sha256": "952266bf046cd680a809d529e4a8433274ac3f97416b7e85b55682d0f6a2698a"
+    },
+    {
+      "path": "docs/site/reference/common-errors-worker.md",
+      "sha256": "e8c5d6c1df362d83aabfd17bd49568caf492151d68b7d7cd0cf13e780744cf68"
+    },
+    {
+      "path": "docs/site/reference/common-errors.md",
+      "sha256": "68d2f0e54277fdd7005622ea6e61b2d2a5654a78c0decbc8cfd01155719a73f8"
+    },
+    {
+      "path": "docs/site/reference/configuration-change-impact.md",
+      "sha256": "6c6eeb50bd4c83b8d99d9eb1eabaed27e1574e81ff66008d9921635faddc5428"
+    },
+    {
+      "path": "docs/site/reference/configuration-compatibility.md",
+      "sha256": "e19a89705d3a7c49e8fd66b38eef47e6bbab6c4b89761a7707ee7b94e229abee"
+    },
+    {
+      "path": "docs/site/reference/configuration-errors.md",
+      "sha256": "2c026f4e0310d32e9646ddf167bb2525cc6140b966380ae2ab8bfe085858678b"
+    },
+    {
+      "path": "docs/site/reference/configuration-precedence.md",
+      "sha256": "507a6da536dc050dbc64eb2d39528af33bd64255a5586be20cf0346c1d6dfa04"
+    },
+    {
+      "path": "docs/site/reference/configuration.md",
+      "sha256": "a25bc223f964036f53f6afc3b2a3ef6e521a7b17820ac35b4ce5fc22547d0fc8"
+    },
+    {
+      "path": "docs/site/reference/contracts.md",
+      "sha256": "406cef2ad44356cccb91055091d23e265f7cca64dceb963241aeed985e0357c4"
+    },
+    {
+      "path": "docs/site/reference/documentation-governance.md",
+      "sha256": "b7f2b5598d40d573dab206b3ec712e2ebadb4e79c636fae67febcf1bf0ac06db"
+    },
+    {
+      "path": "docs/site/reference/documentation-route-registry.json",
+      "sha256": "7e5e283c02677c552eda930da2e65baa2fb4076182f8b48b607876fff10fc8f7"
+    },
+    {
+      "path": "docs/site/reference/documentation-site.md",
+      "sha256": "a1851910ffb2832775a4a4888ee0f3d9e474d5940dcdbbfb46c6d20a861e29cb"
+    },
+    {
+      "path": "docs/site/reference/endpoints.md",
+      "sha256": "187c88845c658dcbaa04bf3270891efc6a6dc93fd333355e378a118c09745f8f"
+    },
+    {
+      "path": "docs/site/reference/environment-variables.md",
+      "sha256": "2cd7f967dcd721a5ddae67ea5ef9944d9ca7d40653a0b7902e72818c9eea73cd"
+    },
+    {
+      "path": "docs/site/reference/errors.md",
+      "sha256": "e080967822865d16be9d6076fbcb16e8cd68e579dc502fd9b4664972eed3e42b"
+    },
+    {
+      "path": "docs/site/reference/events.md",
+      "sha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34"
+    },
+    {
+      "path": "docs/site/reference/generated-documentation-map.json",
+      "sha256": "a0f5e47a4d8620e717d1a02d8a114d46400dec04dd4cf44ff7101ae966aa6673"
+    },
+    {
+      "path": "docs/site/reference/glossary.md",
+      "sha256": "53f4c8f9c4539e1db57cabb354bbcdedf6be9c6be1bea6be0c88581c2e7348ca"
+    },
+    {
+      "path": "docs/site/reference/helm-values.md",
+      "sha256": "2b353ec62d140afddf3d8caaa0610fd70d7104cb79915678dbc1aedd7a0b19db"
+    },
+    {
+      "path": "docs/site/reference/host-and-prism-configuration.md",
+      "sha256": "f4cb0d8a77902249345dc75804a7d54d4b7b56106d4287c0ea62637f8b5198b6"
+    },
+    {
+      "path": "docs/site/reference/images-and-digests.md",
+      "sha256": "b38857d9bd35831949daa4645bc3adfaf72c9530fe910670830fa77148b02fa7"
+    },
+    {
+      "path": "docs/site/reference/lint-policy-generated.md",
+      "sha256": "ec89910014599711b7e58d29010d27b45eae824ea078431f287f8041095861e4"
+    },
+    {
+      "path": "docs/site/reference/lint-policy.md",
+      "sha256": "576657e7509519bbda4736d2397865a19f82604ad33d88799068d2e2460657a6"
+    },
+    {
+      "path": "docs/site/reference/lint-rules.md",
+      "sha256": "0b216d09a96d0b8ca70c727c64982bc826ea0f7564619fdb7bdffc1349a95e9c"
+    },
+    {
+      "path": "docs/site/reference/nova-project.md",
+      "sha256": "e1b616ff78668582570727541b5d0acf4869d3341a96899512ee5c450e35e03f"
+    },
+    {
+      "path": "docs/site/reference/pipeline-definition.md",
+      "sha256": "2883069bd568fb73f47d6524680eae63a03494a5b52f0afced88a4d7674383da"
+    },
+    {
+      "path": "docs/site/reference/pipeline-json.md",
+      "sha256": "e4bbbcde519911fb512acd60b1b4d3945b480b0cc9b8312d757faa96361ea128"
+    },
+    {
+      "path": "docs/site/reference/pipeline-platform.md",
+      "sha256": "53a81b42c1dfbde0f0d0a0a8c61eaabfa36975325e8b1c5cd10653541d0909de"
+    },
+    {
+      "path": "docs/site/reference/platform-surfaces-generated.md",
+      "sha256": "d697f0fc99742812ff4e2a8d30c0a0dec6d48f59e0e14f7808957f333301f2e9"
+    },
+    {
+      "path": "docs/site/reference/plugin-configuration.md",
+      "sha256": "7f9d58b61a55f6d0ea5e48f3aa16568b4a44723500941b4dba12eede7c499c1c"
+    },
+    {
+      "path": "docs/site/reference/project-pipeline-publication.md",
+      "sha256": "28c71320dc54ca369b91d8135d61a109bdf8c4c8f7fd06e20b8cb95ffd7898f9"
+    },
+    {
+      "path": "docs/site/reference/roles-and-package-ownership.md",
+      "sha256": "19b11b1a219bd773a8a91fcf822d05bc20c26d3972f732c546d46b43354f0c23"
+    },
+    {
+      "path": "docs/site/reference/schemas.md",
+      "sha256": "6ed82ed92c3967293fc35d2b13f959a2f46cc835e5ccee991d03dc439ff1a37a"
+    },
+    {
+      "path": "docs/site/reference/sdk-exports.md",
+      "sha256": "56bc9d8712e2c1b6cae343d7a2da4237cd235772ba7e06b7499483089e1d904c"
+    },
+    {
+      "path": "docs/site/reference/sdk.md",
+      "sha256": "7ddc4d5a9a1377c1051f2e2aef00c362a50d567a8f23429dfc5554cf9e73f6ed"
+    },
+    {
+      "path": "docs/site/reference/secrets.md",
+      "sha256": "3ecee1b2983d6a67c582dd966c5019824336aab40418bdc3b1bad3646b9d2649"
+    },
+    {
+      "path": "docs/site/reference/service-routing.md",
+      "sha256": "d9c4d012be815c2409c3bc8e9bd551176ddd88411d9f630003295c5ff481e03a"
+    },
+    {
+      "path": "docs/site/reference/stores-and-retention.md",
+      "sha256": "e5004f910c1b3648c047ff8244c2edd82521d13a0ae60afa7466abd401270f50"
+    },
+    {
+      "path": "docs/site/reference/verification-commands.md",
+      "sha256": "445010332176f9ee304027100b28c345c67db6ee9919be4eca7f9468e2958ed5"
+    },
+    {
+      "path": "docs/site/reference/worker-profiles-and-roles.md",
+      "sha256": "2d3249d4c730797e49e4a39f88a7eca84c163ba3b2c5edf690f4be353d123fd9"
+    },
+    {
+      "path": "docs/site/reference/workflows.md",
+      "sha256": "c6f45231dc6f60b90d849f1cea7c20ab14991de84a95334d7abefb5d26de50c2"
+    },
+    {
+      "path": "docs/site/status/acceptance.md",
+      "sha256": "d211d1cc8e72bc5243c5ee81e11c4fd8ff2bdc3d3f92e838eb0f48439c101d57"
+    },
+    {
+      "path": "docs/site/status/current.md",
+      "sha256": "fdcfec3fbd9e58551706f53422015f1b4a5210f598bb957080fca4763060740f"
+    },
+    {
+      "path": "docs/site/status/open-issues.md",
+      "sha256": "368b06999df04be91bfe1f5a81f1b1dc04e7e41c6e197d16a2612ff3cb334bb3"
+    },
+    {
+      "path": "docs/site/status/roadmap.md",
+      "sha256": "960e3fc1cfdbed1f749c95a71b72732ba272faa362fc243bf060131528cf7d78"
+    },
+    {
+      "path": "docs/site/understand/README.md",
+      "sha256": "fc24b3f49148a76197136ddbd2dc9dfe5badc262af77b80ab9e0c5fcbb2b7067"
+    },
+    {
+      "path": "docs/site/understand/archviewer.md",
+      "sha256": "3cc96e1fe8e8dc253fd3a24eb664bb4a4104ee025fe62619032c7b8f5478ba73"
+    },
+    {
+      "path": "docs/site/understand/buster-namespace-controller.md",
+      "sha256": "1cd0acee6201b9cbc8a43dd3ebe8c57121fb3bdbf1143c87c52c3bf995994d06"
+    },
+    {
+      "path": "docs/site/understand/buster.md",
+      "sha256": "1280aa0a754762461c7bd727952310523a1f3436bba425f1b3351166a07ffa9a"
+    },
+    {
+      "path": "docs/site/understand/codex-integration.md",
+      "sha256": "94f4b2ee416afd6082f02546a72fe6f08291dc94794e555954cd80ec7a38aea4"
+    },
+    {
+      "path": "docs/site/understand/communication.md",
+      "sha256": "87d3e70d96a6398bb50ab28051219b369349c16045980fe34b394f81af2608e2"
+    },
+    {
+      "path": "docs/site/understand/components-and-authority.md",
+      "sha256": "050ec44d4033a72d3c8dfdf7bcc4f919e1bdb5d81c31a441b788802445b375cf"
+    },
+    {
+      "path": "docs/site/understand/data-and-state.md",
+      "sha256": "52bfea9fba3b973d3500f84cdea750b2049252fb1dd4808bcf56c2214a204e90"
+    },
+    {
+      "path": "docs/site/understand/deployment-and-trust.md",
+      "sha256": "8e81810e6f4059dfbe6584f41b87c4abb07bf32820bf5e5095658fbfd23d4fac"
+    },
+    {
+      "path": "docs/site/understand/echo.md",
+      "sha256": "c1d7e540e94e04c2d7bcfad1692bd446a3b811c9cdaf74142c77af70785436c1"
+    },
+    {
+      "path": "docs/site/understand/forge.md",
+      "sha256": "9b9198cb17f1982684f81179b13887e9ce344cd4272f4f2a79dce1d7438514a0"
+    },
+    {
+      "path": "docs/site/understand/nova-core.md",
+      "sha256": "0bd4d1704e0aa000159c21aea125c173b4951062b61b4d52ac16ece5cee9e6e4"
+    },
+    {
+      "path": "docs/site/understand/openclaw.md",
+      "sha256": "70529ca966eadb6aa9b6dcc988d5c4b0e3402ef2e0465f6d29389cf96023e9d1"
+    },
+    {
+      "path": "docs/site/understand/ops-mcp.md",
+      "sha256": "f9526c54902fe515c7836440b663b4978f57317aa93d316bc2593d06c5ca5caf"
+    },
+    {
+      "path": "docs/site/understand/pipeline-dependencies.md",
+      "sha256": "6805be36685c4fcc13f895dfa2e8d4a43bd1bfeff55fdf80774a5652760b6755"
+    },
+    {
+      "path": "docs/site/understand/platform-and-operations.md",
+      "sha256": "e8b85782b9b8ec62331ff1d1c3deb8c7dbc3a3b8f584093d96c994f738fe55f5"
+    },
+    {
+      "path": "docs/site/understand/plugin-runtime.md",
+      "sha256": "f23b04e376ad8c1efe7c80bf6b1887072fd5db5ee7cf64bc66900346b328177b"
+    },
+    {
+      "path": "docs/site/understand/prism-data.md",
+      "sha256": "bc4f0ed0d6df4325d08ce41a1b013b3e444d166233278e2a8368ea3894376fbd"
+    },
+    {
+      "path": "docs/site/understand/prism-runtime.md",
+      "sha256": "5e066d55882f14ea2b310b96d1faf2b5d1c4602b070a2f47774280f1ea132d64"
+    },
+    {
+      "path": "docs/site/understand/prism.md",
+      "sha256": "5d5cbe1c273707bd4e68f206a42222de7bd39dc223862e8c360f7d4a54e0841e"
+    },
+    {
+      "path": "docs/site/understand/request-state-recovery.md",
+      "sha256": "f17de9aa7f74d4dc6d65a88211b7380cf3a215389dca52f581c432659e529a64"
+    },
+    {
+      "path": "docs/site/understand/request-to-result.md",
+      "sha256": "19b0b458e5c73d9573cbc61bc899b8d26d28bfa5bd25482cd7189eca48504d1c"
+    },
+    {
+      "path": "docs/site/understand/security-and-trust.md",
+      "sha256": "9d585aaaab9303532625fd165db9a03cc4a67216693c3dc1d899be1ef287b9a6"
+    },
+    {
+      "path": "docs/site/understand/telemetry.md",
+      "sha256": "64d71087e94101d7256a5137401abca9a5377aa947bf6a1dba3c59ddb9542d9c"
+    },
+    {
+      "path": "docs/site/understand/worker-core.md",
+      "sha256": "e869bf6d4c691e8227024e7d5ecefcc73415a6face1f39f8bd40885bdc0d1140"
+    },
+    {
+      "path": "docs/site/understand/worker-trust.md",
+      "sha256": "73bed3f5857f009f74fa650f32aafd86d0b2bf8b4b2334b5c49f120cd6f030bd"
+    },
+    {
+      "path": "docs/site/use/README.md",
+      "sha256": "1e729b5dae7a51805c5e6ecf7804a7501c0b753092e2c45dac09bb2c13f4a79f"
+    },
+    {
+      "path": "docs/site/use/capacity.md",
+      "sha256": "3d273ca15cf0e887155cea97e3b2d6b49a69d570e8fb84b22a84ed72e204d29c"
+    },
+    {
+      "path": "docs/site/use/demo-delivery.md",
+      "sha256": "97188ee555c2c25a92fb386c875800201a191697f49ab6d415978f14aca0cf32"
+    },
+    {
+      "path": "docs/site/use/diagnose.md",
+      "sha256": "0429e50c4852dc82b091eda209e06da6408d401b2fc648a7f720372d79b78ab3"
+    },
+    {
+      "path": "docs/site/use/install.md",
+      "sha256": "498df5af42f9e8757687a0ba28d659d21bedf63dbbde3c090950aa93512701f7"
+    },
+    {
+      "path": "docs/site/use/maintenance.md",
+      "sha256": "b527c8435fecddc6a310ddbca738deb12c3043e3cb0720ca968333dda0650a0c"
+    },
+    {
+      "path": "docs/site/use/operate.md",
+      "sha256": "eceeb467c5a78e3d587955cff2a795d059700339483efe38040a70628e374483"
+    },
+    {
+      "path": "docs/site/use/plugins.md",
+      "sha256": "08f9f5b478f1579c04c9b59940d4b1b67e2287d6bab3ffc964fe3c4b1a3ed004"
+    },
+    {
+      "path": "docs/site/use/prism-studio.md",
+      "sha256": "292e32670549f7740e762a0f1da39aaf87f3d576fcd23d5f7595c606ea8d7f6a"
+    },
+    {
+      "path": "docs/site/use/quickstart.md",
+      "sha256": "682a5f91bf9a2d84294cb07cb181a4b3d71cd143d6f26d4599d1ded81f32f550"
+    },
+    {
+      "path": "docs/site/use/recovery.md",
+      "sha256": "14f37c6459053864321a9e57f7c38bffed603573a0a45684472486611a86c008"
+    },
+    {
+      "path": "docs/site/use/worker-trust.md",
+      "sha256": "c879d5ad08934c845cca4a57dea74f67ca5861e2ce98dc1264e9c27ca1a4cecf"
+    },
+    {
+      "path": "docs/site/use/workflows/README.md",
+      "sha256": "92c29a3fcbddcf66133d648ab9159bd3ed7c8c2bfb5763b31f17ec98d80963da"
+    },
+    {
+      "path": "docs/site/use/workflows/build-image.md",
+      "sha256": "680db7a6ef14a2fed72351cd34deb8f2db30cb66472b19f13f5d832eb0b297dd"
+    },
+    {
+      "path": "docs/site/use/workflows/buster-suite.md",
+      "sha256": "7c5d9957a63dee9a730710d4146811e1a6347c245efeda236406cfdf38983b59"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project-input.mjs",
+      "sha256": "5e6248abc70806f463293b14193a402a24f6168ab12344762d993d0a99f202da"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project-verification.mjs",
+      "sha256": "3341ba042e0e8bb42a4554c41bee38ab5986ae39afded23c74bd01ac9bbf3ed2"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/compiled-project.mjs",
+      "sha256": "a25552b997a071342fb6e2003ab2ee8b3e9cd963cbc63ce11edb38a5aa075240"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/first-project.mjs",
+      "sha256": "a6c7965165ad093a109c1c5210802914c1382585dd315afea8ddec79c4e08442"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/local-core.mjs",
+      "sha256": "3e54567536d0b13090f2ea37f1b04b4fad725415767c70e24533419eba985744"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/repair-retry.mjs",
+      "sha256": "bd7def69bea092fe006ada1efc331b5c049c97c0768bf0ece7d4aedca9c0d18f"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/request-trace-redis-unavailable.json",
+      "sha256": "9ea32431ccb8979cb625a6c487fd39e348a49e2fe3bd332a647cdc3a9c89e239"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/request-trace-success.json",
+      "sha256": "e2f92f057f5e2c7d1f8bd9d8c9faebdf826d1f818bf0c44405a9d0efe5b07ed7"
+    },
+    {
+      "path": "docs/site/use/workflows/interruption-recovery.md",
+      "sha256": "ad832e449dcceb5a5377d5817ca486bad7072bc5395fb78476e0618fe2e0bfaf"
+    },
+    {
+      "path": "docs/site/use/workflows/kubernetes-fixture.md",
+      "sha256": "0d2fd24886cb46412d1b25cb25b18b7ccfd6e7f3ae8f695c54e5645835aa9772"
+    },
+    {
+      "path": "docs/site/use/workflows/local-core.md",
+      "sha256": "43e8373ca3cf2cb234bbcef9995be6e558874d0e6ada3fe5a472f6100886d3bd"
+    },
+    {
+      "path": "docs/site/use/workflows/redis-replay-recovery.md",
+      "sha256": "41a5067140a53a2d97e4162849a99be5a4e08b65da0c98acf75209e5589c877d"
+    },
+    {
+      "path": "docs/site/use/workflows/repair-retry.md",
+      "sha256": "db147d5a28769315caa2294c6021051fa776386b9e8e68e3a5fdd174308565d8"
+    },
+    {
+      "path": "docs/site/use/workflows/tailnet-exposure.md",
+      "sha256": "1b3f4a0c7d8afe7648fc4f0e4732f4f11cee5ed9c578ce34bf562e5f6bc7a5e2"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/approval.pipeline.json",
+      "sha256": "c1532f9bec42468e078856298a4ff697b7691c81d6fd728f9a53fde897f64adb"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/platform.template.json",
+      "sha256": "8d9f160964ea4c3ff5c924c3c4c36291f5a6bfa969807721f5a8383578a5b1ef"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume/signal.template.json",
+      "sha256": "bb56a824887fc969186e48babe5744a5050fb143099a19e065b00cfbe7c19567"
+    },
+    {
+      "path": "docs/site/use/workflows/wait-resume.md",
+      "sha256": "1b89a8bb14787210a9dfdb390c1be232c917e5b5724b843898436d9c9269677c"
+    },
+    {
+      "path": "docs/site/use/workflows/worker-result-recovery.md",
+      "sha256": "3d0fc1ee7769cc7d0badc86af1d8cb32a51f3a376c8e55c1c0a654cec2e151e5"
+    }
+  ],
+  "preparationCorrection": "Initial unsupported Python tarfile filter argument failed before extraction; resumed empty owned snapshot with explicit regular-file/directory path validation."
+}

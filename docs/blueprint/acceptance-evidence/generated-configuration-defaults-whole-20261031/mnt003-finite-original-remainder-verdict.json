@@ -1,0 +1,87 @@
+{
+  "report": "mnt003-finite-original-remainder-verdict.json",
+  "revision": "d6032264e7cc9f1559c35fd5937453cb927e1bee",
+  "requirementId": "MNT-003",
+  "originalCriterion": "Generierte Konfigurationen und Defaults require a maintainable canonical procedure for supported configuration/default changes, including source/consumer review, generated facts, drift checks, and safe regeneration boundaries.",
+  "currentWholeStatus": "NOT_READY",
+  "reusedQualifiedCoverage": {
+    "REF003": "15 configuration families, 47 direct source boundaries, inverse-consumer reference, precedence/default/reload/sensitivity limits, and selected YAML/schema/runtime composition.",
+    "REF004": "274 schema artifacts classified; current declaration, constraint, default, and consumer/disposition coverage including the 22 authority records.",
+    "environmentSecrets": "Qualified current environment/Secret producer-consumer/default and rotation boundaries remain reusable at their accepted scope."
+  },
+  "actualGap": {
+    "id": "MNT003-P1-MAINTENANCE-ROUTE",
+    "location": "docs/site/extend/documentation-maintenance.md",
+    "finding": "The page gives a generic `docs:inventory:config` route, but does not tell maintainers how to regenerate and check the now-canonical bounded configuration-family reference, its required committed snapshot, or the schema-authority reference route.",
+    "impact": "A maintainer can unnecessarily enter the unrelated default global configuration/API path, or omit the inverse-reference, immutable-revision, and schema-authority outputs needed to maintain supported defaults and consumers."
+  },
+  "sourceVerifiedCommands": [
+    {
+      "purpose": "Selected configuration-family facts and inverse consumers",
+      "commands": [
+        "node scripts/docs-configuration-inventory.mjs --configuration-reference-only",
+        "node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check"
+      ],
+      "outputs": [
+        "docs/generated/inventory/configuration-helm-values.json",
+        "docs/generated/inventory/configuration-schemas.json",
+        "docs/generated/inventory/configuration-runtime-inputs.json",
+        "docs/generated/inventory/configuration-families.json"
+      ],
+      "limits": "Uses the selected YAML/schema/runtime composition and retains all ordinary YAML, receiver, environment, Secret, and authority guards. It deliberately excludes executable program-output API discovery; this is not a default global configuration/API success."
+    },
+    {
+      "purpose": "Canonical human configuration hub",
+      "commands": [
+        "node scripts/docs-generate.mjs --only configuration-hub --revision <full-committed-revision>",
+        "node scripts/docs-generate.mjs --only configuration-hub --revision <full-committed-revision> --check"
+      ],
+      "output": "docs/site/reference/configuration.md",
+      "order": "Commit the reviewed source, family map, and generated configuration-family inventory first. The supplied full commit must contain byte-identical copies of the five hub-bound inputs.",
+      "limits": "The route does not update the shared source lock and grants no SDK, runtime, deployment, or global API authority."
+    },
+    {
+      "purpose": "Schema authority, nested fields, and default/consumer dispositions",
+      "commands": [
+        "node scripts/docs-schema-fields.mjs --reference",
+        "node scripts/docs-schema-fields.mjs --check --reference"
+      ],
+      "outputs": [
+        "docs/generated/inventory/schema-field-drift.json",
+        "docs/site/reference/schemas.md"
+      ],
+      "limits": "Changed schema, registration, source, package, authority, or reader/default disposition stops the route. The index is not a runtime validator and schema defaults do not establish runtime default insertion."
+    }
+  ],
+  "requiredMaintainerProcedure": [
+    "Review the changed source and actual consumer before editing a family map, binding, or generated fact; distinguish schema declaration/default from consumer fallback and effective value.",
+    "Use the configuration-reference route for supported family/default/consumer/inverse changes; inspect all four generated outputs and stop on any selected YAML/schema/runtime blocker.",
+    "Commit the reviewed source-plus-inventory snapshot before generating the configuration hub, then run the same bounded route in check mode.",
+    "For schema authority or nested default changes, update the existing binding only after source review and run the schema reference generation/check route.",
+    "Do not substitute `npm run docs:inventory:config` or its default global API path for this bounded route, and do not treat either bounded route as runtime, browser, provider, deployment, or live-reload evidence."
+  ],
+  "minimalCoherentCorrection": {
+    "scope": "Page-only update to documentation-maintenance.md",
+    "changes": [
+      "Replace or qualify the generic declared-configuration-family table row with the three exact bounded command sequences above, their outputs, order, and stop conditions.",
+      "Add the configuration-family map/inventory and schema-field authority route to the page evidence/maintenance context.",
+      "State explicitly that the bounded configuration route is not a workaround for failed default global API discovery and does not grant runtime/default-insertion claims."
+    ],
+    "nonChanges": [
+      "No generator, extractor, inventory schema, role registry, global API route, or source authority repin.",
+      "No re-audit of the 47 configuration sources, 22 schema records, 45 roles, or closed REF003/REF004/CFG011 scopes."
+    ]
+  },
+  "necessaryBoundedFollowup": [
+    "Affected Source review of the maintenance-page instructions against the three existing CLI boundaries.",
+    "Independent reader task: choose a nested default/consumer change, select the correct route and order, explain the required commit snapshot, and reject the default global/API route as a substitute.",
+    "Quality review of the corrected maintenance section for clear outputs, stop conditions, and limits.",
+    "Run the relevant documentation reference/check commands after the page-only correction; retain any existing global failures rather than relabeling them."
+  ],
+  "historicalNegativeLimits": [
+    "Default global configuration/API discovery remains unclaimed.",
+    "No generic ToolSource, native Python 3.14, runtime, provider, browser, deployment, or live-reload success is inferred.",
+    "No MNT-001, MNT-009, or governance award follows from this diagnosis."
+  ],
+  "finiteNextAction": "Root should make one concise documentation-maintenance.md correction implementing the verified procedure, then obtain the bounded Source/Reader/Quality reviews and actual checks before an original MNT-003 whole decision."
+}

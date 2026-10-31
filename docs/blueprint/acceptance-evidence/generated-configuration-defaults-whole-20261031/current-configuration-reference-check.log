@@ -1,0 +1,4 @@
+DOC_DRIFT_CONFIG: Configuration documentation inventory is stale:
+- docs/generated/inventory/configuration-runtime-inputs.json
+- docs/generated/inventory/configuration-families.json
+Run: npm run docs:inventory:config

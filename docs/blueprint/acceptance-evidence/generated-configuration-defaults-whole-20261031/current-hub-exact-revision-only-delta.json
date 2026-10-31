@@ -1,0 +1,15 @@
+{
+  "previousPinnedRevision": "4b1b44901181eab8c233126d262d3bf44798da02",
+  "currentExactSourceRevision": "d6032264e7cc9f1559c35fd5937453cb927e1bee",
+  "hubOnlyRevisionSubstitution": true,
+  "fiveBoundInputsByteEqual": {
+    "scripts/docs-configuration-inventory.mjs": true,
+    "scripts/docs-generate.mjs": true,
+    "scripts/docs-generate-core.mjs": true,
+    "docs/config/configuration-family-map.json": true,
+    "docs/generated/inventory/configuration-families.json": true
+  },
+  "priorFailure": "Oldpin rejected currenttree drift; no guard changed",
+  "generationExitCode": 0,
+  "checkExitCode": 0
+}

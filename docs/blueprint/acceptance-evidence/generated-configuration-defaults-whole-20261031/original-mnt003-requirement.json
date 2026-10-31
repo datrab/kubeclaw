@@ -1,0 +1,47 @@
+{
+  "id": "MNT-003",
+  "title": "Generierte Konfigurationen und Defaults",
+  "workPackage": "AP09.11",
+  "canonicalTarget": "docs/site/extend/documentation-maintenance.md",
+  "catalogueOwner": "documentation automation",
+  "pageOwner": null,
+  "readerTask": "Generierte Konfigurationen und Defaults",
+  "sourceDependencies": [],
+  "sourceVerification": "pending-current-claim-inspection",
+  "contentKind": "not-in-current-map",
+  "generator": null,
+  "automatedChecks": [],
+  "acceptanceIds": [],
+  "packageGateCandidates": [
+    "A911-01",
+    "A911-02",
+    "A911-03",
+    "A911-04",
+    "A911-05",
+    "A911-06",
+    "A911-07",
+    "A911-08",
+    "A911-09",
+    "A911-10",
+    "A911-11",
+    "A911-12"
+  ],
+  "acceptanceMappingState": "pending-individual-mapping",
+  "requiredManualReview": [
+    "source",
+    "reader",
+    "quality",
+    "astra-final"
+  ],
+  "state": "not-accepted",
+  "evidence": [],
+  "reviews": [],
+  "openFindingIds": [],
+  "catalogueAuthority": "docs/blueprint/AP09-completeness-audit.md#L400",
+  "closureDecision": {
+    "verdict": "NOT_READY",
+    "revision": "e161be417432d4ebdd22a3d84e09057df70abc0d",
+    "reason": "- MNT-003 \u2014 Generierte Konfigurationen und Defaults \u2014 NOT_READY. Canonical: docs/site/extend/documentation-maintenance.md. NOT_READY: recursive schema/configuration/YAML/runtime-input inventories and default/consumer authority exist. Complete supported branches, nested defaults and actual semantic consumers were not all independently checked; no forbidden qualification chain run.",
+    "campaign": "independent-ready-topics-20261020"
+  }
+}

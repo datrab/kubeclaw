@@ -1,0 +1,83 @@
+{
+  "report": "mnt003-whole-original-verdict.json",
+  "revision": "750affb124c8c19696a6938f08312001dc742562",
+  "requirementId": "MNT-003",
+  "originalCriterion": "Generierte Konfigurationen und Defaults: maintainable, source-bound generation and drift procedure for supported configuration/default facts, consumers, and canonical documentation.",
+  "sourceAccuracy": {
+    "verdict": "PASS_AT_MNT003_BOUNDED_SCOPE",
+    "judgment": "The maintenance procedure now matches the three actual owned routes: selected configuration-family generation/check, immutable-revision configuration-hub generation/check, and schema-authority reference generation/check. It accurately preserves the distinction between schema annotations, consumer fallbacks, effective values, precedence, reload/new-run effects, and runtime behavior.",
+    "currentOutputDelta": "The refreshed runtime/family inventories contain only the existing documentation-internal `--reference` switch plus its source-coordinate and parent-fact updates. No environment, Secret, product default, consumer, or runtime meaning changed."
+  },
+  "readerUsability": {
+    "verdict": "PASS",
+    "evidence": "fresh-reader-verdict.json and fresh-reader-final-addendum.json",
+    "judgment": "The independent restricted Reader completed the bounded maintenance plan and confirmed that selected generation/check pairs replace the generic global pair while applicable other checks remain required.",
+    "limits": [
+      "Reader assessed lookup and planning only.",
+      "No source correctness, generation, runtime, browser, bootstrap, or quality claim is inherited from Reader."
+    ]
+  },
+  "quality": {
+    "verdict": "NOT_READY_PENDING_TERMINAL_REFERENCE_CHECK",
+    "judgment": "The page correction is clear, proportional, and preserves stop conditions. However, the final reference-check artifact for the final four-line clarification is empty and its review process is still running. The earlier reference check cannot be relabeled as a check of the final page."
+  },
+  "nativeEvidence": {
+    "schemaReferenceCheck": "PASS",
+    "configurationReferenceInitialFailure": "PRESERVED: stale runtime/family inventories after the REF-004 tool update.",
+    "configurationReferenceGeneration": "PASS: all four bounded inventories generated.",
+    "configurationReferenceCheck": "PASS after regeneration.",
+    "hubInitialFailure": "PRESERVED: old source revision rejected current-tree changes.",
+    "hubGenerationAndCheck": "PASS with refreshed committed inventory revision bfdd4f84408c549750172edc88bea3d210e31e1a.",
+    "defaultGlobalApi": "UNCLAIMED"
+  },
+  "originalWholeVerdict": "NOT_READY_PENDING_ONE_TERMINAL_CHECK",
+  "materialFindings": [
+    {
+      "id": "MNT003-T1-FINAL-REFERENCE-CHECK-PENDING",
+      "location": "final-docs-reference-check.log",
+      "finding": "No terminal result is available for the final maintenance-page clarification at 750affb; the log is empty and the associated review process remains running.",
+      "finiteRemedy": "Preserve the terminal result of the unchanged final documentation-reference check. If it succeeds, no further MNT-003 source, reader, or configuration-generation work is required."
+    }
+  ],
+  "affectedAcceptedRecordPreservation": {
+    "verdict": "PASS_AT_ORIGINAL_SCOPES",
+    "basis": "The four-file delta is limited to the maintenance procedure, two bounded generated inventories, and configuration-hub snapshot links. Existing source/default/consumer semantics remain reused from accepted REF-003, REF-004, configuration, environment, and Secret scopes. This is preservation, not 28 new awards.",
+    "coveredRecordIds": [
+      "AP09-reviewed-configuration-20261020",
+      "AP09-reviewed-maintenance-20261020",
+      "AP09-complete-public-cli-20261020",
+      "AP09-documentation-agent-maintenance-20261021",
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-publication-positive-scope-7ef16585",
+      "A912-05-whole-source-excerpt-callouts-20261022",
+      "pr13-a91005-complete-package-capture-20261024",
+      "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "MNT-005-common-source-bound-error-catalogue-20261030",
+      "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "MNT-004-whole-source-owned-cli-reference-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "A911-05-whole-owned-diagnostic-reference-20261030",
+      "CFG011-REF012-whole-complete-environment-secrets-20261030",
+      "REF003-whole-configuration-families-and-inverse-consumers-20261031"
+    ]
+  },
+  "retainedLimits": [
+    "No default global configuration/API success.",
+    "No runtime default insertion, deployment, provider, browser, telemetry, or live-reload success.",
+    "No generic ToolSource, Python 3.14, MNT-001, MNT-009, or governance award.",
+    "REF-003, REF-004, CFG011/REF012, and other closed semantic scopes are not reopened."
+  ],
+  "finiteNextAction": "Wait only for the actual final reference-check terminal result. On terminal success, register MNT-003 only with these 28 scoped preservation impacts, then run the unchanged original checker and proceed to publication verification."
+}

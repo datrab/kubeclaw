@@ -1,0 +1,40 @@
+{
+  "originalRequirementIds": [
+    "MNT-003"
+  ],
+  "originalWholeVerdict": "PASS",
+  "candidateRevision": "750affb124c8c19696a6938f08312001dc742562",
+  "actualDecisionSha256": "34a5d1a728ecd39db3e9c27bff9af63692708c9063c334553636982d2be24af3",
+  "preservationRecordIds": [
+    "AP09-reviewed-configuration-20261020",
+    "AP09-reviewed-maintenance-20261020",
+    "AP09-complete-public-cli-20261020",
+    "AP09-documentation-agent-maintenance-20261021",
+    "AP09-complete-static-reader-search-20261021",
+    "AP09-publication-positive-scope-7ef16585",
+    "A912-05-whole-source-excerpt-callouts-20261022",
+    "pr13-a91005-complete-package-capture-20261024",
+    "A911-01-whole-ten-family-discovery-declarations-20261027",
+    "MNT-014-whole-native-publication-examples-20261027",
+    "A99-11-whole-published-example-claims-20261027",
+    "QUA-005-whole-published-live-and-completeness-claims-20261027",
+    "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+    "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+    "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+    "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+    "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+    "MNT-005-common-source-bound-error-catalogue-20261030",
+    "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+    "MNT-011-common-diagnostic-production-input-drift-20261030",
+    "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+    "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+    "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+    "MNT-004-whole-source-owned-cli-reference-20261030",
+    "A91306-QUA002-original-controlled-language-whole-20261030",
+    "A911-05-whole-owned-diagnostic-reference-20261030",
+    "CFG011-REF012-whole-complete-environment-secrets-20261030",
+    "REF003-whole-configuration-families-and-inverse-consumers-20261031"
+  ],
+  "preservationBaseDecision": "mnt003-whole-original-verdict.json",
+  "finalActualIndependentDecision": "mnt003-terminal-whole-acceptance-verdict.json"
+}

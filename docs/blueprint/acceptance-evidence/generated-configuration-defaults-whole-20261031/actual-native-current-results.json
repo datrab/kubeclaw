@@ -1,0 +1,38 @@
+{
+  "candidateRevision": "750affb124c8c19696a6938f08312001dc742562",
+  "configurationReferenceGeneration": {
+    "exitCode": 0,
+    "log": "current-configuration-reference-generation.log"
+  },
+  "configurationReferenceCheck": {
+    "exitCode": 0,
+    "log": "regenerated-configuration-reference-check.log"
+  },
+  "schemaReferenceCheck": {
+    "exitCode": 0,
+    "log": "current-schema-reference-check.log"
+  },
+  "hubGeneration": {
+    "exitCode": 0,
+    "log": "refreshed-inventory-configuration-hub-generation.log"
+  },
+  "hubCheck": {
+    "exitCode": 0,
+    "log": "refreshed-inventory-configuration-hub-check.log"
+  },
+  "retainedNegatives": [
+    "Oldpin rejected currenttree drift",
+    "Initial configuration reference check correctly refused two stale outputs"
+  ],
+  "noRuntimeOrGlobalApiClaim": true,
+  "finalReferenceCheck": {
+    "exitCode": 0,
+    "log": "final-docs-reference-check.log",
+    "counts": {
+      "localLinks": 10923,
+      "localAnchors": 4773,
+      "repositoryPaths": 12685,
+      "pinnedSourceLinks": 49125
+    }
+  }
+}

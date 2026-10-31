@@ -1,0 +1,1097 @@
+OpenAI Codex v0.160.0
+--------
+workdir: /home/node/.openclaw/workspace/kubeclaw-pr13-recovery
+model: gpt-5.6-terra
+provider: openai
+approval: never
+sandbox: danger-full-access
+reasoning effort: high
+reasoning summaries: none
+session id: 01a18bf6-0c0d-71a2-aa39-f9550bbed698
+--------
+user
+Continue SAME Source READONLY/noagents/mutations. ORIGINAL WHOLE MNT-003 Generierte Konfigurationen und Defaults decision at frozen750affb124c8c19696a6938f08312001dc742562, not a prerequisite receipt. Evidence /home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031. Reuse finite-original-remainder-verdict original exact maintenancegap, all actual REF003/REF004/config/environment/Secrets source decisions unchanged; no47source/22schema/45role/genericglobal audit. Actual frozen4file delta since publishedd6032264: maintenance2table rows + concise procedure, configurationhub exactrevisioncoordinates, two currentnative configuration runtime/familyoutputs. No code/schema/map/binding/receipt changes. Your exact 3bounded owner command boundaries are implemented with outputs/order/fullcommit/fiveboundinputsguard/stopconditions and clear no runtime/globalAPI defaultinsertion claims. Fresh restricted Reader firstPASS atdff795db with one nonblocking commonchainambiguity; final4line clarification uses selected generation/check pairs instead of globalpair, keeps otherapplicablechecks. Same still-qualifiedReader final750affb1 addendum will be in fresh-reader-final-addendum.json shortly; do not invent Reader evidence, ifnotpresent use fresh-reader-verdict.json plus Sourceassess textualcontinuity and explicitly note lack of finaladdendum. Reader lookup/planning only, not practicalmutation/fullbootstrap/browser/Source/Quality.
+Actual newnormalchecks exposed oldcache/pin, not suppressed: current-schema-reference-check.logPASS; initial current-configuration-reference-check.logstale runtime/families followingREF004newdocTool and5parentdigestadoption. Existing bounded nativegeneration wroteallfour, only2changed. actualgitdiff: --check line66->155; added exactlyONEdocumentation-internal --reference at161, defaultfalse/no value, notoperatorhandbookrequired; corresponding family/inverse row and selected source SHA updates foralreadyqualifiedschemaTool andparent. No environment/Secret/productdefault/consumermeaning changes. Actual normal generation log; regenerated-configuration-reference-check.log running atdispatch, inspect terminalcurrent result whenjudging, nofalsePASS. There is NO new sourceinput/code change duringthis run so Source qualifier reuse valid. Initial old4b1 hubpin refused actual currenttree changes includingacceptedrawlogs andREF004code; firstnegative retained current-configuration-hub-check.log. Normalhubgen/check exactpublished d603 passed, current-hub-exact-revision-only-delta.json provesfiveboundinputs sameoldbytes and onlyrevision substitution. Afteractualnativeinventoryrefresh committed bfdd4f84 (fullhash current-generated-configuration-source-commit.json), normalhubgen/check passed refreshed-inventory-configuration-hub-generation/check.log and hub750aff commit frozen; no guard alteration/repinfiction. Need Source verify finite actualoutputdelta semantics+oldoriginalREF003 preservation, not callcurrentnative/inversenewflag productruntime. Defaultglobal stillunclaimed. Normal docsreferencecheck earlierPASS current-docs-reference-check.log; final afterlastdocclarity running separately asneeded.
+ONE finite affected28record preservation in affected-accepted-records.json actual4changedfiles only. Adjudicate exactoriginalscopes preserved together, no28newawards, originalcriteria/reviewer/checks/summary/limits retained. Inspect existing current maintSource procedure fullnormalmeaning notjusthash; original inventory/default/configconsumer coverage reused fromrealacceptedREF003/4 not newcounts. If materialfindings collectalltogether tiedactualoriginalMNT003, no serial perartifact audits/universalscanner. Return mnt003-whole-original-verdict.json with actualSource/Quality(originalwhole) role judgments, actualReaderqualification/reuse, originalWholeVerdictPASS/FAIL or exactpending ifmissingrealnative/Reader, affectedAcceptedRecordPreservation verdict+coveredRecordIds, retainedhistoricalnegatives/limits, materialfindings and finiteaction. Original requirement onlyMNT003/no gate/MNT001/MNT009/GOV awards. No Astra-model/runtimefiction. Currentregistry71/89gates254/261requirements. Root willregister onlyrealoriginal acceptance, originalchecker thenpush/exactremote. Sourcecurrentmeanings of22/47etc doNOTrepeat, newactualdelta finite asabove.
+codex
+I’ll make the whole MNT-003 decision from the frozen four-file delta and the actual terminal evidence, preserving the earlier bounded source scopes.
+exec
+/bin/bash -lc 'git rev-parse HEAD && git status --short
+D=/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031
+rg --files "$D" | sort | sed -n '"'1,220p'
+printf '\\n--- candidate diff summary ---\\n'
+git diff --stat d6032264e7cc9f1559c35fd5937453cb927e1bee..750affb124c8c19696a6938f08312001dc742562
+git diff --name-only d6032264e7cc9f1559c35fd5937453cb927e1bee..750affb124c8c19696a6938f08312001dc742562" in /home/node/.openclaw/workspace/kubeclaw-pr13-recovery
+ succeeded in 251ms:
+750affb124c8c19696a6938f08312001dc742562
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/affected-accepted-records.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-configuration-hub-check.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-configuration-reference-check.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-configuration-reference-generation.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-docs-reference-check.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-generated-configuration-source-commit.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-hub-exact-revision-only-delta.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-schema-reference-check.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-snapshot-configuration-hub-check.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/current-snapshot-configuration-hub-generation.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/final-docs-reference-check.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/first-two-file-affected-accepted-records.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/fresh-reader-first-visible-snapshot.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/fresh-reader-verdict.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/fresh-reader-visible-snapshot.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/mnt003-finite-original-remainder-execution.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/mnt003-finite-original-remainder-review.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/mnt003-finite-original-remainder-verdict.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/mnt003-whole-original-execution.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/mnt003-whole-original-review.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/original-mnt003-requirement.json
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/refreshed-inventory-configuration-hub-check.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/refreshed-inventory-configuration-hub-generation.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/regenerated-configuration-reference-check.log
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/review-mnt003-finite-original-remainder.py
+/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/review-mnt003-whole-original.py
+
+--- candidate diff summary ---
+ .../inventory/configuration-families.json          | 48 ++++++++++---
+ .../inventory/configuration-runtime-inputs.json    | 48 +++++++++++--
+ docs/site/extend/documentation-maintenance.md      | 71 +++++++++++++++++-
+ docs/site/reference/configuration.md               | 84 +++++++++++-----------
+ 4 files changed, 192 insertions(+), 59 deletions(-)
+docs/generated/inventory/configuration-families.json
+docs/generated/inventory/configuration-runtime-inputs.json
+docs/site/extend/documentation-maintenance.md
+docs/site/reference/configuration.md
+
+exec
+/bin/bash -lc 'D=/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031
+for f in current-schema-reference-check.log current-configuration-reference-generation.log current-configuration-reference-check.log regenerated-configuration-reference-check.log current-configuration-hub-check.log refreshed-inventory-configuration-hub-generation.log refreshed-inventory-configuration-hub-check.log final-docs-reference-check.log current-docs-reference-check.log; do echo "--- $f"; sed -n '"'1,120p' \""'$D/$f"; done
+printf '"'\\n--- source commit ---\\n'; sed -n '1,180p' \""'$D/current-generated-configuration-source-commit.json"
+printf '"'\\n--- fresh reader ---\\n'; sed -n '1,260p' \""'$D/fresh-reader-verdict.json"
+printf '"'\\n--- 28 records ---\\n'; sed -n '1,300p' \""'$D/affected-accepted-records.json"
+printf '"'\\n--- diff maintenance ---\\n'; git diff --unified=10 d6032264..750affb -- docs/site/extend/documentation-maintenance.md" in /home/node/.openclaw/workspace/kubeclaw-pr13-recovery
+ succeeded in 0ms:
+--- current-schema-reference-check.log
+{"schemas":274,"propertyPointers":7355,"runtimeValidationClaimed":false}
+--- current-configuration-reference-generation.log
+wrote docs/generated/inventory/configuration-helm-values.json
+wrote docs/generated/inventory/configuration-schemas.json
+wrote docs/generated/inventory/configuration-runtime-inputs.json
+wrote docs/generated/inventory/configuration-families.json
+--- current-configuration-reference-check.log
+DOC_DRIFT_CONFIG: Configuration documentation inventory is stale:
+- docs/generated/inventory/configuration-runtime-inputs.json
+- docs/generated/inventory/configuration-families.json
+Run: npm run docs:inventory:config
+--- regenerated-configuration-reference-check.log
+Configuration documentation inventory is current.
+--- current-configuration-hub-check.log
+file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-generate.mjs:104
+    throw new Error(`documentation source revision does not match the current source tree: ${mismatches.slice(0, 20).join(', ')}`);
+          ^
+
+Error: documentation source revision does not match the current source tree: docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-batched-family-controls-corrected.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-batched-python-custody-full-file-corrected.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-citation-corrected-reference-check.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-configuration-hub-check.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-configuration-hub-generation.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-configuration-reference-check.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-configuration-reference-native.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-docs-reference-check.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-preaward-original-checker.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-publication-harness.log, docs/blueprint/acceptance-evidence/configuration-families-whole-20261031/ref003-final-registered-original-checker.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/adopted-parent-guards.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/adopted-scalar-guards.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/corrected-native-schema-authority-generation.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/corrected-normal-schema-field-reference-check.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/corrected-schema-authority-controls.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/current-global-reference-check.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/final-current-schema-reference-check.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/first-affected-schema-authority-controls.log, docs/blueprint/acceptance-evidence/schema-constraints-defaults-whole-20261031/first-native-authority-reference-generation.log
+    at file:///home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-generate.mjs:104:11
+
+Node.js v24.22.1
+--- refreshed-inventory-configuration-hub-generation.log
+wrote docs/site/reference/configuration.md
+--- refreshed-inventory-configuration-hub-check.log
+generated reference docs are current
+--- final-docs-reference-check.log
+--- current-docs-reference-check.log
+docs reference check passed (10923 local links, 4773 local anchors, 12685 repository path refs, 49125 pinned source links)
+
+--- source commit ---
+{
+  "revision": "bfdd4f84408c549750172edc88bea3d210e31e1a",
+  "generation": "Existing bounded native route; fouroutputs derived, exactlyruntime/families changed",
+  "actualDelta": "One documentation-internal --reference definition, existing --check coordinate and exact Source-approved schemaTool/parent helper byte identities. No environment/Secret/default/productmeaning changes."
+}
+
+--- fresh reader ---
+{
+  "reviewer": "/root/mnt003_fresh_reader",
+  "role": "Reader-only",
+  "revision": "dff795db733437b8f91120599486bfedff1053ff",
+  "allowedInputs": "Exact frozen docs/site/public JSON snapshot only; no implementation, hidden source/review reports, network/help/agents or mutations.",
+  "verdict": "PASS",
+  "discoverability": "PASS",
+  "clarity": "PASS",
+  "sufficiency": "PASS bounded maintenance update/check planning",
+  "blockingFindings": [],
+  "nonblockingFindings": [
+    "Common handbook chain generic docs:generate/check could be mistaken for an additional global write despite selected maintenance instructions."
+  ],
+  "navigation": [
+    "cat maintenance page; scoped recovery after truncation",
+    "rg handbook headings/configuration/schema/revision/npm ci/Node",
+    "sed opening configuration/schema references; scoped recovery after combined truncation",
+    "handbook2270-2395 documentation change chain",
+    "configuration1-56 family/inverse navigation; schemas1-42 authority selection",
+    "handbook190-225 selected-route prerequisites",
+    "rg maintenance configuration-reference-only/configuration-hub/schema-fields/Maintain generated/guard/refresh",
+    "configuration-precedence1-70",
+    "rg plugin-configuration default/generated/schema-field; excessive output not treated as read"
+  ],
+  "derivedPlan": [
+    "Review absent/explicit/selected-branch consumer, annotation/fallback/effectivevalue/precedence/sensitivity/reload and inverse relation; do not hand-edit generatedfacts.",
+    "Configuration-reference-only generate/check; inspect four named JSONinventories.",
+    "Commit reviewedsource/map/inventories before configurationhub --revision fullimmutablecommit; exact fiveboundinputsmustmatch; no sharedlockupdate.",
+    "Schemafields --reference and --check --reference after affected schema/consumer/bindingreview; fieldindex+ownedschemareferenceoutputs.",
+    "Stop at guard, preserve firsterror/revision/diff, review causes not hash-refresh/omitfamilies; no runtime/globalAPI/defaultinsertion proof."
+  ],
+  "firstFailedStep": "none within bounded lookup/planning task",
+  "execution": "Read/search only. No generation, mutation, installation, browser, runtime or fullbootstrap exercise.",
+  "sourceQualityNotClaimed": true,
+  "originalRawReport": "Actual complete return retained in parent transcript; structured preservation here."
+}
+
+--- 28 records ---
+{
+  "status": "FINITE_ACTUAL_FOUR_FILE_AFFECTED_SCOPE_TABLE",
+  "revision": "750affb124c8c19696a6938f08312001dc742562",
+  "records": [
+    {
+      "id": "AP09-reviewed-configuration-20261020",
+      "revision": "090d9bb60d2d6f68f5acfbdd3ffe1417ef48f41f",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-001",
+        "CFG-002",
+        "CFG-015",
+        "CFG-017"
+      ],
+      "pages": [
+        "docs/site/reference/README.md",
+        "docs/site/reference/pipeline-platform.md",
+        "docs/site/reference/configuration-errors.md",
+        "docs/site/reference/project-pipeline-publication.md",
+        "docs/site/reference/configuration.md"
+      ],
+      "sources": [
+        "scripts/docs-generate.mjs",
+        "scripts/docs-publication.mjs",
+        "skills/common/plugin-runtime/foundation/config/platform.schema.json",
+        "skills/common/plugin-runtime/foundation/config/platform.ts",
+        "skills/nova/core/execution/engine-runtime.ts",
+        "skills/nova/core/execution/engine-snapshots.ts",
+        "skills/nova/core/execution/engine-admin.ts",
+        "skills/nova/core/execution/adapter-startup.ts",
+        "skills/nova/core/execution/graph-build.ts",
+        "skills/nova/core/execution/graph-repair-budget.ts",
+        "skills/nova/pipeline.ts",
+        "skills/nova/project_setup/tools/progress-scaffold.ts",
+        "skills/nova/project_setup/tools/progress-scaffold-validation.ts",
+        "skills/nova/project_setup/tools/progress-scaffold-values.ts",
+        "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+        "skills/nova/core/test-gates/pipeline.ts",
+        "skills/nova/core/test-gates/types.ts",
+        "skills/nova/core/test-gates/resolver.ts",
+        "skills/buster/engine/test-gates/runner.ts",
+        "charts/kubeclaw/values.yaml",
+        "charts/kubeclaw/templates/deployment.yaml",
+        "charts/prism/templates/networkpolicy.yaml"
+      ],
+      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/site/reference/README.md, scripts/docs-generate.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nIndependent PASS for CFG-001, CFG-002, CFG-015, CFG-017. No whole-gate acceptance inferred from narrower requirements.",
+      "changed": [
+        "docs/site/reference/configuration.md"
+      ]
+    },
+    {
+      "id": "AP09-reviewed-maintenance-20261020",
+      "revision": "090d9bb60d2d6f68f5acfbdd3ffe1417ef48f41f",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-013",
+        "MNT-016"
+      ],
+      "pages": [
+        "docs/site/reference/verification-commands.md",
+        "docs/site/extend/plugin-catalogue/README.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/extend/documentation-maintenance.md"
+      ],
+      "sources": [
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-governance.mjs",
+        "skills/prism/control/agent-jobs.ts",
+        "skills/prism/server/agent-job-routes.ts",
+        "scripts/generate-buster-error-reference.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/lib/docs-markdown-anchors.mjs",
+        "scripts/tests/docs-check-refs.test.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-status.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/tests/docs-route-continuity.test.mjs",
+        "scripts/tests/docs-publication-links.test.mjs",
+        "scripts/tests/docs-markdown-anchors.test.mjs",
+        "scripts/tests/docs-check-links.test.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/check-error-code-drift-mutations.mjs",
+        "scripts/check-plugin-manifest-drift-mutations.mjs",
+        "scripts/ap08-extension-inventory.mjs",
+        "scripts/check-schema-drift-mutations.mjs",
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/lib/docs-source-surface-map.mjs",
+        "scripts/tests/docs-source-surface-map.test.mjs"
+      ],
+      "summary": "QUA004 affected-scope preservation: docs/site/extend/documentation-maintenance.md. Current change adds three genuinely current cleanup citation successors and the truthful nested-citation maintenance guidance and documents its limits. The three quoted Source bodies, all program code, generated projections, assets and original authority/execution/history limits remain unchanged. Current citation fidelity and the independent whole appropriate-evidence join are qualified at their proper scope. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision 1054e9b4dd07087545da9f7f5fc7f27592ea6d37.\n\nMNT010 affected-scope preservation: docs/site/extend/documentation-maintenance.md. Current change adds all-owned JSON-schema source/registration admission plus recursive property-pointer inventory before unchanged publication actions and documents its limits. Earlier catalogue meanings and generated catalogue pages remain unchanged; the new schema field index is a bounded mechanical declaration inventory, not runtime/schema semantic approval. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision a237758ced20bce86b278b97f1568fd1b3f17572.\n\nMNT011 affected-scope preservation: docs/site/extend/documentation-maintenance.md. Current change adds conservative owned-production input admission before unchanged diagnostic source/output duties and documents its limits. Actual catalogue meanings and all generated catalogue bytes remain unchanged. Prior responsibilities, negative findings, historical checks and Source/runtime limits retained; no new whole language or universal discovery claim. Previous reviewed revision 0d9b92b9fba234f085f228cc541faaece4846d77.\n\nMNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/site/extend/documentation-maintenance.md, scripts/docs-generate.mjs, scripts/docs-governance.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nIndependent PASS for MNT-013, MNT-016. No whole-gate acceptance inferred from narrower requirements.",
+      "changed": [
+        "docs/site/extend/documentation-maintenance.md"
+      ]
+    },
+    {
+      "id": "AP09-complete-public-cli-20261020",
+      "revision": "090d9bb60d2d6f68f5acfbdd3ffe1417ef48f41f",
+      "gateIds": [],
+      "requirementIds": [
+        "REF-002"
+      ],
+      "pages": [
+        "docs/site/reference/cli.md"
+      ],
+      "sources": [
+        "scripts/check-monitoring.mjs",
+        "scripts/check-runtime-role-manifests.mjs",
+        "scripts/deploy.sh",
+        "scripts/docs-generate-core.mjs",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/generate-buster-error-reference.mjs",
+        "scripts/generate-buster-provider-reference.mjs",
+        "scripts/generate-knip-config.mjs",
+        "scripts/generate-local-helm-authorities.mjs",
+        "scripts/generate-operator-task-registry.mjs",
+        "scripts/generate-plugin-sdk-types.mjs",
+        "scripts/generate-telemetry-contracts.mjs",
+        "scripts/lint-baseline-prune.mjs",
+        "scripts/run-lint-report.mjs",
+        "scripts/runtime-tool-locks.mjs",
+        "scripts/scan-runtime-images.sh",
+        "scripts/versions.mjs",
+        "skills/buster/engine/remote-plan-cli.ts",
+        "skills/nova/core/cli.ts",
+        "skills/nova/core/test-gates/remote-gate-cli.ts",
+        "skills/nova/plugins/lint/src/engine/index.ts",
+        "skills/nova/plugins/review/scripts/generate-bundle-schema.mjs",
+        "skills/nova/plugins/review/scripts/generate-policy-schema.mjs",
+        "skills/nova/plugins/review/scripts/generate-verification-schema.mjs",
+        "skills/nova/project/cli.ts",
+        "skills/nova/project/legacy-import-cli.ts",
+        "skills/nova/project_setup/tools/progress-scaffold.ts",
+        "tools/native-worker-nri/main.go",
+        "docs/generated/inventory/deploy-script.json",
+        "docs/generated/inventory/configuration-runtime-inputs.json"
+      ],
+      "summary": "MNT005 affected-scope preservation at 0d9b92b9fba234f085f228cc541faaece4846d77: only docs/generated/inventory/configuration-runtime-inputs.json, scripts/docs-generate.mjs changed. Independent original-topic content judgment and actual owning generation/native publication preserve the original responsibilities and all limits; prior execution observations are historical, not rerun or relabelled by this update. Original reviewed revision 7f6d3c2817743c22c6420ec46dbd595b382e0ee7.\n\nComplete published operator/developer CLI reference: every deploy invocation and existing public definition plus previously omitted map-defined lint options and equals-syntax Buster revision selectors; actual defaults,arity,repeat,error and destructive-operation boundaries independently reviewed.",
+      "changed": [
+        "docs/generated/inventory/configuration-runtime-inputs.json"
+      ]
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "revision": "090d9bb60d2d6f68f5acfbdd3ffe1417ef48f41f",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-017"
+      ],
+      "pages": [
+        "docs/site/extend/documentation-maintenance.md",
+        "docs/site/extend/developer-handbook.md",
+        "docs/site/reference/documentation-governance.md",
+        "docs/site/reference/documentation-site.md"
+      ],
+      "sources": [
+        ".github/workflows/auto-promote-runtime.yaml",
+        ".github/workflows/build-images.yaml",
+        ".github/workflows/build-ops-mcp.yaml",
+        ".github/workflows/dependency-updates.yaml",
+        ".github/workflows/docs-checks.yaml",
+        ".github/workflows/pipeline-reliability.yaml",
+        ".github/workflows/promote-runtime.yaml",
+        ".github/workflows/publish-image-receipts.yaml",
+        ".github/workflows/release-security.yaml",
+        ".github/workflows/remediation-native.yaml",
+        ".github/workflows/role-images.yaml",
+        ".github/workflows/rollback-runtime.yaml",
+        ".github/workflows/update-checks.yaml",
+        "contracts/pipeline-observability/v1/go/go.mod",
+        "contracts/pipeline-observability/v1/go/go.sum",
+        "contracts/prism/v1/package.json",
+        "contracts/telemetry/v1/tests/contracts.test.mjs",
+        "docker/archviewer.nginx.conf",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/checked-observations.json",
+        "docs/blueprint/acceptance-evidence/tree-boundary-closeout-20261021/prior-record-preservation-review.json",
+        "docs/config/documentation-tree-baseline.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/documentation-route-registry.json",
+        "docs/status/open-issues.json",
+        "go.mod",
+        "ops/pod/package.json",
+        "package-lock.json",
+        "package.json",
+        "packaging/runtime/package-ownership.json",
+        "scripts/argocd-self-management.mjs",
+        "scripts/bootstrap-prism-tests.sh",
+        "scripts/build-native-worker-nri.mjs",
+        "scripts/build-plugin-sandbox.mjs",
+        "scripts/build-v2-plugins.mjs",
+        "scripts/check-configuration-cli-drift.mjs",
+        "scripts/check-configuration-drift-mutations.mjs",
+        "scripts/check-core-architecture-guides.mjs",
+        "scripts/check-erasable-typescript.mjs",
+        "scripts/check-runtime-package-ownership.mjs",
+        "scripts/check-site-reader-boundary.mjs",
+        "scripts/docs-api-argocd-checked-artifact-authority.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-check-refs.mjs",
+        "scripts/docs-configuration-inventory.mjs",
+        "scripts/docs-external-helm-authority-lock.json",
+        "scripts/docs-generate.mjs",
+        "scripts/docs-governance.mjs",
+        "scripts/docs-inventory.mjs",
+        "scripts/docs-parity-transition.mjs",
+        "scripts/docs-platform-surface-inventory.mjs",
+        "scripts/docs-publication.mjs",
+        "scripts/docs-reader/check-artifact.mjs",
+        "scripts/docs-reader/check-search.mjs",
+        "scripts/docs-reader/check-source-links.mjs",
+        "scripts/docs-reader/check-source-previews.mjs",
+        "scripts/docs-reader/metadata.mjs",
+        "scripts/docs-reader/package-lock.json",
+        "scripts/docs-reader/package.json",
+        "scripts/docs-reader/renderer.mjs",
+        "scripts/docs-reader/search-questions.json",
+        "scripts/docs-reader/source-links.mjs",
+        "scripts/docs-reader/source-previews.mjs",
+        "scripts/docs-status.mjs",
+        "scripts/docs-tree-boundary.mjs",
+        "scripts/external-helm-archives.json",
+        "scripts/generate-plugin-sdk-types.mjs",
+        "scripts/generate-telemetry-contracts.mjs",
+        "scripts/lib/docs-publication-assets.mjs",
+        "scripts/lib/docs-publication-links.mjs",
+        "scripts/native-worker-node-preflight.mjs",
+        "scripts/package-agent-skill-bundle.sh",
+        "scripts/platform-services.mjs",
+        "scripts/prepare-native-worker-pools.mjs",
+        "scripts/prepare-reliability-services.sh",
+        "scripts/reliability-tests.mjs",
+        "scripts/render-native-worker-node.mjs",
+        "scripts/run-lint-report.mjs",
+        "scripts/runtime-tool-locks.mjs",
+        "scripts/scan-runtime-images.sh",
+        "scripts/tests/argocd-checked-artifacts.test.mjs",
+        "scripts/tests/docs-publication-assets.test.mjs",
+        "scripts/tests/docs-reader-source-links.test.mjs",
+        "scripts/tests/docs-reader-source-previews.test.mjs",
+        "scripts/tests/docs-reader.test.mjs",
+        "scripts/tests/docs-source-freshness.test.mjs",
+        "scripts/tests/vendor-external-helm-authorities.test.mjs",
+        "scripts/updates/code-release.mjs",
+        "scripts/updates/deployment-release.mjs",
+        "scripts/updates/runtime-inputs.mjs",
+        "scripts/vendor-external-helm-authorities.mjs",
+        "scripts/versions.mjs",
+        "skills/buster/engine/BOUNDARIES.md",
+        "skills/buster/engine/package.json",
+        "skills/common/plugin-runtime/sdk/package.json",
+        "skills/common/plugin-runtime/sdk/tsconfig.build.json",
+        "skills/nova/core/execution/run-decisions.ts",
+        "skills/nova/core/lifecycle/recovery-state.ts",
+        "skills/nova/core/lifecycle/reducer.ts",
+        "skills/nova/core/state/file-mutex.ts",
+        "skills/nova/core/state/journal.ts",
+        "skills/nova/plugins/lint/package.json",
+        "skills/prism/config/native-worker.ts",
+        "skills/prism/integration/engine-capture-retention.mts",
+        "skills/prism/package.json",
+        "skills/prism/server/control-config.ts",
+        "skills/prism/server/control.ts",
+        "skills/prism/server/database-roles.ts",
+        "skills/prism/server/studio-config.ts",
+        "skills/prism/server/worker.ts",
+        "skills/prism/studio/playwright.config.mjs",
+        "skills/prism/tests/native/operation-http.mts",
+        "skills/prism/tests/native/operation-journal.mts",
+        "skills/prism/tests/native/worker-harness.mts",
+        "skills/worker/core/BOUNDARIES.md",
+        "skills/worker/core/worker/native-resource-observation.ts",
+        "skills/worker/core/worker/native-resource-pool.ts",
+        "skills/worker/core/worker/native-resource-scope.ts",
+        "skills/worker/core/worker/native-supervisor-authority.ts",
+        "skills/worker/core/worker/native-worker-ownership.ts",
+        "tests/skills/nova/project_setup/progress-scaffold.test.mjs",
+        "tests/verification/contracts/check-nova-journal-scale.mts",
+        "tests/verification/contracts/check-pipeline-observability-contracts.mts",
+        "tests/verification/contracts/check-pipeline-remote-plan-runtime.mts",
+        "tests/verification/contracts/check-pipeline-remote-process-restart.mts",
+        "tests/verification/contracts/check-pipeline-remote-real-provider.mts",
+        "tests/verification/contracts/check-prism-postgres-transactions.mts",
+        "tests/verification/deployment/native-worker-node.test.mjs",
+        "tests/verification/deployment/prism-native-runtime.test.mjs",
+        "tests/verification/integration/registry-local-gc.test.mjs",
+        "tests/verification/reliability/archviewer-native.test.mjs",
+        "tests/verification/reliability/lifecycle.test.mts",
+        "tests/verification/reliability/project-recovery-version.test.mjs",
+        "tests/verification/reliability/worker-native-scope-live.mts",
+        "tools/native-worker-nri/go.mod",
+        "tools/ops-mcp/package.json",
+        "tools/ops-mcp/src/authentication.mjs",
+        "tools/ops-mcp/src/config.mjs",
+        "tools/ops-mcp/test/kubernetes.test.mjs",
+        "tools/ops-mcp/test/local.test.mjs",
+        "tools/ops-mcp/test/policy_contract_test.py",
+        "tsconfig.base.json",
+        "versions.json",
+
+--- diff maintenance ---
+diff --git a/docs/site/extend/documentation-maintenance.md b/docs/site/extend/documentation-maintenance.md
+index e69397c2..824659a4 100644
+--- a/docs/site/extend/documentation-maintenance.md
++++ b/docs/site/extend/documentation-maintenance.md
+@@ -108,28 +108,95 @@ selector must agree. Non-Markdown reader assets need their separate allowance.
+ 
+ Use the handbook's [single common chain](developer-handbook.md#documentation-change-chain).
+ These choices explain its effects; they do not authorize a command in
+ an environment whose source/tool prerequisites have not been qualified.
+ 
+ | Input change | Selected command and output | Check or failure meaning |
+ | --- | --- | --- |
+ | Page metadata or evidence dependencies | `npm run docs:governance:generate` writes `docs/site/reference/generated-documentation-map.json` | `docs:governance:check` compares expected bytes and validates route metadata. Missing owner/evidence needs source metadata repair, not a map patch. |
+ | Deployment/secret setup/Helm/workflow source facts | `npm run docs:inventory` writes its four inventories under `docs/generated/inventory` | `docs:inventory:check` compares those expected JSON bytes. This does not cover every runtime input. |
+ | Platform ports, endpoints, stores and policy authorities | After committing the source change, `npm run docs:ap09:platform-inventory -- --revision <full-committed-revision>` writes the platform inventory and its generated reference | `npm run docs:ap09:platform-inventory:check` derives the facts again from the inventory's selected source revision. New store identities require an explicit qualified policy binding. |
+-| JSON-schema field, nested property or plugin schema registration | Inspect the owning schema/validator and reader route. Review the status and source identity in `docs/config/schema-field-bindings.json`, then run `node scripts/docs-schema-fields.mjs`. | `node scripts/docs-schema-fields.mjs --check` refuses new, removed or changed schema inputs, changed registrations and stale generated field pointers. Normal publication runs it too. Use the [schema-field drift route](../reference/schemas.md#global-schema-field-drift); a refreshed hash does not approve field meaning or runtime activation. |
++| JSON-schema field, nested default, registration or reader/default disposition | After affected source and consumer review, maintain `docs/config/schema-field-bindings.json`, then run `node scripts/docs-schema-fields.mjs --reference`. This writes the field index and owned schema-authority reference. | `node scripts/docs-schema-fields.mjs --check --reference` checks both outputs and refuses unreviewed schema, registration, source or authority drift. Normal publication uses the same index/reference check. Follow the [bounded configuration/default procedure](#maintain-generated-configuration-and-defaults); a refreshed hash does not approve meaning or runtime activation. |
+ | Common diagnostic family or recovery meaning | Qualify the actual trigger, effect, consumer and recovery boundary before changing `docs/config/common-error-catalogue.json`. Run `npm run docs:errors:generate` to render its seven pages. | `npm run docs:errors:check` first checks selected production-input membership and bytes, then declared source digests and output drift. A changed input stops for review; it is not automatic discovery or approval of a new error. |
+ | Active event/payload source or semantic responsibility | Review the complete source-vector delta and affected producer, transformation, validation and consumer branches. Only after that qualification, update the binding registry's qualified source-vector hash and run `npm run docs:events:generate`. This writes `docs/generated/inventory/event-contracts.json` and only the marked section of `reference/events.md`. | `npm run docs:events:check` is read-only and fails on an unqualified source vector, missing/ambiguous bindings or changed output. Never repin a hash merely to clear failure. `npm run docs:events:test` exercises parser, binding, renderer and check-mode failures; it does not prove live delivery. |
+-| Declared configuration source families | `npm run docs:inventory:config` writes values, schema, and runtime-input JSON inventories; then selected reference generation | `docs:inventory:config:check` rejects stale bytes and verifies external Helm authorities on its successful-current path. Full discovery may acquire tools/children; it is not just a JSON comparison. |
++| Supported configuration families, defaults and inverse consumers | Use `node scripts/docs-configuration-inventory.mjs --configuration-reference-only`, inspect/check its four inventories, then commit the reviewed snapshot before generating the configuration hub. | Use the [bounded procedure below](#maintain-generated-configuration-and-defaults). The default `docs:inventory:config` route includes unrelated executable/API discovery and is not a substitute for this selected route or a read-only JSON comparison. |
+ | Source-derived reference sections | `npm run docs:generate` updates its owned reference outputs | `docs:generate:check` detects mismatch. Prepare the actual source revision and selected discovery route; do not suppress unsupported inputs. |
+ | Plugin catalogue/capability/operator matrix | `npm run docs:publication:generate` writes catalogue/capability pages and the marked operator matrix | `docs:publication:check` first runs helper tests and then compares/checks publication inputs. It does not validate every product example or live effect. |
+ | New/moved documentation inputs | `npm run docs:tree:generate` derives the tree inventory from classification, baseline, current inputs, and consumers | `docs:tree:check` rebuilds and compares the model. Its dependency/consumer analysis has prerequisites; do not infer a pure file read from its name. |
+ 
++### Maintain generated configuration and defaults
++
++Start at the [configuration-family and inverse-consumer reference](../reference/configuration.md)
++and the [schema authority reference](../reference/schemas.md). For a nested default
++change, review the actual absent-input, explicit-input and selected-branch
++consumer behavior. A schema annotation, manual fallback, effective value and
++reload/new-run effect are different facts. Review affected precedence, sensitive
++inputs and consumer relationships before changing the existing
++[family map](../../../docs/config/configuration-family-map.json) or
++[schema bindings](../../../docs/config/schema-field-bindings.json); do not edit
++generated facts or refresh a failed identity merely to clear a guard.
++
++For supported configuration-family/default/consumer changes:
++
++```sh
++node scripts/docs-configuration-inventory.mjs --configuration-reference-only
++node scripts/docs-configuration-inventory.mjs --configuration-reference-only --check
++```
++
++Inspect all four outputs under `docs/generated/inventory`:
++`configuration-helm-values.json`, `configuration-schemas.json`,
++`configuration-runtime-inputs.json` and `configuration-families.json`. This selected
++composition retains the ordinary YAML, schema, runtime-input, environment,
++Secret and authority guards; a failure is a stop, not permission to omit a family.
++It excludes executable program-output API discovery. Its success neither repairs
++nor qualifies the default global configuration/API route.
++
++Commit the reviewed source, family map and inventory changes first. Set
++`CONFIGURATION_REVISION` to that full immutable commit hash, then generate and
++check the human configuration hub:
++
++```sh
++node scripts/docs-generate.mjs --only configuration-hub --revision "$CONFIGURATION_REVISION"
++node scripts/docs-generate.mjs --only configuration-hub --revision "$CONFIGURATION_REVISION" --check
++```
++
++This writes only `docs/site/reference/configuration.md`, without updating the
++shared source lock. The selected commit must contain byte-identical copies of
++`scripts/docs-configuration-inventory.mjs`, `scripts/docs-generate.mjs`,
++`scripts/docs-generate-core.mjs`, the family map and `configuration-families.json`.
++If a bound input changes again, review and commit the corrected snapshot first;
++do not choose a moving ref or unrelated hash to suppress snapshot drift.
++
++For an affected schema declaration, nested default, registration or actual
++reader/default disposition, review the owning schema and consumer, maintain the
++existing bindings, then run:
++
++```sh
++node scripts/docs-schema-fields.mjs --reference
++node scripts/docs-schema-fields.mjs --check --reference
++```
++
++This updates `docs/generated/inventory/schema-field-drift.json` and only the
++owned authority region/metadata in `docs/site/reference/schemas.md`. Unknown or
++changed schema, registration, source, package or authority bindings stop the
++route. The property index is not a schema validator; declaration-only assets
++remain distinct from selected runtime readers. No command here proves runtime
++default insertion, live reload, browser/provider/telemetry execution or deployment.
++Inspect the diffs and use the relevant source-value/refusal controls and
++independent source, reader and quality review before publishing changed meanings.
++For this selected change, use these owned generation/check pairs in the common
++chain instead of its default global `docs:generate`/`docs:generate:check` pair;
++retain the other applicable governance, link and publication checks. Do not add
++a global write or discovery run merely to complete the bounded procedure.
++For prose-only maintenance changes, retain the qualified source snapshot and
++check its existing outputs rather than regenerating unrelated families.
++
+ ### Common-error input drift
+ 
+ The common-error check reports `CATALOGUE_INPUT_SURFACE_DRIFT` with `added`,
+ `removed`, or `changed` and the affected path. Inspect that change before updating
+ `docs/config/common-error-input-surface.json`. Its file list and SHA-256 values
+ record the reviewed production inputs; they do not approve error meaning.
+ 
+ The policy in `scripts/lib/docs-catalogue-input-surface.mjs` selects owned
+ component, contract, chart and deployment inputs, package registrations and
+ selected build/deployment scripts. It includes previously error-free files.
+
+exec
+/bin/bash -lc "D=/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031
+printf '%s\\n' '--- final status files ---'
+for f in \""'$D"/*; do b=$(basename "$f"); case "$b" in *addendum*|*final*|*regenerated*) printf '"'%s ' \""'$b"; [ -f "$f" ] && tail -n 3 "$f"; esac; done
+printf '"'%s\\n' '--- exact affected ids ---'
+node -e \"const x=require(process.argv[1]); console.log(x.records.map(r=>r.id).join('\\\\n')); console.error('count='+x.records.length)\" \""'$D/affected-accepted-records.json"
+printf '"'%s\\n' '--- structured output semantic delta ---'
+node - <<'NODE'
+const cp=require('child_process');const a='d6032264',b='750affb';
+for(const f of ['docs/generated/inventory/configuration-runtime-inputs.json','docs/generated/inventory/configuration-families.json']) {
+ const x=JSON.parse(cp.execFileSync('git',['show',a+':'+f])); const y=JSON.parse(cp.execFileSync('git',['show',b+':'+f]));
+ function diff(a,b,p=''){let out=[];if(typeof a"'!==typeof b||a===null||b===null){if(JSON.stringify(a)!==JSON.stringify(b))out.push(p);return out}if(Array.isArray(a)){let n=Math.max(a.length,b.length);for(let i=0;i<n;i++)out.push(...diff(a[i],b[i],p+'"'['+i+']'));return out}if(typeof a==='object'){for(const k of new Set([...Object.keys(a),...Object.keys(b)]))out.push(...diff(a[k],b[k],p?(p+'.'+k):k));return out}if(a"'!==b)out.push(p);return out}
+ console.log(f); console.log(diff(x,y).slice(0,250).join('"'\\n'));
+}
+NODE
+printf '%s\\n' '--- configuration page delta headings and changed snippets ---'
+git diff --unified=4 d6032264..750affb -- docs/site/reference/configuration.md | sed -n '1,280p'" in /home/node/.openclaw/workspace/kubeclaw-pr13-recovery
+ succeeded in 0ms:
+--- final status files ---
+final-docs-reference-check.log fresh-reader-final-addendum.json   ],
+  "provenance": "Structured preservation of actual final Reader addendum returned in parent transcript."
+}
+regenerated-configuration-reference-check.log Configuration documentation inventory is current.
+--- exact affected ids ---
+AP09-reviewed-configuration-20261020
+AP09-reviewed-maintenance-20261020
+AP09-complete-public-cli-20261020
+AP09-documentation-agent-maintenance-20261021
+AP09-complete-static-reader-search-20261021
+AP09-publication-positive-scope-7ef16585
+A912-05-whole-source-excerpt-callouts-20261022
+pr13-a91005-complete-package-capture-20261024
+A911-01-whole-ten-family-discovery-declarations-20261027
+MNT-014-whole-native-publication-examples-20261027
+A99-11-whole-published-example-claims-20261027
+QUA-005-whole-published-live-and-completeness-claims-20261027
+A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027
+MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028
+REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028
+MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028
+MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030
+MNT-005-common-source-bound-error-catalogue-20261030
+REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030
+MNT-011-common-diagnostic-production-input-drift-20261030
+MNT-010-all-owned-json-schema-recursive-field-drift-20261030
+QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030
+QUA-001-whole-understandable-technical-english-and-depth-20261030
+MNT-004-whole-source-owned-cli-reference-20261030
+A91306-QUA002-original-controlled-language-whole-20261030
+A911-05-whole-owned-diagnostic-reference-20261030
+CFG011-REF012-whole-complete-environment-secrets-20261030
+REF003-whole-configuration-families-and-inverse-consumers-20261031
+count=28
+--- structured output semantic delta ---
+<ref *1> node:child_process:982
+    throw err;
+    ^
+
+Error: spawnSync git ENOBUFS
+    at Object.spawnSync (node:internal/child_process:1191:20)
+    at spawnSync (node:child_process:929:24)
+    at Object.execFileSync (node:child_process:972:15)
+    at [stdin]:3:24
+    at runScriptInThisContext (node:internal/vm:219:10)
+    at node:internal/process/execution:451:12
+    at [stdin]-wrapper:6:24
+    at runScriptInContext (node:internal/process/execution:449:60)
+    at evalFunction (node:internal/process/execution:283:30)
+    at evalTypeScript (node:internal/process/execution:295:3) {
+  errno: -105,
+  code: 'ENOBUFS',
+  syscall: 'spawnSync git',
+  path: 'git',
+  spawnargs: [
+    'show',
+    'd6032264:docs/generated/inventory/configuration-runtime-inputs.json'
+  ],
+  error: [Circular *1],
+  status: null,
+  signal: 'SIGTERM',
+  output: [
+    null,
+    Buffer(1064960) [Uint8Array] [
+      123,  10,  32,  32,  34,  99, 108, 105,  70, 108,  97, 103,
+      115,  34,  58,  32,  91,  10,  32,  32,  32,  32, 123,  10,
+       32,  32,  32,  32,  32,  32,  34,  97, 108, 105,  97, 115,
+       70, 111, 114,  34,  58,  32, 110, 117, 108, 108,  44,  10,
+       32,  32,  32,  32,  32,  32,  34,  99, 104,  97, 110, 103,
+      101,  73, 109, 112,  97,  99, 116,  34,  58,  32,  34,  83,
+      101, 108, 101,  99, 116, 115,  32, 116, 104, 101,  32, 112,
+       97, 114, 115, 101, 114,  32,  98, 114,  97, 110,  99, 104,
+       32, 111, 114,  32,
+      ... 1064860 more items
+    ],
+    Buffer(0) [Uint8Array] []
+  ],
+  pid: 1010614,
+  stdout: Buffer(1064960) [Uint8Array] [
+    123,  10,  32,  32,  34,  99, 108, 105,  70, 108,  97, 103,
+    115,  34,  58,  32,  91,  10,  32,  32,  32,  32, 123,  10,
+     32,  32,  32,  32,  32,  32,  34,  97, 108, 105,  97, 115,
+     70, 111, 114,  34,  58,  32, 110, 117, 108, 108,  44,  10,
+     32,  32,  32,  32,  32,  32,  34,  99, 104,  97, 110, 103,
+    101,  73, 109, 112,  97,  99, 116,  34,  58,  32,  34,  83,
+    101, 108, 101,  99, 116, 115,  32, 116, 104, 101,  32, 112,
+     97, 114, 115, 101, 114,  32,  98, 114,  97, 110,  99, 104,
+     32, 111, 114,  32,
+    ... 1064860 more items
+  ],
+  stderr: Buffer(0) [Uint8Array] []
+}
+
+Node.js v24.22.1
+--- configuration page delta headings and changed snippets ---
+diff --git a/docs/site/reference/configuration.md b/docs/site/reference/configuration.md
+index e6e6d598..24b3cfef 100644
+--- a/docs/site/reference/configuration.md
++++ b/docs/site/reference/configuration.md
+@@ -5,9 +5,9 @@ Audience: operator, project author, plugin author, maintainer
+ Owner: documentation; each named consumer owns its setting semantics
+ Evidence: docs/generated/inventory/configuration-families.json; docs/config/configuration-family-map.json; scripts/docs-configuration-inventory.mjs
+ Applies to: current selected configuration families, source contracts and inverse-consumer routes
+ Last verified: 2026-10-31; guarded source inventory, not a deployment or live-reload observation
+-Source snapshot: `4b1b44901181eab8c233126d262d3bf44798da02`
++Source snapshot: `bfdd4f84408c549750172edc88bea3d210e31e1a`
+ 
+ <!-- BEGIN GENERATED: source-backed reference -->
+ 
+ Generated from: `docs/generated/inventory/configuration-families.json`, `docs/config/configuration-family-map.json`
+@@ -52,52 +52,52 @@ file, generated result or successful compilation is not proof of activation.
+ ## Start from a consumer
+ 
+ Use the consumer below to return to its configuration family. The complete index of recorded
+ field contracts and whole-file delivery boundaries, including registration, transport, runtime and
+-explicit non-delivery roles, is in [`docs/generated/inventory/configuration-families.json`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/docs/generated/inventory/configuration-families.json#L1-L1).
++explicit non-delivery roles, is in [`docs/generated/inventory/configuration-families.json`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/docs/generated/inventory/configuration-families.json#L1-L1).
+ A registration declaration or ConfigMap copy remains distinct from a runtime reader.
+ A payload source tree is not field-level runtime behavior: delivery of a whole file
+ does not prove that its tool or image reads every key or inserts a default.
+ 
+ | Consuming source | Configuration family | Detailed route |
+ | --- | --- | --- |
+-| [`charts/kubeclaw/values.yaml`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/charts/kubeclaw/values.yaml#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts#L1-L1) | Worker resources and profile | [Worker profiles and roles](worker-profiles-and-roles.md), [compatibility](configuration-compatibility.md) |
+-| [`scripts/argocd-self-management.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/argocd-self-management.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/build-runtime-role-bundle.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/build-runtime-role-bundle.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
+-| [`scripts/gitops-continuous.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/gitops-continuous.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/gitops-owner.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/gitops-owner.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/gitops.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/gitops.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/install/register-runtime-argo.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/install/register-runtime-argo.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/observability-retirement-plan.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/observability-retirement-plan.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
+-| [`scripts/recover-openclaw-audit-input.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/recover-openclaw-audit-input.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
+-| [`scripts/render-stateful-network-policies.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/render-stateful-network-policies.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/updates/deployment-release.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/updates/deployment-release.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/updates/materialize-release.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/updates/materialize-release.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/updates/refresh-versions.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/updates/refresh-versions.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/updates/release-images.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/updates/release-images.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`scripts/versions.mjs`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/scripts/versions.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
+-| [`skills/buster/engine/test-gates/artifacts.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/buster/engine/test-gates/artifacts.ts#L1-L1) | Buster test-provider configuration | [Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
+-| [`skills/buster/engine/test-gates/runner.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/buster/engine/test-gates/runner.ts#L1-L1) | Buster test-provider configuration | [Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
+-| [`skills/common/plugin-runtime/foundation/config/platform.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/config/platform.ts#L1-L1) | Platform JSON | [Pipeline platform](pipeline-platform.md) |
+-| [`skills/common/plugin-runtime/foundation/config/published-pair.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/config/published-pair.ts#L1-L1) | Project authoring pair | [Project pipeline JSON](pipeline-json.md), [publication](project-pipeline-publication.md) |
+-| [`skills/common/plugin-runtime/foundation/observability/durable-attempts.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+-| [`skills/common/plugin-runtime/foundation/observability/durable-delivery.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+-| [`skills/common/plugin-runtime/foundation/observability/durable-records.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+-| [`skills/common/plugin-runtime/foundation/registry/configuration.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugin-runtime/foundation/registry/configuration.ts#L1-L1) | Plugin stage, observer, adapter configuration; Buster test-provider configuration | [Plugin configuration](plugin-configuration.md), [plugin catalogue](../extend/plugin-catalogue/README.md)<br>[Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
+-| [`skills/common/plugins/runtime-dispatch/src/openclaw-result.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugins/runtime-dispatch/src/openclaw-result.ts#L1-L1) | OpenClaw / Codex routing and host settings | [Host and Prism configuration](host-and-prism-configuration.md), [OpenClaw](../understand/openclaw.md) |
+-| [`skills/common/plugins/runtime-dispatch/src/openclaw.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/common/plugins/runtime-dispatch/src/openclaw.ts#L1-L1) | OpenClaw / Codex routing and host settings | [Host and Prism configuration](host-and-prism-configuration.md), [OpenClaw](../understand/openclaw.md) |
+-| [`skills/nova/core/execution/graph-build.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/core/execution/graph-build.ts#L1-L1) | Explicit execution graph | [Pipeline definition](pipeline-definition.md) |
+-| [`skills/nova/core/observability/reconciler.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/core/observability/reconciler.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+-| [`skills/nova/plugins/lint/src/engine/policy.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/plugins/lint/src/engine/policy.ts#L1-L1) | Lint policy and generated tool settings | [Lint policy](lint-policy.md), [generated facts](lint-policy-generated.md) |
+-| [`skills/nova/project/cli.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/project/cli.ts#L1-L1) | Nova project JSON; Owned CLI and maintenance inputs | [Nova project](nova-project.md)<br>[CLI](cli.md), [verification commands](verification-commands.md) |
+-| [`skills/nova/project_setup/tools/progress-scaffold.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/nova/project_setup/tools/progress-scaffold.ts#L1-L1) | Project authoring pair | [Project pipeline JSON](pipeline-json.md), [publication](project-pipeline-publication.md) |
+-| [`skills/prism/config/database-bootstrap.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/prism/config/database-bootstrap.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
+-| [`skills/prism/config/native-worker.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/prism/config/native-worker.ts#L1-L1) | Prism native pool host policy | [Host and Prism configuration](host-and-prism-configuration.md), [worker roles](worker-profiles-and-roles.md) |
+-| [`skills/prism/server/control-config.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/prism/server/control-config.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
+-| [`skills/prism/server/ingestion.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/prism/server/ingestion.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
+-| [`skills/worker/core/worker/ownership-store.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/skills/worker/core/worker/ownership-store.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
+-| [`tests/verification/e2e/support/platform-config.ts`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/tests/verification/e2e/support/platform-config.ts#L1-L1) | Compact swarm profile | [Host and Prism configuration](host-and-prism-configuration.md) |
++| [`charts/kubeclaw/values.yaml`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/charts/kubeclaw/values.yaml#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/contracts/pipeline-worker-core/v1/src/resource-validation-v3.ts#L1-L1) | Worker resources and profile | [Worker profiles and roles](worker-profiles-and-roles.md), [compatibility](configuration-compatibility.md) |
++| [`scripts/argocd-self-management.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/argocd-self-management.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/build-runtime-role-bundle.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/build-runtime-role-bundle.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
++| [`scripts/gitops-continuous.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/gitops-continuous.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/gitops-owner.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/gitops-owner.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/gitops.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/gitops.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/install/register-runtime-argo.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/install/register-runtime-argo.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/observability-retirement-plan.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/observability-retirement-plan.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
++| [`scripts/recover-openclaw-audit-input.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/recover-openclaw-audit-input.mjs#L1-L1) | Owned CLI and maintenance inputs | [CLI](cli.md), [verification commands](verification-commands.md) |
++| [`scripts/render-stateful-network-policies.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/render-stateful-network-policies.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/updates/deployment-release.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/updates/deployment-release.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/updates/materialize-release.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/updates/materialize-release.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/updates/refresh-versions.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/updates/refresh-versions.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/updates/release-images.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/updates/release-images.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`scripts/versions.mjs`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/scripts/versions.mjs#L1-L1) | KubeClaw / Prism / GitOps deployment values | [Helm values](helm-values.md), [precedence](configuration-precedence.md), [API updates](api-object-updates.md) |
++| [`skills/buster/engine/test-gates/artifacts.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/buster/engine/test-gates/artifacts.ts#L1-L1) | Buster test-provider configuration | [Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
++| [`skills/buster/engine/test-gates/runner.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/buster/engine/test-gates/runner.ts#L1-L1) | Buster test-provider configuration | [Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
++| [`skills/common/plugin-runtime/foundation/config/platform.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/common/plugin-runtime/foundation/config/platform.ts#L1-L1) | Platform JSON | [Pipeline platform](pipeline-platform.md) |
++| [`skills/common/plugin-runtime/foundation/config/published-pair.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/common/plugin-runtime/foundation/config/published-pair.ts#L1-L1) | Project authoring pair | [Project pipeline JSON](pipeline-json.md), [publication](project-pipeline-publication.md) |
++| [`skills/common/plugin-runtime/foundation/observability/durable-attempts.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/common/plugin-runtime/foundation/observability/durable-attempts.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
++| [`skills/common/plugin-runtime/foundation/observability/durable-delivery.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/common/plugin-runtime/foundation/observability/durable-delivery.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
++| [`skills/common/plugin-runtime/foundation/observability/durable-records.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/common/plugin-runtime/foundation/observability/durable-records.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
++| [`skills/common/plugin-runtime/foundation/registry/configuration.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/common/plugin-runtime/foundation/registry/configuration.ts#L1-L1) | Plugin stage, observer, adapter configuration; Buster test-provider configuration | [Plugin configuration](plugin-configuration.md), [plugin catalogue](../extend/plugin-catalogue/README.md)<br>[Provider fields](buster-provider-configuration.md), [runtime settings](buster-runtime-configuration.md), [suites](buster-suites.md) |
++| [`skills/common/plugins/runtime-dispatch/src/openclaw-result.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/common/plugins/runtime-dispatch/src/openclaw-result.ts#L1-L1) | OpenClaw / Codex routing and host settings | [Host and Prism configuration](host-and-prism-configuration.md), [OpenClaw](../understand/openclaw.md) |
++| [`skills/common/plugins/runtime-dispatch/src/openclaw.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/common/plugins/runtime-dispatch/src/openclaw.ts#L1-L1) | OpenClaw / Codex routing and host settings | [Host and Prism configuration](host-and-prism-configuration.md), [OpenClaw](../understand/openclaw.md) |
++| [`skills/nova/core/execution/graph-build.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/nova/core/execution/graph-build.ts#L1-L1) | Explicit execution graph | [Pipeline definition](pipeline-definition.md) |
++| [`skills/nova/core/observability/reconciler.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/nova/core/observability/reconciler.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
++| [`skills/nova/plugins/lint/src/engine/policy.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/nova/plugins/lint/src/engine/policy.ts#L1-L1) | Lint policy and generated tool settings | [Lint policy](lint-policy.md), [generated facts](lint-policy-generated.md) |
++| [`skills/nova/project/cli.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/nova/project/cli.ts#L1-L1) | Nova project JSON; Owned CLI and maintenance inputs | [Nova project](nova-project.md)<br>[CLI](cli.md), [verification commands](verification-commands.md) |
++| [`skills/nova/project_setup/tools/progress-scaffold.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/nova/project_setup/tools/progress-scaffold.ts#L1-L1) | Project authoring pair | [Project pipeline JSON](pipeline-json.md), [publication](project-pipeline-publication.md) |
++| [`skills/prism/config/database-bootstrap.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/prism/config/database-bootstrap.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
++| [`skills/prism/config/native-worker.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/prism/config/native-worker.ts#L1-L1) | Prism native pool host policy | [Host and Prism configuration](host-and-prism-configuration.md), [worker roles](worker-profiles-and-roles.md) |
++| [`skills/prism/server/control-config.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/prism/server/control-config.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
++| [`skills/prism/server/ingestion.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/prism/server/ingestion.ts#L1-L1) | Runtime process environment and credentials | [Environment variables](environment-variables.md), [Secrets](secrets.md), [host settings](host-and-prism-configuration.md) |
++| [`skills/worker/core/worker/ownership-store.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/skills/worker/core/worker/ownership-store.ts#L1-L1) | Durable storage, limits and retention | [Change impact](configuration-change-impact.md), [observability](stores-and-retention.md) |
++| [`tests/verification/e2e/support/platform-config.ts`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/tests/verification/e2e/support/platform-config.ts#L1-L1) | Compact swarm profile | [Host and Prism configuration](host-and-prism-configuration.md) |
+ 
+ ## Determine the effective value
+ 
+ There is no global last-writer-wins rule. Record the family first, then use
+@@ -182,11 +182,11 @@ prove a deployed effective value or establish successful reload, admission or ro
+ ### Payloads without a proved checked-in runtime reader or delivery
+ 
+ | Source payload | Declared boundary |
+ | --- | --- |
+-| [`charts/kubeclaw/files/config/lint-policy.json`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/charts/kubeclaw/files/config/lint-policy.json#L1-L1) | The repository proves a parser for request.policyPath, but it does not bind that request field to /runtime-config/lint-policy.json. Materialization and parsing are separate proved boundaries, not a continuous runtime chain. |
+-| [`charts/kubeclaw/files/config/swarm.config.json`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/charts/kubeclaw/files/config/swarm.config.json#L1-L1) | The chart materializes the file and injects its mounted path through SWARM_CONFIG. The image-owned process reader and field behavior are not checked in, so path injection does not prove field-level runtime meaning. |
+-| [`charts/kubeclaw/files/config/kubernetes-policy-pack-default.json`](https://github.com/datrab/kubeclaw/blob/4b1b44901181eab8c233126d262d3bf44798da02/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L1) | The checked-in chart does not embed or copy kubernetes-policy-pack-default.json. The deployed lint policy references this file, so the runtime loader rejects that reference unless another unsupported process supplies the missing file. |
++| [`charts/kubeclaw/files/config/lint-policy.json`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/charts/kubeclaw/files/config/lint-policy.json#L1-L1) | The repository proves a parser for request.policyPath, but it does not bind that request field to /runtime-config/lint-policy.json. Materialization and parsing are separate proved boundaries, not a continuous runtime chain. |
++| [`charts/kubeclaw/files/config/swarm.config.json`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/charts/kubeclaw/files/config/swarm.config.json#L1-L1) | The chart materializes the file and injects its mounted path through SWARM_CONFIG. The image-owned process reader and field behavior are not checked in, so path injection does not prove field-level runtime meaning. |
++| [`charts/kubeclaw/files/config/kubernetes-policy-pack-default.json`](https://github.com/datrab/kubeclaw/blob/bfdd4f84408c549750172edc88bea3d210e31e1a/charts/kubeclaw/files/config/kubernetes-policy-pack-default.json#L1-L1) | The checked-in chart does not embed or copy kubernetes-policy-pack-default.json. The deployed lint policy references this file, so the runtime loader rejects that reference unless another unsupported process supplies the missing file. |
+ 
+ A source file or stored payload is not a working operator option when its reader or delivery is unproved.
+ 
+ ## Maintain this reference
+
+exec
+/bin/bash -lc "D=/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031
+printf '%s\\n' '--- final artifacts ---'
+ls -l \""'$D"/*final* 2>/dev/null || true
+printf '"'%s\\n' '--- reader addendum ---'
+sed -n '1,220p' \""'$D/fresh-reader-final-addendum.json" 2>/dev/null || true
+printf '"'%s\\n' '--- final refs raw bytes ---'
+wc -c \""'$D/final-docs-reference-check.log"; xxd -l 160 "$D/final-docs-reference-check.log"
+printf '"'%s\\n' '--- diff inventory compact ---'
+git diff --numstat d6032264..750affb -- docs/generated/inventory/configuration-runtime-inputs.json docs/generated/inventory/configuration-families.json
+git diff --unified=2 d6032264..750affb -- docs/generated/inventory/configuration-runtime-inputs.json | rg -n -C 2 'reference|--check|docs-schema-fields|sourceSha256|line|documentation' | sed -n '1,220p'
+printf '%s\\n' '--- execution status ---'
+sed -n '1,220p' \""'$D/mnt003-whole-original-execution.json"' in /home/node/.openclaw/workspace/kubeclaw-pr13-recovery
+ succeeded in 306ms:
+--- final artifacts ---
+-rw-r--r-- 1 root root    0 Oct 31 12:35 /home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/final-docs-reference-check.log
+-rw-r--r-- 1 root root 2028 Oct 31 12:35 /home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/fresh-reader-final-addendum.json
+--- reader addendum ---
+{
+  "reviewer": "/root/mnt003_fresh_reader",
+  "role": "Reader-only",
+  "revision": "750affb124c8c19696a6938f08312001dc742562",
+  "verdict": "PASS",
+  "discoverability": "PASS",
+  "clarity": "PASS",
+  "sufficiency": "PASS bounded maintenance planning",
+  "priorAmbiguity": "RESOLVED: selected generation/check pairs explicitly replace common global docs:generate/check pair while keeping applicable other checks.",
+  "blockingFindings": [],
+  "newNonblockingFindings": [],
+  "firstFailedStep": "none",
+  "navigation": [
+    "maintenance103-190 generationtable/boundedprocedure",
+    "handbook2273-2335 commonchain/checkbuildboundaries",
+    "maintenance1-45 preparation and184-194 substitutionwording",
+    "configuration1-30 family/source snapshot",
+    "schemas1-36 authority/consumer/selectionboundary"
+  ],
+  "derivedPlan": [
+    "Review actual absent/explicit/selectedbranch/default/precedence/reloadconsumer behavior.",
+    "Maintain reviewed family map/bindings.",
+    "Generate/check four configuration-reference-only inventories.",
+    "Commit reviewedinputs/inventories, then exact fullimmutableCONFIGURATION_REVISION for configurationhubgen/check.",
+    "Affected schemas use schemafields --reference / --check --reference.",
+    "Inspect owned diffs, retain applicable governance/refs/boundary/publicationchecks; selectedpairs SUBSTITUTE for globalgeneration/check pair.",
+    "Guardstop: retain first diagnostic/partialdiff, review actualinput/tool/revisioncause, rerun owner; no blindrepins."
+  ],
+  "allowedInputs": "Final immutable docs/site plus publicJSON snapshot only. No implementation/hiddenevidence/network/otherworkspace/agents.",
+  "execution": "Read/search only; no generation, mutation, install, check, build or deploy.",
+  "notClaimed": [
+    "Source correctness",
+    "generation success",
+    "Source/Quality awards",
+    "runtime/default insertion",
+    "browser",
+    "fullbootstrap"
+  ],
+  "provenance": "Structured preservation of actual final Reader addendum returned in parent transcript."
+}
+--- final refs raw bytes ---
+0 /home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/final-docs-reference-check.log
+/bin/bash: line 7: xxd: command not found
+--- diff inventory compact ---
+38	10	docs/generated/inventory/configuration-families.json
+43	5	docs/generated/inventory/configuration-runtime-inputs.json
+6-         {
+7-           "kind": "argument-parser",
+8:-          "line": 66,
+9:+          "line": 155,
+10:           "path": "scripts/docs-schema-fields.mjs"
+11-         }
+12-@@ -1425,5 +1425,5 @@
+13-       "evidence": "argument membership check",
+14-       "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+15:-      "line": 66,
+16:+      "line": 155,
+17:       "name": "--check",
+18-       "occurrenceCount": 1,
+19-@@ -5777,4 +5777,42 @@
+--
+27-+        {
+28-+          "kind": "argument-parser",
+29:+          "line": 161,
+30:+          "path": "scripts/docs-schema-fields.mjs"
+31-+        }
+32-+      ],
+33-+      "default": "false/not selected",
+34:+      "documentationAuthority": null,
+35:+      "documentationReason": "This definition is not part of the operator-runtime surface.",
+36:+      "documentationStatus": "not-required-in-operator-handbook",
+37-+      "duplicateOptionBehavior": "The linked parser decides whether a repeated option fails or wins.",
+38-+      "evidence": "argument membership check",
+39-+      "failureMeaning": "Missing or invalid values fail only when the linked parser branch rejects them; inspect its unknown-option and duplicate-option fields.",
+40:+      "line": 161,
+41:+      "name": "--reference",
+42-+      "occurrenceCount": 1,
+43:+      "ownerComponent": "operator script scripts/docs-schema-fields.mjs",
+44:+      "ownerEvidence": "scripts/docs-schema-fields.mjs",
+45:+      "path": "scripts/docs-schema-fields.mjs",
+46-+      "precedence": [
+47:+        "explicit command-line flag",
+48-+        "parser-specific duplicate handling",
+49-+        "environment or source default when the consumer declares one",
+--
+52-+      "required": "conditional",
+53-+      "requiredReason": "No unconditional absence rejection is proved by the linked parser.",
+54:+      "runtimeOwner": "operator script scripts/docs-schema-fields.mjs",
+55:+      "surface": "documentation-internal",
+56-+      "type": "boolean switch or command selector",
+57-+      "unknownOptionBehavior": "The linked parser decides whether an unrecognized option fails.",
+--- execution status ---
+{
+  "status": "RUNNING",
+  "pid": 1007817,
+  "startedAt": "2026-10-31T12:35:43.804533+00:00"
+}
+
+codex
+The bounded inventory and hub checks are terminally successful, and the final Reader addendum is now present and PASS. I’m checking the only still-unrecorded final reference-check terminal state before deciding whether a whole award is supportable.
+exec
+/bin/bash -lc "D=/home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031
+printf 'execution-status\\n'; sed -n '1,120p' \""'$D/mnt003-whole-original-execution.json"
+printf '"'final-ref-log\\n'; ls -l \""'$D/final-docs-reference-check.log"; sed -n '"'1,80p' \""'$D/final-docs-reference-check.log"
+printf '"'process\\n'; ps -p 1007817 -o pid=,stat=,etime=,cmd= 2>/dev/null || true
+printf 'repo-state\\n'; git rev-parse HEAD; git status --short" in /home/node/.openclaw/workspace/kubeclaw-pr13-recovery
+ succeeded in 0ms:
+execution-status
+{
+  "status": "RUNNING",
+  "pid": 1007817,
+  "startedAt": "2026-10-31T12:35:43.804533+00:00"
+}
+final-ref-log
+-rw-r--r-- 1 root root 0 Oct 31 12:35 /home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/final-docs-reference-check.log
+process
+1007817 Ss         01:10 python3 /home/node/.openclaw/workspace/operations/pr13/evidence/mnt003-generated-config-defaults-20261031/review-mnt003-whole-original.py
+repo-state
+750affb124c8c19696a6938f08312001dc742562
+
+codex
+{
+  "report": "mnt003-whole-original-verdict.json",
+  "revision": "750affb124c8c19696a6938f08312001dc742562",
+  "requirementId": "MNT-003",
+  "originalCriterion": "Generierte Konfigurationen und Defaults: maintainable, source-bound generation and drift procedure for supported configuration/default facts, consumers, and canonical documentation.",
+  "sourceAccuracy": {
+    "verdict": "PASS_AT_MNT003_BOUNDED_SCOPE",
+    "judgment": "The maintenance procedure now matches the three actual owned routes: selected configuration-family generation/check, immutable-revision configuration-hub generation/check, and schema-authority reference generation/check. It accurately preserves the distinction between schema annotations, consumer fallbacks, effective values, precedence, reload/new-run effects, and runtime behavior.",
+    "currentOutputDelta": "The refreshed runtime/family inventories contain only the existing documentation-internal `--reference` switch plus its source-coordinate and parent-fact updates. No environment, Secret, product default, consumer, or runtime meaning changed."
+  },
+  "readerUsability": {
+    "verdict": "PASS",
+    "evidence": "fresh-reader-verdict.json and fresh-reader-final-addendum.json",
+    "judgment": "The independent restricted Reader completed the bounded maintenance plan and confirmed that selected generation/check pairs replace the generic global pair while applicable other checks remain required.",
+    "limits": [
+      "Reader assessed lookup and planning only.",
+      "No source correctness, generation, runtime, browser, bootstrap, or quality claim is inherited from Reader."
+    ]
+  },
+  "quality": {
+    "verdict": "NOT_READY_PENDING_TERMINAL_REFERENCE_CHECK",
+    "judgment": "The page correction is clear, proportional, and preserves stop conditions. However, the final reference-check artifact for the final four-line clarification is empty and its review process is still running. The earlier reference check cannot be relabeled as a check of the final page."
+  },
+  "nativeEvidence": {
+    "schemaReferenceCheck": "PASS",
+    "configurationReferenceInitialFailure": "PRESERVED: stale runtime/family inventories after the REF-004 tool update.",
+    "configurationReferenceGeneration": "PASS: all four bounded inventories generated.",
+    "configurationReferenceCheck": "PASS after regeneration.",
+    "hubInitialFailure": "PRESERVED: old source revision rejected current-tree changes.",
+    "hubGenerationAndCheck": "PASS with refreshed committed inventory revision bfdd4f84408c549750172edc88bea3d210e31e1a.",
+    "defaultGlobalApi": "UNCLAIMED"
+  },
+  "originalWholeVerdict": "NOT_READY_PENDING_ONE_TERMINAL_CHECK",
+  "materialFindings": [
+    {
+      "id": "MNT003-T1-FINAL-REFERENCE-CHECK-PENDING",
+      "location": "final-docs-reference-check.log",
+      "finding": "No terminal result is available for the final maintenance-page clarification at 750affb; the log is empty and the associated review process remains running.",
+      "finiteRemedy": "Preserve the terminal result of the unchanged final documentation-reference check. If it succeeds, no further MNT-003 source, reader, or configuration-generation work is required."
+    }
+  ],
+  "affectedAcceptedRecordPreservation": {
+    "verdict": "PASS_AT_ORIGINAL_SCOPES",
+    "basis": "The four-file delta is limited to the maintenance procedure, two bounded generated inventories, and configuration-hub snapshot links. Existing source/default/consumer semantics remain reused from accepted REF-003, REF-004, configuration, environment, and Secret scopes. This is preservation, not 28 new awards.",
+    "coveredRecordIds": [
+      "AP09-reviewed-configuration-20261020",
+      "AP09-reviewed-maintenance-20261020",
+      "AP09-complete-public-cli-20261020",
+      "AP09-documentation-agent-maintenance-20261021",
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-publication-positive-scope-7ef16585",
+      "A912-05-whole-source-excerpt-callouts-20261022",
+      "pr13-a91005-complete-package-capture-20261024",
+      "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "MNT-005-common-source-bound-error-catalogue-20261030",
+      "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "MNT-004-whole-source-owned-cli-reference-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "A911-05-whole-owned-diagnostic-reference-20261030",
+      "CFG011-REF012-whole-complete-environment-secrets-20261030",
+      "REF003-whole-configuration-families-and-inverse-consumers-20261031"
+    ]
+  },
+  "retainedLimits": [
+    "No default global configuration/API success.",
+    "No runtime default insertion, deployment, provider, browser, telemetry, or live-reload success.",
+    "No generic ToolSource, Python 3.14, MNT-001, MNT-009, or governance award.",
+    "REF-003, REF-004, CFG011/REF012, and other closed semantic scopes are not reopened."
+  ],
+  "finiteNextAction": "Wait only for the actual final reference-check terminal result. On terminal success, register MNT-003 only with these 28 scoped preservation impacts, then run the unchanged original checker and proceed to publication verification."
+}
+tokens used
+7,518,393
+{
+  "report": "mnt003-whole-original-verdict.json",
+  "revision": "750affb124c8c19696a6938f08312001dc742562",
+  "requirementId": "MNT-003",
+  "originalCriterion": "Generierte Konfigurationen und Defaults: maintainable, source-bound generation and drift procedure for supported configuration/default facts, consumers, and canonical documentation.",
+  "sourceAccuracy": {
+    "verdict": "PASS_AT_MNT003_BOUNDED_SCOPE",
+    "judgment": "The maintenance procedure now matches the three actual owned routes: selected configuration-family generation/check, immutable-revision configuration-hub generation/check, and schema-authority reference generation/check. It accurately preserves the distinction between schema annotations, consumer fallbacks, effective values, precedence, reload/new-run effects, and runtime behavior.",
+    "currentOutputDelta": "The refreshed runtime/family inventories contain only the existing documentation-internal `--reference` switch plus its source-coordinate and parent-fact updates. No environment, Secret, product default, consumer, or runtime meaning changed."
+  },
+  "readerUsability": {
+    "verdict": "PASS",
+    "evidence": "fresh-reader-verdict.json and fresh-reader-final-addendum.json",
+    "judgment": "The independent restricted Reader completed the bounded maintenance plan and confirmed that selected generation/check pairs replace the generic global pair while applicable other checks remain required.",
+    "limits": [
+      "Reader assessed lookup and planning only.",
+      "No source correctness, generation, runtime, browser, bootstrap, or quality claim is inherited from Reader."
+    ]
+  },
+  "quality": {
+    "verdict": "NOT_READY_PENDING_TERMINAL_REFERENCE_CHECK",
+    "judgment": "The page correction is clear, proportional, and preserves stop conditions. However, the final reference-check artifact for the final four-line clarification is empty and its review process is still running. The earlier reference check cannot be relabeled as a check of the final page."
+  },
+  "nativeEvidence": {
+    "schemaReferenceCheck": "PASS",
+    "configurationReferenceInitialFailure": "PRESERVED: stale runtime/family inventories after the REF-004 tool update.",
+    "configurationReferenceGeneration": "PASS: all four bounded inventories generated.",
+    "configurationReferenceCheck": "PASS after regeneration.",
+    "hubInitialFailure": "PRESERVED: old source revision rejected current-tree changes.",
+    "hubGenerationAndCheck": "PASS with refreshed committed inventory revision bfdd4f84408c549750172edc88bea3d210e31e1a.",
+    "defaultGlobalApi": "UNCLAIMED"
+  },
+  "originalWholeVerdict": "NOT_READY_PENDING_ONE_TERMINAL_CHECK",
+  "materialFindings": [
+    {
+      "id": "MNT003-T1-FINAL-REFERENCE-CHECK-PENDING",
+      "location": "final-docs-reference-check.log",
+      "finding": "No terminal result is available for the final maintenance-page clarification at 750affb; the log is empty and the associated review process remains running.",
+      "finiteRemedy": "Preserve the terminal result of the unchanged final documentation-reference check. If it succeeds, no further MNT-003 source, reader, or configuration-generation work is required."
+    }
+  ],
+  "affectedAcceptedRecordPreservation": {
+    "verdict": "PASS_AT_ORIGINAL_SCOPES",
+    "basis": "The four-file delta is limited to the maintenance procedure, two bounded generated inventories, and configuration-hub snapshot links. Existing source/default/consumer semantics remain reused from accepted REF-003, REF-004, configuration, environment, and Secret scopes. This is preservation, not 28 new awards.",
+    "coveredRecordIds": [
+      "AP09-reviewed-configuration-20261020",
+      "AP09-reviewed-maintenance-20261020",
+      "AP09-complete-public-cli-20261020",
+      "AP09-documentation-agent-maintenance-20261021",
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-publication-positive-scope-7ef16585",
+      "A912-05-whole-source-excerpt-callouts-20261022",
+      "pr13-a91005-complete-package-capture-20261024",
+      "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "MNT-005-common-source-bound-error-catalogue-20261030",
+      "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "MNT-004-whole-source-owned-cli-reference-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "A911-05-whole-owned-diagnostic-reference-20261030",
+      "CFG011-REF012-whole-complete-environment-secrets-20261030",
+      "REF003-whole-configuration-families-and-inverse-consumers-20261031"
+    ]
+  },
+  "retainedLimits": [
+    "No default global configuration/API success.",
+    "No runtime default insertion, deployment, provider, browser, telemetry, or live-reload success.",
+    "No generic ToolSource, Python 3.14, MNT-001, MNT-009, or governance award.",
+    "REF-003, REF-004, CFG011/REF012, and other closed semantic scopes are not reopened."
+  ],
+  "finiteNextAction": "Wait only for the actual final reference-check terminal result. On terminal success, register MNT-003 only with these 28 scoped preservation impacts, then run the unchanged original checker and proceed to publication verification."
+}

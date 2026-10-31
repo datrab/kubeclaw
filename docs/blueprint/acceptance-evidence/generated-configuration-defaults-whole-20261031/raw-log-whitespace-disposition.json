@@ -1,0 +1,6 @@
+{
+  "rawLog": "docs/blueprint/acceptance-evidence/generated-configuration-defaults-whole-20261031/mnt003-whole-original-review.log",
+  "sha256": "03c8f3efae75edf0f34c979982f3634d7f560d9c4bb672cfc9d89aa22a46d88b",
+  "disposition": "Original independent review raw output retains whitespace-only diff-context lines. Do not rewrite historical evidence for cosmetic whitespace normalization. All other staged files checked normally.",
+  "sourceAndPublishedRawBytesEqual": true
+}

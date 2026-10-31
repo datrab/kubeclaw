@@ -1,0 +1,16 @@
+{
+  "checkedAt": "2026-10-31T12:36:21.963191+00:00",
+  "snapshots": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-mnt003-reader-dff795db",
+      "activeCwdOrFdUsers": [],
+      "removed": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/pr13-mnt003-reader-750affb1",
+      "activeCwdOrFdUsers": [],
+      "removed": true
+    }
+  ],
+  "manifestsAndRealReportsRetained": true
+}
