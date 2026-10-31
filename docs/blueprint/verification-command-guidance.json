@@ -9425,7 +9425,7 @@
       "purpose": "Generate/check canonical 261-requirement documentation requirement catalogue.",
       "scope": "Original completeness audit German-table regex, 25 exact namespace ranges and order, V47/E144/F70 baseline and 13 package mappings/owner/target overrides.",
       "environment": "Repository root through npm, installed locked native tools/dependencies and actual tracked inputs/Git objects. No root pre/post script definitions observed.",
-      "effects": "Read-only source validation then write generated/ap09-catalogue.json and create directory.",
+      "effects": "Read-only source validation then write `docs/blueprint/generated/ap09-catalogue.json` and create directory.",
       "expected": "Catalogue baseline summary or stale/authority assertion failure. Limits: Catalogue current/planned target presence does not establish accepted completion, independent content review or live behavior.",
       "owner": "[documentation](../extend/documentation-maintenance.md)",
       "changeToCheck": "Changes to the listed receivers, their selected inputs or this command require this exact check and its named delegates. Documentation blueprint, documentation requirement catalog and original acceptance-contract maintainers must inspect complete diagnostics and partial effects, restore owned fixtures where applicable, and obtain independent review of the changed topic. Keep the declared environment, skips and STOP conditions; do not refresh expected data merely to hide a mismatch.",
