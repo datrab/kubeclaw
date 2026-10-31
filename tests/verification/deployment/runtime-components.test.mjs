@@ -427,3 +427,27 @@ test('dispatch collector and bundle CLI preserve non-refreshed component origins
   const unscopedImages = { ...selectedImages }; delete unscopedImages.retainedBaseline;
   assert.throws(() => compatibleCode(root, unscopedImages, unscoped), /CODE_BUNDLE_INPUTS_CHANGED/);
 }));
+
+test('Prism-only payload refreshes Buster bundle provenance for its broad image payload', () => fixture(({ root, write, commit, images, code }) => {
+  write('skills/prism/src/studio/mobile.ts', 'mobile viewport fix');
+  const head = commit();
+  assert(changedImages(root, images, head).includes('buster-runtime'));
+  assert.deepEqual(changedBundles(root, code, head, false, true), ['buster', 'prism']);
+  const roles = execFileSync(process.execPath, [path.join(sourceRoot, 'scripts/updates/code-release.mjs'), '--roles'], {
+    cwd: root, encoding: 'utf8', env: { ...process.env, GITHUB_SHA: head, GITHUB_EVENT_NAME: 'push',
+      GITOPS_RETAINED_BASELINE: '', RUNTIME_RECEIPT_SCOPE: 'all', RUNTIME_REFRESH_PLAN: '' },
+  });
+  assert.deepEqual(JSON.parse(roles), ['buster', 'prism']);
+  const candidate = { ...code, commit: head, sourceRunId: 2, bundles: {
+    ...code.bundles,
+    nova: { ...code.bundles.nova, source: { commit: code.commit, sourceRunId: 1, sourceRunAttempt: 1 } },
+    ...Object.fromEntries(['buster', 'prism'].map(role => [role, {
+      ...code.bundles[role], url: `https://github.com/datrab/kubeclaw/releases/download/code-bundles-2-1/${role}-${head}.tgz`,
+    }])),
+  } };
+  const nextImages = { ...images, commit: head, imageSources: Object.fromEntries(runtimeImages.map(name => [name, {
+    commit: changedImages(root, images, head).includes(name) ? head : images.commit,
+    sourceRunId: 1, sourceRunAttempt: 1,
+  }])) };
+  assert.equal(compatibleCode(root, nextImages, candidate), candidate);
+}));

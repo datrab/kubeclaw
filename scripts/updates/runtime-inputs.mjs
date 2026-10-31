@@ -51,12 +51,19 @@ export function runtimeRefresh(env = process.env) {
   forcedComponents(plan.bundles, runtimeRoles);
   return plan;
 }
-export function changedBundles(root, prior, head, force = false) {
+export function changedBundles(root, prior, head, force = false, alignImageProvenance = false) {
   const forced = forcedComponents(force, runtimeRoles);
   return runtimeRoles.filter(role => {
     if (forced.has(role) || !prior?.bundles?.[role]) return true;
     const source = componentSource(prior, role, 'bundle').commit;
-    return bundleDigest(root, source, role) !== bundleDigest(root, head, role)
+    // Compatibility binds role images to the bundle producer, including image-only
+    // payloads (for example Buster's COPY skills). Refresh provenance together.
+    const roleImages = runtimeImages.filter(name => role === 'nova' ? name === 'nova'
+      : role === 'prism' ? name.startsWith('prism-')
+        : ['buster-gateway', 'buster-runtime', 'namespace-controller'].includes(name));
+    return (alignImageProvenance && roleImages.some(name => inputDigest(root, source, file => imageInput(name, file))
+      !== inputDigest(root, head, file => imageInput(name, file))))
+      || bundleDigest(root, source, role) !== bundleDigest(root, head, role)
       || bundleDigest(root, source, role, head) !== bundleDigest(root, head, role, head);
   });
 }

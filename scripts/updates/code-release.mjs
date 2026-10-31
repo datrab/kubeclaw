@@ -97,7 +97,7 @@ if (process.argv[1] === import.meta.filename) {
   const candidate = retainedBaseline(process.cwd(), process.env.GITOPS_RETAINED_BASELINE)?.code
     ?? (fs.existsSync(priorFile) ? JSON.parse(fs.readFileSync(priorFile, 'utf8')) : undefined);
   const prior = candidate ? validateCodeReceipt(candidate) : undefined;
-  const roles = changedBundles(process.cwd(), prior, process.env.GITHUB_SHA ?? commit, runtimeRefresh().bundles);
+  const roles = changedBundles(process.cwd(), prior, process.env.GITHUB_SHA ?? commit, runtimeRefresh().bundles, true);
   if (directory === '--roles') { process.stdout.write(JSON.stringify(roles)); process.exit(0); }
   if (!/^[a-zA-Z0-9_.-]+\/[a-zA-Z0-9_.-]+$/u.test(repository ?? '')) throw new Error('CODE_REPOSITORY_INVALID');
   const code = { schemaVersion: 1, commit, sourceRunId: Number(process.env.GITHUB_RUN_ID),
