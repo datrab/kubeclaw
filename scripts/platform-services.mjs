@@ -79,5 +79,17 @@ export function platformServices(versions, repository) {
       ignoreDifferences: [{group: '', kind: 'Service', name: 'nova-argocd-egress', namespace: 'kubeclaw', jsonPointers: ['/spec/externalName']}],
     },
   };
-  return [identity, storage, ...applications, litellm, novaArgoAccess];
+  const familyclawRepository = {
+    apiVersion: 'argoproj.io/v1alpha1', kind: 'Application',
+    metadata: {name: 'familyclaw-repository', namespace: 'argocd'},
+    spec: {
+      project: 'infra',
+      source: {repoURL: repository, targetRevision: 'main', path: 'gitops/platform/familyclaw-repository'},
+      destination: {server, namespace: 'argocd'},
+      syncPolicy: {automated: {prune: false, selfHeal: true, allowEmpty: false},
+        syncOptions: ['FailOnSharedResource=true', 'RespectIgnoreDifferences=true']},
+      ignoreDifferences: [{group: '', kind: 'Secret', name: 'familyclaw-repository', namespace: 'argocd', jsonPointers: ['/data']}],
+    },
+  };
+  return [identity, storage, ...applications, litellm, novaArgoAccess, familyclawRepository];
 }

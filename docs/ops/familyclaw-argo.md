@@ -58,3 +58,19 @@ The broader 18-case GitOps run has one existing failure in
 throw with the currently selected baseline). The same failure was reproduced
 against unchanged commit `27af7e8439c1356f059bf97fec0edf10edd8b210`; it is not
 introduced or repaired by this household registration. The other 17 cases pass.
+
+## Private repository credentials
+
+The auto-reconciled `familyclaw-repository` platform Application provisions an
+Ed25519 deploy key inside `argocd/familyclaw-repository`. The private key never
+leaves the Secret or appears in Git/logs. The one-shot nonroot Job may only get
+and patch that exact precreated Secret; retries preserve the existing key.
+Only its public key and fingerprint appear in the Job log, for registration as
+a read-only deploy key on `datrab/Familyclaw`. No personal GitHub token is copied.
+
+The household Application and AppProject use
+`ssh://git@ssh.github.com:443/datrab/Familyclaw.git`; host verification uses Argo's
+existing GitHub known-host entries. Generated Secret data is ignored during
+subsequent reconciliation and protected from pruning/deletion. The workload
+Application remains manual; repository access does not initialize private
+household configuration or synchronize workloads.
