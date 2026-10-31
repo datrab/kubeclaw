@@ -1,0 +1,114 @@
+{
+  "report": "ref003-batched-composition-source-correction-verdict.json",
+  "revision": "51885",
+  "actualP1Correction": {
+    "verdict": "PASS_AT_AFFECTED_SOURCE_SCOPE",
+    "finding": "The corrected build-runtime-role-bundle row no longer asserts a swarm configuration consumer or a runtime image-loader/effective-runtime fact.",
+    "sourceMeaning": {
+      "source": "scripts/build-runtime-role-bundle.mjs",
+      "inputs": [
+        "packaging/runtime/package-ownership.json",
+        "packaging/runtime/roles/nova.json",
+        "packaging/runtime/roles/buster.json",
+        "packaging/runtime/roles/prism.json"
+      ],
+      "roleRestriction": [
+        "nova",
+        "buster",
+        "prism"
+      ],
+      "actualBehavior": "The script requires role, output directory, commit, contract version, and build timestamp; refuses an existing output directory; reads and validates ownership plus the selected role manifest; copies the selected roster; and preserves selection/digest identity.",
+      "qualifiedBoundary": "It is an explicit packaging/owned-CLI assembly consumer. It does not establish swarm-config reading, image loading, startup, credentials, effective runtime, deployment, or runtime behavior."
+    },
+    "mapDisposition": "The owned-cli-maintenance fact, self-consumer, explicit authority inputs, required-operand/default wording, and copy/digest retention wording are source-supported. The generic source disposition must not be interpreted as a runtime configuration producer beyond that bounded assembly fact.",
+    "authorityInputs": "All four newly named inputs are real current regular JSON inputs with role/package selections used by the script; their map binding is now physically and hash acquired by the configuration-family guard.",
+    "controls": {
+      "reported": "ref003-batched-family-controls-corrected.log reports 9 terminal-successful targeted controls.",
+      "scope": "The reported controls cover the new package-ownership/Nova authority mutations, map and inverse substitution seals, physical-file refusal cases, source-selector drift, and data-shape handling. They do not prove bundle execution, a provider, Helm, or deployment behavior."
+    }
+  },
+  "pythonHarnessFix": {
+    "verdict": "PASS_AT_FIXTURE_SCOPE",
+    "finding": "The corrected fixture is not a stubbed coverage oracle. It extracts the real production occurrence set once and adds only the actual owned C receiver as a prerequisite for the relevant coverage assertion; fixture filtering remains in force for every other subject.",
+    "reportedResult": {
+      "log": "ref003-batched-python-custody-full-file-corrected.log",
+      "result": "82 pass, 0 fail, 34 Python-3.14/annotationlib-native skips, 116 total"
+    },
+    "limits": [
+      "This validates the bounded current test-file guard set only.",
+      "It does not supply Python 3.14 annotationlib evidence on the current Python 3.11.2 host.",
+      "It does not qualify a universal native-tool source/parser closure.",
+      "The earlier 80-pass/2-fail fixture defect and the older 12-group/24-skip result remain historical evidence at their original scopes."
+    ]
+  },
+  "snapshotProvenance": {
+    "verdict": "SOURCE_CONFIRMED",
+    "finding": "The earlier P2 premise that --revision accepted HEAD or master was false. The unchanged global docs-generate argument gate requires a 40-character lowercase hexadecimal revision and verifies it is a commit object with git cat-file before branching.",
+    "hubSpecificBoundary": "The new configuration-hub branch additionally requires --revision and compares five exact revision blobs against current bytes: docs-configuration-inventory.mjs, docs-generate.mjs, docs-generate-core.mjs, configuration-family-map.json, and configuration-families.json. The shared source lock remains unchanged.",
+    "controlScope": "The reported ninth control rejecting HEAD, master, a short SHA, and a blob identifier before output is consistent with the actual global gate. No new provenance gate was needed.",
+    "historicalDisposition": "The first Code P2 raw assertion remains preserved as an incorrect premise; it is not relabeled as a clean result."
+  },
+  "existingInputBindingTransfer": {
+    "verdict": "SUPPORTED_AFTER_CODE_FREEZE_AND_MAINTAINED_DERIVATION",
+    "semantics": [
+      {
+        "source": "scripts/docs-configuration-inventory.mjs",
+        "existingAnchors": "One unresolved-module-input authority source identity and five canonical authority identities.",
+        "currentMeaning": "The body now adds an explicit configuration-reference-only route using the already guarded YAML/schema/runtime domain builders and compiled family map. It does not make the default full API/product-output path successful and grants no generic role or loader privilege.",
+        "transfer": "A current source binding is source-supported only for those identified anchors, after fresh maintained scalar derivation."
+      },
+      {
+        "source": "scripts/docs-generate.mjs",
+        "existingAnchors": "One canonical authority identity and reviewedSdkGeneratorRecipe.sourceSha256.",
+        "currentMeaning": "The explicit hub route is revision-pinned and invokes the new hub renderer; the default generation path, SDK import/owner/call body, and ordinary generic guards remain bounded as before.",
+        "transfer": "A current binding is source-supported for the two identified anchors, after maintained derivation confirms the exact changed fields."
+      },
+      {
+        "source": "scripts/docs-generate-core.mjs",
+        "existingAnchors": "None of the old literal locator anchors.",
+        "transfer": "No existing-anchor renewal follows merely from its new hub rendering body."
+      }
+    ],
+    "notYetGranted": [
+      "No native-role PASS.",
+      "No blanket 45-record renewal or registry repin.",
+      "No full-global-API success.",
+      "No fresh native inventory, page, reader-quality, or whole-REF003 result."
+    ]
+  },
+  "finiteFinalChecks": [
+    "Wait for the frozen corrected Code review; Source approval does not substitute for that result.",
+    "Run one maintained post-freeze metadata derivation: scalar receipts first, then parent receipts, limited to the identified configuration-inventory/docs-generate anchors and genuinely changed mode/test inputs.",
+    "Independently review that derived affected metadata table, including the retained baseline five-parent-fact ordering failure; do not adopt it from source hashes alone.",
+    "Run the fresh configuration-reference native inventory with an immutable commit revision, then generate and check the pinned configuration hub.",
+    "Inspect the resulting current configuration reference for practical reader usability and quality, then make the separate whole REF003 Source/Reader/Quality decision."
+  ],
+  "reusedScopeAndLimits": {
+    "reused": "The other 46 source, 15-family, and field/inverse judgments from the prior batch report remain reusable at their exact stated limits.",
+    "notReopened": [
+      "A911-05",
+      "CFG011/REF012",
+      "MNT004",
+      "closed Event/publication content scopes",
+      "the failed default full global API route"
+    ],
+    "currentArtifacts": "Existing native configuration artifacts and configuration.md remain pre-final candidates; configuration.md is still the old canonical page."
+  },
+  "originalREF003": {
+    "verdict": "NOT_ACCEPTED",
+    "status": "This correction resolves the single bundle-reader P1 and supports a finite metadata-transfer path only.",
+    "remaining": [
+      "final native generation",
+      "immutable revision-bound inventory and hub output",
+      "Code review",
+      "affected metadata review",
+      "current reader/quality review",
+      "whole independent REF003 decision",
+      "registration, checker, push, and exact-remote steps"
+    ],
+    "countersPreserved": {
+      "gates": "71/89",
+      "requirements": "252/261"
+    }
+  }
+}

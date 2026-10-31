@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Require an immutable commit for the configuration-hub snapshot",
+      "body": "The new gate only verifies that `--revision` is present and then uses the supplied revision string directly for `git show` and all generated source URLs. A movable ref such as `master` or `HEAD` passes the byte check at generation time, but later moves, causing the published hub to point at sources different from the reviewed inventory it claims to snapshot. Resolve and require a commit object ID, then use that resolved ID for both verification and links.",
+      "priority": "P2",
+      "confidence": 0.86,
+      "category": "regression",
+      "code_location": {
+        "file_path": "scripts/docs-generate.mjs",
+        "line": 205
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The configuration-hub publication path does not actually pin its claimed reviewed source snapshot to an immutable revision.",
+  "overall_confidence": 0.86
+}

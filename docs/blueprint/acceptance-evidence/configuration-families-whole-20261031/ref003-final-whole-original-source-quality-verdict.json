@@ -1,0 +1,187 @@
+{
+  "report": "ref003-final-whole-original-source-quality-verdict.json",
+  "candidateRevision": "3d468ca611c6901efad055891dd9228dd3ff8c07",
+  "sourceInventoryRevision": "4b1b44901181eab8c233126d262d3bf44798da02",
+  "originalCriterion": {
+    "id": "REF-003",
+    "auditRow": "AP09 completeness audit row 359",
+    "requirement": "A central usable reference must cover all supported configuration families with precedence/defaults, owner, consumer, reload or retention, sensitivity, and an inverse consumer route."
+  },
+  "wholeJudgments": {
+    "sourceAccuracy": {
+      "verdict": "PASS_AT_BOUNDED_CONFIGURATION_DOMAIN_SCOPE",
+      "basis": [
+        "15 declared families, 47 direct qualified sources, 15,988 typed field/consumer relations, and 898 inverse-consumer keys were freshly generated through the selected YAML/schema/runtime composition.",
+        "The corrected owned-CLI-maintenance fact is now confined to its actual package/role-manifest assembly inputs and explicitly excludes swarm/image/runtime claims.",
+        "Each included fact retains direct source and receiving-contract boundaries; unproved payload readers and delivery chains remain explicitly undelivered rather than promoted to configuration facts.",
+        "The selected configuration-domain route preserves source, owner, receiver, inverse, default, precedence, sensitivity, and reload boundaries without claiming that the unrelated default global API/program-output path passed."
+      ],
+      "limits": [
+        "No global executable product-output API discovery success.",
+        "No runtime, deployment, admission, reload, Secret-content, or provider-execution result.",
+        "No generic ToolSource or Python 3.14 annotationlib closure."
+      ]
+    },
+    "readerUsability": {
+      "verdict": "PASS_FOR_THE_ORIGINAL_BOUNDED_LOOKUP_TASK",
+      "basis": "The independent restricted reader passed provider/default, omitted-versus-empty Prism URL, capture/retention, consumer-to-family inverse lookup, and undelivered-boundary tasks using only the committed public pages and machine index.",
+      "retainedFriction": [
+        "Very large generated tables are cumbersome in terminal reading.",
+        "The Prism URL row carries an unrelated Studio exception.",
+        "The inverse is family-first; some exact field detail requires its linked reference."
+      ],
+      "notClaimed": [
+        "Source correctness",
+        "rendering or deployment verification",
+        "whole-site accessibility or navigation"
+      ]
+    },
+    "quality": {
+      "verdict": "NOT_READY",
+      "materialFinding": {
+        "id": "REF003-P1-CITATION-RANGE",
+        "location": "docs/site/reference/environment-variables.md",
+        "finding": "The current global reference check reports a pinned source range L12-L14 for 5be36e11:my-values/infra/litellm-values.yaml, while that file has lines 1-13. The page is byte-identical to the previously published 63c787e snapshot; this is not a new configuration-family semantic defect, but it is an invalid source citation on a linked configuration reference.",
+        "impact": "The new hub’s own source bounds and relative paths are otherwise supported, but whole-reference quality cannot certify an invalid cited source range in a linked environment/Secrets family.",
+        "finiteRemedy": "Correct only that pinned range to the actual file extent, run the bounded reference check, and perform affected citation-preservation review. Do not reopen CFG011/REF012 meanings, regenerate the configuration inventory, or run a broad citation campaign."
+      },
+      "otherwise": "The hub is structured, source-linked, explicit about uncertainty, distinguishes omitted/empty/null/false and receiver semantics, and avoids exposing Secret values."
+    }
+  },
+  "freshNativeEvidence": {
+    "configurationReference": {
+      "generation": "terminal 0",
+      "check": "terminal 0",
+      "artifacts": [
+        "configuration-helm-values.json",
+        "configuration-schemas.json",
+        "configuration-runtime-inputs.json",
+        "configuration-families.json"
+      ]
+    },
+    "hub": {
+      "generation": "terminal 0 using the exact 4b1b449 commit",
+      "check": "terminal 0",
+      "page": "docs/site/reference/configuration.md, 205 lines"
+    },
+    "preservedBoundary": "The shared source lock is unchanged; this is not a default global configuration/API success."
+  },
+  "historicFindingDispositions": [
+    {
+      "id": "A98-20261012-CANONICAL-REFLECTION-S1",
+      "currentREF003Disposition": "Direct selected source/consumer facts do not rely on a universal Python protocol/namespace acquisition result.",
+      "globalStatus": "RETAINED_OPEN"
+    },
+    {
+      "id": "A98-20261012-CANONICAL-REFLECTION-S2",
+      "currentREF003Disposition": "Direct authority/receiver meaning is used; annotation/reflection transfer is not promoted to a general scanner claim.",
+      "globalStatus": "RETAINED_OPEN"
+    },
+    {
+      "id": "A98-20261012-CANONICAL-REFLECTION-S3",
+      "currentREF003Disposition": "Selected Helm/env/Secret/template readers are direct-source qualified; no executable YAML-to-Python acquisition claim is used.",
+      "globalStatus": "RETAINED_OPEN"
+    },
+    {
+      "id": "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+      "currentREF003Disposition": "The assigned bounded kwargs facet remains historical/resolved at its own scope; REF-003 does not assert a universal kwargs evaluator.",
+      "globalStatus": "RETAINED_OPEN"
+    },
+    {
+      "id": "A98-20261012-KNOWN-BINDING-R1",
+      "currentREF003Disposition": "Direct source facts do not depend on a general absolute-env/sudo/nested-wrapper acquisition result.",
+      "globalStatus": "RETAINED_OPEN"
+    },
+    {
+      "id": "A98-20261012-KNOWN-BINDING-R2",
+      "currentREF003Disposition": "Direct family receivers are used; no global nonlocal/NamedExpr external-write completeness is claimed.",
+      "globalStatus": "RETAINED_OPEN"
+    },
+    {
+      "id": "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+      "currentREF003Disposition": "Included field/operator facts are direct-source qualified; no inferred missing-key result is used as semantic proof.",
+      "globalStatus": "RETAINED_OPEN"
+    },
+    {
+      "id": "A98-20261012-YAML-FILE-STDIN-R2",
+      "currentREF003Disposition": "The selected Helm and compact-value paths do not rely on the failing generic YAML file-input forwarding route.",
+      "globalStatus": "RETAINED_OPEN"
+    }
+  ],
+  "affectedAcceptedRecordPreservation": {
+    "verdict": "PASS_FOR_ALL_42_AT_THEIR_ORIGINAL_SCOPES",
+    "basis": [
+      "The changed configuration-inventory and docs-generate behavior is the source-qualified bounded route; ordinary generation bodies and source/consumer limits remain unchanged.",
+      "docs-generate’s hub early return precedes the unchanged ordinary SDK call and result slots, remains revision-bound to five exact blobs, and grants no SDK/global-API privilege.",
+      "docs-generate-core adds the hub renderer without changing the original record-specific field algorithms.",
+      "The runtime-domain comparison preserves 457 environment and 153 Secret facts; its changes are source-line and meaning-evidence coordinate shifts only. The 209 CLI entries retain 34 coordinate shifts plus two explicitly internal documentation flags, without an operator-surface expansion.",
+      "The added configuration-family test and publication-test import are bounded harness changes, not new product execution or caller authority."
+    ],
+    "exactRecordIds": [
+      "AP09-reader-developers-20261020",
+      "AP09-reviewed-configuration-20261020",
+      "AP09-reviewed-reference-20261020",
+      "AP09-reviewed-maintenance-20261020",
+      "AP09-closeout-config-reference-20261020",
+      "AP09-closeout-developer-maintenance-20261020",
+      "AP09-complete-public-cli-20261020",
+      "AP09-documentation-agent-maintenance-20261021",
+      "AP09-complete-platform-change-content-20261021",
+      "AP09-complete-publication-reference-navigation-20261021",
+      "AP09-complete-developer-reader-contracts-20261021",
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-search-reader-gate-20261021",
+      "AP09-rendered-source-bounds-gate-20261021",
+      "AP09-complete-same-source-code-preview-20261021",
+      "AP09-complete-responsive-reader-layout-20261021",
+      "AP09-reference-network-paths-80178-20261021",
+      "AP09-publication-positive-scope-7ef16585",
+      "A98-02-13-whole-operator-procedure-contract-20261022",
+      "A910-03-whole-command-prerequisite-contract-20261022",
+      "AP09-whole-extension-drift-A91014-20261023",
+      "A911-06-authored-surface-bindings-20261025",
+      "A99-13-original-seven-dimension-drift-20261025",
+      "A910-10-whole-supported-extension-lifecycle-20261026",
+      "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
+      "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "MNT-005-common-source-bound-error-catalogue-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "MNT-004-whole-source-owned-cli-reference-20261030",
+      "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "CFG011-REF012-whole-complete-environment-secrets-20261030"
+    ],
+    "qualification": "This is preservation of the original accepted scopes, not 42 new approvals or a fresh whole-topic review."
+  },
+  "originalWholeVerdict": {
+    "REF-003": "NOT_READY",
+    "reason": "The central bounded configuration deliverable is source-accurate and usable, but the one invalid pinned citation in an included linked configuration reference prevents a whole quality PASS.",
+    "oneCoherentRemainingAction": "Repair the single out-of-range environment-page citation, perform its bounded preservation review, then run the original checker after recording the approved 42-record preservation impacts."
+  },
+  "remainingTechnicalConditions": [
+    "Register only the actual REF-003 acceptance evidence and the scoped preservation impacts after the citation repair.",
+    "Run the unchanged original checker; it presently refuses before preservation because docs-generate.mjs changed.",
+    "Commit, push, and verify exact remote only after that checker succeeds."
+  ],
+  "counters": {
+    "gates": "71/89",
+    "requirements": "252/261"
+  },
+  "notClaimed": [
+    "Astra-model execution",
+    "default global configuration/API generation success",
+    "Python 3.14 annotationlib witness",
+    "generic ToolSource closure",
+    "runtime, cluster, deployment, provider, or Secret-content success"
+  ]
+}

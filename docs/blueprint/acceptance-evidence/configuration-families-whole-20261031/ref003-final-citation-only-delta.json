@@ -1,0 +1,12 @@
+{
+  "sourceAuthority": "ref003-final-whole-original-source-quality-verdict.json",
+  "file": "docs/site/reference/environment-variables.md",
+  "beforeSha256": "901c5c661d3cecf004c56f863ff725ad34bc976e7927537615d3a35cd3ae9bc3",
+  "afterSha256": "2cd7f967dcd721a5ddae67ea5ef9944d9ca7d40653a0b7902e72818c9eea73cd",
+  "before": "[`my-values/infra/litellm-values.yaml:12-14`](https://github.com/datrab/kubeclaw/blob/5be36e11c830c8312e0ca0c13deed17a6ccab1a4/my-values/infra/litellm-values.yaml#L12-L14)",
+  "after": "[`my-values/infra/litellm-values.yaml:12-13`](https://github.com/datrab/kubeclaw/blob/5be36e11c830c8312e0ca0c13deed17a6ccab1a4/my-values/infra/litellm-values.yaml#L12-L13)",
+  "replacements": 1,
+  "allOtherBytesUnchanged": true,
+  "semantics": "Only displayed/clicked source extent corrected to actual13line pinned file; environment/Secret facts and contracts unchanged.",
+  "noInventoryRegeneration": true
+}

@@ -1,0 +1,160 @@
+{
+  "report": "ref003-final-citation-whole-acceptance-verdict.json",
+  "candidateRevision": "090d9bb60d2d6f68f5acfbdd3ffe1417ef48f41f",
+  "baseRevision": "3d468ca611c6901efad055891dd9228dd3ff8c07",
+  "originalCriterion": {
+    "id": "REF-003",
+    "requirement": "Central reference for all supported configuration families, including precedence/defaults, owner, consumer, reload/retention, sensitivity, and usable inverse lookup.",
+    "auditAuthority": "AP09 completeness audit row 359"
+  },
+  "citationCorrection": {
+    "verdict": "PASS",
+    "change": "Exactly one displayed and linked range changed from my-values/infra/litellm-values.yaml:12-14/#L12-L14 to :12-13/#L12-L13.",
+    "sourceMeaning": "The pinned source has 13 lines; line 12 names GOOGLE_APPLICATION_CREDENTIALS and line 13 supplies its value. The correction restores the full relevant source extent without altering environment/Secret meaning.",
+    "deltaEvidence": {
+      "replacements": 1,
+      "allOtherBytesUnchanged": true,
+      "inventoryOrSchemaRegeneration": false
+    },
+    "finalCheck": "The corrected global documentation-reference check passed: 10,885 local links, 4,772 anchors, 12,677 repository-path references, and 49,125 pinned source links."
+  },
+  "wholeJudgments": {
+    "sourceAccuracy": {
+      "verdict": "PASS_AT_ORIGINAL_BOUNDED_CONFIGURATION_SCOPE",
+      "basis": [
+        "The current guarded composition covers 15 configuration families, 47 direct qualified sources, 15,988 typed field/consumer relations, and 898 inverse-consumer keys.",
+        "Each included fact retains source, owner, consumer, default/precedence, reload/retention, sensitivity, and explicit undelivered/unknown boundaries.",
+        "The corrected citation preserves the external LiteLLM receiver boundary and does not assert an in-repository process reader."
+      ],
+      "limits": [
+        "No default global API/program-output success.",
+        "No runtime, cluster, provider, admission, deployment, or Secret-content success.",
+        "No generic ToolSource or Python 3.14 annotationlib closure."
+      ]
+    },
+    "readerUsability": {
+      "verdict": "PASS",
+      "basis": "The prior restricted independent reader PASS remains applicable: the citation-only correction does not alter lookup structure or semantics. The reader located provider/default, Prism omission-versus-empty behavior, capture/retention, inverse consumer routes, and explicit undelivered limits.",
+      "retainedFriction": [
+        "Large generated tables",
+        "The unrelated Studio exception in the Prism row",
+        "Family-first inverse lookup requiring linked detailed pages for some exact fields"
+      ],
+      "notClaimed": [
+        "A new fresh-reader run",
+        "Source correctness by reader alone",
+        "runtime or deployment verification"
+      ]
+    },
+    "quality": {
+      "verdict": "PASS_AT_ORIGINAL_REFERENCE_SCOPE",
+      "basis": [
+        "The sole prior quality blocker was an out-of-range pinned citation; it is now corrected to the actual two-line declaration.",
+        "The normal reference check now passes.",
+        "The hub remains clear about effective-value distinctions, Secret redaction, consumer/reload limits, and unsupported delivery/readers."
+      ],
+      "limits": [
+        "This is not a whole-site quality award.",
+        "It does not erase retained global ToolSource, default-global-API, or native Python 3.14 limitations."
+      ]
+    }
+  },
+  "historicFindingDisposition": {
+    "verdict": "UNCHANGED_GLOBAL_FAILURES_NOT_USED_AS_REF003_PROOF",
+    "ids": [
+      "A98-20261012-CANONICAL-REFLECTION-S1",
+      "A98-20261012-CANONICAL-REFLECTION-S2",
+      "A98-20261012-CANONICAL-REFLECTION-S3",
+      "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY",
+      "A98-20261012-KNOWN-BINDING-R1",
+      "A98-20261012-KNOWN-BINDING-R2",
+      "A98-20261012-DEPENDENT-KEY-CUSTODY-R1",
+      "A98-20261012-YAML-FILE-STDIN-R2"
+    ],
+    "meaning": "All eight remain open global acquisition/custody limitations. REF-003 instead relies on direct qualified configuration sources and receivers; none of these global findings is closed or relabeled."
+  },
+  "affectedAcceptedRecordPreservation": {
+    "verdict": "PASS_FOR_ALL_42_ORIGINAL_SCOPES",
+    "meaning": "This is append-only preservation of existing accepted scopes, not 42 new acceptances. Original criteria, summaries, reviewers, checks, historical findings, and limits remain intact.",
+    "all42Ids": [
+      "AP09-reader-developers-20261020",
+      "AP09-reviewed-configuration-20261020",
+      "AP09-reviewed-reference-20261020",
+      "AP09-reviewed-maintenance-20261020",
+      "AP09-closeout-config-reference-20261020",
+      "AP09-closeout-developer-maintenance-20261020",
+      "AP09-complete-public-cli-20261020",
+      "AP09-documentation-agent-maintenance-20261021",
+      "AP09-complete-platform-change-content-20261021",
+      "AP09-complete-publication-reference-navigation-20261021",
+      "AP09-complete-developer-reader-contracts-20261021",
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-search-reader-gate-20261021",
+      "AP09-rendered-source-bounds-gate-20261021",
+      "AP09-complete-same-source-code-preview-20261021",
+      "AP09-complete-responsive-reader-layout-20261021",
+      "AP09-reference-network-paths-80178-20261021",
+      "AP09-publication-positive-scope-7ef16585",
+      "A98-02-13-whole-operator-procedure-contract-20261022",
+      "A910-03-whole-command-prerequisite-contract-20261022",
+      "AP09-whole-extension-drift-A91014-20261023",
+      "A911-06-authored-surface-bindings-20261025",
+      "A99-13-original-seven-dimension-drift-20261025",
+      "A910-10-whole-supported-extension-lifecycle-20261026",
+      "A911-01-whole-ten-family-discovery-declarations-20261027",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
+      "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "MNT-005-common-source-bound-error-catalogue-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "MNT-004-whole-source-owned-cli-reference-20261030",
+      "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "CFG011-REF012-whole-complete-environment-secrets-20261030"
+    ],
+    "citationAffectedSubset": [
+      "AP09-complete-static-reader-search-20261021",
+      "AP09-publication-positive-scope-7ef16585",
+      "MNT-014-whole-native-publication-examples-20261027",
+      "A99-11-whole-published-example-claims-20261027",
+      "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "MNT-005-common-source-bound-error-catalogue-20261030",
+      "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "A91306-QUA002-original-controlled-language-whole-20261030",
+      "CFG011-REF012-whole-complete-environment-secrets-20261030"
+    ],
+    "citationSubsetDisposition": "PASS: only displayed/clicked source extent changed; source meaning, page content, execution observations, qualifications, and original outcomes remain unchanged."
+  },
+  "originalWholeVerdict": {
+    "REF-003": "PASS",
+    "scope": "Original all-configuration-family/reference requirement only.",
+    "remainingContentFinding": "none"
+  },
+  "remainingTechnicalConditions": [
+    "Register only REF-003 and the approved 42-record preservation impacts, preserving all prior findings and limits.",
+    "Run the unchanged original checker; it has not yet passed because existing record bindings still predate the approved preservation transfer.",
+    "After a successful checker result, make the coherent commit, push, and verify exact remote."
+  ],
+  "notClaimed": [
+    "Astra-model execution",
+    "default global configuration/API success",
+    "generic ToolSource success",
+    "native Python 3.14 annotationlib witness",
+    "runtime, deployment, cluster, provider, or Secret-content success"
+  ],
+  "countersBeforeRegistration": {
+    "gates": "71/89",
+    "requirements": "252/261"
+  }
+}

@@ -1,0 +1,95 @@
+{
+  "report": "ref003-batched-composition-source-verdict.json",
+  "candidateRevision": "63c787e7e8dc1b85461300f28e8ee63cf3441faf plus frozen current batch worktree",
+  "sourceAccuracy": {
+    "verdict": "NOT_READY",
+    "reason": "One direct-source fact falsely identifies charts/kubeclaw/files/config/swarm.config.json as the consumer of scripts/build-runtime-role-bundle.mjs. The complete current script never reads that file."
+  },
+  "materialFindings": [
+    {
+      "severity": "P1",
+      "source": "docs/config/configuration-family-map.json source scripts/build-runtime-role-bundle.mjs",
+      "finding": "The direct fact conflates a source-owned byte-copy/bundle assembler with a swarm-config reader or image loader.",
+      "evidence": "The script reads packaging/runtime/package-ownership.json and packaging/runtime/roles/${role}.json, selects/copies package and plugin source files, then writes a bundle manifest. It contains no swarm.config.json read and does not establish an image-side loader, startup, effective configuration, or deployment behavior.",
+      "requiredCorrection": "Replace the fact with an own-reader boundary: the bundle script is the bounded reader of its package-ownership and role-manifest inputs. Move it to owned-cli-maintenance, or retain its present family only with equivalent explicit maintenance wording; set the inverse consumer to the script itself, not swarm.config.json. State that the selected role/roster controls bundle assembly only, and retain no image-loader/runtime inference.",
+      "requiredControls": [
+        "Reject a substituted swarm-config consumer.",
+        "Reject a missing or changed package-ownership/selected-role manifest boundary.",
+        "Reject treating copied bundle bytes as loader, startup, credential, or effective-runtime proof.",
+        "Preserve the role allow-list and source-copy roster boundary."
+      ]
+    }
+  ],
+  "checkedCurrentMapSemantics": {
+    "scope": {
+      "families": 15,
+      "mappedSources": 47,
+      "directSourceFacts": 27,
+      "validationOrDocumentationBoundaries": 20,
+      "selectedInputs": {
+        "yaml": 76,
+        "schemas": 60,
+        "runtime": 1092
+      }
+    },
+    "supportedAtExactScope": [
+      "The new mode retains the guarded selected-YAML, schema, runtime, CLI, receiver, Secret, malformed-input, physical-source, and zero-blocker checks.",
+      "It excludes only executable program-output API discovery; it does not install a generic role exemption.",
+      "Typed field inversion preserves registration, transport, and implementation-evidence roles instead of converting every source reference into a runtime receiver.",
+      "YAML payload and undeployed-payload branches retain whole-file and non-delivery limits. No payload key becomes a runtime use merely by appearing in a file.",
+      "Schema inverse entries retain implementation-evidence-not-runtime-observation boundaries; environment and Secret entries preserve no-value/no-effective-secret limits.",
+      "The direct constructor/store, Prism bootstrap/ingestion, OpenClaw target, recovery, retirement, and schema-result records contain source-specific defaults or explicit non-runtime limits. No additional contradiction was found in those bounded records."
+    ],
+    "notAccepted": [
+      "The map hash, physical identity checks, or 15,987 generated facts do not independently prove the meanings of a wrong direct fact.",
+      "The first and second scoped native generations are pre-final-source-change evidence only.",
+      "The composed inverse shape control is a controlled composition check, not final native output.",
+      "The current canonical configuration.md remains the old hub; no reader/publication result exists."
+    ]
+  },
+  "eightFindingDisposition": {
+    "kwargs": "A98-20261012-KNOWN-READER-KWARGS-MISSING-KEY remains independently resolved only for its assigned-source facet, with global gates pending.",
+    "remainingSeven": "The seven other historical generic acquisition limits remain open global history. The twelve joint controls demonstrate the current bounded guards, but CPython 3.14 annotation-library witnesses were unavailable on the observed 3.11.2 environment; no general ToolSource or all-Python claim follows.",
+    "mapRequirement": "Included configuration facts must continue to use direct owner/consumer evidence and state non-reliance on generic reflection, wrapper, NamedExpr, dependent-key, and YAML-stdin acquisition. The controls create neither seven new source bugs nor global closure."
+  },
+  "allowedMinimalCoherentCorrections": [
+    "Correct only the build-runtime-role-bundle direct fact, its family/own-reader inverse wording, and its associated map hash/source snapshot expectations.",
+    "Regenerate configuration-families.json after that correction; do not alter generic API discovery, source selectors, private profiles, or the normal default full path.",
+    "After code freeze, derive metadata once in dependency order: current scalar census first, then current parent facts/roles, then only actually changed module-qualification fields. Do not repin all 45 records.",
+    "Retain the existing test import/parser input boundary. Its six import edges are a finite custody-test dependency; helper four callers and parser seven callers stay unchanged."
+  ],
+  "requiredNextTechnicalPath": {
+    "beforeFinalNative": [
+      "Apply the P1 map correction and review its affected source/content semantics.",
+      "Complete the parallel affected Code P2 review without treating it as this Source verdict.",
+      "Perform the single post-freeze scalar-first/parent-second maintained derivation and affected metadata review."
+    ],
+    "then": [
+      "Run the explicit --configuration-reference-only native generation against the corrected frozen source.",
+      "Create the immutable source/inventory revision required by --only configuration-hub, then generate the canonical hub.",
+      "Review the generated hub for family-to-owner-to-consumer/default/precedence/change-impact/sensitivity lookup tasks and limits.",
+      "Conduct the independent whole REF-003 SourceAccuracy, ReaderUsability, and Quality decision."
+    ],
+    "normalDefaultPath": "The ordinary full configuration/API path remains failed and unclaimed. It is neither waived nor required to report success for this bounded configuration-reference route."
+  },
+  "acceptanceLimits": {
+    "originalREF003": "NOT_ACCEPTED",
+    "currentCounters": {
+      "gates": "71/89",
+      "requirements": "252/261"
+    },
+    "notClaimed": [
+      "Final current native output",
+      "Current canonical configuration hub",
+      "Reader or quality approval",
+      "Global API discovery success",
+      "Runtime, provider, Helm, product, cluster, or live execution",
+      "Registration, checker, push, or exact-remote completion"
+    ],
+    "preserved": [
+      "Earlier helper, parser, native-failure, Code P2, and source-caller negatives",
+      "Accepted A911-05, CFG-011/REF-012, Event, MNT, and publication scopes at their original limits",
+      "Five byte-exact published configuration artifacts as baselines only"
+    ]
+  }
+}

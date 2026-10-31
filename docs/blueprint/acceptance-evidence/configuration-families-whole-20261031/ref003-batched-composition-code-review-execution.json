@@ -1,0 +1,28 @@
+{
+  "status": "TERMINAL",
+  "pid": 840647,
+  "snapshot": "/home/node/.openclaw/workspace/tmp/pr13-ref003-batched-composition-code-rhhhb7p7",
+  "startedAt": "2026-10-31T10:44:26.888957+00:00",
+  "argv": [
+    "bash",
+    "/home/node/.openclaw/agents/main/agent/workshop-skills/autoreview-terra/scripts/run-autoreview.sh",
+    "--mode",
+    "local",
+    "--model",
+    "gpt-5.6-terra",
+    "--thinking",
+    "high",
+    "--codex-bin",
+    "/app/extensions/codex/node_modules/.bin/codex",
+    "--max-priority",
+    "P2",
+    "--dataset",
+    ".pr13-review-context.txt",
+    "--prompt",
+    "Affected P0/P1/P2 exactly NINE file configuration-reference composition/map/current-core hub renderer/explicit docs-only seam/controls and CI import plus two exact parser/helper caller input hashes. Do not reopen prior accepted Source scopes or demand broad global API success;19prior stops preserved. Newroute calls unchanged selectedYamlOnly:true YAML/schema/runtime builders with authorities/zero blockers, not generic output classifier/collector/admission widening. Finite47map+15family direct actualsource identities, fullsource selection vectors76/60/1092, map SHAcompiledpin, regularnlink1/canonical/sourcehash, complete owner/default/inverse/change/sensitivity facts and actual existing field/receiver relation index preserving registration/implementation/transport roles. No rawvalue/formula copy to index. Opaque/unproved reader/delivery explicit, no live/annotation3.14/globalAPI claim. Core pure renderer validates complete inverse multiplicity and family shape, useful selector/consumer/default/change/limits not fielddump. Docs --only configuration-hub requires explicit reviewed revision; 5code/map/data Git bytechecks, bounded Source lock untouched. Other modes and unchanged builder algorithms exactly preserved. New9meaningful controlgroups use actual current composition function with controlled builders over existing actual native output schema, no full producer/helpers/Helm/cluster run; actual separate scoped native0 runs corroborate guard use. Bundle P1 source fact corrected: own package ownership/3role manifests only, inverse ownscript, inputs bytebound andcopy/allow-list limits explicit. PriorCodeP2 immutability finding false against unchangedglobal40hex+commitobject gates; completeheader and nativeHEAD/master/short/blob refusals now supplied, rejectfromactualgate notfromassertion. FullPythonfile correction preserves actualC scanner through subject-specificPythonfilters. Original12facetgroups fixed REAL helper+REAL native C receiver and actual productionreceivercontract in focused VM; all12PASS/24annotationlib nativeunavailable. Noassertion softened; new wrapper must not hide real regression, assess actual full setup/productioncoverage function andhelper supplied. New8suite addedexistingpubtestCI; parser+nativeprofile exact old-to-new testinput SHA only, sourceBoundary helpercalls unchanged, no generictestgrant. Global metadata parents intentionally pending ONE final ordered batch: suppliedactualnegative not causedby this newroute. Source-onlysnapshot not installedproduct, actualroot mapping explicit; supportfiles copiedbyteexact baseline for optional inspection. New SourceMap record semantics receive separate sameSource review, noCodeclean equatesSourceAccuracy. Review composition safety, false complete/inverse/secret/provenance claims, control validity, body/export preserving oldretained/scanner meanings. Noagents/nestedreviews/mutations. Original REF003 whole NOTaccepted, no registration/checker/push claim.",
+    "--json-output",
+    "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg011-ref012-current-20261030/ref003-batched-composition-code-review.json"
+  ],
+  "exitCode": 0,
+  "finishedAt": "2026-10-31T10:46:42.139788+00:00"
+}

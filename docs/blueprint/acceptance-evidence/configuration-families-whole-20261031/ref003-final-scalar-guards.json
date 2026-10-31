@@ -1,0 +1,20 @@
+{
+  "status": "PASS",
+  "results": [
+    {
+      "source": "scripts/bundle-values-field.mjs",
+      "status": "PASS",
+      "occurrences": 6,
+      "runtimeExecutionAuthorized": false,
+      "apiApplyAuthorized": false
+    },
+    {
+      "source": "scripts/buster-resource-overlay.mjs",
+      "status": "PASS",
+      "occurrences": 2,
+      "runtimeExecutionAuthorized": false,
+      "apiApplyAuthorized": false
+    }
+  ],
+  "scope": "Existing two exact deployment scalar use-occurrences, current caller and selected physical census, no producer execution."
+}

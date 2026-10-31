@@ -1,0 +1,55 @@
+{
+  "snapshot": "/home/node/.openclaw/workspace/tmp/pr13-ref003-batched-composition-code-rhhhb7p7",
+  "actualRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "baseline": "26fff82858a9d52c3da19c38cb4b3fb982fb8885",
+  "paths": [
+    {
+      "path": "scripts/docs-configuration-inventory.mjs",
+      "baselineSha256": "6a7a823f73f3f1fd9d7b32ec63e73481ee2c925d9ca0e36873ebb347493d101e",
+      "candidateSha256": "c32d5e890c835f30cb4db8b374fb22b622cae8183fce0b138d327a2e846aeae7"
+    },
+    {
+      "path": "scripts/docs-generate.mjs",
+      "baselineSha256": "911cc972791c6c51643c3828de3840686e96129219e87fa064d73084189efdb9",
+      "candidateSha256": "cc6e7b8d45bab47fb3ee40b63aef294eae1131d3e7123dd1d888502d390b6843"
+    },
+    {
+      "path": "scripts/docs-generate-core.mjs",
+      "baselineSha256": "320b3de76b0848a42ec116844fd709d478f74679610e4a265df7601be86f1f5c",
+      "candidateSha256": "068a05dad8f19cbdc17c3e93393a8c363f2092586a35d210186edf927e238abe"
+    },
+    {
+      "path": "docs/config/configuration-family-map.json",
+      "baselineSha256": null,
+      "candidateSha256": "c03d4c3c93cf51c9ccd8c061716c218f64b6757eb6aca84102bc207022d0315e"
+    },
+    {
+      "path": "scripts/tests/configuration-family-reference.test.mjs",
+      "baselineSha256": null,
+      "candidateSha256": "a23fc0c6b0a772e7b24eccd39b4d0c66f4a28afece596186b04a5bba868fdb4b"
+    },
+    {
+      "path": "scripts/tests/python-environment-discovery.test.mjs",
+      "baselineSha256": "b33ceea5f9fb2d485f2ed83168b8094606e37385cb3f00112b5fea2dae508428",
+      "candidateSha256": "93a642b555f2d547384dde441ed833dec0b403a729fe8b3b4521a601aa390888"
+    },
+    {
+      "path": "scripts/tests/docs-publication-examples.test.mjs",
+      "baselineSha256": "37cec8b7f7b0be1fa36d50a9b23c229be4257b368418f34aeff7ed490f174a66",
+      "candidateSha256": "91072953045370980097bb0a051d7b5d4035922910d45084db8b0c4c81ada693"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "baselineSha256": "27555508d51899520b140df51d6a82e5c58603aac4bafc611bfc7c26799558bb",
+      "candidateSha256": "ac31f254278a673686454c6b92f2ee31cfc7f225f64446f912395b9b862976f2"
+    },
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "baselineSha256": "bc0de262c3d4020659d7892ff6daa65787c4834a6f0f026e9a3aa0f7a6c730d5",
+      "candidateSha256": "f24135d387d1df268665ae5dce59ae6092ac41da9eb587a4d20179c42fef9a8f"
+    }
+  ],
+  "contextBytes": 106979,
+  "contextSha256": "40859a5093199bfffcc86805ed83ccf245ddfb0bbe5bf2c87359f30fbd460d93",
+  "omittedResponsibilities": "Whole source/reader/quality and semantic47 source map decision separate; unchanged qualified native builder semantics reused byteexact. No all-product API/runtime or final metadata acceptance."
+}

@@ -1,0 +1,10 @@
+{
+  "status": "PASS",
+  "baseline": "/home/node/.openclaw/workspace/operations/pr13/evidence/cfg011-ref012-current-20261030/ref003-batched-before-docs-generate.mjs",
+  "baselineOwnerSha256": "4b0c0d7de7b74027987fceccfe15a241d6226e8c11bc61fc313eee7372ed7b9e",
+  "currentOwnerSha256": "4f83d5e6dac87833ec727e521bd3528a0dc42715aa193dfe8fa8bbd77d01cf07",
+  "onlyChange": "One explicit configuration-hub branch inserted; removing that complete AST branch including preceding whitespace recovers exact full original owner bytes.",
+  "insertedBranch": "if (only === 'configuration-hub') {\n    if (!argv.includes('--revision')) throw new Error('configuration-hub requires --revision naming the reviewed source and inventory commit');\n    for (const source of ['scripts/docs-configuration-inventory.mjs','scripts/docs-generate.mjs','scripts/docs-generate-core.mjs','docs/config/configuration-family-map.json','docs/generated/inventory/configuration-families.json']) {\n      const committed = execFileSync('git', ['show', `${sourceRevision}:${source}`], { cwd: invocationRoot, maxBuffer: 64 * 1024 * 1024 });\n      if (!committed.equals(fs.readFileSync(path.join(root, source)))) throw new Error(`CONFIGURATION_HUB_SOURCE_SNAPSHOT_DRIFT:${source}`);\n    }\n    return new Map([['docs/site/reference/configuration.md', renderConfigurationFamilyHub(\n      readJson('docs/generated/inventory/configuration-families.json'), pinnedSourceUrl, {sourceRevision})]]);\n  }",
+  "remainingOwnerByteExact": true,
+  "limit": "Source identity/flow delta only, no SDK execution or original acceptance."
+}

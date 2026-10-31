@@ -1,0 +1,144 @@
+{
+  "report": "ref003-final-ordered-binding-source-verdict.json",
+  "verdict": "SUPPORT_MINIMAL_AFFECTED_CANDIDATE",
+  "candidateScope": {
+    "subjectIdentities": "All 45 existing qualification/purpose subjects remain unchanged.",
+    "scalarOrder": "Supported only in maintained order: scalar receipts first, then parent receipts.",
+    "scalarDelta": {
+      "callers": {
+        "count": 1061,
+        "membership": "unchanged",
+        "changedSources": [
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-configuration-inventory.mjs",
+          "scripts/docs-generate-core.mjs",
+          "scripts/docs-generate.mjs"
+        ]
+      },
+      "selected": {
+        "count": 1306,
+        "added": [
+          "scripts/tests/configuration-family-reference.test.mjs"
+        ],
+        "changed": [
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-configuration-inventory.mjs",
+          "scripts/docs-generate-core.mjs",
+          "scripts/docs-generate.mjs",
+          "scripts/tests/docs-publication-examples.test.mjs"
+        ],
+        "removed": []
+      }
+    },
+    "parentReceipts": [
+      {
+        "record": "api-reference",
+        "fields": [
+          "factsDigest"
+        ]
+      },
+      {
+        "record": "docs-generate",
+        "fields": [
+          "selectors",
+          "factsDigest"
+        ]
+      },
+      {
+        "record": "api-product-scope",
+        "fields": [
+          "factsDigest"
+        ]
+      },
+      {
+        "record": "configuration-inventory",
+        "fields": [
+          "selectors",
+          "factsDigest"
+        ]
+      },
+      {
+        "record": "output-discovery",
+        "fields": [
+          "factsDigest"
+        ]
+      }
+    ],
+    "authorityInputs": "Unchanged from the eight previously identified literal transfers; no authority-input expansion is supported.",
+    "unchanged": [
+      "All other role fields and algorithms",
+      "Registry subjects",
+      "Caller, module, entry, and execution bounds",
+      "Generic graph and unresolved-operation restrictions"
+    ]
+  },
+  "sourceAndOwnerJudgment": {
+    "configurationInventory": {
+      "verdict": "PASS_AT_CURRENT_MODE_SCOPE",
+      "meaning": "The new explicit configuration-reference-only route composes the already guarded YAML, schema, and runtime domain builders plus the sealed family map. It does not make default full API/product-output generation successful and creates no generic role, loader, or runtime privilege."
+    },
+    "docsGenerate": {
+      "verdict": "PASS_WITH_CORRECTED_OWNER_SCOPE",
+      "correction": "My prior statement that the stableWriteMap owner body was unchanged was false. The owner now contains the configuration-hub early return and therefore requires its own current ownerSyntax receipt.",
+      "currentOwnerMeaning": "The early branch requires an explicit full commit revision, verifies five exact revision blobs against current bytes, renders only configuration.md from configuration-families.json, and returns before ordinary SDK generation.",
+      "sdkBoundary": "The ordinary SDK import, call `generateSdkReference({ root, revision: sourceRevision })`, and result slots remain unchanged. The new branch does not execute or broaden SDK behavior.",
+      "ownerSuccessor": "The one current `stableWriteMap` ownerSyntaxSha256 successor is source-supported and necessary; it is not a blind source-hash refresh."
+    },
+    "docsGenerateCore": {
+      "verdict": "CURRENT_HUB_RENDERING_REUSE_ONLY",
+      "meaning": "Its changed hub renderer accounts for derived scalar facts, but no old anchor exists to transfer. It grants neither a new role nor a broad renderer authority."
+    }
+  },
+  "publicationNativeDependentCandidate": {
+    "verdict": "SUPPORTED",
+    "basis": "The five affected parent receipts reflect current derived facts from the already qualified publication-native/profile and configuration-domain changes. The candidate changes only the listed selectors and facts digests; it does not change authority inputs, consumer purpose, role kind, caller limits, source identities, or execution boundaries.",
+    "limits": [
+      "This is metadata continuity, not a new publication-native execution approval.",
+      "It does not accept the 77 unresolved operations.",
+      "It does not replace the earlier retained pre-scalar ordering failure or first-owner negative."
+    ]
+  },
+  "requiredGuardChecks": [
+    "Apply only the maintained final candidate table, including the one stableWriteMap ownerSyntax successor.",
+    "Verify exact application bytes and that all non-listed role fields, subjects, authority inputs, and registry entries remain byte-identical.",
+    "Run the maintained affected scalar-first then parent-second guards; do not infer their result from this Source decision.",
+    "Keep the four immutable revision controls: HEAD, branch name, abbreviated SHA, and blob identifier must fail before output.",
+    "Require the configuration-hub five-blob commit/current-byte equality gate and the unchanged shared source lock."
+  ],
+  "preservedNegativesAndLimits": {
+    "preserved": [
+      "The pre-scalar-order failure",
+      "The first-owner failure",
+      "The earlier incorrect entire-owner-unchanged statement, now explicitly corrected",
+      "The prior P1/P2, fixture, unavailable Python 3.14 witness, and native failure history",
+      "The failing default global API path"
+    ],
+    "notGranted": [
+      "Native-role PASS",
+      "Default global API success",
+      "Fresh configuration reference output",
+      "Reader usability or quality PASS",
+      "Original REF003 acceptance"
+    ]
+  },
+  "nextFiniteWork": [
+    "Finish frozen Code review and apply only this supported affected table.",
+    "Run fresh scoped configuration-reference inventory from an immutable committed revision.",
+    "Generate and check the immutable revision-bound configuration hub.",
+    "Perform current page Reader/Quality review and then the separate whole REF003 decision."
+  ],
+  "originalREF003": {
+    "verdict": "NOT_ACCEPTED",
+    "counters": {
+      "gates": "71/89",
+      "requirements": "252/261"
+    },
+    "remaining": [
+      "fresh scoped native result",
+      "hub generation and check",
+      "reader/quality assessment",
+      "whole independent decision",
+      "registration, checker, publication, and exact-remote work"
+    ]
+  }
+}

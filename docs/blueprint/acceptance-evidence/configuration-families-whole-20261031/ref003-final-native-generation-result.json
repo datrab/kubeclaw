@@ -1,0 +1,31 @@
+{
+  "status": "TERMINAL_SUCCESS_CANDIDATE_ADOPTED_CHECK_PENDING",
+  "exitCode": 0,
+  "families": 15,
+  "sources": 47,
+  "facts": 15988,
+  "inverseConsumerKeys": 898,
+  "files": [
+    {
+      "file": "configuration-helm-values.json",
+      "bytes": 64763761,
+      "sha256": "85e0463ba92eead94091cef8f2e5ad14e5658ad485fa7c67b0a6abd8c6bfb841"
+    },
+    {
+      "file": "configuration-schemas.json",
+      "bytes": 3332925,
+      "sha256": "d6d539677e89ed0c41c964c0f983588a8eef23d1e4ff272c237d3d9ebb5c7206"
+    },
+    {
+      "file": "configuration-runtime-inputs.json",
+      "bytes": 11615847,
+      "sha256": "1e511d5181a616d2155784b2f106774521e10cd20f985b746e0c7b1298b69983"
+    },
+    {
+      "file": "configuration-families.json",
+      "bytes": 37967705,
+      "sha256": "655842ddfdd88189629526d6d56fd6354a9917b39d5efe6229e8838b679b71b1"
+    }
+  ],
+  "limit": "Scoped configuration composition only, no global API or original REF003 acceptance."
+}
