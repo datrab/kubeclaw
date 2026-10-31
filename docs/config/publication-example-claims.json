@@ -772,11 +772,11 @@
     },
     {
       "path": "docs/site/extend/developer-handbook.md",
-      "sha256": "bb2d586fc555a3230581052a91785bf22b6d7791927fb61d15cdb49966360f47",
+      "sha256": "c15a226e7f553a4034772e90eaebf1d0ab234a18133cbba01f9a71209d99c8b1",
       "owner": "extension guide/native component owners",
       "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
       "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
-      "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}\nA91306 editorial delta qualification (does not replace preceding baseline): {\"actualSha256\":\"e4be792c6e013d11b066c6cb7f76d1e7a17327276654b6630a13e8b717d0b85d\",\"baselineRevision\":\"ae67b6204435bb104e00d85091969da53ede415c\",\"evidenceRefs\":[\"independent-source-quality/first-use-priority-and-exercise-links-successor-verdict.json\",\"independent-source-quality/technical-register-independent-v4-verdict.json\"],\"priorQualificationRetainedVerbatim\":true,\"qualificationBoundary\":\"Only actual reviewed source-language delta and preserved original contract obligations. No production execution, historical execution reuse, current-role/API/global freshness or whole-177 award.\",\"reviewFamily\":\"firstuse\",\"state\":\"reviewed-language-source-delta; actual native validators and fresh delivered Reader remain separate\"}",
+      "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}\nA91306 editorial delta qualification (does not replace preceding baseline): {\"actualSha256\":\"e4be792c6e013d11b066c6cb7f76d1e7a17327276654b6630a13e8b717d0b85d\",\"baselineRevision\":\"ae67b6204435bb104e00d85091969da53ede415c\",\"evidenceRefs\":[\"independent-source-quality/first-use-priority-and-exercise-links-successor-verdict.json\",\"independent-source-quality/technical-register-independent-v4-verdict.json\"],\"priorQualificationRetainedVerbatim\":true,\"qualificationBoundary\":\"Only actual reviewed source-language delta and preserved original contract obligations. No production execution, historical execution reuse, current-role/API/global freshness or whole-177 award.\",\"reviewFamily\":\"firstuse\",\"state\":\"reviewed-language-source-delta; actual native validators and fresh delivered Reader remain separate\"}\nBounded lifecycle baseline successor: this procedure now reads the registered fixture startingState.revision instead of contradicting it with historical671234. This changes only baseline selection prose; source/authority separation, all required generation/check/negative/recovery/removal duties and historical citations remain. Actual prior baseline and missing-author failures are retained; mandatory default API/generator qualification remains open, no fresh task or new whole acceptance.",
       "checks": [
         "claim-contract"
       ],
@@ -2019,11 +2019,11 @@
         },
         {
           "ordinal": 45,
-          "sha256": "14afe1e1c8f06476267d1a9b8d2ece7231fe0ac6dfd6caf979398b451ff50854",
+          "sha256": "fcdee716d456f0dfb35e377137631027d537edd5b73fc492b62abbacfc522e07",
           "owner": "extension guide/native component owners",
           "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
           "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
-          "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+          "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.\nOnly explicit exercise baseline selection prose corrected to registered fixture; no changed executable instruction block or new runtime authority.",
           "checks": [
             "claim-contract"
           ]

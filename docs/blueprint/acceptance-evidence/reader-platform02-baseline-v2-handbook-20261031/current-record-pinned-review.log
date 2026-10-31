@@ -1,0 +1,9 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: on
+trufflehog: clean (2.1s)
+review prompt files and datasets leave too little room for change chunks; reduce the extra review context

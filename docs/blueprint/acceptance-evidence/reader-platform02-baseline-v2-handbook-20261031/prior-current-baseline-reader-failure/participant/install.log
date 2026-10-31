@@ -1,0 +1,20 @@
+/tmp/kubeclaw-dev-npm-cache.ALIDsC
+dev
+npm warn deprecated deep-diff@1.0.2: Package no longer supported. Contact Support at https://www.npmjs.com/support for more info.
+
+added 479 packages, and audited 546 packages in 46s
+
+97 packages are looking for funding
+  run `npm fund` for details
+
+42 vulnerabilities (31 moderate, 11 high)
+
+To address issues that do not require attention, run:
+  npm audit fix
+
+To address all issues (including breaking changes), run:
+  npm audit fix --force
+
+Run `npm audit` for details.
+/home/node/.openclaw/workspace/tmp/reader-platform02-fresh-20261031/node_modules/typescript/lib/typescript.js
+/home/node/.openclaw/workspace/tmp/reader-platform02-fresh-20261031/node_modules/json-schema-to-typescript/dist/src/index.js

@@ -1,0 +1,1358 @@
+{
+  "baselineRevision": "2028fe5e13cd8af36b579ee33c9d6bca5bff8d9c",
+  "claimsOldSha256": "d62b70728f5bffc1a2f4f4324b8db025fb4dfe03c4c2d8357a28a2b139e9bcbd",
+  "claimsNewSha256": "c00f429779caccdd72fcab5c4ad8a6b84cf00e185ae37ac29f87321ef57a7b1b",
+  "reconstruction": "deepClone oldCompletePageRecord then set four JSON pointers; exact equality to whole current page record and entire serialized claims tested",
+  "wholeClaimsBytes": 22400574,
+  "wholeRoundtripExact": true,
+  "allOtherClaimsExact": true,
+  "changedProseOrdinal": 45,
+  "handbookOldSha256": "bb2d586fc555a3230581052a91785bf22b6d7791927fb61d15cdb49966360f47",
+  "handbookNewSha256": "c15a226e7f553a4034772e90eaebf1d0ab234a18133cbba01f9a71209d99c8b1",
+  "noExecutableBlockChange": true,
+  "currentCompletePageRecord": {
+    "path": "docs/site/extend/developer-handbook.md",
+    "sha256": "c15a226e7f553a4034772e90eaebf1d0ab234a18133cbba01f9a71209d99c8b1",
+    "owner": "extension guide/native component owners",
+    "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+    "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+    "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}\nA91306 editorial delta qualification (does not replace preceding baseline): {\"actualSha256\":\"e4be792c6e013d11b066c6cb7f76d1e7a17327276654b6630a13e8b717d0b85d\",\"baselineRevision\":\"ae67b6204435bb104e00d85091969da53ede415c\",\"evidenceRefs\":[\"independent-source-quality/first-use-priority-and-exercise-links-successor-verdict.json\",\"independent-source-quality/technical-register-independent-v4-verdict.json\"],\"priorQualificationRetainedVerbatim\":true,\"qualificationBoundary\":\"Only actual reviewed source-language delta and preserved original contract obligations. No production execution, historical execution reuse, current-role/API/global freshness or whole-177 award.\",\"reviewFamily\":\"firstuse\",\"state\":\"reviewed-language-source-delta; actual native validators and fresh delivered Reader remain separate\"}\nBounded lifecycle baseline successor: this procedure now reads the registered fixture startingState.revision instead of contradicting it with historical671234. This changes only baseline selection prose; source/authority separation, all required generation/check/negative/recovery/removal duties and historical citations remain. Actual prior baseline and missing-author failures are retained; mandatory default API/generator qualification remains open, no fresh task or new whole acceptance.",
+    "checks": [
+      "claim-contract"
+    ],
+    "blocks": [
+      {
+        "ordinal": 1,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "0e69ccc5f28c093739d9fe0bbe3c6812d704e75482d85d0970bcde644e25bb42",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "clone isolated checkout",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"clone isolated checkout\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "clone isolated checkout"
+      },
+      {
+        "ordinal": 2,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "15bc93c1601ee2acafe7735a17121003dcfe7a077ae1c62435fb545df1b594ac",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "select pinned baseline and inspect clean identity",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"select pinned baseline and inspect clean identity\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "select pinned baseline and inspect clean identity"
+      },
+      {
+        "ordinal": 3,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "60e338c80f7118c4a4413e38d35a3432a0e8b8ab2443e1604e4fb11c2279b483",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "tool versions",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"tool versions\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "tool versions"
+      },
+      {
+        "ordinal": 4,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "403bf86c0e188072a875a68793d6fea0f64c18c20ea52e7fde2d4fe2206ad607",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "owned cache and locked root install/module presence",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"owned cache and locked root install/module presence\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "owned cache and locked root install/module presence"
+      },
+      {
+        "ordinal": 5,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "4a271bc5719732dbc1138ece5fd8ae766e20533f69ac5cbc466c15f59f974482",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "build native sandbox",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"build native sandbox\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "build native sandbox"
+      },
+      {
+        "ordinal": 6,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "e53c6f27ac2f6b554bd19570fe178506f48fcc5fd4092b9c7c44f22fc8a36537",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "baseline check chain",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"baseline check chain\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "baseline check chain"
+      },
+      {
+        "ordinal": 7,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "f7ae1037ad127eb25a76a62eb6673a06d0eb76ebab1b37abfb0b8b32502c0626",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "install locked browser/host dependencies",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"install locked browser/host dependencies\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "install locked browser/host dependencies"
+      },
+      {
+        "ordinal": 8,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "b6fcafd9e60a12110b5512d36459a9d078e6089658364ca4b74bb544a26f2504",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "separate Ops package installs",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"separate Ops package installs\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "separate Ops package installs"
+      },
+      {
+        "ordinal": 9,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "fc1743680c7553b0b4054555101afbcd984336a1f0bbcd4d2923b18d9574c2e5",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Prism bootstrap installs",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Prism bootstrap installs\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Prism bootstrap installs"
+      },
+      {
+        "ordinal": 10,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "ed656840dac285eabd41db146bf98c43b880bda87db2038b1ca19fa0616a0718",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "SDK generation/build order",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"SDK generation/build order\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "SDK generation/build order"
+      },
+      {
+        "ordinal": 11,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "d9cb9df484ef925f9bb30e07caffc892369c2c7121b57978b9775f722cc3b562",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "lint focused/live checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"lint focused/live checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "lint focused/live checks"
+      },
+      {
+        "ordinal": 12,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "789676ed647091e0847412aee601b9e9b0a61425f7e11b7cff5c29d97ce324d9",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "full lint report",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"full lint report\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "full lint report"
+      },
+      {
+        "ordinal": 13,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "025e1552da682079f6d27d81c77a3676a48bb3f54255a761363216b660e0ab9c",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Nova lifecycle checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Nova lifecycle checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Nova lifecycle checks"
+      },
+      {
+        "ordinal": 14,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "7cfc307f28d5c70efe8adbaf5b016b3d155716bf268c42ddeb0c43a21850c203",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "portable Worker checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"portable Worker checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "portable Worker checks"
+      },
+      {
+        "ordinal": 15,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "a11c5c4fdb18e4b228b31ed7ffb403c5a8c54c1cd2f022048b856e4aa43a7337",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "native Worker checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"native Worker checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "native Worker checks"
+      },
+      {
+        "ordinal": 16,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "8ec6d7e6be07db35cf4dc6b645f3b6d78b87623fafd4e4e30bfdec5667a53242",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Helm/Go native prerequisites",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Helm/Go native prerequisites\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Helm/Go native prerequisites"
+      },
+      {
+        "ordinal": 17,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "57dd1f1f154ae50122d4675ab2a06f5708efce8851fc50c1e900acae7b7a9477",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "native service PATH identity",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"native service PATH identity\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "native service PATH identity"
+      },
+      {
+        "ordinal": 18,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "60d8612f7d54a953e1982683f9034a6d61d28bd7186bee7260add4d89995e1cf",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "prepared cgroup/launcher/identity/limits preflight",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"prepared cgroup/launcher/identity/limits preflight\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "prepared cgroup/launcher/identity/limits preflight"
+      },
+      {
+        "ordinal": 19,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "345ae917bd692b9df9f0fd6673412906b10a497217154615c54412384c9b0401",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Buster registry/resolver/runner checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Buster registry/resolver/runner checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Buster registry/resolver/runner checks"
+      },
+      {
+        "ordinal": 20,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "97d27d0de26655e90fba967c7a409861dabc23936eae732c159a4a2b0a775102",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "GNU tar prerequisite",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"GNU tar prerequisite\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "GNU tar prerequisite"
+      },
+      {
+        "ordinal": 21,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "c5bba811d0f16eb98593a075af89bbedf4bc00cff887d2f162a80cdf586d7339",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "remote restart/provider checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"remote restart/provider checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "remote restart/provider checks"
+      },
+      {
+        "ordinal": 22,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "36d0266ff65092ad485720bf8959d7c18aa0803812c39417ab4428ae51236439",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "fresh PostgreSQL database identity/absence assertion",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"fresh PostgreSQL database identity/absence assertion\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "fresh PostgreSQL database identity/absence assertion"
+      },
+      {
+        "ordinal": 23,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "bd09631ee1270d640f5abcd5698ba3b6c2c92f652662450a892eff9cbdf89c9f",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Prism transaction fixture",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Prism transaction fixture\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Prism transaction fixture"
+      },
+      {
+        "ordinal": 24,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "298450751bcdf0e411c7b40585cbf2d3a15ab3494e557c635729ab42d5e78389",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Prism native-dispatch fixture",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Prism native-dispatch fixture\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Prism native-dispatch fixture"
+      },
+      {
+        "ordinal": 25,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "c66e9cb3677c9a9eff36295418052f6bc4660d509f7208e67aba9dc90a24ecec",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "registry/install/import checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"registry/install/import checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "registry/install/import checks"
+      },
+      {
+        "ordinal": 26,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "916fc68ed283c7b5b43ad50bb04fbfa19b10a66fc86b126fa26c3f325a6fb47f",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "local native registry checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"local native registry checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "local native registry checks"
+      },
+      {
+        "ordinal": 27,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "9bd42740a84afac2a07f60bdbbc01032f812742158a2deb36508d4313093b1a1",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "SDK contract/build/local checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"SDK contract/build/local checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "SDK contract/build/local checks"
+      },
+      {
+        "ordinal": 28,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "8e25906bf4a9957e2abef10ac5bc27b94e0eb8e4b035ba3f0c6cd4a31718b030",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Go/gofmt prerequisite",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Go/gofmt prerequisite\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Go/gofmt prerequisite"
+      },
+      {
+        "ordinal": 29,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "9cc50bd9e69a9873debee3353c73344980eabeb6824606dda73776876c4bfc85",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "telemetry generation/checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"telemetry generation/checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "telemetry generation/checks"
+      },
+      {
+        "ordinal": 30,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "9f62a802faeb6787a44b437d76bba3eba5d393a33de03243d2d4b544d6b38dea",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "absolute observability Go prerequisite",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"absolute observability Go prerequisite\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "absolute observability Go prerequisite"
+      },
+      {
+        "ordinal": 31,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "03d3171eac33e79a300088e7e4f7cbe72bd763b844586017c19f1ac94b011cd5",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "cross-language/durable observability checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"cross-language/durable observability checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "cross-language/durable observability checks"
+      },
+      {
+        "ordinal": 32,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "fce90356c7f0aba6646a553c88f2e3c8e5723bf96ac9310227e49d8201fefe62",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Helm local render/checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Helm local render/checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Helm local render/checks"
+      },
+      {
+        "ordinal": 33,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "0eedf62cdfcbd5ede49924bf4ab25b75c415b4356a75d6a8b89575b8d5b1fe9e",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "GitOps/release fixtures",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"GitOps/release fixtures\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "GitOps/release fixtures"
+      },
+      {
+        "ordinal": 34,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "692834231cbad52a60da0c234961b9a55f0c35d675bead38b45e7e1d6d7086d6",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "OpenSSL prerequisite",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"OpenSSL prerequisite\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "OpenSSL prerequisite"
+      },
+      {
+        "ordinal": 35,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "d125fcee3017452808f94afe1050ae16b4f1b5303d0536a6354c743746dade66",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Ops MCP package tests",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Ops MCP package tests\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Ops MCP package tests"
+      },
+      {
+        "ordinal": 36,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "065dd58780f830cbebdcb8f5477b0ee4fc65ed6eb1ad4283471e7ae1c525f19b",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "owned Python venv creation",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"owned Python venv creation\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "owned Python venv creation"
+      },
+      {
+        "ordinal": 37,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "92eaf6daffb351156e4d244c409255aba05aeb2058ac62da81ded5a6124750f7",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "pinned PyYAML install/verify",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"pinned PyYAML install/verify\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "pinned PyYAML install/verify"
+      },
+      {
+        "ordinal": 38,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "13f607b4b5814af3b8a54f007b795c10b6e0097f09fcb9c9b4fd1046973f079e",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Ops policy test",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Ops policy test\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Ops policy test"
+      },
+      {
+        "ordinal": 39,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "df123dc4d47becc1b2feed3ec0b517b021ce6cae154ca20fe6b086c138483b7e",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "owned Python venv removal",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"owned Python venv removal\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "owned Python venv removal"
+      },
+      {
+        "ordinal": 40,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "5c1f466a1b3e850ae44899238b41a3dc25b0ed19c07edfd707b95f673fe0ce92",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Studio types/domain/build/browser checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Studio types/domain/build/browser checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Studio types/domain/build/browser checks"
+      },
+      {
+        "ordinal": 41,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "5a6c27365927d7944de8121e8d3b3264d4f7b9edf682e17c8c7ec1eec4a910cc",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "bounded native retention check",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"bounded native retention check\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "bounded native retention check"
+      },
+      {
+        "ordinal": 42,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "ef8dee39f0c264d7a722fd3a4c07e498d4f2bcd5fa61aba9a8b2596a410acd46",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "uv/Go version authority preflight",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"uv/Go version authority preflight\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "uv/Go version authority preflight"
+      },
+      {
+        "ordinal": 43,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "1856479e6257ebde97d0d6a48792d4c40a3cb0865e608bd981ec2c7be812a712",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "version/tool-lock checks",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"version/tool-lock checks\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "version/tool-lock checks"
+      },
+      {
+        "ordinal": 44,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "37885e56cc6341748a0f93fb69419ef931daabd97584d867e1714ccbbd71e899",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "release/GitOps fixtures",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"release/GitOps fixtures\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "release/GitOps fixtures"
+      },
+      {
+        "ordinal": 45,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "78dd822e8a67faaae52ae865ed83ab76dbde40282237e7bf2040c43bef46b6df",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "commit owned exercise source/test",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"commit owned exercise source/test\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "commit owned exercise source/test"
+      },
+      {
+        "ordinal": 46,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "d72a24ba1a8402233ae21724792f90d51c4fbc6eb26ddd1633eb99ff0c90c5de",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "Core guide guard check",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"Core guide guard check\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "Core guide guard check"
+      },
+      {
+        "ordinal": 47,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "e51e6d574192b45218624e8d6628b7d2051ddff4d245dcc1c30c92381cc93109",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "capture docs authority commit and source cleanliness",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"capture docs authority commit and source cleanliness\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "capture docs authority commit and source cleanliness"
+      },
+      {
+        "ordinal": 48,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "74e81d7fda7677428002ac1daf2a3f89b65cbce3030ee538b1fe707c413dec94",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "inventory/generation/governance chain",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"inventory/generation/governance chain\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "inventory/generation/governance chain"
+      },
+      {
+        "ordinal": 49,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "ee6131afae2f2517bbf14289f3c77d170a6e29c309f7fa7afca9a1ee7164b2cf",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "documentation validation chain",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"documentation validation chain\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "documentation validation chain"
+      },
+      {
+        "ordinal": 50,
+        "type": "fence",
+        "info": "sh",
+        "sha256": "736e8cb0fbd55730b83ce1827053dbdf0905b24b9895eebfbad6b48daf4678f7",
+        "owner": "Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required",
+        "claim": "rendered publication build",
+        "executionBoundary": "Only registered bounded native input/projection/syntax/contract actions; operational example execution remains original explicitly unexecuted/historical qualified scope",
+        "basis": "{\"pageBasis\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"retainedRecords\":[{\"report\":\"extend-claim-classification/classification.json\",\"claim\":\"rendered publication build\",\"nativeOwner\":\"Validate shell/embedded language with explicit placeholder context; retain exact command owner, prerequisites, expected assertions and cleanup; execute only separately authorized bounded native fixture if proof required\",\"basis\":\"individual retained block/claim record\"}],\"contextJoin\":\"individual retained semantic classification\",\"state\":\"source ownership/classification only; native actions not accepted by this declaration seed\"}",
+        "checks": [
+          "claim-contract",
+          "syntax-instructions"
+        ],
+        "role": "rendered publication build"
+      }
+    ],
+    "prose": [
+      {
+        "ordinal": 1,
+        "sha256": "e9f66852ed68667dcd36904b7766f160f0ec36630f4ec46acc1f16b7936d079e",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 2,
+        "sha256": "138b13cedd33d1893fb11e7b0543c2d367e93144b46d06ee6d2e54c0ca55038a",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 3,
+        "sha256": "f1e0f278bbeab62810c0bfd2f4420ebda1f153ada28cf6514680f6f80b78907e",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 4,
+        "sha256": "24fd527636302d67469e80162a348d195900d8749618abac33dc5bce45977f09",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 5,
+        "sha256": "23612d47ef4f42a9ac516147b3c90dcc986a5c42759c897ba75a6a656dfc30e7",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 6,
+        "sha256": "1ad512123958ab458d6abb17dc2b79e06d9f0ae0df1578a70197e8dc20b44f9d",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 7,
+        "sha256": "d4cfcacbd47352d2a276fe111307c74a0974cc0745fc416497ca653be5e9c2a6",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 8,
+        "sha256": "eef6003e591914cd283e8023e6e13433516334807035c172a48a94979c6d912d",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 9,
+        "sha256": "a568ba4a31b8694fc5d7d9bb65f27d85b3bd705f91567cfa4c43173687537d0f",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 10,
+        "sha256": "1741777e5ec390b8392d1f1e0a0d652238ff87c05375563e06085f183cb8e638",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 11,
+        "sha256": "300407fb12a23beb66f27892ee51b41c5fffbc98df475c5da8c8d510ea8097e9",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 12,
+        "sha256": "3cc06b52da684853830734efdcc645cb175127f4dfeb6bcdee380936616d3207",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 13,
+        "sha256": "c1321085e183f72fc855dd47a085d69a8b07d75f4e00f0e879a9971abe381752",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 14,
+        "sha256": "c5575066fe85442270af179a3b0a20c1c46b58e52740675382c390d22d9c74af",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.\nA91306 editorial delta qualification (does not replace preceding baseline): {\"actualSha256\":\"e4be792c6e013d11b066c6cb7f76d1e7a17327276654b6630a13e8b717d0b85d\",\"baselineRevision\":\"ae67b6204435bb104e00d85091969da53ede415c\",\"evidenceRefs\":[\"independent-source-quality/first-use-priority-and-exercise-links-successor-verdict.json\",\"independent-source-quality/technical-register-independent-v4-verdict.json\"],\"priorQualificationRetainedVerbatim\":true,\"qualificationBoundary\":\"Only actual reviewed source-language delta and preserved original contract obligations. No production execution, historical execution reuse, current-role/API/global freshness or whole-177 award.\",\"reviewFamily\":\"firstuse\",\"state\":\"reviewed-language-source-delta; actual native validators and fresh delivered Reader remain separate\"}",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 15,
+        "sha256": "08424aae2bd33e48af656d8660fa521b4d3050277884129ba8ecf096ab28b0df",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 16,
+        "sha256": "f750478c8329648add23d896931499f641286f6860a998f4f45875bc6c5117e7",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 17,
+        "sha256": "f5a7703693c17099f151437b58dde690c4f2c2bf7409d3b5ca421874ffa4c6ee",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 18,
+        "sha256": "0deaf265609f1f5eb43ffb1a5d221e240d0ab6b905a15952b44448b60f0aad8e",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 19,
+        "sha256": "6bc58d1b2003bb555d3b41e7e9e797e0d67d55e283885d1a15709bb064901eed",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 20,
+        "sha256": "7012a7405da075a509515071947e7c1a6bbba7030e691f6e521b7447ef543271",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 21,
+        "sha256": "9beff1bf77a5dac1a159fd1016ac0f1aef2c5f2f80f0a6b0182eee8ab4df10d2",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 22,
+        "sha256": "b838578c5e5ea50050acc933d1a07e94f466d26d5e153cd2589826804522e136",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 23,
+        "sha256": "0cb6a9bcd42ddfd33285c73a88381dd87d77d04caaf1ff3c3d526d1bf7aa0521",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 24,
+        "sha256": "3a3bf972bd872eca680628bf3c7cb7c03d6e62bee992a3d824af4ff47cc87089",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 25,
+        "sha256": "6909a4901288867efd1b0b4a7d31c415b377e6ae4c8f4505030a669402fb32fb",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 26,
+        "sha256": "49026c6fd7868f4dd262cb2c35fb636b7c1bfb24c7ca125c33030107d38557c5",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 27,
+        "sha256": "6e91897fa10fa3b42fb061eb6aa55ce1123da02a06f25ff7fe1c7c3ef2520f8b",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 28,
+        "sha256": "37571b82cce9728630f4bd4f3b9fb020f6101a43bd81702b97e28cc71f8fb5a3",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 29,
+        "sha256": "c52dd9b70c61ecdb1101ad37c1686f781ebe579cc257afadf1ca4e77da3f6df5",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 30,
+        "sha256": "8e3edadf8a37b566d692c38d7c8159c3a4943bfa46c46b7aca627ae19402611f",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 31,
+        "sha256": "27a1c7b63d2f76b61fbc7f3caa5e53f7db1bc8bb025b0aaa5bedc1fef24592c2",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 32,
+        "sha256": "f0747c0b71f9882834c98deea07e071c9792d90758c248e65820eb79cd537df1",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 33,
+        "sha256": "786d4984eb7b5a5036c28e040eac01193221ef4da1e1b12a280f64fc82e15266",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 34,
+        "sha256": "7ddbe9d9223396899e51397bf6c876c803151b1f47c32ae1aa0c91068792dd48",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 35,
+        "sha256": "f428ea3a9b746933ae529e1c2b7d136e536a906cf3634d2443fc5b4114ef5ad8",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 36,
+        "sha256": "296476c095b1f760f75f2881ff8b152a77c72d441a9fd81b147008ec566c4af5",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 37,
+        "sha256": "2ff9526765426f7b77764338cf1a6cd28cbdc71751ed8c89f6166b9afc54155b",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 38,
+        "sha256": "5206c91832ca63d06286b5054b1f41d005b7d0b7f75618a2ee10ea4bddc2e215",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 39,
+        "sha256": "b9e9ae2ff6022ad868a22e40fa85e2851b3ddcb57f6f6d05ce10f5a4b2be8db0",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 40,
+        "sha256": "d190228a2d391eda8464b1a9fdef5c488513ac8399564499f4564220a09e9289",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 41,
+        "sha256": "b6d73434baaafd90666f83c150b8be5f04020e4bf3d58fd5585f9b2bf82b56e1",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 42,
+        "sha256": "8a6f40961845cca56d1a59c262151b8745f03723eecc4ba7c0f32ac7463b2530",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 43,
+        "sha256": "3c198991b3591ad35ed4aef70902dfaf3a7d25149556c61b1ee8ce3a4a769778",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 44,
+        "sha256": "063a6d169b2aba1c07500049c20ea076378f5676e2a47fbcf6910a045507e7ff",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 45,
+        "sha256": "fcdee716d456f0dfb35e377137631027d537edd5b73fc492b62abbacfc522e07",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.\nOnly explicit exercise baseline selection prose corrected to registered fixture; no changed executable instruction block or new runtime authority.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 46,
+        "sha256": "bf2f716ea0af9bb3805a22963a34f4e1e83d32ca3a65f0e711dd6f5ee590c5c0",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 47,
+        "sha256": "7a0fb63ae2b6c32fd31646e33ec5c61ca8e8c9029066f3f6832de820d4f168ea",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 48,
+        "sha256": "44b56b8d25edd2894a06c7031e78f5e6d806100ee985dcba1ad370d4f490cb38",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 49,
+        "sha256": "e4f17071fa4403dfe19c9bc9459f722e1f673c0df28e42c92b4c7fd00f765a92",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 50,
+        "sha256": "6217f8f76bbcd96672e88d90dce2cae47666664ed7886d8375156e8e65a5e1fc",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      },
+      {
+        "ordinal": 51,
+        "sha256": "dc3f8ac73efa76a29f4ed8c9daedaf859a715d8ea9369b9cb61f51a0578951ab",
+        "owner": "extension guide/native component owners",
+        "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
+        "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
+        "basis": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result.",
+        "checks": [
+          "claim-contract"
+        ]
+      }
+    ]
+  },
+  "oldRecordExactReversePatch": [
+    {
+      "pointer": "/sha256",
+      "value": "bb2d586fc555a3230581052a91785bf22b6d7791927fb61d15cdb49966360f47"
+    },
+    {
+      "pointer": "/basis",
+      "value": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}\nA91306 editorial delta qualification (does not replace preceding baseline): {\"actualSha256\":\"e4be792c6e013d11b066c6cb7f76d1e7a17327276654b6630a13e8b717d0b85d\",\"baselineRevision\":\"ae67b6204435bb104e00d85091969da53ede415c\",\"evidenceRefs\":[\"independent-source-quality/first-use-priority-and-exercise-links-successor-verdict.json\",\"independent-source-quality/technical-register-independent-v4-verdict.json\"],\"priorQualificationRetainedVerbatim\":true,\"qualificationBoundary\":\"Only actual reviewed source-language delta and preserved original contract obligations. No production execution, historical execution reuse, current-role/API/global freshness or whole-177 award.\",\"reviewFamily\":\"firstuse\",\"state\":\"reviewed-language-source-delta; actual native validators and fresh delivered Reader remain separate\"}"
+    },
+    {
+      "pointer": "/prose/44/sha256",
+      "value": "14afe1e1c8f06476267d1a9b8d2ece7231fe0ac6dfd6caf979398b451ff50854"
+    },
+    {
+      "pointer": "/prose/44/basis",
+      "value": "{\"actualContext\":\"extend-claim-classification complete responsibility join with fresh vs qualified whole contexts distinguished\",\"baselineSha256\":\"c897510c3e441dbe5e5d47a1beff9a9e1173d22f50da679938aa2df8f64039a1\",\"currentDeltaNeedsQualification\":true,\"state\":\"needs explicit current5page delta/rebind before integration\"}; Independent source region belongs to this complete authored page contract, not a new execution result."
+    }
+  ],
+  "representation": "ENTIRE CURRENT actualdelivery page record, exact old changedleaf reversepatch; whole serializedclaims reconstruction retained. Not a fake physical fullclaimsfile."
+}

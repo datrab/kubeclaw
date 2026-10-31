@@ -1,0 +1,55 @@
+    PID    PPID COMMAND
+      1       0 /pause
+   1490       0 openclaw-gateway
+   1517    1490 /usr/local/bin/node /app/dist/process/spawn-broker/worker.js
+   1543       0 nginx: master process nginx -g daemon off;
+   1571    1543 nginx: worker process
+   1572    1543 nginx: worker process
+   1573    1543 nginx: worker process
+   1574    1543 nginx: worker process
+   1575    1543 nginx: worker process
+   1576    1543 nginx: worker process
+   1577    1543 nginx: worker process
+   1578    1543 nginx: worker process
+   1579    1543 nginx: worker process
+   1580    1543 nginx: worker process
+   1581    1543 nginx: worker process
+   1582    1543 nginx: worker process
+   1583       0 envoy -c /etc/kubeclaw-worker-trust/envoy.yaml --service-cluster kubeclaw-nova
+   1705    1490 /usr/local/bin/node /app/dist/process/spawn-broker/worker.js
+   1719    1490 /usr/local/bin/node /app/dist/infra/sqlite-readonly-location.worker.js --openclaw-sqlite-readonly-child session
+   1850    1705 /usr/local/bin/node /app/dist/infra/sqlite-readonly-location.worker.js --openclaw-sqlite-readonly-child session
+   1945    1490 /usr/local/bin/node /app/node_modules/.pnpm/@openai+codex@0.160.0/node_modules/@openai/codex/bin/codex.js -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+   1953    1945 /app/node_modules/.pnpm/@openai+codex@0.160.0-linux-x64/node_modules/@openai/codex/vendor/x86_64-unknown-linux-musl/bin/codex -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+   2013    1490 /usr/local/bin/node /app/node_modules/.pnpm/@openai+codex@0.160.0/node_modules/@openai/codex/bin/codex.js -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+   2042    2013 /app/node_modules/.pnpm/@openai+codex@0.160.0-linux-x64/node_modules/@openai/codex/vendor/x86_64-unknown-linux-musl/bin/codex -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+   2146    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+   2153    2146 node /opt/ops-mcp-client/stdio.mjs
+   3660    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+   3667    3660 node /opt/ops-mcp-client/stdio.mjs
+  61364    1490 /usr/local/bin/node /app/node_modules/.pnpm/@openai+codex@0.160.0/node_modules/@openai/codex/bin/codex.js -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+  61371   61364 /app/node_modules/.pnpm/@openai+codex@0.160.0-linux-x64/node_modules/@openai/codex/vendor/x86_64-unknown-linux-musl/bin/codex -c cli_auth_credentials_store="ephemeral" app-server --listen stdio://
+  61410    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+  61417   61410 node /opt/ops-mcp-client/stdio.mjs
+  61636   61371 /app/node_modules/.pnpm/@openai+codex@0.160.0-linux-x64/node_modules/@openai/codex/vendor/x86_64-unknown-linux-musl/bin/codex-code-mode-host
+  63890    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+  63897   63890 node /opt/ops-mcp-client/stdio.mjs
+  63938   61371 node /opt/ops-mcp-client/stdio.mjs
+ 157367   61371 node /opt/ops-mcp-client/stdio.mjs
+ 256766    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+ 256773  256766 node /opt/ops-mcp-client/stdio.mjs
+ 287367    1705 /usr/local/bin/node /app/dist/process/supervisor/service-child-group-anchor.js
+ 287374  287367 node /opt/ops-mcp-client/stdio.mjs
+ 415833   61371 /bin/bash -c python3 - <<'PY' import pathlib,subprocess,time,json,datetime w=pathlib.Path('/home/node/.openclaw/workspace');r=w/'kubeclaw-pr13-recovery';e=w/'operations/pr13/evidence/reader-platform02-baseline-correction-20261031';z={'startedAt':datetime.datetime.now(datetime.timezone.utc).isoformat(),'sourceRevision':subprocess.check_output(['git','rev-parse','HEAD'],cwd=r,text=True).strip(),'argv':[str(w/'operations/pr13/run-reader-env.sh'),'node','scripts/docs-publication.mjs','build'],'supportedYieldingProcess':True,'noOuter300sKill':True};(e/'current-build.json').write_text(json.dumps(z,indent=2)+'\n');t=time.monotonic() with (e/'current-build.log').open('w') as out:p=subprocess.run(z['argv'],cwd=r,stdout=out,stderr=subprocess.STDOUT) z.update(endedAt=datetime.datetime.now(datetime.timezone.utc).isoformat(),elapsedSeconds=time.monotonic()-t,exitCode=p.returncode);(e/'current-build.json').write_text(json.dumps(z,indent=2)+'\n');print(json.dumps(z)) PY
+ 415834  415833 python3 -
+ 415836  415834 node scripts/docs-publication.mjs build
+ 425645  415836 /home/node/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --disable-field-trial-config --disable-background-networking --disable-background-timer-throttling --disable-backgrounding-occluded-windows --disable-back-forward-cache --disable-breakpad --disable-client-side-phishing-detection --disable-component-extensions-with-background-pages --disable-component-update --no-default-browser-check --disable-default-apps --disable-dev-shm-usage --disable-edgeupdater --disable-extensions --disable-features=AvoidUnnecessaryBeforeUnloadCheckSync,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,PaintHolding,ThirdPartyStoragePartitioning,BlockOriginHeaderModificationOnRedirect,Translate,AutoDeElevate,OptimizationHints,msForceBrowserSignIn,msEdgeUpdateLaunchServicesPreferredVersion --enable-features=CDPScreenshotNewSurface --allow-pre-commit-input --disable-hang-monitor --disable-ipc-flooding-protection --disable-popup-blocking --disable-prompt-on-repost --disable-renderer-backgrounding --disable-updater-scheduler --force-color-profile=srgb --metrics-recording-only --no-first-run --password-store=basic --use-mock-keychain --no-service-autorun --export-tagged-pdf --disable-search-engine-choice-screen --unsafely-disable-devtools-self-xss-warnings --edge-skip-compat-layer-relaunch --disable-infobars --disable-search-engine-choice-screen --disable-sync --enable-unsafe-swiftshader --headless --hide-scrollbars --mute-audio --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --no-sandbox --no-sandbox --user-data-dir=/tmp/playwright_chromiumdev_profile-pU5b6S --remote-debugging-pipe --no-startup-window
+ 425647  425645 /home/node/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=zygote --no-zygote-sandbox --no-sandbox --headless
+ 425648  425645 /home/node/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=zygote --no-sandbox --headless
+ 425663  425647 /home/node/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=gpu-process --no-sandbox --disable-dev-shm-usage --disable-breakpad --headless --ozone-platform=headless --use-angle=swiftshader-webgl --enable-unsafe-swiftshader --gpu-preferences=YAAAAAAAAAAgAAAEAAAAAAAAAAAAAGAASAAAAAAAAAAAAAAAAAAAAEAAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAMAAAAAAAAAAwAAAAAAAAAAAAAAAAAAAACAAAAAAAAAAMAAAAAQAAAAAAAAAAAAAACAAAAAAAAAAIAAAAAAAAAA== --shared-files --field-trial-handle=3,i,4469338299658451246,2511722619345840673,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,15972210146684204903,39564494874403849,4 --trace-process-track-uuid=3190708988185955192
+ 425666  425645 /home/node/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=utility --utility-sub-type=network.mojom.NetworkService --lang=en-US --service-sandbox-type=none --no-sandbox --disable-dev-shm-usage --use-angle=swiftshader-webgl --use-gl=angle --mute-audio --headless=old --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,4469338299658451246,2511722619345840673,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,15972210146684204903,39564494874403849,4 --trace-process-track-uuid=3190708989122997041
+ 425790  425648 /home/node/.cache/ms-playwright/chromium_headless_shell-1234/chrome-headless-shell-linux64/chrome-headless-shell --type=renderer --headless=old --no-sandbox --disable-dev-shm-usage --disable-back-forward-cache --disable-background-timer-throttling --disable-breakpad --force-color-profile=srgb --remote-debugging-pipe --allow-pre-commit-input --blink-settings=primaryHoverType=2,availableHoverTypes=2,primaryPointerType=4,availablePointerTypes=4 --ozone-platform=headless --disable-gpu-compositing --lang=en-US --num-raster-threads=4 --enable-main-frame-before-activation --renderer-client-id=9 --time-ticks-at-unix-epoch=-1792743662783044 --launch-time-ticks=744925761493 --shared-files=v8_context_snapshot_data:100 --field-trial-handle=3,i,4469338299658451246,2511722619345840673,262144 --enable-features=CDPScreenshotNewSurface --disable-features=AutoDeElevate,AvoidUnnecessaryBeforeUnloadCheckSync,BlockOriginHeaderModificationOnRedirect,BoundaryEventDispatchTracksNodeRemoval,DestroyProfileOnBrowserClose,DialMediaRouteProvider,GlobalMediaControls,HttpsUpgrades,LensOverlay,MediaRouter,OptimizationHints,PaintHolding,ThirdPartyStoragePartitioning,Translate,msEdgeUpdateLaunchServicesPreferredVersion,msForceBrowserSignIn --variations-seed-version --pseudonymization-salt-handle=7,i,15972210146684204903,39564494874403849,4 --trace-process-track-uuid=3190708994745248135
+ 425806   61371 python3 operations/pr13/evidence/reader-platform02-current-baseline-fresh-20261031/participant/run.py cleanup-inspection set -eu; git status --porcelain; git diff --exit-code; ps -eo pid,ppid,args; find /tmp/kubeclaw-dev-npm-cache.ALIDsC/_logs -maxdepth 1 -type f -print
+ 425807  425806 /bin/bash -c set -eu; git status --porcelain; git diff --exit-code; ps -eo pid,ppid,args; find /tmp/kubeclaw-dev-npm-cache.ALIDsC/_logs -maxdepth 1 -type f -print
+ 425844  425807 ps -eo pid,ppid,args
+/tmp/kubeclaw-dev-npm-cache.ALIDsC/_logs/2026-10-31T23_15_26_213Z-debug-0.log

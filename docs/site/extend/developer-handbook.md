@@ -2128,8 +2128,9 @@ navigation. Changing the constant alone cannot establish a correct explanation.
    the changed source/tests, all three guides, this handbook's affected
    callouts, the checker, `docs/generated/inventory/documentation-source-revision.json`,
    and generated inventory/reference/map output. Record baseline results. For
-   the lifecycle exercise, the task's `671234b056bf5f5f503e51e8db30f843e781ba6e`
-   remains the original product baseline; it is not the later changed revision.
+   the lifecycle exercise, use `startingState.revision` from the registered
+   exercise fixture as the immutable original product baseline. It is not the
+   later changed source or documentation authority revision.
 2. Inspect the actual changed implementation, its callers, compatibility and
    test results. Update the affected explanation and diagnostic/recovery
    instructions. Commit the genuine changed product source and focused tests

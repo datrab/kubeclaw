@@ -1,0 +1,46 @@
+{
+  "status": "FINDING_NOT_APPLICABLE_TO_REAL_COHERENT_FOUR_FILE_CANDIDATE",
+  "finding": {
+    "title": "Update publication claims for the changed handbook",
+    "priority": "P1",
+    "reviewExit": 1,
+    "receipt": "pinned-review.json and terminal.json retained unchanged; no clean0 relabel"
+  },
+  "independentDecision": "The suggested obligation is genuine, but already satisfied in actual main candidate. Finding premise that only handbook changed and page/prose hashes remain old is false for the submitted coherent4file delivery. Do not suppress or blanket-waive content-addressed obligations; record this exact nonapplicability with actual checks.",
+  "actualFacts": {
+    "changedFiles": [
+      "docs/site/extend/developer-handbook.md",
+      "docs/config/publication-example-claims.json",
+      "scripts/docs-api-output-discovery.mjs",
+      "scripts/docs-documentation-owner-purpose-custody.mjs"
+    ],
+    "wholeClaimsSHA": "c00f429779caccdd72fcab5c4ad8a6b84cf00e185ae37ac29f87321ef57a7b1b",
+    "guideActualSHA": "c15a226e7f553a4034772e90eaebf1d0ab234a18133cbba01f9a71209d99c8b1",
+    "page15DeclaredSHA": "c15a226e7f553a4034772e90eaebf1d0ab234a18133cbba01f9a71209d99c8b1",
+    "page15ActualMatches": true,
+    "prose45DeclaredSHA": "fcdee716d456f0dfb35e377137631027d537edd5b73fc492b62abbacfc522e07",
+    "requiredPageHashError": "bindPublicationExampleCoverage at scripts/lib/docs-publication-example-coverage.mjs103 compares actual bytes directly with declared page.sha256. Real candidate has equal current SHA, not oldbb2d... .",
+    "actualCoverage": true,
+    "actualContracts": {
+      "authoredScopes": 212,
+      "exactSourceAnchors": 1088,
+      "sourceAccuracyReviewReperformed": false,
+      "documentProcedureOrProductionExecution": false,
+      "actualNativeResultsJoined": false
+    },
+    "proseConfirmation": "Root actual full native coverage/contract/syntax terminal0 exec72818 on frozen same candidate; native coverage checks page/prose identities. Current prose45 hashfcdee716... is present; no additional native rerun by reviewer."
+  },
+  "fullScopeProof": "Prior independent exact review applied fourpointer patch to complete old handbook record and matched actual page15, then replaced only page15 in baseline entire claims and matched current wholeJSON. Supplied serialized-byte reconstruction exact at22400574bytes. All50blocks unchanged; exact3dependent claims seal literals currentc00f... . Already reviewed full surrounding procedure and13 owning guards; no role/runtime/API authority loosened. This is full affected responsibility/complement proof, not hash-only Source truth.",
+  "reviewRepresentationCause": "Launch explicitly offered complete oldpage+fourpointer lossless current record, actual candidate.patch and13whole owning statements as datasets. Physical snapshot changed only handbook, so reviewing only snapshot changedFiles yields stale physical claims impression. Review overall text says only submitted file change, consistent with that mistaken representation premise. Dataset availability alone does not prove reviewer used it; actual receipt supports prose correction but not a clean coherent4file reviewer verdict.",
+  "SourceQualityApplicability": {
+    "Source": "PASS from exact real candidate independent review: registered fixture selector and source/authority distinctions truthful, surrounding duties unchanged. No new Source material omission identified by this P1.",
+    "Quality": "No actual stale publication binding regression; actual full native coverage separately contradicts predicted failure. Whole affected record and dependent physical seals current; real failed review stays failed.",
+    "independentP2Limit": "Terra run is NOT a clean P0/P1/P2 verdict on the coherent4file candidate and must not be advertised as one. The only stated issue is resolved by actual included data; this independent substantive adjudication plus prior full candidate Source/Reader/guard review supplies explicit disposition, not a fabricated corrected Terra execution. If root has a separate requirement for clean tool-run verdict, that procedural condition remains unmet until a faithfully represented run, not because of actual stale hash. No new unreviewed semantic responsibility identified here."
+  },
+  "concreteRemedy": {
+    "realCandidate": "No additional main mutation or generation needed solely for this finding; current requested page/prose/dependent fingerprint updates already exist. Preserve hashes/proof and native outcome.",
+    "reviewHandoff": "Attach this adjudication and actual4file diff/current complete page proof to closeout. For any required future pinned re-review, materialize coherent current claims/guard files or explicit reconstructed current record in review artifact and ensure reviewer sees actual delivery, not only physical guide delta. Do not reacquire whole/refused Source or rewrite report."
+  },
+  "remaining": "Final coherent current build/artifact/affected-rendered paragraph and original checker still root-owned; do not infer future0, remote availability, default generator qualification or fresh Platform02PASS. Both original freshFAILs retained; no new actor until mandatory localHelm/default path qualifies.",
+  "actions": "Read existing actual finding/launch/terminal/native receipt and validator comparison; direct actual hashes/record inspection only. No main edits/tests/review launches/blockedregistry read."
+}

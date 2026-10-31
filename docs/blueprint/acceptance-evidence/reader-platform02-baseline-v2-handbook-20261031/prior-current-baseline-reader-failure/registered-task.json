@@ -1,0 +1,54 @@
+{
+  "at": "2026-10-31T23:13:56.758138+00:00",
+  "task": {
+    "id": "READER-PLATFORM-02",
+    "persona": "platform-developer",
+    "startPath": "docs/site/README.md",
+    "acceptanceIds": [
+      "A910-11",
+      "A913-04"
+    ],
+    "objective": "Implement the registered Nova lifecycle change from a clean checkout, select the smallest complete check chain, prove compatibility and recovery behavior, and remove the change cleanly.",
+    "taskInput": "The preregistered platform-change fixture at reviewed_revision adds one bounded lifecycle reason without changing an external contract. The participant receives the desired behavior and fixture, but no source path or test command.",
+    "fixturePaths": [
+      "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+    ],
+    "injectedFaultId": "PLATFORM-NOVA-LIFECYCLE-CHANGE",
+    "requiredOutcomes": [
+      {
+        "id": "ownership-and-invariants-found",
+        "passCondition": "The participant finds the canonical owner, affected state invariants, compatibility boundary, generated surfaces, and documentation owner before editing."
+      },
+      {
+        "id": "smallest-complete-chain-runs",
+        "passCondition": "The participant runs the documented unit, contract, replay, recovery, compatibility, and documentation checks required for this change, with no unexplained omission."
+      },
+      {
+        "id": "negative-and-recovery-proof-pass",
+        "passCondition": "The registered invalid transition is rejected and the crash or restart fixture preserves the documented lifecycle result."
+      },
+      {
+        "id": "removal-restores-baseline",
+        "passCondition": "After the exercise, removal restores the original generated output and all selected checks pass without retained test state."
+      }
+    ],
+    "allowedAssistance": "Only docs/site, the registered fixture, and tools selected through the documented change guide. The facilitator cannot name source files or checks.",
+    "failureThreshold": "FAIL after a wrong owner, missing invariant or required check, absent negative/recovery proof, stale generated output, forbidden source, or 180 minutes without completion.",
+    "participantRequirements": {
+      "freshContext": true,
+      "priorContribution": false,
+      "requiredRole": "platform-developer"
+    },
+    "forbiddenSources": [
+      "package-readme",
+      "review-file",
+      "migration-note",
+      "chat-context"
+    ]
+  },
+  "reviewedRevision": "2028fe5e13cd8af36b579ee33c9d6bca5bff8d9c",
+  "currentDocsRoot": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site",
+  "fixtureSha256": "86f9a38e7f7fd6b1ad71fb5d4df6d226f483607054f27cb2caee9dd13f582253",
+  "freshEligibility": "newisolatedMODELplatformdeveloper no priorcontext/contribution",
+  "acceptanceYet": false
+}

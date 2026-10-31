@@ -1,0 +1,532 @@
+{
+  "status": "PASS_EXACT51_SCOPED_PRESERVATION_CONDITIONAL_FINAL_CURRENT_DELIVERY",
+  "materialFindings": [],
+  "selection": {
+    "baseline": "f4a0108f9f12168f06c087e3c9dc3dd7e9d52fa4",
+    "paths": [
+      "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+      "docs/site/extend/developer-handbook.md",
+      "docs/config/publication-example-claims.json",
+      "scripts/docs-api-output-discovery.mjs",
+      "scripts/docs-documentation-owner-purpose-custody.mjs"
+    ],
+    "method": "CurrentPASS completionRecords whose pages/sources exactly intersect combined5paths. Exact impact selection, not new51record audit; reuse prior49 and v1 material-duty decisions and inspect only handbook-only original summary/limits applicability.",
+    "total": 51,
+    "classes": {
+      "v1_31_existing_selection": 31,
+      "handbook_only_addition_prior49": 8,
+      "handbook_only_addition_outside_prior49": 12
+    },
+    "records": [
+      {
+        "id": "AP09-reader-developers-20261020",
+        "class": "handbook_only_addition_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse prior49 original-scope judgment and full new paragraph/page responsibility decision; no executable block/other claims/nav/guard-logic changes, no fresh outcome inferred."
+      },
+      {
+        "id": "AP09-reviewed-publication-navigation-20261020",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Navigation route/decision reachability unchanged; destination paragraph clarifies baseline, not new substantive acceptance."
+      },
+      {
+        "id": "AP09-closeout-developer-maintenance-20261020",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Existing developer/maintenance Source selection and safe-stop responsibilities retained; no new gate or executed platform change."
+      },
+      {
+        "id": "AP09-contributor-baselines-and-migrations-20261021",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Fixture immutable baseline and Source/authority distinction clarified; setup/security/migration duties unchanged, clean install/restore exclusions retained."
+      },
+      {
+        "id": "AP09-documentation-agent-maintenance-20261021",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md",
+          "scripts/docs-api-output-discovery.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "AP09-complete-platform-change-content-20261021",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Effect-format/identity/recovery/capability/integration/GitOps duties not changed by this internal lifecycle baseline selector; no successful generation or platform execution inferred."
+      },
+      {
+        "id": "AP09-complete-publication-reference-navigation-20261021",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "No historical citation/anchor range changes; immutable input selector is not rewritten Source evidence or new rendered route result."
+      },
+      {
+        "id": "AP09-complete-developer-reader-contracts-20261021",
+        "class": "handbook_only_addition_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse prior49 original-scope judgment and full new paragraph/page responsibility decision; no executable block/other claims/nav/guard-logic changes, no fresh outcome inferred."
+      },
+      {
+        "id": "AP09-complete-static-reader-search-20261021",
+        "class": "handbook_only_addition_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse prior49 original-scope judgment and full new paragraph/page responsibility decision; no executable block/other claims/nav/guard-logic changes, no fresh outcome inferred."
+      },
+      {
+        "id": "AP09-complete-static-offline-fallback-20261021",
+        "class": "handbook_only_addition_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse prior49 original-scope judgment and full new paragraph/page responsibility decision; no executable block/other claims/nav/guard-logic changes, no fresh outcome inferred."
+      },
+      {
+        "id": "A910-01-whole-content-20261021",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Clean-checkout tools/credentials/install/baseline/expected safe-stop contract retained. Real missing-author stop and generator blocker explicit; not installation success."
+      },
+      {
+        "id": "A910-11-whole-content-20261021",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Complete change-route duties/check chain unchanged; baseline/changedSource/authority revision clearer. Known mandatory local-Helm/default failure remains real safe STOP, no practical chainPASS."
+      },
+      {
+        "id": "AP09-publication-positive-scope-7ef16585",
+        "class": "handbook_only_addition_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse prior49 original-scope judgment and full new paragraph/page responsibility decision; no executable block/other claims/nav/guard-logic changes, no fresh outcome inferred."
+      },
+      {
+        "id": "A912-05-whole-source-excerpt-callouts-20261022",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "No Source excerpt/callout/link-byte responsibility changes; historical source-box observations remain historical. Need actual current delivery join, not new whole excerpt/browser qualification."
+      },
+      {
+        "id": "A910-03-whole-command-prerequisite-contract-20261022",
+        "class": "handbook_only_addition_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse prior49 original-scope judgment and full new paragraph/page responsibility decision; no executable block/other claims/nav/guard-logic changes, no fresh outcome inferred."
+      },
+      {
+        "id": "AP09-whole-extension-drift-A91014-20261023",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md",
+          "scripts/docs-documentation-owner-purpose-custody.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A911-06-authored-surface-bindings-20261025",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Authored endpoint/outbound/store binding meanings unchanged; no new Source-exhaustiveness or five DATA/ToolSource receiver qualification."
+      },
+      {
+        "id": "A99-13-original-seven-dimension-drift-20261025",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md",
+          "scripts/docs-documentation-owner-purpose-custody.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A99-06-actual-compiled-minimal-project-20261026",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Original da43 compiler/run/audit/artifact/cleanup evidence excludes new lifecycle scratch task; first-project instructions unchanged. No new fresh exercise inferred."
+      },
+      {
+        "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+        "class": "handbook_only_addition_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse prior49 original-scope judgment and full new paragraph/page responsibility decision; no executable block/other claims/nav/guard-logic changes, no fresh outcome inferred."
+      },
+      {
+        "id": "QUA-006-fresh-independent-technical-reader-20261027",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Original fresh technical Reader explicitly inspected dependency-preparation only, not whole handbook; changed later protected-Core paragraph does not change its actual task inputs/observations."
+      },
+      {
+        "id": "MNT-014-whole-native-publication-examples-20261027",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A99-11-whole-published-example-claims-20261027",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "scripts/docs-api-output-discovery.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "scripts/docs-api-output-discovery.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/extend/developer-handbook.md",
+          "docs/site/extend/examples/platform-change-nova-lifecycle.json",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+        "class": "v1_31_existing_selection",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "scripts/docs-api-output-discovery.mjs"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse exact v1 subset scoped-preservation/final SourceReader judgment; this additional paragraph correction retains original duties and all original limits."
+      },
+      {
+        "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+        "class": "handbook_only_addition_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Reuse prior49 original-scope judgment and full new paragraph/page responsibility decision; no executable block/other claims/nav/guard-logic changes, no fresh outcome inferred."
+      },
+      {
+        "id": "QUA007-independent-actual-operator-six-facets-20261031",
+        "class": "handbook_only_addition_outside_prior49",
+        "intersection": [
+          "docs/site/extend/developer-handbook.md"
+        ],
+        "decision": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_FINAL_DELIVERY",
+        "basis": "Actual six-facet local operator task uses da43 and excludes registered multirole tasks; new platform scratch baseline instruction changes none of those qualified observations."
+      }
+    ]
+  },
+  "decision": "All51 original accepted Source/semantic Reader/Quality scopes may retain exact summaries/limits/historical checks/reviews and requirement/gate membership with finite final current delivery/checker closeout. No material original criterion failure identified. No new practical Platform02 or whole-gate acceptance.",
+  "reused": [
+    "../reader-platform02-baseline-correction-20261031/scoped-preservation-decision.json",
+    "final-source-reader-decision.json",
+    "../plugin-checkpoint-original-scope-join-20261031.json"
+  ],
+  "materialAssessmentOnce": "Fixture baseline correction, full asset/contract and4seals qualified atv1. Handbook paragraph alone now follows registered fixture startingState.revision, retains baseline/changedSource/docsAuthority separation. Entire page15/prose45 exact4pointer proof,50blocks unchanged, allotherclaims exact;3claimsseal renewals only and owner logic unchanged. Applies at exact responsibilities, not hashes-as-truth.",
+  "originalFields": {
+    "completionRecordsEqualF4": true,
+    "rule": "Preserve original summaries/limits/reviews/check histories/membership. Append exact current impact/evidence only. Historical unchanged-input or previousNOT_READY sentences remain at their actual original revisions, not false present-tense conclusions."
+  },
+  "finiteRemainingConditions": [
+    "Record actual final coherent build after handbook correction; previous2028 build0/314sec is real but not final handbook delivery.",
+    "Canonical current artifact and bounded affected handbook paragraph/fixture selection delivery; verify copied exact fixture/hash and current claims binding. Old browser/excerpt/search observations remain historical; no wholecorpus rerun required absent new issue.",
+    "Unchanged original completion/acceptance checker after root exact scoped revision-impact append; actual terminal result required. Structural checker does not replace this semantic join."
+  ],
+  "pendingRootResults": "Terra76491 and native72818 running when assigned, no future0 inferred. Root sole writer and final integrator.",
+  "separateUnmetObligations": "Both fresh Platform02 FAIL receipts immutable. Real Git author can be provisioned with registered existing agent identity in clean checkout, not invented human. Mandatory local-Helm/full default API path must genuinely qualify nonfresh before another actor; no generator bypass/blocked-registry reacquisition or newfresh success inferred. Prior global failures and parked A91112 refusal remain.",
+  "awards": "Zero new accepted gates/requirements, fresh persona/operator/human/AT/deployed/runtime/API/global generator or AP10 awards. Other original cases remain independent.",
+  "actions": "Read-only exact selection and bounded summary/limits applicability; reuse already qualified delta. Only this external report written; no tests/main edits/children/refusedregistry read."
+}

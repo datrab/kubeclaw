@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Update publication claims for the changed handbook",
+      "body": "The handbook is content-addressed by `publication-example-claims.json`; its existing page and prose-region hashes still describe the old bytes. The supplied coverage validator compares those hashes to the current file and will fail with `publication inline/prose example claims changed` after this edit. Regenerate/update the handbook record (and its dependent pinned claim fingerprints) with this documentation change.",
+      "priority": "P1",
+      "confidence": 0.99,
+      "category": "regression",
+      "code_location": {
+        "file_path": "docs/site/extend/developer-handbook.md",
+        "line": 2131
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The baseline wording correctly aligns with the fixture, but the only submitted file change leaves the required content-addressed publication claims stale, causing documentation publication validation to fail.",
+  "overall_confidence": 0.99
+}

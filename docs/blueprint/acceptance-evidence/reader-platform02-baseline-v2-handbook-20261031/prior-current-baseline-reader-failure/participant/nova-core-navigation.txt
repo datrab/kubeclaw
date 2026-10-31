@@ -1,0 +1,230 @@
+# Nova Core: From Project Input to Durable Decision
+
+Status: implemented with stated limits
+Audience: architecture reader, Nova developer, operator, incident responder
+Owner: Nova maintainers
+Evidence: skills/nova/project; skills/nova/core; skills/common/plugin-runtime
+Evidence revision: `ce7740252864a9b547bee8a35260d6ab10c9f05e`
+Applies to: `nova-project.v2`, `pipeline-definition.v2`, and the current Nova Core runtime
+Last verified: source and contract inspection on 2026-10-11 at `a1569b61663e4bc85e11d38bd896bb99ed0bd396`; linked implementation files are byte-identical to the evidence revision. This inspection does not establish successful production execution.
+
+## Purpose
+
+Nova Core is the control authority for one pipeline run.
+It turns a fixed graph into ordered attempts, durable decisions, and one final run status.
+
+Core does not implement product work.
+Plugins implement stages and adapters perform external operations.
+Core decides when work can start, what authority it receives, and how its result changes the run.
+
+This page follows that complete path.
+It also explains why each safety boundary exists and what happens when a boundary fails.
+
+For the wider component map, see [Components and Authority](components-and-authority.md).
+For a shorter request trace, see [Request, State, and Recovery](request-state-recovery.md).
+For operational commands, see [Operate the Pipeline](../use/operate.md).
+
+## The Core Model
+
+Nova separates four kinds of truth.
+
+| Truth | Owner | Durable representation | Why it is separate |
+| --- | --- | --- | --- |
+| What work exists | Project compiler and graph validator | Graph in `run-snapshot.json` | Running code must not add undeclared work. |
+| Which implementation may run | Plugin registry and platform policy | Registry in `run-snapshot.json` | A stage name alone does not grant authority. |
+| What happened | Nova Core | Hash-chained journals and artifact records | Recovery needs ordered facts, not process memory. |
+| What the facts mean for the run | Nova lifecycle reducer | Derived stage state and terminal event | Plugins must not select their own lifecycle transition. |
+
+The separation makes replay predictable.
+It also lets Core reject a changed graph, package, or result before the change gains authority.
+
+```mermaid
+flowchart LR
+    Input[Project input] --> Compiler[Project compiler]
+    Compiler --> Definition[Fixed pipeline definition]
+    Definition --> Registry[Registry and grant resolution]
+    Registry --> Snapshot[Atomic run snapshot]
+    Snapshot --> Loop[Scheduler loop]
+    Loop --> Attempt[Bounded stage attempt]
+    Attempt --> Effects[Authorized effects]
+    Attempt --> Result[Typed stage result]
+    Effects --> Receipts[Durable receipts]
+    Result --> Reducer[Lifecycle reducer]
+    Receipts --> Reducer
+    Reducer --> Journal[Lifecycle journal]
+    Journal --> Loop
+    Journal --> Audit[Redacted audit projection]
+```
+
+Text version: The **Project input** enters the **Project compiler**.
+The **Project compiler** produces the **Fixed pipeline definition**.
+The **Fixed pipeline definition** determines the required **Registry and grant resolution**.
+This resolution selects packages, registrations, grants, and providers.
+The **Registry and grant resolution** supplies the **Atomic run snapshot**.
+Nova stores the fixed definition and runtime selections in that snapshot.
+The **Atomic run snapshot** supplies the admitted inputs for the **Scheduler loop**.
+The **Scheduler loop** starts a **Bounded stage attempt**.
+
+A **Bounded stage attempt** requests **Authorized effects**.
+The **Bounded stage attempt** also produces a **Typed stage result**.
+For durable **Authorized effects**, Core stores **Durable receipts**.
+The **Typed stage result** enters the **Lifecycle reducer**.
+**Durable receipts** constrain the **Lifecycle reducer** through the attempt's result.
+Core records the **Lifecycle reducer**'s decisions in the **Lifecycle journal**.
+The **Lifecycle journal** supplies state for the next **Scheduler loop** selection, including replay after interruption.
+The **Lifecycle journal** also supplies the **Redacted audit projection**.
+
+These arrows describe authority and information flow.
+Receipts affect lifecycle decisions through adapter responses and attempt results;
+the reducer does not directly read the receipt journal.
+
+> **Source evidence — control authority**
+>
+> **Claim:** Core, not a plugin, owns scheduling and lifecycle transitions.
+>
+> **Implementation:** Runner admission, reducer, executor, loop and audit functions below trace the control path.
+>
+> [The runner validates the graph and stage inputs before it creates the scheduling loop](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/runner.ts#L40-L78).
+>
+> [The reducer owns all stage states and permitted lifecycle actions](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/lifecycle/reducer.ts#L9-L52).
+>
+> [AdapterRuntime checks receipt outcomes before it returns effect responses to an attempt](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/adapters.ts#L52-L66).
+> [The executor records the typed result before applying the reducer](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L31-L52).
+>
+> [The loop records decisions before its next scheduling selection](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/pipeline-loop.ts#L20-L37).
+> [Audit derives its redacted projection from journal records](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/telemetry/audit.ts#L13-L27).
+>
+> **Contract or setting:** The graph and typed result constrain scheduling; receipts influence lifecycle through the returned result, not a direct reducer receipt read.
+>
+> **Test evidence:** An executed complete project-to-durable-decision check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** These control-flow sources do not prove successful production execution or an external effect.
+
+## Authority and Invariants
+
+The following rules hold across the complete run.
+
+| Rule | Core enforces it by | Failure behavior |
+| --- | --- | --- |
+| One graph defines the run. | Core freezes, sorts, hashes, and stores the graph. | Recovery stops on a pipeline or graph digest mismatch. |
+| One active runtime owns a run mutation. | A run mutation lease surrounds new runs, recovery, resume, and administrative actions. | A second mutation fails before it writes state. |
+| One registration owns each stage type. | Registry build rejects duplicate owners and runtime validation resolves every stage. | Admission stops before the first attempt. |
+| A plugin cannot select a lifecycle state. | The plugin returns a typed result and Core maps it through the reducer. | Invalid results or illegal source states fail closed. |
+| A capability is not general access. | Core checks the grant and its resource constraints for each call. | The invocation is denied and the attempt returns a controlled failure. |
+| An external effect needs stable identity. | Core writes request, acceptance, lock, fence, and receipt records. | An uncertain outcome blocks automatic continuation. |
+| A wait accepts one matching signal. | Core checks wait identity, signal type, issuer, time, and prior consumption. | A stale, foreign, expired, or second signal is rejected. |
+| Recovery preserves consumed budgets. | Replay folds attempt and repair events into counters. | Restart cannot restore spent attempts or repair orders. |
+| A terminal run stays terminal. | Recovery and resume inspect the last run boundary. | Normal recovery and normal resume are rejected. |
+
+These rules trade convenience for evidence.
+For example, Core stops when it cannot distinguish a completed effect from an incomplete effect.
+Automatic repetition would be easier, but it could duplicate a deployment, publication, or remote job.
+
+> **Source evidence — immutable run identity**
+>
+> **Claim:** Graph identity is frozen and run mutations share an exclusive lease.
+>
+> **Implementation:** Graph snapshot construction and engine mutation-lock entry below enforce these separate identities.
+>
+> [The graph snapshot contains ordered nodes, ordinary edges, remediation edges, concurrency, and a content digest](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/graph.ts#L13-L50).
+>
+> [New, recovery, and resume paths execute inside the run mutation lock](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/engine-run.ts#L36-L43).
+>
+> **Contract or setting:** The snapshot digest binds nodes, both edge classes and concurrency; a mutation lease does not replace that digest.
+>
+> **Test evidence:** An executed concurrent mutation and changed-graph recovery check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Exclusive local mutation does not prove remote-resource fencing or target-volume durability.
+
+### Identities do not substitute for each other
+
+| Identity | What it names | Authority that verifies it |
+| --- | --- | --- |
+| Project ID | One authored project definition. | Project compiler. |
+| Pipeline ID | One compiled pipeline definition. | Graph snapshot verification. |
+| Run ID | One execution history. | Run-root resolver and every lifecycle event. |
+| Graph digest | Exact nodes, edges, limits, and concurrency. | New-run snapshot and recovery. |
+| Package content digest | Exact installed package content. | Discovery trust policy and pinned-package recovery. |
+| Registration ID | One stage, adapter, or observer entry inside a package. | Registry and activation policy. |
+| Stage ID | One graph node. | Graph builder and scheduler. |
+| Attempt ID and number | One bounded execution of a stage. | Stage executor and artifact producer checks. |
+| Lease ID | Temporary authority of one attempt context. | Invocation context and revocation checks. |
+| Effect ID and idempotency key | One intended external operation and its retry identity. | Effect coordinator and effect journal. |
+| Resource lock and fencing token | Current writer for one external resource. | Lock manager and adapter fence check. |
+| Wait ID, signal ID, and signal idempotency key | One pause, one answer, and repeat-safe delivery. | Resume validation and signal journal. |
+| Artifact ID and digest | A named output and its exact bytes. | Artifact adapter and checkpoint recorder. |
+| Repair request digest and order ID | One defect-driven repair authority. | Repair budget and replay projection. |
+| Remote job, request, plan, result, and decision digests | One Nova-to-Buster handoff and its returned facts. | Dispatch store, importer, and Nova decision logic. |
+
+An equal label does not imply equal authority.
+For example, an artifact ID without its digest and producer attempt does not identify trusted artifact content.
+A remote job ID without its request digest does not identify the admitted request.
+
+> **Source evidence — attempt and effect identity**
+>
+> **Claim:** Attempt/lease identity and external-effect identity bind different authority.
+>
+> **Implementation:** The executor and effect request type below construct those identities.
+>
+> [The stage executor creates the attempt and lease identities and records package ownership](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/execution/stage-executor.ts#L55-L79).
+>
+> [The effect contract binds idempotency, attempt, capability, operation, resource, and payload](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/core/effects/contracts.ts#L4-L14).
+>
+> **Contract or setting:** The effect contract binds attempt, capability, operation, resource, payload and idempotency key.
+>
+> **Test evidence:** An executed cross-attempt effect-identity rejection check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** Matching labels alone do not prove trusted artifact bytes or authorize another attempt.
+
+## 1. Project Admission and Compilation
+
+### The command boundary
+
+The Nova project command accepts `--project` and `--platform`.
+It accepts one optional operation: compile, recover, or signal.
+Without one of these options, it starts a new run.
+
+The compile operation writes a pipeline definition without starting effects.
+The command uses exclusive file creation, so it does not replace an existing output file.
+A new run also checks the repository `HEAD` and the clean working tree against the declared baseline.
+Recovery compiles the recovery form and then verifies the stored run identity.
+
+> **Source evidence — command selection and baseline checks**
+>
+> **Claim:** The project CLI selects compile, run, recover or signal and checks its admitted runtime/baseline.
+>
+> **Implementation:** The linked CLI branch defines operation selection and its ordering.
+>
+> [The project CLI validates its operation, validates the installed runtime, and selects compile, run, recover, or resume](https://github.com/datrab/kubeclaw/blob/ce7740252864a9b547bee8a35260d6ab10c9f05e/skills/nova/project/cli.ts#L19-L56).
+>
+> **Contract or setting:** Project/platform inputs select this CLI path; compile output uses exclusive creation and does not start pipeline effects.
+>
+> **Test evidence:** An executed production project CLI check is not established by this source trace.
+>
+> **Revision:** `ce7740252864a9b547bee8a35260d6ab10c9f05e`. Source bindings, not execution receipts.
+>
+> **Limit:** A compiled definition is not an executed run, and compilation does not guarantee live provider availability.
+
+### Input admission
+
+The compiler accepts only `nova-project.v2`.
+It rejects unknown object fields instead of silently ignoring them.
+Project and module IDs use a restricted form.
+Repository and workspace paths must be absolute and normalized.
+The workspace must remain outside the repository.
+The baseline must be a full 40-character Git object ID.
+
+Each module must have requirements, owned paths, runtime configuration, and a test plan.
+Owned paths cannot overlap between modules.
+Module dependencies must exist and must not form a cycle.
+A module test plan must contain at least one non-skipped blocking test.
+Its plan digest and project scope must match the project.
+
+**Why these checks exist:** The compiler converts author intent into execution authority.
+An ignored field, moving revision, or overlapping owner can make two valid-looking runs mean different things.

@@ -1,0 +1,16 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: on
+trufflehog: clean (2.1s)
+bundle: 1362 bytes; review passes: 1
+autoreview findings: 1
+[P1] Update publication claims for the changed handbook
+docs/site/extend/developer-handbook.md:2131
+The handbook is content-addressed by `publication-example-claims.json`; its existing page and prose-region hashes still describe the old bytes. The supplied coverage validator compares those hashes to the current file and will fail with `publication inline/prose example claims changed` after this edit. Regenerate/update the handbook record (and its dependent pinned claim fingerprints) with this documentation change.
+
+overall: patch is incorrect (0.99)
+The baseline wording correctly aligns with the fixture, but the only submitted file change leaves the required content-addressed publication claims stale, causing documentation publication validation to fail.

@@ -1,0 +1,20 @@
+{
+  "checkedAt": "2026-10-31T23:16:47.523204+00:00",
+  "ownedPaths": [
+    "/home/node/.openclaw/workspace/tmp/reader-platform02-fresh-20261031",
+    "/tmp/kubeclaw-dev-npm-cache.ALIDsC"
+  ],
+  "activeReferences": [],
+  "preserved": [
+    "commands.jsonl",
+    "all command logs",
+    "npm-logs",
+    "navigation-sha256.txt",
+    "baseline-identities.log",
+    "pre-edit-selection.json",
+    "outcomes.json",
+    "report.md"
+  ],
+  "removed": true,
+  "remainingPaths": []
+}

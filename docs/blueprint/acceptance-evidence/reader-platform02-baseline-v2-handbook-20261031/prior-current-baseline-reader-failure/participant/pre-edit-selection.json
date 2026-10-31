@@ -1,0 +1,29 @@
+{
+  "participant": "fresh model platform-developer",
+  "task": "READER-PLATFORM-02",
+  "reviewedDocsRevision": "2028fe5e13cd8af36b579ee33c9d6bca5bff8d9c",
+  "executionRevision": "f4a0108f9f12168f06c087e3c9dc3dd7e9d52fa4",
+  "navigation": [
+    "docs/site/README.md",
+    "docs/site/extend/README.md",
+    "docs/site/extend/developer-handbook.md",
+    "docs/site/understand/nova-core.md"
+  ],
+  "owner": "Nova Core maintainers; lifecycle recorder skills/nova/core/execution/run-decisions.ts, reducer and replay adjacent",
+  "invariants": [
+    "results accepted only from running",
+    "consume bounded attempts and repairs",
+    "Core alone changes canonical lifecycle",
+    "durable event precedes projection and replay preserves budget",
+    "immutable graph/source/digest identities",
+    "other administrative nonterminal actions retain baseline reason"
+  ],
+  "compatibility": "No schema/event/export/package/graph/digest/CLI changes; baseline string reason representation",
+  "generatedSurfaces": [
+    "SDK src/generated/contracts.ts",
+    "documentation inventory/reference/map and common source lock"
+  ],
+  "documentationOwner": "Nova and developer experience; documentation automation for inventories",
+  "selectedChain": "clean checkout setup steps 1-6; Nova internal lifecycle complete chain; targeted fixture assertions; protected Core revision procedure; common documentation chain; removal exact baseline and same checks",
+  "editingStarted": false
+}

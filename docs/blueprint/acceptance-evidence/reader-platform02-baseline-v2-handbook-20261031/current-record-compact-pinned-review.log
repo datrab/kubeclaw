@@ -1,0 +1,12 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: on
+trufflehog: clean (2.0s)
+bundle: 1362 bytes; review passes: 1
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.9)
+The handbook now selects the registered fixture’s immutable starting revision, and the supplied complete claim-record update and dependent hash pins consistently track the changed handbook bytes.

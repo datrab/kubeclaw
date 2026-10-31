@@ -1,0 +1,1118 @@
+{
+  "at": "2026-10-31T23:22:16.712Z",
+  "coverage": true,
+  "contract": {
+    "authoredScopes": 212,
+    "exactSourceAnchors": 1088,
+    "sourceAccuracyReviewReperformed": false,
+    "documentProcedureOrProductionExecution": false,
+    "actualNativeResultsJoined": false
+  },
+  "syntax": {
+    "checkedCommandReferences": [
+      "docs/site/extend/buster.md#block-1",
+      "docs/site/extend/buster.md#block-2",
+      "docs/site/extend/buster.md#block-3",
+      "docs/site/extend/buster.md#block-4",
+      "docs/site/extend/buster.md#block-6",
+      "docs/site/extend/buster.md#block-7",
+      "docs/site/extend/buster.md#block-8",
+      "docs/site/extend/buster.md#block-9",
+      "docs/site/extend/buster.md#block-10",
+      "docs/site/extend/contracts.md#block-1",
+      "docs/site/extend/contracts.md#block-2",
+      "docs/site/extend/deep-guides/demo-handoff.md#block-1",
+      "docs/site/extend/deep-guides/reports.md#block-1",
+      "docs/site/extend/developer-handbook.md#block-1",
+      "docs/site/extend/developer-handbook.md#block-2",
+      "docs/site/extend/developer-handbook.md#block-3",
+      "docs/site/extend/developer-handbook.md#block-4",
+      "docs/site/extend/developer-handbook.md#block-5",
+      "docs/site/extend/developer-handbook.md#block-6",
+      "docs/site/extend/developer-handbook.md#block-7",
+      "docs/site/extend/developer-handbook.md#block-8",
+      "docs/site/extend/developer-handbook.md#block-9",
+      "docs/site/extend/developer-handbook.md#block-10",
+      "docs/site/extend/developer-handbook.md#block-11",
+      "docs/site/extend/developer-handbook.md#block-12",
+      "docs/site/extend/developer-handbook.md#block-13",
+      "docs/site/extend/developer-handbook.md#block-14",
+      "docs/site/extend/developer-handbook.md#block-15",
+      "docs/site/extend/developer-handbook.md#block-16",
+      "docs/site/extend/developer-handbook.md#block-17",
+      "docs/site/extend/developer-handbook.md#block-18",
+      "docs/site/extend/developer-handbook.md#block-19",
+      "docs/site/extend/developer-handbook.md#block-20",
+      "docs/site/extend/developer-handbook.md#block-21",
+      "docs/site/extend/developer-handbook.md#block-22",
+      "docs/site/extend/developer-handbook.md#block-23",
+      "docs/site/extend/developer-handbook.md#block-24",
+      "docs/site/extend/developer-handbook.md#block-25",
+      "docs/site/extend/developer-handbook.md#block-26",
+      "docs/site/extend/developer-handbook.md#block-27",
+      "docs/site/extend/developer-handbook.md#block-28",
+      "docs/site/extend/developer-handbook.md#block-29",
+      "docs/site/extend/developer-handbook.md#block-30",
+      "docs/site/extend/developer-handbook.md#block-31",
+      "docs/site/extend/developer-handbook.md#block-32",
+      "docs/site/extend/developer-handbook.md#block-33",
+      "docs/site/extend/developer-handbook.md#block-34",
+      "docs/site/extend/developer-handbook.md#block-35",
+      "docs/site/extend/developer-handbook.md#block-36",
+      "docs/site/extend/developer-handbook.md#block-37",
+      "docs/site/extend/developer-handbook.md#block-38",
+      "docs/site/extend/developer-handbook.md#block-39",
+      "docs/site/extend/developer-handbook.md#block-40",
+      "docs/site/extend/developer-handbook.md#block-41",
+      "docs/site/extend/developer-handbook.md#block-42",
+      "docs/site/extend/developer-handbook.md#block-43",
+      "docs/site/extend/developer-handbook.md#block-44",
+      "docs/site/extend/developer-handbook.md#block-45",
+      "docs/site/extend/developer-handbook.md#block-46",
+      "docs/site/extend/developer-handbook.md#block-47",
+      "docs/site/extend/developer-handbook.md#block-48",
+      "docs/site/extend/developer-handbook.md#block-49",
+      "docs/site/extend/developer-handbook.md#block-50",
+      "docs/site/extend/documentation-maintenance.md#block-1",
+      "docs/site/extend/documentation-maintenance.md#block-2",
+      "docs/site/extend/documentation-maintenance.md#block-3",
+      "docs/site/extend/documentation-maintenance.md#block-4",
+      "docs/site/extend/documentation-maintenance.md#block-5",
+      "docs/site/extend/documentation-maintenance.md#block-6",
+      "docs/site/extend/documentation-maintenance.md#block-7",
+      "docs/site/extend/documentation-maintenance.md#block-8",
+      "docs/site/extend/effectful-plugin.md#block-1",
+      "docs/site/extend/first-plugin.md#block-1",
+      "docs/site/extend/first-plugin.md#block-3",
+      "docs/site/extend/first-plugin.md#block-4",
+      "docs/site/extend/first-plugin.md#block-6",
+      "docs/site/extend/first-plugin.md#block-7",
+      "docs/site/extend/first-plugin.md#block-8",
+      "docs/site/extend/first-plugin.md#block-11",
+      "docs/site/extend/first-plugin.md#block-12",
+      "docs/site/extend/first-plugin.md#block-13",
+      "docs/site/extend/first-plugin.md#block-14",
+      "docs/site/extend/first-plugin.md#block-15",
+      "docs/site/extend/first-plugin.md#block-16",
+      "docs/site/extend/first-plugin.md#block-17",
+      "docs/site/extend/first-plugin.md#block-18",
+      "docs/site/extend/first-plugin.md#block-19",
+      "docs/site/extend/host-and-engine.md#block-1",
+      "docs/site/extend/lint.md#block-2",
+      "docs/site/extend/lint.md#block-3",
+      "docs/site/extend/lint.md#block-4",
+      "docs/site/extend/lint.md#block-5",
+      "docs/site/extend/lint.md#block-6",
+      "docs/site/extend/lint.md#block-7",
+      "docs/site/extend/lint.md#block-8",
+      "docs/site/extend/lint.md#block-9",
+      "docs/site/extend/lint.md#block-10",
+      "docs/site/extend/lint.md#block-11",
+      "docs/site/extend/lint.md#block-12",
+      "docs/site/extend/lint.md#block-13",
+      "docs/site/extend/lint.md#block-14",
+      "docs/site/extend/lint.md#block-15",
+      "docs/site/extend/lint.md#block-16",
+      "docs/site/extend/nova.md#block-1",
+      "docs/site/extend/platform/README.md#block-1",
+      "docs/site/extend/platform/README.md#block-2",
+      "docs/site/extend/platform/README.md#block-3",
+      "docs/site/extend/platform/README.md#block-4",
+      "docs/site/extend/platform/README.md#block-5",
+      "docs/site/extend/platform/buster.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw-agent-observer.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw-prism.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.agent-observability.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.api-flow.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.architecture-validator.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.artifact-store.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.axe.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.axe.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.blueprint-sync.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.buster-quality-gate.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.case-study.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.command-runner.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.container-build.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.coverage-budget.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.delivery-lint.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.demo-auth-smoke.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.demo-handoff.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.direct-command.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.git-workspace.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.http.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.http.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.human-approval.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.implementation-agent.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.junit-report.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.kubernetes-fixture.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.lighthouse.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.lint.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.lint.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.network-http.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.notification-observer.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.openapi.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.openclaw-agent-events.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.operator-messaging.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.pipeline-review.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.playwright.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.preflight-contract.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.prism-design.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.project-summary.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.redis-transport.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.remote-test-gate.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.repository-adapter.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.review.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.review.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.runtime-dispatch.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.secret-resolver.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.security-providers.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.size-budget.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.state-store.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.tailscale-exposure.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-observer.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.telemetry-store.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.transport-publisher.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.visual.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.visual.md#block-2",
+      "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md#block-1",
+      "docs/site/extend/plugin-catalogue/kubeclaw.wait-store.md#block-2",
+      "docs/site/extend/testing.md#block-1",
+      "docs/site/extend/testing.md#block-2",
+      "docs/site/extend/testing.md#block-3",
+      "docs/site/reference/buster-runtime-configuration.md#block-2",
+      "docs/site/reference/buster-runtime-configuration.md#block-3",
+      "docs/site/reference/buster-runtime-configuration.md#block-4",
+      "docs/site/reference/buster-runtime-configuration.md#block-5",
+      "docs/site/reference/cli.md#block-1",
+      "docs/site/reference/configuration-precedence.md#block-5",
+      "docs/site/reference/configuration-precedence.md#block-6",
+      "docs/site/reference/contracts.md#block-1",
+      "docs/site/reference/documentation-governance.md#block-1",
+      "docs/site/reference/documentation-site.md#block-1",
+      "docs/site/reference/documentation-site.md#block-2",
+      "docs/site/reference/documentation-site.md#block-3",
+      "docs/site/reference/documentation-site.md#block-4",
+      "docs/site/reference/documentation-site.md#block-5",
+      "docs/site/reference/documentation-site.md#block-6",
+      "docs/site/reference/environment-variables.md#block-1",
+      "docs/site/reference/images-and-digests.md#block-2",
+      "docs/site/reference/nova-project.md#block-1",
+      "docs/site/reference/nova-project.md#block-2",
+      "docs/site/reference/pipeline-definition.md#block-2",
+      "docs/site/reference/project-pipeline-publication.md#block-1",
+      "docs/site/reference/project-pipeline-publication.md#block-2",
+      "docs/site/reference/project-pipeline-publication.md#block-3",
+      "docs/site/reference/project-pipeline-publication.md#block-4",
+      "docs/site/reference/project-pipeline-publication.md#block-5",
+      "docs/site/reference/project-pipeline-publication.md#block-7",
+      "docs/site/reference/roles-and-package-ownership.md#block-1",
+      "docs/site/reference/roles-and-package-ownership.md#block-2",
+      "docs/site/reference/sdk.md#block-6",
+      "docs/site/reference/secrets.md#block-1",
+      "docs/site/reference/secrets.md#block-2",
+      "docs/site/reference/service-routing.md#block-1",
+      "docs/site/reference/service-routing.md#block-2",
+      "docs/site/reference/service-routing.md#block-3",
+      "docs/site/reference/verification-commands.md#block-1",
+      "docs/site/understand/data-and-state.md#block-1",
+      "docs/site/understand/data-and-state.md#block-2",
+      "docs/site/understand/data-and-state.md#block-3",
+      "docs/site/understand/echo.md#block-1",
+      "docs/site/understand/echo.md#block-2",
+      "docs/site/understand/echo.md#block-3",
+      "docs/site/understand/telemetry.md#block-4",
+      "docs/site/use/capacity.md#block-1",
+      "docs/site/use/capacity.md#block-2",
+      "docs/site/use/capacity.md#block-3",
+      "docs/site/use/capacity.md#block-4",
+      "docs/site/use/demo-delivery.md#block-1",
+      "docs/site/use/demo-delivery.md#block-2",
+      "docs/site/use/demo-delivery.md#block-3",
+      "docs/site/use/diagnose.md#block-1",
+      "docs/site/use/diagnose.md#block-2",
+      "docs/site/use/diagnose.md#block-3",
+      "docs/site/use/diagnose.md#block-4",
+      "docs/site/use/diagnose.md#block-5",
+      "docs/site/use/diagnose.md#block-6",
+      "docs/site/use/diagnose.md#block-7",
+      "docs/site/use/diagnose.md#block-8",
+      "docs/site/use/diagnose.md#block-9",
+      "docs/site/use/diagnose.md#block-10",
+      "docs/site/use/diagnose.md#block-11",
+      "docs/site/use/diagnose.md#block-12",
+      "docs/site/use/diagnose.md#block-13",
+      "docs/site/use/diagnose.md#block-14",
+      "docs/site/use/diagnose.md#block-15",
+      "docs/site/use/diagnose.md#block-16",
+      "docs/site/use/diagnose.md#block-17",
+      "docs/site/use/diagnose.md#block-18",
+      "docs/site/use/diagnose.md#block-19",
+      "docs/site/use/diagnose.md#block-20",
+      "docs/site/use/diagnose.md#block-21",
+      "docs/site/use/diagnose.md#block-22",
+      "docs/site/use/diagnose.md#block-23",
+      "docs/site/use/diagnose.md#block-24",
+      "docs/site/use/diagnose.md#block-25",
+      "docs/site/use/diagnose.md#block-26",
+      "docs/site/use/diagnose.md#block-27",
+      "docs/site/use/diagnose.md#block-28",
+      "docs/site/use/diagnose.md#block-29",
+      "docs/site/use/diagnose.md#block-30",
+      "docs/site/use/diagnose.md#block-31",
+      "docs/site/use/diagnose.md#block-32",
+      "docs/site/use/install.md#block-1",
+      "docs/site/use/install.md#block-2",
+      "docs/site/use/install.md#block-3",
+      "docs/site/use/install.md#block-4",
+      "docs/site/use/install.md#block-5",
+      "docs/site/use/install.md#block-6",
+      "docs/site/use/install.md#block-7",
+      "docs/site/use/install.md#block-8",
+      "docs/site/use/install.md#block-9",
+      "docs/site/use/install.md#block-10",
+      "docs/site/use/install.md#block-11",
+      "docs/site/use/install.md#block-12",
+      "docs/site/use/install.md#block-13",
+      "docs/site/use/install.md#block-14",
+      "docs/site/use/install.md#block-15",
+      "docs/site/use/install.md#block-16",
+      "docs/site/use/install.md#block-17",
+      "docs/site/use/install.md#block-18",
+      "docs/site/use/install.md#block-19",
+      "docs/site/use/install.md#block-20",
+      "docs/site/use/install.md#block-21",
+      "docs/site/use/maintenance.md#block-1",
+      "docs/site/use/maintenance.md#block-2",
+      "docs/site/use/maintenance.md#block-3",
+      "docs/site/use/maintenance.md#block-4",
+      "docs/site/use/maintenance.md#block-5",
+      "docs/site/use/maintenance.md#block-6",
+      "docs/site/use/maintenance.md#block-7",
+      "docs/site/use/maintenance.md#block-8",
+      "docs/site/use/maintenance.md#block-9",
+      "docs/site/use/maintenance.md#block-10",
+      "docs/site/use/maintenance.md#block-11",
+      "docs/site/use/maintenance.md#block-12",
+      "docs/site/use/maintenance.md#block-13",
+      "docs/site/use/maintenance.md#block-14",
+      "docs/site/use/maintenance.md#block-15",
+      "docs/site/use/maintenance.md#block-16",
+      "docs/site/use/maintenance.md#block-17",
+      "docs/site/use/maintenance.md#block-18",
+      "docs/site/use/maintenance.md#block-19",
+      "docs/site/use/maintenance.md#block-20",
+      "docs/site/use/maintenance.md#block-21",
+      "docs/site/use/maintenance.md#block-22",
+      "docs/site/use/maintenance.md#block-23",
+      "docs/site/use/maintenance.md#block-24",
+      "docs/site/use/maintenance.md#block-25",
+      "docs/site/use/maintenance.md#block-26",
+      "docs/site/use/operate.md#block-1",
+      "docs/site/use/operate.md#block-2",
+      "docs/site/use/operate.md#block-3",
+      "docs/site/use/operate.md#block-4",
+      "docs/site/use/operate.md#block-5",
+      "docs/site/use/operate.md#block-6",
+      "docs/site/use/operate.md#block-7",
+      "docs/site/use/operate.md#block-8",
+      "docs/site/use/operate.md#block-9",
+      "docs/site/use/operate.md#block-11",
+      "docs/site/use/operate.md#block-12",
+      "docs/site/use/operate.md#block-13",
+      "docs/site/use/operate.md#block-14",
+      "docs/site/use/operate.md#block-15",
+      "docs/site/use/plugins.md#block-1",
+      "docs/site/use/plugins.md#block-2",
+      "docs/site/use/plugins.md#block-3",
+      "docs/site/use/plugins.md#block-4",
+      "docs/site/use/plugins.md#block-5",
+      "docs/site/use/prism-studio.md#block-1",
+      "docs/site/use/prism-studio.md#block-2",
+      "docs/site/use/prism-studio.md#block-3",
+      "docs/site/use/prism-studio.md#block-4",
+      "docs/site/use/prism-studio.md#block-5",
+      "docs/site/use/prism-studio.md#block-6",
+      "docs/site/use/prism-studio.md#block-7",
+      "docs/site/use/prism-studio.md#block-8",
+      "docs/site/use/prism-studio.md#block-9",
+      "docs/site/use/prism-studio.md#block-11",
+      "docs/site/use/prism-studio.md#block-12",
+      "docs/site/use/prism-studio.md#block-13",
+      "docs/site/use/prism-studio.md#block-14",
+      "docs/site/use/prism-studio.md#block-15",
+      "docs/site/use/prism-studio.md#block-16",
+      "docs/site/use/prism-studio.md#block-18",
+      "docs/site/use/prism-studio.md#block-19",
+      "docs/site/use/quickstart.md#block-1",
+      "docs/site/use/quickstart.md#block-2",
+      "docs/site/use/quickstart.md#block-3",
+      "docs/site/use/quickstart.md#block-4",
+      "docs/site/use/quickstart.md#block-5",
+      "docs/site/use/recovery.md#block-1",
+      "docs/site/use/recovery.md#block-2",
+      "docs/site/use/recovery.md#block-3",
+      "docs/site/use/recovery.md#block-4",
+      "docs/site/use/recovery.md#block-5",
+      "docs/site/use/recovery.md#block-6",
+      "docs/site/use/recovery.md#block-7",
+      "docs/site/use/recovery.md#block-8",
+      "docs/site/use/recovery.md#block-9",
+      "docs/site/use/worker-trust.md#block-1",
+      "docs/site/use/worker-trust.md#block-2",
+      "docs/site/use/worker-trust.md#block-3",
+      "docs/site/use/worker-trust.md#block-4",
+      "docs/site/use/workflows/README.md#block-1",
+      "docs/site/use/workflows/README.md#block-2",
+      "docs/site/use/workflows/README.md#block-3",
+      "docs/site/use/workflows/README.md#block-4",
+      "docs/site/use/workflows/README.md#block-5",
+      "docs/site/use/workflows/README.md#block-6",
+      "docs/site/use/workflows/README.md#block-7",
+      "docs/site/use/workflows/README.md#block-8",
+      "docs/site/use/workflows/README.md#block-9",
+      "docs/site/use/workflows/README.md#block-10",
+      "docs/site/use/workflows/build-image.md#block-1",
+      "docs/site/use/workflows/buster-suite.md#block-1",
+      "docs/site/use/workflows/buster-suite.md#block-2",
+      "docs/site/use/workflows/buster-suite.md#block-3",
+      "docs/site/use/workflows/buster-suite.md#block-4",
+      "docs/site/use/workflows/buster-suite.md#block-5",
+      "docs/site/use/workflows/buster-suite.md#block-6",
+      "docs/site/use/workflows/buster-suite.md#block-7",
+      "docs/site/use/workflows/buster-suite.md#block-8",
+      "docs/site/use/workflows/buster-suite.md#block-9",
+      "docs/site/use/workflows/buster-suite.md#block-10",
+      "docs/site/use/workflows/buster-suite.md#block-11",
+      "docs/site/use/workflows/buster-suite.md#block-12",
+      "docs/site/use/workflows/buster-suite.md#block-13",
+      "docs/site/use/workflows/interruption-recovery.md#block-1",
+      "docs/site/use/workflows/local-core.md#block-1",
+      "docs/site/use/workflows/local-core.md#block-2",
+      "docs/site/use/workflows/local-core.md#block-3",
+      "docs/site/use/workflows/local-core.md#block-4",
+      "docs/site/use/workflows/local-core.md#block-5",
+      "docs/site/use/workflows/local-core.md#block-6",
+      "docs/site/use/workflows/redis-replay-recovery.md#block-1",
+      "docs/site/use/workflows/redis-replay-recovery.md#block-2",
+      "docs/site/use/workflows/repair-retry.md#block-1",
+      "docs/site/use/workflows/repair-retry.md#block-2",
+      "docs/site/use/workflows/repair-retry.md#block-3",
+      "docs/site/use/workflows/repair-retry.md#block-4",
+      "docs/site/use/workflows/tailnet-exposure.md#block-1",
+      "docs/site/use/workflows/wait-resume.md#block-1",
+      "docs/site/use/workflows/wait-resume.md#block-2",
+      "docs/site/use/workflows/wait-resume.md#block-3",
+      "docs/site/use/workflows/wait-resume.md#block-4",
+      "docs/site/use/workflows/wait-resume.md#block-5",
+      "docs/site/use/workflows/wait-resume.md#block-6",
+      "docs/site/use/workflows/wait-resume.md#block-7",
+      "docs/site/use/workflows/wait-resume.md#block-8",
+      "docs/site/use/workflows/wait-resume.md#block-9",
+      "docs/site/use/workflows/wait-resume.md#block-10",
+      "docs/site/use/workflows/wait-resume.md#block-11",
+      "docs/site/use/workflows/wait-resume.md#block-12",
+      "docs/site/use/workflows/wait-resume.md#block-13",
+      "docs/site/use/workflows/wait-resume.md#block-14",
+      "docs/site/use/workflows/wait-resume.md#block-15",
+      "docs/site/use/workflows/wait-resume.md#block-16",
+      "docs/site/use/workflows/wait-resume.md#block-17",
+      "docs/site/use/workflows/wait-resume.md#block-18",
+      "docs/site/use/workflows/wait-resume.md#block-20",
+      "docs/site/use/workflows/wait-resume.md#block-21",
+      "docs/site/use/workflows/worker-result-recovery.md#block-1",
+      "docs/site/use/workflows/worker-result-recovery.md#block-2"
+    ],
+    "embeddedLiteralSyntax": [
+      {
+        "ref": "docs/site/extend/developer-handbook.md#block-4",
+        "language": "javascript",
+        "sourceSha256": "2b6106c9894d78df62fa137fd736a41b3e352f3c5a5d414570ca9fc8c732054c"
+      },
+      {
+        "ref": "docs/site/extend/developer-handbook.md#block-17",
+        "language": "javascript",
+        "sourceSha256": "51c4e5cc1f52955455187687e85c0629de02755aea78830f89728cddbc54bdc7"
+      },
+      {
+        "ref": "docs/site/extend/developer-handbook.md#block-17",
+        "language": "javascript",
+        "sourceSha256": "5f7e819b9ccfd6d50fe2ca3721a9af39726e501c92c0e19344d123ed9bcad32c"
+      },
+      {
+        "ref": "docs/site/extend/developer-handbook.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "8db67876651994a1bf9d891fa64fcddb25c58c18cb95f757fa9b5663d75f3a4d"
+      },
+      {
+        "ref": "docs/site/extend/developer-handbook.md#block-42",
+        "language": "javascript",
+        "sourceSha256": "2d586914e8b4cbe31b4ecbab616870400ab3bd0d046f97b11f297e7e2b6c04db"
+      },
+      {
+        "ref": "docs/site/extend/first-plugin.md#block-1",
+        "language": "javascript",
+        "sourceSha256": "6180f2e5a0e3ac695dac5aba24bc1e0022fd8ba0ec0c4aa83d6f6db2f5e1d1d5"
+      },
+      {
+        "ref": "docs/site/extend/first-plugin.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "93ad74113f1d17d33e84fae1503d1ad9d4599361ac70d35f616c3e8cf3c8f478"
+      },
+      {
+        "ref": "docs/site/extend/lint.md#block-2",
+        "language": "javascript",
+        "sourceSha256": "911d3383945da143377d2b9e86057b86d879ecadf7f3dee336ccbb53d1d004d0"
+      },
+      {
+        "ref": "docs/site/extend/lint.md#block-11",
+        "language": "javascript",
+        "sourceSha256": "1c1294a873f5fe55c15611930d1a1a541bd3ec57cb0ab727ad39ec7c1730228c"
+      },
+      {
+        "ref": "docs/site/extend/lint.md#block-11",
+        "language": "javascript",
+        "sourceSha256": "3024af0765a04a3828e18e02c5f27d6e2c7250565078c7040ff0766524d5640d"
+      },
+      {
+        "ref": "docs/site/extend/lint.md#block-11",
+        "language": "javascript",
+        "sourceSha256": "494fa84db4f2e62f7d9b434eb88d2bdfddde8f66438825fe92e69fc5b9814deb"
+      },
+      {
+        "ref": "docs/site/extend/testing.md#block-1",
+        "language": "javascript",
+        "sourceSha256": "cd8a3ec7a1072e11b72a0c3affcd9ce8d520caebd434eee758428b401e112694"
+      },
+      {
+        "ref": "docs/site/reference/project-pipeline-publication.md#block-3",
+        "language": "javascript",
+        "sourceSha256": "5cb1f2cb1c9bdecda653c173fe20c88944d12db2d8141c89964c0a173dc31ce3"
+      },
+      {
+        "ref": "docs/site/reference/project-pipeline-publication.md#block-4",
+        "language": "javascript",
+        "sourceSha256": "b1ef2c38408cdc43eb0f071ac6f974b4b0a4dc5665ed2f7fc426f3eadad68805"
+      },
+      {
+        "ref": "docs/site/reference/project-pipeline-publication.md#block-5",
+        "language": "javascript",
+        "sourceSha256": "80a6644748b842c31ac1eb8d449ffbe246623fbaf1b786454b8c6cde7a1dcae4"
+      },
+      {
+        "ref": "docs/site/reference/project-pipeline-publication.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "4034e95a6036e815fd9bb7edd3ae8cebe0035dc94a8dcb39cf1ff124483b29a7"
+      },
+      {
+        "ref": "docs/site/reference/roles-and-package-ownership.md#block-1",
+        "language": "javascript",
+        "sourceSha256": "269aa9209df07be84c6be312706b94ccf41a07a4d308548c46f63af345f1502b"
+      },
+      {
+        "ref": "docs/site/understand/data-and-state.md#block-1",
+        "language": "python",
+        "sourceSha256": "4174545d424ecaf77828acf6580c60c0f9b7aa2132b29c5cc93b1aefbd41bb0f"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "cba2042fc57606c04544b4c700b61d22b45e01ed3cb2a6ac475b67903dabb215"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "849d01a135988850a0958a5eec275d35e0ffc05cbddb3f639bb379b97862f7e3"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "52a1a68ad7ce3dea0670faace85515cc9d89fbc458b3952d33e93662a3af0214"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "91a7a73bc4ff15c223ab28d484d8b3ce8fa55d791cbb7ca0624cea0740f89266"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "0df2cf6148f9306c442f1945ec3fbf8d887047aa20f857c96041852d35cdea60"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-8",
+        "language": "javascript",
+        "sourceSha256": "9408618ac23a908be91a0d1e3707da7bdb3c45669b2d7e1ca7f6e0eaeb09dc5a"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-9",
+        "language": "javascript",
+        "sourceSha256": "2b75ba6b8d5cc58de639b14714fc43fda571c27a2859053a1740e401d6b26b78"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-9",
+        "language": "javascript",
+        "sourceSha256": "833f1176f048cc77cff22e0187f54993059bed0858794d0c8cadbe0d790d02db"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-10",
+        "language": "javascript",
+        "sourceSha256": "b587b44c1312950f3f717398ec1c4524c7505b7f0b062d662face462f0b9a799"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-10",
+        "language": "javascript",
+        "sourceSha256": "bf78d3d74300f2d8f276a39b46809478789d2e723ee389268893219dc8dc7338"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-10",
+        "language": "javascript",
+        "sourceSha256": "55b527eb2749c646bc6c82880c90476775cdc6aa7f5a8ccdd966e21ccda424b9"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-13",
+        "language": "javascript",
+        "sourceSha256": "c30fbb44365df2374dae1b256d50006c92a7340703a8dc923fd85800eaade120"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-14",
+        "language": "javascript",
+        "sourceSha256": "33821e7aad5de95b80623905e64227ab9ebba9e55b54340e6d6046a1ac85d13c"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-14",
+        "language": "javascript",
+        "sourceSha256": "999ee810b7bc055e15c757a22edf2b8cd591570ada81cc9540022d689b6aecd0"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-14",
+        "language": "javascript",
+        "sourceSha256": "6cddf98ce5269c4a847ed859d356cc12957cb5637cd25d8842f90a7521689c37"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-14",
+        "language": "javascript",
+        "sourceSha256": "49aeed5da6864c029f59f89dd9145b3f10aea59aea52fe46e69c8c6cc9430140"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-14",
+        "language": "javascript",
+        "sourceSha256": "5a37a032753522e9c422ee232ba38a71c4072eac2d1a70856987d6f1c03f995a"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-14",
+        "language": "javascript",
+        "sourceSha256": "d3bf52e598b662aba9394d1fd4e1c6f7fe2bd19452ab58e307b8c67f7e9c2d46"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-14",
+        "language": "javascript",
+        "sourceSha256": "e9cb968fd1434825b66e7b3add9ae989d28cbe0d1e01fa0687a37e5a957d5f90"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-15",
+        "language": "javascript",
+        "sourceSha256": "a5c1ee8aa8f495dd2c8b0ae4ca1c6e56e658ab3c46df00f568591a3aa4a62d58"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-15",
+        "language": "javascript",
+        "sourceSha256": "7ecba8d965d1a40a57d9cd5d9fd0424b827c02099f958fd65116bb7d0f0aa177"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "b577c2676b4e78d0b7d584313bb387f62562a48823b12bf3eb6effe026ed3b5a"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "5f1c21561c7d1063c6f65d6c2ed7cf1ce9d541608dd6216217379c97c875cdd3"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "810754fe47f42e56cfc012401c281eeb9891b0a300f12253d6d1e30a2aa296a4"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "0e3c931eaf8ece628dba38643766dc55f78ec3933f94b0ef3b4f1e83cb8a96ad"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "b5eba3242d67909eed5cec04dd179160b320c9fb1680e1c504f0e2c9b163022b"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "0b05af21d507d610b28e420f0d2013886b5e0efb03b2becae7b4d39592d1a929"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "e8e3e3bdf27cdccc1911ec7cf71ea0b26c9f9daf716c733fb458e501283feb7d"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "0b9be686d769cb9ce8e0e46e93476d0691120240b0b0c0f0382bd971c252876f"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-17",
+        "language": "javascript",
+        "sourceSha256": "1ef5bc4e2c1018ddac24c44545cd86ca85639a44f1e5114adc91763c4e6984f1"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-18",
+        "language": "javascript",
+        "sourceSha256": "bf6b92468899ae3a797cc4ff3ec644f7077ad1d56790771814484da8632a7952"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-19",
+        "language": "javascript",
+        "sourceSha256": "a918ba366972d2a8cafbea827aa3e297ebf143d77eb744e857219e51381de60a"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-19",
+        "language": "javascript",
+        "sourceSha256": "192c0c7ca781cb3340f31b7049ad8df4a9e20439a1be812ba13701f8fc3f9cb6"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-20",
+        "language": "javascript",
+        "sourceSha256": "9757fd5004c52cb4b112e4e77294e01b85e6aadd5b5c990883bd84a74af90fdb"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-20",
+        "language": "javascript",
+        "sourceSha256": "5f013f49f00cff0a322722019598d2533dfc94859bdc5899013d21581fdb70ff"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-20",
+        "language": "javascript",
+        "sourceSha256": "153309e86ac4fc58da9f18ce99b4daaded97acab58acd97e8e0137942f0c1f2a"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-20",
+        "language": "javascript",
+        "sourceSha256": "000f84c3838e47c6d34efde7cd8b47986180cadb4458d3f82afd50a85fdce01a"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-21",
+        "language": "javascript",
+        "sourceSha256": "dad458ba0b6b63e196b293a83cbc72550a842e419cf80d3d0f74c608c068ed3e"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "f641c43d0e1c79ee6bf74a16521b6b10ce5da3ee4d5c15cd68d94c05fa385766"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "eaad010479585108faf3ae8e0f9dcd6bd68eddd62bc4ddd63427d0e24cf70bd4"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "564d98645af54e30ed5a429e4618570558d82453c43671e38f9118eb77699b45"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "98dbc928535a6909dd171cc9d3cf00e85a4a5fe0498e6891987339749931bcc3"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "12f2da5043e3efd6ee054ae43cb6cd13925fd0fd59e92ad0b39a45cc5fef5521"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "4427b793a5e479dfc160759a101d99fe776c1c9284127cc5cf3151681fe89201"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "3b1ece6cc1de15c62d872dbe87c677638c2e5846c7af70de5350d03e9d50fbb2"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "ee5ef3fe45a747af1cdc4d37bc1b1d88c442171a37d1a5368c6c6a5e7d12e81c"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-22",
+        "language": "javascript",
+        "sourceSha256": "dc42d79020633b48e1fec72c9f725a1648e9bb2da53f570742fa80aac4b5562c"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-24",
+        "language": "javascript",
+        "sourceSha256": "a28cf0bb0297720c31ded3928e92d0d84ebc8904264179c5ef4240270e4a0365"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-26",
+        "language": "javascript",
+        "sourceSha256": "0afc32ba531bef178155739bd85024222a846a1ccd866b7124606918fefff5ad"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-28",
+        "language": "javascript",
+        "sourceSha256": "ed2e5481ca0691c70747c9f1b6c96a1b5dc662fd341481ead1bff18286c03630"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-30",
+        "language": "javascript",
+        "sourceSha256": "c1a1f855cf45a8412eab30d3374fb426103b82fa0fe405ced07994a3e60617ad"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-32",
+        "language": "javascript",
+        "sourceSha256": "28f186b026c492717f59a09d7abb29202350da348d83038b051dd1c19b1d78a7"
+      },
+      {
+        "ref": "docs/site/use/diagnose.md#block-32",
+        "language": "javascript",
+        "sourceSha256": "4e1c6a3c347036f6cc278c391949e588ddeb02edbf020d29b3d167f33ccd3702"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "132c3811be9753806f06ec2d9510ddd1de2286fff4b59a5fbdd28755face0463"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "81beec2e03b6c3adcdc34d76715d8d9c00e4d92e30fc8ae147bee39df7df1f19"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-9",
+        "language": "javascript",
+        "sourceSha256": "90b642218cef386fccd7506383b45387bdc86a5bd1b6828c07655089bf8a59ce"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-9",
+        "language": "javascript",
+        "sourceSha256": "975f337ce4ead1472e1f82efb7b74d694d7f6a97f802dc418181bb836b9c3f8c"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-9",
+        "language": "javascript",
+        "sourceSha256": "83811d2eb64cc7e42ac10d9191d40c812e16a5854e3060350eabc63322742f0d"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-9",
+        "language": "javascript",
+        "sourceSha256": "11a6be560b48c47775d06e131bb5d760226e3608ae67564f4dc104f1c1db4838"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-12",
+        "language": "javascript",
+        "sourceSha256": "dc4655bd0602001d69df36ba9688451c1d8adb8e2baa1cc38cbbdd499c082dac"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-12",
+        "language": "javascript",
+        "sourceSha256": "8bad205becb5fbd0b3ec8bf79e7111325483b02099717c20ff0df95b81121741"
+      },
+      {
+        "ref": "docs/site/use/install.md#block-12",
+        "language": "javascript",
+        "sourceSha256": "1dd5a50b389c39bedbb3467af90e8643d6e1873d35e21d59ba84e37179bc50c8"
+      },
+      {
+        "ref": "docs/site/use/maintenance.md#block-12",
+        "language": "javascript",
+        "sourceSha256": "0181b5851b8b73f622931ca2d20172cdfd743a798960991dae73eac0b8390d73"
+      },
+      {
+        "ref": "docs/site/use/maintenance.md#block-16",
+        "language": "javascript",
+        "sourceSha256": "dbf1c649fd33d805afc728823fcd397b4a87f004bd1cc93495de65cf76e56ee4"
+      },
+      {
+        "ref": "docs/site/use/maintenance.md#block-21",
+        "language": "javascript",
+        "sourceSha256": "467844f19dac34aff2cc11e2d2b660df5c9275115452f8bff48ba36c2a660b66"
+      },
+      {
+        "ref": "docs/site/use/maintenance.md#block-21",
+        "language": "javascript",
+        "sourceSha256": "a0227874621340c740c08aba26ff6f26eae369e701c3e64600fa05251f92d412"
+      },
+      {
+        "ref": "docs/site/use/operate.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "38f996de4993de88637e9d98a818347758b190ee404eb7f5ca13748d68a390d5"
+      },
+      {
+        "ref": "docs/site/use/operate.md#block-8",
+        "language": "javascript",
+        "sourceSha256": "59be196ca78dc5bb9ff0ba0cfd0deabf834a1385e4d9e3f49abf29d121bdcd9c"
+      },
+      {
+        "ref": "docs/site/use/prism-studio.md#block-12",
+        "language": "javascript",
+        "sourceSha256": "e6e1ac2e4a589f96ba93ad1b1d2027d272f4014296f734602a91f0c8da4dfd35"
+      },
+      {
+        "ref": "docs/site/use/prism-studio.md#block-13",
+        "language": "javascript",
+        "sourceSha256": "3576c0599aa3746f317d6b50ef0b108711ed4fcd2f6ea581bb77f46be86b090c"
+      },
+      {
+        "ref": "docs/site/use/quickstart.md#block-1",
+        "language": "javascript",
+        "sourceSha256": "9f0916652663d908946c9e1ccef914676d6f32c82f440b0cef11bd06d614e288"
+      },
+      {
+        "ref": "docs/site/use/quickstart.md#block-1",
+        "language": "javascript",
+        "sourceSha256": "2b6106c9894d78df62fa137fd736a41b3e352f3c5a5d414570ca9fc8c732054c"
+      },
+      {
+        "ref": "docs/site/use/recovery.md#block-1",
+        "language": "python",
+        "sourceSha256": "f6a760e5c6ec82d1b6c5710efe5df4db7ba5ecc6a3debda349f4c040a1483c94"
+      },
+      {
+        "ref": "docs/site/use/recovery.md#block-1",
+        "language": "python",
+        "sourceSha256": "2cbfe42e396ba5c8ad429ac529df40a7f4c55a20690efc6ba93cfb43ecc14f66"
+      },
+      {
+        "ref": "docs/site/use/recovery.md#block-1",
+        "language": "python",
+        "sourceSha256": "5ad328e549583126a2f3d1cc9d1dc16f6dcd0a4306e0eeb7cb1cfd54daa4e32b"
+      },
+      {
+        "ref": "docs/site/use/recovery.md#block-1",
+        "language": "python",
+        "sourceSha256": "24219ae5f98a999d215b087ac03e9021812ea59d35155235b0ee8aa66888c3b1"
+      },
+      {
+        "ref": "docs/site/use/recovery.md#block-4",
+        "language": "python",
+        "sourceSha256": "fcb80c3e882cbb1cfcb947b48bc78c5a0335b496f2820eef4de64cd93403f9cc"
+      },
+      {
+        "ref": "docs/site/use/recovery.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "292f2caad3edaafa72da25f9a47b4b3795cee6e1f78b3dfd1a4635d63ac0028a"
+      },
+      {
+        "ref": "docs/site/use/worker-trust.md#block-1",
+        "language": "javascript",
+        "sourceSha256": "2aa08908d543ca623f38609681aeb7cdab519e348b910ecb8756244b1c962d89"
+      },
+      {
+        "ref": "docs/site/use/workflows/README.md#block-2",
+        "language": "javascript",
+        "sourceSha256": "8d6466bf49bbcd5862cc1ec51aa405f0d709162dfec9f77640f1c748521053d1"
+      },
+      {
+        "ref": "docs/site/use/workflows/buster-suite.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "4405ad9066b9ac3db4c9bfe69f7113d24c0da2997fc6b7ebc2baf2c296c5c082"
+      },
+      {
+        "ref": "docs/site/use/workflows/buster-suite.md#block-9",
+        "language": "javascript",
+        "sourceSha256": "84e876991fd6a3d6daa1be2d6cc3cb958aba2d40a32b17ad695cf527cfcdd05b"
+      },
+      {
+        "ref": "docs/site/use/workflows/buster-suite.md#block-10",
+        "language": "javascript",
+        "sourceSha256": "3e1a1b83d2071b973f3db14d08921cb629d4b69ec3cd2732d913c6de77f864f7"
+      },
+      {
+        "ref": "docs/site/use/workflows/buster-suite.md#block-11",
+        "language": "javascript",
+        "sourceSha256": "83d8d9dc89053943e6a7563dda6c1e2db76ee6293ef6d4a26c411ac6e31fcff6"
+      },
+      {
+        "ref": "docs/site/use/workflows/buster-suite.md#block-13",
+        "language": "javascript",
+        "sourceSha256": "857ab7bddc2aad4f748f62d9d8d1007ddc051bcc5766c2c96161a5855e5aab7c"
+      },
+      {
+        "ref": "docs/site/use/workflows/local-core.md#block-1",
+        "language": "javascript",
+        "sourceSha256": "c5009995739e0ade3c331036669ff8bace3bce7f15736b921294208af0e8bf46"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-2",
+        "language": "javascript",
+        "sourceSha256": "5c81fa26271714df6dcb06a27bc687eae5e5e6dd48596a75f8805c50d56fe92f"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-2",
+        "language": "javascript",
+        "sourceSha256": "b26764bba32454c2a45a1ec0c1c22546bc9d5e186f99d8f8edefac96366fdffc"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-2",
+        "language": "javascript",
+        "sourceSha256": "013f7111e6de4ee0d7a2ee4c1b585af45822e9bdcc3fbb4532cbcbe759a2b38a"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-3",
+        "language": "javascript",
+        "sourceSha256": "a1e2dae87663b5fbdd3623953117f293cdec4bcfc4ede92449517b1a5c4ebfac"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-4",
+        "language": "javascript",
+        "sourceSha256": "550f348333e43b58c51fb23d9cde5e1d9e463b691b05f949e8efa9a32bbf95f3"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-7",
+        "language": "javascript",
+        "sourceSha256": "6cf0c9ace013b98e530e94e6b0a5a7b9127b465217bd7093c2c6d9476e614ef2"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-8",
+        "language": "javascript",
+        "sourceSha256": "a0fb26fd9b06589907f84103e34999357e4e5115df067fc379b13a2c0327ce4f"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-9",
+        "language": "javascript",
+        "sourceSha256": "b46704653317483090098fc8f7ad09c728467d52d7669e2ea9886a93dd0d43a4"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-18",
+        "language": "javascript",
+        "sourceSha256": "0baa76539a5b82c141d661635f86560c792391e945f6a09cc3a382e52f55d2a0"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-6",
+        "language": "javascript",
+        "sourceSha256": "915ada21923977160a090a9dd55d1166ffeaef5d6c38dc63cad67985d4677be1"
+      },
+      {
+        "ref": "docs/site/use/workflows/wait-resume.md#block-20",
+        "language": "javascript",
+        "sourceSha256": "2ef30059f4981882d9f859b87b357f3433c8426709e8413ca3e3d819a0bbb508"
+      },
+      {
+        "ref": "docs/site/use/maintenance.md#block-5",
+        "language": "python",
+        "sourceSha256": "05fde6d0365027c6d9587bb4e1a51c1b02da39b166a671a459ac42b8a5cba5c2"
+      },
+      {
+        "ref": "docs/site/use/maintenance.md#block-5",
+        "language": "python",
+        "sourceSha256": "c098eee8193c0ec61bbcf4776038ed966814145ee69c840741210abf5f069537"
+      }
+    ],
+    "explicitMaterializations": [
+      {
+        "ref": "docs/site/extend/buster.md#block-6",
+        "substitutions": [
+          {
+            "from": "<plugin-id>",
+            "to": "kubeclaw.direct-command"
+          }
+        ],
+        "materializedSha256": "a5360f15c0d7a4c1c30719b11046ea894c50911104142bc185556afc0fad76a4",
+        "execution": false
+      },
+      {
+        "ref": "docs/site/extend/buster.md#block-7",
+        "substitutions": [
+          {
+            "from": "<package-directory>",
+            "to": "direct-command"
+          }
+        ],
+        "materializedSha256": "8beae2cc4196267cea565b9146fc696596490f7badd072f0c876045421d3a405",
+        "execution": false
+      },
+      {
+        "ref": "docs/site/extend/buster.md#block-9",
+        "substitutions": [
+          {
+            "from": "<package-directory>",
+            "to": "direct-command"
+          }
+        ],
+        "materializedSha256": "d3284ba2583c35c8728f8f00d6f67c202c7b6f9734955599b73757a5120b0e61",
+        "execution": false
+      },
+      {
+        "ref": "docs/site/reference/images-and-digests.md#block-2",
+        "substitutions": [
+          {
+            "from": "<runtime|ops>",
+            "to": "runtime"
+          },
+          {
+            "from": "<image-slot>",
+            "to": "nova"
+          },
+          {
+            "from": "<os/architecture[/variant]>",
+            "to": "linux/amd64"
+          },
+          {
+            "from": " [registry-bearer-token-file]",
+            "to": ""
+          }
+        ],
+        "materializedSha256": "165fc34dd6bffd41d3c0119dd0da3e71820ab4fbd17b826085241b8763c7d4b0",
+        "execution": false
+      }
+    ],
+    "documentCommandsExecuted": false,
+    "importsResolvedOrNativeArgumentsValidatedBySyntax": false,
+    "sqlAndYamlPayloads": "Four authored payloads retain their separate native/projection/schema duties; no shell expansion or SQL executed"
+  },
+  "limits": "Actual complete owning instruction API receives full454hosts and allboundSource; parse-only not commands executed. Firstcandidate assets-native actual0 reused: all28asset bytes unchanged from2028."
+}
