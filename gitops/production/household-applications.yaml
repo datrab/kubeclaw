@@ -20,6 +20,12 @@ spec:
       kind: PersistentVolumeClaim
     - group: ''
       kind: Service
+    - group: ''
+      kind: ServiceAccount
+    - group: rbac.authorization.k8s.io
+      kind: Role
+    - group: rbac.authorization.k8s.io
+      kind: RoleBinding
     - group: apps
       kind: Deployment
     - group: apps
@@ -30,6 +36,8 @@ spec:
       kind: CronJob
     - group: networking.k8s.io
       kind: NetworkPolicy
+    - group: networking.k8s.io
+      kind: Ingress
   orphanedResources:
     warn: true
 ---
