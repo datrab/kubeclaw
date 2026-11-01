@@ -26,15 +26,17 @@ contract fixture, not a newly discovered product template service.
 Prism maintainers must supply and document the actual native binding intended by
 that original condition, or obtain an explicit original-criterion adjudication.
 Do not relabel a document ID as a provider or output. This local input/contract
-question is not automatically an external credential problem. No Gateway,
-model, provider request, signed result, approval or Baseline Bundle is created.
+question is not automatically an external credential problem. This validation creates no Gateway request, model request, provider request,
+signed result, approval or Baseline Bundle.
 
 ## Prerequisites and local command
 
 Use a clean complete Source checkout at the immutable revision supplied by the
 registered exercise, after that revision actually contains both fixtures and the
 helper. Follow the developer handbook's locked development-dependency setup.
-Require Node 24 and the normal source dependencies. The helper derives Source from its own installed location, requires the entire checkout clean (including untracked files), records its exact revision/tree and input hashes, and rejects a distinct `KUBECLAW_EXAMPLE_SOURCE_ROOT` override. Do not combine a helper or fixture from another checkout. A published Reader archive
+Require Node 24 and the normal source dependencies. The helper derives Source from its own installed location. It requires a clean
+checkout, including untracked files, and records the exact revision, tree and input hashes.
+It rejects a distinct `KUBECLAW_EXAMPLE_SOURCE_ROOT` override. Do not combine a helper or fixture from another checkout. A published Reader archive
 alone is not an execution checkout.
 
 Run from the repository root. Choose an absolute result directory outside the
@@ -85,7 +87,8 @@ separate native observation, not a relabelled test-name result.
 
 ## Capability mutation and exact diagnostic
 
-This proposed guide registers the exact facilitator mutation for `QUALITY-UNDECLARED-PROVIDER-CAPABILITY` (pending Source integration; it does not change the original task criteria): in an owned copy of
+This guide registers the exact `QUALITY-UNDECLARED-PROVIDER-CAPABILITY` facilitator mutation.
+Original task criteria do not change. In an owned copy of
 `skills/buster/plugins/direct-command/plugin.json`, append `state.read` to
 `kubeclaw.direct-command:command`'s `requiredCapabilities`, leaving the canonical
 capability-reference page unchanged. It is a new explicit registration proposal
