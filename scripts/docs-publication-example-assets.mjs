@@ -21,14 +21,27 @@ export function validateExampleAssets(root, assets) {
     } else if (relative.endsWith('.json')) { json(relative); parsedJson.push(relative); }
     else throw new Error(`PUBLICATION_EXAMPLE_ASSET_FAMILY_UNIMPLEMENTED:${relative}`);
   }
-  const teachingPackages = ['extend/examples/minimal-stage', 'extend/examples/observer-lifecycle/plugin'];
+  const teachingPackages = ['extend/examples/minimal-stage', 'extend/examples/observer-lifecycle/plugin',
+    'use/workflows/examples/uncertain-effect/plugin'];
   const packages = teachingPackages.map(directory => {
     const location = `${directory}/plugin.json`;
     const manifest = parsePluginManifest(read(location), path.join(site, location));
-    const schemas = assets.filter(file => file.startsWith(`${directory}/schemas/`) && file.endsWith('.schema.json'));
+    const schemas = assets.filter(file => file.startsWith(`${directory}/schemas/`)
+      && (directory === 'use/workflows/examples/uncertain-effect/plugin'
+        ? ['config.json', 'input.json', 'result.json'].some(name => file === `${directory}/schemas/${name}`)
+        : file.endsWith('.schema.json')));
     for (const file of schemas) validateReferencedSchema(read(file), path.join(site, file));
     return { id: manifest.id, nativeManifestAndSchemaCompilation: true, schemas, activation: false };
   });
+  // This is graph/schema and private-package validation, not an effect run.
+  // Runtime loss/receipt/receiver observations retain their independent real case.
+  const uncertainGraph = json('use/workflows/examples/uncertain-effect.pipeline.json');
+  native.validateGraphExample(uncertainGraph);
+  assert.equal(uncertainGraph.id, 'reader-uncertain-effect');
+  assert.equal(uncertainGraph.stages.length, 1);
+  assert.equal(uncertainGraph.stages[0].type, 'example.uncertain-effect.mutate');
+  assert.deepEqual(uncertainGraph.stages[0].execution,
+    { maxAttempts: 3, maxRemediationCycles: 0, timeoutMs: 20000 });
   const governance = execFileSync(process.execPath, [path.join(root, 'scripts/docs-governance.mjs'), '--check'],
     { cwd: root, encoding: 'utf8', timeout: 120000, maxBuffer: 4 * 1024 * 1024 });
   assert.match(governance, /documentation governance passed \([0-9]+ pages mapped\)/u);
@@ -71,6 +84,7 @@ export function validateExampleAssets(root, assets) {
   });
   return { syntaxOnlyAssets: syntax, parsedJsonAssets: parsedJson, packages, projectFactories,
     governanceMapAndRouteOwner: true,
+    uncertainEffectGraph: { nativeSchemaAndGraph: true, privateTeachingPackage: true, activation: false, effectExecuted: false },
     matrix, signal, browserCompanions, completeExerciseStageResults: completeStageResults,
     conceptualTraces, runtimeJourneyReexecuted: false,
     retainedRuntimeJourneyQualification: 'Separate original full-vector evidence; syntax/compilation never replaces it' };

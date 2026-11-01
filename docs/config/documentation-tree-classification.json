@@ -35969,6 +35969,78 @@
       "originalPath": "docs/site/reference/common-errors.md",
       "expectedPath": "docs/site/reference/common-errors.md",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect.pipeline.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/examples/uncertain-effect.pipeline.json",
+      "expectedPath": "docs/site/use/workflows/examples/uncertain-effect.pipeline.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/journey.mjs",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/examples/uncertain-effect/journey.mjs",
+      "expectedPath": "docs/site/use/workflows/examples/uncertain-effect/journey.mjs",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/package.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/package.json",
+      "expectedPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/package.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/plugin.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/plugin.json",
+      "expectedPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/plugin.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/config.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/config.json",
+      "expectedPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/config.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/input.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/input.json",
+      "expectedPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/input.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/result.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/result.json",
+      "expectedPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/result.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/src/stage.js",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/src/stage.js",
+      "expectedPath": "docs/site/use/workflows/examples/uncertain-effect/plugin/src/stage.js",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/uncertain-effect.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Owned local uncertain-effect teaching workflow, real drop-only execution and explicit no-replay/retention boundaries; not a shipped runtime role.",
+      "originalPath": "docs/site/use/workflows/uncertain-effect.md",
+      "expectedPath": "docs/site/use/workflows/uncertain-effect.md",
+      "introducedAfterBaseline": true
     }
   ]
 }

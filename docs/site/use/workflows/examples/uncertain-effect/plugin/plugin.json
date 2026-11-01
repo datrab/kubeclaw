@@ -1,0 +1,21 @@
+{
+  "id": "example.uncertain-effect",
+  "apiVersion": "pipeline-plugin-v2",
+  "packageVersion": "1.0.0",
+  "stages": [
+    {
+      "id": "mutate",
+      "type": "example.uncertain-effect.mutate",
+      "module": "src/stage.js",
+      "export": "execute",
+      "requiredCapabilities": [
+        "runtime.dispatch"
+      ],
+      "configSchema": "schemas/config.json",
+      "inputSchema": "schemas/input.json",
+      "resultSchema": "schemas/result.json"
+    }
+  ],
+  "observers": [],
+  "adapters": []
+}

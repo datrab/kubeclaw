@@ -1,0 +1,19 @@
+{
+  "schemaVersion": "pipeline-definition.v2",
+  "id": "reader-uncertain-effect",
+  "maxConcurrency": 1,
+  "stages": [
+    {
+      "id": "mutate",
+      "type": "example.uncertain-effect.mutate",
+      "dependsOn": [],
+      "config": {},
+      "input": {},
+      "execution": {
+        "maxAttempts": 3,
+        "maxRemediationCycles": 0,
+        "timeoutMs": 20000
+      }
+    }
+  ]
+}

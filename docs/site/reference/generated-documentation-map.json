@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 184,
+  "pageCount": 185,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -4129,6 +4129,28 @@
         "tests/verification/e2e/nova-tailscale-production-preflight.mts",
         "scripts/deploy.sh",
         "my-values/infra/tailscale-operator-values.yaml"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/uncertain-effect.md",
+      "route": "/use/workflows/uncertain-effect/",
+      "contentKind": "authored",
+      "status": "bounded local teaching procedure",
+      "audience": "pipeline author and operator",
+      "owner": "Nova Core and effect-adapter maintainers",
+      "appliesTo": "one owned loopback receiver and one trusted local stage; not a deployed workflow",
+      "lastVerified": "2026-10-31. Actual response-drop-only author execution and independent original-fault/Source judgment; fresh reader remains separate",
+      "sourceDependencies": [
+        "docs/site/use/workflows/examples/uncertain-effect.pipeline.json",
+        "docs/site/use/workflows/examples/uncertain-effect/journey.mjs",
+        "docs/site/use/workflows/examples/uncertain-effect/plugin",
+        "skills/nova/core/effects/durable-invocation.ts",
+        "skills/common/plugins/runtime-dispatch"
       ],
       "checks": [
         "npm run docs:governance:check",

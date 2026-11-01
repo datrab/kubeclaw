@@ -46,9 +46,9 @@ export function validateInstructionSyntax(pages, sources) {
     }
   }
   assert.equal(textCommands.size, 0, 'declared text command disappeared');
-  // Preserve the original 451 hosts plus the three MNT003-owned generation/check blocks.
-  // The existing declaration binds every block and all parser-only limits remain.
-  assert.equal(selected.size, 454, 'instruction host responsibility changed');
+  // Preserve all454 previous hosts and the four uncertain-effect procedure blocks.
+  // The explicit declaration binds every old/new block; all parser-only limits remain.
+  assert.equal(selected.size, 458, 'instruction host responsibility changed');
   const embedded = [];
   for (const binding of embeddedProgramBindings) {
     assert(selected.has(binding.ref), `unbound embedded host input: ${binding.ref}`);

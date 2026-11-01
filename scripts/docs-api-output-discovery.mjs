@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "c00f429779caccdd72fcab5c4ad8a6b84cf00e185ae37ac29f87321ef57a7b1b"
+      "sha256": "05c3b82a531bb06a175da106d7d442cb4120c3b2a338cc8be2dd6ad036a6e1bb"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3423,8 +3423,12 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "sha256": "26e790a95b065b5b77538f501863a09a90f2ccd67e1c76cf617c8fff2dc09f41"
     },
     {
+      "path": "docs/config/documentation-tree-classification.json",
+      "sha256": "3ea2e2d544e5a64f90aefe40137668e533a6b20b47f463c2a7de59b2b468d102"
+    },
+    {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "c00f429779caccdd72fcab5c4ad8a6b84cf00e185ae37ac29f87321ef57a7b1b"
+      "sha256": "05c3b82a531bb06a175da106d7d442cb4120c3b2a338cc8be2dd6ad036a6e1bb"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3504,7 +3508,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
-      "sha256": "ad7fa661d665dcad5553b881e749e4bfbbba39e6cb2f2487c767e0b702ecd09a"
+      "sha256": "508624b7fed8ace1eb2d468a7313942b48ad8c23774be0119f76d97a365eb5e2"
     },
     {
       "path": "docs/site/reference/helm-values.md",
@@ -3543,6 +3547,10 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "sha256": "0fe8346293c9e20e88e102b03cf2ac9792973416d10c940d7e957ac22e970066"
     },
     {
+      "path": "docs/site/use/workflows/README.md",
+      "sha256": "11af2555f4a65eea88fb1daaee40b0e6bb01cb4e7473bac4dc75e57c15f6b389"
+    },
+    {
       "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
       "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5"
     },
@@ -3579,6 +3587,42 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "sha256": "e2f92f057f5e2c7d1f8bd9d8c9faebdf826d1f818bf0c44405a9d0efe5b07ed7"
     },
     {
+      "path": "docs/site/use/workflows/examples/uncertain-effect.pipeline.json",
+      "sha256": "d2ae14634ed7061e257a50cf52ff4d5830a18993955a71da599864448bb0ab14"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/journey.mjs",
+      "sha256": "7f88cdabc73ecae8bccb21e3523b7be09819158b926eda43c1fa848725e2cc9c"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/package.json",
+      "sha256": "291d1d1d5b1e40cb92b21c09b2c0dfc3f0ae0efedd3db9ec20562a03b5164c73"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/plugin.json",
+      "sha256": "00bf39ebd3b1851dce0e6af8363ea68635fde22340135dd42a49356cd418b409"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/config.json",
+      "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/input.json",
+      "sha256": "2656294ca60aa23acaa3e6e1b688fa8b754196e6636657eb146a559936511803"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/schemas/result.json",
+      "sha256": "b065f652df71a853fdc26e2edd957ce5bf9b5de3634b91a19a9fc7608bac102c"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/uncertain-effect/plugin/src/stage.js",
+      "sha256": "9f03161a68b3f82d7e51ab84315dc1385db2a78e877e8084f08a506d50dfeed3"
+    },
+    {
+      "path": "docs/site/use/workflows/uncertain-effect.md",
+      "sha256": "eb4ea2c0d09968315b58cf313ca0cc55344ca79b6cfd5e2406c48a45bd223ec6"
+    },
+    {
       "path": "docs/site/use/workflows/wait-resume.md",
       "sha256": "1b89a8bb14787210a9dfdb390c1be232c917e5b5724b843898436d9c9269677c"
     },
@@ -3600,11 +3644,11 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "scripts/docs-publication-example-assets.mjs",
-      "sha256": "0d4aef98781cc9bf1f38302b1de373062556f21ad12e41aef6f20e9ed1ec3d25"
+      "sha256": "eb3f7e237274103d6ef3c7acec9a3702ef9cfa5d4cf76aa2254bd6acf32515bd"
     },
     {
       "path": "scripts/docs-publication-example-native.mjs",
-      "sha256": "75ccb5e8b86cad5395e2dd698aa7de67583c165bd1daa9718ab8e0153c450fa7"
+      "sha256": "4b10931357712db448ec49609ea510c274d7a596fe5569e40e6a123453d57ba3"
     },
     {
       "path": "scripts/docs-publication-example-projections.mjs",
@@ -3615,8 +3659,16 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "sha256": "b55c0e9addce76c121f4f5aedd5863493d581dca0a0d90be69a420b7b942c262"
     },
     {
+      "path": "scripts/docs-publication-instruction-syntax.mjs",
+      "sha256": "edaad893617524f08bef0c6a741a46b1a880257f356d610c02d26367569be418"
+    },
+    {
       "path": "scripts/docs-publication.mjs",
       "sha256": "c96741df38af067044811d38e0c0513dd9512e383493d08e984cf62e538b1bd5"
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "sha256": "2a87cebc2487e7ef7e3cff6dcf4b46182ec315c23143fb03845c7278a69bee68"
     },
     {
       "path": "scripts/lib/docs-publication-example-coverage.mjs",
@@ -5201,7 +5253,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "symbol": "validateBrowserCompanions"
     }
   ],
-  "factsDigest": "bf226417f8311315304773b9d4f158955489a1d323f2f1ff85b122c26905857c",
+  "factsDigest": "8ca109678fb1c6a54c01436cf3917290c3c4e0e7cc52636a7d4cfd73c471774d",
   "descriptors": [
     {
       "line": 62,
@@ -5367,7 +5419,8 @@ const reviewedPublicationNativeValidation = Object.freeze({
         "validateProjectFactories",
         "validateTestScopeExample(matrix)",
         "validateApprovalSignalExample",
-        "validateBrowserCompanions"
+        "validateBrowserCompanions",
+        "validateGraphExample(uncertainGraph)"
       ],
       "limit": "Existing assets-native validation only; no independent package entry or runtime grant."
     },

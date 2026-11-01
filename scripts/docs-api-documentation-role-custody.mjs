@@ -4546,7 +4546,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "4d7f6df9b81e3129b1224a4dddf1b5bd08633c0cd2e575ca8b8eb24619f22afd",
+    "factsDigest": "0a97e611305d278840f1e8dab485af2e7327f48f42ab45e816c7821c70f72a67",
     "authorityInputs": [
       {
         "path": "scripts/docs-publication-examples.mjs",
@@ -5918,7 +5918,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "3dc1ff3d3ec94c1b0799d5c99298e41f4fc507f35f290ddbf7f4d5ef318f39e3"
       }
     ],
-    "factsDigest": "6db23d8e7f95c3d978f7b95dbfb09c76a584282e42f16acb0c83dc2b03fc5298",
+    "factsDigest": "914fb82e3bf512f2274ecf542c3c802bea53d7bba03457f128af075bad3b2ddc",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-search.mjs": {
@@ -10312,7 +10312,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "513381bdf505da98a8e167972356a489817bafd9422efef66a347fa8d49c5b93"
       }
     ],
-    "factsDigest": "6560f1e61c961d23e1af79749981bddc80dbe9026981480f31325ef17f790640",
+    "factsDigest": "a7c151ee51859915965607f7ca2c3abb7439ac1eb85d08e7c04b68c1df81be01",
     "authorityInputs": [],
     "purposeInputs": [
       {
@@ -10373,7 +10373,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/lib/docs-publication-assets.mjs",
         "canonical": "scripts/lib/docs-publication-assets.mjs",
-        "sha256": "c0d58d0680bb42186370cb13a346e72e739e3ff64e146541c9f36c5dfd2ab294"
+        "sha256": "2a87cebc2487e7ef7e3cff6dcf4b46182ec315c23143fb03845c7278a69bee68"
       },
       {
         "path": "scripts/lib/docs-route-continuity.mjs",
@@ -10714,7 +10714,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-publication-instruction-syntax.mjs",
-      "sha256": "4f91df3bcbd66cc0d2894f2d5bfb43cff97b22a66f8afa91b3866fcccd03a9d4"
+      "sha256": "edaad893617524f08bef0c6a741a46b1a880257f356d610c02d26367569be418"
     },
     {
       "path": "scripts/docs-publication-embedded-yaml.mjs",
@@ -20719,7 +20719,7 @@ export const reviewedRootNodeEntryRecipes = {
     {
       "source": "scripts/lib/docs-publication-assets.mjs",
       "kind": "selected-operative-definition",
-      "purpose": "Independently reviewed exact positive reader-asset selection, no Markdown wildcard or source execution. One added repair-retry example asset literal preserves all prior selections; public page/asset/copy producers retain their original bounds. Omitted definitions are not newly qualified by this range receipt; the separate publicationManifest operation is bound by its actual consumer facts. Additional finite compiled-project successor: exactly three explicit public example asset paths; same positive selection, copy-only behavior, no wildcard, new caller, runtime execution or DATA authority.",
+      "purpose": "Independently reviewed exact positive reader-asset selection, no Markdown wildcard or source execution. One added repair-retry example asset literal preserves all prior selections; public page/asset/copy producers retain their original bounds. Omitted definitions are not newly qualified by this range receipt; the separate publicationManifest operation is bound by its actual consumer facts. Additional finite compiled-project successor: exactly three explicit public example asset paths; same positive selection, copy-only behavior, no wildcard, new caller, runtime execution or DATA authority. Additional finite PIPE04 successor: exactly eight explicit canonical uncertain-effect graph/helper/private-package/schema/stage assets. All prior28 allowances and nonallowlist definitions remain exact; line positions shift by eight. Selection, physical-file rejection and copy-only producer behavior unchanged. Neither syntax/schema checking nor publication of teaching code authorizes its execution, external effects, API apply or new package/native caller.",
       "units": [
         {
           "symbol": "ImportDeclaration",
@@ -20739,36 +20739,36 @@ export const reviewedRootNodeEntryRecipes = {
           "symbol": "files",
           "kind": "FirstStatement",
           "startLine": 6,
-          "endLine": 35,
-          "syntaxSha256": "a544500135bddecb41457bc20755e3fdf3d8b8b818f2bb55debd8e32d31e665a"
+          "endLine": 43,
+          "syntaxSha256": "0e44853376aa89591cb8d4aba722101f8057a2251f391a9184e689d85c58a7cc"
         },
         {
           "symbol": "publicationPages",
           "kind": "FunctionDeclaration",
-          "startLine": 37,
-          "endLine": 72,
+          "startLine": 45,
+          "endLine": 80,
           "syntaxSha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
         },
         {
           "symbol": "publicationAssets",
           "kind": "FunctionDeclaration",
-          "startLine": 74,
-          "endLine": 92,
+          "startLine": 82,
+          "endLine": 100,
           "syntaxSha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
         },
         {
           "symbol": "copyPublicationAssets",
           "kind": "FunctionDeclaration",
-          "startLine": 94,
-          "endLine": 100,
+          "startLine": 102,
+          "endLine": 108,
           "syntaxSha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
         }
       ],
       "ranges": [
         {
           "startLine": 1,
-          "endLine": 113,
-          "sha256": "c0d58d0680bb42186370cb13a346e72e739e3ff64e146541c9f36c5dfd2ab294"
+          "endLine": 121,
+          "sha256": "2a87cebc2487e7ef7e3cff6dcf4b46182ec315c23143fb03845c7278a69bee68"
         }
       ],
       "initialization": [
@@ -20782,7 +20782,7 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "kind": "FirstStatement",
-          "syntaxSha256": "a544500135bddecb41457bc20755e3fdf3d8b8b818f2bb55debd8e32d31e665a"
+          "syntaxSha256": "0e44853376aa89591cb8d4aba722101f8057a2251f391a9184e689d85c58a7cc"
         }
       ]
     },
