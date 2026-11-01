@@ -1,4 +1,4 @@
-# Generated from release 1280bca85e3425cfea429a0c01c2e094dccdb797 and byte-matched source configuration; do not edit.
+# Generated from release 89f2577a8b1bb3dd8f0434ac97b792e44459c65b and byte-matched source configuration; do not edit.
 agentRole: nova
 gateway:
   startupDoctor:
@@ -29,13 +29,13 @@ imagePullSecrets:
 codeBundle:
   enabled: true
   archiveUrl: >-
-    https://github.com/datrab/kubeclaw/releases/download/code-bundles-41222330849-1/nova-37c9d0075a1f172895da55d4ebd351cd6e5006f7.tgz
-  expectedCommit: 37c9d0075a1f172895da55d4ebd351cd6e5006f7
+    https://github.com/datrab/kubeclaw/releases/download/code-bundles-41335994611-1/nova-89f2577a8b1bb3dd8f0434ac97b792e44459c65b.tgz
+  expectedCommit: 89f2577a8b1bb3dd8f0434ac97b792e44459c65b
   contractVersion: v2
   auth:
     existingSecret: github-bundle-reader
     existingSecretKey: token
-  sha256: 5fcd49cb20b6faed9f394739e6c96bb5499affd45345a4aea0631136912312a7
+  sha256: 9043b9378608e17935025bbfb8e8a22dd698c236d44c783a45e8f23a37296fa9
 auth:
   existingSecret: openclaw-shared-secrets
   existingSecretKey: gatewayToken-nova

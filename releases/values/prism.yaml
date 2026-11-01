@@ -1,4 +1,4 @@
-# Generated from release 1280bca85e3425cfea429a0c01c2e094dccdb797 and byte-matched source configuration; do not edit.
+# Generated from release 89f2577a8b1bb3dd8f0434ac97b792e44459c65b and byte-matched source configuration; do not edit.
 images:
   control:
     repository: ghcr.io/datrab/kubeclaw-prism-control
