@@ -1,0 +1,1652 @@
+{
+  "status": "UNADOPTED_EXACT73_ORIGINAL_SEMANTIC_PRESERVATION_WITH_COHERENT_ROOT_PARSER_ROLE_SUCCESSORS_PENDING_ACTUAL_CLOSEOUT",
+  "materialFindings": [],
+  "selection": {
+    "baseline": "370b824795bd73ffd11586aabdf62ece26476c5b",
+    "count": 73,
+    "reuseCounts": {
+      "prior51": 46,
+      "prior49_not51": 8,
+      "newly_impacted_original_scope": 17,
+      "additional_role_custody_only": 2
+    },
+    "method": "ExactcurrentPASS completionRecords pages/sources intersect actualcurrenttracked+untrackedproductchange paths vs370. Currentrole-custody actuallyadopted adds14intersections,12already71 and2new. Proposedremaining5literals samealreadyselectedpath, noadditionalIDs. Reuse earlier71semanticjudgments andonlynewrole/parser/factpurposedeltas; not73wholeaudit.",
+    "actualChangedTrackedPaths": [
+      "docs/config/documentation-tree-classification.json",
+      "docs/config/publication-example-claims.json",
+      "docs/site/reference/generated-documentation-map.json",
+      "docs/site/use/workflows/README.md",
+      "scripts/docs-api-documentation-role-custody.mjs",
+      "scripts/docs-api-output-discovery.mjs",
+      "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "scripts/docs-publication-example-assets.mjs",
+      "scripts/docs-publication-instruction-syntax.mjs",
+      "scripts/lib/docs-publication-assets.mjs"
+    ],
+    "records": [
+      {
+        "id": "AP09.1-ready-topics-20261020",
+        "intersection": [
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior49_not51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "GOV-001",
+            "GOV-003",
+            "GOV-004",
+            "GOV-008",
+            "ENT-001",
+            "ENT-002",
+            "ENT-003",
+            "ENT-004",
+            "DEC-001",
+            "STA-001",
+            "STA-002"
+          ]
+        }
+      },
+      {
+        "id": "Reviewed-corrections-20261020",
+        "intersection": [
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior49_not51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "SPC-001",
+            "CFG-006",
+            "FLW-011",
+            "EXT-005",
+            "EXT-006",
+            "CFG-016",
+            "GOV-006"
+          ]
+        }
+      },
+      {
+        "id": "AP09-reader-workflows-20261020",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior49_not51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-002",
+            "FLW-004",
+            "FLW-008"
+          ]
+        }
+      },
+      {
+        "id": "AP09-reviewed-publication-navigation-20261020",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-02"
+          ],
+          "requirementIds": [
+            "PUB-001"
+          ]
+        }
+      },
+      {
+        "id": "AP09-first-project-example-20261020",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-003",
+            "FLW-005"
+          ]
+        }
+      },
+      {
+        "id": "AP09-compiler-import-provider-diagnosis-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A98-06"
+          ],
+          "requirementIds": [
+            "NVC-002",
+            "NVC-003",
+            "PLG-006",
+            "PLG-008",
+            "OPR-006"
+          ]
+        }
+      },
+      {
+        "id": "AP09-install-maintenance-project-entry-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior49_not51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "OPR-003",
+            "OPR-008",
+            "CFG-003",
+            "ENT-005"
+          ]
+        }
+      },
+      {
+        "id": "AP09-documentation-agent-maintenance-20261021",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-017"
+          ]
+        }
+      },
+      {
+        "id": "AP09-complete-platform-change-content-20261021",
+        "intersection": [
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "CDV-003",
+            "CDV-007",
+            "CDV-010",
+            "CDV-012"
+          ]
+        }
+      },
+      {
+        "id": "AP09-complete-publication-reference-navigation-20261021",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "PUB-003",
+            "PUB-009"
+          ]
+        }
+      },
+      {
+        "id": "AP09-complete-developer-reader-contracts-20261021",
+        "intersection": [
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "QUA-008",
+            "QUA-009"
+          ]
+        }
+      },
+      {
+        "id": "AP09-complete-static-reader-search-20261021",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "PUB-002"
+          ]
+        }
+      },
+      {
+        "id": "AP09-search-reader-gate-20261021",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-04"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "AP09-rendered-source-bounds-gate-20261021",
+        "intersection": [
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-09"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "AP09-complete-static-offline-fallback-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-10"
+          ],
+          "requirementIds": [
+            "PUB-006"
+          ]
+        }
+      },
+      {
+        "id": "AP09-complete-same-source-code-preview-20261021",
+        "intersection": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "reuseClass": "additional_role_custody_only",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Originalsame-sourceinertpreviewcomponent/source/excerptrenderlogic unchanged; oldbrowser/excerptobservationstayshistorical. Newpositiveassetselection androotrolebindingdo notalterpreviewsemantics; currentcanonicalartifact/boundednewguide/indexdeliveryrequired.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "PUB-004"
+          ]
+        }
+      },
+      {
+        "id": "AP09-complete-responsive-reader-layout-20261021",
+        "intersection": [
+          "scripts/docs-api-documentation-role-custody.mjs"
+        ],
+        "reuseClass": "additional_role_custody_only",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Originalresponsive320/768/1440scroll/focus/navigation mechanism unchanged; nofreshwholelayout/human/ATqualification. Boundednewguide/indexbrowserdeliveryrequired, exactoldfullcorpusproof historical.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-07"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Original incident diagnosis/recovery/identity/authorized-read/unknown-not-nonexecution/safeSTOP route stays primary. Added localdrop rehearsal does not implement generic reconciliation or replace old unsupported-boundary task; new authornative remains separate.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-010"
+          ]
+        }
+      },
+      {
+        "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior49_not51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-014"
+          ]
+        }
+      },
+      {
+        "id": "FLW017-demo-supported-contract-and-live-gap-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-017"
+          ]
+        }
+      },
+      {
+        "id": "FLW006-local-core-same-run-audit-artifact-telemetry-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-006"
+          ]
+        }
+      },
+      {
+        "id": "A99-07-representative-buster-workflow-content-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A99-07"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "FLW007-supported-failure-task-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-007"
+          ]
+        }
+      },
+      {
+        "id": "FLW009-supported-failure-task-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-009"
+          ]
+        }
+      },
+      {
+        "id": "FLW015-supported-failure-task-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-015"
+          ]
+        }
+      },
+      {
+        "id": "FLW016-supported-failure-task-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-016"
+          ]
+        }
+      },
+      {
+        "id": "FLW012-supported-failure-task-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-012"
+          ]
+        }
+      },
+      {
+        "id": "FLW013-supported-failure-task-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "FLW-013"
+          ]
+        }
+      },
+      {
+        "id": "A99-08-complete-supported-failure-journey-union-20261021",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Whole original6failurefamily documentation union remains complete: primary original uncertain-effect route kept; other5routes and all live/external ownership/stop bounds unchanged. New localcase not promoted to independent A99-12 or sixfamily liveexecution.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A99-08"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A912-03-supported-redirect-paths-20261021",
+        "intersection": [
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-03"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A912-11-deterministic-page-records-20261022",
+        "intersection": [
+          "docs/site/reference/generated-documentation-map.json",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior49_not51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-11"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "AP09-publication-positive-scope-7ef16585",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-01"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A912-05-whole-source-excerpt-callouts-20261022",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A912-05"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior49_not51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A98-02",
+            "A98-13"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A910-03-whole-command-prerequisite-contract-20261022",
+        "intersection": [
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A910-03"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "PUB008-current-reader-build-ci-20261023",
+        "intersection": [
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "newly_impacted_original_scope",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "PUB-008"
+          ]
+        }
+      },
+      {
+        "id": "AP09-whole-extension-drift-A91014-20261023",
+        "intersection": [
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A910-14"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A911-06-authored-surface-bindings-20261025",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A911-06"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A99-13-original-seven-dimension-drift-20261025",
+        "intersection": [
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A99-13"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A99-06-actual-compiled-minimal-project-20261026",
+        "intersection": [
+          "docs/site/use/workflows/README.md",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A99-06"
+          ],
+          "requirementIds": [
+            "FLW-001"
+          ]
+        }
+      },
+      {
+        "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+        "intersection": [
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A910-10"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "QUA-006-fresh-independent-technical-reader-20261027",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "QUA-006"
+          ]
+        }
+      },
+      {
+        "id": "MNT-014-whole-native-publication-examples-20261027",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/docs-publication-example-assets.mjs",
+          "scripts/docs-publication-instruction-syntax.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-014"
+          ]
+        }
+      },
+      {
+        "id": "A99-11-whole-published-example-claims-20261027",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/docs-publication-example-assets.mjs",
+          "scripts/docs-publication-instruction-syntax.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A99-11"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/docs-publication-example-assets.mjs",
+          "scripts/docs-publication-instruction-syntax.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "QUA-005"
+          ]
+        }
+      },
+      {
+        "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A913-10"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "CFG-007"
+          ]
+        }
+      },
+      {
+        "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "scripts/docs-publication-instruction-syntax.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-015"
+          ]
+        }
+      },
+      {
+        "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "CFG-013"
+          ]
+        }
+      },
+      {
+        "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "CFG-010"
+          ]
+        }
+      },
+      {
+        "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "CFG-012"
+          ]
+        }
+      },
+      {
+        "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "REF-016"
+          ]
+        }
+      },
+      {
+        "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-008"
+          ]
+        }
+      },
+      {
+        "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-006"
+          ]
+        }
+      },
+      {
+        "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+        "intersection": [
+          "docs/config/documentation-tree-classification.json",
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-005"
+          ]
+        }
+      },
+      {
+        "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "REF-005"
+          ]
+        }
+      },
+      {
+        "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-011"
+          ]
+        }
+      },
+      {
+        "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-010"
+          ]
+        }
+      },
+      {
+        "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "QUA-004"
+          ]
+        }
+      },
+      {
+        "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/docs-publication-example-assets.mjs",
+          "scripts/docs-publication-instruction-syntax.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "QUA-001"
+          ]
+        }
+      },
+      {
+        "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "scripts/docs-publication-instruction-syntax.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-004"
+          ]
+        }
+      },
+      {
+        "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "CFG-009",
+            "REF-013"
+          ]
+        }
+      },
+      {
+        "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A913-06"
+          ],
+          "requirementIds": [
+            "QUA-002"
+          ]
+        }
+      },
+      {
+        "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A911-05"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+        "intersection": [
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-api-output-discovery.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "REF-003"
+          ]
+        }
+      },
+      {
+        "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+        "intersection": [
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-api-output-discovery.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "MNT-003"
+          ]
+        }
+      },
+      {
+        "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "scripts/docs-publication-instruction-syntax.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "GOV-002",
+            "MNT-001",
+            "MNT-009"
+          ]
+        }
+      },
+      {
+        "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "scripts/docs-publication-instruction-syntax.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A911-07"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-api-output-discovery.mjs",
+          "scripts/docs-documentation-owner-purpose-custody.mjs",
+          "scripts/docs-publication-example-assets.mjs",
+          "scripts/docs-publication-instruction-syntax.mjs",
+          "scripts/lib/docs-publication-assets.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A913-02",
+            "A913-03"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+        "intersection": [
+          "docs/config/publication-example-claims.json",
+          "docs/site/reference/generated-documentation-map.json",
+          "scripts/docs-api-documentation-role-custody.mjs",
+          "scripts/docs-api-output-discovery.mjs"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A98-10",
+            "A98-11",
+            "A911-02"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+        "intersection": [
+          "docs/site/reference/generated-documentation-map.json",
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A913-01"
+          ],
+          "requirementIds": []
+        }
+      },
+      {
+        "id": "QUA010-A9814-A91111-A91308-original-maintainability-and-distinct-drift-path-join-20261031",
+        "intersection": [
+          "docs/site/reference/generated-documentation-map.json"
+        ],
+        "reuseClass": "prior49_not51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
+        "originalScopeMembership": {
+          "gateIds": [
+            "A98-14",
+            "A911-11",
+            "A913-08"
+          ],
+          "requirementIds": [
+            "QUA-010"
+          ]
+        }
+      },
+      {
+        "id": "QUA007-independent-actual-operator-six-facets-20261031",
+        "intersection": [
+          "docs/site/use/workflows/README.md"
+        ],
+        "reuseClass": "prior51",
+        "proposedJudgment": {
+          "Source": "PRESERVE_EXACT_ORIGINAL_SCOPE",
+          "Reader": "PRESERVE_EXACT_ORIGINAL_SCOPE_NOT_NEW_FRESH_TASK",
+          "Quality": "PRESERVE_EXACT_ORIGINAL_SCOPE_CONDITIONAL_CURRENT_DELIVERY"
+        },
+        "materialApplicability": "Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
+        "originalScopeMembership": {
+          "gateIds": [],
+          "requirementIds": [
+            "QUA-007"
+          ]
+        }
+      }
+    ]
+  },
+  "decision": "Allselected73 originalsemanticSource/Reader/Qualityjudgments maypreserveexactoriginalduties conditionalnonwaivableactualcurrentnormalpublication/native/guard/artifact/Reader/originalchecker closeout. Exactrootrow+newparser/3role successorssubstantivelyqualified; notcurrentlyguardPASS/newtask/gateaward. No failedoriginalsemanticcriterionidentified; actualuncompletedchecks remainuncompleted.",
+  "substantiveBasis": [
+    "Originalincident diagnosis/recovery/unknown-effect/authority/safeSTOP route remains primary; secondary ownedlocalrehearsal does not substitute for incident ownerreconciliation or wholeworkflow/fresh acceptance.",
+    "Faithful native drop-only sourcepath independently qualified: real localfailedreceipt/Coreblocked versus unknown/unreconciledexternal outcome/receiveronecommit observation; separateexplicitoperator assessment; no journals rewritten/replayed.",
+    "Maincleanupdelta+fourset-e guards actual ownednegativecontrols preserve output/export safety. Newprivatepackage/parser/schema/nativegraph purpose qualified without runtime/apply/publicimport authority.",
+    "Complete finalclaims05c3 wholeJSON/serializedproof and map53MB wholebytecomplement: oldpages/sourceSurfaceMap exact, onlynewpage185/mapcount+asset/anchor/consumer consequences. Original454hosts exact+4new.",
+    "Finite complete13guardstates adopted exact2moduleSHAs: existing495inputs4qualifiedsuccessors+13actualnewpins508; sixrosters/selectors/2YAML10native/rawunknowns/guardlogic unchanged; onlygraphaction appended. Preexistingd9HelmAST matcher successor explicitly attributed not falselyPIPE04-only or oldguardfreshPASS."
+  ],
+  "originalRecords": {
+    "completeCompletionRecordsEqual370": true,
+    "retentionRule": "Keep originalsummary/limits/review/requirements/gates/checkhistory/negative evidence unchanged. Append exact revisionimpact/currentchecks only. Historical no-current-byte-change and oldNOT_READY sentences retain historical scope, not misleading presenttense universal statements."
+  },
+  "finiteRemainingConditions": [
+    "Actualcoherentguard/native/YAML/readerCI/childtestsandfaithfulpinnedP2 afterallqualifiedroot+5remainingfieldsadopted. No bypass/nonzeroorcollectionstopmarkedPASS. Priorfailedreviews/testsremain.",
+    "Actualnormal185publicationbuild mustdispatchfullcurrentnativeinput/contract/projection/syntax dutiesincludingnewprivategraph/package; canonicalartifact/source/36assetbindings andboundednewguide/indexrenderedReader/browserrequired. Historicalallpage/excerpt/search/layout/twobuildproofsnotrelabeledfresh.",
+    "Unchangedoriginalcompletion/acceptancechecker afterrootappendonlyexact73revisionimpact/currentchecks. Originalsummary/limits/reviews/history/gate/requirementmembershipretained.",
+    "ExactcompleteSourcepublicavailabilitybeforeNEWeligiblefreshPIPE04, whoseoriginal4outcomesremainseparatepending. Authornative/parseguardresultsnotfreshaward."
+  ],
+  "preservedLimits": "All globalAPI/defaultgenerator/refusedA91112/fiveDATA/Knip/native/runtime/human/AT/AP10/livefixture/deployment gaps remain at actualscope. Newloopbackcase does not close them. No freshwhole A99-12/A91305 or wholeuncertainreconciliation platformaward.",
+  "evidenceReuse": [
+    "final-source-reader-quality-decision.json",
+    "final-guard-companion-independent-decision.json",
+    "claims-complete-affected-responsibility-final.json",
+    "map-whole-byte-and-authority-companion.json",
+    "../reader-platform02-baseline-v2-handbook-20261031/scoped-preservation-decision.json",
+    "../plugin-checkpoint-original-scope-join-20261031.json",
+    "../reader-pipeline04-response-loss-original-candidate-20261031/original-fault-scope-and-source-decision.json",
+    "root-harness-independent-decision.json",
+    "root-recipe-finding-adjudication.json",
+    "remaining-binder-independent-decision.json"
+  ],
+  "actions": "Read-only exactimpactselection, actualexisting originalsummary/limits applicability for newlyimpactedscopes, priorfinite responsibility reuse and wholeoriginalrecord comparison. Externalproposalonly; no tests/mainwrites/children/refusedregistry.",
+  "newActualRootGraphNegativeAdjudication": {
+    "actual": "actual-four-guard-successor-tests.log reports66tests64PASS2FAIL. Child+readerCI pass; native/YAML suitecollection stillstops DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED scripts/lib/docs-publication-assets.mjs reviewed defining operation changed files, assertRootHarnessClosure role-custody32617. Read receipt only; blockedregistry notread/reacquired.",
+    "classification": "GENUINE_NEW_CURRENT_ROOTGRAPH_REFUSAL, NOT_BASELINE_IDENTICAL_OR_TARGETED_GUARD_PASS. It concerns actual8allowance filesSet definition change under broader executable/nodeentry Sourcecustody. Previous globalgenerator alreadyfailed otherSourcequalification, but different oldfailure does not prove this newrole accepted.",
+    "scopeSeparation": "Finite publication/readerCI Sourcepurpose decisions qualify exact newinertasset meanings and localprofile companions, not complete rootentrydefinition custody/defaultAPIgraph. Passingchild/readerCI and source/metadata/CI P2 do not establish native/YAML guardacquisition or rootgraph/defaultgenerator success. Keep newfailure under openA91112/A91108 actualsource boundary; no blanketwaiver or registryrepair-by-projection.",
+    "original71": "Existing71 summaries/limits do not grant rootgraph/defaultgenerator/A91112/A91108 closure from these records. Newfixture path and scalar/parse/nativepublication roles are already substantively reviewed at exactmeaning. Their original content/Source/semanticReader responsibilities can preserve while graphnegative stays explicitlyopen, CONDITIONAL currentnormal185publication/native/artifact/originalchecker obligations below. Newglobalrolefailure alone is not retroactive failedoriginalcondition they explicitlyexcluded.",
+    "noTargetedTestFiction": "Twofailedsuites did not execute their intendednative/YAML specific assertions after globalrootentryrefusal. Do not mark those assertions tested/pass or erase planned testlimitation. Sourcepurpose qualification remains review+otheractualnativeevidence only, not actual successfulguardacquisition.",
+    "ownerClarification": "Root reports exact failed owner is immutable reviewedRootNodeEntryRecipes.closure in role-custody, NOT refused mutable authoritiesJSON. Do not automatically conflate distinct Sourceowners. Author bounded completeowningSource/changedresponsibility qualification proposal pending; this report does not decide its safety/sufficiency or claim exactfailurepreexisting. Finaloriginalscopeadoption/remedy judgment awaits exactproposal and actualrootobservations."
+  },
+  "exactOriginalConditionsStillRequired": [
+    {
+      "records": [
+        "MNT-014-whole-native-publication-examples-20261027",
+        "A99-11-whole-published-example-claims-20261027"
+      ],
+      "condition": "Their original completepublishedexample/failclosed normalcheck-build input/contract/projection/syntax responsibility MUST still dispatch and check currentowned inputs in real normalpublication, including newgraph/privatepackage purposes. If normal185publisher/nativevalidation cannot run or fails due guard/custody/input/parser, currentQualitydelivery rebinding is NOTready; cannot waive because defaultglobal alreadyred. Root must fix exact in-scope publisher failure or retain currentdelivery pending, not accept a brokennormalowner route."
+    },
+    {
+      "records": [
+        "AP09-publication-positive-scope-7ef16585",
+        "AP09-complete-static-reader-search-20261021",
+        "AP09-search-reader-gate-20261021",
+        "AP09-rendered-source-bounds-gate-20261021",
+        "AP09-complete-static-offline-fallback-20261021",
+        "A912-03-supported-redirect-paths-20261021",
+        "A912-05-whole-source-excerpt-callouts-20261022",
+        "A912-11-deterministic-page-records-20261022",
+        "PUB008-current-reader-build-ci-20261023"
+      ],
+      "condition": "Actualcurrentpublication/artifact/route/source/asset integrity and boundednewguide/indexReaderdelivery required for changedoutputs; historicaltwobuild/search/browser/excerpt/CIobservations stay exacthistorical. If currentartifactdeliverable breaks positiveallowlist/navigation/binding, exact owningoriginalcriterion currentpreservation fails regardless rootgraphscope. No newtwobuild/hostedCIclaim required."
+    },
+    {
+      "records": [
+        "FLW010-uncertain-effect-supported-boundary-20261021",
+        "A99-08-complete-supported-failure-journey-union-20261021"
+      ],
+      "condition": "Primary originaluncertainincident identity/receipt/authorizedread/unknownnotnonexecution/safeSTOP route and othersixfamily responsibilities retained; newloopbackrehearsal cannot substitute for unavailable genericreconciliation or freshfullfailuretask. Current mainindex was substantively checked to retain thatroute; no violation identified."
+    },
+    {
+      "records": [
+        "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+        "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+        "QUA010-A9814-A91111-A91308-original-maintainability-and-distinct-drift-path-join-20261031"
+      ],
+      "condition": "Original explicitproductauthority/map/sourceassignments and distinctqualified parser/CI-catching meanings unchanged. Completeoldmap/sourceSurfaceMap complement substantiates scope; do NOT promote currentfullrootrole or defaultAPI/ToolSource closure. If actual productauthority/parserroutes change beyondqualifieddelta, separateexactoriginal review needed; no such change identified."
+    }
+  ],
+  "conditionClarification": "Earlier proposal broadly listed actualguardtests as currentcloseout. This addendum distinguishes targetednative/YAMLsuite assertions UNEXECUTED due realbroaderentryrefusal from originalnormalpublication/currentdelivery duties. It does NOT waive a failednormalpublicationoriginalcriterion and does NOT award refusedglobalrole. Originalsemanticpreservation conditional only on genuinelyapplicable originalduties; impossible globalclosure not imposed as newcondition on explicitlyexcluded oldcontent/Source scopes.",
+  "rootAndRemainingBinderQualification": {
+    "root": "Exact9a9rootrecipeactualmainadopted; meaningfulactualguardprogresspastrootclosurethenparserfailure. PriorP1aboutabsentmetadata notapplicabletoactualmainbutreviewterminal1retained; no falsecleanP2. Completeaffectedrowlibrary/selectedguardpurpose independentlyPASS, not765KBsemanticwholeclaim.",
+    "remaining": "remaining-binder-independent-decision.json independentlyPASSexactfivefieldsuccessor07cbe... proposedafter9a9. Parser454->458sourcepin, page-recordlibpurposepin, publication182/page36/artifact51selectedfactdigests: unchangedselectors/authority/guards. Artifacthistorical22->observer28->PIPE0436explicitlyqualified, noteightonly oroldreceiptunchanged.",
+    "testTruth": "Previousrootgraph/parserfailures remainexactnegativehistory. Remaining5fieldproposal notapplied/testedbyreviewer; rootmustretainactualcoherenttests/P2results. No root/native/YAMLsuccessinferredfromSourcequalification.",
+    "scope": "ImmutableSourceownedroot/parser/rolerecipes distinctfromrefusedmutableauthorityJSON; no sourcepartition/projection retry/newentry/publicruntime/APIrole. Exact107otherroleentries/23rootentries/114otherclosure/5wildcards unchanged."
+  },
+  "combinedScopeAddition": "Only2additionalrolepathoriginals;12roleintersectionsalready71 updatedintersections. Noothernewacceptedrecordselected bynewguide/assetsdirectpath.73existingrecordsproposedpreservation, zeroawards."
+}

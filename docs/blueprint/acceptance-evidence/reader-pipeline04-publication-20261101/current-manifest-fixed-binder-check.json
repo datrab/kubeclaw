@@ -1,0 +1,53 @@
+{
+  "status": "NO_EXISTING_FIXED_SOURCE_PROFILE_BINDER_FOR_GENERATED_MANIFEST_FOUND",
+  "generator": "current-manifest-generation.json: root actualterminal0/19.0428s, not invoked by child",
+  "manifest": {
+    "path": "docs/config/documentation-publication-manifest.json",
+    "oldSha256": "5dcdca6da1c8fb2ac5cad782cc9005e0fffa2873ef5235e5a0f991bcc5163098",
+    "currentSha256": "253dc0a55bf61e20601acbc4cab1d9be90b8a285cb4a2374cee4e630b787f88a",
+    "oldPageCount": 184,
+    "currentPageCount": 185,
+    "added": [
+      {
+        "sourcePath": "docs/site/use/workflows/uncertain-effect.md",
+        "route": "/use/workflows/uncertain-effect.html",
+        "canonicalUrl": "/use/workflows/uncertain-effect.html"
+      }
+    ],
+    "removed": [],
+    "changedOldPageRecords": [],
+    "otherFieldsExact": true,
+    "meaning": "Pages-only positive manifest. Sole5line newpage record, not asset roster; existing36asset selection belongs to separate Sourceowned publicationAssets allowlist. No extra missingasset record inferred."
+  },
+  "fixedProfileCheck": {
+    "modules": [
+      "scripts/docs-api-output-discovery.mjs",
+      "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "scripts/docs-api-documentation-role-custody.mjs"
+    ],
+    "profileFamilies": [
+      "reviewedPublicationYamlValidationInputs",
+      "reviewedPublicationNativeValidation",
+      "publicationExampleChildPurpose",
+      "readerArtifactCiPurpose",
+      "documentationExecutableRoleRecipes",
+      "reviewedPublicationParserRecipe",
+      "reviewedRootNodeEntryRecipes"
+    ],
+    "manifestPathHits": [],
+    "oldOrCurrentHashHitsAcrossScriptSources": [],
+    "scriptMjsTsFilesChecked": 439,
+    "meaning": "No literal fixed path or hash binding in existing named owners requires successor for this generated manifest. Their separately qualified code/assets/claims/map inputs remain at actual scope; this receipt does not claim global discovery or blocked authority JSON accepts manifest."
+  },
+  "ordinaryDynamicConsumers": [
+    "scripts/docs-publication.mjs generate/check publicationManifestPath",
+    "scripts/docs-reader/page-records.mjs inputPaths.publication",
+    "scripts/docs-reader/check-search.mjs",
+    "scripts/docs-reader/diagrams.mjs",
+    "scripts/docs-reader/source-previews.mjs",
+    "scripts/docs-blueprint-generate.mjs"
+  ],
+  "limits": "No new native/default/global build/test/scanner; no mainwrites or authoring; no refused mutable JSON read or claim of its absent bindings. Sole finitehash check, no repeatSourcecampaign or acceptance. Root peer currentmanifest/complement check and commit/currentbuild remain required.",
+  "mainMutation": false,
+  "refusedRegistryRead": false
+}

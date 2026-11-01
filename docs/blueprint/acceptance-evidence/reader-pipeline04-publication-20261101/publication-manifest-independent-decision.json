@@ -1,0 +1,44 @@
+{
+  "status": "PASS_FINITE_NATIVE_GENERATED_PUBLICATION_MANIFEST_SUCCESSOR",
+  "materialFindings": [],
+  "source": "657f4a2ddd455b08431217bdee15aa40594b6508",
+  "actualGeneration": {
+    "receipt": "current-manifest-generation.json/log",
+    "argv": [
+      "node",
+      "scripts/docs-publication.mjs",
+      "generate"
+    ],
+    "exitCode": 0,
+    "seconds": 19.042848258046433,
+    "provenance": "Existing root-coordinator actualsupportedgeneration, not reviewer rerun."
+  },
+  "wholeOldNew": {
+    "oldSHA": "5dcdca6da1c8fb2ac5cad782cc9005e0fffa2873ef5235e5a0f991bcc5163098",
+    "newSHA": "253dc0a55bf61e20601acbc4cab1d9be90b8a285cb4a2374cee4e630b787f88a",
+    "oldBytes": 36082,
+    "newBytes": 36278,
+    "oldPages": 184,
+    "newPages": 185,
+    "exactOnlyAddedEntry": {
+      "sourcePath": "docs/site/use/workflows/uncertain-effect.md",
+      "route": "/use/workflows/uncertain-effect.html",
+      "canonicalUrl": "/use/workflows/uncertain-effect.html"
+    },
+    "wholeOldParsedComplementExact": true,
+    "schemaAndAllOldRecordsOrderUnchanged": true,
+    "actualDiff": "Only5line insertion forone newpage. No historicalroute/canonicalURL/source records replaced.",
+    "entireSerializedByteReconstructionExact": true,
+    "newEntryIndex": 182
+  },
+  "semanticOwnerDecision": "PASS: actual existingpublicationManifest derives canonicalreaderpage source/route/URL records through unchanged explicitclassification/regularphysicalpage traversal. Newguide is already classified canonical; source path maps to expectedartifactlocal/use/workflows/uncertain-effect.html, not externaldeployment authority. Onepage185 is realownedoutput consequence, not fabricatedrender/hosting availability.",
+  "generatorScope": "Read normalgenerator ownership: generatedMap containsmanifest plus existingcatalogue/capabilities/pluginpages andoperator matrix update. Actualcurrentdiff onlymanifest; allothergeneratedviews byteunchanged. compareGenerated will requirecurrentmanifest in normalpublication; unchangedregisteredgeneration is appropriate fix, no manualfact edit or bypass.",
+  "assetClarification": "This manifest schema containspages ONLY. Eightnewassetallowances are NOT eightmanifestentries; alreadyowned separatepositiveassetselector/nativepurposes feed build copies andartifactpage/source record bindings. No missingassetmanifestfield or inventednewauthority.",
+  "qualityLimits": "First185build actualfailed stale manifest in26.7sec remains failed, no newartifactPASS from failedbuild. Generation0 doesnot provecorrectedbuild/nativeartifact/Reader/sourcebinding/remote. Newroute canbe declared here but must be actuallyrendered/copied/verified bynormalcurrentdelivery. Existingguards/native18/P2clean0 are priorindependentactualresults, not reviewer execution.",
+  "remainingRootConditions": [
+    "Root authorinitialstaticcheck reports no manifestprofilepins; exact finalhashcensus pending. No additionalpinrenewal inferred/authorized without actualconsumer.",
+    "Commitcoherentgeneratedmanifest consequence; actualcurrent185normalbuild/native/canonicalartifact+boundednewguide/indexReader delivery andoriginalchecker/preservation.",
+    "ExactpubliccompleteSourcebeforeNEWfreshPIPE04actor; fouroriginaloutcomes stillseparate, no fresh/gate award."
+  ],
+  "actions": "Read-only completeold/currentmanifest JSON+actualdiff/normalgenerator-ownercode andactualgenerationreceipt. No generation/tests/mainwrites/children/refusedregistry."
+}

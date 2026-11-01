@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-11-01T00:39:57.274104+00:00",
+  "sourceRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+  "argv": [
+    "node",
+    "scripts/check-ap09-acceptance-contract.mjs"
+  ],
+  "supportedYieldingProcess": true,
+  "noOuter300sKill": true,
+  "endedAt": "2026-11-01T00:41:00.606915+00:00",
+  "elapsedSeconds": 63.33098621794488,
+  "exitCode": 0
+}

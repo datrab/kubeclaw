@@ -1,0 +1,46 @@
+{
+  "status": "PASS_ACTUAL_CURRENT_TWO_PAGE_RENDERED_CONTENT_READER",
+  "materialFindings": [],
+  "source": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+  "actualArtifacts": {
+    "use/workflows/uncertain-effect.html": "77c1cd02912c0da8f488b34af4490820e7d6b9372482fcdfb0d543160d48813f",
+    "use/workflows/README.html": "02af5c4e9e00ffdff4b087ebcf91aa1cf72068be2d360064c039903ad9618111"
+  },
+  "method": "Read actualcurrent publishedHTML visible maintext/headings/tables/code andhrefs, compare fullnewguide authorintent and materiallychangedindexrow. This is independent nonauthor Source-exposed renderedcontent Reader inspection, not browsergeometry/AT/freshpracticaltask; no newprocess or rerun. Metadata header transformation is intentional and not tested byrawMarkdown-equality.",
+  "actualBuild": "current-build.json root actualnormal185build0/305.1645seconds at737; firststale-manifestfailedbuild retained separately, not relabelled.",
+  "observations": [
+    {
+      "facet": "Complete visibleguide",
+      "decision": "PASS",
+      "actual": "NativePage scope/sources header retains6fields, canonical Evidencepaths, actualauthor/localdate/freshseparation and loopback/notdeployedapplicability. Objective/prerequisites/inspect/stop/export sections fullyvisible; actualfailedtransportreceipt/Coreblocked/oneattempt and unknownunreconciledexternal distinction notlost by renderer."
+    },
+    {
+      "facet": "CanonicalSource and prerequisites",
+      "decision": "PASS",
+      "actual": "Visibleguide requires complete immutable registeredSource beforedependencies and fullHEAD check, Node24/GNUflock/Linux/ownedpaths. ActualfooterdocumentationSource737; canonicalEvidence hrefs becomeGitHub737 paths, localregisteredgraph link targets deliveredexamples/uncertain-effect.pipeline.json. Links are correctlyformed; remote737availability not inferred."
+    },
+    {
+      "facet": "Four commandblocks",
+      "decision": "PASS",
+      "actual": "ActualHTML pre/code text exact-equal all4authoredbashfences; eachfirstset-e visible. Run->inspect->explicitstop->export/copy/diff->cleanup order retained; exportplaceholder preserved asliteral code text, notinterpretedHTML. No rendererintroduced shell/body loss."
+    },
+    {
+      "facet": "Originalfault/identity/status",
+      "decision": "PASS",
+      "actual": "Actualvisibletext saysdropafterfsync beforeheaders withoutpriorsignal; allowrealerrorhandling. RequiresCoreexit1/signalnull, truefailedadapter.effect_failed/localrun.blocked/no retry, sameeffect/key/resource/payload/heads, actualGET501 andrawbyteequality. Receivercommit evidence remains distinctfromCore receipt; separateoperatorassessment notproductjournal mutation."
+    },
+    {
+      "facet": "SafeSTOP and cleanup",
+      "decision": "PASS",
+      "actual": "Visibleguide preservesno--recover/newattempt/newkey/resend/journaledit. Explicitstop afterowninspection, completeevidence set andpreflight-vs-caseledger distinction, copycomparison/newexternaldestinationbeforeboundedownedcleanup. No successfulreconciliation/freshactor/productionclaim introduced."
+    },
+    {
+      "facet": "Changedindexroute",
+      "decision": "PASS",
+      "actual": "ActualREADME.html tablekeepsLost Responses diagnosis FIRST, Pipeline State Recovery next, secondaryuncertain-effectrehearsal linkthird. All3actualhrefs resolve intendedcanonicalrelativepaths; evidenceboundaryretainsrawpreservation/authorizedownerread/unknownsafeSTOP andaddsnotdeployed/realtransportfailed distinction. Otheroriginalworkflow rows andfirstproject content unchanged inpurpose."
+    }
+  ],
+  "limits": "This dischargesactualtwo-pagecurrentrenderedcontent/semanticReaderfacet only. Canonicalartifact49633 and320/1440browser/Axe84154 results notobservedhere; no layout/search/keyboard/network/Axe/humanATpass invented. Current remoteSource/publictask andoriginalchecker remainseparate.",
+  "effectOnOriginalScopes": "Existing73semanticSource/Reader/Qualitypreservation can reuse thiscurrentchangedcontentfacet; nooriginalcheckhistory rewritten, no newrequirement/gate/freshpersona acceptance. Finalcloseout awaits actualcanonical/browser andnormaloriginalchecker.",
+  "actions": "OnlyactualHTML/source/evidence read andread-onlyblock/hrefcomparisons; externalreportwritten, no mainwrites/tests/processes/children/refusedregistry."
+}

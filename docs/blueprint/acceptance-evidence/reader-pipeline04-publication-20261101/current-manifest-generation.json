@@ -1,0 +1,9 @@
+{
+  "argv": [
+    "node",
+    "scripts/docs-publication.mjs",
+    "generate"
+  ],
+  "exitCode": 0,
+  "seconds": 19.042848258046433
+}

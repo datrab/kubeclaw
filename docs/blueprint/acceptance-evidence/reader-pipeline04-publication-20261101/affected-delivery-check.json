@@ -1,0 +1,87 @@
+{
+  "at": "2026-11-01T00:36:46.779Z",
+  "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+  "exactEightAssets": true,
+  "observations": [
+    {
+      "width": 320,
+      "layout": {
+        "viewport": 320,
+        "scrollWidth": 320,
+        "codeScrollers": [
+          {
+            "tabindex": "0",
+            "width": 286,
+            "scroll": 728
+          },
+          {
+            "tabindex": "0",
+            "width": 286,
+            "scroll": 760
+          },
+          {
+            "tabindex": "0",
+            "width": 286,
+            "scroll": 736
+          },
+          {
+            "tabindex": "0",
+            "width": 286,
+            "scroll": 1072
+          }
+        ]
+      },
+      "exactFourExecutableBlocks": true,
+      "secondaryIndexLink": true,
+      "skipLinkKeyboard": true,
+      "searchKeyboard": true,
+      "axe": {
+        "violations": [],
+        "incomplete": []
+      }
+    },
+    {
+      "width": 1440,
+      "layout": {
+        "viewport": 1440,
+        "scrollWidth": 1440,
+        "codeScrollers": [
+          {
+            "tabindex": "0",
+            "width": 758,
+            "scroll": 758
+          },
+          {
+            "tabindex": "0",
+            "width": 758,
+            "scroll": 776
+          },
+          {
+            "tabindex": "0",
+            "width": 758,
+            "scroll": 758
+          },
+          {
+            "tabindex": "0",
+            "width": 758,
+            "scroll": 1088
+          }
+        ]
+      },
+      "exactFourExecutableBlocks": true,
+      "secondaryIndexLink": true,
+      "skipLinkKeyboard": true,
+      "searchKeyboard": true,
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          {
+            "id": "color-contrast",
+            "nodes": 102
+          }
+        ]
+      }
+    }
+  ],
+  "limits": "Actual bounded newpage/secondaryindex/assets/search/responsive/keyboard and automatic accessibility only. No actual AT, full contrast, human, fresh original case, two-build determinism or whole gate award."
+}

@@ -1,0 +1,15 @@
+{
+  "startedAt": "2026-11-01T00:24:58.248184+00:00",
+  "sourceRevision": "657f4a2ddd455b08431217bdee15aa40594b6508",
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "supportedYieldingProcess": true,
+  "noOuter300sKill": true,
+  "endedAt": "2026-11-01T00:25:24.994804+00:00",
+  "elapsedSeconds": 26.744559766957536,
+  "exitCode": 1
+}

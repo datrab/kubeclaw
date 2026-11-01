@@ -1,0 +1,127 @@
+{
+  "failures": [
+    {
+      "opsEvidence": "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/source-invalidated-review-terminal.json",
+      "sha256": "4723c9091691ad2808095658f6dae8633c92fda8bd9bb850afd664489327e4bc",
+      "bytes": 52,
+      "actualReceipt": {
+        "exitCode": 1,
+        "seconds": 32.63987317995634
+      }
+    },
+    {
+      "opsEvidence": "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/metadata-review-terminal.json",
+      "sha256": "7b740f87f79bee663288d971588dbe1b6301c8a5293b2986d716ed8b58acc5f7",
+      "bytes": 52,
+      "actualReceipt": {
+        "exitCode": 1,
+        "seconds": 2.435762755922042
+      }
+    },
+    {
+      "opsEvidence": "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/actual-three-guard-tests.json",
+      "sha256": "571847eb8d645554ad7b059c40c787bca41bc767f7d15a2d1ad1dc8ea650a02b",
+      "bytes": 513,
+      "actualReceipt": {
+        "argv": [
+          "node",
+          "--test",
+          "scripts/tests/api-output-publication-native-custody.test.mjs",
+          "scripts/tests/api-output-publication-child-custody.test.mjs",
+          "scripts/tests/api-output-publication-yaml-input-custody.test.mjs"
+        ],
+        "exitCode": 1,
+        "seconds": 2.480680670007132,
+        "scope": "Existing maintained exact owner-body harness, actual graph/facts/physical inputs and meaningful negative controls; fake filesystem/Helm controls remain controls, not binary or deployment execution."
+      }
+    },
+    {
+      "opsEvidence": "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/actual-four-guard-successor-tests.json",
+      "sha256": "d1fcfcfc4c671342757f2218f09075b6889e144079d97581fb4b05c2799301a2",
+      "bytes": 588,
+      "actualReceipt": {
+        "argv": [
+          "node",
+          "--test",
+          "scripts/tests/api-output-publication-native-custody.test.mjs",
+          "scripts/tests/api-output-publication-child-custody.test.mjs",
+          "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
+          "scripts/tests/docs-reader-artifact-ci-purpose.test.mjs"
+        ],
+        "exitCode": 1,
+        "seconds": 5.790299421991222,
+        "priorFailedTestsRetained": true,
+        "scope": "Maintained owner-body harness with actual physical inputs/graph/facts plus explicit controlled negatives. Not global default generator, binary execution or actual fresh case."
+      }
+    },
+    {
+      "opsEvidence": "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/actual-root-recipe-successor-tests.json",
+      "sha256": "dae1ffa6e53f840f8e82e521a6da41317f38cfeac7ffddc1186b139078d09e14",
+      "bytes": 496,
+      "actualReceipt": {
+        "argv": [
+          "node",
+          "--test",
+          "scripts/tests/api-output-publication-native-custody.test.mjs",
+          "scripts/tests/api-output-publication-yaml-input-custody.test.mjs"
+        ],
+        "exitCode": 1,
+        "seconds": 16.089623645995744,
+        "priorFailuresRetained": true,
+        "reusedUnchangedPasses": "child6 and readerCI58 actual prior controls; no redundant rerun",
+        "scope": "Maintained actual guard/facts/graph owner-body harness; controlled fake Helm/fs are not binary/native runtime evidence."
+      }
+    },
+    {
+      "opsEvidence": "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/affected-delivery-first-launch-failure.json",
+      "sha256": "041a9e603f72961b107eb6dab5d631b016d0d071e36bc3f539e7819e73cd33f3",
+      "bytes": 669,
+      "actualReceipt": {
+        "command": [
+          "operations/pr13/run-reader-env.sh",
+          "node",
+          "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/affected-delivery-check.mjs"
+        ],
+        "exitCode": 1,
+        "error": "Cannot find module 'markdown-it'; Require stack /home/node/.openclaw/workspace/kubeclaw-pr13-recovery/package.json",
+        "phase": "Beforebrowserstartup; no observations and no productfailure inferred",
+        "initialHarnessSha256": "ca2562409ad29d7ce22e4dfc2da11fb3aeaa5bff088a31b44d200b38c36087d9",
+        "remedy": "Resolve actual maintained renderer markdown-it dependency through scripts/docs-reader/package.json createRequire; no install/alias/product modification"
+      }
+    },
+    {
+      "opsEvidence": "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/affected-delivery-axe-context-prerequisite-failure.json",
+      "sha256": "a391eabb0a91996254b03ffd0c486303698b300f13c9c2932bbf9df7f02b4c5c",
+      "bytes": 485,
+      "actualReceipt": {
+        "exitCode": 1,
+        "error": "AxeBuilder: Please use browser.newContext()",
+        "initialHarnessSha256": "ab0aab8ae8ef4ecb5711e179c40f16af9aad4c53d99a90368d23d0409d47315d",
+        "phase": "After initial route/layout/skip-link assertions at320, before completedAxe/browser-result registration",
+        "noProductFailureOrCompletedPassInferred": true,
+        "remedy": "Explicit browser.newContext then context.newPage/context.close, as actual installed Axe API requires; no product/criteria changes"
+      }
+    },
+    {
+      "opsEvidence": "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/affected-delivery-keyboard-immediate-assert-failure.json",
+      "sha256": "f7a1b54b398126539dc636645652cdf6f811470fdc558fc2a9bb8190b5b3b723",
+      "bytes": 476,
+      "actualReceipt": {
+        "exitCode": 1,
+        "actual": "/search.html",
+        "expected": "/use/workflows/uncertain-effect.html",
+        "initialHarnessSha256": "c9d12dcce32b9890272982e78c5f0090b058e6167b13e31820f2797791aec37a",
+        "phase": "Immediate URL assertion after page.keyboard.press Enter; no navigation waiter unlike click auto-wait",
+        "remedy": "Register bounded page.waitForURL in Promise.all with actual Enter; if no navigation still fails, not bypassed",
+        "completedBrowserPassClaimed": false
+      }
+    }
+  ],
+  "alsoRetainedPublicly": [
+    "root-recipe-pinned-review.json",
+    "root-recipe-finding-adjudication.json",
+    "first-current-build.json",
+    "first-current-build.log"
+  ],
+  "limits": "No new original gate/requirement/fresh-task/actualAT/fullcontrast/deployment/defaultAPIgenerator/AP10 acceptance. Desktop102incompleteAxecontrast retained; no two-build determinism rerun. Old compound author fault is not original case, faithful successor author is not fresh reader. Complete immutable source becomes public only after verifiedpush."
+}

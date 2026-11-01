@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Update the root-harness custody receipt for the changed asset allowlist",
+      "body": "The root-node custody guard hashes this `files` declaration and its enclosing line range. Its current stored recipe still expects the pre-change declaration, and the supplied guard evidence shows it now fails with `DOCUMENTATION_TOOL_NODE_ENTRY_CUSTODY_UNQUALIFIED ... reviewed defining operation changed files`. Consequently, the native/root documentation guard cannot run after this change. Include the corresponding reviewed-recipe successor (updated declaration hash, shifted function coordinates, range hash, and initialization receipt) with this allowlist update.",
+      "priority": "P1",
+      "confidence": 0.99,
+      "category": "regression",
+      "code_location": {
+        "file_path": "scripts/lib/docs-publication-assets.mjs",
+        "line": 32
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The new allowlist entries are internally consistent, but the only submitted product change invalidates the repository's required root-harness custody receipt. The supplied successor metadata is explicitly proposed rather than included in this change bundle, so the existing guard deterministically rejects the updated library.",
+  "overall_confidence": 0.99
+}

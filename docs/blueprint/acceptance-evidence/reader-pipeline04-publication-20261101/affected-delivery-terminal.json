@@ -1,0 +1,13 @@
+{
+  "endedAt": "2026-11-01T00:37:49.164699+00:00",
+  "command": [
+    "operations/pr13/run-reader-env.sh",
+    "node",
+    "operations/pr13/evidence/reader-pipeline04-root-integration-20261031/affected-delivery-check.mjs"
+  ],
+  "exitCode": 0,
+  "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+  "scope": "Actual complete bounded desktop/mobile route, Sourceboundassets/code, skip/searchkeyboard/layout and automaticAxe subset",
+  "desktopContrastIncomplete": 102,
+  "fullContrastOrAT": false
+}

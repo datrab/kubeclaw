@@ -1,0 +1,30 @@
+{
+  "at": "2026-11-01T00:42:09.485575+00:00",
+  "removed": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-pinned-review-20261031",
+      "bytes": 764267
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-metadata-review-20261031",
+      "bytes": 978407
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-ci-companion-review-20261031",
+      "bytes": 223917
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-root-recipe-review-20261031",
+      "bytes": 154005
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-coherent-role-review-20261031",
+      "bytes": 1963222
+    }
+  ],
+  "activeReadableCwdFdReferences": [],
+  "unreadableOrRacedProcesses": 15,
+  "remainingOwnedReviewScratch": [],
+  "currentAcceptanceArtifactRetained": "repo/.tmp/docs-publication actual737185pages, needed for openPUB007 actualAT and nextdelivery comparison; not old review scratch",
+  "limits": "Readable proc cwd/fd point-in-time probe, not OS isolation/global proof; no shared runtime/sourceWIP/locks/otherowners touched"
+}

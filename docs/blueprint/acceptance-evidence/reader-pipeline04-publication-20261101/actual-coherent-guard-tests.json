@@ -1,0 +1,14 @@
+{
+  "argv": [
+    "node",
+    "--test",
+    "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
+    "scripts/tests/api-output-publication-parser-custody.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 54.95262108009774,
+  "priorFailuresRetained": true,
+  "unchangedActualChildAndReaderCiPassesReused": true,
+  "scope": "Actual maintained source/graph/facts guarded acquisition and explicit negatives. Not globalAPIgenerator, deployment or freshcase."
+}
