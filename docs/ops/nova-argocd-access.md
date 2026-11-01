@@ -6,12 +6,18 @@ manual platform handovers, this new network-only application auto-syncs without
 pruning so no cluster credential is needed to bootstrap the connection.
 It creates no Role, service account token, password or cluster-wide exception.
 
-`resources.yaml` adds a Cilium egress allowance for exactly agent-nova to the
-Argo server identity on backend TCP8080 (Service ports80/443 target this port),
-and to its dedicated Tailscale operator proxy on TCP443. It does not enable a new
-default-deny boundary itself; the existing central policy and all other allows
-remain in force. HTTP is for unauthenticated diagnostics only: Argo's current
-server.insecure setting means direct internal access is not HTTPS.
+`resources.yaml` creates only the targeted standalone Service. The current
+cluster rejects `cilium.io/v2` discovery, so including a CiliumNetworkPolicy in
+this application prevented the entire sync. The optional Cilium allowance is
+retained separately in `cilium-optional.yaml`, excluded by the exact Argo
+`directory.include: resources.yaml` filter. Apply it only on a cluster that
+actually supports Cilium and after reviewing its existing isolation model.
+
+No generic NetworkPolicy replaces it: selecting Nova with a new Egress policy
+would itself introduce isolation and could interrupt unrelated working tools.
+This fix creates no NetworkPolicy, removes no live policy, and changes no existing
+network/RBAC enforcement. Existing policies and tailnet ACLs remain authoritative.
+A policy-blocked path still needs an explicitly scoped operator-managed allowance.
 
 The standalone egress Service targets only `argocd.tail576648.ts.net` and reuses
 the existing operator OAuth configuration and tailnet grants. No new Tailscale
@@ -43,3 +49,12 @@ to Service TCP80/443 were refused; the MagicDNS hostname was unresolved. The
 repository's central default-deny rules lacked an explicit Nova→Argo allowance.
 These observations motivate this path but do not alone prove which live component
 rejected it. Source tests and review are separate from operator/tailnet/live checks.
+
+## Observed failure, 2026-11-01
+
+The operations API reported `nova-argocd-access`: OutOfSync / Missing, operation
+Failed, with `failed to discover server resources for group version cilium.io/v2`.
+This proves the deployment incompatibility, not successful HTTPS connectivity.
+Familyclaw was separately OutOfSync / Healthy at comparison revision 8c828786.
+The current operations identity explicitly denies namespace `familyclaw`; do not
+work around that restriction through another pod or silently expand its own grant.
