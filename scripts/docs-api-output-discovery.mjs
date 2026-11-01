@@ -2519,7 +2519,7 @@ const reviewedEventContractDocumentationOutput = Object.freeze({
   "fixedInputs": [
     {
       "path": "scripts/docs-event-contracts.mjs",
-      "sha256": "d501c2a0fd3d2e81d214aa8eadd7128af2b840f4b483c48ee5303d9e394a57bf"
+      "sha256": "d732c59be80007cdc986059a23437e41d96ee6984860a242138a72a7b253507d"
     },
     {
       "path": "scripts/lib/docs-event-contracts.mjs",
@@ -2535,7 +2535,7 @@ const reviewedEventContractDocumentationOutput = Object.freeze({
     },
     {
       "path": "docs/config/event-reference-bindings.json",
-      "sha256": "ecc03af8ccd80a02f2c519500918889de174e5265dcad5dfd26f59781bc10633"
+      "sha256": "1259adf28dc58fded6f7462f96e86ad436b7d9d53a9dc74593a9769203f61281"
     },
     {
       "path": "package.json",
@@ -2543,7 +2543,7 @@ const reviewedEventContractDocumentationOutput = Object.freeze({
     },
     {
       "path": "docs/site/reference/events.md",
-      "sha256": "804fec397db9665b80ba2fa49c03c40d9e83ea00729632dc009e5cd1a746ed34"
+      "sha256": "2f3add53b588aff3eacf45d5d366ea2461998ff922757d33c7a968bc76d39551"
     }
   ],
   "targets": [
@@ -2563,7 +2563,7 @@ const reviewedEventContractDocumentationOutput = Object.freeze({
       "expression": "`${error.message}\\n`"
     }
   ],
-  "factsDigest": "2ae525f9af7ac12b7e06fba9e55a8f57ccf5cda25033cd7c7c2084c2971a68a2",
+  "factsDigest": "0a2385beb624ff93acb883ac63cf093a1c9483e83ba701947f410a897b7bec4b",
   "descriptors": [
     {
       "line": 11,
@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "06dc2e0cca666395beb00f8e0c8caa546b03147827eabb5d2713baa3e1b1a1c4"
+      "sha256": "e8e29e8ff3560fc6e3eb252d5a7b8fe9091ab8b672578832455c66e456895d1d"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3428,7 +3428,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "06dc2e0cca666395beb00f8e0c8caa546b03147827eabb5d2713baa3e1b1a1c4"
+      "sha256": "e8e29e8ff3560fc6e3eb252d5a7b8fe9091ab8b672578832455c66e456895d1d"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",

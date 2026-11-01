@@ -772,7 +772,7 @@
     },
     {
       "path": "docs/site/extend/developer-handbook.md",
-      "sha256": "c15a226e7f553a4034772e90eaebf1d0ab234a18133cbba01f9a71209d99c8b1",
+      "sha256": "0a3ac234d12c96a9d81f79c8ab0dfcdf17e16d58b0c8fa5f44eb0e24f28e92d4",
       "owner": "extension guide/native component owners",
       "claim": "complete extension authoring lifecycle and actual block/inline/prose responsibilities",
       "executionBoundary": "complete page responsibility binding, actual instruction units distinct from identifiers; no per-identifier execution claim",
