@@ -1,0 +1,166 @@
+{
+  "status": "PASS_BOUNDED_PUBLICATION_METADATA_SOURCE_READER_QUALITY_SEMANTICS",
+  "at": "2026-11-01T01:26:23.249167+00:00",
+  "sourceAssessment": "PASS",
+  "readerAssessment": "PASS",
+  "qualityAssessment": "PASS",
+  "candidateBase": "b023efe888121d01f9b4ea5a3932ff1dcca691b0",
+  "proposalSHA256": "b4c517286f6432a976ef2f4123a62d2ef7e364b9ea347533fac2a7f55524166b",
+  "proposedWholeClaimsSHA256": "4bb2c975efed884b1779211d8ac1d3e1166d4943866308abbbafa90401fbd792",
+  "proposedClassificationSHA256": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd",
+  "scope": {
+    "claimsPages": [
+      "pages[107] nova-project",
+      "pages[166] workflow README",
+      "append pages[185] quality-validation"
+    ],
+    "assets": "append four after36",
+    "checks": [
+      "checks[0] claim-contract",
+      "checks[1] syntax-instructions",
+      "checks[20] assets-native"
+    ],
+    "authorities": [
+      24,
+      28,
+      33
+    ],
+    "contracts": "contracts[123], contracts[182], five appends after221",
+    "classification": "five appends after4505"
+  },
+  "materialFindings": [],
+  "acceptanceScopeTransfer": "No existing acceptance award or historical SourceRecord rewrite required solely by this metadata candidate/commit. Current narrow source/metadata responsibility belongs to this decision; any later actual check/build/pin is separate. Preserve historical PIPE04 and other receipts byte-exact; original PIPE01/QUALITY01 conditions remain unmet as previously stated.",
+  "limits": [
+    "Content/semantic review, not successful current native dispatcher or guard successor receipt",
+    "No HTML Reader delivery/search/accessibility or fresh participant observation",
+    "No helper, Core, Redis, provider, model, Gateway, approval, capability mutation or cleanup execution by this review",
+    "Pinned P2 separate; no whole original case, whole gate, historical acceptance renewal or73-scope preservation claim"
+  ],
+  "reviewedFiles": [
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/publication-metadata-proposal/complete-affected-record-proposal.json",
+      "sha256": "b4c517286f6432a976ef2f4123a62d2ef7e364b9ea347533fac2a7f55524166b",
+      "bytes": 531909
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/publication-metadata-proposal/native-parser-affected-regions.json",
+      "sha256": "58e543fc408ee144a6bee43bc6b9ca5c18ae5bb1f97d14990d064136247c7ed5",
+      "bytes": 184577
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/publication-metadata-proposal/exact-complement-proof.json",
+      "sha256": "b652efa2fa5b77feb536b3e01c55590f8b784e91039dbd04e26cc7e876e292d9",
+      "bytes": 3177
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/publication-metadata-proposal/proposal-structural-and-application-controls.json",
+      "sha256": "f0ff7c3aea0f47a84efd79a038f6ffeea0596fbd887452dc59b7e7cdd85b2640",
+      "bytes": 1682
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/pinned-v3-source-inputs.json",
+      "sha256": "14562e16a32b9976b385acaa99f75e23aa8038fa2c215f75cfa4003d97edb0da",
+      "bytes": 4315
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-publication-claim-contracts.mjs",
+      "sha256": "b278456c79aba384170f4dacfb13389a1f2c5c7acdef61f5d532c8e9a84f9c9c",
+      "bytes": 4632
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/lib/docs-publication-example-coverage.mjs",
+      "sha256": "5217aa0f2bd0303d614a0b94a29b8d78f3e1473433ad413cd5e19749fa660dda",
+      "bytes": 8526
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/scripts/docs-publication-examples.mjs",
+      "sha256": "b55c0e9addce76c121f4f5aedd5863493d581dca0a0d90be69a420b7b942c262",
+      "bytes": 9346
+    }
+  ],
+  "frozenSourceInputs": [
+    {
+      "path": "docs/site/reference/nova-project.md",
+      "bytes": 39400,
+      "sha256": "217d91583f26d89ec054c810dd101181a6d5e43fce48cf255e7b7dc776c7154e",
+      "observedSha256": "217d91583f26d89ec054c810dd101181a6d5e43fce48cf255e7b7dc776c7154e"
+    },
+    {
+      "path": "docs/site/use/workflows/README.md",
+      "bytes": 27321,
+      "sha256": "8a2faaf0e489fcb446172f9baf439661766de57c1187e458079fd8b158615426",
+      "observedSha256": "8a2faaf0e489fcb446172f9baf439661766de57c1187e458079fd8b158615426"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/minimal-project.mjs",
+      "bytes": 9729,
+      "sha256": "0851cc47a9376444c6ed0634cb079257a7edff0d5d8b08b2419ba22e66b95107",
+      "observedSha256": "0851cc47a9376444c6ed0634cb079257a7edff0d5d8b08b2419ba22e66b95107"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/minimal.pipeline.json",
+      "bytes": 13374,
+      "sha256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b",
+      "observedSha256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "bytes": 2704,
+      "sha256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600",
+      "observedSha256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "bytes": 11046,
+      "sha256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6",
+      "observedSha256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6"
+    },
+    {
+      "path": "docs/site/use/workflows/quality-validation.md",
+      "bytes": 8625,
+      "sha256": "62d8f66bd86e238e31caf07b49fa9a1c9e5e2c82d717ed68982f3f608ea8ac30",
+      "observedSha256": "62d8f66bd86e238e31caf07b49fa9a1c9e5e2c82d717ed68982f3f608ea8ac30"
+    },
+    {
+      "path": "scripts/docs-publication-example-assets.mjs",
+      "bytes": 6323,
+      "sha256": "d32279f359d0d2b17a49b10601dd3f611c8fcac6b6a431a9a0495de04bf14d05",
+      "observedSha256": "d32279f359d0d2b17a49b10601dd3f611c8fcac6b6a431a9a0495de04bf14d05"
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "bytes": 6410,
+      "sha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0",
+      "observedSha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0"
+    },
+    {
+      "path": "scripts/docs-publication-instruction-syntax.mjs",
+      "bytes": 4360,
+      "sha256": "51424c23dcb60f8505fc35ddac9e90bd53d22c2e7803cf9f71bd4c5024437949",
+      "observedSha256": "51424c23dcb60f8505fc35ddac9e90bd53d22c2e7803cf9f71bd4c5024437949"
+    }
+  ],
+  "immutableBaselineOwnerJoins": [
+    {
+      "source": "scripts/lib/docs-publication-claim-contracts.mjs",
+      "revision": "b023efe888121d01f9b4ea5a3932ff1dcca691b0",
+      "sha256": "b278456c79aba384170f4dacfb13389a1f2c5c7acdef61f5d532c8e9a84f9c9c",
+      "matchesPreviouslyReadOwnerBytes": true,
+      "method": "git show immutable baseline blob, not mutable main JSON"
+    },
+    {
+      "source": "scripts/lib/docs-publication-example-coverage.mjs",
+      "revision": "b023efe888121d01f9b4ea5a3932ff1dcca691b0",
+      "sha256": "5217aa0f2bd0303d614a0b94a29b8d78f3e1473433ad413cd5e19749fa660dda",
+      "matchesPreviouslyReadOwnerBytes": true,
+      "method": "git show immutable baseline blob, not mutable main JSON"
+    },
+    {
+      "source": "scripts/docs-publication-examples.mjs",
+      "revision": "b023efe888121d01f9b4ea5a3932ff1dcca691b0",
+      "sha256": "b55c0e9addce76c121f4f5aedd5863493d581dca0a0d90be69a420b7b942c262",
+      "matchesPreviouslyReadOwnerBytes": true,
+      "method": "git show immutable baseline blob, not mutable main JSON"
+    }
+  ]
+}

@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-01T02:10:23.271372+00:00",
+  "originalFailures": [
+    "actualroute workflows/README.html not guessed workflows/index.html",
+    "authoredfences mixed with renderedSourcepreview",
+    "previewclass belongs to code not pre; actualHTML observed"
+  ],
+  "finiteRemedy": "Route selected from actualreader manifest; exact code:not(.source-preview-code) based on complete concrete source excerpt pre/code HTML. Sourcepreview remains independently canonicalartifact checked. No product changes or suppressed authored blocks.",
+  "expectedChecks": "all3 affected routes320/1440, exact4assets, authoredcodefences, search keyboard navigation+skip; no AT/contrast/task award"
+}

@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T02:11:44.755282+00:00",
+  "endedAt": "2026-11-01T02:12:08.119728+00:00",
+  "argv": [
+    "node",
+    "scripts/docs-reader/check-search.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 23.364437493029982,
+  "sourceRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "scope": "search only; no original gate award inferred"
+}

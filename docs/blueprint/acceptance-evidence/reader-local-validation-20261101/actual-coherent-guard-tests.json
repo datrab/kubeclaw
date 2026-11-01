@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-01T01:44:44.143868+00:00",
+  "argv": [
+    "node",
+    "--test",
+    "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
+    "scripts/tests/api-output-publication-parser-custody.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 51.770259203971364,
+  "scope": "Actual maintained Source graph/facts/selectedinput acquisition and meaningful negatives, unchanged child6/CI58 controls reused, not globalAPI/defaultgenerator/reader/runtimeaward"
+}

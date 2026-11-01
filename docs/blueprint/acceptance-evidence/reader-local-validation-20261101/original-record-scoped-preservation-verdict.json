@@ -1,0 +1,1591 @@
+{
+  "status": "PASS_EXACT_79_RECORD_12_PATH_SCOPED_PRESERVATION",
+  "at": "2026-11-01T02:12:14.243024+00:00",
+  "sourceRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "frozenAffectedExtractSHA256": "dde7588a36361685ef08de5eda957e512cdc6a7156a05405aa875aff5220627f",
+  "independentWholeRecordJoin": "original-record-preservation-independent-joins.json",
+  "sourceAssessment": "PASS",
+  "readerAssessment": "PASS",
+  "qualityAssessment": "PASS",
+  "materialUnmetForThisPreservation": [],
+  "qualifiedPaths": [
+    {
+      "path": "docs/config/documentation-publication-manifest.json",
+      "currentBlob": "ac90cbf6a11ad0fdd1d2f41083eaf578710ce9b7",
+      "qualifiedDelta": "185 old publication entries exact; one authored quality route added, no redirects or runtime authority.",
+      "evidence": [
+        "native-publication-manifest-exact-consequence.json",
+        "affected-delivery-check.json"
+      ]
+    },
+    {
+      "path": "docs/config/documentation-tree-classification.json",
+      "currentBlob": "e3ade5154e3c3778b30d1dc8f66dc199352b500a",
+      "qualifiedDelta": "Five exact canonical reader additions; old4505-record prefix preserved, no broad exemption.",
+      "evidence": [
+        "publication-metadata-semantic-verdict.json",
+        "artifact-terminal.json"
+      ]
+    },
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "currentBlob": "796beff0ff6413e23ebf346756a1662e6a5d2317",
+      "qualifiedDelta": "Complete affected page/asset/contract/check/authority responsibilities retain original execution/history/error/cleanup limits; precise generated-map and three-prose successors, not runtime evidence.",
+      "evidence": [
+        "publication-metadata-semantic-verdict.json",
+        "native-map-semantic-delta-verdict.json",
+        "three-language-guard-semantic-verdict.json"
+      ]
+    },
+    {
+      "path": "docs/site/reference/generated-documentation-map.json",
+      "currentBlob": "a3c01efb28fdb6e04c6a6c14c2b5104505433634",
+      "qualifiedDelta": "185 old page metadata and complete serialized SourceSurfaceMap exact; only one authored page/count added.",
+      "evidence": [
+        "native-map-semantic-delta-verdict.json",
+        "native-map-whole-byte-consequence.json"
+      ]
+    },
+    {
+      "path": "docs/site/reference/nova-project.md",
+      "currentBlob": "a92966e268728af328045ed123e1b02ed4a7b52e",
+      "qualifiedDelta": "Finite compiler policy/default/constants table; existing command/recovery/preflight/summary authorities retained. No runtime-target or original PIPE01 award.",
+      "evidence": [
+        "publication-metadata-semantic-verdict.json",
+        "affected-delivery-check.json"
+      ]
+    },
+    {
+      "path": "docs/site/use/workflows/README.md",
+      "currentBlob": "4847f69ce528cf5a369f1b61e86effc85012c472",
+      "qualifiedDelta": "Separate local inspection path and quality route; old compile/execution/failure/recovery routes and instruction bodies preserved. Redis/fresh original conditions remain open.",
+      "evidence": [
+        "publication-metadata-semantic-verdict.json",
+        "affected-delivery-check.json"
+      ]
+    },
+    {
+      "path": "scripts/docs-api-documentation-role-custody.mjs",
+      "currentBlob": "7b897621577448f821e221b9baafac950fb213f8",
+      "qualifiedDelta": "Complete changed selected root row and three importer-role facts only; unchanged114-row complement not freshly semantically reviewed.",
+      "evidence": [
+        "guard-companion-semantic-verdict.json"
+      ]
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "currentBlob": "35cbea6b3cf4cd349ba47d3ac9a6c52839e7a141",
+      "qualifiedDelta": "Exact fixed-input pin/five-inert-input/two-schema-call successors; native1764/YAML8 facts, raw10+2 slots, six rosters/selectors/flags retained; no UNKNOWN/API exemption.",
+      "evidence": [
+        "guard-companion-semantic-verdict.json",
+        "three-language-guard-semantic-verdict.json"
+      ]
+    },
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "currentBlob": "0e5c669c8a05c0a0a4dbca0d649191f3a2e5ab7e",
+      "qualifiedDelta": "Only exact claims/library pins; same physical source, caller, argv, result-gate and external CI/WeakMap analysis-only provenance.",
+      "evidence": [
+        "guard-companion-semantic-verdict.json",
+        "three-language-guard-semantic-verdict.json"
+      ]
+    },
+    {
+      "path": "scripts/docs-publication-example-assets.mjs",
+      "currentBlob": "c3218d39aa6f758113d66b50fe99ba6c56b5ff1b",
+      "qualifiedDelta": "Graph/designDocument native parsing and helper syntax only; no helper/Core/Redis/Gateway/provider execution.",
+      "evidence": [
+        "publication-metadata-semantic-verdict.json",
+        "guard-companion-semantic-verdict.json"
+      ]
+    },
+    {
+      "path": "scripts/docs-publication-instruction-syntax.mjs",
+      "currentBlob": "4bd525180ea7cbc429db6831197348ef9c9f2dd9",
+      "qualifiedDelta": "458 old shell bodies preserved plus4 new hosts=462; parser/materialization/no-execution limits unchanged.",
+      "evidence": [
+        "publication-metadata-semantic-verdict.json",
+        "guard-companion-semantic-verdict.json"
+      ]
+    },
+    {
+      "path": "scripts/lib/docs-publication-assets.mjs",
+      "currentBlob": "bcf52037ac2c33c32011f2a9ca2b4513691c2bf3",
+      "qualifiedDelta": "Exactly four fixed path additions36\u219240; rest of full library behavior unchanged, positive scope/regular-file/route/copy guards retained.",
+      "evidence": [
+        "guard-companion-semantic-verdict.json",
+        "affected-delivery-check.json"
+      ]
+    }
+  ],
+  "approvedRecords": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "GOV-001",
+        "GOV-003",
+        "GOV-004",
+        "GOV-008",
+        "ENT-001",
+        "ENT-002",
+        "ENT-003",
+        "ENT-004",
+        "DEC-001",
+        "STA-001",
+        "STA-002"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "4b069f0f46b7d4a828778a7061980f4b2b511e7e705c057e7c890e17fa141576",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "SPC-001",
+        "CFG-006",
+        "FLW-011",
+        "EXT-005",
+        "EXT-006",
+        "CFG-016",
+        "GOV-006"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "b61b83ef963280bb1bb9a20f796da739e42af2666dcca1e20f34ef58fca82d91",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-reader-workflows-20261020",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-002",
+        "FLW-004",
+        "FLW-008"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "c65446631fe90017eecb63c411df7a1849326a33fe7d59892b2f7a78645ad199",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-reviewed-publication-navigation-20261020",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-02"
+      ],
+      "requirementIds": [
+        "PUB-001"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "7c82852602436cc7117359ecf3888d036b114f2c71bd6d462a5525ed81d9e658",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-first-project-example-20261020",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-003",
+        "FLW-005"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "062794e71135c4943659645220eee01f24ea2997cfe87fd9c50ffff9cc1bee57",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A98-06"
+      ],
+      "requirementIds": [
+        "NVC-002",
+        "NVC-003",
+        "PLG-006",
+        "PLG-008",
+        "OPR-006"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "d2bb94292491f04795b9ace4ac34151fc16eca391594b1d871eb0c2a02155b7f",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-install-maintenance-project-entry-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "OPR-003",
+        "OPR-008",
+        "CFG-003",
+        "ENT-005"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "f4cba42d00188d8b62441b6de19c43389cba6ed2ca0a3ec5660ae3bb91cd3b2d",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-017"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "9bdd1ccd3f6d4d9c61b98cb02afba5ffcd901c72aac44c7eda282288ce75cce6",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-complete-platform-change-content-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "CDV-003",
+        "CDV-007",
+        "CDV-010",
+        "CDV-012"
+      ],
+      "approvedChangedPaths": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "7d5ae0a2a7f19bc6a31cf99d3201365162b25faf57192325b651ea0004b80c37",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-complete-publication-reference-navigation-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-003",
+        "PUB-009"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "8f3e1605db70929e59a1641eaa8cb463a98b66a690de7462d1bf976521efa198",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-complete-developer-reader-contracts-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-008",
+        "QUA-009"
+      ],
+      "approvedChangedPaths": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "bc9cab90d269c9a9e321b6f5dbc9bf9451367ab339932ad25ee9407893a660c1",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-002"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "4521665d8439cd7ce7cb4051596d0bea2e979a55653453a990cd12340c9b9a68",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-search-reader-gate-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-04"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "5b6d4dc542acc1428e57fd9dff54f6224d814f628d1ff7efbb3527a685800165",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-09"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "723f0b3788febc487795147a4c9f287eb00ddae5ab229381ef124a7aa9c274d4",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-complete-static-offline-fallback-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-10"
+      ],
+      "requirementIds": [
+        "PUB-006"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "7a0dc1bbfbaa10dd926b9297cefcc2ba0049da5199518e51645913b28ee71596",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-complete-same-source-code-preview-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-004"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "4e7c5254fa5282214c821d924afc4e532860ab8ee936b248d86a3d0f1407e378",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-complete-responsive-reader-layout-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-07"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "scripts/docs-api-documentation-role-custody.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "a5ac78ffca9e8605728977cbe6d45024fe9e0e90bd677cb2a83de17db0323152",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-02-whole-content-20261021",
+      "priorReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "gateIds": [
+        "A99-02"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "74eff73c6e312c3ee0c80ad04489ee99279d0cc9c8d44423283942dbee70d9a5",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-03-whole-content-20261021",
+      "priorReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "gateIds": [
+        "A99-03"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "3e112fb013b8c42ee8c197d853e4e734927e6a86d414487a190deffa08b0d992",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-05-whole-content-20261021",
+      "priorReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "gateIds": [
+        "A99-05"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "88dcaa4b6f6903a161d448c08589716e92a969584739ea19359d5a69202c47f6",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-01-whole-recursive-input-content-20261021",
+      "priorReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "gateIds": [
+        "A99-01"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "f575bca5a56198de3407b965d0c38ad7a944baea1b933f464f07b1425d478783",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-010"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "85e36e2fe1e605cbacea90c0a31d2a755002558a0cc0c17395e05d92ea8c2f50",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW014-plugin-operator-supported-lifecycle-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-014"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "4afcd77038dfdd0f92bc57fee0ec437a6a9532757417d67317762758f2ae3014",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW017-demo-supported-contract-and-live-gap-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-017"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "bb48f0c461558712e715e4c5ac9d619769287b98fbc8bb2fe5300451df1f8439",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW006-local-core-same-run-audit-artifact-telemetry-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-006"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "7b11558aa1a0b4126f2322b7352f6d094a9d02faa41ac65ca6e2f406dbcdb403",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-07-representative-buster-workflow-content-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A99-07"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "bb3b3cb7130813c93b517848dbd6f96bc697e6f288159e4643bed86e1c208d4a",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW007-supported-failure-task-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-007"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "b3a7ed253fad362f644ea47b02cbafee9b577c4a08e4fcbf69b14430f2d414e5",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW009-supported-failure-task-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-009"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "da8babe23a904cd85e2378019a70dd26c0afb32676edfc77594da64fb6995fb6",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW015-supported-failure-task-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-015"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "ac696460dd4d67cde9d83dd335116b78a96ccee58b39eefa1b5d9d361a36ae8a",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW016-supported-failure-task-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-016"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "62224db8fbc9f2aa2adaaf347bb24671cd49a30119aa3b4083bb8ba2b44d213a",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW012-supported-failure-task-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-012"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "d3fd3f45f223cc24f8fc0a0ea073b2bfc8939da5ce21a19bb9ddfcd25ae714e1",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "FLW013-supported-failure-task-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "FLW-013"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "84896ca6774541c074517566f73aaa8c27d9ccd7bd6ba37fb9b038aeedf5344d",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-08-complete-supported-failure-journey-union-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A99-08"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "452fc4acb99f5ad20ea799d06342e5eab6a593404281d2d3af722a80249c314e",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A912-03-supported-redirect-paths-20261021",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-03"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "5bb1293bd75e209aef51865483608ea4e9e033688037a850c59f7ef6b742141f",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A912-11-deterministic-page-records-20261022",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-11"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "d4e969157690624c2c9253d97209dc80398e87924429906c7bb65ff05a652960",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-01"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "7bcecdb5b440e76b50956234bb6cf2b2beb9b6b84fff60b4804070be18140643",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A912-05-whole-source-excerpt-callouts-20261022",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A912-05"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/nova-project.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "c1e67aea626989f69a6a75c352702b93ecd6a133b7ab03a739245ae494968cb3",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A98-02",
+        "A98-13"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "386c0ae90702230ff52f12c94303d307786bddce016901105df22c3d4f0e72e3",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A910-03-whole-command-prerequisite-contract-20261022",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A910-03"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "29a39598e119f98efb16821da62d84bdea878e384c74a52411ea7b10df49f8ef",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A910-06-whole-justified-classification-20261022",
+      "priorReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "gateIds": [
+        "A910-06"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "903fa8e0536b0478a200ed2c29dc40614970972df304c4981b072e1e4f04de4e",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A910-07-08-09-12-OPL001-whole-487f4e00-20261022",
+      "priorReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "gateIds": [
+        "A910-07",
+        "A910-08",
+        "A910-09",
+        "A910-12"
+      ],
+      "requirementIds": [
+        "OPL-001"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "cb025b5b205182c3be972b9710c93006d7fca9798a5eb6c593afeb68618659c4",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "PUB008-current-reader-build-ci-20261023",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "PUB-008"
+      ],
+      "approvedChangedPaths": [
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "5d31078c9b5484d695a9c755ca720e5a63e01e915e2a4983511cff7a9f2d7d02",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "AP09-whole-extension-drift-A91014-20261023",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A910-14"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "3b167bb426bbfa687b5c7e8cabb94e7f3a76645d292c62413c8749c62219b0ac",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A911-06-authored-surface-bindings-20261025",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A911-06"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "a667d495428dd06f006fae5074a7db067cb76efc84e237107495c1356d3bc1ab",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-13-original-seven-dimension-drift-20261025",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A99-13"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "a58d8c187c8c245e1324d91d1dccb850691d0d469554e43ec8e581df84e82691",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-06-actual-compiled-minimal-project-20261026",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A99-06"
+      ],
+      "requirementIds": [
+        "FLW-001"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "51163997fff5554bdb69945df653828a81440bcf522c11613e2d8c396b817234",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A910-10"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/use/workflows/README.md",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "d53cf8137c991427cd503128731c24eb1efe07ea14834609da44e2c0bae87ee2",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "QUA-006-fresh-independent-technical-reader-20261027",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-006"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "7da05924ddd4c73d7024841470a001384be37433833c611c9dedb4ed6346ff80",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT-014-whole-native-publication-examples-20261027",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-014"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/docs-publication-example-assets.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "58a6f5be509ba7c681738ffe2dc401770409aa36ebbcc11ba1dcf8a6ef8e07ed",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A99-11-whole-published-example-claims-20261027",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A99-11"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/docs-publication-example-assets.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "232ec434eaf29c221c76ed4bd75c6cde293ac436c4d8e03a880f0247a317fe34",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-005"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/docs-publication-example-assets.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "079e6d6e7928eea04561a61a9fa3ea858a92ff0b1d1daa92e9b98c067e99fb15",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A913-10"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "5f14b26f84381dcf09a5be61a48a103ea63010b135695c6bab31e270d633defb",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-007"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "581b752eed21aec8a74190175147ddab5373b6e2bc1c22749da33c7ff49ec4cf",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-015"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication-instruction-syntax.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "db19a5f15ba949f24fbba176ad223df816f0592a921ac91a55e5788888e6e8e0",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-013"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "3fab324b2e99cd3b4f916287f3e8ebd7e9f3e3c89044b3fe65ac9d6003a0e36f",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-010"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "8bd4c397f6dcf47067a80b1716a8594a26a394eade636e04251e9cb707358bb6",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-012"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "c5afbba7edf597cb1bdbb79d093fd4cc57ca364a710658f694c6958e7872791d",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "REF-016"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "c7f05d37460d1c6bcbfe6222bbac2dc25de8380e91f051597b5b29e64a688614",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-008"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "e09edc6c1c4e6c29b7fe0de24794f67a07b8796a1beb085469e79a4e497c51f2",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-006"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "a943c2033d2d8c3970b4a60978883b306c796d2b53f4b11d51967eb4ea399cf2",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-005"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/documentation-tree-classification.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "98add7fc899d0b8772eaa21e5f94996fc48462c001e444168c48af08ba0b2070",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "REF-005"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "258de571504e75668838c9f99110150ce101e2285f7c8f9ea6854dc878cdb67a",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-011"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "8f24dca21eff8b409921195756dc01573cbd337d0ff147e42110ba6c4b25b394",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-010"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "5a7fb933a0878730bf394d11e320a136a8d4196ca004926a02f6ee00afa0a1d9",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-004"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "5ed53c9860d43fbc32fe71958712db524a5f3cfcf56ae0ce9c1c91d5b499c35c",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-001"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/docs-publication-example-assets.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "668cb2cfccb67b155aa817458086cacde572c3f9b41a8103dccdc2b3fb6574f3",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-004"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "03ce46c2bc4b919c80eba72db91c2ac10159e3434d9f2ceb1e8f10d823972753",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "CFG-009",
+        "REF-013"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "a56dc94fae78e439ec49b29bcff3b8eb2e422094f196c7273cebe4e1475b57d1",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A913-06"
+      ],
+      "requirementIds": [
+        "QUA-002"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "cea803a6fbc2986c9993eb2d58fdd804e45a6113b9d93673ef485771035aadd8",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A911-05"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "03d40d03e75c14bb73e1bdd1eb2887d70138ea33f25456d0ba0b88361f644161",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "REF-003"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "86047b7b35144908f37766d5c783364a9dc842301dc9c139c4d65a8886c2d50d",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "MNT-003"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/reference/nova-project.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "6aceb17b132d5b9f19cbd443a73674da7d8a134bb0a89d84f9c1987e7f4a6e20",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "GOV-002",
+        "MNT-001",
+        "MNT-009"
+      ],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "bce83eee743e9f9e0f3bc3679b746a226b3634d365aecfe4c40265306a4e3bb9",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A911-07"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "d03e55119c87b61f87d34dd030db56a3ed01cd85f8292b859439f5f68897a23d",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A913-02",
+        "A913-03"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/documentation-publication-manifest.json",
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-publication-example-assets.mjs",
+        "scripts/docs-publication-instruction-syntax.mjs",
+        "scripts/lib/docs-publication-assets.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "f4e6c5d74588faefe52d2da8bc15a722fc8078c822532f5f30680155edb7a3a0",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A98-10",
+        "A98-11",
+        "A911-02"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "scripts/docs-api-documentation-role-custody.mjs",
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "5623e7ac0b0bce6bf67be5b90470acbe77a612e74a9a92cf7a0b3a57fc4f5589",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A913-01"
+      ],
+      "requirementIds": [],
+      "approvedChangedPaths": [
+        "docs/site/reference/generated-documentation-map.json",
+        "docs/site/reference/nova-project.md",
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "dcdf5f84f759a98a1f4e5b0a471113b93c8d62b6abeecfdd2243052b3ac87a9b",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "QUA010-A9814-A91111-A91308-original-maintainability-and-distinct-drift-path-join-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [
+        "A98-14",
+        "A911-11",
+        "A913-08"
+      ],
+      "requirementIds": [
+        "QUA-010"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "11edcc98168878ef86831cde73ba9fcd9bfe31f2798eb0d4919d760713cf8491",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    },
+    {
+      "id": "QUA007-independent-actual-operator-six-facets-20261031",
+      "priorReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "gateIds": [],
+      "requirementIds": [
+        "QUA-007"
+      ],
+      "approvedChangedPaths": [
+        "docs/site/use/workflows/README.md"
+      ],
+      "sourceAccuracy": "PASS_SCOPED_PRESERVATION",
+      "readerUsability": "PASS_SCOPED_PRESERVATION",
+      "quality": "PASS_SCOPED_PRESERVATION",
+      "originalRecordCanonicalSHA256": "03d3a120feda1c412ffa24ead22cc3bfcbb7a7109c02a2c7269cb338b79a01db",
+      "scope": "Only intersections listed here; whole original contract/checks/summary/limits/history/review/exposure retained verbatim. No historical check promoted to current execution."
+    }
+  ],
+  "recordIntegrationBoundary": "Root may update only these79 reviewed relevant-vector revisions and append an exact scoped impact referencing this decision; retain every prior field/check/history/limit and negative record. This is not79 new acceptances. Other records untouched unless separately qualified.",
+  "actualCurrentObservations": [
+    "corrected-current-publication-build.json exit0/318.164s atc180",
+    "artifact-terminal.json exit0/34.511s;186selected204HTML279digests47936links",
+    "affected-delivery-terminal.json exit0/4.487s;3routes/2widths,17fences eachwidth,6skip paths/searchkeyboard/new4assets/scope visibility"
+  ],
+  "retainedFailures": [
+    "original-checker-terminal.json exit1 at changed AP09.1 map binding; not rerun or changed here",
+    "prior build and delivery oracle failures remain negative evidence",
+    "raw CodeP2 sole0.99 false-positive finding remains verbatim; distinct independent actual native rejection retained"
+  ],
+  "limits": [
+    "No new source-unexposed/fresh reader, human/AT, whole language certification, two-build determinism or full old practical rerun",
+    "No original PIPE01 Redis/Core/audit/fault/runtime authority, literal Prism template/provider/output binding or complete QUALITY01/A99-12/A912-12/A913-04/A913-05 award",
+    "No old global API/default acquisition/ToolSource/UNKNOWN/Knip/live/deployment/release/parity/deletion failure waiver",
+    "Historical date/count/source-specific limits remain historical, not rewritten as current assertion; only exact current deltas qualified",
+    "No main/matrix/proposal write, children, native test/checker rerun, new whole-product audit or receipt rewrite"
+  ]
+}

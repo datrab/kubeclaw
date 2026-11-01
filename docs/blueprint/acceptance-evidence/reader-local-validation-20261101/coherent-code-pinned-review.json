@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Fix the malformed-flow assertion so the helper can succeed",
+      "body": "`studioFlows()` deliberately accepts the design-document contract before narrowing `flows` itself; when `flows.review` is `null`, it throws `Error('Invalid Prism flow')`, not an error containing `PRISM_INPUT_INVALID`. The assertion therefore always throws, the outer catch sets `NATIVE_VALIDATION_STOPPED` and a nonzero exit code, and the documented `set -e` command cannot produce the promised result files. Match `Invalid Prism flow` here, or make the negative fixture violate the Prism schema instead.",
+      "priority": "P1",
+      "confidence": 0.99,
+      "category": "regression",
+      "code_location": {
+        "file_path": "docs/site/use/workflows/examples/quality-validation.mjs",
+        "line": 14
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The new quality-validation workflow fails its own malformed-flow assertion on every otherwise-valid invocation, so its documented success path is unusable.",
+  "overall_confidence": 0.99
+}

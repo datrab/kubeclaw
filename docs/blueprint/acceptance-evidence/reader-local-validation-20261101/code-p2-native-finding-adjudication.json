@@ -1,0 +1,80 @@
+{
+  "status": "REJECT_SOLE_P1_AS_DEMONSTRATED_FALSE_POSITIVE",
+  "at": "2026-11-01T01:50:14.689266+00:00",
+  "finding": "Fix the malformed-flow assertion so the helper can succeed",
+  "rawReviewSHA256": "2580d36f39754cd36dfba0259bc4bee5636339cea85d70673c1b5b8b32343d40",
+  "rawReviewDisposition": "Preserved verbatim: soleP1 confidence0.99 and patch-is-incorrect overall remain raw facts; not rawclean",
+  "probeExitCode": 0,
+  "observedError": "PRISM_INPUT_INVALID: designDocument: /flows/review must be object",
+  "exactHelperRegexAssertionPasses": true,
+  "aliasResolution": {
+    "specifier": "@kubeclaw/prism-contracts-v1",
+    "importer": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/prism/studio/flows.ts",
+    "resolved": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/contracts/prism/v1/src/index.ts",
+    "realpath": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/contracts/prism/v1/src/index.ts"
+  },
+  "bindings": [
+    {
+      "path": "skills/prism/studio/flows.ts",
+      "bytes": 2579,
+      "sha256": "a48cd934ead75e3cffccbfe3dcf0eae307f08e8f4f6c994575a6542b82cb4159"
+    },
+    {
+      "path": "contracts/prism/v1/src/index.ts",
+      "bytes": 4989,
+      "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18"
+    },
+    {
+      "path": "contracts/prism/v1/schemas/prism-v1.schema.json",
+      "bytes": 25800,
+      "sha256": "7e8e248ffbc3753ee462d8e4f1d8de98499c02df94f07f0bcfc28367886bf99b"
+    },
+    {
+      "path": "contracts/prism/v1/src/validators.generated.mjs",
+      "bytes": 272607,
+      "sha256": "26e790a95b065b5b77538f501863a09a90f2ccd67e1c76cf617c8fff2dc09f41"
+    },
+    {
+      "path": "contracts/prism/v1/src/complexity.ts",
+      "bytes": 3283,
+      "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df"
+    },
+    {
+      "path": "contracts/prism/v1/src/document-semantics.ts",
+      "bytes": 7054,
+      "sha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2"
+    },
+    {
+      "path": "contracts/prism/v1/src/node-catalog.ts",
+      "bytes": 11592,
+      "sha256": "6c005e8a54eb395677727023fe8bb659c223cd252baac6d1e628112172127104"
+    },
+    {
+      "path": "contracts/prism/v1/package.json",
+      "bytes": 846,
+      "sha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "bytes": 2704,
+      "sha256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "bytes": 11046,
+      "sha256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6"
+    }
+  ],
+  "validate23WholeFunctionSHA256": "bfd68a61031258c78f28a93d4c2818e6e10427182005df186fe95f19b9cfbfeb",
+  "validate23WholeFunctionBytes": 81193,
+  "generatedFlowTypeBranchExact": "];}else {vErrors.push(err181);}errors++;}}}else {const err182 = {instancePath:instancePath+\"/flows/\" + key30.replace(/~/g, \"~0\").replace(/\\//g, \"~1\"),schemaPath:\"#/properties/flows/additionalProperties/type\",keyword:\"type\",params:{type: \"object\"},message:\"must be object\"};if(vErrors === null){vErrors = [err182];}else {vErrors.push(err182);}errors++;}}}else {const err183 = {instancePath:instancePath+\"/flows\",schemaPath:\"#/properties/flows/type\",keyword:\"type\",params:",
+  "why": "studioFlows first calls validatePrism(designDocument). Its selected compiled validateDesignDocument=validate23 rejects null flow values under schema flows.additionalProperties.type=object. validatePrism throws PRISM_INPUT_INVALID before the later Studio narrowing can throw Invalid Prism flow. P1 reversed actual reachable call order and contract admissibility.",
+  "requiredSourceCorrection": null,
+  "recommendation": "Do not change correct assertion to satisfy this finding; no unchanged review loop is warranted for the sole demonstrably non-actionable P1. Keep separate coherent review adjudication, not a rewritten raw receipt.",
+  "limits": [
+    "Only this actual same-source finding adjudicated, not a new whole code review or full helper run",
+    "Prior full helper success is supporting historical observation only; independent current bounded probe is decisive for this assertion",
+    "No root code/metadata/proposal or raw P2 receipt edits",
+    "No original case/gate/human/AT/deployment award; existing independent Source/Reader/Quality and guard P2/test receipts retain separate actual scope"
+  ]
+}

@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-11-01T02:12:23.529121+00:00",
+  "endedAt": "2026-11-01T02:12:46.869295+00:00",
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-reader/check-diagrams.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 23.340165480040014,
+  "sourceRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "scope": "diagrams only; no original gate award inferred"
+}

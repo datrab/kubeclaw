@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T02:12:47.802039+00:00",
+  "endedAt": "2026-11-01T02:13:53.711188+00:00",
+  "argv": [
+    "node",
+    "scripts/check-ap09-acceptance-contract.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 65.90913758601528,
+  "sourceRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "scope": "original-checker only; no original gate award inferred"
+}

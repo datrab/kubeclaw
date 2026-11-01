@@ -1,0 +1,15 @@
+{
+  "startedAt": "2026-11-01T02:01:55.851931+00:00",
+  "endedAt": "2026-11-01T02:07:14.015940+00:00",
+  "sourceRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 318.16399146593176,
+  "priorFailurePreserved": "actual-current-publication-build.json/log",
+  "scope": "Actual corrected current186publication; no AT/human or originalgate claim"
+}

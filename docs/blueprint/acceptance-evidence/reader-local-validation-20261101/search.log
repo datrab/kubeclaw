@@ -1,0 +1,113 @@
+{
+  "indexedCanonicalPages": 186,
+  "internalArtifacts": 0,
+  "readerQuestionsPassed": 12,
+  "observed": [
+    {
+      "query": "disaster recovery",
+      "expectedRoute": "use/recovery.html",
+      "observedTopThree": [
+        "use/recovery.html",
+        "understand/data-and-state.html",
+        "status/open-issues.html"
+      ]
+    },
+    {
+      "query": "backup restore",
+      "expectedRoute": "use/recovery.html",
+      "observedTopThree": [
+        "use/recovery.html",
+        "reference/common-errors-prism.html",
+        "understand/data-and-state.html"
+      ]
+    },
+    {
+      "query": "install platform",
+      "expectedRoute": "use/install.html",
+      "observedTopThree": [
+        "use/install.html",
+        "reference/common-errors-platform.html",
+        "status/roadmap.html"
+      ]
+    },
+    {
+      "query": "troubleshoot incident",
+      "expectedRoute": "use/diagnose.html",
+      "observedTopThree": [
+        "use/diagnose.html"
+      ]
+    },
+    {
+      "query": "create first plugin",
+      "expectedRoute": "extend/first-plugin.html",
+      "observedTopThree": [
+        "extend/first-plugin.html",
+        "use/plugins.html",
+        "reference/plugin-configuration.html"
+      ]
+    },
+    {
+      "query": "change core",
+      "expectedRoute": "extend/developer-handbook.html",
+      "observedTopThree": [
+        "extend/developer-handbook.html",
+        "understand/nova-core.html",
+        "extend/platform/buster.html"
+      ]
+    },
+    {
+      "query": "settings overrides",
+      "expectedRoute": "reference/configuration-precedence.html",
+      "observedTopThree": [
+        "reference/configuration-precedence.html",
+        "decisions/test-gate.html",
+        "reference/buster-suites.html"
+      ]
+    },
+    {
+      "query": "package ownership",
+      "expectedRoute": "reference/roles-and-package-ownership.html",
+      "observedTopThree": [
+        "reference/roles-and-package-ownership.html",
+        "extend/deep-guides/README.html",
+        "understand/plugin-runtime.html"
+      ]
+    },
+    {
+      "query": "first pipeline compile",
+      "expectedRoute": "use/workflows/README.html",
+      "observedTopThree": [
+        "use/workflows/README.html",
+        "extend/first-plugin.html",
+        "reference/cli.html"
+      ]
+    },
+    {
+      "query": "remove plugins",
+      "expectedRoute": "use/plugins.html",
+      "observedTopThree": [
+        "use/plugins.html",
+        "reference/common-errors-foundation.html",
+        "understand/openclaw.html"
+      ]
+    },
+    {
+      "query": "prism studio",
+      "expectedRoute": "use/prism-studio.html",
+      "observedTopThree": [
+        "use/prism-studio.html",
+        "extend/platform/prism.html",
+        "reference/common-errors-prism.html"
+      ]
+    },
+    {
+      "query": "minimumLinePercent",
+      "expectedRoute": "reference/plugin-configuration.html",
+      "observedTopThree": [
+        "reference/plugin-configuration.html",
+        "reference/buster-suites.html",
+        "extend/plugin-catalogue/kubeclaw.coverage-budget.html"
+      ]
+    }
+  ]
+}

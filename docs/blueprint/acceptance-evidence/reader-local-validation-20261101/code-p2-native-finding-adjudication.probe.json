@@ -1,0 +1,82 @@
+{
+  "at": "2026-11-01T01:49:53.714Z",
+  "node": "v24.22.1",
+  "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+  "aliasResolution": {
+    "specifier": "@kubeclaw/prism-contracts-v1",
+    "importer": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/prism/studio/flows.ts",
+    "resolved": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/contracts/prism/v1/src/index.ts",
+    "realpath": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/contracts/prism/v1/src/index.ts"
+  },
+  "baselineNativeFlow": "review",
+  "mutation": "structuredClone(fixture).flows.review=null",
+  "actualError": "PRISM_INPUT_INVALID: designDocument: /flows/review must be object",
+  "expectedRegex": "/PRISM_INPUT_INVALID/",
+  "expectedRegexMatches": true,
+  "exactHelperAssertionPasses": true,
+  "compiledErrors": [
+    {
+      "instancePath": "/flows/review",
+      "schemaPath": "#/properties/flows/additionalProperties/type",
+      "keyword": "type",
+      "params": {
+        "type": "object"
+      },
+      "message": "must be object"
+    }
+  ],
+  "fullHelperRun": false,
+  "sourceWrites": false,
+  "bindings": [
+    {
+      "path": "skills/prism/studio/flows.ts",
+      "bytes": 2579,
+      "sha256": "a48cd934ead75e3cffccbfe3dcf0eae307f08e8f4f6c994575a6542b82cb4159"
+    },
+    {
+      "path": "contracts/prism/v1/src/index.ts",
+      "bytes": 4989,
+      "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18"
+    },
+    {
+      "path": "contracts/prism/v1/schemas/prism-v1.schema.json",
+      "bytes": 25800,
+      "sha256": "7e8e248ffbc3753ee462d8e4f1d8de98499c02df94f07f0bcfc28367886bf99b"
+    },
+    {
+      "path": "contracts/prism/v1/src/validators.generated.mjs",
+      "bytes": 272607,
+      "sha256": "26e790a95b065b5b77538f501863a09a90f2ccd67e1c76cf617c8fff2dc09f41"
+    },
+    {
+      "path": "contracts/prism/v1/src/complexity.ts",
+      "bytes": 3283,
+      "sha256": "041bfa7037f86afaf6f9667bc90a07db4fe088924dcb3e7ef650841dfd1c60df"
+    },
+    {
+      "path": "contracts/prism/v1/src/document-semantics.ts",
+      "bytes": 7054,
+      "sha256": "0a467d617890be691aaff6eb114b4acbb5de4efca55a5888879b7518a7f4cef2"
+    },
+    {
+      "path": "contracts/prism/v1/src/node-catalog.ts",
+      "bytes": 11592,
+      "sha256": "6c005e8a54eb395677727023fe8bb659c223cd252baac6d1e628112172127104"
+    },
+    {
+      "path": "contracts/prism/v1/package.json",
+      "bytes": 846,
+      "sha256": "88ab4aa94f1fa8d02e55d36d790361ad06247e0058ab87b878ea316af3f3cf1f"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "bytes": 2704,
+      "sha256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "bytes": 11046,
+      "sha256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6"
+    }
+  ]
+}

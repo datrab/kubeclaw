@@ -1,0 +1,106 @@
+{
+  "at": "2026-11-01T02:10:27.693Z",
+  "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "pageCount": 186,
+  "assets": [
+    {
+      "path": "use/workflows/examples/minimal.pipeline.json",
+      "sha256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b",
+      "byteExact": true
+    },
+    {
+      "path": "use/workflows/examples/minimal-project.mjs",
+      "sha256": "0851cc47a9376444c6ed0634cb079257a7edff0d5d8b08b2419ba22e66b95107",
+      "byteExact": true
+    },
+    {
+      "path": "use/workflows/examples/prism-studio-flow.json",
+      "sha256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600",
+      "byteExact": true
+    },
+    {
+      "path": "use/workflows/examples/quality-validation.mjs",
+      "sha256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6",
+      "byteExact": true
+    }
+  ],
+  "observations": [
+    {
+      "width": 320,
+      "route": "use/workflows/README.html",
+      "status": 200,
+      "layout": {
+        "viewport": 320,
+        "scrollWidth": 320
+      },
+      "faithfulCodeBlocks": 11,
+      "keyboardSkip": true
+    },
+    {
+      "width": 320,
+      "route": "use/workflows/quality-validation.html",
+      "status": 200,
+      "layout": {
+        "viewport": 320,
+        "scrollWidth": 320
+      },
+      "faithfulCodeBlocks": 3,
+      "keyboardSkip": true
+    },
+    {
+      "width": 320,
+      "route": "reference/nova-project.html",
+      "status": 200,
+      "layout": {
+        "viewport": 320,
+        "scrollWidth": 320
+      },
+      "faithfulCodeBlocks": 3,
+      "keyboardSkip": true
+    },
+    {
+      "width": 320,
+      "searchAndKeyboardNavigation": true,
+      "scopeLimitVisible": true
+    },
+    {
+      "width": 1440,
+      "route": "use/workflows/README.html",
+      "status": 200,
+      "layout": {
+        "viewport": 1440,
+        "scrollWidth": 1440
+      },
+      "faithfulCodeBlocks": 11,
+      "keyboardSkip": true
+    },
+    {
+      "width": 1440,
+      "route": "use/workflows/quality-validation.html",
+      "status": 200,
+      "layout": {
+        "viewport": 1440,
+        "scrollWidth": 1440
+      },
+      "faithfulCodeBlocks": 3,
+      "keyboardSkip": true
+    },
+    {
+      "width": 1440,
+      "route": "reference/nova-project.html",
+      "status": 200,
+      "layout": {
+        "viewport": 1440,
+        "scrollWidth": 1440
+      },
+      "faithfulCodeBlocks": 3,
+      "keyboardSkip": true
+    },
+    {
+      "width": 1440,
+      "searchAndKeyboardNavigation": true,
+      "scopeLimitVisible": true
+    }
+  ],
+  "limits": "Actual affected routes/assets/code/search/responsive/keyboard only. No real assistive technology, complete contrast, participant, original whole task or new gate acceptance."
+}

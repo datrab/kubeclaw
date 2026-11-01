@@ -1,0 +1,13 @@
+{
+  "sourceRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "originalWholeMatrixSHA256": "5546b018e735968da962701f37b8ab33fa96abc13c4fcf576157c02eeefed874",
+  "inverseWholeMatrixByteExact": true,
+  "changedFieldsOnly": [
+    "revision",
+    "previousReviewedRevision",
+    "revisionHistory",
+    "impactReviews"
+  ],
+  "actualOriginalAwardsAdded": 0,
+  "originalChecksLimitsReviewsFailuresAndScopeUnchanged": true
+}

@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T01:52:08.432630+00:00",
+  "sourceRevision": "331e469f624d0aa418773b37604e535ba334609e",
+  "argv": [
+    "node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "exitCode": 1,
+  "seconds": 22.175368090043776,
+  "scope": "Actual supported current186page publicationbuild; no synchronous300s kill, no priorartifact relabelledcurrent"
+}

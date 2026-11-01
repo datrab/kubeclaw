@@ -387,7 +387,7 @@
     },
     {
       "id": "AP09.1-ready-topics-20261020",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Documentation implementation authors before review campaign",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -665,7 +665,7 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "impactReview": {
         "reviewer": "/root/review_worker_ready",
         "verdict": "PASS",
@@ -1225,6 +1225,16 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "revisionHistory": [
@@ -1311,7 +1321,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "scopePreservation3408": {
         "priorRevision": "7ef16585ba04eba3628cead304be85307436f091",
@@ -3167,7 +3178,7 @@
     },
     {
       "id": "Reviewed-corrections-20261020",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -4155,9 +4166,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "deef4c3ad6e25aaefb13a9977da93889266a043c",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
@@ -4230,7 +4251,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "scopePreservation3408": {
         "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
@@ -4797,7 +4819,7 @@
     },
     {
       "id": "AP09-reader-workflows-20261020",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_data_ready",
       "gateIds": [],
@@ -5138,9 +5160,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "8ccb32055745d4f834837c7e7042ad06901f3c8a",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "scopePreservation3408": {
         "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
         "priorReviewer": "/root/review_data_ready",
@@ -5160,7 +5192,10 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "AP09-reader-developers-20261020",
@@ -8938,7 +8973,7 @@
     },
     {
       "id": "AP09-reviewed-publication-navigation-20261020",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Documentation implementation authors",
       "reviewer": "/root/review_publication; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [
@@ -9642,9 +9677,22 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -9714,7 +9762,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite aggregate31 Source/Reader/Quality preservation; original summary/limits/historical checks and accepted membership unchanged."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "scopePreservation3408": {
         "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
@@ -12337,7 +12386,7 @@
     },
     {
       "id": "AP09-first-project-example-20261020",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Documentation authors and correction coordinator",
       "reviewer": "/root/review_first_project; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "gateIds": [],
@@ -12660,9 +12709,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "113da57a37d25cd45f23d902728e87dcd1770f8c",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8f79e328cf216b53dc2e665896c65cbb19a2e0ce",
@@ -12679,7 +12740,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/diagram-boundaries-20261021/prior-record-preservation-review.json",
           "reason": "Narrow independent preservation after four source-backed diagram boundary corrections, exact alternative/registry updates, four owner-generated metadata fields and nine explicitly internal proof records. No reapproval of untouched historical claims or broad diagram/runtime semantics."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
@@ -13551,7 +13613,7 @@
     },
     {
       "id": "AP09-compiler-import-provider-diagnosis-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Documentation authors and /root correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (ready, correction-final and contributor invocations)",
       "gateIds": [
@@ -13848,9 +13910,20 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "a7d0e07cacc037b94e8a45ed2f0d90bd0259b213",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8c96fe55390c1b2f656e8ee57eeac1188a782bb7",
@@ -13871,7 +13944,8 @@
           ],
           "review": "handoffs/pr13-reset-20261021/release-review.md",
           "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "scopePreservation3408": {
         "priorRevision": "7ef16585ba04eba3628cead304be85307436f091",
@@ -14511,7 +14585,7 @@
     },
     {
       "id": "AP09-install-maintenance-project-entry-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Documentation authors and /root entry correction coordinator",
       "reviewer": "Independent Codex autoreview 2026-10-21 (operator, entry closeout and publication impact invocations)",
       "gateIds": [],
@@ -14661,7 +14735,8 @@
           ],
           "review": "handoffs/pr13-reset-20261021/release-review.md",
           "reason": "Independent narrow Source/Reader/Quality preservation: truthful current selection stop, family-specific Ops direct-main authority, bound manifest observation with explicit false loaded-module/payload flags. Current d303 reader: 167 canonical pages/177 HTML/209 hashes/36958 local targets; 14471 Source links/3742 objects;1696 excerpts/889 objects;27 deterministic SVGs;12 search questions and12 scoped offline/noJS width observations PASS. Unchanged original accepted scopes/limits preserved; no blanket semantic, operational or live reapproval."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -14817,6 +14892,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -14862,7 +14948,8 @@
         "originalSummaryLimitsAndHistoryRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
     },
     {
       "id": "AP09-ops-mcp-complete-contract-20261021",
@@ -16217,7 +16304,7 @@
     },
     {
       "id": "AP09-documentation-agent-maintenance-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -17584,9 +17671,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "3745dce3d46361806f86f17595f20aef1e044f1b",
@@ -17740,7 +17839,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "scopePreservation3408": {
         "priorRevision": "487f4e00af5d330b0fb253c2bdc67210476068f3",
@@ -18215,7 +18315,7 @@
     },
     {
       "id": "AP09-complete-platform-change-content-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root authored content and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -19047,9 +19147,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "078105e40a50f23983e31c136f9bd81912ae6310",
@@ -19118,7 +19228,8 @@
           "changedFiles": [],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Reviewed coherent configuration/product owner declarations, necessary exact existing moduleanchor and finite custody identities; bounded originalscope preservation only, including documented recursive overlap."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -21028,7 +21139,7 @@
     },
     {
       "id": "AP09-complete-publication-reference-navigation-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -21446,7 +21557,8 @@
           "changedFiles": [],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Reviewed coherent configuration/product owner declarations, necessary exact existing moduleanchor and finite custody identities; bounded originalscope preservation only, including documented recursive overlap."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -21987,6 +22099,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -22000,7 +22123,7 @@
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
       },
-      "previousReviewedRevision": "448b8282e6a0c374030c256009224fb7b76d14e8",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
         "priorReviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
@@ -22061,7 +22184,7 @@
     },
     {
       "id": "AP09-complete-developer-reader-contracts-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root documentation author and correction coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -22571,7 +22694,8 @@
           "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
           "revision": "fb48da8ae1af107873e7586538dd7de9245e882b",
           "reason": "Independently reviewed additive package-check lifecycle guide preserves exact original scope; not recounted."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -23070,9 +23194,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
         "priorReviewer": "Independent Codex autoreview whole finished-reader-topics and LiteLLM audits with correction-final follow-up; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
@@ -23142,7 +23276,7 @@
     },
     {
       "id": "AP09-complete-static-reader-search-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "verdict": "PASS",
@@ -24085,7 +24219,8 @@
           "previousReviewedRevision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
           "revision": "7ff6afabab5e8c4c67253a05dbeb1aa56d224d86",
           "reason": "Independent original-scope preservation after single Prism page correction; no recount."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -25565,6 +25700,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -25608,7 +25758,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "mnt004ScopedPreservation": {
         "priorRevision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
         "priorReviewer": "Independent Codex autoreview static-reader whole PUB-002 Source/reader-quality closeout; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer; MNT011 current bounded maintenance/guard scope preservation by independent content reviewer; MNT010 current bounded maintenance/guard scope preservation by independent content reviewer; QUA004 current bounded maintenance/guard scope preservation by independent content reviewer",
@@ -25712,7 +25862,7 @@
     },
     {
       "id": "AP09-search-reader-gate-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent non-author Source-exposed Codex configured gpt-5.6-terra/high; coherent original CLI Source/Reader/Quality and final integration under AP09sections1–4; not a new Astra-model execution; original bounded content reviewer retained in mnt004ScopedPreservation",
       "verdict": "PASS",
@@ -26213,7 +26363,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -26922,6 +27073,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -26964,7 +27128,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
         "priorReviewer": "Independent Codex autoreview whole A912-04 code/evidence review plus narrow Source/Reader/Quality native-impact follow-up; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
@@ -27004,7 +27168,7 @@
     },
     {
       "id": "AP09-rendered-source-bounds-gate-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent non-author Source-exposed Codex configured gpt-5.6-terra/high; coherent original CLI Source/Reader/Quality and final integration under AP09sections1–4; not a new Astra-model execution; original bounded content reviewer retained in mnt004ScopedPreservation",
       "verdict": "PASS",
@@ -27516,7 +27680,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -28188,6 +28353,18 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -28230,7 +28407,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
         "priorReviewer": "Independent Codex autoreview whole A912-09 Source/Reader/Quality review and narrow changed-boundary impact review for 21 prior PASS records; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
@@ -28270,7 +28447,7 @@
     },
     {
       "id": "AP09-complete-static-offline-fallback-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent Codex autoreview whole PUB-006/A912-10 Source/Reader/Quality closeout, inspecting original obligation, actual browser provenance and critical task prose; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
       "verdict": "PASS",
@@ -28438,7 +28615,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite aggregate31 Source/Reader/Quality preservation; original summary/limits/historical checks and accepted membership unchanged."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -28792,9 +28970,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "scopePreservationPluginLifecycle20261031": {
         "previousReviewedRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
         "independentOriginalScopeDecision": "docs/blueprint/acceptance-evidence/plugin-stage-local-lifecycle-20261031/plugin-checkpoint-original-scope-join-20261031.json",
@@ -28816,7 +29006,7 @@
     },
     {
       "id": "AP09-complete-same-source-code-preview-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent non-author Source-exposed Codex configured gpt-5.6-terra/high; coherent original CLI Source/Reader/Quality and final integration under AP09sections1–4; not a new Astra-model execution; original bounded content reviewer retained in mnt004ScopedPreservation",
       "verdict": "PASS",
@@ -29281,7 +29471,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -29909,6 +30100,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Originalsame-sourceinertpreviewcomponent/source/excerptrenderlogic unchanged; oldbrowser/excerptobservationstayshistorical. Newpositiveassetselection androotrolebindingdo notalterpreviewsemantics; currentcanonicalartifact/boundednewguide/indexdeliveryrequired.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -29951,7 +30153,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
         "priorReviewer": "Independent Codex autoreview whole PUB004 Source/Reader/Quality closeout plus narrow changed-boundary preservation for21priorPASSrecords; current MNT005 affected-scope preservation by independent Codex gpt-5.6-terra content reviewer",
@@ -29991,7 +30193,7 @@
     },
     {
       "id": "AP09-complete-responsive-reader-layout-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root documentation author and implementation coordinator",
       "reviewer": "Independent non-author Source-exposed Codex configured gpt-5.6-terra/high; coherent original CLI Source/Reader/Quality and final integration under AP09sections1–4; not a new Astra-model execution; original bounded content reviewer retained in mnt004ScopedPreservation",
       "verdict": "PASS",
@@ -30543,7 +30745,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "impactReviews": [
         {
@@ -31170,6 +31373,16 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Originalresponsive320/768/1440scroll/focus/navigation mechanism unchanged; nofreshwholelayout/human/ATqualification. Boundednewguide/indexbrowserdeliveryrequired, exactoldfullcorpusproof historical.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-documentation-role-custody.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -31212,7 +31425,7 @@
         "browserPreservation": "No new browser, screenreader or fresh-persona exercise: unchanged authored pages/shared renderer outputs retain only prior successful original scopes. Current Source/output checks separately executed.",
         "globalGeneratorLimit": "Original normal5b1b localHelm exits1 at scripts/install/register-runtime-argo.mjs29; infrastructure slots passed. No global configuration/API/schema/runtime acceptance."
       },
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "mnt004ScopedPreservation": {
         "priorRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
         "priorReviewer": "Independent Codex autoreview whole A91207 responsive-layout closeout and narrow24-record prior-boundary preservation",
@@ -33322,7 +33535,7 @@
     },
     {
       "id": "A99-02-whole-content-20261021",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -33504,12 +33717,26 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revisionHistory": [
+        "7f6d3c2817743c22c6420ec46dbd595b382e0ee7"
       ]
     },
     {
       "id": "A99-03-whole-content-20261021",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -33676,7 +33903,21 @@
           "quality": "PASS unchangednormalbuild native28join and fiveoriginalReader/repositoryrefs controls allterminal0; separately retained wrongCLIattempt1",
           "preserved": "Originalsummaries/pages/sources/checks/reviewers/verdicts/limits/history/previousReviewedRevision/revisionHistory and oldimpactentries exact. No new115awards or historicalNOT_READY promotion.",
           "qualificationDebt": "Originalglobalpublisherpurpose/API/source-role debt remains unqualified, not newlyrun orPASS. No MNT015/MNT009/A91107/fullQUA004/production/live/human/runtimegrant. Historicalfailedchecks/448count/promptacquisition/wrongCLI failures retained."
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revisionHistory": [
+        "7f6d3c2817743c22c6420ec46dbd595b382e0ee7"
       ]
     },
     {
@@ -33928,7 +34169,7 @@
     },
     {
       "id": "A99-05-whole-content-20261021",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 documentation contributors",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -34047,7 +34288,21 @@
           "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/a9911-20261025/project-publication-preservation-content-1711-verdict.json",
           "reportSha256": "9972953a18d06f67774b6f852162aa303469047453b2f09c9fed75b1c38e4354",
           "inspectionLimit": "Static fullSource inspection; actual technical build/checks are coordinator observations, not reviewer-executed tests or fresh historical/native/live/human exercises. WholeA99-11NOT_READY; original DATA/runtime/ToolSource/deployprovenance/releaseKnip/human limits retained."
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revisionHistory": [
+        "7f6d3c2817743c22c6420ec46dbd595b382e0ee7"
       ]
     },
     {
@@ -34366,7 +34621,7 @@
     },
     {
       "id": "A99-01-whole-recursive-input-content-20261021",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 documentation contributors; parent lint-wording correction",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -34730,9 +34985,19 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "767ffd43a9ee0a28e2b3ca463e7648d765a9accb",
+      "previousReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "revisionHistory": [
         {
           "revision": "767ffd43a9ee0a28e2b3ca463e7648d765a9accb",
@@ -34751,7 +35016,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Reviewed coherent configuration/product owner declarations, necessary exact existing moduleanchor and finite custody identities; bounded originalscope preservation only, including documented recursive overlap."
-        }
+        },
+        "7f6d3c2817743c22c6420ec46dbd595b382e0ee7"
       ]
     },
     {
@@ -37349,7 +37615,7 @@
       ]
     },
     {
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -37517,6 +37783,16 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Original incident diagnosis/recovery/identity/authorized-read/unknown-not-nonexecution/safeSTOP route stays primary. Added localdrop rehearsal does not implement generic reconciliation or replace old unsupported-boundary task; new authornative remains separate.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -37529,10 +37805,14 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance supporting procedures and root integration/correction; /root independent authored row Source/Reader/quality",
       "review": {
@@ -37840,15 +38120,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
           "revision": "fb48da8ae1af107873e7586538dd7de9245e882b",
           "reason": "Independently reviewed additive package-check lifecycle guide preserves exact original scope; not recounted."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "revisionImpacts": [
         {
@@ -37870,7 +38161,7 @@
       }
     },
     {
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "existing documentation authors",
       "reviewer": "/root/workflow_acceptance",
       "review": {
@@ -38010,7 +38301,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
@@ -38501,7 +38806,7 @@
       ]
     },
     {
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root",
       "pages": [
@@ -38653,7 +38958,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
@@ -38746,7 +39065,7 @@
     },
     {
       "id": "A99-07-representative-buster-workflow-content-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "existing Buster workflow authors; package citation repair independently reviewed by root",
       "reviewer": "/root/workflow_acceptance",
       "gateIds": [
@@ -39071,7 +39390,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
@@ -39171,7 +39504,7 @@
     },
     {
       "id": "FLW007-supported-failure-task-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -39279,12 +39612,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "FLW009-supported-failure-task-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -39384,12 +39731,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "FLW015-supported-failure-task-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -39607,12 +39968,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "FLW016-supported-failure-task-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root/operator_acceptance independent whole topic and correction rereview; parent installed-path/Reader integration",
       "gateIds": [],
@@ -39669,7 +40044,7 @@
       ],
       "openIssues": [],
       "verdict": "PASS",
-      "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "impactReviews": [
         {
           "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
@@ -39733,6 +40108,16 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "revisionHistory": [
@@ -39740,12 +40125,13 @@
           "previousReviewedRevision": "cfc97be096908c1193877d054bb80662120f1eca",
           "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
           "reason": "Independent exact one-page native-scope example correction preserves original scope and limits; not recounted."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "FLW012-supported-failure-task-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
       "gateIds": [],
@@ -39849,12 +40235,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "FLW013-supported-failure-task-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "/root/workflow_acceptance",
       "reviewer": "/root independent nonauthor Source/Reader/quality review; operator_acceptance independent canonical integration preservation",
       "gateIds": [],
@@ -39957,12 +40357,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing authored task/fixture/diagnosis/owner/stop and actual historical exercise responsibilities unchanged; index adds separateuncertain localrehearsal only. New effectharness not evidence of compiledproject/Redis/Buster/Worker/Tailnet/demo/plugin task success.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "A99-08-complete-supported-failure-journey-union-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Documentation topic authors and integration coordinator",
       "reviewer": "Independent topic-review union: operator_acceptance (new Redis/Worker topics); original independent Codex topic reviewers (registry/Tailnet diagnosis); workflow_acceptance (uncertain-effect/Demo); root nonauthor (BuildKit/Tailnet task guides)",
       "gateIds": [
@@ -40364,6 +40778,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Whole original6failurefamily documentation union remains complete: primary original uncertain-effect route kept; other5routes and all live/external ownership/stop bounds unchanged. New localcase not promoted to independent A99-12 or sixfamily liveexecution.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -40377,18 +40802,19 @@
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
       },
-      "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "previousReviewedRevision": "340875215c422fb1cc0901e867420928eae3dfc0",
           "revision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
           "reason": "Independent exact one-page native-scope example correction preserves original scope and limits; not recounted."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "A912-03-supported-redirect-paths-20261021",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "operator_acceptance original implementation; root coherent F1/F2 correction",
       "reviewer": "Independent non-author Source-exposed Codex configured gpt-5.6-terra/high; coherent original CLI Source/Reader/Quality and final integration under AP09sections1–4; not a new Astra-model execution; original bounded content reviewer retained in mnt004ScopedPreservation",
       "gateIds": [
@@ -40808,9 +41234,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -40827,7 +41263,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
@@ -40844,7 +41281,7 @@
     },
     {
       "id": "A912-11-deterministic-page-records-20261022",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "/root/workflow_acceptance metadata author; /root installed integration and original production builds",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -41536,6 +41973,18 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -41549,7 +41998,7 @@
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
       },
-      "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -41567,7 +42016,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -41623,7 +42073,7 @@
     },
     {
       "id": "AP09-publication-positive-scope-7ef16585",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "existing publication/content maintainers; final authored Sourcefield additions separately reviewed by workflow_acceptance",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -43265,6 +43715,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -43293,7 +43758,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -43336,7 +43801,8 @@
           "previousReviewedRevision": "d07cacd6f820abf98a74b23e799a23fde30f5133",
           "revision": "7ff6afabab5e8c4c67253a05dbeb1aa56d224d86",
           "reason": "Independent original-scope preservation after single Prism page correction; no recount."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
@@ -43443,7 +43909,7 @@
     },
     {
       "id": "A912-05-whole-source-excerpt-callouts-20261022",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Existing publication/canonical topic maintainers; field-correction authors in named independent reviews",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -44230,6 +44696,18 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/reference/nova-project.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -44258,7 +44736,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -44275,7 +44753,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "a91306Qua002ScopedPreservation": {
         "priorRevision": "ce66ce71912fa6ab03f1671602d82ed9af799bc3",
@@ -44315,7 +44794,7 @@
     },
     {
       "id": "A98-02-13-whole-operator-procedure-contract-20261022",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -45607,6 +46086,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -45635,7 +46127,7 @@
         "priorSummaryStatus": "Original summary and all old limits/checks/review/persona provenance retained as historical scope; current177-page observations stated here, not retroactively attributed to old runs.",
         "globalGeneratorLimit": "Original normal81b localHelm still FAILS at infrastructure-chart.mjs63. This preservation grants no global configuration/API generator or live-release acceptance."
       },
-      "previousReviewedRevision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -45706,7 +46198,8 @@
           "previousReviewedRevision": "151c2dfeaaaf2e6eac33c372314d33deb326bf5d",
           "revision": "fb48da8ae1af107873e7586538dd7de9245e882b",
           "reason": "Independently reviewed additive package-check lifecycle guide preserves exact original scope; not recounted."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -45788,7 +46281,7 @@
     },
     {
       "id": "A910-03-whole-command-prerequisite-contract-20261022",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Original canonical topic maintainers plus separately reviewed bounded corrections",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -46885,6 +47378,16 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -46898,7 +47401,7 @@
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
       },
-      "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -46954,7 +47457,8 @@
           "previousReviewedRevision": "c56f684a0b18bbf8c9615524e6702a0e80a589e4",
           "revision": "fb48da8ae1af107873e7586538dd7de9245e882b",
           "reason": "Independently reviewed additive package-check lifecycle guide preserves exact original scope; not recounted."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -47196,7 +47700,7 @@
     },
     {
       "id": "A910-06-whole-justified-classification-20261022",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Original classifier maintainer; inclusive policy correction by /root/custody_review; original index output by maintained owner",
       "reviewer": "/root/operator_acceptance; corrected153judgments supplied by exact separate workflow nonauthor Source review",
       "gateIds": [
@@ -48385,6 +48889,16 @@
           },
           "actualCommittedBuildAndFiveReaderJoin": "/home/node/.openclaw/workspace/operations/pr13/evidence/a91310-original-closure-20261027/original112-preservation-independent/final-source-22199bd9/actual-final-build-reader-input-artifact-join.json",
           "actualCommittedBuildAndFiveReaderJoinSha256": "03e940dfe11d1ce5ff52b7e4b40200d79b429734793ada7cbb62a05fa1606245"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservation3408": {
@@ -48397,11 +48911,15 @@
         "historicalChecksRemainAtOriginalRevisions": true,
         "practicalReaderProvenance": "Any original practical/semantic Reader observation remains dated and scoped. This source-informed content review is not a fresh eligible practical participant or new run.",
         "limits": "Only affected declared content/source bindings preserved. Old Ops loopback/shared-token/read-only/direct-token units are superseded where applicable by current source-only central Ops contract; no original live result transfers. No new global API/config generator, runtime, full accessibility, practical Reader execution or two-build determinism claim."
-      }
+      },
+      "previousReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revisionHistory": [
+        "7f6d3c2817743c22c6420ec46dbd595b382e0ee7"
+      ]
     },
     {
       "id": "A910-07-08-09-12-OPL001-whole-487f4e00-20261022",
-      "revision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Original canonical-guide authors and named eleven-guide correction authors; exact provenance in frozen proof union",
       "reviewer": "/root/source_closeout (Source); /root/reader_closeout (Reader); /root/quality_closeout (Quality); /root combines independent decisions",
       "gateIds": [
@@ -49004,9 +49522,19 @@
           "actualCommittedSevenControlsJoinSha256": "18180dc28b033e5ef1e87a0df0ee3bbc3256ef0bce6e8901162e0107d5d09e76",
           "normalNative28Attribution": "Actual unchanged normalbuild/checkSite executes normal28 dispatcher and validates schemaVersion/ok/exactcheckIDset/pages/assets/blocks before outputmutation. Currentbuild0 proves accepted complete gate; childJSONstdout suppressed, so NO independentlyparsed current28 child details/inputvector/freshperaction result claim. Older structured receipts remain historical at actual prior scope.",
           "historicalChecks": "Everyoldcheck remains its originaldatedobservation; current7actualcontrols are separately appended successor proof. No fresh156mutation/package/human/live/allfieldruntime rerun claimed."
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
+      "previousReviewedRevision": "7f6d3c2817743c22c6420ec46dbd595b382e0ee7",
       "revisionHistory": [
         {
           "revision": "4db128da05fabcf1cc4f345e54c343877e2f782b",
@@ -49016,12 +49544,13 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent bounded Error discovery and finite custody original-scope preservation; no new acceptance."
-        }
+        },
+        "7f6d3c2817743c22c6420ec46dbd595b382e0ee7"
       ]
     },
     {
       "id": "PUB008-current-reader-build-ci-20261023",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Existing canonical publication authors; Nova coordinated unchanged-source checks and adoption",
       "reviewer": "Independent non-author Source-exposed Codex configured gpt-5.6-terra/high; coherent original CLI Source/Reader/Quality and final integration under AP09sections1–4; not a new Astra-model execution; original bounded content reviewer retained in mnt004ScopedPreservation",
       "gateIds": [],
@@ -49306,9 +49835,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "c0d892fb2ea7f88994e53ea29de0fdce2d87d89e",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -49325,7 +49864,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Independent finite CI/maintenance21 Source/Reader/Quality preservation; original summary/limits/historical observations/accepted membership unchanged."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -49342,7 +49882,7 @@
     },
     {
       "id": "AP09-whole-extension-drift-A91014-20261023",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -50081,9 +50621,20 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
-      "previousReviewedRevision": "a7a855e35b01161e0328687d2c7ef34210f3bd1f",
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
       "revisionHistory": [
         {
           "revision": "8fa9ed9b95bb37ca234aef1f321f68831519abab",
@@ -50195,7 +50746,8 @@
           ],
           "review": "docs/blueprint/acceptance-evidence/README.md",
           "reason": "Exact independently reviewed platform ordering and finite shared custody original-scope preservation; no new acceptance."
-        }
+        },
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ],
       "mnt004ScopedPreservation": {
         "priorRevision": "0d9b92b9fba234f085f228cc541faaece4846d77",
@@ -51114,7 +51666,7 @@
     },
     {
       "id": "A911-06-authored-surface-bindings-20261025",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -51733,6 +52285,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -51792,11 +52355,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "A99-13-original-seven-dimension-drift-20261025",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 documentation authors and continuation coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -52247,6 +52814,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -52338,7 +52916,11 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "A913-09-compact-current-closeout-20261025",
@@ -52464,7 +53046,7 @@
     },
     {
       "id": "A99-06-actual-compiled-minimal-project-20261026",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex gpt-5.6-terra/high/P2 SourceQuality and fresh semantic Reader reviewers; final original-scope adoption reviewer",
       "gateIds": [
@@ -52803,6 +53385,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservationPlatformBaseline20261031": {
@@ -52813,11 +53406,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "A910-10-whole-supported-extension-lifecycle-20261026",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova documentation implementation and closure coordinator",
       "reviewer": "Independent native /root/helm_whole_practical; non-author Source-exposed topical Source/Reader/Quality and final integration under AP09 sections1–4; not blind Reader or new Astra-model execution; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -53636,6 +54233,18 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/use/workflows/README.md",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -53716,11 +54325,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "QUA-006-fresh-independent-technical-reader-20261027",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova documentation continuation coordinator",
       "reviewer": "Independent pinned fe588b1a Codex Terra/high/P2 original criterion adjudicator; fresh native model Reader /root/fresh_technical_reader",
       "gateIds": [],
@@ -53911,6 +54524,16 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "scopePreservationPlatformBaseline20261031": {
@@ -53921,7 +54544,11 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "A911-01-whole-ten-family-discovery-declarations-20261027",
@@ -54880,7 +55507,7 @@
       ]
     },
     {
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [],
       "requirementIds": [
@@ -55705,6 +56332,23 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Existing positive publication/navigation/source/search/offline/redirect/command/route mechanisms retained. Exact8assets+9classifications and newpage/secondarylink extend existing ownedoutput only. Original observed rendering/checks/twobuilds remain historical; actual current185page artifact/affectedbrowser/native/checker required, no hostedCI/human claim.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md",
+            "scripts/docs-publication-example-assets.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -55825,10 +56469,14 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova publication-example implementation and sole shared-lease integration owner",
       "gateIds": [
         "A99-11"
@@ -56653,6 +57301,23 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md",
+            "scripts/docs-publication-example-assets.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -56773,7 +57438,11 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "QUA-003-whole-significant-decision-rationale-20261027",
@@ -56911,7 +57580,7 @@
     },
     {
       "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova documentation claim integration and sole shared-lease writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -57715,6 +58384,23 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md",
+            "scripts/docs-publication-example-assets.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -57835,11 +58521,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [
@@ -58877,6 +59567,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -59000,11 +59703,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova sole shared-lease documentation integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -59659,6 +60366,16 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -59763,7 +60480,11 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "OPL-005-whole-plugin-dependency-secret-and-receiving-ownership-20261028",
@@ -60354,7 +61075,7 @@
     },
     {
       "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer with /root/language_projection_architecture authored finite native-owner proposals",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -60720,6 +61441,18 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-publication-instruction-syntax.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -60815,7 +61548,11 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "CFG-014-whole-configuration-change-impact-and-safe-recovery-20261028",
@@ -61017,7 +61754,7 @@
     },
     {
       "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture proposed finite canonical wording; maintained contract successor authored by root",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -61415,6 +62152,16 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -61493,11 +62240,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer; /root/language_projection_architecture authored independently adjudicated finite native-owner and historical projection proposals; root authored canonical/integration/contract successors",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -61914,6 +62665,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -62022,11 +62784,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -62383,6 +63149,17 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -62480,11 +63257,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole product integration author and writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -63770,6 +64551,19 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
       ],
       "mnt004ScopedPreservation": {
@@ -63888,11 +64682,15 @@
         "originalSummariesLimitsHistoryAndReviewsRetained": true,
         "historicalChecksNotRelabelledCurrent": true,
         "newWholeAcceptance": false
-      }
+      },
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
+      ]
     },
     {
       "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -64840,12 +65638,28 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -65515,12 +66329,28 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-tree-classification.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "MNT-005-common-source-bound-error-catalogue-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66038,12 +66868,29 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/documentation-tree-classification.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66569,12 +67416,27 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -66860,12 +67722,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -67158,12 +68034,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -67694,12 +68584,29 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -68321,12 +69228,32 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md",
+            "scripts/docs-publication-example-assets.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "MNT-004-whole-source-owned-cli-reference-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -69776,12 +70703,31 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained; original reviewer retained in scoped preservation",
       "gateIds": [],
@@ -70070,12 +71016,27 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "A91306-QUA002-original-controlled-language-whole-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova /root retained sole integration writer",
       "reviewer": "Independent helm_whole_practical Source/content-Quality/final integration plus fresh Source-unexposed current_whole_reader delivered Reader/reader-facing Quality; original qualifications and truthful role limits retained",
       "gateIds": [
@@ -70474,12 +71435,30 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "A911-05-whole-owned-diagnostic-reference-20261030",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "Nova sole integration owner; existing diagnostic documentation authors",
       "reviewer": "Independent Codex gpt-5.6-terra/high whole original A911-05 content assessor, session01a18bf6-0c0d-71a2-aa39-f9550bbed698; nonauthor, bounded qualified REF005/MNT005 reuse",
       "gateIds": [
@@ -70853,7 +71832,22 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
@@ -70966,7 +71960,7 @@
     },
     {
       "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/ref003_fresh_reader",
       "gateIds": [],
@@ -71205,7 +72199,23 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
@@ -71311,7 +72321,7 @@
     },
     {
       "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent Reader /root/mnt003_fresh_reader",
       "gateIds": [],
@@ -71547,12 +72557,28 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/nova-project.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "independent-codex-source-quality:01a18bf6-0c0d-71a2-aa39-f9550bbed698; independent restricted practical Reader /root/gov_mnt_practical_reader",
       "gateIds": [],
@@ -71689,12 +72715,30 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native child /root/qua010_execution_path; bounded A911-07 adjudication, non-author of reviewed source/map",
       "gateIds": [
@@ -71806,12 +72850,30 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -72607,12 +73669,36 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/documentation-publication-manifest.json",
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-api-output-discovery.mjs",
+            "scripts/docs-documentation-owner-purpose-custody.mjs",
+            "scripts/docs-publication-example-assets.mjs",
+            "scripts/docs-publication-instruction-syntax.mjs",
+            "scripts/lib/docs-publication-assets.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native child /root/qua010_execution_path",
       "gateIds": [
@@ -73340,12 +74426,30 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/config/publication-example-claims.json",
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "scripts/docs-api-documentation-role-custody.mjs",
+            "scripts/docs-api-output-discovery.mjs"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent native non-author /root/qua010_execution_path",
       "gateIds": [
@@ -73512,12 +74616,28 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/generated-documentation-map.json",
+            "docs/site/reference/nova-project.md",
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "QUA010-A9814-A91111-A91308-original-maintainability-and-distinct-drift-path-join-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author documentation and native-helper final reviewer /root/qua010_execution_path",
       "gateIds": [
@@ -73625,12 +74745,26 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Sharedclaims/map dependency only: original ownpages/sourceSurfaceMap/existingcontracts unchanged. Complete wholecomplement proofs qualify newpage/newassets/index/map bookkeeping without altering original productfacts/owner/semantic/runtime obligations.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/reference/generated-documentation-map.json"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     },
     {
       "id": "QUA007-independent-actual-operator-six-facets-20261031",
-      "revision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
       "author": "PR13 sole integration owner",
       "reviewer": "Independent non-author native /root/pub007_binding; distinct from documentation author and fresh operator executor",
       "gateIds": [],
@@ -73774,7 +74908,21 @@
           ],
           "summary": "Independent exact original Source/Reader/Quality preservation at retained original limits. Reuse exact prior qualified semantic/content/native/source-purpose responsibilities and negatives. Actual new finiteguide/helper/assetconsumer meanings and4inputsuccessors+13pins/Helmfacts/graphaction independently qualified once; no parser/sink/runtime/publicauthority relaxation or historicalexecution transfer.",
           "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-publication-20261101/scoped-preservation-final-decision.json"
+        },
+        {
+          "revision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+          "previousRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+          "reviewer": "Independent non-author /root/reader_pipeline04_fresh_20261101",
+          "report": "docs/blueprint/acceptance-evidence/reader-local-validation-20261101/original-record-scoped-preservation-verdict.json",
+          "changedPaths": [
+            "docs/site/use/workflows/README.md"
+          ],
+          "scope": "Only named affected Source/Reader/Quality delta preserved. All original checks, practical observations, limits and negatives remain at their actual original scope/revision; no rerun or new acceptance inferred."
         }
+      ],
+      "previousReviewedRevision": "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147",
+      "revisionHistory": [
+        "737b79ff35881531ca17ad0ad3a1aa6e5f0cf147"
       ]
     }
   ],

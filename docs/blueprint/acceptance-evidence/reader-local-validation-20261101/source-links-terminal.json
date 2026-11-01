@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T02:11:44.748872+00:00",
+  "endedAt": "2026-11-01T02:17:35.052435+00:00",
+  "argv": [
+    "node",
+    "scripts/docs-reader/check-source-links.mjs"
+  ],
+  "exitCode": 0,
+  "elapsedSeconds": 350.30355506192427,
+  "sourceRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "scope": "source-links only; no original gate award inferred"
+}

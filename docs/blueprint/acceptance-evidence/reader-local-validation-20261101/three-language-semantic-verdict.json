@@ -1,0 +1,26 @@
+{
+  "status": "PASS_THREE_SAME_MEANING_NATIVE_LANGUAGE_CORRECTIONS",
+  "at": "2026-11-01T01:56:49.305975+00:00",
+  "sourceAssessment": "PASS",
+  "readerAssessment": "PASS",
+  "qualityAssessment": "PASS",
+  "materialFindings": [],
+  "path": "docs/site/use/workflows/quality-validation.md",
+  "oldSHA256": "62d8f66bd86e238e31caf07b49fa9a1c9e5e2c82d717ed68982f3f608ea8ac30",
+  "currentSHA256": "af7e73137e3f32a51d082985128e25378720bc5c1c63d44396e28b52dbd36e89",
+  "exactClauseProposalSHA256": "c60668cd850989817507443358d3e6a208cbf63335381e663ac01894ac98dcd2",
+  "actualOwnerLanguageCheck": "PASS; exact maintained checkLanguage/stripMarkdown/constants, no diagnostics",
+  "wholeThreeClauseReconstructionExact": true,
+  "meaning": [
+    "Active validation subject clarifies no Gateway/model/provider request or signed/approval/bundle output; no runtime effect added",
+    "Split sentences preserve installed single Source, whole checkout cleanliness including untracked files, exact revision/tree/input hashes and distinct override refusal",
+    "Shortened precise facilitator-mutation clause preserves unchanged original criteria; following explicit new-registration-proposal/old-fixture-unspecified wording and proposal status remain"
+  ],
+  "unchangedResponsibilities": "All other page bytes reconstruct exactly from frozen old source by the exact three substitutions; helpers/fixtures/codeblocks/native headers/classification/map/manifest unaffected by these prose corrections",
+  "limits": [
+    "No full publication build/check/test or whole P2 rerun",
+    "Existing raw incorrect CodeP2 receipt and independent false-positive adjudication unchanged",
+    "Claims/source anchors/hash and known fixed-input literals require their separate exact successor, not new slot/role/roster/native-fact authority",
+    "No new original task, gate, human/AT or publication acceptance; no main/proposal writes/children"
+  ]
+}

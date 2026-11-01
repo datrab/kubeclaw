@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T02:11:44.761416+00:00",
+  "endedAt": "2026-11-01T02:11:56.644574+00:00",
+  "argv": [
+    "node",
+    "scripts/docs-reader/check-diagrams.mjs"
+  ],
+  "exitCode": 1,
+  "elapsedSeconds": 11.883157326024957,
+  "sourceRevision": "c1803732b0feafb70ce3c7ccfbb5b4cd216e02dc",
+  "scope": "diagrams only; no original gate award inferred"
+}

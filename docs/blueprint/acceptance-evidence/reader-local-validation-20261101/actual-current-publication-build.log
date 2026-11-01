@@ -1,0 +1,4 @@
+documentation publication failed:
+- docs/site/use/workflows/quality-validation.md contains avoidable passive voice: is created
+- docs/site/use/workflows/quality-validation.md has a 30-word sentence; limit is 25: The helper derives Source from its own installed location, requires the entire checkout clean (including untra
+- docs/site/use/workflows/quality-validation.md has a 26-word sentence; limit is 25: This proposed guide registers the exact facilitator mutation for `QUALITY-UNDECLARED-PROVIDER-CAPABILITY` (pen

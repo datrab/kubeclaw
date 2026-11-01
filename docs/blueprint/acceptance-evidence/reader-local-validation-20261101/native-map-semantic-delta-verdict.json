@@ -1,0 +1,38 @@
+{
+  "status": "PASS_BOUNDED_ACTUAL_GOVERNANCE_MAP_CONSEQUENCE",
+  "at": "2026-11-01T01:30:51.859205+00:00",
+  "sourceAssessment": "PASS",
+  "readerAssessment": "PASS",
+  "qualityAssessment": "PASS",
+  "materialFindings": [],
+  "currentClaimsSHA256": "d97c56efef457c3f90ae4b0162a18caf5ea7c772efd19fee87bd8d2ee83d4e17",
+  "currentClaimsCustody": "Actual sha256sum on current WIP bytes matched supplied complete record custody; no main JSON parse or raw map archive retained",
+  "currentMapSHA256": "e35eb079b4b6cfeab58f9a8d3bfaa54370352a1d13ac948fd27a7a92660e7e5f",
+  "oldMapSHA256": "508624b7fed8ace1eb2d468a7313942b48ad8c23774be0119f76d97a365eb5e2",
+  "actualNativeGeneration": "Root supplied actual maintained generator exit0; reviewer did not rerun it",
+  "mapMeaning": "Only185\u2192186 count and complete new authored quality-validation page; supplied whole map proof preserves every185 old page object and serialized SourceSurfaceMap",
+  "independentSemanticJoin": "Exactly five asset/contract leaf changes against immutable git-show b023 baseline, independently verified; complete old basis/scope/expectedResults retained as exact suffix and all other whole fields unchanged",
+  "limits": [
+    "Earlier publication-metadata verdict retained, not replaced",
+    "No current dispatcher/build/guard/P2 receipt inferred",
+    "No original reader/gate/AT/deployment/current API/runtime award or historical receipt rewrite",
+    "No new acceptance-scope transfer required solely for this map identity/count/page insertion"
+  ],
+  "inputHashes": [
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/native-map-whole-byte-consequence.json",
+      "bytes": 1596,
+      "sha256": "ee9d38c97614b0c03539cb218d3661b032c109a86c21fe779d0107b081657341"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/native-map-complete-extra-metadata-responsibility.json",
+      "bytes": 78919,
+      "sha256": "08012d123b394e8c4c2aee1f0e48f75a2276fa0bbdd2405ef29cfe701feaadd3"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/native-map-independent-inverse-join.json",
+      "bytes": 4183,
+      "sha256": "09e1527093a3e03500e08e52d454828dd2845b19753b80567c843d9930afb52b"
+    }
+  ]
+}

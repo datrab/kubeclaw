@@ -1,0 +1,112 @@
+{
+  "status": "PASS_BOUNDED_SELECTED_GUARD_SOURCE_PURPOSE_READER_QUALITY",
+  "at": "2026-11-01T01:42:58.971965+00:00",
+  "sourceAssessment": "PASS",
+  "readerAssessment": "PASS",
+  "qualityAssessment": "PASS",
+  "materialFindings": [],
+  "baseMainCommit": "b023efe888121d01f9b4ea5a3932ff1dcca691b0",
+  "patchSHA256": "342d6a49ce55f9d40fde870b1330127eb58617e0041577112817ab1c1f552d90",
+  "threeProposedFiles": [
+    {
+      "file": "scripts/docs-api-output-discovery.mjs",
+      "oldSha256": "dfcea89ab26d9c98c8cf89ae512b0a2ca4a9dce6f843ef90557f4462bed4c686",
+      "currentSha256": "c01910c39730210a612fb38b0d2b765412610b23e376c13c966dbf35f9b361d3",
+      "edits": [
+        {
+          "purpose": "reviewedPublicationNativeValidation",
+          "oldBytes": 107129,
+          "newBytes": 108144
+        },
+        {
+          "purpose": "reviewedPublicationYamlValidationInputs",
+          "oldBytes": 4939,
+          "newBytes": 4939
+        }
+      ]
+    },
+    {
+      "file": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "oldSha256": "99cd88eaccd0c8adf67ec3205fac8744b54526e6a7a85dbe1c56b7798f18ad17",
+      "currentSha256": "44c6f527179eac58f333713eac957858487729349f83d9ef7fd8c0730c7bff98",
+      "edits": [
+        {
+          "purpose": "publicationExampleChildPurpose",
+          "oldBytes": 3201,
+          "newBytes": 3201
+        },
+        {
+          "purpose": "readerArtifactCiPurpose",
+          "oldBytes": 4752,
+          "newBytes": 4752
+        }
+      ]
+    },
+    {
+      "file": "scripts/docs-api-documentation-role-custody.mjs",
+      "oldSha256": "07cbe8b1a8d5008a6a5af220453f842e9f136e0c13acea6b432d9e61eb42e4e2",
+      "currentSha256": "734920ad66453ec8d9a834ea326caea3e81e770d890518d013ebb4892e51abff",
+      "edits": [
+        {
+          "purpose": "reviewedRootNodeEntryRecipes",
+          "oldBytes": 765934,
+          "newBytes": 766297
+        },
+        {
+          "purpose": "reviewedPublicationParserRecipe",
+          "oldBytes": 3303,
+          "newBytes": 3303
+        },
+        {
+          "purpose": "purpose:scripts/docs-reader/page-records.mjs:scripts/lib/docs-publication-assets.mjs",
+          "oldBytes": 66,
+          "newBytes": 66
+        },
+        {
+          "purpose": "facts:scripts/docs-reader/page-records.mjs",
+          "oldBytes": 66,
+          "newBytes": 66
+        },
+        {
+          "purpose": "facts:scripts/docs-reader/check-artifact.mjs",
+          "oldBytes": 66,
+          "newBytes": 66
+        },
+        {
+          "purpose": "facts:scripts/docs-publication.mjs",
+          "oldBytes": 66,
+          "newBytes": 66
+        }
+      ]
+    }
+  ],
+  "frozenInputs": {
+    "manifest": "11d9d095ba12d64b4553ed85b06025a0e7338694b82fc6ab003b03f21c651e38",
+    "claims": "d97c56efef457c3f90ae4b0162a18caf5ea7c772efd19fee87bd8d2ee83d4e17",
+    "classification": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd",
+    "map": "e35eb079b4b6cfeab58f9a8d3bfaa54370352a1d13ac948fd27a7a92660e7e5f"
+  },
+  "reviewInputManifestSHA256": "7c33c6239721dbcd612b40c869f406511abcdacc8c6e60d067d542fc03ae2d81",
+  "independentInverseEvidence": "guard-companion-independent-inverse.json",
+  "semanticScope": [
+    "Complete five selected profiles (old/current), complete34 owning guard/caller declarations, whole2 changed library/native-consumer code datasets",
+    "Complete changed root closure row and complete three importer role rows",
+    "115-row const whole inverse custody only, not fresh semantic review of all115"
+  ],
+  "qualification": [
+    "Five fixed inputs are inert publication read/syntax/contract data, not executable caller grants",
+    "Eight native existing-input successors bind separately source-qualified changed content and generatedmetadata",
+    "Native1764 facts/YAML8 facts, raw10+2 slots, six directory rosters and selectors retain original independent qualification and limits",
+    "Whole36\u219240 asset allowlist is four fixed strings only; reject aliases/unknown assets/classification/route loss remains",
+    "Parser/CI/child actual source/caller/installed-factory/argv/result/provenance and physical-path guards preserved",
+    "Three importer fact successors track only static files initializer; no new operation/source/child/authority selector",
+    "No6UNKNOWNor1API raw role relabel, binary provenance, current tool success, future temp-state or cleanup guarantee granted"
+  ],
+  "limits": [
+    "Distinct from pinned code review P2 and later existing guard tests",
+    "No main/proposal mutation or native/product tests by reviewer",
+    "No generic default/API success, refused registry read/projection, new census, runtime/import/apply/model/Gateway/provider/Redis authority",
+    "No acceptance-record transfer, task/gate award, human/AT or blanket115semantic qualification",
+    "Earlier source/metadata/map verdicts and original historical PIPE04 evidence retained"
+  ]
+}

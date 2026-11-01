@@ -1,0 +1,52 @@
+{
+  "status": "PASS_FOUR_LITERAL_SOURCE_PURPOSE_TRANSFER_ONLY",
+  "at": "2026-11-01T02:01:47.452624+00:00",
+  "sourceAssessment": "PASS",
+  "readerAssessment": "PASS",
+  "qualityAssessment": "PASS",
+  "materialFindings": [],
+  "sourceRevision": "331e469f624d0aa418773b37604e535ba334609e",
+  "patchSHA256": "70857b4b1808d1fa9a803296e534426724c75e6151e0920b8b604850c061a6a7",
+  "claimsSHA256": "2670783e043afb829626873ffb25227d0ca349395d07f2ca510e6545fef9d2ef",
+  "guideSHA256": "af7e73137e3f32a51d082985128e25378720bc5c1c63d44396e28b52dbd36e89",
+  "independentDataProof": "three-language-guard-independent-inverse.json",
+  "completeProfileCounts": [
+    12,
+    513,
+    4
+  ],
+  "semanticJoin": "Whole selected old profiles equal prior independently qualified current profiles; all10 owning guard bodies exact; only4 fixed input SHA literals change. New claims changes only pageSHA,2proseSHA and complete matchinganchor; semantic fields/history/checks/limits exact.",
+  "noNewNativeObservation": true,
+  "limits": [
+    "Prior clean guard review and actual unchanged tests retain original scopes; no rerun or new output asserted",
+    "Same sources/selectors/facts/rawslots/rosters/actionBoundaries/callers/constructor/binary/package/role authority",
+    "No main/proposal writes, children, refused-registry reads/projections, new campaign, runtime or gate/human award"
+  ],
+  "hashEvidence": [
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/three-language-guard-successor/bounded-source-purpose-proposal.json",
+      "bytes": 5922,
+      "sha256": "e326611287e229b02f06bb5e62bbf20e92274b4d5a7d4fa024f486b42c61a754"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/three-language-guard-successor/complete-profiles-vectors-inverse.json",
+      "bytes": 460232,
+      "sha256": "a32168ab43d96b62c1f76412e584e981219b35686d71210013091e921ce3d685"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/three-language-guard-successor/complete-owning-13-statements.json",
+      "bytes": 141170,
+      "sha256": "bb25ee5365573ad289603fcffd566bdb7ead91321278e0593be731fe0fdfa2ec"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/three-language-guard-successor/exact-four-literal-edits.json",
+      "bytes": 2446,
+      "sha256": "0496cacc6ca5b4dfdd0f812284c59b456501cc1ebc2fa103498e6c7a9d525759"
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/three-language-guard-successor/four-literal-successor.patch",
+      "bytes": 1542,
+      "sha256": "70857b4b1808d1fa9a803296e534426724c75e6151e0920b8b604850c061a6a7"
+    }
+  ]
+}

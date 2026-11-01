@@ -1,0 +1,15 @@
+{
+  "nativeResult": {
+    "htmlPages": 204,
+    "uniqueVerifiedLinks": 22612,
+    "uniqueSourceObjects": 6621,
+    "limit": "Primary source object/revision/line or Markdown-fragment verification only; not semantic or live-runtime acceptance."
+  },
+  "completeRawObservationCollections": {
+    "primarySources": 6621
+  },
+  "wholeRawLogSHA256": "c1ce377d468d9a493948336c18b67390ccc5e167295753c202651759debe0e98",
+  "wholeRawLogBytes": 2432456,
+  "completeRawLogRetained": "operations/pr13/evidence/reader-original-local-candidates-root-review-20261101/source-links.log",
+  "limit": "Actual command zero and exact source links verified. Compact receipt does not replace or relabel raw findings."
+}
