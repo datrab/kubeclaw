@@ -8,7 +8,7 @@ import {fixtureGit} from './minimal-redis-inspection.mjs';import {spawn,execFile
 const installedSource=path.resolve(path.dirname(fileURLToPath(import.meta.url)),'../../../../..');
 const [requestedSource,operation,root,mode='healthy']=process.argv.slice(2);
 assert.equal(fs.realpathSync(installedSource),installedSource,'Installed Source must be canonical');assert.equal(requestedSource,installedSource,'Explicit Source must equal this installed helper checkout');const sourceRoot=installedSource;
-assert(process.argv.length>=5&&process.argv.length<=6&&['prepare','gateway-identities','run','inspect','cleanup'].includes(operation),'Usage: node minimal-compiled-redis.mjs SOURCE prepare|gateway-identities|run|inspect|cleanup /tmp/kubeclaw-reader-pipeline01 [healthy|redis-unreachable]');
+assert(process.argv.length>=5&&process.argv.length<=6&&['prepare','gateway-identities','runtime-identities','run','inspect','cleanup'].includes(operation),'Usage: node minimal-compiled-redis.mjs SOURCE prepare|gateway-identities|runtime-identities|run|inspect|cleanup /tmp/kubeclaw-reader-pipeline01 [healthy|redis-unreachable]');
 assert(['healthy','redis-unreachable'].includes(mode));
 assert(sourceRoot&&path.isAbsolute(sourceRoot)&&fs.realpathSync(sourceRoot)===sourceRoot,'Explicit actual immutable Source root required');
 assert.equal(root,'/tmp/kubeclaw-reader-pipeline01');
@@ -42,6 +42,15 @@ if(operation==='gateway-identities'){
  const observation=await observeGatewayIdentity(gatewaySelection(load(canonical),process.env),requiredEnv('COMPILED_GATEWAY_TOKEN'));
  writeOnce('gateway-runtime-identity.json',{...observation,sourceRevision,canonicalSha256:fileDigest(canonical)});
  process.stdout.write(JSON.stringify(observation)+'\n');process.exit(0);
+}
+if(operation==='runtime-identities'){
+ const {selectedRuntimeRegistryIdentities}=await import('./minimal-redis-inspection.mjs');
+ const {runRoot}=await import(pathToFileURL(path.join(sourceRoot,'skills/nova/core/execution/run-root.ts')).href);
+ const {readRunSnapshot,graphSnapshot}=await import(pathToFileURL(path.join(sourceRoot,'skills/nova/core/execution/engine-snapshots.ts')).href);
+ const runId=read('project/project.json').runId,dir=runRoot(path.join(root,'raw-before-audit/state'),runId),original=runRoot(path.join(root,'compiled-state'),runId);
+ assert.deepEqual(fs.readFileSync(path.join(dir,'run-snapshot.json')),fs.readFileSync(path.join(original,'run-snapshot.json')),'Retained run snapshot differs');
+ const snapshot=readRunSnapshot(dir);assert.deepEqual(snapshot.graph,graphSnapshot(load(canonical)),'Frozen graph differs from canonical fixture');
+ console.log(JSON.stringify({status:'FROZEN_SELECTED_RUNTIME_IDENTITIES_RESOLVED',runId,sourceRevision,snapshotDigest:snapshot.digest,canonicalSha256:fileDigest(canonical),...selectedRuntimeRegistryIdentities(snapshot,load(canonical))},null,2));process.exit(0);
 }
 const imp=x=>import(pathToFileURL(path.join(sourceRoot,x)).href);
 const {loadProductionBusterRemotePlanRuntime}=await imp('skills/buster/engine/test-gates/production.ts');

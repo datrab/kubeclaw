@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "0019f6a9d106a1630ef43ac8f2f95ad14e688b9a61f6193c5cdd07945d97b2a7"
+      "sha256": "d01d9218b63960685ede897d5f03d4d4abd5d7d380b62ca585bfc3c8a5f8a370"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3428,7 +3428,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "0019f6a9d106a1630ef43ac8f2f95ad14e688b9a61f6193c5cdd07945d97b2a7"
+      "sha256": "d01d9218b63960685ede897d5f03d4d4abd5d7d380b62ca585bfc3c8a5f8a370"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3548,7 +3548,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/use/workflows/README.md",
-      "sha256": "f2822fe0e0fa86354802c08daaf18f752e04775df1c1bad70b2059b353b41460"
+      "sha256": "91a14e8418f2bfc0f7d3242deb77a2387448ff8598ea1db8cc1dcb32dd3ed946"
     },
     {
       "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
@@ -3576,7 +3576,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/use/workflows/examples/minimal-compiled-redis.mjs",
-      "sha256": "c530079e5b2ece5a78d37458c5095c334f7be594118013e3485f743f006000f4"
+      "sha256": "5bc2998072d885410553a0094dc8a9260948f65573d8cf67e9ce44aa9117fdc0"
     },
     {
       "path": "docs/site/use/workflows/examples/minimal-project.mjs",
@@ -3584,7 +3584,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/use/workflows/examples/minimal-redis-inspection.mjs",
-      "sha256": "88fdfa08ede9213bde475652786697fc3ef9ab4d22289ae20dc125d526ac2580"
+      "sha256": "1a53d19b148eb69b5ac72c1cd21668faa228cbd0837aa89ea88f8992693d354a"
     },
     {
       "path": "docs/site/use/workflows/examples/minimal-redis-verification.mjs",

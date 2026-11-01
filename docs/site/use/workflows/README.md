@@ -262,6 +262,16 @@ set -e
 npm run plugin-system:sandbox:build
 ```
 
+For this selected registry lookup, do not substitute the broad
+`verify:plugin-packages` test route. If independently selecting that broader
+route, first prepare the handbook's [locked Chromium and host libraries](../../extend/developer-handbook.md#prepare-a-clean-checkout).
+The facilitator must supply the genuine installed browser Linux support and
+font configuration as well as Redis's owned loader directory; compose both
+library paths rather than replacing browser support with Redis-only
+`LD_LIBRARY_PATH`. Missing `libglib-2.0.so.0` is a host prerequisite failure,
+not proof that a selected registry identity is absent. Do not stub Chromium,
+disable its checks, hide the failure or count it as a successful package test.
+
 The operator supplies `COMPILED_TOOLS_BIN` for that actual locked tool bundle.
 Stop on an unavailable or failing tool; never replace it with a successful stub.
 The helper derives Source from its installed location. Its explicit Source
@@ -310,8 +320,10 @@ node docs/site/use/workflows/examples/minimal-project.mjs defaults /tmp/kubeclaw
 
 `identities` validates the graph schema and resolves installed stage, selected
 adapter/observer and Buster plan identities. It is not complete runtime admission.
-Read `compiled-platform.complete.json` after admission for every selected
-provider/grant and its exact configuration. Full native platform admission occurs
+After the healthy run, use the `runtime-identities` registry command below for
+every selected runtime provider and its frozen package provenance. Read
+`compiled-platform.complete.json` for configuration/grants, not identity proof.
+Full native platform admission occurs
 before Core starts. Link each compiler default to the
 [finite policy/default authority table](../../reference/nova-project.md#minimal-compiler-policy-and-derived-values).
 Generated identities and derived values are not additional runtime defaults.
@@ -333,7 +345,19 @@ set -e
 node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" gateway-identities /tmp/kubeclaw-reader-pipeline01
 node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" run /tmp/kubeclaw-reader-pipeline01 healthy
 node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" inspect /tmp/kubeclaw-reader-pipeline01 healthy
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" runtime-identities /tmp/kubeclaw-reader-pipeline01
 ```
+
+`runtime-identities` uses the native integrity-checked frozen run registry, not
+a newly discovered catalogue. It prints all eight configured stages, the active
+observer, every selected capability and all ten unique adapter identities with
+full package/source/trust provenance. In particular this includes repository,
+artifact-store, git-workspace, state-store and lint executor, which the initial
+five-adapter lookup does not cover. Use the initial `identities` for the two
+Buster provider plans and their report adapters, and `gateway-identities` for
+`forge`'s agent/model. The unchanged canonical fixture has `suites: []`: there is
+no selected suite/fixture provider to invent. Inventory or all-package tests
+are not substitutes for these selected registry observations.
 
 The helper starts the genuine shipped Buster runtime on a fresh local store.
 Source jobs carry real source attestations; imported results and decisions are
@@ -345,8 +369,11 @@ The native passive audit command is also available in this same checkout:
 
 ```bash
 set -e
-/usr/bin/script -q -e -c 'node skills/nova/core/cli.ts --platform /tmp/kubeclaw-reader-pipeline01/compiled-platform.complete.json --audit run:first-project-001' /dev/null
+/usr/bin/script -q -e -c 'node skills/nova/core/cli.ts --platform /tmp/kubeclaw-reader-pipeline01/compiled-platform.complete.json --audit run:first-project-001' /dev/null < /dev/null
 ```
+
+Submit the audit command as one command per prompt. Its explicit closed stdin
+prevents `script` from consuming later queued terminal commands as audit input.
 
 Core stdout, process exit or a provider response alone is not the result
 boundary. The inspector joins that same run's canonical events, delivery records,
@@ -386,9 +413,21 @@ graph, reset a journal or silently choose another endpoint.
 set -e
 node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" prepare /tmp/kubeclaw-reader-pipeline01
 node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" gateway-identities /tmp/kubeclaw-reader-pipeline01
-node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" run /tmp/kubeclaw-reader-pipeline01 redis-unreachable
+# Capture a nonzero fault command without ending the approved set-e shell.
+if node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" run /tmp/kubeclaw-reader-pipeline01 redis-unreachable; then
+  PIPELINE01_FAULT_COMMAND_EXIT=0
+else
+  PIPELINE01_FAULT_COMMAND_EXIT=$?
+fi
+printf 'Fault command exit: %s\n' "$PIPELINE01_FAULT_COMMAND_EXIT"
 node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" inspect /tmp/kubeclaw-reader-pipeline01 redis-unreachable
 ```
+
+Retain the actual fault command exit and its original diagnostics, even when
+nonzero. The helper may return zero after identifying the bounded state; that
+does not change the separately retained Core exit. A command failure is not a
+fault pass: the following offline inspector must still qualify the exact native
+persisted state and refuses wrong/incomplete faults. Do not rerun to get zero.
 
 For this observed product version, the real connection-refusal fault produces
 Core exit **13**, empty Core stdout and an unsettled top-level-await diagnostic.

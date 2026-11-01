@@ -109,3 +109,31 @@ export function assertGatewayObservation(observation,selection,sourceRevision,ca
  assert.equal(observation.sourceRevision,sourceRevision);assert.equal(observation.canonicalSha256,canonicalSha256);
  assert.deepEqual(observation.selected,{id:selection.agentId,model:selection.model});
 }
+
+// Resolve only this frozen run's selected registrations, never a global package test.
+export function selectedRuntimeRegistryIdentities(snapshot,definition){
+ const registry=snapshot.registry,packages=new Map(registry.packages),enabled=new Set(registry.enabledRegistrations);
+ assert.equal(packages.size,registry.packages.length,'Duplicate frozen package identity');
+ const registrationId=p=>p.package.package.pluginId+':'+p.registrationId;
+ function identity(row){
+  const id=registrationId(row.provenance);assert(enabled.has(id),'Selected registration is disabled');
+  assert.deepEqual(packages.get(row.provenance.package.package.pluginId),row.provenance.package,'Frozen package provenance mismatch');
+  return {id,identity:row.provenance};
+ }
+ const stages=definition.stages.map(stage=>{
+  const configured=registry.configuredStages.filter(r=>r.stageId===stage.id&&r.stageType===stage.type);assert.equal(configured.length,1,'Configured stage identity unresolved');
+  const rows=registry.registrations.stages.filter(r=>r.stageType===stage.type);assert.equal(rows.length,1,'Stage registry identity unresolved');assert.deepEqual(configured[0].owner,rows[0].provenance);
+  return {stageId:stage.id,type:stage.type,...identity(rows[0])};
+ });
+ const seen=new Set(),providers=registry.selectedProviders.map(selected=>{
+  assert(!seen.has(selected.capability),'Duplicate selected capability');seen.add(selected.capability);
+  const id=registrationId(selected.provider);assert.equal(registry.configuration.providers[selected.capability],id,'Frozen selected provider differs from configuration');
+  const rows=registry.registrations.adapters.filter(r=>r.registrationId===id);assert.equal(rows.length,1,'Selected adapter registry identity unresolved');assert.deepEqual(rows[0].provenance,selected.provider);
+  return {capability:selected.capability,...identity(rows[0])};
+ });
+ assert.deepEqual([...seen].sort(),Object.keys(registry.configuration.providers).sort(),'Missing selected capability');
+ const adapters=[...new Map(providers.map(p=>[p.id,{id:p.id,identity:p.identity}])).values()];
+ const observers=registry.registrations.observers.filter(r=>enabled.has(r.registrationId)).map(identity);
+ for(const id of Object.keys(registry.configuration.observers)){assert.equal(observers.filter(r=>r.id===id).length,1,'Configured observer identity unresolved');}
+ return {stages,providers,adapters,observers,scope:'Frozen selected runtime registrations and full package provenance only; initial identities resolves Buster plans/report identities; Gateway lookup resolves forge agent/model. No global package verification or new runtime execution.'};
+}
