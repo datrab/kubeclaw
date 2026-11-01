@@ -18,6 +18,7 @@ const sources = Object.keys(authority.sourcePins);
 // Synthetic guard context reconstructed from the sealed current Source; this
 // unit fixture is not a fresh selected native graph or execution observation.
 const editorial = authority.retainedEditorialContext;
+const standalone = authority.standaloneManifestAssertionContext;
 const operationText = row => {
   const text = fs.readFileSync(path.join(repository, row.source), 'utf8');
   const tree = ts.createSourceFile(row.source, text, ts.ScriptTarget.Latest, true);
@@ -26,28 +27,28 @@ const operationText = row => {
   visit(tree); assert.notEqual(found, undefined, 'current operation syntax must reconstruct exactly'); return found;
 };
 const graph = {
-  edges: [...new Map([...authority.incomingEdges, ...editorial.incomingEdges].map(edge => [JSON.stringify(edge), edge])).values()].sort((a,b)=>a.source.localeCompare(b.source)||fs.readFileSync(path.join(repository,a.source),'utf8').indexOf(a.operation)-fs.readFileSync(path.join(repository,b.source),'utf8').indexOf(b.operation)),
-  publicEntries: [...new Map([...authority.publicEntries, ...editorial.publicEntries].map(entry => [JSON.stringify(entry), entry])).values()].sort((a,b)=>a.path.localeCompare(b.path)),
+  edges: [...new Map([...authority.incomingEdges, ...editorial.incomingEdges, ...standalone.incomingEdges, ...standalone.outgoingEdges].map(edge => [JSON.stringify(edge), edge])).values()].sort((a,b)=>a.source.localeCompare(b.source)||fs.readFileSync(path.join(repository,a.source),'utf8').indexOf(a.operation)-fs.readFileSync(path.join(repository,b.source),'utf8').indexOf(b.operation)),
+  publicEntries: [...new Map([...authority.publicEntries, ...editorial.publicEntries, ...standalone.publicEntries].map(entry => [JSON.stringify(entry), entry])).values()].sort((a,b)=>a.path.localeCompare(b.path)),
   aliases: editorial.aliases,
   dynamicOperations: editorial.unresolvedModuleOperations.map(({operationSha256, ...row}) => ({...row, operation: operationText({...row, operationSha256})})),
 };
 // Existing owner parser supplies these in real discovery; this fixture is data.
-const nativePackageEntries = editorial.packageEntries;
+const nativePackageEntries = [...editorial.packageEntries, ...standalone.packageEntries];
 const original = source => authority.descriptors.filter(role => role.source === source).map(({source, ...role}) => ({...role, dependencies: []}));
 const diagnostic = /API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED/u;
 function fixture(run) {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'top-level-output-purpose-'));
   const write = (file, bytes) => {fs.mkdirSync(path.dirname(path.join(root, file)), {recursive: true}); fs.writeFileSync(path.join(root, file), bytes);};
   try {
-    for (const file of [authorityPath, ...authority.inputs.map(input => input.path)]) write(file, fs.readFileSync(path.join(repository, file)));
-    run({root, write, acquire: (classify = original, selectedGraph = graph, census = sources) => checkedTopLevelScriptPurposes(root, selectedGraph, classify, census, nativePackageEntries)});
+    for (const file of [...new Set([authorityPath, 'package.json', ...authority.inputs.map(input => input.path)])]) write(file, fs.readFileSync(path.join(repository, file)));
+    run({root, write, acquire: (classify = original, selectedGraph = graph, census = sources, entries = nativePackageEntries) => checkedTopLevelScriptPurposes(root, selectedGraph, classify, census, entries)});
   } finally {fs.rmSync(root, {recursive: true, force: true});}
 }
 
-test('current real native parser agrees with complete reviewed30-slot seal', () => {
+test('current real native parser agrees with complete reviewed92-slot seal', () => {
   const classify = createSerializedOutputRoleClassifier(repository, sources);
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
-  assert.equal(receipt.descriptors.length, 30);
+  assert.equal(receipt.descriptors.length, 92);
   assert.equal(receipt.runtimeExecutionAuthorized, false);
   assert.equal(receipt.apiApplyAuthorized, false);
   assert.match(receipt.currentPurposeInputBindingDigest, /^[a-f0-9]{64}$/u);
@@ -76,7 +77,7 @@ test('each sealed Source/helper/input byte change and missing primary source fai
   assert.throws(() => acquire(original, graph, sources.slice(1)), /missing selected source/u);
 }));
 
-test('all14 source role inversions and every30-slot omission/extension fail', () => fixture(({acquire}) => {
+test('all17 source role inversions and every92-slot omission/extension fail', () => fixture(({acquire}) => {
   for (const source of sources) {
     assert.throws(() => acquire(candidate => original(candidate).map((role, index) => candidate === source && index === 0 ? {...role, role: role.role === 'unknown' ? 'non-api' : 'unknown'} : role)), /canonical native slot\/role roster/u);
   }
@@ -267,7 +268,7 @@ test('aggregate fixed-file occurrence preserves UNKNOWN and rejects receiver/cal
 test('exact three current purpose bindings reject missing duplicate reordered extra malformed and historical drift', async t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'top-purpose-current-bindings-'));
   t.after(() => fs.rmSync(root, {recursive: true, force: true}));
-  for (const file of [authorityPath, ...authority.inputs.map(input => input.path)]) {
+  for (const file of [...new Set([authorityPath, 'package.json', ...authority.inputs.map(input => input.path)])]) {
     fs.mkdirSync(path.dirname(path.join(root, file)), {recursive: true});
     fs.copyFileSync(path.join(repository, file), path.join(root, file));
   }
@@ -329,4 +330,58 @@ test('retained transitive caller, native package, public, alias and unresolved-l
   assert.throws(() => acquire(original, {...graph, dynamicOperations: changed}), retainedFailure);
   assert.throws(() => checkedTopLevelScriptPurposes(root, graph, original, sources), /native package entry acquisition required/u);
   assert.throws(() => checkedTopLevelScriptPurposes(root, graph, original, sources, [...nativePackageEntries, {name: 'runtime:retained', command: 'node '+projection, source: projection}]), retainedFailure);
+}));
+
+const manifestSources = standalone.sources;
+test('manifest-lint family selects all34 retained UNKNOWN inputs without role mutation or API grants', () => {
+  const classify = createSerializedOutputRoleClassifier(repository, sources);
+  const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
+  let selected = 0, total = 0;
+  for (const source of manifestSources) for (const role of classify(source)) {
+    total++; const before = JSON.stringify(role);
+    const purpose = selectedTopLevelScriptPurpose(source, role, receipt);
+    assert.equal(JSON.stringify(role), before);
+    if (role.role === 'unknown' && role.sink === 'fs.writeFileSync') {
+      assert(purpose); selected++;
+      assert.equal(purpose.canonicalRawRole, 'unknown');
+      assert.equal(purpose.runtimeExecutionAuthorized, false);
+      assert.equal(purpose.apiApplyAuthorized, false);
+      assert.match(purpose.purpose, /verification receiving purpose only/u);
+    } else assert.equal(purpose, null);
+  }
+  assert.equal(selected, 34); assert.equal(total, 62);
+  const outside = 'tests/verification/e2e/manifest-lint-production.mts';
+  // Foreign Source rejection only, not a native classification observation.
+  assert.equal(selectedTopLevelScriptPurpose(outside, {line: 12, sink: 'fs.writeFileSync', role: 'unknown'}, receipt), null);
+});
+test('manifest-lint family rejects changes in any of its five complete Source inputs', () => fixture(({root, write, acquire}) => {
+  acquire();
+  for (const source of standalone.contextSources) {
+    const bytes = fs.readFileSync(path.join(root, source));
+    write(source, Buffer.concat([bytes, Buffer.from('\n')]));
+    assert.throws(() => acquire(), diagnostic, source);
+    write(source, bytes);
+  }
+  acquire();
+}));
+test('manifest-lint family retains actual incoming outgoing native command and public boundaries', () => fixture(({root, write, acquire}) => {
+  const helper = manifestSources.find(source => source.includes('/support/'));
+  assert.throws(() => acquire(original, {...graph, edges: [...graph.edges,
+    {source: 'unreviewed.mjs', target: helper, kind: 'import', operation: 'import x'}]}), diagnostic);
+  const outgoing = graph.edges.find(edge => standalone.contextSources.includes(edge.source)
+    && !sources.includes(edge.target)); assert(outgoing);
+  assert.throws(() => acquire(original, {...graph, edges: graph.edges.filter(edge => edge !== outgoing)}), diagnostic);
+  assert.throws(() => acquire(original, {...graph, publicEntries: [...graph.publicEntries,
+    {path: 'new-alias.mjs', canonicalSource: helper}]}), diagnostic);
+  const entries = nativePackageEntries.map(entry => standalone.contextSources.includes(entry.source)
+    ? {...entry, command: entry.command + ' --unreviewed'} : entry);
+  assert.throws(() => acquire(original, graph, sources, entries), diagnostic);
+  const packageBytes = fs.readFileSync(path.join(root, 'package.json'));
+  const pkg = JSON.parse(packageBytes), entry = standalone.packageEntries[0];
+  pkg.scripts[entry.name] += ' --changed-physical-command';
+  write('package.json', JSON.stringify(pkg));
+  assert.throws(() => acquire(), /actual maintained command/u);
+  write('package.json', packageBytes);
+  const dynamic = {source: manifestSources[0], expression: 'unresolved', operation: 'import(unknown)', hints: []};
+  assert.throws(() => acquire(original, {...graph, dynamicOperations: [...graph.dynamicOperations, dynamic]}), diagnostic);
 }));

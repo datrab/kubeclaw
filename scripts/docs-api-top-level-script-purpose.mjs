@@ -6,7 +6,7 @@ import ts from 'typescript';
 import {shellNativeNodeEntries} from './docs-shell-source-custody.mjs';
 
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
-const authoritySha256 = 'd52fd853409b62f295dbd30b72ea08766d8da265ba6c530a362f2736364b66a5';
+const authoritySha256 = 'ce3151db4da995514943ff1be8b8768792f7b9aaf6831770d2a074cee06ebe32';
 const currentPurposeInputBindings20261031 = Object.freeze([
   {
     "path": "docs/site/extend/lint.md",
@@ -35,9 +35,19 @@ const selectedSources = Object.freeze([
   'scripts/generate-plugin-dependency-aggregate.mjs',
   'scripts/lib/docs-retained-configuration-formatters.mjs',
   'scripts/lib/docs-retained-source.mjs',
+  "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+  "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+  "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
 ]);
+const standaloneManifestAssertionSources = Object.freeze([
+  "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+  "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+  "tests/verification/contracts/support/manifest-lint-parity-fixture.mts"
+]);
+const standaloneManifestAssertionPurpose = "Exact complete-Source manifest-lint standalone assertion-family fixture file input to the reviewed lint-report/parity receivers. This is verification receiving purpose only: arbitrary YAML, schema/policy variants and bytes remain raw UNKNOWN; no payload truth, API/node-constructor exclusion, runtime execution, safe filesystem, native-tool success or apply grant.";
 const descriptor = role => Object.fromEntries(['line', 'sink', 'expression', 'sinkContract', 'role'].map(key => [key, role[key] ?? null]));
 const purposes = Object.freeze({
+
   "scripts/lib/docs-retained-configuration-formatters.mjs:11": "Exact Source/caller-bound documentary environment-purpose prose formatter. Supplied meaning/owner/boundary text remains raw documentary text; no independent truth, HTML safety, runtime configuration or API classification grant.",
   "scripts/lib/docs-retained-source.mjs:145": "Exact retained-language bundle JSON-plus-newline serializer at sealed construction callers. Arbitrary nested data remains UNKNOWN; not universal canonicalization, safe arbitrary getters/toJSON, current discovery or API admission.",
   "scripts/lib/docs-retained-source.mjs:166": "Exact staged600 retained-language bundle write from the sealed projection caller; physical root/canonical parent/regular target and strictly outside-checkout target checks retained. Genuinely writes outside checkout; no permission to invoke it, general external-write authority, durability or hostile-filesystem guarantee.",
@@ -119,6 +129,28 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
     unresolvedModuleOperations: graph.dynamicOperations.map(({source, expression, operation, hints}) => ({source, expression, operationSha256: hash(operation), hints})),
   };
   if (JSON.stringify(context) !== JSON.stringify(editorial)) fail('retained editorial caller/public/alias/dynamic context');
+  // One sealed standalone assertion-family Source review; NOT a test-directory,
+  // assert-import, filename or arbitrary runtime payload classifier.
+  const standalone = authority.standaloneManifestAssertionContext;
+  if (!standalone || JSON.stringify(standalone.sources) !== JSON.stringify(standaloneManifestAssertionSources)) fail('standalone assertion source roster');
+  const standaloneContextSources = standalone.contextSources;
+  if (!Array.isArray(standaloneContextSources) || standaloneContextSources.length !== 5
+    || !standaloneContextSources.every(source => authority.inputs.some(input => input.path === source))) fail('standalone assertion complete sealed caller inputs');
+  const rootPackage = JSON.parse(read('package.json'));
+  if (nativePackageEntries.filter(entry => standaloneContextSources.includes(entry.source))
+    .some(entry => rootPackage.scripts?.[entry.name] !== entry.command)) fail('standalone assertion actual maintained command');
+  const standaloneActual = {
+    sources: standaloneManifestAssertionSources, contextSources: standaloneContextSources,
+    incomingEdges: graph.edges.filter(edge => standaloneContextSources.includes(edge.target)),
+    outgoingEdges: graph.edges.filter(edge => standaloneContextSources.includes(edge.source)),
+    packageEntries: nativePackageEntries.filter(entry => standaloneContextSources.includes(entry.source)),
+    publicEntries: graph.publicEntries.filter(entry => standaloneContextSources.includes(entry.canonicalSource) || standaloneContextSources.includes(entry.source)),
+    aliases: graph.aliases,
+    packageTargets: Object.fromEntries(['bin','main','exports'].map(key => [key,rootPackage[key] ?? null])),
+    unresolvedModuleOperations: graph.dynamicOperations.filter(operation => standaloneContextSources.includes(operation.source))
+      .map(operation => Object.fromEntries(['source','expression','operation','hints'].map(key => [key,operation[key] ?? null]))),
+  };
+  if (JSON.stringify(standaloneActual) !== JSON.stringify(standalone)) fail('standalone assertion native/caller/public/dynamic context');
   const actual = selectedSources.flatMap(source => classify(source).map(role => ({source, ...descriptor(role)})));
   if (JSON.stringify(actual) !== JSON.stringify(authority.descriptors)) fail('canonical native slot/role roster; registry relabel or missing/new slot');
   const receipt = Object.freeze({
@@ -133,11 +165,13 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
 
 export function selectedTopLevelScriptPurpose(source, role, receipt) {
   if (!selectedSources.includes(source)) return null;
+  if (standaloneManifestAssertionSources.includes(source) && (role.role !== 'unknown' || role.sink !== 'fs.writeFileSync')) return null;
   assert(receipt && receipts.has(receipt), 'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: unacquired receipt');
   const expected = receipt.descriptors.find(item => item.source === source && item.line === role.line && item.sink === role.sink);
   assert(expected && JSON.stringify(descriptor(expected)) === JSON.stringify(descriptor(role)),
     'API_PRODUCT_TOP_LEVEL_SOURCE_PURPOSE_UNQUALIFIED: changed canonical slot or role');
-  const purpose = purposes[`${source}:${role.line}`];
+  const purpose = standaloneManifestAssertionSources.includes(source)
+    ? standaloneManifestAssertionPurpose : purposes[`${source}:${role.line}`];
   if (!purpose) return null; // Raw/API/mixed streams still need their own finite adapters.
   return Object.freeze({purpose, canonicalRawRole: role.role, witnessDigest: receipt.witnessDigest, inputDigest: receipt.inputDigest,
     currentPurposeInputBindingDigest: receipt.currentPurposeInputBindingDigest,

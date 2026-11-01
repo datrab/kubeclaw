@@ -13,7 +13,10 @@
     "scripts/versions.mjs": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b",
     "scripts/generate-plugin-dependency-aggregate.mjs": "6e1953fccf9f5157c8c49533feba28f3c2560867ae545f33fa4ece7a143ef249",
     "scripts/lib/docs-retained-configuration-formatters.mjs": "4688fa761e4a5b5c0eedf75929b322d24c32940e53d8c2548a8fbf375e67df7c",
-    "scripts/lib/docs-retained-source.mjs": "ae43af2513846ec8a58c345e84d01a2c1d547e8b3fa25cd3c1829e721c6ab7b6"
+    "scripts/lib/docs-retained-source.mjs": "ae43af2513846ec8a58c345e84d01a2c1d547e8b3fa25cd3c1829e721c6ab7b6",
+    "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts": "bf8c6ebbc6d342b21022fa963e9ae26382b601680c6fa267577d3e04a6213173",
+    "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts": "b94dea52056143338924d753f250364134532db0dfa789fb0224624d746994c4",
+    "tests/verification/contracts/support/manifest-lint-parity-fixture.mts": "0d9b46b01a11c1a0468c2e6c17b89547c7b1d08ae0fcc7e6936c42afc1c869b5"
   },
   "descriptors": [
     {
@@ -271,6 +274,502 @@
       "line": 199,
       "sink": "fs.writeFileSync",
       "expression": "text",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 30,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 95,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 96,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 97,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 99,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 100,
+      "sink": "fs.writeFileSync",
+      "expression": "workload(true).replace('name: app', 'name: legacy-discovery')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 114,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 115,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 140,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(canonical)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 155,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 175,
+      "sink": "fs.writeFileSync",
+      "expression": "workload(true).replace('apiVersion: apps/v1', 'apiVersion: apps/v2')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 181,
+      "sink": "fs.writeFileSync",
+      "expression": "workload(true).replace('name: app', 'name: legacy-discovery')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 184,
+      "sink": "fs.writeFileSync",
+      "expression": "'x'.repeat(100_001)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 197,
+      "sink": "fs.writeFileSync",
+      "expression": "Array.from({ length: 33 }, (_, index) => `apiVersion: v1\\nkind: Secret\\nmetadata: { name: item-${index} }\\n`).join('---\\n')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 200,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 203,
+      "sink": "fs.writeFileSync",
+      "expression": "Array.from({ length: 20 }, () => '---\\n').join('')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 204,
+      "sink": "fs.writeFileSync",
+      "expression": "Array.from({ length: 20 }, () => '---\\n').join('')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 208,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(aggregateDocuments)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 214,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(canonical)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 216,
+      "sink": "fs.writeFileSync",
+      "expression": "Array.from({ length: 4096 }, (_, index) => `apiVersion: apps/v2\\nkind: Deployment\\nmetadata: { name: large-${index} }\\nspec: {}\\n`).join('---\\n')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 221,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(largeEvidencePolicy)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 227,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 228,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(canonical)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 230,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 246,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 247,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 251,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 255,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 257,
+      "sink": "fs.writeFileSync",
+      "expression": "workload(true).replace('apiVersion: apps/v1', 'apiVersion: apps/v2')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 265,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 266,
+      "sink": "fs.writeFileSync",
+      "expression": "workload(true).replace('apiVersion: apps/v1', 'apiVersion: apps/v2')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 272,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(unknownPack)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 277,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(networkSchema)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 282,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(forged)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 287,
+      "sink": "fs.writeFileSync",
+      "expression": "`${JSON.stringify(document, null, 2)}\\n`",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 290,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(policy)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 296,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 297,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(canonical)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 301,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(deselectedPack)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 309,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(removedPack)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 312,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(canonical)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 316,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(duplicateInputs)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 321,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 327,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(escapedProject)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 333,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 337,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(oversizedPack)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 342,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 346,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(excessiveRules)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 358,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 362,
+      "sink": "fs.writeFileSync",
+      "expression": "JSON.stringify(manyPacks)",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "line": 368,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "line": 26,
+      "sink": "fs.writeFileSync",
+      "expression": "export function legacyCompatibleWorkload(): string {\n  const content = workload({ secondContainer: false })\n    .replace('serviceAccountName: runtime', 'imagePullSecrets: [{ name: registry-auth }]')\n    .replace('        envFrom:\\n          - secretRef: { name: runtime-env }\\n          - configMapRef: { name: runtime-config }', '        env:\\n          - { name: REDIS_HOST, value: redis }')\n    .replace('        env:\\n          - name: TOKEN', '          - name: TOKEN');\n  if (!/^\\s+- \\{ name: REDIS_HOST, value: redis \\}$/mu.test(content)) {\n    throw new Error('legacy-compatible workload is missing REDIS_HOST');\n  }\n  return content;\n}",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "line": 42,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "api"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "line": 104,
+      "sink": "console.log",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 34,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 120,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 121,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "api"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 122,
+      "sink": "fs.writeFileSync",
+      "expression": null,
+      "sinkContract": null,
+      "role": "non-api"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 125,
+      "sink": "fs.writeFileSync",
+      "expression": "fs.readFileSync('charts/kubeclaw/files/config/kubernetes-policy-pack-default.json', 'utf8')",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 141,
+      "sink": "fs.writeFileSync",
+      "expression": "value",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 142,
+      "sink": "fs.writeFileSync",
+      "expression": "content",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "line": 143,
+      "sink": "fs.writeFileSync",
+      "expression": "content",
       "sinkContract": null,
       "role": "unknown"
     }
@@ -619,6 +1118,26 @@
     {
       "path": "scripts/lib/docs-retained-source.mjs",
       "sha256": "ae43af2513846ec8a58c345e84d01a2c1d547e8b3fa25cd3c1829e721c6ab7b6"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "sha256": "bf8c6ebbc6d342b21022fa963e9ae26382b601680c6fa267577d3e04a6213173"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "sha256": "b94dea52056143338924d753f250364134532db0dfa789fb0224624d746994c4"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts",
+      "sha256": "a651989d29077e47a4ea3db706786bb3b7af55c4ed06d9f1d52ae81071a50bfd"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+      "sha256": "3b83e612a8b24f9bd45de5c2c0264d1416f8ac6a79f60c055685f03d0ebe3162"
+    },
+    {
+      "path": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "sha256": "0d9b46b01a11c1a0468c2e6c17b89547c7b1d08ae0fcc7e6936c42afc1c869b5"
     }
   ],
   "incomingEdges": [
@@ -693,6 +1212,24 @@
       "target": "scripts/updates/deployment-release.mjs",
       "kind": "import",
       "operation": "import { validateReleaseReceipt } from './deployment-release.mjs';"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts",
+      "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "kind": "import",
+      "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "kind": "import",
+      "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
+    },
+    {
+      "source": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+      "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+      "kind": "import",
+      "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
     },
     {
       "source": "tests/verification/deployment/prism-release-evidence.test.mjs",
@@ -775,12 +1312,24 @@
     {
       "path": "scripts/versions.mjs",
       "canonicalSource": "scripts/versions.mjs"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "canonicalSource": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts"
+    },
+    {
+      "path": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "canonicalSource": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts"
     }
   ],
   "absentPackageBoundaries": [
     "scripts/package.json",
     "scripts/updates/package.json",
-    "scripts/observability-retirement/package.json"
+    "scripts/observability-retirement/package.json",
+    "tests/package.json",
+    "tests/verification/package.json",
+    "tests/verification/contracts/package.json",
+    "tests/verification/contracts/support/package.json"
   ],
   "authority": "Source-owned finite output-purpose/descriptor seal, not producer execution observations, global non-API classification, API admission or apply authorization.",
   "retainedEditorialContext": {
@@ -1557,5 +2106,135 @@
         ]
       }
     ]
+  },
+  "standaloneManifestAssertionContext": {
+    "sources": [
+      "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "tests/verification/contracts/support/manifest-lint-parity-fixture.mts"
+    ],
+    "contextSources": [
+      "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+      "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+      "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts",
+      "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+      "tests/verification/contracts/support/manifest-lint-parity-fixture.mts"
+    ],
+    "incomingEdges": [
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts",
+        "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+        "kind": "import",
+        "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+        "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+        "kind": "import",
+        "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+        "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+        "kind": "import",
+        "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
+      }
+    ],
+    "outgoingEdges": [
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts",
+        "target": "skills/nova/plugins/lint/src/engine/index.ts",
+        "kind": "import",
+        "operation": "import { executeLintReport } from '../../../skills/nova/plugins/lint/src/engine/index.ts';"
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts",
+        "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+        "kind": "import",
+        "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+        "target": "skills/nova/plugins/lint/src/engine/index.ts",
+        "kind": "import",
+        "operation": "import { executeLintReport } from '../../../skills/nova/plugins/lint/src/engine/index.ts';"
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+        "target": "skills/nova/plugins/lint/src/engine/index.ts",
+        "kind": "import",
+        "operation": "import { executeLintReport } from '../../../skills/nova/plugins/lint/src/engine/index.ts';"
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+        "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+        "kind": "import",
+        "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+        "target": "skills/nova/core/src/index.ts",
+        "kind": "import",
+        "operation": "import * as core from '../../../skills/nova/core/src/index.ts';"
+      },
+      {
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+        "target": "tests/verification/contracts/support/manifest-lint-parity-fixture.mts",
+        "kind": "import",
+        "operation": "import { createManifestParityFixture, legacyCompatibleWorkload, supportResources, workload } from './support/manifest-lint-parity-fixture.mts';"
+      }
+    ],
+    "packageEntries": [
+      {
+        "name": "verify:test-gate:manifest-lint-cutover",
+        "command": "npm run plugin-system:sandbox:build && node tests/verification/contracts/check-pipeline-manifest-lint-cutover.mts && node tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts && node tests/verification/contracts/check-pipeline-manifest-lint-production.mts && npm run verify:test-gate:manifest-lint-parity",
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts"
+      },
+      {
+        "name": "verify:test-gate:manifest-lint-implementation",
+        "command": "npm run verify:test-gate:manifest-lint-baseline && node tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts && npm test --prefix skills/nova/plugins/lint && npx tsc --noEmit -p skills/nova/plugins/lint/tsconfig.json",
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts"
+      },
+      {
+        "name": "verify:test-gate:manifest-lint-parity",
+        "command": "npm run verify:test-gate:manifest-lint-parity-ledger && node tests/verification/contracts/check-pipeline-manifest-lint-parity.mts && node tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts && node tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts && npm run verify:test-gate:manifest-lint-implementation && npm run verify:test-gate:phase10",
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts"
+      },
+      {
+        "name": "verify:test-gate:manifest-lint-parity",
+        "command": "npm run verify:test-gate:manifest-lint-parity-ledger && node tests/verification/contracts/check-pipeline-manifest-lint-parity.mts && node tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts && node tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts && npm run verify:test-gate:manifest-lint-implementation && npm run verify:test-gate:phase10",
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts"
+      },
+      {
+        "name": "verify:test-gate:manifest-lint-parity",
+        "command": "npm run verify:test-gate:manifest-lint-parity-ledger && node tests/verification/contracts/check-pipeline-manifest-lint-parity.mts && node tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts && node tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts && npm run verify:test-gate:manifest-lint-implementation && npm run verify:test-gate:phase10",
+        "source": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts"
+      }
+    ],
+    "publicEntries": [
+      {
+        "path": "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts",
+        "canonicalSource": "tests/verification/contracts/check-pipeline-manifest-lint-comparison.mts"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts",
+        "canonicalSource": "tests/verification/contracts/check-pipeline-manifest-lint-implementation.mts"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts",
+        "canonicalSource": "tests/verification/contracts/check-pipeline-manifest-lint-parity.mts"
+      },
+      {
+        "path": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts",
+        "canonicalSource": "tests/verification/contracts/check-pipeline-manifest-lint-vertical.mts"
+      }
+    ],
+    "aliases": [],
+    "packageTargets": {
+      "bin": null,
+      "main": null,
+      "exports": null
+    },
+    "unresolvedModuleOperations": []
   }
 }
