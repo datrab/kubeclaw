@@ -22,8 +22,197 @@ const currentPurposeInputBindings20261031 = Object.freeze([
     "path": "scripts/docs-publication.mjs",
     "sha256": "c96741df38af067044811d38e0c0513dd9512e383493d08e984cf62e538b1bd5",
     "historicalSha256": "2e44d7a367bfce370229a00af8b0352690983029f763020608e938ba8fd35943"
+  },
+  {
+    "path": "scripts/docs-generate.mjs",
+    "sha256": "41a30fba96b6ecab94926ff54ed840ec7a3c08b983c31c2840fdf0999e1f7e4c",
+    "historicalSha256": "cc6e7b8d45bab47fb3ee40b63aef294eae1131d3e7123dd1d888502d390b6843"
+  },
+  {
+    "path": "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "sha256": "a52fafc6ad2bf82e71bc1f0e27bb8506f94032af3b9adec8aa2ddfecf494f0f6",
+    "historicalSha256": "27131383875cc3159513110ebd2006afeb8a195295565850fe62542f8f7beb75"
   }
 ].map(Object.freeze));
+// One current native test receiver successor. Historical authority stays sealed.
+const currentTopLevelProducerBinding20261101 = Object.freeze({
+  "path": "scripts/tests/api-output-publication-native-custody.test.mjs",
+  "historicalSha256": "27131383875cc3159513110ebd2006afeb8a195295565850fe62542f8f7beb75",
+  "sha256": "a52fafc6ad2bf82e71bc1f0e27bb8506f94032af3b9adec8aa2ddfecf494f0f6",
+  "historicalDescriptors": [
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 59,
+      "sink": "unknown-output-function",
+      "expression": "writeFileSync",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 72,
+      "sink": "unknown-output-function",
+      "expression": "writeFileSync",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 85,
+      "sink": "unknown-output-function",
+      "expression": "writeFileSync",
+      "sinkContract": null,
+      "role": "unknown"
+    }
+  ],
+  "descriptors": [
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 60,
+      "sink": "unknown-output-function",
+      "expression": "writeFileSync",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 73,
+      "sink": "unknown-output-function",
+      "expression": "writeFileSync",
+      "sinkContract": null,
+      "role": "unknown"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 86,
+      "sink": "unknown-output-function",
+      "expression": "writeFileSync",
+      "sinkContract": null,
+      "role": "unknown"
+    }
+  ],
+  "historicalSlots": [
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 59,
+      "sink": "unknown-output-function"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 72,
+      "sink": "unknown-output-function"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 85,
+      "sink": "unknown-output-function"
+    }
+  ],
+  "slots": [
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 60,
+      "sink": "unknown-output-function"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 73,
+      "sink": "unknown-output-function"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "line": 86,
+      "sink": "unknown-output-function"
+    }
+  ],
+  "historicalOutgoingEdges": [
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-api-output-discovery.mjs",
+      "kind": "import",
+      "operation": "import {discoverScriptInputGraph} from '../docs-api-output-discovery.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-api-output-role-classification.mjs",
+      "kind": "import",
+      "operation": "import {classifySerializedOutputRoles,deriveNativeOperationFacts,nativeOperationFactDigest} from '../docs-api-output-role-classification.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-shell-source-custody.mjs",
+      "kind": "import",
+      "operation": "import {shellNativeNodeEntries} from '../docs-shell-source-custody.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-api-documentation-role-custody.mjs",
+      "kind": "import",
+      "operation": "import {expandReviewedNodePackageGlob} from '../docs-api-documentation-role-custody.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "import",
+      "operation": "import {assertPublicationExampleChildPurpose} from '../docs-documentation-owner-purpose-custody.mjs';"
+    }
+  ],
+  "outgoingEdges": [
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/lib/docs-publication-example-coverage.mjs",
+      "kind": "import",
+      "operation": "import {publicationExampleBlocks} from '../lib/docs-publication-example-coverage.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-api-output-discovery.mjs",
+      "kind": "import",
+      "operation": "import {discoverScriptInputGraph} from '../docs-api-output-discovery.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-api-output-role-classification.mjs",
+      "kind": "import",
+      "operation": "import {classifySerializedOutputRoles,deriveNativeOperationFacts,nativeOperationFactDigest} from '../docs-api-output-role-classification.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-shell-source-custody.mjs",
+      "kind": "import",
+      "operation": "import {shellNativeNodeEntries} from '../docs-shell-source-custody.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-api-documentation-role-custody.mjs",
+      "kind": "import",
+      "operation": "import {expandReviewedNodePackageGlob} from '../docs-api-documentation-role-custody.mjs';"
+    },
+    {
+      "source": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "target": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "kind": "import",
+      "operation": "import {assertPublicationExampleChildPurpose,publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs} from '../docs-documentation-owner-purpose-custody.mjs';"
+    }
+  ]
+});
+function currentTopLevelPurposeAuthority(authority,fail) {
+ const r=currentTopLevelProducerBinding20261101,p=r.path,s=authority.standaloneVerificationContext;
+ if(authority.sourcePins[p]!==r.historicalSha256
+  ||JSON.stringify(authority.descriptors.filter(row=>row.source===p))!==JSON.stringify(r.historicalDescriptors)
+  ||JSON.stringify(s.slots.filter(row=>row.source===p))!==JSON.stringify(r.historicalSlots)
+  ||JSON.stringify(s.outgoingEdges.filter(row=>row.source===p))!==JSON.stringify(r.historicalOutgoingEdges))fail('current producer historical Source/slots/context identity');
+ if(JSON.stringify(r.descriptors)!==JSON.stringify(r.historicalDescriptors.map(row=>({...row,line:row.line+1})))
+  ||JSON.stringify(r.slots)!==JSON.stringify(r.historicalSlots.map(row=>({...row,line:row.line+1}))))fail('current producer exact line-only slot successor');
+ const descriptorPairs=r.historicalDescriptors.map((row,index)=>[JSON.stringify(row),r.descriptors[index]]);
+ const slotPairs=r.historicalSlots.map((row,index)=>[JSON.stringify(row),r.slots[index]]);
+ const first=s.outgoingEdges.findIndex(row=>row.source===p);
+ const next={...authority,sourcePins:{...authority.sourcePins,[p]:r.sha256},
+  descriptors:authority.descriptors.map(row=>row.source===p?descriptorPairs.find(([old])=>old===JSON.stringify(row))[1]:row),
+  standaloneVerificationContext:{...s,slots:s.slots.map(row=>row.source===p?slotPairs.find(([old])=>old===JSON.stringify(row))[1]:row),
+   outgoingEdges:s.outgoingEdges.flatMap((row,index)=>row.source!==p?[row]:index===first?r.outgoingEdges:[])}};
+ return next;
+}
 const hash = value => createHash('sha256').update(value).digest('hex');
 const receipts = new WeakSet();
 const selectedSources = Object.freeze([
@@ -231,10 +420,10 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
   };
   const bytes = read(authorityPath);
   if (hash(bytes) !== authoritySha256) fail('immutable Source-purpose authority');
-  const authority = JSON.parse(bytes);
+  const authority = currentTopLevelPurposeAuthority(JSON.parse(bytes),fail);
   if (JSON.stringify(Object.keys(authority.sourcePins)) !== JSON.stringify(selectedSources)) fail('source roster');
   if (!selectedSources.every(source => sources.includes(source))) fail('missing selected source from native census');
-  const approvedCurrentPaths = ["docs/site/extend/lint.md", "scripts/plugin-registration-dependencies.mjs", "scripts/docs-publication.mjs"];
+  const approvedCurrentPaths = ["docs/site/extend/lint.md", "scripts/plugin-registration-dependencies.mjs", "scripts/docs-publication.mjs", "scripts/docs-generate.mjs", "scripts/tests/api-output-publication-native-custody.test.mjs"];
   const bindings = currentPurposeInputBindings20261031;
   if (JSON.stringify(bindings.map(binding => binding?.path)) !== JSON.stringify(approvedCurrentPaths)) fail('current binding exact ordered roster');
   for (const binding of bindings) {
@@ -368,6 +557,7 @@ export function checkedTopLevelScriptPurposes(root, graph, classify, sources, na
   if (JSON.stringify(actual) !== JSON.stringify(authority.descriptors)) fail('canonical native slot/role roster; registry relabel or missing/new slot');
   const receipt = Object.freeze({
     witnessDigest: authoritySha256, inputDigest: hash(JSON.stringify(facts)), currentPurposeInputBindingDigest,
+    currentProducerBindingDigest: hash(JSON.stringify(currentTopLevelProducerBinding20261101)),
     dependencies: Object.freeze([authorityPath, ...facts.map(input => input.path)]),
     descriptors: Object.freeze(authority.descriptors.map(Object.freeze)),
     standaloneVerificationSlots: Object.freeze(standalone.slots.map(slot => Object.freeze({...slot}))),
@@ -404,6 +594,7 @@ export function selectedTopLevelScriptPurpose(source, role, receipt) {
   if (!purpose) return null; // Raw/API/mixed streams still need their own finite adapters.
   return Object.freeze({purpose, canonicalRawRole: role.role, witnessDigest: receipt.witnessDigest, inputDigest: receipt.inputDigest,
     currentPurposeInputBindingDigest: receipt.currentPurposeInputBindingDigest,
+    currentProducerBindingDigest: receipt.currentProducerBindingDigest,
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false,
     limit: 'Source-owned output purpose only; runtime inputs/results unobserved; arbitrary embedded tool/status bytes are not globally non-API.'});
 }

@@ -3,6 +3,7 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
+import {pathToFileURL} from 'node:url';
 import test from 'node:test';
 import {createHash} from 'node:crypto';
 import {spawnSync} from 'node:child_process';
@@ -14,6 +15,27 @@ import {checkedReleaseRendererOutputs} from '../docs-api-output-discovery.mjs';
 const repository = path.resolve(import.meta.dirname, '../..');
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
 const authority = JSON.parse(fs.readFileSync(path.join(repository, authorityPath)));
+// The JSON witness remains historical on disk. This consistency fixture applies
+// the separately reviewed exact current companion only to its synthetic data.
+const receiverSource = fs.readFileSync(path.join(repository, 'scripts/docs-api-top-level-script-purpose.mjs'), 'utf8');
+const receiverTree = ts.createSourceFile('receiver', receiverSource, ts.ScriptTarget.Latest, true);
+const companionNode = receiverTree.statements.flatMap(n => ts.isVariableStatement(n) ? [...n.declarationList.declarations] : [])
+  .find(n => n.name.getText(receiverTree) === 'currentTopLevelProducerBinding20261101');
+const companion = JSON.parse(companionNode.initializer.arguments[0].getText(receiverTree));
+assert.equal(authority.sourcePins[companion.path], companion.historicalSha256);
+assert.deepEqual(authority.descriptors.filter(r => r.source === companion.path), companion.historicalDescriptors);
+const oldStandalone = authority.standaloneVerificationContext;
+assert.deepEqual(oldStandalone.slots.filter(r => r.source === companion.path), companion.historicalSlots);
+assert.deepEqual(oldStandalone.outgoingEdges.filter(r => r.source === companion.path), companion.historicalOutgoingEdges);
+const firstCompanionEdge = oldStandalone.outgoingEdges.findIndex(r => r.source === companion.path);
+authority.sourcePins[companion.path] = companion.sha256;
+authority.descriptors = authority.descriptors.map(r => r.source === companion.path
+  ? companion.descriptors[companion.historicalDescriptors.findIndex(old => JSON.stringify(old) === JSON.stringify(r))] : r);
+oldStandalone.slots = oldStandalone.slots.map(r => r.source === companion.path
+  ? companion.slots[companion.historicalSlots.findIndex(old => JSON.stringify(old) === JSON.stringify(r))] : r);
+oldStandalone.outgoingEdges = oldStandalone.outgoingEdges.flatMap((r,i) => r.source !== companion.path ? [r]
+  : i === firstCompanionEdge ? companion.outgoingEdges : []);
+
 const sources = Object.keys(authority.sourcePins);
 // Synthetic guard context reconstructed from the sealed current Source; this
 // unit fixture is not a fresh selected native graph or execution observation.
@@ -292,7 +314,7 @@ test('aggregate fixed-file occurrence preserves UNKNOWN and rejects receiver/cal
 
 // Exercise the exact private table via isolated copies of this pure receiver,
 // never through an extra production binding interface or a product command.
-test('exact three current purpose bindings reject missing duplicate reordered extra malformed and historical drift', async t => {
+test('exact five current purpose bindings reject missing duplicate reordered extra malformed and historical drift', async t => {
   const root = fs.mkdtempSync(path.join(os.tmpdir(), 'top-purpose-current-bindings-'));
   t.after(() => fs.rmSync(root, {recursive: true, force: true}));
   for (const file of [...new Set([authorityPath, 'package.json', ...authority.inputs.map(input => input.path)])]) {
@@ -305,10 +327,18 @@ test('exact three current purpose bindings reject missing duplicate reordered ex
   const end = code.indexOf('.map(Object.freeze));', start);
   assert(start >= prefix.length && end > start);
   const bindings = JSON.parse(code.slice(start, end));
-  assert.equal(bindings.length, 3);
+  assert.equal(bindings.length, 5);
+  let mutationsExecuted = 0;
+  async function loadReceiver(candidate) {
+    const executable = candidate.replace("from 'typescript'", 'from '+JSON.stringify(import.meta.resolve('typescript')))
+      .replace("from './docs-shell-source-custody.mjs'", 'from '+JSON.stringify(pathToFileURL(path.join(repository, 'scripts/docs-shell-source-custody.mjs')).href));
+    const moduleFile = path.join(root, 'receiver-'+mutationsExecuted+'.mjs');
+    fs.writeFileSync(moduleFile, executable); mutationsExecuted++;
+    return import(pathToFileURL(moduleFile).href);
+  }
   for (const mutate of [
     rows => rows.slice(1),
-    rows => [rows[0], rows[0], rows[2]],
+    rows => [rows[0], rows[0], ...rows.slice(2)],
     rows => [...rows].reverse(),
     rows => [...rows, {...rows[0], path: 'scripts/unapproved.mjs'}],
     rows => rows.map((row, i) => i ? row : {...row, path: 'scripts/unapproved.mjs'}),
@@ -316,10 +346,35 @@ test('exact three current purpose bindings reject missing duplicate reordered ex
     rows => rows.map((row, i) => i ? row : {...row, sha256: 'not-a-digest'}),
     rows => rows.map((row, i) => i ? row : {...row, historicalSha256: '0'.repeat(64)}),
     rows => rows.map((row, i) => i ? row : {...row, sha256: '0'.repeat(64)}),
+    rows => rows.slice(0, 4),
+    rows => rows.slice(0, 3),
+    rows => rows.map((row, i) => i === 3 ? {...row, historicalSha256: '0'.repeat(64)} : row),
+    rows => rows.map((row, i) => i === 3 ? {...row, sha256: '0'.repeat(64)} : row),
+    rows => rows.map((row, i) => i === 4 ? {...row, historicalSha256: '0'.repeat(64)} : row),
+    rows => rows.map((row, i) => i === 4 ? {...row, sha256: '0'.repeat(64)} : row),
   ]) {
     const candidate = code.slice(0, start) + JSON.stringify(mutate(structuredClone(bindings))) + code.slice(end);
-    const receiver = await import('data:text/javascript;base64,' + Buffer.from(candidate).toString('base64'));
+    const receiver = await loadReceiver(candidate);
     assert.throws(() => receiver.checkedTopLevelScriptPurposes(root, graph, original, sources, nativePackageEntries), diagnostic);
+  }
+  const producerPrefix = 'const currentTopLevelProducerBinding20261101 = Object.freeze(';
+  const producerStart = code.indexOf(producerPrefix)+producerPrefix.length;
+  const producerEnd = code.indexOf(');\nfunction currentTopLevelPurposeAuthority', producerStart);
+  assert(producerStart >= producerPrefix.length && producerEnd > producerStart);
+  const producer = JSON.parse(code.slice(producerStart, producerEnd));
+  for (const mutate of [
+    r => ({...r, historicalSha256:'0'.repeat(64)}),
+    r => ({...r, sha256:'0'.repeat(64)}),
+    r => ({...r, historicalDescriptors:r.historicalDescriptors.slice(1)}),
+    r => ({...r, descriptors:r.descriptors.map((row,i)=>i?row:{...row,line:999})}),
+    r => ({...r, historicalSlots:[]}),
+    r => ({...r, slots:r.slots.map((row,i)=>i?row:{...row,line:999})}),
+    r => ({...r, historicalOutgoingEdges:r.historicalOutgoingEdges.slice(1)}),
+    r => ({...r, outgoingEdges:[...r.outgoingEdges,{source:r.path,target:'scripts/unapproved.mjs',kind:'import',operation:'import unapproved'}]}),
+  ]) {
+    const candidate=code.slice(0,producerStart)+JSON.stringify(mutate(structuredClone(producer)))+code.slice(producerEnd);
+    const receiver=await loadReceiver(candidate);
+    assert.throws(()=>receiver.checkedTopLevelScriptPurposes(root,graph,original,sources,nativePackageEntries),diagnostic);
   }
 });
 
@@ -604,7 +659,21 @@ const finalReceivingRows = [
 ];
 test('all31 residual receiving rows join exact canonical descriptors without raw-role mutation', () => fixture(({acquire}) => {
   const receipt = acquire();
-  for (const slot of finalReceivingRows) {
+  // These ledger rows retain their historical coordinates. Resolve only the
+  // authenticated concrete producer successor already checked by this fixture.
+  assert.equal(finalReceivingRows.filter(row => row.source === companion.path).length, companion.historicalDescriptors.length);
+  for (const historicalSlot of finalReceivingRows) {
+    let slot = historicalSlot;
+    if (slot.source === companion.path) {
+      const matches = companion.historicalDescriptors.map((row,index) => ({row,index}))
+        .filter(({row}) => row.source === slot.source && row.line === slot.line && row.sink === slot.sink);
+      assert.equal(matches.length, 1, slot.rowId);
+      const current = companion.descriptors[matches[0].index];
+      assert.deepEqual(current, {...matches[0].row,line:current.line});
+      assert.equal(current.role, 'unknown');
+      assert.equal(current.source, slot.source); assert.equal(current.sink, slot.sink);
+      slot = {...slot,line:current.line};
+    }
     const candidates = original(slot.source).filter(role => role.line === slot.line && role.sink === slot.sink);
     assert(candidates.length, slot.rowId);
     for (const role of candidates) {

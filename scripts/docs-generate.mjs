@@ -12,7 +12,7 @@ import {
   renderWorkflowTable,
   table,
 } from './docs-generate-core.mjs';
-import { publicationClaimsPurposeInputBytes } from './docs-documentation-owner-purpose-custody.mjs';
+import { publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs } from './docs-documentation-owner-purpose-custody.mjs';
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 import { schemaSemanticText } from './plugin-registration-dependencies.mjs';
 import { stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
@@ -103,8 +103,10 @@ function hasEquivalentDerivedPublicationSeals(sourcePath) {
     const current = fs.readFileSync(file);
     // Validate even identical inputs: malformed/ambiguous claims are not an
     // eligible derived metadata boundary.
-    const baselineProjection = publicationClaimsPurposeInputBytes(baseline);
-    const currentProjection = publicationClaimsPurposeInputBytes(current);
+    const mixedPurposeInputs={};
+    publicationClaimsPurposePhysicalInputs(root,mixedPurposeInputs);
+    const baselineProjection = publicationClaimsPurposeInputBytes(baseline,mixedPurposeInputs);
+    const currentProjection = publicationClaimsPurposeInputBytes(current,mixedPurposeInputs);
     if (baseline.equals(current)) return true;
     return baselineProjection === currentProjection;
   } catch {

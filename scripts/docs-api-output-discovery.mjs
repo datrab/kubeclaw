@@ -6,7 +6,7 @@ import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-ve
 import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose} from './docs-api-top-level-script-purpose.mjs';
 import {checkedStorageReceiverPurposes,selectedStorageReceiverPurpose} from './docs-api-storage-receiver-purpose.mjs';
 import {checkedPrismNativeRequestCapability,classifyPrismNativeRequestRoles,selectedPrismNativeRequestCapability} from './docs-api-prism-native-request-capability.mjs';
-import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed,publicationClaimsPurposeInputBytes} from './docs-documentation-owner-purpose-custody.mjs';
+import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed,publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs} from './docs-documentation-owner-purpose-custody.mjs';
 import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
 import {deploymentScalarOccurrenceCustody, selectedDeploymentScalarOccurrences} from './docs-deployment-scalar-occurrence-custody.mjs';
 import {deploymentConfigOutputCustody, deploymentConfigOutputRole} from './docs-deployment-config-output-custody.mjs';
@@ -2758,7 +2758,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
       "path": "docs/config/publication-example-claims.json",
       "historicalWholeInputSha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f",
       "purposeProjection": "exact-generated-record-seals-only/v1",
-      "purposeProjectionSha256": "0d5241e8ef278d077c58cdad2a3071970a0b5eb6f2f68f2f10a4aa704639173c"
+      "purposeProjectionSha256": "42d41be79e14631751cd0673f5059ddb75c11f60ce78fa181ba195e2fb291ade"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -2913,7 +2913,8 @@ function checkedPublicationYamlValidationInputs(root,graph,classify,sources) {
   if(!sources.includes(profile.source))return null;
   const fail=detail=>assert.fail('API_PRODUCT_PUBLICATION_YAML_INPUT_PURPOSE_UNQUALIFIED: '+detail);
   if((root!==profile.root&&!isReviewedPracticalReaderGraphRoot(root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
-  const currentPurposeInputs=[];
+  const mixedPurposeInputs={};
+  const currentPurposeInputs=[...publicationClaimsPurposePhysicalInputs(root,mixedPurposeInputs)];
  for(const input of profile.fixedInputs){
     const file=path.join(root,input.path);
     for(let current=file;current!==root;current=path.dirname(current)){
@@ -2923,7 +2924,7 @@ function checkedPublicationYamlValidationInputs(root,graph,classify,sources) {
     }
     const inputBytes=fs.readFileSync(file);
   if(input.purposeProjection!==undefined&&(input.path!=='docs/config/publication-example-claims.json'||input.purposeProjection!=='exact-generated-record-seals-only/v1'))fail('unsupported input projection '+input.path);
-  const purposeBytes=input.purposeProjection===undefined?inputBytes:publicationClaimsPurposeInputBytes(inputBytes);
+  const purposeBytes=input.purposeProjection===undefined?inputBytes:publicationClaimsPurposeInputBytes(inputBytes,mixedPurposeInputs);
   if(hash(purposeBytes)!==(input.purposeProjectionSha256??input.sha256))fail('fixed source/input '+input.path);
   currentPurposeInputs.push({path:input.path,sha256:hash(inputBytes)});
   }
@@ -2949,7 +2950,7 @@ function checkedPublicationYamlValidationInputs(root,graph,classify,sources) {
   const roles=classify(profile.source);
   if(JSON.stringify(roles.map(publicationYamlValidationDescriptor))!==JSON.stringify(profile.descriptors))fail('complete explicit-preparation raw schema vector');
   const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line)),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,schemaSemanticsNewlyApproved:false})));
-  const receipt=Object.freeze({source:profile.source,slots,materials:Object.freeze([...profile.materials]),preparedSchemaFileNames:Object.freeze([...profile.preparedSchemaFileNames]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,currentPurposeInputs,materials:profile.materials,files:profile.preparedSchemaFileNames})),nativeValidatorSuccessObserved:false,newBinaryProvenanceGranted:false,futurePreparedPathStateObserved:false,preparationExecutionAuthorized:false,normalValidationReadOnly:true,cleanupOrRollbackGuaranteed:false,scope:'Only exact schema preparation-output purpose and normal read/stdin validation boundary; no native success, new caller or API grant'});
+  const receipt=Object.freeze({source:profile.source,slots,materials:Object.freeze([...profile.materials]),preparedSchemaFileNames:Object.freeze([...profile.preparedSchemaFileNames]),dependencies:Object.freeze([...new Set([...profile.fixedInputs.map(input=>input.path),...currentPurposeInputs.map(input=>input.path)])]),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,currentPurposeInputs,materials:profile.materials,files:profile.preparedSchemaFileNames})),nativeValidatorSuccessObserved:false,newBinaryProvenanceGranted:false,futurePreparedPathStateObserved:false,preparationExecutionAuthorized:false,normalValidationReadOnly:true,cleanupOrRollbackGuaranteed:false,scope:'Only exact schema preparation-output purpose and normal read/stdin validation boundary; no native success, new caller or API grant'});
   publicationYamlValidationReceipts.add(receipt);return receipt;
 }
 function selectedPublicationYamlValidationInput(source,role,receipt) {
@@ -3541,7 +3542,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "path": "docs/config/publication-example-claims.json",
       "historicalWholeInputSha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f",
       "purposeProjection": "exact-generated-record-seals-only/v1",
-      "purposeProjectionSha256": "0d5241e8ef278d077c58cdad2a3071970a0b5eb6f2f68f2f10a4aa704639173c"
+      "purposeProjectionSha256": "42d41be79e14631751cd0673f5059ddb75c11f60ce78fa181ba195e2fb291ade"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -5656,7 +5657,8 @@ function checkedPublicationNativeValidation(root,graph,classify,sources) {
  if(!sources.includes(profile.source))return null;
  const fail=detail=>assert.fail('API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: '+detail);
  if((root!==profile.root&&!isReviewedPracticalReaderGraphRoot(root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
- const currentPurposeInputs=[];
+ const mixedPurposeInputs={};
+ const currentPurposeInputs=[...publicationClaimsPurposePhysicalInputs(root,mixedPurposeInputs)];
  for(const input of profile.fixedInputs){
   const file=path.join(root,input.path);
   for(let current=file;current!==root;current=path.dirname(current)){
@@ -5666,7 +5668,7 @@ function checkedPublicationNativeValidation(root,graph,classify,sources) {
   }
   const inputBytes=fs.readFileSync(file);
   if(input.purposeProjection!==undefined&&(input.path!=='docs/config/publication-example-claims.json'||input.purposeProjection!=='exact-generated-record-seals-only/v1'))fail('unsupported input projection '+input.path);
-  const purposeBytes=input.purposeProjection===undefined?inputBytes:publicationClaimsPurposeInputBytes(inputBytes);
+  const purposeBytes=input.purposeProjection===undefined?inputBytes:publicationClaimsPurposeInputBytes(inputBytes,mixedPurposeInputs);
   if(hash(purposeBytes)!==(input.purposeProjectionSha256??input.sha256))fail('fixed source/input '+input.path);
   currentPurposeInputs.push({path:input.path,sha256:hash(inputBytes)});
  }
@@ -5699,7 +5701,7 @@ function checkedPublicationNativeValidation(root,graph,classify,sources) {
  const roles=classify(profile.source);
  if(JSON.stringify(roles.map(publicationNativeValidationDescriptor))!==JSON.stringify(profile.descriptors))fail('complete ten-slot raw vector');
  const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line)),runtimeExecutionAuthorized:false,apiApplyAuthorized:false})));
- const receipt=Object.freeze({source:profile.source,slots,dependencies:Object.freeze([...profile.fixedInputs.map(input=>input.path),...generatedDataSnapshots.map(input=>input.path)]),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,currentPurposeInputs,generatedDataSnapshots,rosters:profile.directoryRosters,edges:profile.incomingEdges,slots:profile.descriptors})),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,toolSuccessObserved:false,newBinaryProvenanceGranted:false,networkAbsenceProved:false,futureTemporaryStateObserved:false,cleanupAttemptOnly:true,cleanupOrRollbackGuaranteed:false,productOutputs:Object.freeze([])});
+ const receipt=Object.freeze({source:profile.source,slots,dependencies:Object.freeze([...new Set([...profile.fixedInputs.map(input=>input.path),...currentPurposeInputs.map(input=>input.path),...generatedDataSnapshots.map(input=>input.path)])]),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,currentPurposeInputs,generatedDataSnapshots,rosters:profile.directoryRosters,edges:profile.incomingEdges,slots:profile.descriptors})),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,toolSuccessObserved:false,newBinaryProvenanceGranted:false,networkAbsenceProved:false,futureTemporaryStateObserved:false,cleanupAttemptOnly:true,cleanupOrRollbackGuaranteed:false,productOutputs:Object.freeze([])});
  publicationNativeValidationReceipts.add(receipt);return receipt;
 }
 function selectedPublicationNativeValidation(source,role,receipt) {

@@ -516,7 +516,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
   },
   {
-    "expressionSha256": "b9e0dade7217ecfc25ed890e37f718aad3dc37fd76ff9602a8174ca1f4892f1b"
+    "expressionSha256": "a7dc689e4e1eb29d38e50378c7b527efcb1699afa780e73ca8d4cfc0eb99477e"
   },
   {
     "expressionSha256": "2622126f748ecb921e36ef23523ff970251ea6e66431b89d3b8efc913e7f780a"
@@ -636,7 +636,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "23f8ffe64b7fa6557f778121a6c050adfea672efeffdef0ee17768d219793389"
   }
 ],
-    "factsDigest": "450ea0511b6754ce17453c5294bf78667e99f04696b959e553c73abb89e1b89d",
+    "factsDigest": "73a38cd37d340777d8d0c556dd78f82d57baeed5f5e2cee83c8c30b25fd6ca5d",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -857,7 +857,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "17ef6b9796fd9d66797bbf3e78b026dcf13f69b1d17129bf5f2bde0c55aac2a8",
+    "factsDigest": "2cdd188ac68891c49f6554b399759e4c851d42157e621e2be11b722be1c16688",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1136,7 +1136,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "cafa0128505ff8a682709d309fe69497dfb5658c3b435dfbdff64426c4423d0e",
+    "factsDigest": "99d92d09bfec074087af369c053a07abec225798b38010970e76d58b93aaee75",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1983,7 +1983,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "8441f2cdca349bab6ef9948958aae5b6312ed8bb0d7a74272cc6bc7a6154ac42",
+    "factsDigest": "10a3b05acb1b28d69633d8f82159b484e01f47b26bc3f9787759b0d36fe657f6",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2107,7 +2107,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "06bc5c5a6e802c66944116f0d0c2e15ae11931683791246e8075e59082fbc1c3"
   },
   {
-    "expressionSha256": "6919c96c06a758fc1a1671163853b8c43e0e6f577607fba966f96b6f01aee0e9"
+    "expressionSha256": "cb6a678d48d77d612f59d41970c1e40bc8a4014b0b6fe2c2871e9d8df64d67d9"
   },
   {
     "expressionSha256": "f1619164e74114794de09c8fc772092311dd2c8a9ab98307e0ed729cf4121d97"
@@ -2134,7 +2134,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
   }
 ],
-    "factsDigest": "e57ebb65ba24eab2435297c6c28f26669c9df04fed86ef13fe5104565c939df9",
+    "factsDigest": "a4cf1c7b2423f8539f19cf3316f24f9ce18500779728890f876f2e34ffd9d300",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -7526,7 +7526,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-generate.mjs",
         "canonical": "scripts/docs-generate.mjs",
-        "sha256": "ac1c2787fa0ec0aca098f542e946349d345b13c006154da56b52b6d8c64a5e93"
+        "sha256": "41a30fba96b6ecab94926ff54ed840ec7a3c08b983c31c2840fdf0999e1f7e4c"
       },
       {
         "path": "scripts/docs-local-helm-field-authorities.json",
@@ -10456,7 +10456,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-output-discovery.mjs",
         "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "0b4ddbdca8af443fc5837a0a9492259d62e5b1670da378e5c023d7c409667f73"
+        "sha256": "73d8597f6fe10f0b1dbb6a1454bac263535ee58b17a8b9e6b2d9260a8f829b6f"
       },
       {
         "path": "scripts/docs-helm-memory-chart.mjs",
@@ -10501,7 +10501,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-output-discovery.mjs",
         "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "0b4ddbdca8af443fc5837a0a9492259d62e5b1670da378e5c023d7c409667f73"
+        "sha256": "73d8597f6fe10f0b1dbb6a1454bac263535ee58b17a8b9e6b2d9260a8f829b6f"
       },
       {
         "path": "scripts/docs-memory-inputs.mjs",
@@ -10791,11 +10791,11 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-api-output-discovery.mjs",
-      "sha256": "0b4ddbdca8af443fc5837a0a9492259d62e5b1670da378e5c023d7c409667f73"
+      "sha256": "73d8597f6fe10f0b1dbb6a1454bac263535ee58b17a8b9e6b2d9260a8f829b6f"
     },
     {
       "path": "scripts/tests/api-output-publication-native-custody.test.mjs",
-      "sha256": "bff2a57b6ae7cca5a61e67b8839c45917e896d23bc6110f7c06abd100f958ed2"
+      "sha256": "a52fafc6ad2bf82e71bc1f0e27bb8506f94032af3b9adec8aa2ddfecf494f0f6"
     }
   ],
   "callers": [
@@ -11696,7 +11696,7 @@ const reviewedRootSelectedCompilerRecipe=frozenRecipes({
 });
 const reviewedSdkGeneratorRecipe=frozenRecipes({
   "source": "scripts/docs-generate.mjs",
-  "sourceSha256": "ac1c2787fa0ec0aca098f542e946349d345b13c006154da56b52b6d8c64a5e93",
+  "sourceSha256": "41a30fba96b6ecab94926ff54ed840ec7a3c08b983c31c2840fdf0999e1f7e4c",
   "importSyntax": "import { generateSdkReference } from './docs-sdk-reference.mjs';",
   "importSha256": "e15b85ac5924f3161910eefb87c17408769991d84095ccba953a05da09af2e12",
   "targetSourceSha256": "d04f9cba922825061989086c80890c50ff2e8b283f9d2fe4279ed70de9499cf0",
@@ -11710,7 +11710,7 @@ const reviewedSdkGeneratorRecipe=frozenRecipes({
   },
   "rootRevisionPrerequisites": [
     "root=path.resolve(option(--root,process.cwd())); exact canonical worktree root only for this proposed profile. Detached allow flag/env mode requires separate receipt; do not inherit observation.",
-    "Generator current40hex sourceRevision must identify existing local commit and match all non-generated tracked/untracked product and generator sources; exact internal completion JSON records are excluded and forbidden as generator inputs or pinned authority; source lock/selected inputs actual bytes and Git caller process are qualification inputs. The sole additional derived-metadata equivalence is docs/config/publication-example-claims.json: the existing sourceRevision Git blob and the current canonical regular single-link physical file must both pass the exact eight-generated-record-seal projection and have equal projected bytes. Only those eight generated SHA literals may differ; all authored claims, code payload seals, IDs, native bindings and every other byte/path remain subject to the original freshness requirements. This is a pre-generation Source-purpose condition, not native SDK execution or current artifact acceptance.",
+    "Generator current40hex sourceRevision must identify existing local commit and match all non-generated tracked/untracked product and generator sources; exact internal completion JSON records are excluded and forbidden as generator inputs or pinned authority; source lock/selected inputs actual bytes and Git caller process are qualification inputs. The sole additional derived-metadata equivalence is docs/config/publication-example-claims.json: the existing sourceRevision Git blob and current canonical regular single-link file must both pass the same exact Source-owned 76-record generated-page/prose/asset-seal projection and have equal projected bytes. The three mixed pages (use/plugins.md, reference/schemas.md and reference/events.md) require physical inputs acquired from the actual canonical caller root, preserving their exact authored-byte projections outside unique owner-generated regions and only the one explicitly selected current-schema citation shape. All code-block SHA/type/info/ordinal seals, authored claims, IDs, native bindings, responsibility/basis bytes and every other path remain under the original freshness requirements. This is pre-generation Source-purpose equivalence, not native SDK execution, current generated-output freshness or artifact acceptance.",
     "option fallback evaluation is eager: sourceRevision lock read occurs even explicit --revision; absent lock evaluates git rev-parse HEAD fallback even explicit --revision. git cat-file/show-toplevel/diff/ls-files calls are genuine child inputs/effects.",
     "--update-source-revision writes lock before subsequent freshness guard. It rejects --check but is not admitted by read-only acquisition witness; source commit and separate generated revision prerequisites apply."
   ],

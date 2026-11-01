@@ -13,7 +13,7 @@ import {classifySerializedOutputRoles,deriveNativeOperationFacts,nativeOperation
 import {shellNativeNodeEntries} from '../docs-shell-source-custody.mjs';
 import {expandReviewedNodePackageGlob} from '../docs-api-documentation-role-custody.mjs';
 import {publicationExampleBlocks} from '../lib/docs-publication-example-coverage.mjs';
-import {assertPublicationExampleChildPurpose,publicationClaimsPurposeInputBytes} from '../docs-documentation-owner-purpose-custody.mjs';
+import {assertPublicationExampleChildPurpose,publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs} from '../docs-documentation-owner-purpose-custody.mjs';
 const root=path.resolve(import.meta.dirname,'../..'),modulePath='scripts/docs-api-output-discovery.mjs',source='scripts/docs-publication-embedded-yaml.mjs',caller='scripts/docs-publication-examples.mjs';
 const code=fs.readFileSync(path.join(root,modulePath),'utf8'),tree=ts.createSourceFile(modulePath,code,ts.ScriptTarget.Latest,true),graph=discoverScriptInputGraph(root),raw=classifySerializedOutputRoles(root,source);
 const statement=(t,name)=>{const n=t.statements.find(n=>ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(t)===name));assert(n,name);return n.getText(t);};
@@ -23,7 +23,7 @@ function verifier({overrides=new Map(),cwd=root,selectedGraph=graph,alias=null,h
   realpathSync:file=>String(file)===alias||tempAlias&&String(file)===os.tmpdir()?String(file)+'.alias':fs.realpathSync(file),
   lstatSync:file=>{const s=fs.lstatSync(file);return String(file)===hardlink||String(file)===badParent?{...s,nlink:String(file)===hardlink?2:s.nlink,isFile:()=>s.isFile(),isDirectory:()=>String(file)===badParent?false:s.isDirectory(),isSymbolicLink:()=>s.isSymbolicLink()}:s;}
  };
- const context=vm.createContext({assert,fs:reader,os,path,process:{cwd:()=>cwd},hash:b=>crypto.createHash('sha256').update(b).digest('hex'),deriveNativeOperationFacts:(...args)=>nativeFacts??deriveNativeOperationFacts(...args),nativeOperationFactDigest,shellNativeNodeEntries,expandReviewedNodePackageGlob,assertPublicationExampleChildPurpose,publicationClaimsPurposeInputBytes});
+ const context=vm.createContext({assert,fs:reader,os,path,process:{cwd:()=>cwd},hash:b=>crypto.createHash('sha256').update(b).digest('hex'),deriveNativeOperationFacts:(...args)=>nativeFacts??deriveNativeOperationFacts(...args),nativeOperationFactDigest,shellNativeNodeEntries,expandReviewedNodePackageGlob,assertPublicationExampleChildPurpose,publicationClaimsPurposeInputBytes,publicationClaimsPurposePhysicalInputs});
  const body=statement(tree,'isReviewedPracticalReaderGraphRoot')+'\n'+statement(tree,'reviewedPublicationYamlValidationInputs')+'\n'+statement(tree,'publicationYamlValidationReceipts')+'\n'+['documentationEntryPoints','publicationYamlValidationDescriptor','checkedPublicationYamlValidationInputs','selectedPublicationYamlValidationInput'].map(n=>declaration(tree,n)).join('\n');
  vm.runInContext(body+'\nglobalThis.api={acquire:checkedPublicationYamlValidationInputs,slot:selectedPublicationYamlValidationInput};',context);context.rawJSON=JSON.stringify(rows);const classify=()=>vm.runInContext('JSON.parse(rawJSON)',context);
  return{acquire:(selectedRoot=root)=>context.api.acquire(selectedRoot,selectedGraph,classify,[source]),slot:(role,receipt,selectedSource=source)=>context.api.slot(selectedSource,role,receipt)};
