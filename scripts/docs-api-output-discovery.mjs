@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "d01d9218b63960685ede897d5f03d4d4abd5d7d380b62ca585bfc3c8a5f8a370"
+      "sha256": "223c7ec01af0931925ce46a6a5dc72b0bd37180099b04cb7a7d8ebb4ecaa98c1"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3428,7 +3428,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "d01d9218b63960685ede897d5f03d4d4abd5d7d380b62ca585bfc3c8a5f8a370"
+      "sha256": "223c7ec01af0931925ce46a6a5dc72b0bd37180099b04cb7a7d8ebb4ecaa98c1"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3508,7 +3508,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
-      "sha256": "bdd14a0769d2ff65a042be4bd5f9c7db12003ce017d8f053d45191c3a7446ea7"
+      "sha256": "56247158b9487a01194334a0824704ee2ce4ca005e8f50d6e49eb0e72324ccd4"
     },
     {
       "path": "docs/site/reference/helm-values.md",
@@ -3596,11 +3596,11 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
-      "sha256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600"
+      "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
     },
     {
       "path": "docs/site/use/workflows/examples/quality-validation.mjs",
-      "sha256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6"
+      "sha256": "ab862a8a86d40810994bafea3a8669cbc5969e0f40f51887e28754b7507b8503"
     },
     {
       "path": "docs/site/use/workflows/examples/repair-retry.mjs",
@@ -3648,7 +3648,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/use/workflows/quality-validation.md",
-      "sha256": "af7e73137e3f32a51d082985128e25378720bc5c1c63d44396e28b52dbd36e89"
+      "sha256": "d88b9747a74d76342c24b25022f1fe0c856df72e3dfc24187a2805c8ff8c97f9"
     },
     {
       "path": "docs/site/use/workflows/uncertain-effect.md",
@@ -3676,7 +3676,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "scripts/docs-publication-example-assets.mjs",
-      "sha256": "d32279f359d0d2b17a49b10601dd3f611c8fcac6b6a431a9a0495de04bf14d05"
+      "sha256": "439ab9b09fa0a5e2caddfa1e885124cc224f1523aa388e97a3c08d331909b7fc"
     },
     {
       "path": "scripts/docs-publication-example-native.mjs",
@@ -5454,7 +5454,8 @@ const reviewedPublicationNativeValidation = Object.freeze({
         "validateBrowserCompanions",
         "validateGraphExample(uncertainGraph)",
         "validateGraphExample(json('use/workflows/examples/minimal.pipeline.json'))",
-        "validatePrism('designDocument', json('use/workflows/examples/prism-studio-flow.json'))"
+        "validateEngineRequest('generate', prismRequest)",
+      "validatePrism('designDocument', prismRequest.input.document)"
       ],
       "limit": "Existing assets-native validation only; no independent package entry or runtime grant."
     },

@@ -4,7 +4,7 @@ import path from 'node:path';
 import { execFileSync } from 'node:child_process';
 import { parsePluginManifest, validateReferencedSchema, validateContractValue } from '../skills/common/plugin-runtime/foundation/registry/schema.ts';
 import * as native from './docs-publication-example-native.mjs';
-import { validatePrism } from '../contracts/prism/v1/src/index.ts';
+import { validatePrism, validateEngineRequest } from '../contracts/prism/v1/src/index.ts';
 
 export function validateExampleAssets(root, assets) {
   const site = path.join(root, 'docs/site');
@@ -45,7 +45,9 @@ export function validateExampleAssets(root, assets) {
     { maxAttempts: 3, maxRemediationCycles: 0, timeoutMs: 20000 });
   // Parse the actual new canonical inputs; no helper, provider or runtime is executed.
   native.validateGraphExample(json('use/workflows/examples/minimal.pipeline.json'));
-  validatePrism('designDocument', json('use/workflows/examples/prism-studio-flow.json'));
+  const prismRequest = json('use/workflows/examples/prism-studio-flow.json');
+  validateEngineRequest('generate', prismRequest);
+  validatePrism('designDocument', prismRequest.input.document);
   const governance = execFileSync(process.execPath, [path.join(root, 'scripts/docs-governance.mjs'), '--check'],
     { cwd: root, encoding: 'utf8', timeout: 120000, maxBuffer: 4 * 1024 * 1024 });
   assert.match(governance, /documentation governance passed \([0-9]+ pages mapped\)/u);

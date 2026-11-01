@@ -1,33 +1,45 @@
 # Validate a local Prism flow and resolve a Buster suite
 
-Status: bounded local validation proposal; original quality-reader case remains incomplete
+Status: local native request/template/provider/output validation; original fresh quality-reader acceptance pending
 Audience: Prism and Buster specialist
 Owner: Prism document and Studio maintainers; Buster resolver and capability-documentation maintainers
 Evidence: docs/site/use/workflows/examples/prism-studio-flow.json; docs/site/use/workflows/examples/quality-validation.mjs; docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json
-Applies to: native document, transition, preview, suite resolution and documentation-drift checks; no provider execution or deployment
-Last verified: 2026-11-01. Actual author validation and mutation controls; not a fresh participant or independent acceptance
+Applies to: native request/document/template, local deterministic design provider and typed output, suite resolution and documentation-drift checks; no remote provider execution or deployment
+Last verified: 2026-11-01. Actual author native request/component/provider/output and retained mutation controls; not a fresh participant or original acceptance
 
-## Scope and unresolved original condition
+## Native validation scope and identities
 
-The original `READER-QUALITY-01` task requires Prism validation to resolve flow,
-template, provider and output identities. Its named Prism fixture was missing.
-The proposed fixture here is a real `prism.design-document.v1` document, not a
-wrapper that bypasses the contract. The native validator, Studio flow resolver,
-preview renderer and deterministic evaluator accept it. They resolve document,
-flow, view, state, node and action identities.
+The canonical `prism-studio-flow.json` is a real closed native `generate`
+engine request, not a new wrapper or provider registry. Its `input.document`
+is a native `prism.design-document.v1` document. Flow `review` selects the
+`confirm-button` transition from `home/ready` to `home/default`.
 
-Those Studio contracts do **not** bind a template registry, design-provider
-registration or output identity. The helper reports this missing original
-condition rather than inventing these identities. Its zero exit means the
-specified bounded validation assertions completed. It does not make the original
-quality-reader case pass. The authoring basis is the maintained `minimal-web.json`
-contract fixture, not a newly discovered product template service.
+The document also selects reusable component template `review-card` through a
+native `component` node's `props.component`. The native document validator
+checks that reference, and the real renderer must include the selected template's
+content. A seed-file hash, unrelated HTML or a preview alert is not resolution.
+“Template” here means this actual reusable component definition, not a newly
+claimed product `templateId` service.
 
-Prism maintainers must supply and document the actual native binding intended by
-that original condition, or obtain an explicit original-criterion adjudication.
-Do not relabel a document ID as a provider or output. This local input/contract
-question is not automatically an external credential problem. This validation creates no Gateway request, model request, provider request,
-signed result, approval or Baseline Bundle.
+For this local validation command, the fixed factory is the maintained
+`DeterministicDesignProvider` export in `skills/prism/engine/design-providers.ts`.
+The helper constructs that real provider and uses it in `PrismEngine` for the
+fixture's native `generate` request. It verifies the actual typed operation and
+changed document, then renders with `capture: false` to prove template consumption.
+The provider identity and exact Source hash are bound to the fixture request digest.
+There is no `providerId` field in the request and no remote model response.
+This is the documented validation route's fixed local constructor selection, not a new
+Worker/Studio provider-wire setting or a claim of production generation.
+
+The worker binding validates installed request and result schema IDs/digests for
+`kubeclaw.prism-design-engine@1`; generated and rendered result records retain
+those exact output contracts. The production native worker **rejects generate**
+with `Prism generation requires the OpenClaw agent gateway`. Local library
+validation does not bypass or authorize that production path. It creates no
+Gateway job, Control approval, signed result or Baseline Bundle.
+
+Original task acceptance still requires independent judgment and a new eligible
+participant completing the unchanged four outcomes; helper zero is not that award.
 
 ## Prerequisites and local command
 
@@ -51,6 +63,8 @@ export QUALITY_RESULTS="<new-absolute-result-directory>"
 node docs/site/use/workflows/examples/quality-validation.mjs "$QUALITY_RESULTS"
 cat "$QUALITY_RESULTS/author-native-result.json"
 cat "$QUALITY_RESULTS/prism-native-result.json"
+cat "$QUALITY_RESULTS/prism-generated-result.json"
+cat "$QUALITY_RESULTS/prism-rendered-result.json"
 cat "$QUALITY_RESULTS/buster-resolved-plan.json"
 cat "$QUALITY_RESULTS/capability-mutation-result.json"
 ```
@@ -59,11 +73,11 @@ Stop at the first unexpected error. Keep that error and partial results. Do not
 broaden grants, replace a native owner with a schema-only stub, or interpret
 `ready` from local evaluation as a deployed design approval.
 
-The helper validates flow `review` in document `quality-reader-design`. Its
+The native request contains document `quality-reader-design`, revision 1. Its
 `confirm` action on `confirm-button` resolves `home/ready` to `home/default`.
 Wrong-node navigation does not resolve. Malformed flow data is rejected by the
 actual contract. A missing transition endpoint produces a blocking native flow
-finding. The actual renderer produces the corresponding local preview markup.
+finding. The real generated output and native render must contain the referenced component template. Missing/wrong template references, wrong request-schema digest, invented provider/template input fields and malformed output are rejected. The helper retains generated/rendered typed results and local preview markup.
 
 For Buster, the helper copies the canonical full suite fixture byte-exactly into
 an owned temporary `.swarm/pipeline.json`, loads module `web`, discovers the
@@ -148,9 +162,9 @@ records. Remove only that selected result directory after exporting any needed
 evidence; do not remove the source checkout, canonical fixture, real job store
 or an unrelated cache.
 
-Original outcome one remains open until its template/provider/output binding is
-substantively supplied and reviewed. No fresh quality-reader, whole gate,
-provider execution, accessibility or deployment acceptance follows from these
+The local fixture/request/template/provider/output path must receive independent
+original-condition judgment before a new eligible fresh quality reader. No whole-gate,
+remote-provider execution, accessibility or deployment acceptance follows from these
 local checks.
 
 The result directory must be new and absolute, with an existing canonical parent and no symlink anywhere in its parent ancestry. The helper refuses noncanonical or symlinked ancestry before creating the result root.

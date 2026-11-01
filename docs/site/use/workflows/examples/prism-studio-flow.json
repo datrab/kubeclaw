@@ -1,133 +1,158 @@
 {
-  "meta": {
-    "schema": "prism.design-document.v1",
-    "documentId": "quality-reader-design",
-    "projectId": "quality-reader-project",
-    "revision": 1,
-    "title": "Quality reader flow",
-    "createdAt": "2026-08-16T00:00:00Z",
-    "updatedAt": "2026-08-16T00:00:00Z"
-  },
-  "theme": {
-    "colors": {
-      "background": "#0b0d10",
-      "surface": "#15181d",
-      "text": "#f4f6f8",
-      "action": "#f97316"
-    },
-    "typography": {
-      "body": {
-        "family": "Inter",
-        "fallback": [
-          "system-ui"
-        ]
-      }
-    },
-    "space": {
-      "small": 8,
-      "medium": 16,
-      "large": 24
-    },
-    "breakpoints": {
-      "compact": 0,
-      "regular": 768,
-      "wide": 1280
-    },
-    "rules": [
-      {
-        "subject": "colors.action",
-        "instruction": "Use only for the primary action."
-      }
-    ]
-  },
-  "assets": {},
-  "components": {},
-  "views": {
-    "home": {
-      "title": "Home",
-      "surface": "web",
-      "root": {
-        "id": "home-root",
-        "type": "stack",
-        "props": {
-          "direction": "vertical",
-          "gap": 16
+  "operation": "generate",
+  "input": {
+    "document": {
+      "meta": {
+        "schema": "prism.design-document.v1",
+        "documentId": "quality-reader-design",
+        "projectId": "quality-reader-project",
+        "revision": 1,
+        "title": "Quality reader flow",
+        "createdAt": "2026-08-16T00:00:00Z",
+        "updatedAt": "2026-08-16T00:00:00Z"
+      },
+      "theme": {
+        "colors": {
+          "background": "#0b0d10",
+          "surface": "#15181d",
+          "text": "#f4f6f8",
+          "action": "#f97316"
         },
-        "children": [
+        "typography": {
+          "body": {
+            "family": "Inter",
+            "fallback": [
+              "system-ui"
+            ]
+          }
+        },
+        "space": {
+          "small": 8,
+          "medium": 16,
+          "large": 24
+        },
+        "breakpoints": {
+          "compact": 0,
+          "regular": 768,
+          "wide": 1280
+        },
+        "rules": [
           {
-            "id": "title",
-            "type": "heading",
-            "props": {
-              "content": "Deployments",
-              "level": 1
-            }
-          },
-          {
-            "id": "confirm-button",
-            "type": "button",
-            "props": {
-              "label": "Confirm",
-              "action": "confirm",
-              "accessibilityLabel": "Confirm selection",
-              "variant": "primary"
-            }
+            "subject": "colors.action",
+            "instruction": "Use only for the primary action."
           }
         ]
       },
-      "states": {
-        "default": {
-          "patches": {}
-        },
-        "ready": {
-          "patches": {}
+      "assets": {},
+      "components": {
+        "review-card": {
+          "title": "Review card",
+          "root": {
+            "id": "review-card-content",
+            "type": "text",
+            "props": {
+              "content": "Resolved quality component template"
+            }
+          }
         }
       },
-      "responsive": {
-        "compact": {
-          "patches": {}
-        },
-        "regular": {
-          "patches": {}
-        },
-        "wide": {
-          "patches": {}
+      "views": {
+        "home": {
+          "title": "Home",
+          "surface": "web",
+          "root": {
+            "id": "home-root",
+            "type": "stack",
+            "props": {
+              "direction": "vertical",
+              "gap": 16
+            },
+            "children": [
+              {
+                "id": "title",
+                "type": "heading",
+                "props": {
+                  "content": "Deployments",
+                  "level": 1
+                }
+              },
+              {
+                "id": "confirm-button",
+                "type": "button",
+                "props": {
+                  "label": "Confirm",
+                  "action": "confirm",
+                  "accessibilityLabel": "Confirm selection",
+                  "variant": "primary"
+                }
+              },
+              {
+                "id": "review-card-instance",
+                "type": "component",
+                "props": {
+                  "component": "review-card"
+                }
+              }
+            ]
+          },
+          "states": {
+            "default": {
+              "patches": {}
+            },
+            "ready": {
+              "patches": {}
+            }
+          },
+          "responsive": {
+            "compact": {
+              "patches": {}
+            },
+            "regular": {
+              "patches": {}
+            },
+            "wide": {
+              "patches": {}
+            }
+          },
+          "mockData": {},
+          "initialState": "ready"
         }
       },
-      "mockData": {},
-      "initialState": "ready"
-    }
-  },
-  "flows": {
-    "review": {
-      "title": "Review",
-      "goal": "Confirm selection",
-      "start": {
-        "view": "home",
-        "state": "ready"
-      },
-      "success": {
-        "view": "home",
-        "state": "default"
-      },
-      "recovery": [],
-      "transitions": [
-        {
-          "id": "confirm",
-          "from": {
+      "flows": {
+        "review": {
+          "title": "Review",
+          "goal": "Confirm selection",
+          "start": {
             "view": "home",
             "state": "ready"
           },
-          "to": {
+          "success": {
             "view": "home",
             "state": "default"
           },
-          "trigger": {
-            "actor": "user",
-            "action": "confirm",
-            "node": "confirm-button"
-          }
+          "recovery": [],
+          "transitions": [
+            {
+              "id": "confirm",
+              "from": {
+                "view": "home",
+                "state": "ready"
+              },
+              "to": {
+                "view": "home",
+                "state": "default"
+              },
+              "trigger": {
+                "actor": "user",
+                "action": "confirm",
+                "node": "confirm-button"
+              }
+            }
+          ]
         }
-      ]
-    }
+      }
+    },
+    "instruction": "Quality reader generated heading",
+    "mode": "refine"
   }
 }
