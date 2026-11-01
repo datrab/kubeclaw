@@ -8,11 +8,12 @@ import zlib from 'node:zlib';
 import test from 'node:test';
 import ts from 'typescript';
 import YAML from 'yaml';
+import {publicationExampleBlocks} from '../lib/docs-publication-example-coverage.mjs';
 import {discoverScriptInputGraph} from '../docs-api-output-discovery.mjs';
 import {classifySerializedOutputRoles,deriveNativeOperationFacts,nativeOperationFactDigest} from '../docs-api-output-role-classification.mjs';
 import {shellNativeNodeEntries} from '../docs-shell-source-custody.mjs';
 import {expandReviewedNodePackageGlob} from '../docs-api-documentation-role-custody.mjs';
-import {assertPublicationExampleChildPurpose} from '../docs-documentation-owner-purpose-custody.mjs';
+import {assertPublicationExampleChildPurpose,publicationClaimsPurposeInputBytes} from '../docs-documentation-owner-purpose-custody.mjs';
 const root=path.resolve(import.meta.dirname,'../..'),modulePath='scripts/docs-api-output-discovery.mjs',source='scripts/docs-publication-example-native.mjs',caller='scripts/docs-publication-examples.mjs';
 const code=fs.readFileSync(path.join(root,modulePath),'utf8'),tree=ts.createSourceFile(modulePath,code,ts.ScriptTarget.Latest,true),graph=discoverScriptInputGraph(root),raw=classifySerializedOutputRoles(root,source);
 const statement=(t,name)=>{const n=t.statements.find(n=>ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(t)===name));assert(n,name);return n.getText(t);};
@@ -22,10 +23,10 @@ function verifier({overrides=new Map(),cwd=root,selectedGraph=graph,alias=null,h
   realpathSync:file=>String(file)===alias||tempAlias&&String(file)===os.tmpdir()?String(file)+'.alias':fs.realpathSync(file),
   lstatSync:file=>{const s=fs.lstatSync(file);return String(file)===hardlink||String(file)===badParent?{...s,nlink:String(file)===hardlink?2:s.nlink,isFile:()=>s.isFile(),isDirectory:()=>String(file)===badParent?false:s.isDirectory(),isSymbolicLink:()=>s.isSymbolicLink()}:s;}
  };
- const context=vm.createContext({assert,fs:reader,os,path,process:{cwd:()=>cwd},hash:b=>crypto.createHash('sha256').update(b).digest('hex'),deriveNativeOperationFacts:(...args)=>nativeFacts??deriveNativeOperationFacts(...args),nativeOperationFactDigest,shellNativeNodeEntries,expandReviewedNodePackageGlob,assertPublicationExampleChildPurpose});
- const body=statement(tree,'reviewedPublicationNativeValidation')+'\n'+statement(tree,'publicationNativeValidationReceipts')+'\n'+['documentationEntryPoints','publicationNativeValidationDescriptor','checkedPublicationNativeValidation','selectedPublicationNativeValidation'].map(n=>declaration(tree,n)).join('\n');
- vm.runInContext(body+'\nglobalThis.api={acquire:checkedPublicationNativeValidation,slot:selectedPublicationNativeValidation};',context);context.rawJSON=JSON.stringify(rows);const classify=()=>vm.runInContext('JSON.parse(rawJSON)',context);
- return{acquire:(selectedRoot=root)=>context.api.acquire(selectedRoot,selectedGraph,classify,[source]),slot:(role,receipt,selectedSource=source)=>context.api.slot(selectedSource,role,receipt)};
+ const context=vm.createContext({assert,Buffer,fs:reader,os,path,process:{cwd:()=>cwd},hash:b=>crypto.createHash('sha256').update(b).digest('hex'),deriveNativeOperationFacts:(...args)=>nativeFacts??deriveNativeOperationFacts(...args),nativeOperationFactDigest,shellNativeNodeEntries,expandReviewedNodePackageGlob,assertPublicationExampleChildPurpose,publicationClaimsPurposeInputBytes,publicationExampleBlocks});
+ const body=statement(tree,'isReviewedPracticalReaderGraphRoot')+'\n'+statement(tree,'reviewedPublicationGeneratedDataInputs')+'\n'+statement(tree,'reviewedPublicationNativeValidation')+'\n'+statement(tree,'publicationNativeValidationReceipts')+'\n'+['publicationGeneratedDataSnapshots','documentationEntryPoints','publicationNativeValidationDescriptor','checkedPublicationNativeValidation','selectedPublicationNativeValidation'].map(n=>declaration(tree,n)).join('\n');
+ vm.runInContext(body+'\nglobalThis.api={acquire:checkedPublicationNativeValidation,slot:selectedPublicationNativeValidation,snapshots:publicationGeneratedDataSnapshots};',context);context.rawJSON=JSON.stringify(rows);const classify=()=>vm.runInContext('JSON.parse(rawJSON)',context);
+ return{acquire:(selectedRoot=root)=>context.api.acquire(selectedRoot,selectedGraph,classify,[source]),slot:(role,receipt,selectedSource=source)=>context.api.slot(selectedSource,role,receipt),snapshots:()=>context.api.snapshots(root,detail=>assert.fail(detail))};
 }
 
 const helperCode=fs.readFileSync(path.join(root,source),'utf8'),helperTree=ts.createSourceFile(source,helperCode,ts.ScriptTarget.Latest,true);
@@ -86,4 +87,34 @@ test('actual Buster construction and Prism blocked path never start recover or i
  vm.runInContext(statement(helperTree,'digest')+'\n'+['withExampleDirectory','validateBusterExample','validatePrismPayloadTemplate'].map(n=>declaration(helperTree,n)).join('\n')+'\nglobalThis.api={buster:validateBusterExample,prism:validatePrismPayloadTemplate};',context);
  const b=context.api.buster(root,{platformConfig:'./platform.json'});assert.equal(b.listenerStarted,false);assert.equal(b.providerExecution,false);assert.equal(constructed,1);assert.equal(start+recover,0);assert.equal(cleaned,1);
  context.templateJSON=JSON.stringify({approvalId:'THE_STUDIO_APPROVAL_ID',architectureDigest:'sha256:THE_ACTIVE_ARCHITECTURE_DIGEST',bundleDigest:'sha256:THE_PUBLISHED_BUNDLE_DIGEST',decision:'approve',issuer:{type:'operator',id:'THE_CONFIGURED_ISSUER_ID'}});const p=await context.api.prism(vm.runInContext('JSON.parse(templateJSON)',context));assert.equal(p.dispatches,0);assert.equal(invoked,0);
+});
+
+// Exact receiving payloads remain sealed; generated surrounding data is not an
+// execution/freshness assertion and complete current bytes remain dependencies.
+test('three generated inputs preserve consumed templates and wait block without Source/output self-seals',()=>{
+ const helm='docs/site/reference/helm-values.md',cap='docs/site/reference/capabilities.md',map='docs/site/reference/generated-documentation-map.json';
+ const original=p=>fs.readFileSync(path.join(root,p),'utf8');
+ const override=(p,text)=>verifier({overrides:new Map([[path.join(root,p),Buffer.from(text)]])}).snapshots();
+ const baseline=verifier().snapshots();assert.equal(baseline.length,3);
+ const helmText=original(helm),match=helmText.match(/`(--set [^`]+)`/u);assert(match);
+ for(const changed of [helmText.replace(match[1],match[1].replace('<value>','<different>')),helmText+"\n`--set 'unreviewed=<value>'`\n"])assert.throws(()=>override(helm,changed),/consumed Helm/);
+ const changedProse=override(helm,helmText+'\nGenerated surrounding prose successor.\n');assert.notEqual(JSON.stringify(changedProse),JSON.stringify(baseline));
+ const capText=original(cap),block=publicationExampleBlocks(capText)[0];assert(block);
+ // A space after the content's terminal newline only indents the closing
+ // Markdown fence; it does not substitute any consumed JSON byte.
+ const benignClosingIndent=capText.replace(block.content,block.content+' ');
+ const benignBlock=publicationExampleBlocks(benignClosingIndent)[0];
+ assert.equal(benignBlock.content,block.content);assert.deepEqual(benignBlock,block);
+ assert.equal(override(cap,benignClosingIndent).length,3);
+ const originalUrl='http://127.0.0.1:18765',changedUrl='http://127.0.0.1:18766';
+ assert.equal(block.content.split(originalUrl).length,2);
+ const changedContent=block.content.replace(originalUrl,changedUrl);
+ const changedPage=capText.replace(block.content,changedContent);
+ const changedBlock=publicationExampleBlocks(changedPage)[0];
+ assert.notEqual(changedBlock.content,block.content);assert.notEqual(changedBlock.sha256,block.sha256);
+ assert.notDeepEqual(changedBlock,block);
+ assert.throws(()=>override(cap,changedPage),/consumed capability/);
+ assert.equal(override(cap,capText+'\nGenerated listing successor.\n').length,3);
+ assert.equal(override(map,original(map).replace(/\s*$/u,'\n')).length,3);assert.throws(()=>override(map,'not JSON'),/metadata JSON/);assert.throws(()=>override(map,'[]'),/metadata object/);
+ for(const p of [helm,cap,map]){assert.throws(()=>verifier({alias:path.join(root,p)}).snapshots(),/physical generated data/);assert.throws(()=>verifier({hardlink:path.join(root,p)}).snapshots(),/regular generated data/);}
 });

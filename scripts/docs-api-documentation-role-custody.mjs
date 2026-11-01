@@ -1,5 +1,5 @@
 import {preparedGoEnvironment,preparedGoParser,runPreparedGoParser} from './docs-prepared-go-parsers.mjs';
-import {assertDocumentationOwnerPurpose} from './docs-documentation-owner-purpose-custody.mjs';
+import {assertDocumentationOwnerPurpose,documentationPurposeInputBytes} from './docs-documentation-owner-purpose-custody.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
@@ -507,13 +507,16 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "d284087d8274693e9c3abdb1382ded93999265e70f986bc09e4f749bd6b23d97"
   },
   {
+    "expressionSha256": "42162c62a8a31c710b892ed61276d194f4816f25e8eaa3ad92e7f74d9bf7a896"
+  },
+  {
     "expressionSha256": "7e21e727b1aa620c91d42c51f6683af852c19ba62531811eb35a12919ffb3a76"
   },
   {
     "expressionSha256": "abfcad28ec14344e651d5f0983b24be76635f7dc84460622b29987c2a7f15ad3"
   },
   {
-    "expressionSha256": "87c83bae6aadfdaf63a4b586b6debdd54fa068a2f17fb5d79a8f2b477112014c"
+    "expressionSha256": "b9e0dade7217ecfc25ed890e37f718aad3dc37fd76ff9602a8174ca1f4892f1b"
   },
   {
     "expressionSha256": "2622126f748ecb921e36ef23523ff970251ea6e66431b89d3b8efc913e7f780a"
@@ -633,7 +636,7 @@ export const documentationExecutableRoleRecipes = {
     "expressionSha256": "23f8ffe64b7fa6557f778121a6c050adfea672efeffdef0ee17768d219793389"
   }
 ],
-    "factsDigest": "a3be1585ad75e9fb8de51ea65d197cd409a37c0a0d4d697c6fcab01c3c215512",
+    "factsDigest": "450ea0511b6754ce17453c5294bf78667e99f04696b959e553c73abb89e1b89d",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -854,7 +857,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "bc83eda8b5216ff930c728074f7ebc6a5bf0bbf32636be420a7c518670a6042e",
+    "factsDigest": "17ef6b9796fd9d66797bbf3e78b026dcf13f69b1d17129bf5f2bde0c55aac2a8",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1133,7 +1136,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "df717ce9bbe9616806293894eeee810433d38e5c16ef98478d63e364099eead6",
+    "factsDigest": "cafa0128505ff8a682709d309fe69497dfb5658c3b435dfbdff64426c4423d0e",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -1980,7 +1983,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "e22d37577088dab5c00345e8780120d5b37982afa881fd7c4cdaa3350dc93544",
+    "factsDigest": "8441f2cdca349bab6ef9948958aae5b6312ed8bb0d7a74272cc6bc7a6154ac42",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2025,107 +2028,113 @@ export const documentationExecutableRoleRecipes = {
     "role": "documentation-consumer",
     "consumer": "Repository reader Markdown/reference/publication generation and documentation consistency diagnostics; selected local documentation files, not product API submission.",
     "selectors": [
-      {
-        "expressionSha256": "42f0b26e3b0f16557c48a907d784324e860ca9afe326d6d2234e82d3fd027258"
-      },
-      {
-        "expressionSha256": "b90688d7d5b07df4959c4294ad357a3989da11a1dec1e93ee47763f69f270dac"
-      },
-      {
-        "expressionSha256": "c824beb57cc09f2e56e2e9f5ca6343661b53a5f53c390ddbb730d1b52314eee7"
-      },
-      {
-        "expressionSha256": "abb0fd8dd3657dc2def0f6ca2780277cf1a9090ebc8489085ec81466116a8de3"
-      },
-      {
-        "expressionSha256": "5eaeea2758e424b92d512899659608292cf47e81bca0fc80f7effd24990c4507"
-      },
-      {
-        "expressionSha256": "7d09aa08dcea05d9c2471bfe4906f654f7b392ed33ca69d227645b5889912503"
-      },
-      {
-        "expressionSha256": "877d6cd2e701030d913e69d441b5cff92ad4a44015f475f256d62a2c4a03ceab"
-      },
-      {
-        "expressionSha256": "31e5879e12add593b4783af3887a636cb81d8395da7bf29fd8aeb15777ffd3c1"
-      },
-      {
-        "expressionSha256": "4c8fc2b2a209c92e50fc8d3b6a0092ef424a0bac5e83e3a18473aa4ad1bd3a45"
-      },
-      {
-        "expressionSha256": "1b38bd69b83614c131fae1f146941af591930e47bc76dc44640bae943d526d4c"
-      },
-      {
-        "expressionSha256": "c4960f031f234a7c2e17211436dbd2b6f63f70f9f57a1129857db69111807eba"
-      },
-      {
-        "expressionSha256": "20a58229236520318f448fd5449840a10173f37466edca8bc87a32b6eb8df2cd"
-      },
-      {
-        "expressionSha256": "2afc15ec230d6f159c5d28eab4453da08e927b455a695687666512a190292411"
-      },
-      {
-        "expressionSha256": "7921184c201b0ea5c3791ca4d3302f17670e710559809a602087ebe4b27bc2a1"
-      },
-      {
-        "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
-      },
-      {
-        "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
-      },
-      {
-        "expressionSha256": "8131d9dbd6b8d62447e39e6a343d64b489a5d44be6caf5cb6dda99c2a2866cd3"
-      },
-      {
-        "expressionSha256": "9d196a1875159c508cfac6bfb2060ff64a56d5d38cb28623767e3b75870fba67"
-      },
-      {
-        "expressionSha256": "61abf964a1be06a1d4523ccd7f36fe7b650229ad9e65c0b06bd05dd59adc834f"
-      },
-      {
-        "expressionSha256": "edbb4deedefdbf0f2e8b02e7eb83f2c277a43b21a6bbcbde7df3ddad5c5e9955"
-      },
-      {
-        "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
-      },
-      {
-        "expressionSha256": "e15b85ac5924f3161910eefb87c17408769991d84095ccba953a05da09af2e12"
-      },
-      {
-        "expressionSha256": "7401e62868ce6afe93a05539ba0c0b898b0ccbebaf6ce9970cc96226613f6d78"
-      },
-      {
-        "expressionSha256": "21a13fdfe23ba66b9f2f6dd2afe37a0b29fc2b740df2bef86a45328b2c6c6631"
-      },
-      {
-        "expressionSha256": "06bc5c5a6e802c66944116f0d0c2e15ae11931683791246e8075e59082fbc1c3"
-      },
-      {
-        "expressionSha256": "f1619164e74114794de09c8fc772092311dd2c8a9ab98307e0ed729cf4121d97"
-      },
-      {
-        "expressionSha256": "a73d565e4a9d4eaa617f6e312b824a6be8ba179428f408d0bfab39277215795f"
-      },
-      {
-        "expressionSha256": "86c8bdd899093598d798b23d65c4a6da48605ca01d9fb61efd9e51cf0a25d8cb"
-      },
-      {
-        "expressionSha256": "db900114666944d649868c5db4aba11ac299e60603810f2e2bce1d09a1dfb961"
-      },
-      {
-        "expressionSha256": "3093041b8534276d7eaeb14ec69fc16f98a338726484813ce3d35571bf35b3fe"
-      },
-      {
-        "expressionSha256": "71824da97a2e8d97e3690cd486dda4912b3dca55aed8f83108045eaa5c0cf83a"
-      },
-      {
-        "expressionSha256": "8fc56a360bf283ce2d427496d7293335cfcf9a488e2c54f7867c82a11c7f7621"
-      },
-      {
-        "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
-      }
-    ],
-    "factsDigest": "fdeae16acb315d3bc9f85a91ec1d96b5650c6b5dea71f197f8c14bfa742a0c9e",
+  {
+    "expressionSha256": "42f0b26e3b0f16557c48a907d784324e860ca9afe326d6d2234e82d3fd027258"
+  },
+  {
+    "expressionSha256": "b90688d7d5b07df4959c4294ad357a3989da11a1dec1e93ee47763f69f270dac"
+  },
+  {
+    "expressionSha256": "c824beb57cc09f2e56e2e9f5ca6343661b53a5f53c390ddbb730d1b52314eee7"
+  },
+  {
+    "expressionSha256": "abb0fd8dd3657dc2def0f6ca2780277cf1a9090ebc8489085ec81466116a8de3"
+  },
+  {
+    "expressionSha256": "5eaeea2758e424b92d512899659608292cf47e81bca0fc80f7effd24990c4507"
+  },
+  {
+    "expressionSha256": "7d09aa08dcea05d9c2471bfe4906f654f7b392ed33ca69d227645b5889912503"
+  },
+  {
+    "expressionSha256": "877d6cd2e701030d913e69d441b5cff92ad4a44015f475f256d62a2c4a03ceab"
+  },
+  {
+    "expressionSha256": "31e5879e12add593b4783af3887a636cb81d8395da7bf29fd8aeb15777ffd3c1"
+  },
+  {
+    "expressionSha256": "4c8fc2b2a209c92e50fc8d3b6a0092ef424a0bac5e83e3a18473aa4ad1bd3a45"
+  },
+  {
+    "expressionSha256": "1b38bd69b83614c131fae1f146941af591930e47bc76dc44640bae943d526d4c"
+  },
+  {
+    "expressionSha256": "c4960f031f234a7c2e17211436dbd2b6f63f70f9f57a1129857db69111807eba"
+  },
+  {
+    "expressionSha256": "be8a7061327bf7d21fd30f654dba3403555cb0800a8d225ae98413c3b82035fe"
+  },
+  {
+    "expressionSha256": "20a58229236520318f448fd5449840a10173f37466edca8bc87a32b6eb8df2cd"
+  },
+  {
+    "expressionSha256": "2afc15ec230d6f159c5d28eab4453da08e927b455a695687666512a190292411"
+  },
+  {
+    "expressionSha256": "7921184c201b0ea5c3791ca4d3302f17670e710559809a602087ebe4b27bc2a1"
+  },
+  {
+    "expressionSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+  },
+  {
+    "expressionSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+  },
+  {
+    "expressionSha256": "8131d9dbd6b8d62447e39e6a343d64b489a5d44be6caf5cb6dda99c2a2866cd3"
+  },
+  {
+    "expressionSha256": "9d196a1875159c508cfac6bfb2060ff64a56d5d38cb28623767e3b75870fba67"
+  },
+  {
+    "expressionSha256": "61abf964a1be06a1d4523ccd7f36fe7b650229ad9e65c0b06bd05dd59adc834f"
+  },
+  {
+    "expressionSha256": "edbb4deedefdbf0f2e8b02e7eb83f2c277a43b21a6bbcbde7df3ddad5c5e9955"
+  },
+  {
+    "expressionSha256": "ad73ca8dd2be89150d9ce0f13eae68ebf5fc6eae24f81e521b6223459d4a6005"
+  },
+  {
+    "expressionSha256": "e15b85ac5924f3161910eefb87c17408769991d84095ccba953a05da09af2e12"
+  },
+  {
+    "expressionSha256": "7401e62868ce6afe93a05539ba0c0b898b0ccbebaf6ce9970cc96226613f6d78"
+  },
+  {
+    "expressionSha256": "21a13fdfe23ba66b9f2f6dd2afe37a0b29fc2b740df2bef86a45328b2c6c6631"
+  },
+  {
+    "expressionSha256": "06bc5c5a6e802c66944116f0d0c2e15ae11931683791246e8075e59082fbc1c3"
+  },
+  {
+    "expressionSha256": "6919c96c06a758fc1a1671163853b8c43e0e6f577607fba966f96b6f01aee0e9"
+  },
+  {
+    "expressionSha256": "f1619164e74114794de09c8fc772092311dd2c8a9ab98307e0ed729cf4121d97"
+  },
+  {
+    "expressionSha256": "a73d565e4a9d4eaa617f6e312b824a6be8ba179428f408d0bfab39277215795f"
+  },
+  {
+    "expressionSha256": "86c8bdd899093598d798b23d65c4a6da48605ca01d9fb61efd9e51cf0a25d8cb"
+  },
+  {
+    "expressionSha256": "db900114666944d649868c5db4aba11ac299e60603810f2e2bce1d09a1dfb961"
+  },
+  {
+    "expressionSha256": "3093041b8534276d7eaeb14ec69fc16f98a338726484813ce3d35571bf35b3fe"
+  },
+  {
+    "expressionSha256": "71824da97a2e8d97e3690cd486dda4912b3dca55aed8f83108045eaa5c0cf83a"
+  },
+  {
+    "expressionSha256": "8fc56a360bf283ce2d427496d7293335cfcf9a488e2c54f7867c82a11c7f7621"
+  },
+  {
+    "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
+  }
+],
+    "factsDigest": "e57ebb65ba24eab2435297c6c28f26669c9df04fed86ef13fe5104565c939df9",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -7517,7 +7526,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-generate.mjs",
         "canonical": "scripts/docs-generate.mjs",
-        "sha256": "cc6e7b8d45bab47fb3ee40b63aef294eae1131d3e7123dd1d888502d390b6843"
+        "sha256": "ac1c2787fa0ec0aca098f542e946349d345b13c006154da56b52b6d8c64a5e93"
       },
       {
         "path": "scripts/docs-local-helm-field-authorities.json",
@@ -9765,7 +9774,8 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "docs/site/reference/capabilities.md",
         "canonical": "docs/site/reference/capabilities.md",
-        "sha256": "bda8980cbbd060a24f1b0e7c26cd5a5ff7aee5683c9c81dbdced48a849ba7d3d"
+        "projection": "capability-registration-reader-columns/v1",
+        "sha256": "625ebc282501239f4d23e48555f4773bf8328f680b0aebf911273819fdc8594d"
       },
       {
         "path": "package.json",
@@ -10446,7 +10456,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-output-discovery.mjs",
         "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "432de71d0728276bb3dc8d239a83a21bb8cf7f25c331d5a80a8548214d5ec2f0"
+        "sha256": "0b4ddbdca8af443fc5837a0a9492259d62e5b1670da378e5c023d7c409667f73"
       },
       {
         "path": "scripts/docs-helm-memory-chart.mjs",
@@ -10491,7 +10501,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-output-discovery.mjs",
         "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "432de71d0728276bb3dc8d239a83a21bb8cf7f25c331d5a80a8548214d5ec2f0"
+        "sha256": "0b4ddbdca8af443fc5837a0a9492259d62e5b1670da378e5c023d7c409667f73"
       },
       {
         "path": "scripts/docs-memory-inputs.mjs",
@@ -10778,6 +10788,14 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     {
       "path": "scripts/tests/docs-publication-examples.test.mjs",
       "sha256": "6fc070c113689b96fa1e7ef672b139fa6ab066143c7fd7bcaafc6b34e0fdfb87"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "sha256": "0b4ddbdca8af443fc5837a0a9492259d62e5b1670da378e5c023d7c409667f73"
+    },
+    {
+      "path": "scripts/tests/api-output-publication-native-custody.test.mjs",
+      "sha256": "bff2a57b6ae7cca5a61e67b8839c45917e896d23bc6110f7c06abd100f958ed2"
     }
   ],
   "callers": [
@@ -10787,7 +10805,9 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     "scripts/docs-publication-instruction-syntax.mjs",
     "scripts/docs-publication-embedded-yaml.mjs",
     "scripts/docs-publication-example-projections.mjs",
-    "scripts/tests/docs-publication-examples.test.mjs"
+    "scripts/tests/docs-publication-examples.test.mjs",
+    "scripts/docs-api-output-discovery.mjs",
+    "scripts/tests/api-output-publication-native-custody.test.mjs"
   ],
   "installedInputs": [
     {
@@ -11676,7 +11696,7 @@ const reviewedRootSelectedCompilerRecipe=frozenRecipes({
 });
 const reviewedSdkGeneratorRecipe=frozenRecipes({
   "source": "scripts/docs-generate.mjs",
-  "sourceSha256": "cc6e7b8d45bab47fb3ee40b63aef294eae1131d3e7123dd1d888502d390b6843",
+  "sourceSha256": "ac1c2787fa0ec0aca098f542e946349d345b13c006154da56b52b6d8c64a5e93",
   "importSyntax": "import { generateSdkReference } from './docs-sdk-reference.mjs';",
   "importSha256": "e15b85ac5924f3161910eefb87c17408769991d84095ccba953a05da09af2e12",
   "targetSourceSha256": "d04f9cba922825061989086c80890c50ff2e8b283f9d2fe4279ed70de9499cf0",
@@ -11690,7 +11710,7 @@ const reviewedSdkGeneratorRecipe=frozenRecipes({
   },
   "rootRevisionPrerequisites": [
     "root=path.resolve(option(--root,process.cwd())); exact canonical worktree root only for this proposed profile. Detached allow flag/env mode requires separate receipt; do not inherit observation.",
-    "Generator current40hex sourceRevision must identify existing local commit and match all non-generated tracked/untracked product and generator sources; exact internal completion JSON records are excluded and forbidden as generator inputs or pinned authority; source lock/selected inputs actual bytes and Git caller process are qualification inputs.",
+    "Generator current40hex sourceRevision must identify existing local commit and match all non-generated tracked/untracked product and generator sources; exact internal completion JSON records are excluded and forbidden as generator inputs or pinned authority; source lock/selected inputs actual bytes and Git caller process are qualification inputs. The sole additional derived-metadata equivalence is docs/config/publication-example-claims.json: the existing sourceRevision Git blob and the current canonical regular single-link physical file must both pass the exact eight-generated-record-seal projection and have equal projected bytes. Only those eight generated SHA literals may differ; all authored claims, code payload seals, IDs, native bindings and every other byte/path remain subject to the original freshness requirements. This is a pre-generation Source-purpose condition, not native SDK execution or current artifact acceptance.",
     "option fallback evaluation is eager: sourceRevision lock read occurs even explicit --revision; absent lock evaluates git rev-parse HEAD fallback even explicit --revision. git cat-file/show-toplevel/diff/ls-files calls are genuine child inputs/effects.",
     "--update-source-revision writes lock before subsequent freshness guard. It rejects --check but is not admitted by read-only acquisition witness; source commit and separate generated revision prerequisites apply."
   ],
@@ -11828,7 +11848,7 @@ export function assertDocumentationExecutableRole(root,source,staticSources=new 
   assert.equal(syntaxSha256(bytes),purposeRecipe.sourceSha256,`DOCUMENTATION_TOOL_PURPOSE_SOURCE_DRIFT: ${source}`);
   for(const input of purposeRecipe.purposeInputs){
    const file=path.join(root,input.path),canonical=fs.existsSync(file)?path.relative(root,fs.realpathSync(file)).replaceAll(path.sep,'/'):null;
-   assert(canonical===input.canonical&&canonical===input.path&&fs.statSync(file).isFile()&&syntaxSha256(fs.readFileSync(file))===input.sha256,`DOCUMENTATION_TOOL_PURPOSE_INPUT_DRIFT: ${source}; ${input.path}`);
+   assert(canonical===input.canonical&&canonical===input.path&&fs.statSync(file).isFile()&&syntaxSha256(documentationPurposeInputBytes(source,input,fs.readFileSync(file)))===input.sha256,`DOCUMENTATION_TOOL_PURPOSE_INPUT_DRIFT: ${source}; ${input.path}`);
    purposeFiles.push(file);
   }
  }

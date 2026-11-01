@@ -6,7 +6,7 @@ import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-ve
 import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose} from './docs-api-top-level-script-purpose.mjs';
 import {checkedStorageReceiverPurposes,selectedStorageReceiverPurpose} from './docs-api-storage-receiver-purpose.mjs';
 import {checkedPrismNativeRequestCapability,classifyPrismNativeRequestRoles,selectedPrismNativeRequestCapability} from './docs-api-prism-native-request-capability.mjs';
-import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed} from './docs-documentation-owner-purpose-custody.mjs';
+import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed,publicationClaimsPurposeInputBytes} from './docs-documentation-owner-purpose-custody.mjs';
 import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
 import {deploymentScalarOccurrenceCustody, selectedDeploymentScalarOccurrences} from './docs-deployment-scalar-occurrence-custody.mjs';
 import {deploymentConfigOutputCustody, deploymentConfigOutputRole} from './docs-deployment-config-output-custody.mjs';
@@ -25,6 +25,7 @@ import ts from 'typescript';
 import { shellHeredocCustody, shellCommandAcquisitions, shellNativeNodeEntries } from './docs-shell-source-custody.mjs';
 import { documentationExecutableRoleRecipes, assertDocumentationExecutableRole, qualifiedRootNodeHarnessSources, expandReviewedNodePackageGlob, reviewedRootSelectedCompilerCapability, rootSelectedCompilerTarget, reviewedCliNativeCompilerCapability, cliNativeCompilerTarget, assertCliNativeCompilerGraphPurpose, reviewedCliTypedFixtureCapability, cliTypedFixtureCompilerTarget, assertCliTypedFixtureGraphPurpose, cliTypedFixtureAnalysisSeed, reviewedPublicationParserCapability, verifyPublicationParserProvenance, assertPublicationParserGraphPurpose, reviewedImporterResolutionOperation } from './docs-api-documentation-role-custody.mjs';
 import { createSerializedOutputRoleClassifier, deriveNativeOperationFacts, nativeOperationFactDigest } from './docs-api-output-role-classification.mjs';
+import { publicationExampleBlocks } from './lib/docs-publication-example-coverage.mjs';
 import { checkCatalogueInputSurface } from './lib/docs-catalogue-input-surface.mjs';
 
 const isReviewedPracticalReaderGraphRoot=root=>(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'||root==='/home/node/.openclaw/workspace/tmp/pr13-a91108-local-helm-readonly-20261101')&&fs.realpathSync(root)===root;
@@ -2429,7 +2430,7 @@ const reviewedCommonErrorMarkdownOutput = Object.freeze({
     },
     {
       "path": "docs/config/common-error-input-surface.json",
-      "sha256": "d32fdcef972d2531b2f3c69ae1b8e7e1e2b9e0e718337cb0bc90042b1be9e7a2"
+      "sha256": "0b181236aaf7ad8f664d35610e5cb13ed48ddefe29ce7f92cb6f08713551a588"
     },
     {
       "path": "package.json",
@@ -2570,7 +2571,9 @@ const reviewedEventContractDocumentationOutput = Object.freeze({
     },
     {
       "path": "docs/config/event-reference-bindings.json",
-      "sha256": "1259adf28dc58fded6f7462f96e86ad436b7d9d53a9dc74593a9769203f61281"
+      "historicalWholeInputSha256": "1259adf28dc58fded6f7462f96e86ad436b7d9d53a9dc74593a9769203f61281",
+      "purposeProjection": "root-source-vector-stamp-only/v1",
+      "purposeProjectionSha256": "ac9c1aa37faf6bf79e39252293020a4d19f4ebff44820a77704fac68fc98f347"
     },
     {
       "path": "package.json",
@@ -2578,7 +2581,9 @@ const reviewedEventContractDocumentationOutput = Object.freeze({
     },
     {
       "path": "docs/site/reference/events.md",
-      "sha256": "2f3add53b588aff3eacf45d5d366ea2461998ff922757d33c7a968bc76d39551"
+      "historicalWholeInputSha256": "2f3add53b588aff3eacf45d5d366ea2461998ff922757d33c7a968bc76d39551",
+      "purposeProjection": "existing-generated-region-interior-only/v1",
+      "purposeProjectionSha256": "c7f8e40fc689673cd0e9e42ef1902ac6286e4252e69d050de3215f5ae3c1d69f"
     }
   ],
   "targets": [
@@ -2654,6 +2659,27 @@ const eventContractDocumentationReceipts = new WeakSet();
 function eventContractOutputDescriptor(role) {
   return Object.fromEntries(['line','sink','role','expression','basis','keys','sinkContract'].map(key=>[key,role[key]??null]));
 }
+function eventContractPurposeInputBytes(input,bytes) {
+  if(input.purposeProjection===undefined)return bytes;
+  const fail=detail=>assert.fail('API_PRODUCT_EVENT_DOCUMENTATION_PURPOSE_UNQUALIFIED: fixed source/input '+input.path+'; '+detail);
+  const text=bytes.toString('utf8');if(hash(text)!==hash(bytes))fail('invalid UTF-8');
+  if(input.path==='docs/config/event-reference-bindings.json'&&input.purposeProjection==='root-source-vector-stamp-only/v1'){
+    const tree=ts.parseJsonText(input.path,text),root=tree.statements[0]?.expression;
+    if(tree.parseDiagnostics.length||tree.statements.length!==1||!root||!ts.isObjectLiteralExpression(root))fail('bindings JSON root');
+    const fields=root.properties.filter(node=>ts.isPropertyAssignment(node)&&ts.isStringLiteral(node.name)&&node.name.text==='qualifiedSourceVectorSha256');
+    if(fields.length!==1||!ts.isStringLiteral(fields[0].initializer))fail('unique root source-vector stamp');
+    const value=fields[0].initializer,begin=value.getStart(tree),end=value.end;
+    if(!/^"[a-f0-9]{64}"$/u.test(text.slice(begin,end)))fail('source-vector stamp representation');
+    return text.slice(0,begin)+'"'+'0'.repeat(64)+'"'+text.slice(end);
+  }
+  if(input.path==='docs/site/reference/events.md'&&input.purposeProjection==='existing-generated-region-interior-only/v1'){
+    const begin='<!-- BEGIN GENERATED EVENT CONTRACT REFERENCE -->',end='<!-- END GENERATED EVENT CONTRACT REFERENCE -->';
+    const start=text.indexOf(begin),finish=text.indexOf(end);
+    if(start<0||finish<start+begin.length||text.indexOf(begin,start+begin.length)>=0||text.indexOf(end,finish+end.length)>=0)fail('unique ordered generated region');
+    return text.slice(0,start+begin.length)+'\n<generated-event-reference-interior>\n'+text.slice(finish);
+  }
+  fail('unsupported purpose projection');
+}
 function checkedEventContractDocumentationOutputs(root,graph,classify,sources) {
   const profile=reviewedEventContractDocumentationOutput;
   if(!sources.includes(profile.source))return null;
@@ -2670,9 +2696,13 @@ function checkedEventContractDocumentationOutputs(root,graph,classify,sources) {
     }
     return file;
   };
+  const currentPurposeInputs=[];
   for(const input of profile.fixedInputs){
     const file=physicalTarget(input.path);
-    if(!fs.existsSync(file)||!fs.lstatSync(file).isFile()||hash(fs.readFileSync(file))!==input.sha256)fail('fixed source/input '+input.path);
+    if(!fs.existsSync(file)||!fs.lstatSync(file).isFile())fail('fixed source/input '+input.path);
+    const bytes=fs.readFileSync(file),projected=eventContractPurposeInputBytes(input,bytes);
+    if(hash(projected)!==(input.purposeProjection===undefined?input.sha256:input.purposeProjectionSha256))fail('fixed source/input '+input.path);
+    currentPurposeInputs.push({path:input.path,sha256:hash(bytes)});
   }
   const scripts=JSON.parse(fs.readFileSync(path.join(root,'package.json'))).scripts??{};
   for(const[name,command]of Object.entries(profile.callers))if(scripts[name]!==command)fail('original package caller '+name);
@@ -2689,7 +2719,7 @@ function checkedEventContractDocumentationOutputs(root,graph,classify,sources) {
   const roles=classify(profile.source);
   if(JSON.stringify(roles.map(eventContractOutputDescriptor))!==JSON.stringify(profile.descriptors))fail('complete four-slot raw vector');
   const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line&&row.sink===slot.sink)),role:'non-api',runtimeExecutionAuthorized:false,apiApplyAuthorized:false})));
-  const receipt=Object.freeze({source:profile.source,slots,targets:Object.freeze([...profile.targets]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({fixed:profile.fixedInputs,targets:profile.targets,callers:profile.callers})),qualifiedSourceVectorSatisfaction:'not-observed',sourceVectorGuardPreserved:true,currentEventSemanticClosureGranted:false,defaultMayPartiallyWrite:true,checkModeNeverWrites:true});
+  const receipt=Object.freeze({source:profile.source,slots,targets:Object.freeze([...profile.targets]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({fixed:profile.fixedInputs,currentPurposeInputs,targets:profile.targets,callers:profile.callers})),qualifiedSourceVectorSatisfaction:'not-observed',sourceVectorGuardPreserved:true,currentEventSemanticClosureGranted:false,defaultMayPartiallyWrite:true,checkModeNeverWrites:true});
   eventContractDocumentationReceipts.add(receipt);return receipt;
 }
 function selectedEventContractDocumentationOutput(source,role,receipt) {
@@ -2726,7 +2756,9 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f"
+      "historicalWholeInputSha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f",
+      "purposeProjection": "exact-generated-record-seals-only/v1",
+      "purposeProjectionSha256": "0d5241e8ef278d077c58cdad2a3071970a0b5eb6f2f68f2f10a4aa704639173c"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -2881,14 +2913,19 @@ function checkedPublicationYamlValidationInputs(root,graph,classify,sources) {
   if(!sources.includes(profile.source))return null;
   const fail=detail=>assert.fail('API_PRODUCT_PUBLICATION_YAML_INPUT_PURPOSE_UNQUALIFIED: '+detail);
   if((root!==profile.root&&!isReviewedPracticalReaderGraphRoot(root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
-  for(const input of profile.fixedInputs){
+  const currentPurposeInputs=[];
+ for(const input of profile.fixedInputs){
     const file=path.join(root,input.path);
     for(let current=file;current!==root;current=path.dirname(current)){
       if(!fs.existsSync(current)||fs.realpathSync(current)!==current||fs.lstatSync(current).isSymbolicLink())fail('physical input '+input.path);
       const stat=fs.lstatSync(current);
       if(current===file?!stat.isFile()||stat.nlink!==1:!stat.isDirectory())fail('regular input '+input.path);
     }
-    if(hash(fs.readFileSync(file))!==input.sha256)fail('fixed source/input '+input.path);
+    const inputBytes=fs.readFileSync(file);
+  if(input.purposeProjection!==undefined&&(input.path!=='docs/config/publication-example-claims.json'||input.purposeProjection!=='exact-generated-record-seals-only/v1'))fail('unsupported input projection '+input.path);
+  const purposeBytes=input.purposeProjection===undefined?inputBytes:publicationClaimsPurposeInputBytes(inputBytes);
+  if(hash(purposeBytes)!==(input.purposeProjectionSha256??input.sha256))fail('fixed source/input '+input.path);
+  currentPurposeInputs.push({path:input.path,sha256:hash(inputBytes)});
   }
   const callerProof=assertPublicationExampleChildPurpose(root);
   if(!callerProof||callerProof.source!==profile.caller)fail('existing normal publication child');
@@ -2912,7 +2949,7 @@ function checkedPublicationYamlValidationInputs(root,graph,classify,sources) {
   const roles=classify(profile.source);
   if(JSON.stringify(roles.map(publicationYamlValidationDescriptor))!==JSON.stringify(profile.descriptors))fail('complete explicit-preparation raw schema vector');
   const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line)),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,schemaSemanticsNewlyApproved:false})));
-  const receipt=Object.freeze({source:profile.source,slots,materials:Object.freeze([...profile.materials]),preparedSchemaFileNames:Object.freeze([...profile.preparedSchemaFileNames]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,materials:profile.materials,files:profile.preparedSchemaFileNames})),nativeValidatorSuccessObserved:false,newBinaryProvenanceGranted:false,futurePreparedPathStateObserved:false,preparationExecutionAuthorized:false,normalValidationReadOnly:true,cleanupOrRollbackGuaranteed:false,scope:'Only exact schema preparation-output purpose and normal read/stdin validation boundary; no native success, new caller or API grant'});
+  const receipt=Object.freeze({source:profile.source,slots,materials:Object.freeze([...profile.materials]),preparedSchemaFileNames:Object.freeze([...profile.preparedSchemaFileNames]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,currentPurposeInputs,materials:profile.materials,files:profile.preparedSchemaFileNames})),nativeValidatorSuccessObserved:false,newBinaryProvenanceGranted:false,futurePreparedPathStateObserved:false,preparationExecutionAuthorized:false,normalValidationReadOnly:true,cleanupOrRollbackGuaranteed:false,scope:'Only exact schema preparation-output purpose and normal read/stdin validation boundary; no native success, new caller or API grant'});
   publicationYamlValidationReceipts.add(receipt);return receipt;
 }
 function selectedPublicationYamlValidationInput(source,role,receipt) {
@@ -3502,7 +3539,9 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f"
+      "historicalWholeInputSha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f",
+      "purposeProjection": "exact-generated-record-seals-only/v1",
+      "purposeProjectionSha256": "0d5241e8ef278d077c58cdad2a3071970a0b5eb6f2f68f2f10a4aa704639173c"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3569,24 +3608,12 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "sha256": "630e5513c5b3f13c736368b311b3c8b23f3dc0bcb4f215e81cff072c82116a5d"
     },
     {
-      "path": "docs/site/reference/capabilities.md",
-      "sha256": "bda8980cbbd060a24f1b0e7c26cd5a5ff7aee5683c9c81dbdced48a849ba7d3d"
-    },
-    {
       "path": "docs/site/reference/configuration-precedence.md",
       "sha256": "507a6da536dc050dbc64eb2d39528af33bd64255a5586be20cf0346c1d6dfa04"
     },
     {
       "path": "docs/site/reference/documentation-route-registry.json",
       "sha256": "7e5e283c02677c552eda930da2e65baa2fb4076182f8b48b607876fff10fc8f7"
-    },
-    {
-      "path": "docs/site/reference/generated-documentation-map.json",
-      "sha256": "56247158b9487a01194334a0824704ee2ce4ca005e8f50d6e49eb0e72324ccd4"
-    },
-    {
-      "path": "docs/site/reference/helm-values.md",
-      "sha256": "2b353ec62d140afddf3d8caaa0610fd70d7104cb79915678dbc1aedd7a0b19db"
     },
     {
       "path": "docs/site/reference/host-and-prism-configuration.md",
@@ -5557,6 +5584,69 @@ const reviewedPublicationNativeValidation = Object.freeze({
     }
   ]
 });
+// Fixed receiving-purpose boundary, not freshness or payload truth. These three
+// owner-generated inputs cannot seal their own complete output bytes in Source.
+// All authored inputs and all actually consumed native-code/template bytes remain
+// sealed. Current complete physical bytes remain cache/receipt dependencies.
+const reviewedPublicationGeneratedDataInputs = Object.freeze({
+  "paths": [
+    "docs/site/reference/helm-values.md",
+    "docs/site/reference/capabilities.md",
+    "docs/site/reference/generated-documentation-map.json"
+  ],
+  "helmOptions": [
+    "--set 'nodeSelector.kubeclaw\\.io/log-collector=<value>'",
+    "--set 'spire-server.controllerManager.identities.clusterSPIFFEIDs.default.podSelector.matchLabels.kubeclaw\\.dev/worker-trust=<value>'",
+    "--set 'capabilityProviders.buster.capabilities.runtime\\.dispatch=<value>'",
+    "--set 'capabilityProviders.buster.capabilities.runtime\\.dispatch.adapter=<value>'",
+    "--set 'capabilityProviders.buster.capabilities.runtime\\.dispatch.port=<value>'",
+    "--set 'capabilityProviders.buster.capabilities.test\\.plan\\.execute=<value>'",
+    "--set 'capabilityProviders.buster.capabilities.test\\.plan\\.execute.adapter=<value>'",
+    "--set 'capabilityProviders.buster.capabilities.test\\.plan\\.execute.port=<value>'",
+    "--set 'capabilityProviders.buster.capabilities.test\\.plan\\.execute.proxyPort=<value>'",
+    "--set 'capabilityProviders.buster.capabilities.test\\.plan\\.execute.scheme=<value>'",
+    "--set 'capabilityProviders.prism.capabilities.runtime\\.dispatch=<value>'",
+    "--set 'capabilityProviders.prism.capabilities.runtime\\.dispatch.adapter=<value>'",
+    "--set 'capabilityProviders.prism.capabilities.runtime\\.dispatch.authentication=<value>'",
+    "--set 'capabilityProviders.prism.capabilities.runtime\\.dispatch.port=<value>'",
+    "--set 'capabilityProviders.prism.capabilities.runtime\\.dispatch.proxyPort=<value>'"
+  ],
+  "capabilityBlocks": [
+    {
+      "ordinal": 1,
+      "type": "fence",
+      "info": "json",
+      "sha256": "cf37e1f3b528eb01320cb95a0ec2f02f70d6ab481e0f61e8b2c076e2b1090012"
+    }
+  ]
+});
+function publicationGeneratedDataSnapshots(root,fail) {
+ const snapshots=[];
+ for(const relative of reviewedPublicationGeneratedDataInputs.paths){
+  const file=path.join(root,relative);
+  for(let current=file;current!==root;current=path.dirname(current)){
+   if(!fs.existsSync(current)||fs.realpathSync(current)!==current||fs.lstatSync(current).isSymbolicLink())fail('physical generated data '+relative);
+   const stat=fs.lstatSync(current);
+   if(current===file?!stat.isFile()||stat.nlink!==1:!stat.isDirectory())fail('regular generated data '+relative);
+  }
+  const bytes=fs.readFileSync(file),text=bytes.toString('utf8');
+  if(!Buffer.from(text,'utf8').equals(bytes))fail('generated data UTF-8 '+relative);
+  if(relative==='docs/site/reference/helm-values.md'){
+   const options=[...new Set([...text.matchAll(/--set '[^'\n]+=<value>'/gu)].map(match=>match[0]))];
+   if(JSON.stringify(options)!==JSON.stringify(reviewedPublicationGeneratedDataInputs.helmOptions))fail('consumed Helm option templates');
+  }else if(relative==='docs/site/reference/capabilities.md'){
+   const blocks=publicationExampleBlocks(text).map(({content,...descriptor})=>descriptor);
+   if(JSON.stringify(blocks)!==JSON.stringify(reviewedPublicationGeneratedDataInputs.capabilityBlocks))fail('consumed capability example blocks');
+  }else{
+   // Metadata-only asset input: parseability, not correctness/freshness, is the
+   // receiving contract here. Original governance/publication checks still run.
+   let value;try{value=JSON.parse(text);}catch{fail('generated documentation metadata JSON');}
+   if(!value||typeof value!=='object'||Array.isArray(value))fail('generated documentation metadata object');
+  }
+  snapshots.push(Object.freeze({path:relative,sha256:hash(bytes),bytes:bytes.length}));
+ }
+ return Object.freeze(snapshots);
+}
 const publicationNativeValidationReceipts = new WeakSet();
 function publicationNativeValidationDescriptor(role) {
  return Object.fromEntries(['line','sink','role','expression','basis','keys','sinkContract'].map(key=>[key,role[key]??null]));
@@ -5566,6 +5656,7 @@ function checkedPublicationNativeValidation(root,graph,classify,sources) {
  if(!sources.includes(profile.source))return null;
  const fail=detail=>assert.fail('API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: '+detail);
  if((root!==profile.root&&!isReviewedPracticalReaderGraphRoot(root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+ const currentPurposeInputs=[];
  for(const input of profile.fixedInputs){
   const file=path.join(root,input.path);
   for(let current=file;current!==root;current=path.dirname(current)){
@@ -5573,8 +5664,13 @@ function checkedPublicationNativeValidation(root,graph,classify,sources) {
    const stat=fs.lstatSync(current);
    if(current===file?!stat.isFile()||stat.nlink!==1:!stat.isDirectory())fail('regular input '+input.path);
   }
-  if(hash(fs.readFileSync(file))!==input.sha256)fail('fixed source/input '+input.path);
+  const inputBytes=fs.readFileSync(file);
+  if(input.purposeProjection!==undefined&&(input.path!=='docs/config/publication-example-claims.json'||input.purposeProjection!=='exact-generated-record-seals-only/v1'))fail('unsupported input projection '+input.path);
+  const purposeBytes=input.purposeProjection===undefined?inputBytes:publicationClaimsPurposeInputBytes(inputBytes);
+  if(hash(purposeBytes)!==(input.purposeProjectionSha256??input.sha256))fail('fixed source/input '+input.path);
+  currentPurposeInputs.push({path:input.path,sha256:hash(inputBytes)});
  }
+ const generatedDataSnapshots=publicationGeneratedDataSnapshots(root,fail);
  // These are only the finite directories enumerated or rendered by this helper.
  const files=relative=>{
   const result=[];
@@ -5603,7 +5699,7 @@ function checkedPublicationNativeValidation(root,graph,classify,sources) {
  const roles=classify(profile.source);
  if(JSON.stringify(roles.map(publicationNativeValidationDescriptor))!==JSON.stringify(profile.descriptors))fail('complete ten-slot raw vector');
  const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line)),runtimeExecutionAuthorized:false,apiApplyAuthorized:false})));
- const receipt=Object.freeze({source:profile.source,slots,dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,rosters:profile.directoryRosters,edges:profile.incomingEdges,slots:profile.descriptors})),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,toolSuccessObserved:false,newBinaryProvenanceGranted:false,networkAbsenceProved:false,futureTemporaryStateObserved:false,cleanupAttemptOnly:true,cleanupOrRollbackGuaranteed:false,productOutputs:Object.freeze([])});
+ const receipt=Object.freeze({source:profile.source,slots,dependencies:Object.freeze([...profile.fixedInputs.map(input=>input.path),...generatedDataSnapshots.map(input=>input.path)]),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,currentPurposeInputs,generatedDataSnapshots,rosters:profile.directoryRosters,edges:profile.incomingEdges,slots:profile.descriptors})),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,toolSuccessObserved:false,newBinaryProvenanceGranted:false,networkAbsenceProved:false,futureTemporaryStateObserved:false,cleanupAttemptOnly:true,cleanupOrRollbackGuaranteed:false,productOutputs:Object.freeze([])});
  publicationNativeValidationReceipts.add(receipt);return receipt;
 }
 function selectedPublicationNativeValidation(source,role,receipt) {

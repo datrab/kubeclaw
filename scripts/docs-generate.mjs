@@ -12,6 +12,7 @@ import {
   renderWorkflowTable,
   table,
 } from './docs-generate-core.mjs';
+import { publicationClaimsPurposeInputBytes } from './docs-documentation-owner-purpose-custody.mjs';
 import { yamlFieldPathTokens } from './yaml-field-path.mjs';
 import { schemaSemanticText } from './plugin-registration-dependencies.mjs';
 import { stripMarkdownCodeAndRawHtml } from './lib/docs-markdown-anchors.mjs';
@@ -87,18 +88,42 @@ function isCompletionRecord(sourcePath) {
     || (relative.startsWith('docs/blueprint/acceptance-evidence/') && relative.endsWith('.json'));
 }
 
+
+// Only generated seal values may differ from the cited source commit. Authored
+// claims, executable payload seals and every other source path remain exact.
+function hasEquivalentDerivedPublicationSeals(sourcePath) {
+  if (sourcePath !== 'docs/config/publication-example-claims.json') return false;
+  try {
+    const file = path.join(root, sourcePath);
+    const stat = fs.lstatSync(file);
+    if (!stat.isFile() || stat.nlink !== 1 || fs.realpathSync(file) !== file) return false;
+    const baseline = execFileSync('git', ['show', `${sourceRevision}:${sourcePath}`], {
+      cwd: gitRoot, stdio: ['ignore', 'pipe', 'ignore'], maxBuffer: 64 * 1024 * 1024,
+    });
+    const current = fs.readFileSync(file);
+    // Validate even identical inputs: malformed/ambiguous claims are not an
+    // eligible derived metadata boundary.
+    const baselineProjection = publicationClaimsPurposeInputBytes(baseline);
+    const currentProjection = publicationClaimsPurposeInputBytes(current);
+    if (baseline.equals(current)) return true;
+    return baselineProjection === currentProjection;
+  } catch {
+    return false;
+  }
+}
+
 if (root === gitRoot) {
   const generatedPrefixes = ['docs/generated/', 'docs/site/'];
   const changed = execFileSync('git', ['diff', '--name-only', sourceRevision, '--', '.'], {
     cwd: gitRoot,
     encoding: 'utf8',
   }).trim().split('\n').filter(Boolean)
-    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)) && !isCompletionRecord(sourcePath));
+    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)) && !isCompletionRecord(sourcePath) && !hasEquivalentDerivedPublicationSeals(sourcePath));
   const untracked = execFileSync('git', ['ls-files', '--others', '--exclude-standard'], {
     cwd: gitRoot,
     encoding: 'utf8',
   }).trim().split('\n').filter(Boolean)
-    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)) && !isCompletionRecord(sourcePath));
+    .filter((sourcePath) => !generatedPrefixes.some((prefix) => sourcePath.startsWith(prefix)) && !isCompletionRecord(sourcePath) && !hasEquivalentDerivedPublicationSeals(sourcePath));
   const mismatches = [...new Set([...changed, ...untracked])].sort();
   if (mismatches.length) {
     throw new Error(`documentation source revision does not match the current source tree: ${mismatches.slice(0, 20).join(', ')}`);

@@ -21,9 +21,9 @@ function verifier({overrides=new Map(),cwd=root,selectedGraph=graph,rows=raw,nat
   lstatSync:file=>{if(absent.has(String(file))){const e=new Error('controlled missing');e.code='ENOENT';throw e;}const s=fs.lstatSync(file);return String(file)===hardlink?{...s,nlink:2,isFile:()=>s.isFile(),isDirectory:()=>s.isDirectory(),isSymbolicLink:()=>s.isSymbolicLink()}:s;},
   realpathSync:file=>String(file)===alias?String(file)+'.alias':fs.realpathSync(file)
  };
- const context=vm.createContext({assert,fs:reader,path,process:{cwd:()=>cwd},hash:b=>createHash('sha256').update(b).digest('hex'),deriveNativeOperationFacts:(...args)=>nativeFacts??deriveNativeOperationFacts(...args),nativeOperationFactDigest,shellNativeNodeEntries,expandReviewedNodePackageGlob});
- const declarations=['documentationEntryPoints','eventContractOutputDescriptor','checkedEventContractDocumentationOutputs','selectedEventContractDocumentationOutput'].map(declaration).join('\n');
- vm.runInContext(statement('reviewedEventContractDocumentationOutput')+'\n'+statement('eventContractDocumentationReceipts')+'\n'+declarations+'\nglobalThis.api={acquire:checkedEventContractDocumentationOutputs,slot:selectedEventContractDocumentationOutput};',context);
+ const context=vm.createContext({assert,fs:reader,path,process:{cwd:()=>cwd},ts,hash:b=>createHash('sha256').update(b).digest('hex'),deriveNativeOperationFacts:(...args)=>nativeFacts??deriveNativeOperationFacts(...args),nativeOperationFactDigest,shellNativeNodeEntries,expandReviewedNodePackageGlob});
+ const declarations=['documentationEntryPoints','eventContractOutputDescriptor','eventContractPurposeInputBytes','checkedEventContractDocumentationOutputs','selectedEventContractDocumentationOutput'].map(declaration).join('\n');
+ vm.runInContext(statement('isReviewedPracticalReaderGraphRoot')+'\n'+statement('reviewedEventContractDocumentationOutput')+'\n'+statement('eventContractDocumentationReceipts')+'\n'+declarations+'\nglobalThis.api={acquire:checkedEventContractDocumentationOutputs,slot:selectedEventContractDocumentationOutput};',context);
  context.rawJSON=JSON.stringify(rows);const classify=()=>vm.runInContext('JSON.parse(rawJSON)',context);
  return {acquire:(selectedRoot=root)=>context.api.acquire(selectedRoot,selectedGraph,classify,[source]),slot:(role,receipt,selectedSource=source)=>context.api.slot(selectedSource,role,receipt)};
 }
@@ -67,16 +67,31 @@ test('canonical native root/cwd three package commands compound drift and caller
  const publicAlias=structuredClone(graph);publicAlias.publicEntries.push({path:'scripts/alias.mjs',canonicalSource:source});assert.throws(()=>verifier({selectedGraph:publicAlias}).acquire(),/canonical public entry/);
  const imported=structuredClone(graph);imported.edges.push({source:'scripts/arbitrary.mjs',target:source,kind:'import',operation:'import event'});assert.throws(()=>verifier({selectedGraph:imported}).acquire(),/incoming import\/callback/);
 });
+test('only root admission stamp bytes may change; complete authored bindings remain exact',()=>{
+ const file=path.join(root,'docs/config/event-reference-bindings.json'),before=fs.readFileSync(file,'utf8');
+ const stamp=/"qualifiedSourceVectorSha256": "[a-f0-9]{64}"/u;
+ const changed=before.replace(stamp,'"qualifiedSourceVectorSha256": "'+'a'.repeat(64)+'"');assert.notEqual(changed,before);
+ const old=verifier().acquire(),current=verifier({overrides:new Map([[file,Buffer.from(changed)]])}).acquire();
+ assert.equal(current.qualifiedSourceVectorSatisfaction,'not-observed');assert.equal(current.currentEventSemanticClosureGranted,false);assert.notEqual(current.inputDigest,old.inputDigest);
+ for(const bad of [changed.replace('a'.repeat(64),'invalid'),changed.replace('"families": [','"extra": true,\n  "families": ['),changed.replace('"families": [','"qualifiedSourceVectorSha256": "'+'b'.repeat(64)+'",\n  "families": ['),changed.replace('"qualificationStatus":','"renamedQualificationStatus":')])assert.throws(()=>verifier({overrides:new Map([[file,Buffer.from(bad)]])}).acquire(),/fixed source\/input/);
+});
+test('only existing generated region interior may change without claiming output freshness',()=>{
+ const file=path.join(root,'docs/site/reference/events.md'),before=fs.readFileSync(file,'utf8'),begin='<!-- BEGIN GENERATED EVENT CONTRACT REFERENCE -->',end='<!-- END GENERATED EVENT CONTRACT REFERENCE -->';
+ const at=before.indexOf(begin)+begin.length,to=before.indexOf(end);assert(at>=begin.length&&to>at);
+ const changed=before.slice(0,at)+'\nSTALE generated apiVersion: v1; kind: Secret\n'+before.slice(to),r=verifier({overrides:new Map([[file,Buffer.from(changed)]])}).acquire();
+ assert.equal(r.currentEventSemanticClosureGranted,false);assert.equal(r.qualifiedSourceVectorSatisfaction,'not-observed');
+ for(const bad of [changed+'\nUNREVIEWED AUTHORED TEXT',changed.replace(begin,''),changed.replace(end,''),changed.replace(end,begin+end),end+'\n'+begin])assert.throws(()=>verifier({overrides:new Map([[file,Buffer.from(bad)]])}).acquire(),/fixed source\/input/);
+});
 const generatorCode=fs.readFileSync(path.join(root,source),'utf8'),generatorTree=ts.createSourceFile(source,generatorCode,ts.ScriptTarget.Latest,true);
 const program=generatorTree.statements.filter(n=>!ts.isImportDeclaration(n)&&!(ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>['root','args'].includes(d.name.getText(generatorTree))))).map(n=>n.getText(generatorTree)).join('\n');
-function mode({args=[],stale=false,sourceMismatch=false,secondWriteFailure=false}={}){
+function mode({args=[],stale=false,sourceMismatch=false,secondWriteFailure=false,generatedRegionDrift=false}={}){
  const inventory={schemaVersion:'controlled-event-documentation',families:[{sample:'apiVersion: v1\nkind: Secret\n'}]},generated='<!-- BEGIN GENERATED EVENT CONTRACT REFERENCE -->\napiVersion: v1\nkind: Secret\n<!-- END GENERATED EVENT CONTRACT REFERENCE -->\n';
  const page=replaceEventReference('Operator introduction\n\nExisting page body\n',generated),expectedInventory=JSON.stringify(inventory,null,2)+'\n',writes=new Map(),attempts=[],mkdir=[],stdout=[],stderr=[];let censusCalls=0,bindingCalls=0;
  const binding='a'.repeat(64),state={exitCode:0,stdout:{write:s=>stdout.push(s)},stderr:{write:s=>stderr.push(s)}};
  const fakeFs={existsSync:()=>true,readFileSync:(file)=>{
   if(file.endsWith('event-reference-bindings.json'))return JSON.stringify({qualifiedSourceVectorSha256:binding});
   if(file.endsWith('event-contracts.json'))return stale?'stale inventory':expectedInventory;
-  if(file.endsWith('events.md'))return page;
+  if(file.endsWith('events.md'))return generatedRegionDrift?page.replace('apiVersion: v1','STALE_GENERATED_CONTENT'):page;
   throw Error('unreviewed read '+file);
  },mkdirSync:file=>mkdir.push(file),writeFileSync:(file,body)=>{attempts.push(file);if(secondWriteFailure&&attempts.length===2)throw new Error('controlled second-write failure: apiVersion: v1');writes.set(file,body);}};
  const context=vm.createContext({root,path,args,process:state,fs:fakeFs,collectEventSourceVector:()=>{censusCalls++;return {sourceSetSha256:sourceMismatch?'b'.repeat(64):binding,sources:[{path:'controlled'}]};},collectBoundEventReference:()=>{bindingCalls++;return inventory;},renderEventReference:()=>generated,replaceEventReference});
@@ -87,6 +102,7 @@ test('actual sealed mode program uses fake inputs only: invalid argv/check/defau
  for(const args of [['--extra'],['--check','--check']]){const r=mode({args});assert.equal(r.exitCode,2);assert.equal(r.censusCalls,0);assert.equal(r.writes.size,0);assert.equal(r.mkdir.length,0);}
  const check=mode({args:['--check']});assert.equal(check.exitCode,0);assert.equal(check.writes.size,0);assert.equal(check.mkdir.length,0);
  const drift=mode({args:['--check'],stale:true});assert.equal(drift.exitCode,1);assert(drift.stderr[0].includes('DOC_DRIFT_EVENT_CONTRACT'));assert.equal(drift.writes.size,0);assert.equal(drift.mkdir.length,0);
+ const staleRegion=mode({args:['--check'],generatedRegionDrift:true});assert.equal(staleRegion.exitCode,1);assert(staleRegion.stderr[0].includes('DOC_DRIFT_EVENT_CONTRACT'));assert.equal(staleRegion.writes.size,0);assert.equal(staleRegion.mkdir.length,0);
  const mismatch=mode({sourceMismatch:true});assert.equal(mismatch.exitCode,1);assert(mismatch.stderr[0].includes('EVENT_SOURCE_SEMANTIC_DISPOSITION_REQUIRED'));assert.equal(mismatch.bindingCalls,0);assert.equal(mismatch.writes.size,0);assert.equal(mismatch.mkdir.length,0);
  const generated=mode();assert.equal(generated.exitCode,0);assert.deepEqual(generated.attempts,[path.join(root,'docs/generated/inventory/event-contracts.json'),path.join(root,'docs/site/reference/events.md')]);assert.equal(generated.writes.size,2);
  const partial=mode({secondWriteFailure:true});assert.equal(partial.exitCode,1);assert.equal(partial.attempts.length,2);assert.equal(partial.writes.size,1);assert(partial.writes.has(path.join(root,'docs/generated/inventory/event-contracts.json')));assert(partial.stderr[0].includes('controlled second-write failure'));

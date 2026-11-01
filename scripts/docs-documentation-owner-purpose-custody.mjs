@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import ts from 'typescript';
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
@@ -16,7 +17,8 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "docs/site/reference/capabilities.md",
         "canonical": "docs/site/reference/capabilities.md",
-        "sha256": "bda8980cbbd060a24f1b0e7c26cd5a5ff7aee5683c9c81dbdced48a849ba7d3d"
+        "projection": "capability-registration-reader-columns/v1",
+        "sha256": "625ebc282501239f4d23e48555f4773bf8328f680b0aebf911273819fdc8594d"
       },
       {
         "path": "package.json",
@@ -359,13 +361,34 @@ export const reviewedDocumentationOwnerPurposes=freeze({
   }
 });
 const sha=bytes=>createHash('sha256').update(bytes).digest('hex');
+// This one reviewed drift-control copies the generated page into its fixture.
+// Its real checker reads only the four registration declaration columns, never
+// the fifth Source citation or surrounding generated prose. This is receiving
+// purpose, not current declaration correctness or native execution proof.
+export function documentationPurposeInputBytes(source,input,bytes) {
+ if(input.projection===undefined)return bytes;
+ assert(source==='scripts/check-capability-registrations-drift-controls.mjs'&&input.path==='docs/site/reference/capabilities.md'&&input.projection==='capability-registration-reader-columns/v1','DOCUMENTATION_PURPOSE_INPUT_PROJECTION_UNQUALIFIED');
+ const text=Buffer.isBuffer(bytes)?bytes.toString('utf8'):bytes;
+ assert(typeof text==='string'&&Buffer.from(text,'utf8').equals(Buffer.isBuffer(bytes)?bytes:Buffer.from(bytes)),'DOCUMENTATION_PURPOSE_INPUT_PROJECTION_UTF8');
+ const start='## Registration Capability Declarations\n',end='## Platform Grants Are Not Swarm Roles\n';
+ assert(text.split(start).length===2&&text.split(end).length===2&&text.indexOf(start)<text.indexOf(end),'DOCUMENTATION_PURPOSE_INPUT_PROJECTION_SECTIONS');
+ const rows=[];
+ for(const line of text.split(start)[1].split(end)[0].split('\n')){
+  if(!line.startsWith('| ')||line.startsWith('| Namespace')||line.startsWith('| ---'))continue;
+  const cells=line.split('|').slice(1,-1).map(cell=>cell.trim());
+  assert(cells.length===5,'DOCUMENTATION_PURPOSE_INPUT_PROJECTION_ROW');
+  rows.push(cells.slice(0,4));
+ }
+ assert(rows.length>0,'DOCUMENTATION_PURPOSE_INPUT_PROJECTION_EMPTY');
+ return JSON.stringify([start,end,rows]);
+}
 export function assertDocumentationOwnerPurpose(root,source){
  if(readerArtifactCiRoleSources.has(source))assertReaderArtifactExternalCiPurpose(root); // before direct role-cache entry too
  const profile=reviewedDocumentationOwnerPurposes[source];if(!profile)return null;
  root=path.resolve(root);
- const acquire=(selected,expected)=>{const file=path.join(root,selected);assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.statSync(file).isFile()&&sha(fs.readFileSync(file))===expected,`DOCUMENTATION_OWNER_PURPOSE_INPUT_DRIFT: ${source}; ${selected}`);};
+ const acquire=(selected,expected,input={})=>{const file=path.join(root,selected);assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.statSync(file).isFile()&&sha(documentationPurposeInputBytes(source,{...input,path:selected},fs.readFileSync(file)))===expected,`DOCUMENTATION_OWNER_PURPOSE_INPUT_DRIFT: ${source}; ${selected}`);};
  acquire(source,profile.sourceSha256);
- for(const input of profile.purposeInputs)acquire(input.path,input.sha256);
+ for(const input of profile.purposeInputs)acquire(input.path,input.sha256,input);
  return profile;
 }
 // Call with actual original graph/entry observations, never inferred entries.
@@ -542,7 +565,9 @@ const publicationExampleChildPurpose=freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f"
+      "historicalWholeInputSha256": "dc132bc762d54068ce563e7df23fdad91af90c7b1798768a0e686ea4b3ab2a1f",
+      "purposeProjection": "exact-generated-record-seals-only/v1",
+      "purposeProjectionSha256": "0d5241e8ef278d077c58cdad2a3071970a0b5eb6f2f68f2f10a4aa704639173c"
     },
     {
       "path": "package.json",
@@ -567,10 +592,63 @@ const publicationExampleChildPurpose=freeze({
   },
   "scope": "Normal check/default/build child analysis provenance only. Owned native fixture validation is not live deployment, API output, module initialization, publishing or whole-documentation acceptance. Generate does not invoke this child."
 });
+// Source-purpose byte projection only. Actual publication coverage still seals
+// complete current files/blocks/prose and owns freshness; this is no native result.
+export function publicationClaimsPurposeInputBytes(bytes) {
+ const fail=detail=>assert.fail('DOCUMENTATION_PUBLICATION_CLAIMS_PURPOSE_DRIFT: '+detail);
+ const text=bytes.toString('utf8');
+ if(createHash('sha256').update(text).digest('hex')!==createHash('sha256').update(bytes).digest('hex'))fail('invalid UTF-8');
+ const tree=ts.parseJsonText('docs/config/publication-example-claims.json',text),root=tree.statements[0]?.expression;
+ if(tree.parseDiagnostics.length||tree.statements.length!==1||!root||!ts.isObjectLiteralExpression(root))fail('JSON root');
+ const property=(object,key)=>{
+  if(!ts.isObjectLiteralExpression(object))fail('object '+key);
+  const found=object.properties.filter(node=>ts.isPropertyAssignment(node)&&ts.isStringLiteral(node.name)&&node.name.text===key);
+  if(found.length!==1)fail('unique field '+key);
+  return found[0].initializer;
+ };
+ const array=(object,key)=>{const value=property(object,key);if(!ts.isArrayLiteralExpression(value))fail('array '+key);return value.elements;};
+ const ranges=[];
+ const seal=object=>{
+  const node=property(object,'sha256'),start=node.getStart(tree),end=node.end;
+  if(!ts.isStringLiteral(node)||!/^"[a-f0-9]{64}"$/u.test(text.slice(start,end)))fail('seal representation');
+  ranges.push([start,end]);
+ };
+ // Exact generated records only, not every hash in these pages and not basis
+ // strings, Source identities, block payloads, responsibilities, IDs or checks.
+ const selected=[
+  ['pages','docs/site/reference/capabilities.md',[1,2],2],
+  ['pages','docs/site/reference/events.md',[1],6],
+  ['pages','docs/site/reference/helm-values.md',[1],1],
+  ['assets','docs/site/reference/generated-documentation-map.json',null],
+ ];
+ for(const [collection,relative,ordinals,proseCount]of selected){
+  const matches=array(root,collection).filter(item=>{const node=property(item,'path');return ts.isStringLiteral(node)&&node.text===relative;});
+  if(matches.length!==1)fail('unique selected record '+relative);
+  const record=matches[0];seal(record);
+  if(ordinals!==null){
+   const prose=array(record,'prose');
+   if(prose.length!==proseCount)fail('selected prose roster '+relative);
+   for(let index=0;index<prose.length;index++){
+    const ordinal=property(prose[index],'ordinal');
+    if(!ts.isNumericLiteral(ordinal)||ordinal.text!==String(index+1))fail('selected prose ordinal '+relative);
+    if(ordinals.includes(index+1))seal(prose[index]);
+   }
+  }
+ }
+ let projected=text;
+ for(const [start,end]of ranges.sort((a,b)=>b[0]-a[0]))projected=projected.slice(0,start)+'"'+'0'.repeat(64)+'"'+projected.slice(end);
+ return projected;
+}
+
 const publicationExampleChildProofs=new WeakMap();
 export function qualifyPublicationExampleChildInputs(inputs) {
  const profile=publicationExampleChildPurpose,fail=detail=>assert.fail('DOCUMENTATION_PUBLICATION_CHILD_PURPOSE_DRIFT: '+detail);
- for(const pin of profile.inputs)if(typeof inputs[pin.path]!=='string'||sha(inputs[pin.path])!==pin.sha256)fail('bound input '+pin.path);
+ for(const pin of profile.inputs){
+  if(typeof inputs[pin.path]!=='string')fail('bound input '+pin.path);
+  if(pin.purposeProjection!==undefined&&(pin.path!=='docs/config/publication-example-claims.json'||pin.purposeProjection!=='exact-generated-record-seals-only/v1'))fail('unsupported input projection '+pin.path);
+  const bytes=pin.purposeProjection===undefined?inputs[pin.path]:publicationClaimsPurposeInputBytes(Buffer.from(inputs[pin.path]));
+  if(sha(bytes)!==(pin.purposeProjectionSha256??pin.sha256))fail('bound input '+pin.path);
+ }
  const parent=inputs[profile.parent],child=inputs[profile.source],definition=JSON.parse(inputs['package.json']),claims=JSON.parse(inputs['docs/config/publication-example-claims.json']);
  if(!parent.includes(profile.callSyntax)||!parent.includes(profile.resultGateSyntax)||parent.split("path.join(root, 'scripts/docs-publication-examples.mjs')").length!==2||!parent.includes(profile.parentRootSyntax)||!parent.includes(profile.mainGuardSyntax))fail('exact parent invocation/result gate/root/main');
  if(!profile.modeSyntax.every(s=>parent.includes(s))||!child.includes(profile.mainGuardSyntax)||!child.includes(profile.childRootSyntax))fail('check/build/default versus generate and child main/root');
