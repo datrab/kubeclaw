@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T08:18:04.399335+00:00",
+  "endedAt": "2026-11-01T08:18:13.538223+00:00",
+  "seconds": 9.138907846063375,
+  "exitCode": 0,
+  "argv": [
+    "node",
+    "scripts/docs-governance.mjs",
+    "--check"
+  ],
+  "scope": "Actual coherent prose-only guide/claims/four-seal state; no new code blocks/embedded programs/roles; original generator/AT/AP10 scopes not inferred"
+}

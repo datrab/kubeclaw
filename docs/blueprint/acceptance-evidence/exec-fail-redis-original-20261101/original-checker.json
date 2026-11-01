@@ -1,0 +1,15 @@
+{
+  "exitCode": 0,
+  "endedAt": "2026-11-01T08:38:19.664810+00:00",
+  "command": "PATH=/usr/local/go/bin:$PATH node scripts/check-ap09-acceptance-contract.mjs",
+  "result": {
+    "ok": true,
+    "policy": "compact-topic-review-20261019",
+    "acceptancePoints": 89,
+    "catalogueRequirements": 261,
+    "acceptedGates": 81,
+    "acceptedRequirements": 260,
+    "complete": false,
+    "contentReviewPerformedByChecker": false
+  }
+}

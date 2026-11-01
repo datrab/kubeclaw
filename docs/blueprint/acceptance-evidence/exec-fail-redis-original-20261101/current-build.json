@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-11-01T08:20:01.356322+00:00",
+  "endedAt": "2026-11-01T08:25:09.613482+00:00",
+  "seconds": 308.2571445639478,
+  "exitCode": 0,
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+  "scope": "Actual coherent current186-page publication with truthful nativeNovaRedis localcounterpart; no Buster/K8s/PVC or humanAT/generator/AP10 award"
+}

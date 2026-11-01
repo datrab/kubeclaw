@@ -1,0 +1,166 @@
+{
+  "at": "2026-11-01T08:15:25.577552+00:00",
+  "scope": "All owned retained actual nativehealth/audit/AOF/log files; protected ephemeralconfig absent",
+  "files": [
+    {
+      "path": "after-readiness.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-readiness.stdout",
+      "bytes": 46,
+      "sha256": "69f5668f75d874e84bbb87228fd67b1bf11f1b915bcb0d41b1851959d6e5aee8"
+    },
+    {
+      "path": "after-startup-status.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-startup-status.stdout",
+      "bytes": 51,
+      "sha256": "5f5a57ba03129ec734d2addc304313c84e092710d38f2ef39ba5bbe6056b1150"
+    },
+    {
+      "path": "after-startup.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "after-startup.stdout",
+      "bytes": 165,
+      "sha256": "86d9a640b6da5f8fafbb1f3fb03f32a588a6144951dfa00dd3cc07dd480419e5"
+    },
+    {
+      "path": "appendonlydir/appendonly.aof.1.base.rdb",
+      "bytes": 89,
+      "sha256": "7974962437dbe7b455f996c1f9d4a25a28fbf94fd12d3ae7c4b4d800b98ca7a3"
+    },
+    {
+      "path": "appendonlydir/appendonly.aof.1.incr.aof",
+      "bytes": 622,
+      "sha256": "2ddd4a4af3e8b5b442fc27a862a46ad4699c092547365a3f657f0cad80649f37"
+    },
+    {
+      "path": "appendonlydir/appendonly.aof.manifest",
+      "bytes": 88,
+      "sha256": "ca465c5845ad4d4c0a2b4cda8853efeb9423cb4242a4eaaa5ecbaa00a4e75492"
+    },
+    {
+      "path": "audit-after.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit-after.stdout",
+      "bytes": 130055,
+      "sha256": "60113c52981b76e9e64a85f706860ddc91aa4b1d4a762456e1d64b9a26ca7ef4"
+    },
+    {
+      "path": "audit-before.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit-before.stdout",
+      "bytes": 130055,
+      "sha256": "60113c52981b76e9e64a85f706860ddc91aa4b1d4a762456e1d64b9a26ca7ef4"
+    },
+    {
+      "path": "audit-during.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "audit-during.stdout",
+      "bytes": 130055,
+      "sha256": "60113c52981b76e9e64a85f706860ddc91aa4b1d4a762456e1d64b9a26ca7ef4"
+    },
+    {
+      "path": "before-readiness.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "before-readiness.stdout",
+      "bytes": 46,
+      "sha256": "69f5668f75d874e84bbb87228fd67b1bf11f1b915bcb0d41b1851959d6e5aee8"
+    },
+    {
+      "path": "before-startup-status.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "before-startup-status.stdout",
+      "bytes": 51,
+      "sha256": "5f5a57ba03129ec734d2addc304313c84e092710d38f2ef39ba5bbe6056b1150"
+    },
+    {
+      "path": "before-startup.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "before-startup.stdout",
+      "bytes": 165,
+      "sha256": "b676157675697e2f1f7aed28ae2e4bce104147633ab646724edeaba34a9adf23"
+    },
+    {
+      "path": "bounded-result.json",
+      "bytes": 421,
+      "sha256": "463ad12cc601b4550eba98c777887d578bdbbd72a973739891495046d5f0fa2e"
+    },
+    {
+      "path": "fault-readiness.stderr",
+      "bytes": 96,
+      "sha256": "a56acc2d5ddb33e003734b2f8ce2cbd231c5619b586f92e06cbada008a33c6e0"
+    },
+    {
+      "path": "fault-readiness.stdout",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "health-stream-after.txt",
+      "bytes": 178,
+      "sha256": "f763949f76179a9ec481e057500208aca356868754114f23c82a5b1ea22fec0e"
+    },
+    {
+      "path": "health-stream-before.txt",
+      "bytes": 89,
+      "sha256": "0b62c78aca49a27c967f874e8f476835d2c4e71f76d1d7fe188f152c6fa49815"
+    },
+    {
+      "path": "nova-startup.json",
+      "bytes": 146,
+      "sha256": "8a6f73d93580be4f471cb3abdb3ea711c1aadcea22aaaae6d7e6a3b7b3cab32b"
+    },
+    {
+      "path": "nova-startup.jsonl",
+      "bytes": 242,
+      "sha256": "0d6173b992afd29bd46b735d9cb8835e82a8fed2b9ecc6ce88c51441a3927941"
+    },
+    {
+      "path": "owned-server.log",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "owner.json",
+      "bytes": 186,
+      "sha256": "2c36123dd4a0e3ee641704606a5e89948de5db234ea5dde8f117abdf9768031f"
+    },
+    {
+      "path": "progress.json",
+      "bytes": 4299,
+      "sha256": "7c26d3cc6bb2cec79cf471b5dabd2d7e943695b3a355f98341cfe65b6a7c6596"
+    },
+    {
+      "path": "redis.log",
+      "bytes": 2657,
+      "sha256": "b3a938111920eb74aa2499e815883a1d1c52aa753d936f05dbd5b2d00e328566"
+    }
+  ]
+}

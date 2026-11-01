@@ -1,0 +1,15 @@
+{
+  "startedAt": "2026-11-01T08:18:04.398983+00:00",
+  "endedAt": "2026-11-01T08:18:56.327406+00:00",
+  "seconds": 51.92844391998369,
+  "exitCode": 0,
+  "argv": [
+    "node",
+    "--test",
+    "--test-name-pattern=four actual callers|native graph all four|separate schema|block ordinals|exact physical normal|physical symlinks",
+    "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
+    "scripts/tests/api-output-publication-child-custody.test.mjs"
+  ],
+  "scope": "Actual coherent prose-only guide/claims/four-seal state; no new code blocks/embedded programs/roles; original generator/AT/AP10 scopes not inferred"
+}

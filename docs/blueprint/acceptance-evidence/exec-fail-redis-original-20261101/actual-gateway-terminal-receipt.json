@@ -1,0 +1,35 @@
+{
+  "observedAt": "2026-11-01T08:15:25.577552+00:00",
+  "actualTool": "openclaw.gateway_exec then gateway_process poll",
+  "gatewayProcess": {
+    "sessionId": "salty-fjord",
+    "pid": 1099235,
+    "terminalCollected": true,
+    "exitCode": 0
+  },
+  "sourceRevision": "2068150b6a813b95a1caf262ba109ef578b2d852",
+  "driverSHA256": "9531ead9f9f5f6185cd82a2dba97b2b560899828bf98f2bb2fc05afdf43c0dd3",
+  "launcherSHA256": "edce5a0ced88962fa43f35c7123f6134f168db9946c0b61e5527c97b6877ee37",
+  "specSHA256": "f666ff198560ff7d36a3c72140d957d37b677a3723c8f5dec61bb5565f6bf399",
+  "actualOwnedStepPidsAbsent": [
+    1099277,
+    1099297,
+    1099305,
+    1099318,
+    1099325,
+    1099338,
+    1099346,
+    1099383,
+    1099392,
+    1099404,
+    1099411,
+    1099424
+  ],
+  "privateConfigAbsent": true,
+  "expectedNegative": {
+    "step": "fault-readiness",
+    "exitCode": 1,
+    "scope": "Only Redisreachability failure; preserved as1, NOT relabelled0"
+  },
+  "originalCaseAcceptance": "Independent4scopePASS pendingcurrentguide/publication/finalregistration, no whole gate"
+}

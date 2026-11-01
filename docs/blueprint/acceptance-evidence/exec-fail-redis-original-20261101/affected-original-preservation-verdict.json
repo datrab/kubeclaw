@@ -1,0 +1,1094 @@
+{
+  "status": "PASS_ORIGINAL_43_RECORD_THREE_SCOPE_PRESERVATION",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T08:22:54.428244+00:00",
+  "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+  "baselineRevision": "2068150b6a813b95a1caf262ba109ef578b2d852",
+  "proposalManifestSHA256": "cef78cc232e68809b61d417b652cb2145318978bad42d05803a3d91306ff577e",
+  "baselineMatrixSHA256": "287fd2780927c0bda34a94c0232f2671520a3cec1c7f9c449d2b95b86acdd4e9",
+  "records": [
+    {
+      "id": "AP09-compiler-import-provider-diagnosis-20261021",
+      "index": 23,
+      "originalRecordCanonicalSHA256": "113a754c355924d116dd196e14ec867f37210e266b2974e0b1b0af22c9138a80",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "index": 33,
+      "originalRecordCanonicalSHA256": "cccb269fd209ff1f17e51e5272b6457751a5c8036f459fa411a0458567735bbf",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only three existing guide/claims input SHA literals change. Same native1764/YAML8 facts, selectors, rosters, roles, acquired receipt, physical-path/caller guards and no-runtime/API boundaries remain; no default generator or catalogue authority renewal."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "AP09-complete-static-reader-search-20261021",
+      "index": 42,
+      "originalRecordCanonicalSHA256": "c9e98586fed352e738bf3169d30ce2c3594fc267e06a43999c3161e1c4c90e63",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "AP09-rendered-source-bounds-gate-20261021",
+      "index": 44,
+      "originalRecordCanonicalSHA256": "1811bb86d0baf121dcf2b1a974dfc7c9c9295cb7155ca0c3c53d600e01fd8c35",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "AP09-whole-independent-platform-decision-review-20261021-d477",
+      "index": 66,
+      "originalRecordCanonicalSHA256": "8265fb4ca1e580e6c55b30b25f0ff06f04fb0e9fcc030b327309c7b0bc191b1f",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "FLW010-uncertain-effect-supported-boundary-20261021",
+      "index": 70,
+      "originalRecordCanonicalSHA256": "6f08179624cbec6f699e6056232f8f49de198cff7caaae5befea75e61d734a5f",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A99-08-complete-supported-failure-journey-union-20261021",
+      "index": 85,
+      "originalRecordCanonicalSHA256": "34592cd9c6e28f1b19aa7de28424a10709e2e563f4f1296fcacea688583fe9af",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "index": 88,
+      "originalRecordCanonicalSHA256": "b9616121b38e01a5d2793100944d5cd40977b08636e454fe6401d44c20f323d5",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A912-05-whole-source-excerpt-callouts-20261022",
+      "index": 89,
+      "originalRecordCanonicalSHA256": "d9a5528bad341aebf70c65ccfba2de68ff1ffe158b132dfe98d9037da9bd1f59",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "index": 90,
+      "originalRecordCanonicalSHA256": "5f30d49dc10cb3c9003a8f4ed58abbb0da3941b526cf41ca847a9d20c52e6b20",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "AP09-whole-extension-drift-A91014-20261023",
+      "index": 96,
+      "originalRecordCanonicalSHA256": "cf125b2b532e933c29d31fe3e08b1b603b726d2646e6bca13e3187764d5f8abd",
+      "changedExplicitPaths": [
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only existing claims input SHA changes. Same actual normal child/root/parent/check/build boundary and WeakMap proof remains; no new package/API entry/caller/runtime grant."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A911-06-authored-surface-bindings-20261025",
+      "index": 99,
+      "originalRecordCanonicalSHA256": "25137ab1028f1c5bc628ceb398c232c402b0ec5041faed8791324d9cf5a45b37",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A99-13-original-seven-dimension-drift-20261025",
+      "index": 100,
+      "originalRecordCanonicalSHA256": "d4a2295cfd309e90826ee4ac1b05a0e307cd813bfd5d00f7a3af154e773f3634",
+      "changedExplicitPaths": [
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only existing claims input SHA changes. Same actual normal child/root/parent/check/build boundary and WeakMap proof remains; no new package/API entry/caller/runtime grant."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT-014-whole-native-publication-examples-20261027",
+      "index": 108,
+      "originalRecordCanonicalSHA256": "99fc2d76b5cfa707b98229093d5392107b41e7494e5ade6a03321e374be1840c",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A99-11-whole-published-example-claims-20261027",
+      "index": 109,
+      "originalRecordCanonicalSHA256": "6ee4f128324937733229ec8af6d1707ba5278e4af408fcd3889233e610aa3185",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "index": 111,
+      "originalRecordCanonicalSHA256": "72a0fa72bdd7f45fbe14b54d677ca30042f976c26cae3e7e5b57f7ca44db8d35",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "index": 112,
+      "originalRecordCanonicalSHA256": "5a3bc938b76c74ee62733b1073c04363cec16b1ecbb1915df6f2309e75f314a3",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "index": 113,
+      "originalRecordCanonicalSHA256": "ab84a35df7afbd2e6581c6fe063b70e1e52c5af2f5b09fa42cae91c998ab7468",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "index": 115,
+      "originalRecordCanonicalSHA256": "43939c3330dd5fd13b331cabbf97ddca3f116a6ef095c3dab1f132cd03b5b3d4",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "index": 117,
+      "originalRecordCanonicalSHA256": "728be8219b3d2f9e3f895629f60e87e50aed3593f3932ccbd9a19d6550758e45",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "index": 118,
+      "originalRecordCanonicalSHA256": "1bbd59d3272b7c8e27b460411ca91cefdcd3ef62e29e52301f05b554afcbd9b5",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "index": 119,
+      "originalRecordCanonicalSHA256": "fa375d50a74370ca02ee4f6dfb81dd6ac4afe286bc78e1382edd482854344542",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "index": 120,
+      "originalRecordCanonicalSHA256": "ef75fc582f2a718798e8496deee2ee5e1cf8e9b0f4f8626bae0a85850f838635",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "index": 121,
+      "originalRecordCanonicalSHA256": "bc894b2b74ef3827766c2a8db58c8781b1554c454625df70545859350a1b4e08",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "index": 122,
+      "originalRecordCanonicalSHA256": "fdb6316cd954e42cbb11efa9df839fb5fb6ea02ec272098f35fe972a8e11e564",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "index": 123,
+      "originalRecordCanonicalSHA256": "02bc11186a6d008bd3cb44b533b2d1066b93dc219df72fbcf6b53e4deed19ca0",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "index": 124,
+      "originalRecordCanonicalSHA256": "a5b0567e5970d4004823a7f554213505e8ac3a7f692516c11285db62995a6b56",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "index": 125,
+      "originalRecordCanonicalSHA256": "0a2305815cb31c7860d3c612e24cfff724d6cb4099543dcc3027b9e86892ef97",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "index": 126,
+      "originalRecordCanonicalSHA256": "5b9bda45974059bc7f8037a36c5eb477f7e97690cc54c6029a3f80fdbf9ba46e",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "index": 127,
+      "originalRecordCanonicalSHA256": "dc71bfa2e7da1271069a712fabc1f8d404e662bad907de9a2c69e693bea838a6",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "index": 128,
+      "originalRecordCanonicalSHA256": "e693b1a501802ab6dd0462f80a5aaa30d10e809a61419a3a88aaa1672fa33ac0",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "index": 129,
+      "originalRecordCanonicalSHA256": "3525521cfc4ee43b39a07999e7b06eb9bfb93efb8083f89a156804ba83c99085",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only three existing guide/claims input SHA literals change. Same native1764/YAML8 facts, selectors, rosters, roles, acquired receipt, physical-path/caller guards and no-runtime/API boundaries remain; no default generator or catalogue authority renewal.",
+          "Only existing claims input SHA changes. Same actual normal child/root/parent/check/build boundary and WeakMap proof remains; no new package/API entry/caller/runtime grant."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "index": 130,
+      "originalRecordCanonicalSHA256": "d624a3bda1805fba798c78b8d536fc4399a3120fed74e7c436a89ee05f4f5bbe",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "index": 131,
+      "originalRecordCanonicalSHA256": "683187e25039b56b7f88392ab52e62254e7c44e832d4c0222063afc7a5d3372b",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+      "index": 132,
+      "originalRecordCanonicalSHA256": "4c84c382ecc296bb5efb66debaa4fd0954abe6ff022a6d47556042f9b8069cfd",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "index": 134,
+      "originalRecordCanonicalSHA256": "073260c81a389cdae726d628b7fc188deb57da6e229e7261743ffdf833a28869",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only three existing guide/claims input SHA literals change. Same native1764/YAML8 facts, selectors, rosters, roles, acquired receipt, physical-path/caller guards and no-runtime/API boundaries remain; no default generator or catalogue authority renewal."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+      "index": 136,
+      "originalRecordCanonicalSHA256": "da1f88b991efe6f881c0065c03c7eaca56e36f56b1e2f59be58c732a5a12492b",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only three existing guide/claims input SHA literals change. Same native1764/YAML8 facts, selectors, rosters, roles, acquired receipt, physical-path/caller guards and no-runtime/API boundaries remain; no default generator or catalogue authority renewal."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "index": 137,
+      "originalRecordCanonicalSHA256": "cbd6f424194efe6715d472115370c2fbc85a919dc586f32ed9f0577c01477245",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only three existing guide/claims input SHA literals change. Same native1764/YAML8 facts, selectors, rosters, roles, acquired receipt, physical-path/caller guards and no-runtime/API boundaries remain; no default generator or catalogue authority renewal.",
+          "Only existing claims input SHA changes. Same actual normal child/root/parent/check/build boundary and WeakMap proof remains; no new package/API entry/caller/runtime grant."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+      "index": 138,
+      "originalRecordCanonicalSHA256": "d37b860864665619c7a15ecfda59cba3988754f39fa531263ecdf2b22c09e475",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only three existing guide/claims input SHA literals change. Same native1764/YAML8 facts, selectors, rosters, roles, acquired receipt, physical-path/caller guards and no-runtime/API boundaries remain; no default generator or catalogue authority renewal.",
+          "Only existing claims input SHA changes. Same actual normal child/root/parent/check/build boundary and WeakMap proof remains; no new package/API entry/caller/runtime grant."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "index": 139,
+      "originalRecordCanonicalSHA256": "65aa5624d4b6865178a105dfe617d6cb74f9866a5f211bbf90c39bda13fe3b44",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/use/diagnose.md",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced.",
+          "Only three existing guide/claims input SHA literals change. Same native1764/YAML8 facts, selectors, rosters, roles, acquired receipt, physical-path/caller guards and no-runtime/API boundaries remain; no default generator or catalogue authority renewal.",
+          "Only existing claims input SHA changes. Same actual normal child/root/parent/check/build boundary and WeakMap proof remains; no new package/API entry/caller/runtime grant."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+      "index": 140,
+      "originalRecordCanonicalSHA256": "8c9e05de6d3bd749533cdb0d0b1a7272b799b21a74373a76bd2493d55408c5f0",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only diagnose page157/prose10 and procedure contract173/current exact anchor change. Complete whole physical inverse preserves all other185pages43assets/checks/authorities/contracts and old meaning/history. No declaration-to-execution promotion.",
+          "Only three existing guide/claims input SHA literals change. Same native1764/YAML8 facts, selectors, rosters, roles, acquired receipt, physical-path/caller guards and no-runtime/API boundaries remain; no default generator or catalogue authority renewal."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+      "index": 141,
+      "originalRecordCanonicalSHA256": "218c986752924992d638520857f664a0be2205124215bc5e0a6c5bce79733d28",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    },
+    {
+      "id": "QUA007-independent-actual-operator-six-facets-20261031",
+      "index": 143,
+      "originalRecordCanonicalSHA256": "39c5179d9c5bcf6ff293fe0002cc977858a9e306581ebbba5de8d2c17c252d90",
+      "changedExplicitPaths": [
+        "docs/site/use/diagnose.md"
+      ],
+      "SourceAccuracy": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": [
+          "Only the prose10 local counterpart appends actual full-health/owned-endpoint/native-audit/AOF/XADD obligations; every old cluster instruction, Source box, codeblock and role limit remains. Original observed reader/operator tasks stay historical, not rerun or replaced."
+        ]
+      },
+      "ReaderUsability": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Original topic/practical observations and all limits retained exactly. Prose adds explicit local-vs-cluster boundaries without changing original commands or reader contracts; current artifact/search/keyboard delivery is now evidenced by terminal same-Source receipts, not historical substitution."
+      },
+      "Quality": {
+        "status": "PASS_BOUNDED_ORIGINAL_SCOPE_PRESERVATION",
+        "basis": "Whole relevant qualified Source/metadata inverses and current native coverage/governance/6guard successes support preservation. Current build/five artifact checks/affected delivery are actual terminal PASS at Sourcea051; all old checks/reviews/failures/limits/history remain exact."
+      }
+    }
+  ],
+  "actualClosedConditions": {
+    "current-native-coverage-contracts.json": {
+      "startedAt": "2026-11-01T08:18:04.398581+00:00",
+      "endedAt": "2026-11-01T08:18:13.267845+00:00",
+      "seconds": 8.869298671022989,
+      "exitCode": 0,
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/operations/pr13/evidence/next-original-dependency-fault-selection-20261101/actual-current-receivers.mjs"
+      ],
+      "scope": "Actual coherent prose-only guide/claims/four-seal state; no new code blocks/embedded programs/roles; original generator/AT/AP10 scopes not inferred"
+    },
+    "current-governance.json": {
+      "startedAt": "2026-11-01T08:18:04.399335+00:00",
+      "endedAt": "2026-11-01T08:18:13.538223+00:00",
+      "seconds": 9.138907846063375,
+      "exitCode": 0,
+      "argv": [
+        "node",
+        "scripts/docs-governance.mjs",
+        "--check"
+      ],
+      "scope": "Actual coherent prose-only guide/claims/four-seal state; no new code blocks/embedded programs/roles; original generator/AT/AP10 scopes not inferred"
+    },
+    "current-targeted-guards.json": {
+      "startedAt": "2026-11-01T08:18:04.398983+00:00",
+      "endedAt": "2026-11-01T08:18:56.327406+00:00",
+      "seconds": 51.92844391998369,
+      "exitCode": 0,
+      "argv": [
+        "node",
+        "--test",
+        "--test-name-pattern=four actual callers|native graph all four|separate schema|block ordinals|exact physical normal|physical symlinks",
+        "scripts/tests/api-output-publication-native-custody.test.mjs",
+        "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
+        "scripts/tests/api-output-publication-child-custody.test.mjs"
+      ],
+      "scope": "Actual coherent prose-only guide/claims/four-seal state; no new code blocks/embedded programs/roles; original generator/AT/AP10 scopes not inferred"
+    }
+  },
+  "pendingConditions": [],
+  "physicalPreservation": "Frozen materializer permits only existing revision/previousReviewedRevision/history/impact appends and in-memory full-record/physical inverse. Main matrix currently byteexact baseline. All43 original canonical records/checks/review/limits joined exactly.101 other records must remain byteexact at final materialization. No materialization performed without final exact report.",
+  "reuse": [
+    "independent-local-redis-metadata-verdict.json",
+    "independent-native-redis-v2-prelaunch-verdict.json",
+    "independent-native-redis-v3-fast-exit-verdict.json",
+    "independent-original-redis-verdict.json"
+  ],
+  "limits": [
+    "No old acceptance scopes reopened or broadened; changed exact path intersections only.",
+    "Prior defaultglobal API/generator FAIL, PUB007 AT/contrast, AP10 and all prior raw failures remain unchanged.",
+    "No historical reader observation relabelled current/fresh/human or native/service execution inferred from metadata.",
+    "Separate original Redis4 bounded outcome is not a whole-gate award or substitute for current publication conditions."
+  ],
+  "newAwards": [],
+  "mainMutation": false,
+  "finalizedAt": "2026-11-01T08:33:37.729593+00:00",
+  "conditionalReceiptSHA256": "f31547f4884dc723263fef527194f607969daa1bc1384eccfeb8c091d5f4dcf6",
+  "actualPublicationConditionClosures": {
+    "current-build.json": {
+      "sha256": "e7a3d4634d4c67f415bb6eba524e270d38444b0f73fb37777537cc6ea8393bbc",
+      "exitCode": 0,
+      "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+      "seconds": 308.2571445639478
+    },
+    "current-artifact.json": {
+      "sha256": "8ca4289f429e801e3789755f21b9f61220ffeac2bf5eb22da67e53c4678346a9",
+      "exitCode": 0,
+      "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+      "seconds": 54.931387291057035
+    },
+    "current-search.json": {
+      "sha256": "33d0a7d451f9c7b31288605c6cfbbd1f8540396a2b83563e7681b5d4acb9f8ab",
+      "exitCode": 0,
+      "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+      "seconds": 40.10797429597005
+    },
+    "current-source-previews.json": {
+      "sha256": "01d20dea13d6eca111189a85033c89abf50fb694329b7fdbd4691834b3cc3a71",
+      "exitCode": 0,
+      "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+      "seconds": 58.06594727002084
+    },
+    "current-diagrams.json": {
+      "sha256": "d62cea4cc3cbd2b07e95531bf739421c6de319f2f7c49bb61552435e313f0c41",
+      "exitCode": 0,
+      "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+      "seconds": 41.817034782026894
+    },
+    "current-source-links.json": {
+      "sha256": "2a8c923728bd0a4f8d05530379b4714fbd325524c297514f6920908d053a09f0",
+      "exitCode": 0,
+      "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+      "seconds": 369.9060303650331
+    },
+    "current-diagnose-delivery-check.json": {
+      "sha256": "9a10959575d95805a953370029f85e5ed1991d1769b8a5b6e8ec82bf241b0e5d",
+      "pass": true,
+      "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+      "scope": "Bounded engineering route/viewport/fence/keyboard/search/asset delivery only; not fresh participant, assistive technology, screen reader, contrast, protected browser or original acceptance."
+    }
+  },
+  "report": "/home/node/.openclaw/workspace/operations/pr13/evidence/next-original-dependency-fault-selection-20261101/affected-original-preservation-verdict.json"
+}

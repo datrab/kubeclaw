@@ -1,0 +1,165 @@
+{
+  "status": "COMPLETE_BOUNDED_NOVA_ONLY",
+  "steps": [
+    {
+      "name": "audit-before",
+      "exitCode": 0,
+      "seconds": 0.6149754400830716,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099277,
+      "ownedProcessGroup": 1099277,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "owned-server-ready",
+      "pid": 1099297
+    },
+    {
+      "name": "before-startup",
+      "exitCode": 0,
+      "seconds": 3.018900239956565,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099305,
+      "ownedProcessGroup": 1099305,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "before-startup-status",
+      "exitCode": 0,
+      "seconds": 0.0318055379902944,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099318,
+      "ownedProcessGroup": 1099318,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "before-readiness",
+      "exitCode": 0,
+      "seconds": 0.11401900602504611,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099325,
+      "ownedProcessGroup": 1099325,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "owned-server-stopped",
+      "pid": 1099297,
+      "exitCode": 0
+    },
+    {
+      "name": "fault-readiness",
+      "exitCode": 1,
+      "seconds": 0.1139877859968692,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099338,
+      "ownedProcessGroup": 1099338,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "audit-during",
+      "exitCode": 0,
+      "seconds": 0.5648567680036649,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099346,
+      "ownedProcessGroup": 1099346,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "owned-server-ready",
+      "pid": 1099383
+    },
+    {
+      "name": "after-startup",
+      "exitCode": 0,
+      "seconds": 2.9183578360825777,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099392,
+      "ownedProcessGroup": 1099392,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "after-startup-status",
+      "exitCode": 0,
+      "seconds": 0.031783067039214075,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099404,
+      "ownedProcessGroup": 1099404,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "after-readiness",
+      "exitCode": 0,
+      "seconds": 0.11403210589196533,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099411,
+      "ownedProcessGroup": 1099411,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "audit-after",
+      "exitCode": 0,
+      "seconds": 0.5647660560207441,
+      "timeoutSeconds": 90,
+      "timedOut": false,
+      "interrupted": false,
+      "unexpectedOwnedDescendants": false,
+      "ownedPid": 1099424,
+      "ownedProcessGroup": 1099424,
+      "groupStillAlive": false,
+      "ownedCleanup": null
+    },
+    {
+      "name": "owned-server-stopped",
+      "pid": 1099383,
+      "exitCode": 0
+    }
+  ],
+  "primaryError": null,
+  "cleanupErrors": [],
+  "redisPid": 1099383,
+  "redisAlive": false,
+  "privateConfigPresent": false,
+  "credentialReferencesScrubbed": true,
+  "scope": "actualNova only; no Busterrole/deployment/PVC/caseaward",
+  "processCensusUninspectablePids": [
+    "1",
+    "1543"
+  ],
+  "processCensusScope": "sameUID readable /proc only; separate frozen independent custody decision required"
+}

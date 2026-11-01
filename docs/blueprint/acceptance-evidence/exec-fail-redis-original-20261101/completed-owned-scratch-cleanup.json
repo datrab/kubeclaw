@@ -1,0 +1,96 @@
+{
+  "at": "2026-11-01T08:19:47.737971+00:00",
+  "observations": [
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/redis-original-stopped-audit-20261101",
+      "activeReadableReferences": [],
+      "inaccessibleProcessIds": [
+        "1571",
+        "1572",
+        "1573",
+        "1574",
+        "1575",
+        "1576",
+        "1577",
+        "1578",
+        "1579",
+        "1580",
+        "1581",
+        "1582",
+        "1583"
+      ],
+      "removedBytes": 611652,
+      "removed": true,
+      "limit": "Bounded readable/proc view plus qualified exclusive known-writer provenance, not universalhost census"
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/redis-original-lifecycle-v2-pinned-20261101",
+      "activeReadableReferences": [],
+      "inaccessibleProcessIds": [
+        "1571",
+        "1572",
+        "1573",
+        "1574",
+        "1575",
+        "1576",
+        "1577",
+        "1578",
+        "1579",
+        "1580",
+        "1581",
+        "1582",
+        "1583"
+      ],
+      "removedBytes": 447272,
+      "removed": true,
+      "limit": "Bounded readable/proc view plus qualified exclusive known-writer provenance, not universalhost census"
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/redis-original-lifecycle-v3-pinned-20261101",
+      "activeReadableReferences": [],
+      "inaccessibleProcessIds": [
+        "1571",
+        "1572",
+        "1573",
+        "1574",
+        "1575",
+        "1576",
+        "1577",
+        "1578",
+        "1579",
+        "1580",
+        "1581",
+        "1582",
+        "1583"
+      ],
+      "removedBytes": 463297,
+      "removed": true,
+      "limit": "Bounded readable/proc view plus qualified exclusive known-writer provenance, not universalhost census"
+    },
+    {
+      "root": "/home/node/.openclaw/workspace/tmp/redis-original-metadata-pinned-20261101",
+      "activeReadableReferences": [],
+      "inaccessibleProcessIds": [
+        "1571",
+        "1572",
+        "1573",
+        "1574",
+        "1575",
+        "1576",
+        "1577",
+        "1578",
+        "1579",
+        "1580",
+        "1581",
+        "1582",
+        "1583"
+      ],
+      "removedBytes": 600170,
+      "removed": true,
+      "limit": "Bounded readable/proc view plus qualified exclusive known-writer provenance, not universalhost census"
+    }
+  ],
+  "SourceWipSharedRuntimeLocksCanonicalArtifactPreserved": true,
+  "actualNativeRedisPidsAlreadyAbsent": true,
+  "originalRawAndNecessaryReviewContextsRetainedOutsideTmp": true
+}

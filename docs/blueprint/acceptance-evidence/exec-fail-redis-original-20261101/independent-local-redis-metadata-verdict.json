@@ -1,0 +1,88 @@
+{
+  "status": "PASS_BOUNDED_SOURCE_READER_QUALITY_SEMANTICS_PENDING_ACTUAL_POSTAPPLY_RECEIVERS",
+  "reviewer": "independent MODEL /root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T08:09:50.255620+00:00",
+  "manifestSHA256": "625de8f0ffafc3f3c328a62e4d8f250ba4aeeda2e680a7461980a8edd830ae31",
+  "guideSHA256": "400d1969237d4939a38a45a343ff7282d303c9393d96ee5c16411c3a74cd6a6e",
+  "files": [
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "oldSHA256": "12f0da0d5873fd67e19d95278a9f308d5190e7a96579f8c622508b58646b5be6",
+      "currentSHA256": "06dc2e0cca666395beb00f8e0c8caa546b03147827eabb5d2713baa3e1b1a1c4",
+      "bytes": 22692676
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "oldSHA256": "cbb4510b17f2d6a02935f1c8844b29beb77812cd182a0c490c4b0aea1917b450",
+      "currentSHA256": "f878e3782db3e83f03470c5fca62252188a329e0020c6f3449c5cceac26fffc0",
+      "bytes": 615173
+    },
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "oldSHA256": "cef34235d813a65ef892f1826b47d7de6d8941ab8c02222cdc26d0b7b1fdd584",
+      "currentSHA256": "9d4e3163b57a100fbb14ba8c4bf59c49198609c755bbf529cce4ea997874e8c9",
+      "bytes": 35686
+    }
+  ],
+  "selectedScope": {
+    "page": 157,
+    "proseOrdinal": 10,
+    "contract": 173,
+    "contractAnchorIndex": 2,
+    "profiles": [
+      "reviewedPublicationNativeValidation",
+      "reviewedPublicationYamlValidationInputs",
+      "publicationExampleChildPurpose"
+    ],
+    "fourExistingInputSeals": [
+      [
+        "reviewedPublicationNativeValidation",
+        "docs/config/publication-example-claims.json"
+      ],
+      [
+        "reviewedPublicationYamlValidationInputs",
+        "docs/site/use/diagnose.md"
+      ],
+      [
+        "reviewedPublicationYamlValidationInputs",
+        "docs/config/publication-example-claims.json"
+      ],
+      [
+        "publicationExampleChildPurpose",
+        "docs/config/publication-example-claims.json"
+      ]
+    ]
+  },
+  "judgments": {
+    "SourceAccuracy": "PASS_BOUNDED_CHANGED_MEANING",
+    "ReaderUsability": "PASS_BOUNDED_CHANGED_MEANING",
+    "Quality": "PASS_BOUNDED_CHANGED_MEANING"
+  },
+  "meaning": "Existing full page contract now explicitly carries already qualified genuine Nova local Redis counterpart. Prior basis preserved verbatim; page/prose digest and complete controlled-exercise anchor reflect only appended paragraph. Contract prerequisites/errors/cleanup/expectedResults append full-health, owned-target, stopped-audit, unchanged-head, same-endpoint/AOF, durable-state and real new-XADD/read obligations; no execution or broader deployment award. Cluster procedure and all prior failures/limits remain unchanged.",
+  "nativeConsumption": "Current complete owning consumers still require physical regular bound inputs, canonical root/cwd, exact caller/edge/package boundaries and native fact/role/slot vectors; acquired WeakMap/WeakSet receipts remain required. Updated existing SHA literals identify the qualified complete claims/guide bytes only. They grant no runtime execution/API apply, new binary provenance, future temporary-state observation, guaranteed cleanup or new caller privilege.",
+  "actualIndependentProofs": [
+    "Whole physical claims inverse exact after restoring only page157 and contract173; all other185 pages,43assets,28checks,other228contracts,83authorities exact.",
+    "Whole two guard-file physical inverse exact after restoring only four registered literal spans; no predicates/slots/rosters/selector/facts/root grants changed.",
+    "All frozen three-file old/current hashes match physical Source and proposals; complete13 owning statement strings match proposed physical files.",
+    "Selected whole old/current profile deltas consist solely of existing claims/guide SHA inputs; complete native1764/YAML8 facts and prior182/36/51 importer responsibility remain unchanged, not newly derived/awarded.",
+    "Controlled-section exactExcerpt inverse differs only at already qualified final Redis paragraph; binding authority/module, all32 codeblocks, embedded slots,471-host roster and check-input vectors unchanged."
+  ],
+  "contextCustody": {
+    "current-selected-claims-context.json": "74ecd51947d0ccfcf5b109f2c700093f5a710b1409f1162a21ea0b2597508167",
+    "complete-selected-claims-profiles.json": "ab003ad4bc6ad67b2ae44c8ef872813c94e81887a1d945f220c99e540e7a5db7",
+    "current-13-owning-context.json": "135e2a037fc9193f4a7521ce313eee0368422ad8d19b07ca3f2619dbf617f889"
+  },
+  "pendingReceivers": [
+    "Actual current native claim coverage/contracts for186pages43assets after Root adoption.",
+    "Actual supported native governance receiver must confirm whole map/classification unchanged; no map renewal inferred from hashes.",
+    "Existing targeted native/YAML/child acquisition/guard receivers at actual adopted hashes.",
+    "Applicable native instruction-syntax receiver remains471hosts and unchanged embedded slots; no grammar/execution grant."
+  ],
+  "materialRemainingFindings": [],
+  "limits": [
+    "Semantic qualification is not current postapply receiver PASS, artifact PASS or original Redis four-outcome award.",
+    "No default API/generator/role renewal, no blanket whole original-scope transfer; prior baseline failures and all prior raw P2 failures retained.",
+    "No service, credential, model/Core execution or checks rerun by this reviewer; main untouched.",
+    "No Buster/Kubernetes/StatefulSet/PVC/production outage, live-workflow-memory or whole gate claim."
+  ]
+}

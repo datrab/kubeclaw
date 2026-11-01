@@ -1,0 +1,125 @@
+{
+  "status": "PASS_ORIGINAL_EXEC_FAIL_REDIS_FOUR_FINAL_BOUNDED",
+  "reviewer": "independent MODEL /root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T08:11:50.091736+00:00",
+  "fixture": "docs/blueprint/AP09-acceptance-fixtures.json#EXEC-FAIL-REDIS",
+  "outcomes": [
+    {
+      "id": "signal",
+      "originalCondition": "Redis health and first consumer failure are observed.",
+      "observed": "PASS",
+      "evidence": "actual-owned-nova-redis/fault-readiness.stderr; progress.json fault-readiness exit1/.1139878s, full genuine Nova readiness Redis-only Connection is closed after healthy preflight; expected negative retained."
+    },
+    {
+      "id": "state",
+      "originalCondition": "Persisted and in-memory state at failure are distinguished.",
+      "observed": "PASS",
+      "evidence": "Three native audits each144 events join exact retained journal/headac94; all39 raw hashes unchanged. Owned Redis process exited, so its volatile process memory did not survive; retained AOF loaded on new PID with same sentinel and old stream. No claim live Nova workflow/cache memory was inspected."
+    },
+    {
+      "id": "decision",
+      "originalCondition": "No unbounded retry or data reset is used.",
+      "observed": "PASS",
+      "evidence": "Frozen V3 actual terminal0; finite900s work/percommand90s bounds, exact owned Redis stop/restart; no Core resume/replay/reset. No timeout or unexpected-group path accepted. Raw/state/shared markers untouched."
+    },
+    {
+      "id": "recovery",
+      "originalCondition": "Connectivity recovery and functional verification pass.",
+      "observed": "PASS",
+      "evidence": "Same endpoint35429/config/AOF, two real Redis PIDs; original AOF loaded. Full native startup/status/readiness0 after restore; original stream prefix retained plus new actual XADD identity, XRANGE read. AOF independently parsed one SET/two XADD; actual driver GET equality asserted. Not PONG-only recovery."
+    }
+  ],
+  "actualScope": "Owned genuine selected Nova complete maintained native health program; facilitator/engineering deployment evidence, not fresh participant or full production outage.",
+  "supportingReceipt": "independent-actual-redis-custody-check.json",
+  "supportingRawRoot": "actual-owned-nova-redis",
+  "frozenDriverSHA256": "9531ead9f9f5f6185cd82a2dba97b2b560899828bf98f2bb2fc05afdf43c0dd3",
+  "frozenSpecSHA256": "f666ff198560ff7d36a3c72140d957d37b677a3723c8f5dec61bb5565f6bf399",
+  "cleanupObserved": "Actual recorded child/server PIDs absent and private config removed; actual Gateway terminal0 collected. Four owned scratch roots removed after bounded readable /proc checks and qualified exclusive writer custody, with inaccessible-process limits explicit. All32 native runtime files plus39 original raw identities and derived audit platform retained/hash-exact.",
+  "registrationConditions": [],
+  "retainedNegatives": [
+    "Fault native readiness exit1 is the intended observed failure, not erased.",
+    "Prior V1/V2/P2 failures and initial process-permission/custody limits remain retained.",
+    "Initial independent offline AOF assertion assumed pre-option argument position; corrected offline parsing proved actual ID joins. No runtime evidence altered."
+  ],
+  "limits": [
+    "No Buster role, Kubernetes smoke/StatefulSet/PVC or production-outage acceptance.",
+    "No ongoing pipeline was interrupted or resumed; native audit is of already stopped real run, preserving its prior failed downstream outcome.",
+    "No Redis corruption/crash durability, cache reconstruction, live workflow-memory inspection or whole pipeline result proved.",
+    "No MODEL/human fresh-reader or AT/contrast/whole-reader gate award.",
+    "No runtime rerun or main mutation by reviewer; final matrix/case registration/checker remain Root integration actions."
+  ],
+  "unmetOriginalCondition": null,
+  "wholeGateAward": false,
+  "finalizedAt": "2026-11-01T08:33:37.729593+00:00",
+  "executionSourceRevision": "2068150b6a813b95a1caf262ba109ef578b2d852",
+  "publicationSourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+  "actualConditionClosures": {
+    "currentPublication": {
+      "current-build.json": {
+        "sha256": "e7a3d4634d4c67f415bb6eba524e270d38444b0f73fb37777537cc6ea8393bbc",
+        "exitCode": 0,
+        "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+        "seconds": 308.2571445639478
+      },
+      "current-artifact.json": {
+        "sha256": "8ca4289f429e801e3789755f21b9f61220ffeac2bf5eb22da67e53c4678346a9",
+        "exitCode": 0,
+        "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+        "seconds": 54.931387291057035
+      },
+      "current-search.json": {
+        "sha256": "33d0a7d451f9c7b31288605c6cfbbd1f8540396a2b83563e7681b5d4acb9f8ab",
+        "exitCode": 0,
+        "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+        "seconds": 40.10797429597005
+      },
+      "current-source-previews.json": {
+        "sha256": "01d20dea13d6eca111189a85033c89abf50fb694329b7fdbd4691834b3cc3a71",
+        "exitCode": 0,
+        "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+        "seconds": 58.06594727002084
+      },
+      "current-diagrams.json": {
+        "sha256": "d62cea4cc3cbd2b07e95531bf739421c6de319f2f7c49bb61552435e313f0c41",
+        "exitCode": 0,
+        "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+        "seconds": 41.817034782026894
+      },
+      "current-source-links.json": {
+        "sha256": "2a8c923728bd0a4f8d05530379b4714fbd325524c297514f6920908d053a09f0",
+        "exitCode": 0,
+        "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+        "seconds": 369.9060303650331
+      },
+      "current-diagnose-delivery-check.json": {
+        "sha256": "9a10959575d95805a953370029f85e5ed1991d1769b8a5b6e8ec82bf241b0e5d",
+        "pass": true,
+        "sourceRevision": "a0514a87313cd0cab5b1b3cbd4936b7281df6675",
+        "scope": "Bounded engineering route/viewport/fence/keyboard/search/asset delivery only; not fresh participant, assistive technology, screen reader, contrast, protected browser or original acceptance."
+      }
+    },
+    "GatewayTerminal": {
+      "path": "actual-gateway-terminal-receipt.json",
+      "sha256": "f7fc902e9506298df97e187d4e91438ed44e2e60804dd5b7f57be91058685418",
+      "exitCode": 0
+    },
+    "runtimeFileIndex": {
+      "path": "actual-runtime-file-index.json",
+      "sha256": "afdc5d21aa1ca53aebc70d1d807dc54836dab4868a09e3eb89b0adec043a8cc8",
+      "files": 32,
+      "allBytesAndHashesVerified": true
+    },
+    "retainedAuditAuthority": {
+      "path": "retained-audit-binding/retired-input-relocations.json",
+      "sha256": "23c1b017308cb83f8fa389e8f4983969e5fe7899f4ecef6e551a846b8c011ea5",
+      "39RawAndDerivedPlatformHashesVerified": true,
+      "noRewrittenRuntimeRecord": true
+    },
+    "ownedScratchCleanup": {
+      "path": "completed-owned-scratch-cleanup.json",
+      "sha256": "62cac16a3c711e601beeb68a3d310d7122b5e6472ff4e101ce0c564f836277c0",
+      "4OwnedRootsRemoved": true,
+      "inaccessibleProcLimitsRetained": true
+    }
+  }
+}
