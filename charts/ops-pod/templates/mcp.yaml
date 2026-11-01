@@ -1,3 +1,4 @@
+{{- if and .Values.mcp.secretInput.enabled (empty .Values.mcp.secretInput.targets) -}}{{ fail "mcp.secretInput.targets is required" }}{{- end -}}
 {{- $name := printf "%s-mcp" .Release.Name -}}
 {{- $clients := list -}}
 {{- $ids := dict -}}
@@ -14,8 +15,8 @@
 {{- range .namespacePrefixes -}}
 {{- if not (has (lower .) $.Values.rbac.namespacePrefixes) -}}{{- fail "MCP client prefix is outside rbac.namespacePrefixes" -}}{{- end -}}
 {{- end -}}
-{{- if and .readOnly (or (has "exec_pod" .tools) (not (empty .exec))) -}}
-{{- fail "Read-only MCP clients cannot have exec tools or grants" -}}
+{{- if and .readOnly (or (or (has "exec_pod" .tools) (has "secure_secret_request" .tools) (has "secure_secret_targets" .tools) (has "secure_secret_status" .tools) (has "secure_secret_cancel" .tools) (has "secure_secret_revoke" .tools) (has "secure_secret_probe" .tools) (has "secure_secret_reconcile" .tools)) (not (empty .exec))) -}}
+{{- fail "Read-only MCP clients cannot have exec or secret-management tools or grants" -}}
 {{- end -}}
 {{- range .exec -}}
 {{- if .allNonSystemNamespaces -}}
@@ -76,6 +77,9 @@ spec:
             {{- if .Values.mcp.monitoring.enabled }}
             - {name: OPS_PROMETHEUS_ORIGIN, value: {{ printf "http://%s.%s.svc.cluster.local:%v" .Values.mcp.monitoring.service .Values.mcp.monitoring.namespace .Values.mcp.monitoring.port | quote }}}
             {{- end }}
+            {{- if .Values.mcp.secretInput.enabled }}
+            - {name: OPS_SECRET_INPUT_CONFIG, value: /etc/secret-input/broker.json}
+            {{- end }}
             - {name: OPS_MCP_POLICY_FILE, value: /etc/ops-mcp/policy.json}
             - {name: OPS_MCP_TLS_CERT_FILE, value: /etc/ops-tls/tls.crt}
             - {name: OPS_MCP_TLS_KEY_FILE, value: /etc/ops-tls/tls.key}
@@ -87,6 +91,11 @@ spec:
           resources: {{ toYaml .Values.resources.mcp | nindent 12 }}
           volumeMounts:
             - {name: kube-api, mountPath: /var/run/secrets/kubernetes.io/serviceaccount, readOnly: true}
+            {{- if .Values.mcp.secretInput.enabled }}
+            - {name: secret-input-config, mountPath: /etc/secret-input, readOnly: true}
+            - {name: secret-input-tls, mountPath: /etc/secret-input-tls, readOnly: true}
+            - {name: secret-input-state, mountPath: /var/lib/secret-input}
+            {{- end }}
             - {name: policy, mountPath: /etc/ops-mcp, readOnly: true}
             - {name: tls, mountPath: /etc/ops-tls, readOnly: true}
             {{- range .Values.mcp.clients }}
@@ -102,6 +111,14 @@ spec:
             initialDelaySeconds: 20
             periodSeconds: 20
       volumes:
+        {{- if .Values.mcp.secretInput.enabled }}
+        - name: secret-input-config
+          configMap: {name: {{ $name }}-secret-input}
+        - name: secret-input-tls
+          secret: {secretName: {{ required "mcp.secretInput.brokerTlsSecret is required" .Values.mcp.secretInput.brokerTlsSecret }}, defaultMode: 0440}
+        - name: secret-input-state
+          persistentVolumeClaim: {claimName: {{ required "mcp.secretInput.existingClaim is required" .Values.mcp.secretInput.existingClaim }}}
+        {{- end }}
         - name: policy
           configMap: {name: {{ $name }}-policy}
         - name: tls
@@ -118,3 +135,12 @@ spec:
               - configMap:
                   name: kube-root-ca.crt
                   items: [{key: ca.crt, path: ca.crt}]
+
+{{- if .Values.mcp.secretInput.enabled }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: {{ $name }}-secret-input}
+data:
+  broker.json: {{ dict "publicOrigin" (required "mcp.secretInput.publicOrigin is required" .Values.mcp.secretInput.publicOrigin) "storeFile" "/var/lib/secret-input/requests.sqlite" "targets" .Values.mcp.secretInput.targets "tls" (dict "caFile" "/etc/secret-input-tls/ca.crt" "certFile" "/etc/secret-input-tls/tls.crt" "keyFile" "/etc/secret-input-tls/tls.key") | toJson | quote }}
+{{- end }}

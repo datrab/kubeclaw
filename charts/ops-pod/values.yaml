@@ -54,6 +54,14 @@ tailscale:
 # Central MCP service. Argo creates credential objects and a scoped Sync Job
 # fills them inside the cluster. Each client receives only its own credential.
 mcp:
+  # Disabled until recipient keys and mTLS are provisioned. Contains public keys,
+  # target names and encrypted request state only; never private recipient keys.
+  secretInput:
+    enabled: false
+    publicOrigin: ""
+    existingClaim: ""
+    brokerTlsSecret: ""
+    targets: []
   monitoring:
     enabled: false
     namespace: monitoring

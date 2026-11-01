@@ -120,3 +120,11 @@ test('namespace-wide exact exec grants cover every regular container without mat
     assert.throws(() => parse({ ...actor, exec: [{ ...namespaceGrant, ...changed }] }), /grant/);
   }
 });
+
+
+test('secret-custody workloads deny pod exec even to an explicitly broad operations client', () => {
+ const client={readAllNamespaces:true,exec:[{allNonSystemNamespaces:true,allPods:true,allContainers:true,timeoutSeconds:120,maxOutputBytes:65536}]};
+ const args={namespace:'familyclaw',pod:'receiver',container:'receiver',timeoutSeconds:30,maxOutputBytes:1024};
+ const pod={metadata:{labels:{'security.kubeclaw.io/secret-custody':'true'}},spec:{containers:[{name:'receiver'}]}};
+ assert.throws(()=>authorizeExec(client,args,pod),/OPS_EXEC_TARGET_FORBIDDEN/);
+});

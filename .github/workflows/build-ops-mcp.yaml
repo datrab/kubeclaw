@@ -11,6 +11,8 @@ on:
       - examples/cilium/**
       - ops/pod/**
       - charts/ops-pod/**
+      - charts/secret-receiver/**
+      - tests/verification/deployment/secret-input-chart.test.mjs
       - scripts/deploy-ops-pod.sh
       - .github/workflows/build-ops-mcp.yaml
   push:
@@ -26,6 +28,8 @@ on:
       - examples/cilium/**
       - ops/pod/**
       - charts/ops-pod/**
+      - charts/secret-receiver/**
+      - tests/verification/deployment/secret-input-chart.test.mjs
       - scripts/deploy-ops-pod.sh
       - .github/workflows/build-ops-mcp.yaml
   workflow_dispatch: null
@@ -76,6 +80,14 @@ jobs:
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
           version: v3.22.0
+      - name: Verify encrypted input in a real browser
+        if: matrix.image == 'kubeclaw-ops-mcp'
+        run: |
+          npm ci --ignore-scripts
+          node node_modules/playwright/cli.js install --with-deps chromium
+          node tools/ops-mcp/test/browser/secret-input.mjs
+      - name: Test encrypted secret deployment contracts
+        run: node --test tests/verification/deployment/secret-input-chart.test.mjs
       - name: Test Ops Pod and actual Codex CLI
         working-directory: ops/pod
         run: |
@@ -169,6 +181,14 @@ jobs:
         uses: azure/setup-helm@1a275c3b69536ee54be43f2070a358922e12c8d4 # v4.3.1
         with:
           version: v3.22.0
+      - name: Verify encrypted input in a real browser
+        if: matrix.image == 'kubeclaw-ops-mcp'
+        run: |
+          npm ci --ignore-scripts
+          node node_modules/playwright/cli.js install --with-deps chromium
+          node tools/ops-mcp/test/browser/secret-input.mjs
+      - name: Test encrypted secret deployment contracts
+        run: node --test tests/verification/deployment/secret-input-chart.test.mjs
       - name: Test Ops Pod and actual Codex CLI
         working-directory: ops/pod
         run: |

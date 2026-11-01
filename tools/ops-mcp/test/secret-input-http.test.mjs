@@ -1,0 +1,9 @@
+import test from 'node:test';import assert from 'node:assert/strict';import http from 'node:http';import {once} from 'node:events';import {webcrypto} from 'node:crypto';import {seal} from '../src/secret-input/browser.mjs';import {handleSecretInput} from '../src/secret-input/http.mjs';import {secret,fixture} from './fixtures/secret-input.mjs';
+test('actual HTTP input path has CSP/no-store, rejects cross-origin/plaintext and never exposes secret values',async()=>{const f=fixture();const server=http.createServer((req,res)=>{void handleSecretInput(req,res,{broker:f.broker,publicOrigin:'https://secrets.example.ts.net'}).then(handled=>{if(!handled){res.writeHead(404);res.end();}});});server.listen(0,'127.0.0.1');await once(server,'listening');const base='http://127.0.0.1:'+server.address().port;
+ try{const r=f.create(),authorization='Bearer '+r.token,url=base+'/secret-input/api/'+r.id;
+ const page=await fetch(base+'/secret-input/');assert.equal(page.status,200);assert.equal(page.headers.get('cache-control'),'no-store');assert.match(page.headers.get('content-security-policy'),/frame-ancestors 'none'/);
+ assert.equal((await fetch(url)).status,404);assert.equal((await fetch(url,{headers:{authorization}})).status,200);
+ assert.equal((await fetch(url,{method:'POST',headers:{authorization,origin:'https://hostile.example','content-type':'application/json'},body:JSON.stringify({password:secret})})).status,403);
+ const sealed=await seal(secret,r.metadata,r.metadata.spki,webcrypto);const response=await fetch(url,{method:'POST',headers:{authorization,origin:'https://secrets.example.ts.net','content-type':'application/json'},body:JSON.stringify(sealed)});assert.equal(response.status,200);const result=await response.json();assert.equal(result.state,'stored');assert(!JSON.stringify(result).includes(secret));
+ }finally{await new Promise(resolve=>server.close(resolve));f.close();}});
+

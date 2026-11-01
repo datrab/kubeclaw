@@ -1,0 +1,4 @@
+apiVersion: v2
+name: secret-receiver
+version: 0.1.0
+description: Namespace-owned encrypted secret intake and internal consumer storage

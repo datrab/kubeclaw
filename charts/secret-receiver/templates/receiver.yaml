@@ -1,0 +1,61 @@
+{{- if not (regexMatch "^.+@sha256:[a-f0-9]{64}$" .Values.image) -}}{{ fail "image must be an immutable digest" }}{{- end -}}
+{{- $name := printf "%s-secret-receiver" .Release.Name -}}
+apiVersion: v1
+kind: ConfigMap
+metadata: {name: {{ $name }}}
+data:
+  receiver.json: {{ dict "provider" .Values.provider "port" 8443 "tenant" (required "tenant is required" .Values.tenant) "namespace" .Release.Namespace "target" (required "target is required" .Values.target) "names" .Values.names "publicKeyFile" "/var/lib/secret-input/recipient/public.pem" "encryptedPrivateKeyFile" "/var/lib/secret-input/recipient/private.pem" "passphraseFile" "/var/run/recipient-master/passphrase" "storeFile" "/var/lib/secret-input/values.sqlite" "brokerCertificateFingerprint" (required "brokerCertificateFingerprint is required" .Values.brokerCertificateFingerprint) "tls" (dict "caFile" "/etc/recipient-tls/ca.crt" "certFile" "/etc/recipient-tls/tls.crt" "keyFile" "/etc/recipient-tls/tls.key") | toJson | quote }}
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata: {name: {{ $name }}}
+spec:
+  replicas: 1
+  strategy: {type: Recreate}
+  selector: {matchLabels: {app.kubernetes.io/name: {{ $name }}}}
+  template:
+    metadata: {labels: {app.kubernetes.io/name: {{ $name }}, security.kubeclaw.io/secret-custody: "true"}}
+    spec:
+      automountServiceAccountToken: false
+      securityContext: {runAsNonRoot: true, runAsUser: 1000, runAsGroup: 1000, fsGroup: 1000, seccompProfile: {type: RuntimeDefault}}
+      initContainers:
+        - name: provision-recipient
+          image: {{ required "image digest is required" .Values.image | quote }}
+          command: [node, /app/src/secret-input/provision-key.mjs, /var/lib/secret-input/recipient, /var/run/recipient-master/passphrase]
+          securityContext: {readOnlyRootFilesystem: true, allowPrivilegeEscalation: false, capabilities: {drop: [ALL]}}
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+          volumeMounts:
+            - {name: master, mountPath: /var/run/recipient-master, readOnly: true}
+            - {name: state, mountPath: /var/lib/secret-input}
+      containers:
+        - name: receiver
+          image: {{ required "image digest is required" .Values.image | quote }}
+          command: [node, /app/src/secret-input/namespace-server.mjs, /etc/recipient/receiver.json]
+          ports: [{name: receiver, containerPort: 8443}]
+          securityContext: {readOnlyRootFilesystem: true, allowPrivilegeEscalation: false, capabilities: {drop: [ALL]}}
+          resources: {{ toYaml .Values.resources | nindent 12 }}
+          readinessProbe: {tcpSocket: {port: receiver}, periodSeconds: 10}
+          volumeMounts:
+            - {name: config, mountPath: /etc/recipient, readOnly: true}
+            - {name: tls, mountPath: /etc/recipient-tls, readOnly: true}
+            - {name: master, mountPath: /var/run/recipient-master, readOnly: true}
+            - {name: state, mountPath: /var/lib/secret-input}
+      volumes:
+        - name: config
+          configMap: {name: {{ $name }}}
+        - name: tls
+          secret: {secretName: {{ required "tlsSecret is required" .Values.tlsSecret }}, defaultMode: 0440}
+        - name: master
+          csi:
+            driver: secrets-store.csi.k8s.io
+            readOnly: true
+            volumeAttributes: {secretProviderClass: {{ required "keyProviderClass is required" .Values.keyProviderClass | quote }}}
+        - name: state
+          persistentVolumeClaim: {claimName: {{ required "existingClaim is required" .Values.existingClaim }}}
+---
+apiVersion: v1
+kind: Service
+metadata: {name: {{ $name }}}
+spec:
+  selector: {app.kubernetes.io/name: {{ $name }}}
+  ports: [{name: receiver, port: 8443, targetPort: receiver}]

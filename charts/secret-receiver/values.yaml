@@ -1,0 +1,14 @@
+image: "" # Immutable kubeclaw-ops-mcp image digest
+existingClaim: ""
+tenant: ""
+target: ""
+names: []
+provider: "" # Optional: hetzner-storage (read-only access probe)
+brokerCertificateFingerprint: "" # Authorized broker client certificate SHA256
+keyProviderClass: ""
+tlsSecret: "" # Existing namespace receiver mTLS identity + client CA
+resources:
+  requests: {cpu: 25m, memory: 64Mi}
+  limits: {cpu: 500m, memory: 256Mi}
+brokerNamespace: ""
+brokerPodName: "" # app.kubernetes.io/name of the authorized Ops MCP workload

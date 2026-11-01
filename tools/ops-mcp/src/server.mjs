@@ -1,3 +1,6 @@
+import {loadSecretInput} from './secret-input/config.mjs';
+import {handleSecretInput} from './secret-input/http.mjs';
+import {registerSecretInput} from './secret-input/register.mjs';
 import { boundedUtf8, logObservation } from './diagnostics.mjs';
 import { getHubbleFlows } from './hubble.mjs';
 import { validNamespace, namespaceAllowed, createAccessPolicy, requestIdentity, authorizeTool, authorizeExec, audit, identityContext } from './access-policy.mjs';
@@ -16,6 +19,7 @@ import { toNodeHandler } from '@modelcontextprotocol/node';
 import * as z from 'zod/v4';
 
 const config = loadOpsMcpConfig();
+const secretInput = loadSecretInput(process.env.OPS_SECRET_INPUT_CONFIG);
 const PORT = config.port;
 const HOST = config.host;
 const kubeRequest = createKubeRequest();
@@ -271,6 +275,8 @@ function buildServer() {
       return jsonText({ ...page, nextContinueToken: page.continuation });
     });
   }
+
+  registerSecretInput(server, principal, secretInput?.broker);
 
   server.registerTool('get_resource_inventory', {
     title: 'Read resource and storage inventory',
@@ -613,7 +619,12 @@ const createServer = tlsCert ? handler => {
   return createHttpsServer({ cert, key, minVersion: 'TLSv1.2' }, handler);
 } : createHttpServer;
 let tlsReload;
-const httpServer = createServer((req, res) => {
+const httpServer = createServer(async (req, res) => {
+  if (secretInput && req.url?.startsWith('/secret-input/')) {
+    try { if (!await handleSecretInput(req, res, secretInput)) { res.writeHead(404); res.end(); } }
+    catch { if (!res.headersSent) res.writeHead(503); res.end(); }
+    return;
+  }
   let url;
   try {
     // Never use the untrusted Host header to construct the parser base; only
@@ -672,6 +683,7 @@ async function shutdown(signal) {
   tlsReload?.close();
   httpServer.close();
   await mcpHandler.close();
+  secretInput?.close();
   process.exit(0);
 }
 

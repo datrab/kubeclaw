@@ -7,7 +7,7 @@ export const requestIdentity = new AsyncLocalStorage();
 export const READ_ONLY_TOOLS = Object.freeze(['platform_cluster_state', 'platform_network_state', 'list_argocd_applications',
   'namespace_overview', 'get_pod', 'get_events', 'get_pod_logs', 'get_hubble_flows', 'get_pod_metrics',
   'get_resource_inventory', 'get_monitoring_metrics', 'get_monitoring_alerts']);
-export const TOOL_NAMES = [...READ_ONLY_TOOLS, 'exec_pod'];
+export const TOOL_NAMES = [...READ_ONLY_TOOLS, 'exec_pod', 'secure_secret_targets', 'secure_secret_request', 'secure_secret_status', 'secure_secret_cancel', 'secure_secret_revoke', 'secure_secret_probe', 'secure_secret_reconcile'];
 const dns = /^[a-z0-9](?:[a-z0-9-]{0,61}[a-z0-9])?$/;
 const strings = (v, check) => Array.isArray(v) && v.every(x => typeof x === 'string' && check(x));
 const positive = (v, max) => Number.isInteger(v) && v > 0 && v <= max;
@@ -65,7 +65,7 @@ export function createAccessPolicy(config) {
     // never enabled by the old shared bearer configuration.
     const bearer = createBearerAuthorization(config.bearer);
     return { ready: () => bearer.ready(), authenticate: header => bearer.authorized(header)
-      ? { id: 'legacy-observer', namespaces: config.namespaces, tools: TOOL_NAMES.filter(x => x !== 'exec_pod' && (config.localOnly || !x.startsWith('platform_'))), exec: [] } : null };
+      ? { id: 'legacy-observer', namespaces: config.namespaces, tools: READ_ONLY_TOOLS.filter(x => config.localOnly || !x.startsWith('platform_')), exec: [] } : null };
   }
   if (config.bearer.file || config.bearer.token) throw new Error('Do not combine a client policy with a shared bearer');
   const load = () => {
@@ -105,7 +105,7 @@ export function authorizeTool(client, tool, args, argoNamespace) {
 }
 
 export function authorizeExec(client, args, pod) {
-  if (client?.readOnly) throw new Error('OPS_EXEC_TARGET_FORBIDDEN');
+  if (client?.readOnly || pod.metadata?.labels?.['security.kubeclaw.io/secret-custody'] === 'true') throw new Error('OPS_EXEC_TARGET_FORBIDDEN');
   const systemPod = ['system-node-critical', 'system-cluster-critical'].includes(pod.spec?.priorityClassName) || pod.spec?.priority >= 2000000000;
   const grant = client.exec.find(grant => grant.allNonSystemNamespaces === true
     ? nonSystemNamespace(args.namespace) && !systemPod
