@@ -2697,11 +2697,11 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "12f0da0d5873fd67e19d95278a9f308d5190e7a96579f8c622508b58646b5be6"
+      "sha256": "06dc2e0cca666395beb00f8e0c8caa546b03147827eabb5d2713baa3e1b1a1c4"
     },
     {
       "path": "docs/site/use/diagnose.md",
-      "sha256": "54cbb9fa7ef96a3b67913b0973a3bdae6530f8d8aa57aa92e9a8e674c5d2985f"
+      "sha256": "400d1969237d4939a38a45a343ff7282d303c9393d96ee5c16411c3a74cd6a6e"
     },
     {
       "path": "docs/site/use/install.md",
@@ -3428,7 +3428,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "12f0da0d5873fd67e19d95278a9f308d5190e7a96579f8c622508b58646b5be6"
+      "sha256": "06dc2e0cca666395beb00f8e0c8caa546b03147827eabb5d2713baa3e1b1a1c4"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",

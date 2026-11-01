@@ -745,7 +745,22 @@ Cleanup consists only of removing any deliberately queued test observation
 through its owning adapter's retention rule. Keep the original Nova journal,
 the failure output, and the successful new stream identity. If rollout or the
 functional checks fail, keep admission stopped and escalate; do not delete the
-PVC.
+PVC. An owned local engineering counterpart uses the genuine selected Nova
+runtime and its complete maintained health script, retaining every enabled
+check, code-bundle verification, role identity, and protected service binding.
+Only an exclusively owned authenticated loopback Redis target, health stream,
+and startup record paths are isolated; shared runtime configuration, startup
+records, and Redis remain untouched. First require full startup and readiness
+success, then deny only that owned endpoint and require the full readiness
+report to identify only Redis reachability failure. Preserve stopped-run raw
+state and execute native audits before, during, and after the outage with an
+unchanged journal head; do not interrupt a pipeline or replay an observation.
+Restore the same endpoint, configuration, and persistent AOF directory; verify
+the retained durable sentinel and earlier stream entries, then require full
+startup and readiness, a new real startup XADD, and an actual stream read.
+Retain failures and owned-service cleanup evidence without resetting shared
+state. This local counterpart establishes no second Buster role, Kubernetes
+smoke, StatefulSet readiness, PVC identity, or production-outage result.
 
 ### Prism PostgreSQL Unavailable
 
