@@ -39,5 +39,7 @@ export function classifyPrismNativeRequestRoles(source,classify,receipt){
 export function selectedPrismNativeRequestCapability(source,role,receipt){
  if(!receipt||source!==profile.source||role.role!=='unknown')return null;
  const record=acquired.get(receipt);assert(record,'PRISM_REQUEST_CAPABILITY_UNACQUIRED');record.recheck();
- const proof=rawReceipts.get(role);return proof?.receipt===receipt&&proof.raw===JSON.stringify(role)?receipt:null;
+ const proof=rawReceipts.get(role);
+ if(proof?.receipt!==receipt||proof.raw!==JSON.stringify(role))return null;
+ return receipt;
 }
