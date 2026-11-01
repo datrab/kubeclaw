@@ -1,0 +1,10 @@
+{
+  "at": "2026-11-01T05:19:11.888636+00:00",
+  "onlyMatrixChange": "append1freshcaseObservation",
+  "allPriorObservationsCompletionRecordsGatesRequirementsExact": true,
+  "actualCaseOutcomesPassed": 5,
+  "newOriginalGateOrRequirementAward": false,
+  "priorMatrixSha256": "0321a4dc184fe3339466538f39c2a5b5cc87bdb07119707ea89813f2df9c12dd",
+  "candidateMatrixSha256": "c703ffa08dbf56c120f5cd14bd3db6d130f9c27d69bd590eb10ca67337869f81",
+  "publicEvidenceBytes": 40640
+}

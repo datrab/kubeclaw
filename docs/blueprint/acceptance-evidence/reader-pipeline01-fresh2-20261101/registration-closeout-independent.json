@@ -1,0 +1,81 @@
+{
+  "scope": "Proof-only compact fresh2 registration closeout, not original outcome rerun",
+  "verdict": "PASS_REGISTRATION_CLOSEOUT",
+  "materialFindings": [],
+  "reviewedSource": "795a2157fcaddcd27015601f348c5898b8f52689",
+  "originalOutcomeDecision": "PASS5 isolatedMODEL only, exact retained independent-original-verdict.json reused",
+  "matrix": {
+    "path": "docs/blueprint/documentation-completion-matrix.json",
+    "candidateSHA256": "c703ffa08dbf56c120f5cd14bd3db6d130f9c27d69bd590eb10ca67337869f81",
+    "priorSHA256": "0321a4dc184fe3339466538f39c2a5b5cc87bdb07119707ea89813f2df9c12dd",
+    "oneAppendedObservationId": "READER-PIPELINE-01-fresh-model-20261101",
+    "wholeSemanticInverseExact": true,
+    "wholePhysicalInverseExact": true,
+    "allPriorObservationsRecordsGatesRequirementsNegativesExact": true,
+    "newGateAwards": [],
+    "newRequirementAwards": []
+  },
+  "compactEvidence": {
+    "directory": "docs/blueprint/acceptance-evidence/reader-pipeline01-fresh2-20261101",
+    "bytes": 41108,
+    "originalDecisionParticipantResultTaskAndFaultReceiptCopiesExact": true,
+    "allRetainedRawEvidenceCustodyHashesMatch": true,
+    "fullRetainedEvidenceRoot": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-pipeline01-fresh2-20261101",
+    "credentialInspection": "No material accidental credential values found in selected public evidence; no secret values emitted. PEM/bearer/JWT/exact secret-field inspection plus semantic receipt review; no universal arbitrary-encoding secret absence guarantee.",
+    "referenceBase": "Raw participant/evidence relative references preserve their original retained evidence context; provenance supplies full retained evidence root, not an assertion all raw runtime files are copied into publication."
+  },
+  "lateFacilitatorCleanup": "Root separately reports owned clone/host removal only after exact export/no-user inspection; no new participant step or outcome inferred. Cleanup inspection may be added as separate custody evidence, not Source/task mutation.",
+  "limits": [
+    "Firstfresh NOT_COMPLETE remains unchanged",
+    "HealthyCore0 versusfaultCore13/nonterminal SAFE_STOP preserved",
+    "MODEL nothuman; no AT/contrast/whole-reader/gate/globalAPI/defaultgenerator/AP10 award",
+    "Unchanged original checker is a separate Root actual receipt; not executed/claimed by this review",
+    "No site/config/guard/Source changes or build needed from proof-only registration; no repo mutation by reviewer"
+  ],
+  "publicFileHashes": [
+    {
+      "path": "facilitator-fault-injection.json",
+      "sha256": "6fac785549e69afb55f94e511fdbafff3a24bddef330d80dba574f726e527624"
+    },
+    {
+      "path": "final-central-census.json",
+      "sha256": "f03e26222130bc3c69add812756905500c588d98b5c5901769adad134816a80a"
+    },
+    {
+      "path": "host-final-receipt.json",
+      "sha256": "ed65add1346d6bffd5db14d150c9ca3b2feab6e53f8c21d25f9d19e767410c98"
+    },
+    {
+      "path": "independent-original-verdict.json",
+      "sha256": "e2c19c62b22490421e8c1fba89bcb743000135e15410427969ee0d3a8d5512cf"
+    },
+    {
+      "path": "independent-original-verdict.md",
+      "sha256": "d852a408c208c52d8f1232b0de2afff65e0c763a7cd3b84cb0536f4a1f615a88"
+    },
+    {
+      "path": "participant-record.md",
+      "sha256": "9d31009e7b355ba4e79cee20f9c6e117c179d7d75e41dfeb106a8804e261f88f"
+    },
+    {
+      "path": "provenance.json",
+      "sha256": "8400309dfb202c695dc1daf26b264dbe152b64a37f8fc8515404c4017c316ac9"
+    },
+    {
+      "path": "registered-task.json",
+      "sha256": "0fcb29408c2f0efacb0f2e5d7c32c23078a46304ecd5fcf4a80622d357e61cea"
+    },
+    {
+      "path": "registration-proof.json",
+      "sha256": "02e4630e579d4b06e38a9b7f792be2e5bbd07925f39e332093700a122694200b"
+    },
+    {
+      "path": "results.md",
+      "sha256": "5edb8ec91764adb79306673b8718cb22a6ffc780f8c8d7d00acd83abc1343a0b"
+    },
+    {
+      "path": "root-export-custody-verification.json",
+      "sha256": "ecbbacc3b512fcb9b2801b3400e15e4fcda4ec4b7340f9387a6d672a2c898619"
+    }
+  ]
+}

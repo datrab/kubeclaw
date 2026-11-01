@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-11-01T05:12:48.412792+00:00",
+  "endedAt": "2026-11-01T05:12:48.613296+00:00",
+  "actorReadyForFaultReceived": true,
+  "action": "Root requested stop of exact exclusivelyownedRedis through existing parentcontrol",
+  "ownedRedisPid": 875627,
+  "actualRedisExitCode": 0,
+  "endpointUnchanged": "redis://127.0.0.1:39163",
+  "sourceRevision": "795a2157fcaddcd27015601f348c5898b8f52689",
+  "workflowOrJournalModifiedByFacilitator": false,
+  "rootOutputInterpretation": false,
+  "shellRetained": true
+}

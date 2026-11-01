@@ -1,0 +1,24 @@
+{
+  "at": "2026-11-01T05:18:48.507489+00:00",
+  "scope": "Read-only full exported-file set/size/SHA comparison; not participant work or original acceptance",
+  "exports": [
+    {
+      "mode": "healthy",
+      "manifestSha256": "907b06a0f629b4e4af592fcab2282f68dc0d80e1d1bd3f6be5a61f8507182f55",
+      "files": 474,
+      "bytes": 10155909,
+      "exactTreeAndBytes": true,
+      "nativeResult": "HEALTHY_CORE_AUDIT_AND_REAL_SAME_RUN_REDIS_JOIN",
+      "credentialsRetained": false
+    },
+    {
+      "mode": "fault",
+      "manifestSha256": "3a55422aba0b4284cabf020558394e229b30b09c153e43cdfe2f44eae83a384a",
+      "files": 90,
+      "bytes": 427115,
+      "exactTreeAndBytes": true,
+      "nativeResult": "ORIGINAL_REDIS_FAULT_PERSISTED_NONTERMINAL_SAFE_STOP",
+      "credentialsRetained": false
+    }
+  ]
+}

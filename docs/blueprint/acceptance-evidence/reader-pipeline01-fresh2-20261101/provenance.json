@@ -1,0 +1,83 @@
+{
+  "reviewedRevision": "795a2157fcaddcd27015601f348c5898b8f52689",
+  "participantType": "NEW isolated MODEL pipeline-author; not human",
+  "fullRetainedEvidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-pipeline01-fresh2-20261101",
+  "independentNativeCustody": {
+    "healthyAuditInspectorRunAndJournalMatch": true,
+    "fullHealthyAuditEventCount224FinalSucceeded": true,
+    "frozenRegistryOutput8stages15caps10adapters1observer": true,
+    "canonicalCompiledHealthyFaultSourceBytesExact": true,
+    "canonicalSHA256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b",
+    "healthyExportAll474ManifestEntriesByteHashExact": true,
+    "faultExportAll90ManifestEntriesByteHashExact": true
+  },
+  "rawEvidenceCustody": [
+    {
+      "path": "registered-task.json",
+      "sha256": "0fcb29408c2f0efacb0f2e5d7c32c23078a46304ecd5fcf4a80622d357e61cea"
+    },
+    {
+      "path": "results.md",
+      "sha256": "5edb8ec91764adb79306673b8718cb22a6ffc780f8c8d7d00acd83abc1343a0b"
+    },
+    {
+      "path": "participant-record.md",
+      "sha256": "9d31009e7b355ba4e79cee20f9c6e117c179d7d75e41dfeb106a8804e261f88f"
+    },
+    {
+      "path": "terminal-003.txt",
+      "sha256": "fb1cc5e7be091ee7ca2b0901fe22911f43f4154d3399eb3acc7147a75ce33358"
+    },
+    {
+      "path": "healthy-inspect.stdout",
+      "sha256": "ee16f72c34a52f6223187d2001542cec1188443deea7de9afb8ecf2e87741427"
+    },
+    {
+      "path": "native-audit.stdout",
+      "sha256": "c169137d8d9bad9c6b8132493019585d54b4caef9a12303dbe1f2865dc72e654"
+    },
+    {
+      "path": "runtime-identities.stdout",
+      "sha256": "b4a297f1b74b10d915bd759456c7477dfd555fcee6f4f6cd7c6ef4da9ed081b3"
+    },
+    {
+      "path": "fault-inspect.stdout",
+      "sha256": "f2d10488f6b3ae1d236e5bda3ff4cad93e2bc7f3ecce1001851170226308c9df"
+    },
+    {
+      "path": "healthy-export.manifest.json",
+      "sha256": "907b06a0f629b4e4af592fcab2282f68dc0d80e1d1bd3f6be5a61f8507182f55"
+    },
+    {
+      "path": "fault-export.manifest.json",
+      "sha256": "3a55422aba0b4284cabf020558394e229b30b09c153e43cdfe2f44eae83a384a"
+    },
+    {
+      "path": "facilitator-fault-injection.json",
+      "sha256": "6fac785549e69afb55f94e511fdbafff3a24bddef330d80dba574f726e527624"
+    }
+  ],
+  "firstAttempt": {
+    "state": "NOT_COMPLETE",
+    "evidence": "operations/pr13/evidence/reader-pipeline01-fresh-20261101",
+    "independentDecision": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-pipeline01-original-independent-verdict.json",
+    "notRewritten": true
+  },
+  "reusedPublication": {
+    "sourceRevision": "1a93145e51354630a4fb117bd379b011a89c5cf5",
+    "exactRemoteRevision": "795a2157fcaddcd27015601f348c5898b8f52689",
+    "currentBuild": "docs/blueprint/acceptance-evidence/reader-pipeline01-registry-correction-20261101/fresh-correction-current-build.json",
+    "fiveArtifactChecksAndAffectedDelivery": "Already published unchanged; this addition changes proof/matrix only, no site/guard/config/source changes."
+  },
+  "newAcceptedGateIds": [],
+  "newAcceptedRequirementIds": [],
+  "limits": [
+    "First reader-pipeline01-fresh-20261101 remains NOT_COMPLETE:1/2/3PASS,4partialFAIL,5unobserved. This is a separate new eligible actor/registration, not repair of that record.",
+    "Healthy long PTY stdout exceeded retention cap; warning remains. Complete native audit, inspector and exports provide actual result authority without rerun.",
+    "Unsent request-006.txt is not execution; actual poll006-poll and subsequent exact requests are separately retained.",
+    "Fault actual Core13/unsettled await/nonterminal is a retained native process failure. Inspector/wrapper zero means bounded state identification, not Core success or exhausted retries.",
+    "Healthy precleanup native-verification.cleanup=pending remains its historical snapshot; actual cleanup receipt013 separately establishes owned export/cleanup.",
+    "No workflow replay/reset/recovery, provider/production deployment, restored service readiness or general fault remediation inferred.",
+    "MODEL task evidence, not human/AT/contrast/accessibility/whole-reader-gate or whole AP09/AP10 acceptance. Other original tasks/gates and global API/defaultgenerator failures remain separate."
+  ]
+}

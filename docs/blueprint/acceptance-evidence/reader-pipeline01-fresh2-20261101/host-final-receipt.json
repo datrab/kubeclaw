@@ -1,0 +1,48 @@
+{
+  "status": "HOST_EXITED_RETAIN_ACTOR_STATE_AND_LOGS",
+  "sourceRoot": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-fresh2-source-20261101",
+  "sourceRevision": "795a2157fcaddcd27015601f348c5898b8f52689",
+  "redis": {
+    "pid": 875627,
+    "endpoint": "redis://127.0.0.1:39163",
+    "logicalServerPath": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-execution-20261101/redis/usr/bin/redis-server",
+    "canonicalCli": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-execution-20261101/redis/usr/bin/redis-cli",
+    "libraryPath": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-execution-20261101/redis/usr/lib/x86_64-linux-gnu",
+    "exitCode": 0
+  },
+  "shellPid": 875634,
+  "steps": [
+    {
+      "action": "authenticated-owned-readiness",
+      "response": "PONG",
+      "pid": 875627
+    },
+    {
+      "action": "stop-exact-owned-redis",
+      "pid": 875627,
+      "exitCode": 0
+    },
+    {
+      "action": "participant-shell-exited",
+      "exitCode": 0
+    },
+    {
+      "action": "final-host-cleanup",
+      "privateConfigRemoved": true,
+      "actorFixtureDeleted": false,
+      "remoteJobsCancelled": false,
+      "localDescendantsReconciled": false,
+      "shellLeaderAlive": false,
+      "redisAlive": false,
+      "primaryError": null,
+      "cleanupErrors": []
+    }
+  ],
+  "credentialValuesInReceipt": false,
+  "privateConfigPresent": false,
+  "privateConfigRetained": false,
+  "privateConfigOwnerAction": null,
+  "participantTaskExecutedByFacilitator": false,
+  "stopControl": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-fresh2-host-20261101/STOP_OWNED_REDIS",
+  "deadlineMinutes": 90
+}

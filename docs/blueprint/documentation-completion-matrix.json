@@ -121939,6 +121939,48 @@
       "newAcceptedGates": [],
       "newAcceptedRequirements": [],
       "scope": "Exactly original localresponse-loss-only case, actualnativeCorefailedreceipt/blocked preserved while externaloutcomeunknown; originalidentity/actual501lookup/no replay/explicit safeSTOP/retention+cleanup independentlyproven. Other whole-case/gate/human/deployed/AT/contrast/AP10 duties not inferred."
+    },
+    {
+      "id": "READER-PIPELINE-01-fresh-model-20261101",
+      "taskId": "READER-PIPELINE-01",
+      "reviewedDocumentationRevision": "795a2157fcaddcd27015601f348c5898b8f52689",
+      "executionRevision": "795a2157fcaddcd27015601f348c5898b8f52689",
+      "participantType": "NEW isolated pipeline-author MODEL /root/reader_pipeline01_fresh2_20261101; not human",
+      "verdict": "PASS",
+      "originalOutcomes": [
+        {
+          "id": "pipeline-validates",
+          "verdict": "PASS"
+        },
+        {
+          "id": "minimal-run-succeeds",
+          "verdict": "PASS"
+        },
+        {
+          "id": "effective-defaults-explained",
+          "verdict": "PASS"
+        },
+        {
+          "id": "runtime-identities-resolve",
+          "verdict": "PASS"
+        },
+        {
+          "id": "failure-action-is-bounded",
+          "verdict": "PASS"
+        }
+      ],
+      "independentDecision": "docs/blueprint/acceptance-evidence/reader-pipeline01-fresh2-20261101/independent-original-verdict.json",
+      "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline01-fresh2-20261101/results.md",
+      "registeredAcceptanceIds": [
+        "A99-06",
+        "A99-08",
+        "A99-12",
+        "A913-04",
+        "A913-05"
+      ],
+      "newAcceptedGates": [],
+      "newAcceptedRequirements": [],
+      "scope": "Exactly original five-outcome fresh isolated MODEL pipeline-author task. Healthy Core0/audit and fault Core13/nonterminal SAFE_STOP distinct; first incomplete attempt unchanged. No whole-reader-gate, other journey, human, AT/contrast, generator or AP10 award."
     }
   ],
   "pipeline04PublicationCheckpoint20261101": {

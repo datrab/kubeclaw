@@ -1,0 +1,22 @@
+{
+  "at": "2026-11-01T05:19:39.604042+00:00",
+  "activeOwnedPathUsers": [],
+  "cleanExactPublicCloneVerified": true,
+  "actualFullExportsRetained": true,
+  "selectedHostLifecycleRetained": true,
+  "privateConfigAbsentBefore": true,
+  "centralNonterminal": 0,
+  "removed": [
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-fresh2-source-20261101",
+      "removedBytes": 1181847773,
+      "absentAfter": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-fresh2-host-20261101",
+      "removedBytes": 2789,
+      "absentAfter": true
+    }
+  ],
+  "sharedToolsSourceWipAndAcceptanceEvidencePreserved": true
+}

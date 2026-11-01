@@ -1,0 +1,193 @@
+{
+  "task": "READER-PIPELINE-01",
+  "verdict": "PASS_ORIGINAL_FIVE_OUTCOMES_MODEL_PARTICIPANT_ONLY",
+  "outcomes": [
+    {
+      "id": "pipeline-validates",
+      "observed": "PASS",
+      "passCondition": "The exact documented validation command exits zero for the unchanged fixture.",
+      "basis": "Actor-originated exact documented prepare and identities execute in protected set-e shell and return to prompt; prepared eight-stage graph equals unchanged registered canonical fixture. Independently byte-joined healthy and fault compiled graphs to public Source canonical fixture.",
+      "evidence": [
+        "request-001.txt",
+        "terminal-003.txt",
+        "response-003.json",
+        "healthy-export/project/compiled.json",
+        "fault-export/project/compiled.json"
+      ]
+    },
+    {
+      "id": "minimal-run-succeeds",
+      "observed": "PASS",
+      "passCondition": "With healthy dependencies, the exact documented run command reaches the expected authoritative terminal state and the audit command verifies it.",
+      "basis": "One documented healthy run: Core0/run.succeeded, eight successful stages/attempts, ten original artifacts and224events. Complete native passive audit and documented inspector share exact run/journal head;224same-run Redis rows in12streams. Native-verification allOriginalArtifactsVerified/rawBytesPreservedBeforeAudit true.",
+      "evidence": [
+        "request-004.txt",
+        "response-007.json",
+        "request-008.txt",
+        "healthy-inspect.stdout",
+        "request-010.txt",
+        "native-audit.stdout",
+        "healthy-export/native-verification.json"
+      ]
+    },
+    {
+      "id": "effective-defaults-explained",
+      "observed": "PASS",
+      "passCondition": "The participant records every default inserted by the compiler and links each value to its documented authority.",
+      "basis": "Actual defaults output observed; participant records every finite compiler policy/constant and links documented minimal authority table, explains7=1+5+1 and2=1+1, source no inserted technical retry, explicit encoding selectors and derived graph/source/coverage/plan values. Observer/runtime defaults correctly excluded from compiler scope.",
+      "evidence": [
+        "terminal-003.txt",
+        "participant-record.md#complete-compiler-default-explanation"
+      ]
+    },
+    {
+      "id": "runtime-identities-resolve",
+      "observed": "PASS",
+      "passCondition": "Every selected role, stage, plugin, provider, fixture, and report identity resolves through the documented registry command.",
+      "basis": "Initial documented identities resolves configured stages/adapters/observer and both canonical direct-command/JUnit plan/report selections; protected Gateway agents_list resolves forge\u2192main/openai/gpt-6.1-sol. Documented runtime-identities observes frozen native registry with8stages/15selected capabilities/10unique adapters/1observer and full package/source/trust provenance, including all five prior-missing identities. Canonical suites[] selects no fixture/suite provider; extra Buster agent disabled. No arbitrary transitive catalogue obligation imposed.",
+      "evidence": [
+        "terminal-003.txt",
+        "response-005.json",
+        "request-008.txt",
+        "runtime-identities.stdout",
+        "participant-record.md"
+      ]
+    },
+    {
+      "id": "failure-action-is-bounded",
+      "observed": "PASS",
+      "passCondition": "For the Redis fault, the participant identifies the persisted state, does not use unbounded retry, and selects the documented stop or recovery action.",
+      "basis": "After actor-confirmed healthy export/cleanup, facilitator stops only owned Redis at same endpoint. Actor runs fault once, retains actual wrapper status and observes native Core13/empty stdout/no terminal/two events/one started-failed observer attempt/failed ECONNREFUSED receipt/no checkpoint or exhaustion. Actor explicitly selects documented SAFE_STOP, no retry/reset/replay/journal or lock edits, names observer/Core/Redis owner continuation boundary; exact stopped-state export/cleanup is custody, not recovery or workflow success.",
+      "evidence": [
+        "response-013.json",
+        "facilitator-fault-injection.json",
+        "request-014.txt",
+        "response-015.json",
+        "fault-inspect.stdout",
+        "participant-record.md#chronological-actions",
+        "request-016.txt",
+        "response-017.json",
+        "fault-export.manifest.json"
+      ]
+    }
+  ],
+  "exactUnmetOriginalConditions": [],
+  "reviewer": "Independent non-author MODEL /root/reader_pipeline04_fresh_20261101",
+  "participant": "NEW isolated pipeline-author MODEL /root/reader_pipeline01_fresh2_20261101; not human",
+  "publicReviewedRevision": "795a2157fcaddcd27015601f348c5898b8f52689",
+  "originalTaskAuthority": "docs/blueprint/AP09-acceptance-fixtures.json READER-PIPELINE-01, exact registered task retained in registered-task.json",
+  "original90MinuteBoundary": {
+    "registeredAt": "2026-11-01T05:04:55.705246+00:00",
+    "lastExecutedOutcomeReceiptAt": "2026-11-01T05:16:38.170000+00:00",
+    "elapsedSeconds": 702.464754,
+    "under90Minutes": true,
+    "noClockResetOrContinuationFromFirstAttempt": true
+  },
+  "assistanceAssessment": {
+    "allowedAssistance": "Only docs/site, the registered fixture, and commands named by its pages. The facilitator can inject or remove the Redis fault but cannot interpret output.",
+    "transport": "Disclosed actor-originated byte-exact request/raw response relay through Root approved Gateway, not direct actor native Gateway tools.",
+    "observedTransportCustody": "All recorded write request file hashes independently equal requested/sent SHA and byteExact true; all transport receipts state no Root interpretation. Actor records command selection/interpretation; facilitator only injects owned Redis stop after actor ready.",
+    "qualifiedOriginalBoundary": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/fresh-participant-mechanical-relay-original-boundary.json",
+    "forbiddenSourcesOrUnsafeRetryObserved": false
+  },
+  "actualHealthy": {
+    "CoreExit": 0,
+    "terminal": "run.succeeded",
+    "runId": "run:first-project-001",
+    "journalHead": "sha256:cf7964c81870c3cc76c8f4c04ade1eb8c2ed4948d9eb04b1055d7a3b83ff73e4",
+    "stageSuccesses": 8,
+    "artifacts": 10,
+    "events": 224,
+    "RedisRows": 224,
+    "RedisStreams": 12
+  },
+  "actualFault": {
+    "CoreExit": 13,
+    "wrapperCommandExit": 0,
+    "inspectorExit": 0,
+    "terminal": null,
+    "events": [
+      "run.created",
+      "run.started"
+    ],
+    "stageAttempts": 0,
+    "observerAttemptNumbers": [
+      1
+    ],
+    "observerStatuses": [
+      "started",
+      "failed"
+    ],
+    "checkpointAbsent": true,
+    "budgetExhaustion": false,
+    "endpoint": "redis://127.0.0.1:39163",
+    "journalHead": "sha256:a7e6ea01464ca29127b8524d4169fdd317fe9734447f5112a75d296bde106f2f",
+    "nativeCompletionRefusal": "RUN_EVIDENCE_NOT_COMPLETED",
+    "selectedAction": "SAFE_STOP"
+  },
+  "independentDataCustodyChecks": {
+    "healthyAuditInspectorRunAndJournalMatch": true,
+    "fullHealthyAuditEventCount224FinalSucceeded": true,
+    "frozenRegistryOutput8stages15caps10adapters1observer": true,
+    "canonicalCompiledHealthyFaultSourceBytesExact": true,
+    "canonicalSHA256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b",
+    "healthyExportAll474ManifestEntriesByteHashExact": true,
+    "faultExportAll90ManifestEntriesByteHashExact": true
+  },
+  "retainedNegativesAndLimits": [
+    "First reader-pipeline01-fresh-20261101 remains NOT_COMPLETE:1/2/3PASS,4partialFAIL,5unobserved. This is a separate new eligible actor/registration, not repair of that record.",
+    "Healthy long PTY stdout exceeded retention cap; warning remains. Complete native audit, inspector and exports provide actual result authority without rerun.",
+    "Unsent request-006.txt is not execution; actual poll006-poll and subsequent exact requests are separately retained.",
+    "Fault actual Core13/unsettled await/nonterminal is a retained native process failure. Inspector/wrapper zero means bounded state identification, not Core success or exhausted retries.",
+    "Healthy precleanup native-verification.cleanup=pending remains its historical snapshot; actual cleanup receipt013 separately establishes owned export/cleanup.",
+    "No workflow replay/reset/recovery, provider/production deployment, restored service readiness or general fault remediation inferred.",
+    "MODEL task evidence, not human/AT/contrast/accessibility/whole-reader-gate or whole AP09/AP10 acceptance. Other original tasks/gates and global API/defaultgenerator failures remain separate."
+  ],
+  "custody": [
+    {
+      "path": "registered-task.json",
+      "sha256": "0fcb29408c2f0efacb0f2e5d7c32c23078a46304ecd5fcf4a80622d357e61cea"
+    },
+    {
+      "path": "results.md",
+      "sha256": "5edb8ec91764adb79306673b8718cb22a6ffc780f8c8d7d00acd83abc1343a0b"
+    },
+    {
+      "path": "participant-record.md",
+      "sha256": "9d31009e7b355ba4e79cee20f9c6e117c179d7d75e41dfeb106a8804e261f88f"
+    },
+    {
+      "path": "terminal-003.txt",
+      "sha256": "fb1cc5e7be091ee7ca2b0901fe22911f43f4154d3399eb3acc7147a75ce33358"
+    },
+    {
+      "path": "healthy-inspect.stdout",
+      "sha256": "ee16f72c34a52f6223187d2001542cec1188443deea7de9afb8ecf2e87741427"
+    },
+    {
+      "path": "native-audit.stdout",
+      "sha256": "c169137d8d9bad9c6b8132493019585d54b4caef9a12303dbe1f2865dc72e654"
+    },
+    {
+      "path": "runtime-identities.stdout",
+      "sha256": "b4a297f1b74b10d915bd759456c7477dfd555fcee6f4f6cd7c6ef4da9ed081b3"
+    },
+    {
+      "path": "fault-inspect.stdout",
+      "sha256": "f2d10488f6b3ae1d236e5bda3ff4cad93e2bc7f3ecce1001851170226308c9df"
+    },
+    {
+      "path": "healthy-export.manifest.json",
+      "sha256": "907b06a0f629b4e4af592fcab2282f68dc0d80e1d1bd3f6be5a61f8507182f55"
+    },
+    {
+      "path": "fault-export.manifest.json",
+      "sha256": "3a55422aba0b4284cabf020558394e229b30b09c153e43cdfe2f44eae83a384a"
+    },
+    {
+      "path": "facilitator-fault-injection.json",
+      "sha256": "6fac785549e69afb55f94e511fdbafff3a24bddef330d80dba574f726e527624"
+    }
+  ],
+  "reviewActivity": "Read-only original task/evidence/data comparison and own decision writes. No Core/model/service/native check rerun, source/main mutation or generic audit."
+}

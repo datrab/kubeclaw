@@ -1,0 +1,64 @@
+{
+  "registeredAt": "2026-11-01T05:04:55.705246+00:00",
+  "task": {
+    "id": "READER-PIPELINE-01",
+    "persona": "pipeline-author",
+    "startPath": "docs/site/README.md",
+    "acceptanceIds": [
+      "A99-06",
+      "A99-08",
+      "A99-12",
+      "A913-04",
+      "A913-05"
+    ],
+    "objective": "Create, validate, and execute a minimal pipeline to its authoritative terminal result, explain the effective defaults, then identify the first safe action for one dependency failure.",
+    "taskInput": "The canonical minimal pipeline fixture at reviewed_revision. The facilitator makes its declared Redis endpoint unreachable before the failure run.",
+    "fixturePaths": [
+      "docs/site/use/workflows/examples/minimal.pipeline.json"
+    ],
+    "injectedFaultId": "PIPELINE-REDIS-UNREACHABLE",
+    "requiredOutcomes": [
+      {
+        "id": "pipeline-validates",
+        "passCondition": "The exact documented validation command exits zero for the unchanged fixture."
+      },
+      {
+        "id": "minimal-run-succeeds",
+        "passCondition": "With healthy dependencies, the exact documented run command reaches the expected authoritative terminal state and the audit command verifies it."
+      },
+      {
+        "id": "effective-defaults-explained",
+        "passCondition": "The participant records every default inserted by the compiler and links each value to its documented authority."
+      },
+      {
+        "id": "runtime-identities-resolve",
+        "passCondition": "Every selected role, stage, plugin, provider, fixture, and report identity resolves through the documented registry command."
+      },
+      {
+        "id": "failure-action-is-bounded",
+        "passCondition": "For the Redis fault, the participant identifies the persisted state, does not use unbounded retry, and selects the documented stop or recovery action."
+      }
+    ],
+    "allowedAssistance": "Only docs/site, the registered fixture, and commands named by its pages. The facilitator can inject or remove the Redis fault but cannot interpret output.",
+    "failureThreshold": "FAIL after one unresolved identity, unexplained effective default, unsafe retry, use of a forbidden source, or 90 minutes without completion.",
+    "participantRequirements": {
+      "freshContext": true,
+      "priorContribution": false,
+      "requiredRole": "pipeline-author"
+    },
+    "forbiddenSources": [
+      "package-readme",
+      "review-file",
+      "migration-note",
+      "chat-context"
+    ]
+  },
+  "reviewedRevision": "795a2157fcaddcd27015601f348c5898b8f52689",
+  "sourceRoot": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-pipeline01-fresh2-source-20261101",
+  "participant": "NEW isolated MODEL requiredRole pipeline-author; no prior contribution/context",
+  "gatewayTerminal": "tide-ridge",
+  "transport": "Actor-originated exactinput/rawresponse relay throughRoot approvedGateway only; noRootinterpretation/selection/hints; independently qualified originalscope",
+  "facilitatorScope": "Preprovisioned genuine host/dependencies/ownedRedis and faultinjection only; original90min/source/failure limits unchanged",
+  "evidenceDirectory": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-pipeline01-fresh2-20261101",
+  "actualOutcome": "PENDING"
+}
