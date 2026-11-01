@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-11-01T05:51:36.978166+00:00",
+  "endedAt": "2026-11-01T05:52:17.668003+00:00",
+  "seconds": 40.68981855700258,
+  "exitCode": 0,
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-reader/check-diagrams.mjs"
+  ],
+  "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+  "scope": "Actual current publication diagrams after material Prism native fixture/helper/guide/consumer correction; no fresh reader, AT/contrast or whole-gate acceptance"
+}

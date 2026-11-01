@@ -1,0 +1,22 @@
+{
+  "status": "ACCEPTED_FINAL_ADOPTION_CONDITION_UNRESOLVED",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T05:36:18.900447+00:00",
+  "rawPinnedReview": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/candidate-pinned-v2-review.json",
+  "rawPinnedReviewSHA256": "ae729259bc0034d46b459db69e41dfb90b62f7180d4efefc0b282def7689b635",
+  "rawFindingPreserved": true,
+  "finding": "P1 fixed-input publication profile still binds old assets-native consumer d32279 instead of candidate 439ab9. Existing guard correctly fails closed before new request validation.",
+  "disposition": "Accepted concrete necessary downstream metadata correction. The previously reviewed functional tuple and semantic actionBoundary remain qualified at their explicit unadopted scope; no current clean or final adoption claim. No new product Source correction is indicated by this finding.",
+  "necessaryFix": "Independently qualify actual candidate consumer fixedInputs[196], fixture/helper/guide/claims and any actual native-map dependency successors against complete changed Source meanings, current claims/anchors, owner purpose and whole inverse/complement. Do not blindly repin unrelated facts or alter predicates/rosters.",
+  "resolutionRequires": [
+    "Actual qualified metadata/seals applied to coherent current candidate.",
+    "Actual current relevant native guard and publication receiver terminal PASS."
+  ],
+  "notResolution": [
+    "A promised seal update",
+    "An old or candidate-only native result",
+    "Rewriting the raw P1 as clean",
+    "An unchanged product/helper rewrite or generic audit"
+  ],
+  "priorDecision": "candidate-independent-verdict.json remains bounded Source/Reader/Quality sufficiency, not final adoption or fresh original outcome."
+}

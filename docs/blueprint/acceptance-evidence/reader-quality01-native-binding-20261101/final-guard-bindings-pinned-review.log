@@ -1,0 +1,12 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: on
+trufflehog: clean (2.1s)
+bundle: 3869 bytes; review passes: 1
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.98)
+The changed fixed-input hashes consistently reseal the publication validation and child-purpose profiles for the supplied current claims, generated map, fixture, helper, guide, and asset-validator sources. No actionable P0–P2 defect is evident in this bundle.

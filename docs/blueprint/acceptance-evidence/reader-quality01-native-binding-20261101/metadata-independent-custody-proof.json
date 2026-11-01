@@ -1,0 +1,50 @@
+{
+  "allFourManifestHashesExact": true,
+  "claimsChangedRecordGroups": [
+    [
+      "pages",
+      185
+    ],
+    [
+      "assets",
+      26
+    ],
+    [
+      "assets",
+      38
+    ],
+    [
+      "assets",
+      39
+    ],
+    [
+      "contracts",
+      115
+    ],
+    [
+      "contracts",
+      221
+    ],
+    [
+      "contracts",
+      224
+    ],
+    [
+      "contracts",
+      225
+    ],
+    [
+      "authorities",
+      24
+    ]
+  ],
+  "wholePhysicalClaimsInverseExact": true,
+  "allChecksWholeExact": true,
+  "selectedCurrentSourceAnchorsExactOccurrencesAndPageAssetHashes": true,
+  "priorAssetBasisAndContractStatementsRetained": true,
+  "mapOnlyQualityPage179StatusAppliesToLastVerified": true,
+  "wholePhysicalMapInverseExact": true,
+  "eightLiteralSealsMatchActualQualifiedSourceSHA": true,
+  "twoGuardSourcesOnlyEightSealsWholeInverseExact": true,
+  "all13OwningContextsMatchCurrentSource": true
+}

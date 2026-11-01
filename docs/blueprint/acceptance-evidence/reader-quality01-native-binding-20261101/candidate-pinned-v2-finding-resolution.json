@@ -1,0 +1,73 @@
+{
+  "status": "RESOLVED_SOLE_P1_AT_ACTUAL_COHERENT_NATIVE_GUARD_AND_RECEIVER_SCOPE",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "observedAt": "2026-11-01T05:46:18.577536+00:00",
+  "previousDisposition": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/candidate-pinned-v2-finding-disposition.json",
+  "previousDispositionSHA256": "df0bbeb7a798ca4ff987420311ddec30e24e7c192254b1d64ed83792bd06ace8",
+  "rawP1": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/candidate-pinned-v2-review.json",
+  "rawP1SHA256": "ae729259bc0034d46b459db69e41dfb90b62f7180d4efefc0b282def7689b635",
+  "rawP1Unchanged": true,
+  "conditionsObserved": {
+    "qualifiedEightLiteralSealsAppliedAndEightCoherentCurrentFileHashesVerified": true,
+    "actualAffectedGuardTests": {
+      "exitCode": 0,
+      "testsPassed": 18
+    },
+    "actualCurrentNativeCoverage": {
+      "exitCode": 0,
+      "pages": 186,
+      "assets": 43,
+      "sourceEntries": 3529
+    },
+    "actualEntireNativeAssetReceiver": {
+      "exitCode": 0,
+      "newPrismRequestParsedAndNestedNativeValidation": true,
+      "helperSyntaxOnly": true
+    }
+  },
+  "evidence": [
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/metadata-independent-verdict.json",
+      "sha256": "f805e700ca09ec19961436f289a269f6817d1c376c9bf32b6250312a7dcd05f2"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/metadata-independent-custody-proof.json",
+      "sha256": "e4987f26ba872d0f69f7019fb1f359f694eae19ed6a6ad1e65214d5611bcdc1e"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/root-coherent-integration.json",
+      "sha256": "dea954ba544b5f7a1124f012fc167f5a2030dc462540f790db30b1194efa1a94"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-three-guard-tests.json",
+      "sha256": "70e64ee62d9f5ebe247ccb360ff3725482c0f54e90cb7077fa680d4014081a0b"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-three-guard-tests-tool-result.json",
+      "sha256": "1eb2560b7db028906e278bc879f153dba06cdaf0c0d038419facbba275643970"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-native-coverage.json",
+      "sha256": "082fd786be48237be7ccbfcadb90e0e637df2d8a949430b50f3fbb599d0a3087"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-native-coverage.log",
+      "sha256": "8b85a209ea6336a4c4f9899531f3959c92f1a54c9725905fc3116d4f563d8a41"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-native-assets-receiver.json",
+      "sha256": "62360a3fb9c6948781b0fa48950880b3d15c85c86bb5cf06c264465187215ada"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-native-assets-receiver.log",
+      "sha256": "08d0e2e3cbc42b50d8da71acb7aa5f9165c28c493126dba244ad1d4844d46f4a"
+    }
+  ],
+  "meaning": "The previously obsolete fixed-input binding is actually replaced by the independently qualified current metadata, and current affected guards plus full native assets receiver succeed. This meets the exact finite resolution conditions; the old raw finding remains a true historical failure of that earlier candidate, not relabeled clean.",
+  "limits": [
+    "No reviewer rerun or main mutation.",
+    "No current artifact/build/delivery, immutable publication, fresh QUALITY01 original outcome or whole-gate inference.",
+    "No production provider/Gateway/model/job or AT/contrast award.",
+    "All prior functional/native/metadata judgments retain their original bounded scope; unrelated historical failures remain."
+  ]
+}

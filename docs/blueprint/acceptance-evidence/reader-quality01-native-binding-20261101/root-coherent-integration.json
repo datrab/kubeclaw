@@ -1,0 +1,49 @@
+{
+  "at": "2026-11-01T05:44:39.339788+00:00",
+  "baseline": "ea325a6d115a967ea6f5e0d674f4284081b27d6c",
+  "coherentFiles": [
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "bytes": 3856,
+      "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "bytes": 16253,
+      "sha256": "ab862a8a86d40810994bafea3a8669cbc5969e0f40f51887e28754b7507b8503"
+    },
+    {
+      "path": "docs/site/use/workflows/quality-validation.md",
+      "bytes": 9819,
+      "sha256": "d88b9747a74d76342c24b25022f1fe0c856df72e3dfc24187a2805c8ff8c97f9"
+    },
+    {
+      "path": "scripts/docs-publication-example-assets.mjs",
+      "bytes": 6449,
+      "sha256": "439ab9b09fa0a5e2caddfa1e885124cc224f1523aa388e97a3c08d331909b7fc"
+    },
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "bytes": 22676370,
+      "sha256": "223c7ec01af0931925ce46a6a5dc72b0bd37180099b04cb7a7d8ebb4ecaa98c1"
+    },
+    {
+      "path": "docs/site/reference/generated-documentation-map.json",
+      "bytes": 53018542,
+      "sha256": "56247158b9487a01194334a0824704ee2ce4ca005e8f50d6e49eb0e72324ccd4"
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "bytes": 615173,
+      "sha256": "53629bf24093c35a781a827b2842829454d00f16016c41e9ee8ab44ac42ed798"
+    },
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "bytes": 35686,
+      "sha256": "b8259554f89fd73830a183faad96da4c81e803a82212c3b1753a6f3c6acdf6b5"
+    }
+  ],
+  "independentSourceReaderQuality": "PASS_SOURCE_AND_METADATA",
+  "pinnedP2": "Both final semantic scopes clean; priorP1 retained pending actualcurrentnativeguard/receiver",
+  "newAwards": []
+}

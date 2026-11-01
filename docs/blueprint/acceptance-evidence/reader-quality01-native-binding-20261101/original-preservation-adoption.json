@@ -1,0 +1,14 @@
+{
+  "at": "2026-11-01T05:58:26.902071+00:00",
+  "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+  "baselineMatrixSHA256": "c703ffa08dbf56c120f5cd14bd3db6d130f9c27d69bd590eb10ca67337869f81",
+  "qualifiedMatrixSHA256": "17bed00466aa36d257efc423aeabff835c28b53f8882562be97147d4dc0ebe7b",
+  "affectedOriginalPASSRecords": 39,
+  "originalScopeJudgments": 117,
+  "finalizedReviewerAndReportFields": 78,
+  "wholePhysicalMatrixInverseExact": true,
+  "allOldFieldsChecksReviewsLimitsNegativesHistoryPrefixesExact": true,
+  "unaffectedRecordsExact": 105,
+  "newAcceptedGates": [],
+  "newAcceptedRequirements": []
+}

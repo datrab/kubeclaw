@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-11-01T05:45:31.182180+00:00",
+  "endedAt": "2026-11-01T05:45:37.859480+00:00",
+  "seconds": 6.677322930074297,
+  "exitCode": 0,
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-quality01-original-mapping-20261101/actual-native-coverage.mjs"
+  ],
+  "coherentIntegration": "root-coherent-integration.json",
+  "sourceState": "Eight qualified uncommitted files at canonical main root; not public/currentartifact/freshcase"
+}

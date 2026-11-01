@@ -1,0 +1,77 @@
+{
+  "actualContract": true,
+  "actualStudioActionResolution": true,
+  "actualPreviewRendered": true,
+  "actualSemanticInvalidEndpointRefused": true,
+  "fixture": {
+    "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+    "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1",
+    "nativeRequestOperation": "generate"
+  },
+  "documentId": "quality-reader-design",
+  "projectId": "quality-reader-project",
+  "revision": 1,
+  "flow": {
+    "id": "review",
+    "title": "Review",
+    "start": {
+      "view": "home",
+      "state": "ready"
+    },
+    "transitions": [
+      {
+        "from": {
+          "view": "home",
+          "state": "ready"
+        },
+        "to": {
+          "view": "home",
+          "state": "default"
+        },
+        "trigger": {
+          "action": "confirm",
+          "node": "confirm-button"
+        }
+      }
+    ]
+  },
+  "target": {
+    "view": "home",
+    "state": "default"
+  },
+  "template": {
+    "kind": "native reusable component definition, not product templateId registry",
+    "id": "review-card",
+    "definitionSHA256": "b350af0729cf4269dd959a7567426abe8a32a41d109e96f023339be4ae6d4554",
+    "renderedContentObserved": true
+  },
+  "provider": {
+    "module": "skills/prism/engine/design-providers.ts",
+    "export": "DeterministicDesignProvider",
+    "sourceSHA256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+    "selection": "Fixed actual local factory of this documented validation command, not a native provider wire field or production generation",
+    "actualGenerateOperationApplied": true,
+    "requestSHA256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
+  },
+  "requestContract": {
+    "schemaId": "prism.engine-requests.v1.json#/$defs/generate",
+    "schemaDigest": "sha256:e18427462e1e6bdab1c9f204b65f1cf020a32b21084fda8fb0d00a30d0eb367f"
+  },
+  "generatedOutput": {
+    "schemaId": "https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/generate",
+    "schemaDigest": "sha256:c60a2d5e5c434abc482040443fafa30aac7d28ed6ced04efc9b3fdb9a12eacb6",
+    "resultSHA256": "54b50035bef27eac4b6db03a2ba82e34e2ce0c608fdee019e0c79230a0748f2f"
+  },
+  "renderedOutput": {
+    "schemaId": "https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/render",
+    "schemaDigest": "sha256:dfd2beb6acf288381e44afbd56241572f6e09549993e14b71dbbab2e643ff2ac",
+    "resultSHA256": "bb8dc1a6d127dc4db5777d59316048f989cd508809875b65715f529c98fb98ed",
+    "capture": false
+  },
+  "evaluation": {
+    "status": "ready",
+    "findings": []
+  },
+  "productionHostGenerate": "Unsupported: native worker requires OpenClaw agent gateway; this direct local contract validation does not dispatch it",
+  "originalReaderAcceptance": "Pending independent original-condition judgment and new eligible participant; no self-award"
+}

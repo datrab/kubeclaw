@@ -1,0 +1,18 @@
+{
+  "findings": [
+    {
+      "title": "Reseal the publication profile after changing its fixed input",
+      "body": "`checkedPublicationNativeValidation` treats `scripts/docs-publication-example-assets.mjs` as a fixed, byte-hashed input. The supplied profile still records its old SHA-256 (`d32279\u2026`), while this bundle changes that file (`439ab9\u2026`). Consequently, any qualifying publication validation that acquires this receipt fails at `fixed source/input scripts/docs-publication-example-assets.mjs` before the updated request validation can run. Update the independently maintained fixed-input/profile metadata as part of adopting this source change.",
+      "priority": "P1",
+      "confidence": 0.98,
+      "category": "regression",
+      "code_location": {
+        "file_path": "scripts/docs-publication-example-assets.mjs",
+        "line": 47
+      }
+    }
+  ],
+  "overall_correctness": "patch is incorrect",
+  "overall_explanation": "The native request/template/provider/output validation is coherent, but the accompanying fixed-input publication guard is left inconsistent with the changed asset validator, making the relevant publication validation path fail closed.",
+  "overall_confidence": 0.97
+}

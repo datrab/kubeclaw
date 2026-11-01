@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T05:32:42.175107+00:00",
+  "endedAt": "2026-11-01T05:32:43.401794+00:00",
+  "elapsedSeconds": 1.2266845990670845,
+  "exitCode": 0,
+  "ownedSource": "/home/node/.openclaw/workspace/operations/pr13/runtime/quality01-candidate-source-20261101",
+  "sourceRevision": "eee0a35102b572140d07a6860151dc190ca778a0",
+  "fullHelperExactCandidate": true,
+  "dependencies": "Physical copy after package+lock byte equality; no dependency install or shared mutable symlink",
+  "freshParticipant": false,
+  "productionDispatchOrOriginalAcceptance": false
+}

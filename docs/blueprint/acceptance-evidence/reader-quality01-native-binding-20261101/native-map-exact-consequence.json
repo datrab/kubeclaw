@@ -1,0 +1,68 @@
+{
+  "status": "ACTUAL_OWNED_CANDIDATE_NATIVE_GENERATION_ZERO_NOT_MAIN",
+  "sourceClone": "/home/node/.openclaw/workspace/operations/pr13/runtime/quality01-candidate-source-20261101",
+  "cloneHEAD": "eee0a35102b572140d07a6860151dc190ca778a0",
+  "exitCode": 0,
+  "seconds": 6.994507823954336,
+  "oldMapSHA256": "bdd14a0769d2ff65a042be4bd5f9c7db12003ce017d8f053d45191c3a7446ea7",
+  "currentMapSHA256": "56247158b9487a01194334a0824704ee2ce4ca005e8f50d6e49eb0e72324ccd4",
+  "pageCountUnchanged": true,
+  "pagesCount": 186,
+  "changedQualityPage": {
+    "index": 179,
+    "old": {
+      "page": "docs/site/use/workflows/quality-validation.md",
+      "route": "/use/workflows/quality-validation/",
+      "contentKind": "authored",
+      "status": "bounded local validation proposal; original quality-reader case remains incomplete",
+      "audience": "Prism and Buster specialist",
+      "owner": "Prism document and Studio maintainers; Buster resolver and capability-documentation maintainers",
+      "appliesTo": "native document, transition, preview, suite resolution and documentation-drift checks; no provider execution or deployment",
+      "lastVerified": "2026-11-01. Actual author validation and mutation controls; not a fresh participant or independent acceptance",
+      "sourceDependencies": [
+        "docs/site/use/workflows/examples/prism-studio-flow.json",
+        "docs/site/use/workflows/examples/quality-validation.mjs",
+        "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    "current": {
+      "page": "docs/site/use/workflows/quality-validation.md",
+      "route": "/use/workflows/quality-validation/",
+      "contentKind": "authored",
+      "status": "local native request/template/provider/output validation; original fresh quality-reader acceptance pending",
+      "audience": "Prism and Buster specialist",
+      "owner": "Prism document and Studio maintainers; Buster resolver and capability-documentation maintainers",
+      "appliesTo": "native request/document/template, local deterministic design provider and typed output, suite resolution and documentation-drift checks; no remote provider execution or deployment",
+      "lastVerified": "2026-11-01. Actual author native request/component/provider/output and retained mutation controls; not a fresh participant or original acceptance",
+      "sourceDependencies": [
+        "docs/site/use/workflows/examples/prism-studio-flow.json",
+        "docs/site/use/workflows/examples/quality-validation.mjs",
+        "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    "changedFields": [
+      "status",
+      "appliesTo",
+      "lastVerified"
+    ]
+  },
+  "other185PageRecordsExact": true,
+  "wholeSourceSurfaceMapExact": true,
+  "entireMapInverseByteExact": true,
+  "classificationWholeBytesExact": true,
+  "classificationSHA256": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd",
+  "actualDirtyPaths": [
+    " M docs/site/reference/generated-documentation-map.json"
+  ],
+  "noOriginalAcceptance": true
+}

@@ -1,0 +1,53 @@
+{
+  "status": "FROZEN_UNADOPTED_NATIVE_QUALITY_TUPLE_CANDIDATE",
+  "baselineRevision": "ea325a6d115a967ea6f5e0d674f4284081b27d6c",
+  "fourProductFiles": [
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "oldSHA256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600",
+      "currentSHA256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1",
+      "bytes": 3856
+    },
+    {
+      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "oldSHA256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6",
+      "currentSHA256": "ab862a8a86d40810994bafea3a8669cbc5969e0f40f51887e28754b7507b8503",
+      "bytes": 16253
+    },
+    {
+      "path": "docs/site/use/workflows/quality-validation.md",
+      "oldSHA256": "af7e73137e3f32a51d082985128e25378720bc5c1c63d44396e28b52dbd36e89",
+      "currentSHA256": "d88b9747a74d76342c24b25022f1fe0c856df72e3dfc24187a2805c8ff8c97f9",
+      "bytes": 9819
+    },
+    {
+      "path": "scripts/docs-publication-example-assets.mjs",
+      "oldSHA256": "d32279f359d0d2b17a49b10601dd3f611c8fcac6b6a431a9a0495de04bf14d05",
+      "currentSHA256": "439ab9b09fa0a5e2caddfa1e885124cc224f1523aa388e97a3c08d331909b7fc",
+      "bytes": 6449
+    }
+  ],
+  "semanticGuardCompanion": {
+    "path": "scripts/docs-api-output-discovery.mjs",
+    "currentSHA256": "3cfe334619607ce366dac0ee099aeda3cfc76445ece660b863bcf1d5a796653a",
+    "delta": "ONLY actionBoundary[0].use old whole-designDocument statement\u2192closed generate-request validation+nested document validation; no seals/fingerprints renewed."
+  },
+  "patchSHA256": "2351218e56a86f0937974152344b4f5349956d0d827f335e54ef260c6ada83f1",
+  "patchBytes": 35815,
+  "roundtripAllFiveFilesExact": true,
+  "nodeSyntaxChecks": 3,
+  "actualTargetedEvidence": [
+    "changed-prism-native-results/exact-body-execution.json",
+    "changed-prism-native-results/exact-publication-consumer-controls.json",
+    "native-evidence/native-result-and-limit.json"
+  ],
+  "actualResult": "Exact changed local Prism body PASS: nativegenerate realprovider applies1operation; realcomponent template rendered capturefalse; native declaredschemas/digests bound; meaningfulmissing/wrongtemplate/inputschema/provider-templatefield/output/flow negatives refuse. Exact2publication statements positive1/negative2PASS. Previous6nativeprobecontrols retained includingproductionhostgenerateguard.",
+  "reuse": "Buster resolver and capabilitymutation executable bodies byte-exact vs baseline; prior genuine results retained atscope, not rerun. Existing installedSource/Git/pathguard logic retained; candidate native-body mapping explicitauthor-only, not publicinstalledguard execution.",
+  "fullHelperOrWholePublicationReceiverRun": false,
+  "mainMutation": false,
+  "credentialsGatewayModelJobs": false,
+  "newRegistryOrProductProtocol": false,
+  "freshOrOriginalAcceptance": false,
+  "completeContextBytes": 134351,
+  "RootRemaining": "Independent wholeSource/Reader/originalfirstcondition judgment and P2; qualify necessary existing nativeguard actionBoundary/source-input/facts consequences and claims/schema metadata, actual current native receiver/publication, immutable publish before neweligiblefreshQUALITY actor. No dependentguard granted by this author patch."
+}

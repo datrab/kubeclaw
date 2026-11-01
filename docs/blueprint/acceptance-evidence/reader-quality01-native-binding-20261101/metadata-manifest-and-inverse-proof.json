@@ -1,0 +1,182 @@
+{
+  "status": "UNADOPTED_PENDING_WHOLE_METADATA_SOURCE_READER_REVIEW",
+  "baselineFrozen5SourceClone": "/home/node/.openclaw/workspace/operations/pr13/runtime/quality01-candidate-source-20261101",
+  "baselineCloneRevision": "eee0a35102b572140d07a6860151dc190ca778a0",
+  "files": [
+    {
+      "path": "docs/config/publication-example-claims.json",
+      "oldSHA256": "d01d9218b63960685ede897d5f03d4d4abd5d7d380b62ca585bfc3c8a5f8a370",
+      "currentSHA256": "223c7ec01af0931925ce46a6a5dc72b0bd37180099b04cb7a7d8ebb4ecaa98c1",
+      "bytes": 22676370
+    },
+    {
+      "path": "docs/site/reference/generated-documentation-map.json",
+      "oldSHA256": "bdd14a0769d2ff65a042be4bd5f9c7db12003ce017d8f053d45191c3a7446ea7",
+      "currentSHA256": "56247158b9487a01194334a0824704ee2ce4ca005e8f50d6e49eb0e72324ccd4",
+      "bytes": 53018542
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "oldSHA256": "3cfe334619607ce366dac0ee099aeda3cfc76445ece660b863bcf1d5a796653a",
+      "currentSHA256": "53629bf24093c35a781a827b2842829454d00f16016c41e9ee8ab44ac42ed798",
+      "bytes": 615173
+    },
+    {
+      "path": "scripts/docs-documentation-owner-purpose-custody.mjs",
+      "oldSHA256": "7f0a2adb450b7a01a7817ec463ffdb29e256a3552c73ee2fba2a485226394e29",
+      "currentSHA256": "b8259554f89fd73830a183faad96da4c81e803a82212c3b1753a6f3c6acdf6b5",
+      "bytes": 35686
+    }
+  ],
+  "patchSHA256": "0c6dbe38cdffaeb41bb53edad72392915e2ea821c4eca8f38031180ea549132d",
+  "patchBytes": 237369,
+  "roundtripAllFourFilesExact": true,
+  "wholePhysicalClaimsInverseExact": true,
+  "claimedMeaning": "Current local native request/component/fixedrealconstructor/output resolution, not providerwire registry or productionhost generation. Explicit local helper native operations vs syntax/request-only publication remain distinct; originalcase/fresh/P2/currentartifact still separate. Prior unresolved/historical qualifiers retained with currentmeaning labels, not silentlyrewritten as oldexecutionproof.",
+  "claims": {
+    "guideBlocks": 3,
+    "guideProse": 4,
+    "changedBlocks": [
+      1
+    ],
+    "changedProse": [
+      1,
+      2,
+      4
+    ],
+    "twoAssetHashes": [
+      "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "docs/site/use/workflows/examples/quality-validation.mjs"
+    ],
+    "threeExistingContracts": [
+      "docs/site/use/workflows/quality-validation.md",
+      "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "docs/site/use/workflows/examples/quality-validation.mjs"
+    ],
+    "allCheckInputVectorsExact": true,
+    "oneGenuinelyChangedNativeAuthority": "scripts/docs-publication-example-assets.mjs",
+    "other185PagesAndOtherAssetsContractsExact": true,
+    "mapAssetAndMapContractPreciseNativeHeaderConsequence": true,
+    "historicalBasisNegativesRetained": true
+  },
+  "guard": {
+    "existingSHASeals": 8,
+    "nativeFixedInputs516": "claims134 +realgeneratedmap +fixture176/helper177/guide189 +consumer196439ab9...",
+    "YAML12": "claims[4] only",
+    "child4": "claims[2] only",
+    "sameActionBoundaryAsFrozenSource": true,
+    "noNewSourceRoleSlotCallerSelectorsFactsRoster": true,
+    "complete13OwningContexts": true,
+    "no182_36_51OrOtherFactsRenewal": true
+  },
+  "nativeGovernance": {
+    "status": "ACTUAL_OWNED_CANDIDATE_NATIVE_GENERATION_ZERO_NOT_MAIN",
+    "sourceClone": "/home/node/.openclaw/workspace/operations/pr13/runtime/quality01-candidate-source-20261101",
+    "cloneHEAD": "eee0a35102b572140d07a6860151dc190ca778a0",
+    "exitCode": 0,
+    "seconds": 6.994507823954336,
+    "oldMapSHA256": "bdd14a0769d2ff65a042be4bd5f9c7db12003ce017d8f053d45191c3a7446ea7",
+    "currentMapSHA256": "56247158b9487a01194334a0824704ee2ce4ca005e8f50d6e49eb0e72324ccd4",
+    "pageCountUnchanged": true,
+    "pagesCount": 186,
+    "changedQualityPage": {
+      "index": 179,
+      "old": {
+        "page": "docs/site/use/workflows/quality-validation.md",
+        "route": "/use/workflows/quality-validation/",
+        "contentKind": "authored",
+        "status": "bounded local validation proposal; original quality-reader case remains incomplete",
+        "audience": "Prism and Buster specialist",
+        "owner": "Prism document and Studio maintainers; Buster resolver and capability-documentation maintainers",
+        "appliesTo": "native document, transition, preview, suite resolution and documentation-drift checks; no provider execution or deployment",
+        "lastVerified": "2026-11-01. Actual author validation and mutation controls; not a fresh participant or independent acceptance",
+        "sourceDependencies": [
+          "docs/site/use/workflows/examples/prism-studio-flow.json",
+          "docs/site/use/workflows/examples/quality-validation.mjs",
+          "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"
+        ],
+        "checks": [
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ]
+      },
+      "current": {
+        "page": "docs/site/use/workflows/quality-validation.md",
+        "route": "/use/workflows/quality-validation/",
+        "contentKind": "authored",
+        "status": "local native request/template/provider/output validation; original fresh quality-reader acceptance pending",
+        "audience": "Prism and Buster specialist",
+        "owner": "Prism document and Studio maintainers; Buster resolver and capability-documentation maintainers",
+        "appliesTo": "native request/document/template, local deterministic design provider and typed output, suite resolution and documentation-drift checks; no remote provider execution or deployment",
+        "lastVerified": "2026-11-01. Actual author native request/component/provider/output and retained mutation controls; not a fresh participant or original acceptance",
+        "sourceDependencies": [
+          "docs/site/use/workflows/examples/prism-studio-flow.json",
+          "docs/site/use/workflows/examples/quality-validation.mjs",
+          "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"
+        ],
+        "checks": [
+          "npm run docs:governance:check",
+          "npm run docs:publication:check",
+          "npm run docs:check:refs"
+        ]
+      },
+      "changedFields": [
+        "status",
+        "appliesTo",
+        "lastVerified"
+      ]
+    },
+    "other185PageRecordsExact": true,
+    "wholeSourceSurfaceMapExact": true,
+    "entireMapInverseByteExact": true,
+    "classificationWholeBytesExact": true,
+    "classificationSHA256": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd",
+    "actualDirtyPaths": [
+      " M docs/site/reference/generated-documentation-map.json"
+    ],
+    "noOriginalAcceptance": true
+  },
+  "instructionHost471Unchanged": true,
+  "unrelatedSpecialWorkflowBlock2Exact": true,
+  "library43ClassificationWholeUnchanged": true,
+  "noMainMutation": true,
+  "noWholeNativePredicateReceiverRerun": true,
+  "wholeHelperActualRootReceipt": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-quality01-original-mapping-20261101/whole-helper.json",
+  "acceptance": "Unadopted authorproposal; Root original P2 soleconsumerinputP1 only resolves after actualqualifiedeightseals/authorities/claims applied and originalnativechecks. No new award.",
+  "boundedReviewContexts": {
+    "current-selected-claims-context.json": 69246,
+    "current-map-ownership-context.json": 84125,
+    "current-13-owning-context.json": 142570
+  },
+  "remaining": "Independent metadatawholeSource/Reader/Quality +finalP2 coherentguardstate; Rootsoleapply/nativecoverage/publication/originalchecker/immutablepush beforefreshQUALITY task.",
+  "actualSelectedFactProof": {
+    "scope": "Only two existing selected native/YAML fact derivations, no guard/receiver/global discovery/defaultgenerator execution, no mutableauthority registry read",
+    "rows": [
+      {
+        "profile": "reviewedPublicationNativeValidation",
+        "source": "scripts/docs-publication-example-native.mjs",
+        "selectorsUnchanged": true,
+        "registeredDigest": "8ca109678fb1c6a54c01436cf3917290c3c4e0e7cc52636a7d4cfd73c471774d",
+        "currentDigest": "8ca109678fb1c6a54c01436cf3917290c3c4e0e7cc52636a7d4cfd73c471774d",
+        "equal": true,
+        "count": 1764,
+        "changedAssetConsumerInClosure": false,
+        "seconds": 1.33
+      },
+      {
+        "profile": "reviewedPublicationYamlValidationInputs",
+        "source": "scripts/docs-publication-embedded-yaml.mjs",
+        "selectorsUnchanged": true,
+        "registeredDigest": "79dea1473f089d01718925c668685976c1dabfca5a056e851b15795089fcdf0b",
+        "currentDigest": "79dea1473f089d01718925c668685976c1dabfca5a056e851b15795089fcdf0b",
+        "equal": true,
+        "count": 8,
+        "changedAssetConsumerInClosure": false,
+        "seconds": 0.007
+      }
+    ],
+    "allEqual": true,
+    "noNewFactSealsProposed": true
+  }
+}

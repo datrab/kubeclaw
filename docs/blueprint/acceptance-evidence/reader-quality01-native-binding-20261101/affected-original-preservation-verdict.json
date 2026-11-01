@@ -1,0 +1,1382 @@
+{
+  "status": "PASS_ORIGINAL_39_AFFECTED_SCOPES_PRESERVED",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "at": "2026-11-01T05:49:29.322469+00:00",
+  "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+  "proposalManifestSHA256": "0ddb6a0ea8e2b74b54e6223c97f9015c5f75fce718b2eb61403a59194f0f9b1b",
+  "baselineMatrixSHA256": "c703ffa08dbf56c120f5cd14bd3db6d130f9c27d69bd590eb10ca67337869f81",
+  "candidateMatrixSHA256": "ca0dff873c9e785948f3c3beac4efe1468174a9c4126586145ee8a5599b1cb89",
+  "recordCount": 39,
+  "unaffectedRecordsEntireExact": 105,
+  "wholePhysicalMatrixInverseByteExact": true,
+  "topLevelOutsideCompletionRecordsExact": true,
+  "changedPathCounts": {
+    "docs/site/reference/generated-documentation-map.json": 28,
+    "scripts/docs-api-output-discovery.mjs": 8,
+    "scripts/docs-documentation-owner-purpose-custody.mjs": 6,
+    "docs/config/publication-example-claims.json": 26,
+    "scripts/docs-publication-example-assets.mjs": 5
+  },
+  "records": [
+    {
+      "id": "AP09.1-ready-topics-20261020",
+      "baselineRecordIndex": 1,
+      "originalRecordCanonicalSHA256": "ed83cd3b02dc96466a2802d1c5069beba4f6161f329cc76ca3f127e72d368db4",
+      "originalChecksCanonicalSHA256": "ada36478e7411b58382e818ce279a2b7f087f161a43d8c1504f20a426f5be080",
+      "originalCheckCount": 42,
+      "originalMeaning": "Independent PASS for entry/authority/completeness rules, product explanation/request, stable decision identity and public status/register consistency.",
+      "changedExplicitPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "7377a8f1418ec5f50aabdfe65922cd2866782c947b57bd0aa9d50f2a96407864",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "Reviewed-corrections-20261020",
+      "baselineRecordIndex": 8,
+      "originalRecordCanonicalSHA256": "6fb2dd1514305c441229e2d58fcba423cbb2720568495bdc58ef647734a074e3",
+      "originalChecksCanonicalSHA256": "39489508df63dc9aea49109193babb24d274f14675b0a2a44d3cc71e657fb38d",
+      "originalCheckCount": 43,
+      "originalMeaning": "Seven concrete review findings corrected and independently re-reviewed: unsafe retry opt-in in4Buster reader paths,actual admission/invocation error codes,current lint facts and generated metadata freshness.",
+      "changedExplicitPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "27b82fcbafd684d8677dc83721f09df506b5ccc862f699b323324e1d86fa3fc3",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "AP09-documentation-agent-maintenance-20261021",
+      "baselineRecordIndex": 33,
+      "originalRecordCanonicalSHA256": "9b220e8f7e26bf052f5c92dc3c95d508eff1e1e01cfcbff3ee8dae4bc7397ad4",
+      "originalChecksCanonicalSHA256": "0fed34df8fef75a0c6e3e78ab5bd84e23105550377f23905ed5d93b21d5068cd",
+      "originalCheckCount": 66,
+      "originalMeaning": "Whole central documentation-agent maintenance contract: discovery, impact, owned generation, review, reader probe and safe retirement.",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "The already-qualified selected two-call actionBoundary and existing input seals are finite data successors. Complete owning guards retain physical roots, purpose receipts, selectors, raw slots, rosters and no-runtime grants."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "58cdf27de0ecf6436e6136bcc5059b10d80fd8223d27704fea26fac499000577",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A912-11-deterministic-page-records-20261022",
+      "baselineRecordIndex": 87,
+      "originalRecordCanonicalSHA256": "593de40ea7e6bfe512da50feaaee564c1fb51f58bb752292f2c26cde4636d245",
+      "originalChecksCanonicalSHA256": "72966694ad9389f4c2b241f4de0b302336d27febe8d88c6ffbdfcf8a4bb42218",
+      "originalCheckCount": 33,
+      "originalMeaning": "Whole publication determinism and machine-readable page bindings independently accepted: two actual clean normal builds at identical Source/tools, all419outputs byte-equal;177routes/canonicals/source records and919declared dependencies verified against757actual Git objects, actual redirect/home/shared/output hashes and meaningful drift/omission negatives. Not aggregate documentation or runtime acceptance.",
+      "changedExplicitPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "db7f45ff21d4bb73b26928e5c9b1dd3a01f9d5d338485c531addf1377c1e73d7",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "AP09-publication-positive-scope-7ef16585",
+      "baselineRecordIndex": 88,
+      "originalRecordCanonicalSHA256": "9fe4fe36a97792b4ea95364af62008213ae3f3d8b595435133b7951d04b97546",
+      "originalChecksCanonicalSHA256": "14d1b1573a02d86b795b43405da04e1c61e830c65963bde034757670776bd6bc",
+      "originalCheckCount": 61,
+      "originalMeaning": "Whole positive publication/reader boundary: exact revision-bound177canonical pages, finite declared support/output set, actual rogueMarkdown no-route/no-output negative and no internal documentation-work prose/link leakage.",
+      "changedExplicitPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "711229978db6b802aacb6dedfb926b3c6db0a3fe1f99180e34d075171c3aec24",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A98-02-13-whole-operator-procedure-contract-20261022",
+      "baselineRecordIndex": 90,
+      "originalRecordCanonicalSHA256": "a7ce39f9bc37cad7f7949850a198df92f69d24c2ac1e630a9f85701da87bb0fb",
+      "originalChecksCanonicalSHA256": "fe80d6521a57ae346be52e6bc1febf495b05ebd959df9c8f90857536f4712f31",
+      "originalCheckCount": 47,
+      "originalMeaning": "Whole canonical thirteen-task operator map and linked concrete workflow/host procedure family; version/location/authority/prerequisites/commands/observations/safe-stop/recovery/unsupported bounds, using independent Root correction review for authored quickstart.",
+      "changedExplicitPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "191eee77e5eef8ffe50ed6cad37a7b4c54e920bcf99d5c4ea04187acd9b7442c",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "AP09-whole-extension-drift-A91014-20261023",
+      "baselineRecordIndex": 96,
+      "originalRecordCanonicalSHA256": "63de520bbe29f00b36f19e95ec1ee3d9997de9465bdb67a9e11321dc8d90c53e",
+      "originalChecksCanonicalSHA256": "cd5d37dc13253014ab4bfdd2a3826c9cd51461efe09cea0f11199b2616bd251b",
+      "originalCheckCount": 53,
+      "originalMeaning": "Independent complete A91014 generator-or-guide mutation acceptance across SDK export/public contracts, plugin manifest, extension class, distinct provider/fixture/report registration, genuine nested configuration, capability/grant, Secret and error-code routes. Representative Add/Change/Remove per actual independent path:45 registered observations, not45 requirements. Wrong nested affected-page mapping found independently and corrected with registry-derived publication assertion; whole-topic review explicitly PASS after source/custody closure.",
+      "changedExplicitPaths": [
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Only the existing whole-claims input seal changes; parent/child syntax, route, actual result gate, purpose acquisition and no broader caller grants remain exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "fafd3f80b1deb3977ada66aa68fdbc97a74d00b9feb5266480136408413cedb5",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A99-13-original-seven-dimension-drift-20261025",
+      "baselineRecordIndex": 100,
+      "originalRecordCanonicalSHA256": "3af676ae69847b8b2647acd8a87b32e5f37201044d739296ae9a16c2788eeec0",
+      "originalChecksCanonicalSHA256": "292545b51d0d86e3ee9e0e839e912bb1700db9d06ddb9a8dd2d2c096fbcb8963",
+      "originalCheckCount": 28,
+      "originalMeaning": "Original A99-13 seven named product-contract mutation dimensions: schemafield,stagetype,role,provider,fixture,reportformat,progresscontract. Full prior independent A91014 exact scope reused for first6; genuine current published progress baseline and3original mutation refusals/restorations supplement it. Independent complete original criterion Source/semantic Reader/Quality PASS.",
+      "changedExplicitPaths": [
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Only the existing whole-claims input seal changes; parent/child syntax, route, actual result gate, purpose acquisition and no broader caller grants remain exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "bfde3f7a477e150f80b7fd8fc6422162107905571ff3aa9d12e9e9b0c36be079",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A910-10-whole-supported-extension-lifecycle-20261026",
+      "baselineRecordIndex": 104,
+      "originalRecordCanonicalSHA256": "04068666485d83e534a4b1088b111eed19d51ce9c1aef52df28bfcaea279aefa",
+      "originalChecksCanonicalSHA256": "6e2d72b5e4f621b84f6e69926acdd96d55426334a8a1b04d9314e04d130773cb",
+      "originalCheckCount": 30,
+      "originalMeaning": "Original whole A910-10 documentation acceptance: every supported internal extension class has a clean-checkout change/registration/permission/configuration/test/activation/observation/compatibility/removal/rollback path or complete honest product-boundary owner/action/stop/resume procedure under controlling contract1\u20134. Actual new pinned local observer journey closes the previously missing practical authoring contribution; separate substantive lint/common and whole twelve-family assessments explicitly confirm all original steps without compile/unit-as-activation. Reuses unchanged qualified source/reader scopes only within their limits, not by counters.",
+      "changedExplicitPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "bebcc6f9bef8cafca3dd35c66c15947e8b167c55ef717eb4fafa9b4e97e5efcf",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT-014-whole-native-publication-examples-20261027",
+      "baselineRecordIndex": 108,
+      "originalRecordCanonicalSHA256": "fcde93b2c9eeb350514a6e7e3c3302ed3a2d91d1d2c1097fee2efe3b21bcd3f7",
+      "originalChecksCanonicalSHA256": "6f3e70a5c751231939b26aec6813f23c0398f85f81e5aedd2216d9d9de8337ef",
+      "originalCheckCount": 34,
+      "originalMeaning": "Original MNT-014/F7 complete executable/schema-validated publication example obligation: exhaustive authored discovery and failclosed normalcheck/build native input/contract/projection/syntax joins, including both full project factories; no selected-plugin/resume-only substitution and no mandatory live deployment.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication-example-assets.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded.",
+          "The real closed generate request and nested native document replace obsolete raw-document assumption. Publication does not execute helper/provider/engine; actual full receiver succeeds and native positive/negative controls support refusal."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "9259671604bce6d2934dde605e1c094b0847e053f90bcdcbc262d43379144710",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A99-11-whole-published-example-claims-20261027",
+      "baselineRecordIndex": 109,
+      "originalRecordCanonicalSHA256": "e1246f63f1ecbed57c2a0ded3b29ec5a0d6605ccf2d4a205b40568a711e4905d",
+      "originalChecksCanonicalSHA256": "db777b7384c40121430a8095e50a5ca6a7b1753c4f621bb8fb82e12b3ef18da1",
+      "originalCheckCount": 34,
+      "originalMeaning": "Original whole A99-11: all published examples discoverable and checked according to their actual claim; executable instructions retain toolchain, prerequisites, expected result, errors/effects/cleanup, and explanatory or unexecuted product paths are explicit. Separately adjudicated full original automatic-failure predicates; not an automatic promotion from MNT014.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication-example-assets.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded.",
+          "The real closed generate request and nested native document replace obsolete raw-document assumption. Publication does not execute helper/provider/engine; actual full receiver succeeds and native positive/negative controls support refusal."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "9259671604bce6d2934dde605e1c094b0847e053f90bcdcbc262d43379144710",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "QUA-005-whole-published-live-and-completeness-claims-20261027",
+      "baselineRecordIndex": 111,
+      "originalRecordCanonicalSHA256": "f8267d096cb5ee39366283ce77333cdcee3c25dd9d3320d1b4cb0a315144ce0c",
+      "originalChecksCanonicalSHA256": "606ffc323a3debb51f1f00c616fb8c92f964bdea404d8023b11af1f939f2fcbf",
+      "originalCheckCount": 30,
+      "originalMeaning": "No material false live-success or unsupported unbounded completeness claim found in complete qualified actual publication contexts; not merely sampled pages, keyword absence or hashes.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication-example-assets.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded.",
+          "The real closed generate request and nested native document replace obsolete raw-document assumption. Publication does not execute helper/provider/engine; actual full receiver succeeds and native positive/negative controls support refusal."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "4cad5301ab418452c3a191d0a1824d6d67d13d0301f2a5c95dd76af7829c33a5",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A913-10-whole-source-reasoned-applicability-and-visible-product-boundaries-20261027",
+      "baselineRecordIndex": 112,
+      "originalRecordCanonicalSHA256": "be5310c5fb6cefee42eb6ef4c2382e47b1f666585c68aa678e6c6ec70c8a6d0c",
+      "originalChecksCanonicalSHA256": "386869e83939ef3fd7f05a427cc57603d9834f89363cced3c1075d49e51d4ef4",
+      "originalCheckCount": 41,
+      "originalMeaning": "Whole original applicability and visible product-boundary duty independently passed:294 structured contexts,9 authored/generated applicability families,25 owner/acceptance boundaries and complete177page/28asset implicit responsibilities. Material GitOps-status, Swarm-wrapper and unused-field/profile findings repaired through native owners and independently checked at actual full delivery. Fresh original Operator02 scored4/4. Current committed publication and all five Reader controls pass; no missing execution is disguised as N/A.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "c506dd71f17ea7c49715ca398ee899c7cefd29cad57510a0ec759446c510a06e",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "CFG-007-whole-recursive-plugin-configuration-and-native-consumer-semantics-20261028",
+      "baselineRecordIndex": 113,
+      "originalRecordCanonicalSHA256": "e3c7388713c3a07bc1f4612ccd1f7d7d31037709ac5a5b2d02599753ce628a20",
+      "originalChecksCanonicalSHA256": "73a4186ecccc77e83fe845466217046d8933455b2d0d273f5202bc440533fc32",
+      "originalCheckCount": 44,
+      "originalMeaning": "Whole original CFG007: all857 recursive schema declarations and actual consumer meanings plus15Swarm settings are current and source-qualified. Earlier53corrections retain actual valid qualification; new29meanings(artifact3+26durable/evidence) now state real defaults/admission/path bases/count/payload/store budgets and failure timing. Complete actual central reference and selected operator projection are independently qualified; associated29native mapfacts, qualified3scope claims and committed326 finalcontrols pass. No declaration/count/hash-only acceptance.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "87b051d6eb4acb1267fcac4e69922c07f51c790994c20341d119505d7aefa2be",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT-015-whole-source-owner-page-check-and-independent-review-routing-20261028",
+      "baselineRecordIndex": 115,
+      "originalRecordCanonicalSHA256": "99c4dbdf2530bbb7d05484b260cc3a01e9bc1563deb0dea20c962ca39b9a1b91",
+      "originalChecksCanonicalSHA256": "18350f99b81f7b661b41238f3ee013b94efe91c0bc645c44e0ee3a25b4d4fc50",
+      "originalCheckCount": 42,
+      "originalMeaning": "Whole original MNT015 source-to-canonical-page/owner/applicable-check and mandatory independent-topic review responsibility independently passed across seven composed source families and five duties. Existing exported prompt-library missing route genuinely repaired through native metadata/real workspace checks; all affected generation/failure/addition/removal/STOP and historical/source/local/live boundaries retained. Exact current source/code/bindings, meaningful native controls, committed Reader and original115 preservation qualified; not automatic closure from one witness or counts.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "4fec8ac0c702f56a4021b9b9c86e4349585cc79d4a0a482c9b2cc6fc2ce96534",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "CFG-013-whole-precedence-effective-values-and-source-qualified-conflicts-20261028",
+      "baselineRecordIndex": 117,
+      "originalRecordCanonicalSHA256": "251241a4d83a0914aa84143671984020446efe5f2f2c12d5263eda0861939072",
+      "originalChecksCanonicalSHA256": "bf11131676462d6fadff0d9ab27e373230b468db5a29486413b1395304f0bb81",
+      "originalCheckCount": 39,
+      "originalMeaning": "Whole original CFG-013 independently passed across all ten actual configuration families: producer-to-consumer merge/default/capture, absence/empty/null/false, conflict/error and safe effective-value inspection duties. Newly found genuine fixed-env/extraEnv duplicate and required-Secret failure gap repaired through the canonical authored owner and a semantic maintained one-page contract successor. Complete core and host/Helm/Kubernetes/Secret responsibilities and individual23 historical finding facets qualified; original global failures remain unawarded. Actual committed publication controls and original117 semantic preservation complete; no table/count/hash-only closure.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "3efd1c1407feb8b6df88e7c7800c69b77e5990670fb285139011d86b5f97019f",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "CFG-010-whole-host-prism-codex-configuration-and-consumer-authority-20261028",
+      "baselineRecordIndex": 118,
+      "originalRecordCanonicalSHA256": "53a2af8be739b9d17205adc04fe9a6447ae42fe25f58e4cd17ef187fb6bc4abc",
+      "originalChecksCanonicalSHA256": "8d8d7b4faec5a60337f0f504de880a3e5127cbddd34c0dfc32caeab184cc82ac",
+      "originalCheckCount": 40,
+      "originalMeaning": "Whole original CFG-010 independently passed across all seven actual host/Prism/OpenClaw/standalone-Codex families: configuration sources, defaults, Secret consumers, precedence, startup capture and safe verification. Stage agentRole versus actual config.agent selection and standalone Codex persisted-home/forced-MCP/credential boundaries corrected centrally. Complete63 Prism names/77 consumer contracts and158 Helm meaning cells were source-reconciled; eight real semantic families corrected through existing shared native owners and genuinely implemented authenticated finite v2 delivery (11 ENV tuples/16 Helm identities/15 DB Secret consumers), not hand-edited raw inventories. Current meaning provenance is separate from retained historical observations. Whole13 original finding facets qualified only locally. Actual committed publication7, full physical/Git output/source binding and original118 semantic preservation independently passed; no count/hash-only or unexecuted live closure.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "46679b98439053f0902f87875c134d0fe0bdece26a5220cf467483ab4b82ec42",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "CFG-012-whole-ports-services-endpoints-ingress-and-controller-activation-20261028",
+      "baselineRecordIndex": 119,
+      "originalRecordCanonicalSHA256": "552c74752cca467b7e3b147be07106b80b4c72221c4b506284b6455520b4c866",
+      "originalChecksCanonicalSHA256": "e41790d9e3e202fb0a42b9acc005e0ebff6d1efa0f803f4bcb87afde976f32a5",
+      "originalCheckCount": 43,
+      "originalMeaning": "Whole original CFG-012 independently passed for configured ports, Services, inbound/outbound endpoints and ingress: all22 exposures/72 inbound/65 outbound occurrences reconciled across39 actual producer/receiver bodies and coherent trust/health/failure/operator duties. Four ordinary controller Kubernetes calls incorrectly hidden behind optional readiness activation corrected through the existing native caller-aware owner. Omitted PostgreSQL targetPort now preserves the raw omission and explains numeric Service-port default with pinned primary evidence; named targets and profile-specific ownership/storage/ports remain distinct. Genuine source-first bounded endpoint publication delivered both remedies without full configuration/SDK regeneration. Whole delivered content, seven committed publication controls, actual output/Git/native-metadata binding and every original119 scope independently passed.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "fee8e8a7e5807f3a9caf182174950ba52551608b59a46ac8c451311c81dc44fc",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "REF-016-whole-verification-command-ci-environment-effects-owner-and-change-routing-20261028",
+      "baselineRecordIndex": 120,
+      "originalRecordCanonicalSHA256": "7ce17fee22cb6070f3666bf29cfbdf49dcb989a3cc2e25dcc2172f1219d57ed5",
+      "originalChecksCanonicalSHA256": "04f0cfebbd399f8ff05fd119122a7004aa47c59d8ae8cc8f8aa49495bb429bcb",
+      "originalCheckCount": 40,
+      "originalMeaning": "Whole original REF-016 independently passed: all301 root npm aliases,14 actual CI workflows,41 deployment forms,18 guide forms and88 concrete package/specialist routes map purpose, scope, environment, authority/write/residual effects, expected results/limits, existing canonical maintainer owner and change-to-check. Actual private/delegated versus public frontdoor scope is Source-reasoned, not a counts exemption. All49 wrapper-selected package lifecycles plus explicit focused Prism/Ops/lint, telemetry and committed Reader routes retain concrete duties. Exact301 raw root command declarations and58 selected manifest definitions are read-only literal Source data; genuine native loader/Source guards, independent semantic review and actual current HTML prove values/order/cwd and preserve wildcards without executing those commands. Actual native current generation/publication/Reader/references and old120 preservation passed.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "ef04f19a0fbc3143012b781fdca7a6360a3b4d273440c7ee23b418339f3e9be5",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT-008-whole-generated-platform-store-policy-retention-quota-cleanup-20261028",
+      "baselineRecordIndex": 121,
+      "originalRecordCanonicalSHA256": "5c53817098992f30f752f3003ca9680a5af97d0b41ba60427c3d138fc90f6f33",
+      "originalChecksCanonicalSHA256": "d724a0ab3a307d1b1e3b8cedf44db665bba24f3d4f5a7a2a93f1f435fb0a977e",
+      "originalCheckCount": 42,
+      "originalMeaning": "Whole original MNT-008 independently passed: generated ports/endpoints/stores retain nine original surfaces and75 original store identities;52 source-qualified policy families and9 additional native instances carry machine-readable typed declarations/limits, constructor/caller/configuration boundaries, retention/capacity/cleanup/failure/retained-authority responsibilities and concrete Source locators. Native conditional Helm projection is explicitly distinguished from six original profiles and unresolved expressions. Maintainer guidance explains clean committed Source generation versus later canonical contract preparation and normal publication. Independent actual current Reader/Quality and complete121preservation passed; no gate or unrelated requirement awarded.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "13fc4c88732dfeb68cee6d3629a03ecf669b9c7a5bd6bfae373b4f680a582806",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT-006-whole-generated-active-event-payload-version-producer-consumer-20261030",
+      "baselineRecordIndex": 122,
+      "originalRecordCanonicalSHA256": "e59f4fd995193a30b641c2246bc0574eeeeecad0cb70fbe08e75a300632ad1f1",
+      "originalChecksCanonicalSHA256": "e16089282816f405fa7aec64e23eda6184eba7d62723b042a32187e0e12f826c",
+      "originalCheckCount": 41,
+      "originalMeaning": "Whole original MNT-006 PASS under AP09 sections1\u20133: source-qualified generated active event/payload/version and actual producer/transformer/validator/consumer graph across all14 mechanisms, joined to activation, retained/unknown boundaries and complete maintenance/verification ownership. Original F4 names/positions-only deficiency is remedied. Independent Source and delivered technical Reader/Quality judgments compose with actual native parser-route drift tests and final seven publication checks; original122 preservation PASS at original limits. No unrelated gate or whole controlled-language award.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "bb1369056cb8ec69e952cf70b68c29319a205cad1cd0f5e9a888d0279bb07f63",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT-005-common-source-bound-error-catalogue-20261030",
+      "baselineRecordIndex": 123,
+      "originalRecordCanonicalSHA256": "d733dad859481d622fc5cf40e3469fc4a8e7b8ae1ee6b133f77fbd1e66526dc7",
+      "originalChecksCanonicalSHA256": "7836485c4fb86fb24c3469de07c7c832fd411b975d33530b48778c1f9e2699a6",
+      "originalCheckCount": 35,
+      "originalMeaning": "Whole original MNT005 content deficiency F3 resolved under AP09 sections1\u20133 and Raven owner-priority20261030: generated common diagnostic catalogue across Foundation/plugins, Nova/projects, Worker/native, Prism/backup, platform and Helm, not Buster-only. Entries explain identity/construction, actual trigger/effect, retry/safe-action, retained evidence and consumer boundaries. Independent complete page/semantic review plus unchanged qualified Source scopes and concrete reader tasks found no material error; original content PASS explicitly reaffirmed after ten title/path labels were corrected. Actual seven publication commands pass. No new gate or whole controlled-language acceptance.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "31554b7f2b1ec12ed008edf74760900562e4ae698eefb39fe8896de113cf5302",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "REF-005-owned-diagnostic-identities-causes-effects-recovery-20261030",
+      "baselineRecordIndex": 124,
+      "originalRecordCanonicalSHA256": "70dd43a7b87f427c80b5e50961131f9b3d7cdf850f00b1c77c13f3fb092b4f34",
+      "originalChecksCanonicalSHA256": "2ccc842ef54f94a7cb981659a60b06ae9037aab5141caf71322d3d8c0ade6f1e",
+      "originalCheckCount": 31,
+      "originalMeaning": "Original REF005 PASS under controlling AP09 sections1\u20133 and owner usable-documentation policy: owned diagnostic codes, message/construction patterns, declared-only vocabulary and successful control outcomes are separated and source-linked with causes, side effects, safe next actions and retained-state limits. Common/worker, project compiler/CLI/recovery and canonical-state/evidence responsibilities now complement typed constructors and existing wrapper/HTTP/result routing. Independent whole-topic Source/usability/quality/completeness review found no material omission or unsafe instruction. Actual seven publication checks pass. No new gate or whole controlled-language award.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "8633af139aea33b13042b0b53e4f381654393d28787c1c108aa51d81f8b57af6",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT-011-common-diagnostic-production-input-drift-20261030",
+      "baselineRecordIndex": 125,
+      "originalRecordCanonicalSHA256": "f9d7c757179bf17d09faeffef2705eca820d2356784587c21a7b95ec28a14aba",
+      "originalChecksCanonicalSHA256": "f49a9bfb726d9635d6387fdbd8ae0512e0432062a32175cb75544a448bb90e56",
+      "originalCheckCount": 31,
+      "originalMeaning": "Original MNT011 PASS: common diagnostic driftcheck now refuses selected owned production-input path additions/removals/byte changes, including formerly error-free active Nova and Studio sources, before existing source-binding and generated-output checks. Root/direct/deployment-script symlink paths fail closed. Independent coherent original Source/Reader/Quality and transfer review passed after two concrete material implementation defects were corrected. The maintenance route explains finite scope and reviewed refresh rather than hash-only semantic approval. Actual publication checks pass. No new gate or whole controlled-language award.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "de10ab8ce158ec9aa6d46acbc81fc35809c4dd8d21f2b6aba6aba6171ed63d48",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT-010-all-owned-json-schema-recursive-field-drift-20261030",
+      "baselineRecordIndex": 126,
+      "originalRecordCanonicalSHA256": "2f5e8cb36d1daadd7621f08503ee1bc2bb7e2c6b7b9658cdc9677f1b7bbe0af4",
+      "originalChecksCanonicalSHA256": "6c8f9cc00a936ccac55403d355d8c1f8c6ead248f93ee12a32e43472abe85b06",
+      "originalCheckCount": 31,
+      "originalMeaning": "Original MNT010 PASS at its explicit original schema-field drift scope: the former16-schema subset is replaced by all current owned regular schema JSON source membership/bytes, recursive literal property-pointer/member-subtree inventory, explicit current/fixture/retained/documentation status and reader routes. Both current plugin.json and openclaw.plugin.json registration forms are bound. Independent coherent original Source/Reader/Quality and responsibility transfer passed after the one real OpenClaw registration omission was corrected. Actual publication runs the new check before every prior native action and all seven checks pass. No new gate, universal API/consumer, runtime-schema or whole controlled-language award.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "6ca119b6a6e184047be67d0d7418a829d87dae1ca154330d1a70f4e7f5d20707",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "QUA-004-whole-appropriate-technical-evidence-and-current-citations-20261030",
+      "baselineRecordIndex": 127,
+      "originalRecordCanonicalSHA256": "7bdd36edb9ce766a3c58d7d7dd6cd47cb74987d0ae0b70122a7b2b12c848a0f4",
+      "originalChecksCanonicalSHA256": "53f80d2bef2fcc6e215c3d0743a3174c96bd4eb2e4ba2011d2d631993dd0ea84",
+      "originalCheckCount": 31,
+      "originalMeaning": "Whole original QUA004 PASS at appropriate evidence for asserted technical scope: independent non-author Source/usability/quality judgment joins the qualified original177-page/28-asset Source-content facets, later MNT006/MNT005/REF005/MNT011/MNT010 scoped successors, actual F2 host-version/default/minimum and F3 release-selection PR versus Ops direct-push source corrections, historical/nonexecution boundaries and three current citation repairs. Current evidence kinds remain distinct from runtime proof.22of24old citation values were already current; only twoPrism and one newSchema cleanup copy required current qualification. Maintenance guidance prevents top-level-only citation updates. All current literal copies and all7publication checks pass. No new gate or whole A913/language/universal API award.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "613b7b2bf81e9ee3d27b3fdf1ce4e39a39c4983e980987d51bc1b35bf0174658",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "QUA-001-whole-understandable-technical-english-and-depth-20261030",
+      "baselineRecordIndex": 128,
+      "originalRecordCanonicalSHA256": "b0db7daa816958345cd289cff8b8c4f678bbeb1c69599df882ddab2332eeaab6",
+      "originalChecksCanonicalSHA256": "179087655dbeb91ed61b3734bbc0c951fdc17b78f808ac5299e24dcf64a14edd",
+      "originalCheckCount": 31,
+      "originalMeaning": "Whole original QUA001 PASS: understandable technical English and sufficient technical depth across qualified original177-page/28-asset corpus plus current topic deltas/seven catalogue pages. Independent current canonical-document task traces resolve F1 complete project input\u2192compiled graph and F3 supported capability/plugin integration change, with authority, prerequisites, expected output, failure stop, retained evidence, original-versus-new input, recovery and owned cleanup. Existing whole Source-content-quality and later changed-topic qualifications supply the whole meaning/structure join; not three samples promoted by count. Final integration explicitly satisfies legacy astra-final disposition under controlling compact AP09sections1\u20134 through this non-author coherent review, without a new Astra-model run. Source-body-identical successful publication checks reused. No new gate or QUA002/A91306 award.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-publication-example-assets.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded.",
+          "The real closed generate request and nested native document replace obsolete raw-document assumption. Publication does not execute helper/provider/engine; actual full receiver succeeds and native positive/negative controls support refusal."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "de07116fa4d2242305188b011ede2eee428301c81d4d8d2ba0105bbc314afe8f",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT-004-whole-source-owned-cli-reference-20261030",
+      "baselineRecordIndex": 129,
+      "originalRecordCanonicalSHA256": "2e7d29196c3a0312d1746edc70018294ad26bfad73b9c3493c5d66d773fa5e71",
+      "originalChecksCanonicalSHA256": "2af2c908e5e9a1488fdbc68131bd2dea215eabcab5e4948ed7ec98575024759d",
+      "originalCheckCount": 24,
+      "originalMeaning": "Whole original generated CLI documentation PASS: source-owned commands/subcommands/options/defaults/exit boundaries from current scripts/entrypoints, not deploy-only inventory. Native model covers859 selected sources/480manifest interfaces with precise physical source and parent/receiver/cwd/manifest authority. Supported and qualified-maintenance routes lead; private/source-only/delegated/upstream boundaries do not gain invocation authority. Independent practical lookup tasks qualify deployment nesting/default/function return, Node check/stale exit, Python defaultFalse and Go conditionalexit. All declaration values preserved by ordinary complete compact JSON; semantic contract successors, actual publication and source checks pass. Qualified prior129 scopes preserved, legacy astra-final truthfully satisfied by the same non-author final integration under controlling compact contract.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded.",
+          "The already-qualified selected two-call actionBoundary and existing input seals are finite data successors. Complete owning guards retain physical roots, purpose receipts, selectors, raw slots, rosters and no-runtime grants.",
+          "Only the existing whole-claims input seal changes; parent/child syntax, route, actual result gate, purpose acquisition and no broader caller grants remain exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "f62d01fc9407fba6d1ef2950c00100ff488f79018d620705d2a2c36be44f2b72",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "CFG009-REF013-whole-current-Helm-GitOps-values-20261030",
+      "baselineRecordIndex": 130,
+      "originalRecordCanonicalSHA256": "f1208fd09cd9e2de2add472fc2e78975442b950a5bf0bd51222233ca84adbe34",
+      "originalChecksCanonicalSHA256": "c3111a58354d945335cc4723834111d005f1156f35c04282e346d07b8b869bbc",
+      "originalCheckCount": 16,
+      "originalMeaning": "Whole original Helm/GitOps/infrastructure values reference: current discovered inputs and nested defaults, precedence, owning producers/controllers/processes, failure and restart/effective-state boundaries. Local chart/release/production profiles and embedded Argo metadata/retry/collection meanings source-qualified. Passive release metadata is not ownership/sync proof; retry counts differ from backoff time. Practical independent reader tasks and complete original-topic Source/Quality/final integration pass. Native generation/drift, exact literal-key examples, maintained CLI preservation and actual frozen rendered publication controls pass; prior130 content responsibilities preserved.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "7ba4a4095b2dfdf3ca367f9c6543c2224c473f39920ef487e1ed155901f7de02",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A91306-QUA002-original-controlled-language-whole-20261030",
+      "baselineRecordIndex": 131,
+      "originalRecordCanonicalSHA256": "376f0082cd23f349e45862352623dacfabd36318897e1217f37a7a0c2cd4daa2",
+      "originalChecksCanonicalSHA256": "32fbc0e165267638446658ea033d5336bc98e6a330c8d44868f72fdf8510a21f",
+      "originalCheckCount": 12,
+      "originalMeaning": "Original controlled-language review closes retained177-page/28-asset scope plus seven current catalogue pages. Qualified applicable53-rule method, dictionary/POS/sense, technical noun/verb and first-dependent contexts, maintained-owner corrections and resolved findings are joined through actual current material-delta Source review. Fresh Source-unexposed delivered Reader task review and reader-facing Quality pass after actual table-loss finding and targeted corrected-delivery retest. Prior131 accepted responsibilities preserved, including original122 subset; historical negatives retained. Independent original final integration PASS; no score/linter substitutes for editorial judgment.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "4722acded92ce55539ed3d172bd62ac3dd08c37c3ee4b924c21fa3da4a895a09",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A911-05-whole-owned-diagnostic-reference-20261030",
+      "baselineRecordIndex": 132,
+      "originalRecordCanonicalSHA256": "da9e0794a7174dc70a5b8b21f882375dbd25b47e57abbe6ab5ac685798692a04",
+      "originalChecksCanonicalSHA256": "fe27217395dd274fc175574b6621aa31f51feeb927d1a22907b3a14481ccce52",
+      "originalCheckCount": 7,
+      "originalMeaning": "A911-05's additional dynamic-formation and lifecycle requirements are now materially met. The prior active runtime-config dynamic family is covered with its constructor, activation ordering, effect boundary, retry stop, safe correction, and reconciliation limit; the catalog is no longer a Buster-only diagnostic surface. Independent exact eight-dimension judgments: docs/blueprint/acceptance-evidence/a91105-errors-20261030/whole-content-verdict.json. Original dynamic runtime-config failure explicitly resolved at current Source; prior negative retained, no receipt rewritten. No other ID awarded.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "b35e89dfc02cb23144b1495c8d6e014ac85f522255f6f2fe9c6403e464a21acc",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "REF003-whole-configuration-families-and-inverse-consumers-20261031",
+      "baselineRecordIndex": 134,
+      "originalRecordCanonicalSHA256": "c04fc66ebfae596bd6fb3e91d55d3eda8d0e2d84277aab15fb75fbc5e8747283",
+      "originalChecksCanonicalSHA256": "8ed3fc0e2b0863166a0e34d77d40f7b73b17d78e92d042987f42c763b919a605",
+      "originalCheckCount": 13,
+      "originalMeaning": "Original REF-003 all supported configuration-family/default/precedence/owner/consumer/reload-or-retention/sensitivity and inverse-consumer usable-reference criterion independently accepted. Existing guarded YAML/schema/runtime composition plus finite direct-source map yields complete bounded configuration reference without promoting docs/validation fixtures or unproved payload readers. One coherent remainder replaces serial unrelated API-output role repairs.",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "The already-qualified selected two-call actionBoundary and existing input seals are finite data successors. Complete owning guards retain physical roots, purpose receipts, selectors, raw slots, rosters and no-runtime grants."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "4565fd513c279d40b41c532cbfcc71d7ba3eb16c3b6162a572e9210f1747bc5f",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "MNT003-whole-generated-configuration-defaults-maintenance-20261031",
+      "baselineRecordIndex": 136,
+      "originalRecordCanonicalSHA256": "3aea6bdf15d9321ab591cb9983bade14cad926419f7185798637e3e2691d5002",
+      "originalChecksCanonicalSHA256": "ba5f14d714ed5e8c50b2cbd3d5acb58f754ea55562a474d0c1ec404aa3ce4840",
+      "originalCheckCount": 9,
+      "originalMeaning": "Original MNT-003 complete supported generated configuration/default inventory and usable maintenance criterion independently accepted. Existing qualified family/default/precedence/consumer/inverse and schema authority coverage is maintained by precise owned generation/check pairs, explicit source-plus-inventory commit order and source-linked failure boundaries. One coherent procedure correction and native projection refresh; no new collector or global proof platform.",
+      "changedExplicitPaths": [
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "The already-qualified selected two-call actionBoundary and existing input seals are finite data successors. Complete owning guards retain physical roots, purpose receipts, selectors, raw slots, rosters and no-runtime grants."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "a5cfa1d20fde73f3de572f6d6a224f03bca671621152d4f8743e8a29d3aff6d6",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "GOV002-MNT001-MNT009-whole-product-authority-and-inverse-matrix-20261031",
+      "baselineRecordIndex": 137,
+      "originalRecordCanonicalSHA256": "282f374a713f684a85f5ff8fbbc8f648f32a7faad970c53135dd043a105c5823",
+      "originalChecksCanonicalSHA256": "c9b8f67063e137846eef1030f08953cc8375fd7a387c6d7257af1a92dbfa9e7b",
+      "originalCheckCount": 7,
+      "originalMeaning": "Original GOV-002 complete documentation-obligated product-surface inventory, MNT-001 one mechanical authority per fact, and MNT-009 complete forward/inverse source-to-documentation coverage matrix independently accepted together. Existing source-qualified84families/12groups and30typed/54manual routes retain their exact meaning and limits; bounded manual routes are not automatic product-fact authority. Usable reader lookup and actual regeneration/check/restoration close the original maintenance obligations.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "The already-qualified selected two-call actionBoundary and existing input seals are finite data successors. Complete owning guards retain physical roots, purpose receipts, selectors, raw slots, rosters and no-runtime grants.",
+          "Only the existing whole-claims input seal changes; parent/child syntax, route, actual result gate, purpose acquisition and no broader caller grants remain exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "62f4ffd1bea0e5d67f1a2c5ba55b488f2e1758fabc55d0fbc204b46aa165fee3",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A911-07-whole-source-to-documentation-map-consolidated-20261031",
+      "baselineRecordIndex": 138,
+      "originalRecordCanonicalSHA256": "17d31651ed8b5121d989a13465e585f91964d5e828c4804c7198cba534ab032d",
+      "originalChecksCanonicalSHA256": "d4bf102a39536c79cf83978fb1b0160ee360275eb08e43fd7155f1bdebbdf6d6",
+      "originalCheckCount": 4,
+      "originalMeaning": "Independent original A911-07 forward/inverse source-to-documentation map accepted from complete applicable authority assignment, orphan/inverse controls and actual restricted Reader task evidence; distinct whole-gate decision, not inherited requirement counters.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "The already-qualified selected two-call actionBoundary and existing input seals are finite data successors. Complete owning guards retain physical roots, purpose receipts, selectors, raw slots, rosters and no-runtime grants.",
+          "Only the existing whole-claims input seal changes; parent/child syntax, route, actual result gate, purpose acquisition and no broader caller grants remain exact."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "d2f4b94dfd0681e185c491874780e29ac9348070093b93fc7ae65203fa521980",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A913-02-A913-03-original-content-and-independent-topic-review-consolidation-20261031",
+      "baselineRecordIndex": 139,
+      "originalRecordCanonicalSHA256": "782016ae072a36633ce5fb3c3bd0ac2cf78d04097418807c12e09c2a6c4de77b",
+      "originalChecksCanonicalSHA256": "5af0817a9cb98b938404d92ae799d493e92d9e20912700a75b80a3a217e0873d",
+      "originalCheckCount": 4,
+      "originalMeaning": "Separate original content-six-aspect and independent-topic-review conditions adjudicated from existing complete applicable semantic/topic/actual Reader evidence. Current operational accessibility/operator/mutation obligations, metadata join and config baseline defect remain explicitly open; no blanket review rerun or requirement counter promotion.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-api-output-discovery.mjs",
+        "scripts/docs-documentation-owner-purpose-custody.mjs",
+        "scripts/docs-publication-example-assets.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded.",
+          "The already-qualified selected two-call actionBoundary and existing input seals are finite data successors. Complete owning guards retain physical roots, purpose receipts, selectors, raw slots, rosters and no-runtime grants.",
+          "Only the existing whole-claims input seal changes; parent/child syntax, route, actual result gate, purpose acquisition and no broader caller grants remain exact.",
+          "The real closed generate request and nested native document replace obsolete raw-document assumption. Publication does not execute helper/provider/engine; actual full receiver succeeds and native positive/negative controls support refusal."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "120a0a07f87c730e3e14f96e9c28af45b986b8e5ba8982334f15746a3f4d06ef",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A98-10-A98-11-A911-02-original-configuration-reference-and-precedence-consolidation-20261031",
+      "baselineRecordIndex": 140,
+      "originalRecordCanonicalSHA256": "9f46d85ab9555aaf6a96f68674cdcd4b4f98bee4bcb96418fe4eb035af6bf26f",
+      "originalChecksCanonicalSHA256": "e55969381971df12ef1443ae5e67bb17ecbfa165f5ec37d9f728562c1f022b2f",
+      "originalCheckCount": 6,
+      "originalMeaning": "Three separate original configuration inventory, effective-value precedence and recursive reference conditions independently judged PASS from complete applicable topic Source/Reader/Quality decisions and actual tests, with current native supported comparator/output join and coherent publication. No whole mutation award.",
+      "changedExplicitPaths": [
+        "docs/config/publication-example-claims.json",
+        "docs/site/reference/generated-documentation-map.json",
+        "scripts/docs-api-output-discovery.mjs"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Current claims match the real native request/template/fixed local provider/output relationship, exact anchors and parse-versus-invoked-helper boundary. Whole check vectors and historical limits remain; this is no retroactive operational success.",
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded.",
+          "The already-qualified selected two-call actionBoundary and existing input seals are finite data successors. Complete owning guards retain physical roots, purpose receipts, selectors, raw slots, rosters and no-runtime grants."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "128a064f15de66782df46606b2d27b20cb1310419474b467df33369e840858a7",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "A913-01-original-261-findings-current-metadata-consolidation-20261031",
+      "baselineRecordIndex": 141,
+      "originalRecordCanonicalSHA256": "abdd0c6aa1b0147f21e84cf3bb3fba1aa2ce8341b1e040a1b8885abfdbcc7ae0",
+      "originalChecksCanonicalSHA256": "693f775e51a44d15a50a5ad436585c5ac789e30c0f28cd252961dc7574179ef0",
+      "originalCheckCount": 5,
+      "originalMeaning": "Exact current261-ID individual findings, page/owner/check/review joins and status/completion-record consistency independently PASS at qualified metadata candidate. Only QUA-010 subsequently changes through a separate original whole actual PASS record; PUB-007 and QUA-007 remain unmet. All184 entire canonical page records remain unchanged.",
+      "changedExplicitPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "560b92dd293a8bad0e6e575b0de18ff7246bb778734d3718f3fc2822fd83d12e",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    },
+    {
+      "id": "QUA010-A9814-A91111-A91308-original-maintainability-and-distinct-drift-path-join-20261031",
+      "baselineRecordIndex": 142,
+      "originalRecordCanonicalSHA256": "ca531074db28d63d26e4f9464836cc70a82cae33801640765e6a3041f9ece7d4",
+      "originalChecksCanonicalSHA256": "113ba02eb3377e5f1250710f6f76e25845fad09cd2e0e1049ac82b8aef7edeed",
+      "originalCheckCount": 5,
+      "originalMeaning": "Separate original whole maintainability five-kind artificial surface change and three original drift gates independently PASS. Actual ten current config/flag CI catches with unchanged outputs/readers and final native0 join current event3, eight embedded Change/Remove, actual API semantic3 at same serialized path/common comparator and maintained reader mapping, plus qualified existing platform/plugin/error/shell/native controls. Related Source/recipe refusals support original CI catch, not a false per-parser semantic award.",
+      "changedExplicitPaths": [
+        "docs/site/reference/generated-documentation-map.json"
+      ],
+      "SourceAccuracy": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reasons": [
+          "Native map changes only the quality page status/appliesTo/lastVerified; all185 other page records and whole SourceSurfaceMap are exact. Existing topic source/route/owner meaning is not replaced or globally expanded."
+        ]
+      },
+      "ReaderUsability": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Prior original topic-specific practical/Reader observations remain historical and are not relabeled fresh. Qualified changed Source/metadata meaning is unchanged from the conditional judgment; actual same-Source build, all five artifact checks and affected quality-page320/1440 engineering delivery now close the previously explicit current-delivery condition. No independent human/AT or new original task execution is inferred."
+      },
+      "Quality": {
+        "judgment": "PASS_EXACT_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+        "reason": "Previously qualified finite Source/metadata/P2/18guards/native coverage/full asset receiver assertions are reused unchanged. Actual same-Source current build, five artifact checks and affected delivery are terminal PASS. Every original check/review/limit/negative/history prefix remains exact; this is preservation, not renewed historical execution or a new case/gate award."
+      },
+      "originalLimitsCanonicalSHA256": "b7a1454adabf27eaf78ae4e0804b31ce3df6172eadcc1fec7c6b847ad6eec298",
+      "allOriginalFieldsAndHistoryPrefixesPreserved": true,
+      "overall": "PASS_ORIGINAL_AFFECTED_SCOPE_PRESERVED",
+      "reviewer": "/root/reader_pipeline04_fresh_20261101",
+      "report": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+      "actualConditionClosures": "actualConditionClosures (same Source)"
+    }
+  ],
+  "adoptionConditions": [],
+  "currentBuildFiveChecksAndDelivery": "ACTUAL_TERMINAL_PASS_AT_SAME_SOURCE",
+  "evidenceReuse": [
+    "candidate-independent-verdict.json",
+    "metadata-independent-verdict.json",
+    "metadata-independent-custody-proof.json",
+    "candidate-pinned-v2-finding-resolution.json",
+    "whole-helper.json",
+    "current-three-guard-tests.json",
+    "current-native-coverage.json",
+    "current-native-assets-receiver.json",
+    "final-guard-bindings-pinned-review.json"
+  ],
+  "materialUnmetOriginalContentScope": [],
+  "retainedNegatives": [
+    "First fresh PIPE01 NOT_COMPLETE remains unchanged; later fresh2 PASS5 remains distinct MODEL task, not whole reader acceptance.",
+    "Original PLATFORM01/02/default global API/generator failures remain; selected purpose qualification does not waive raw UNKNOWN or global debts.",
+    "Prior raw P2 P1 and packaging/syntax failures remain historical; resolved P1 only at actual current guard/receiver scope.",
+    "PUB007 human AT/contrast and AP10 parity/deferred boundaries remain open."
+  ],
+  "limits": [
+    "Receipt-only finalization of same39 previously qualified actual path intersections; no semantic rerun, main mutation or check rerun.",
+    "105 unaffected records and whole original matrix inverse remain exact; every old field/check/review/limit/negative/history retained.",
+    "No new original QUALITY01 case, whole-reader gate/requirement, production/provider/Gateway, human/AT/contrast/protected-browser or AP10 award.",
+    "Root alone applies reviewer/report fields, runs unchanged original checker and handles commit/push/exactremote; those actions are not claimed complete here."
+  ],
+  "finalizedAt": "2026-11-01T05:56:42.333297+00:00",
+  "conditionalDecisionReference": {
+    "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/conditional-original-preservation-verdict.json",
+    "sha256": "88864e7335f777f02e85f350e9a845c89e6bbb29188f4c321bebf827cdb2e127"
+  },
+  "publicReport": "docs/blueprint/acceptance-evidence/reader-quality01-native-binding-20261101/affected-original-preservation-verdict.json",
+  "actualConditionClosures": [
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-build.json",
+      "sha256": "2236f5008176f39978fa0c55bee97c4d2917390c8aa991869fc5fcbd1dbef1fe",
+      "exitCode": 0,
+      "seconds": 306.7434295939747,
+      "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-artifact.json",
+      "sha256": "547e1322b0a331465fafe12052d94fa7a9882b1a8bab182a754435003a9a50a8",
+      "exitCode": 0,
+      "seconds": 53.02252999006305,
+      "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-search.json",
+      "sha256": "8b53c18dbc43f925a281e37441d631a1902923baf2869fd09ca4428addce406d",
+      "exitCode": 0,
+      "seconds": 37.78361429006327,
+      "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-source-previews.json",
+      "sha256": "b4510da68bbded7f8aa35e8b1880512d821469a41a86f1a6abefa6d078ad9682",
+      "exitCode": 0,
+      "seconds": 58.972545376978815,
+      "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-diagrams.json",
+      "sha256": "da50840e2183687fbd6258f1c9a846e8fa2613a63d45aa10425ac37183d78be5",
+      "exitCode": 0,
+      "seconds": 40.68981855700258,
+      "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-source-links.json",
+      "sha256": "f08f7d7001f0d00a99e3ee9f12413f9c644706f9dc2bb6dd0f423b3c30fcd350",
+      "exitCode": 0,
+      "seconds": 262.05301478493493,
+      "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d"
+    },
+    {
+      "path": "operations/pr13/evidence/reader-quality01-original-mapping-20261101/current-quality-delivery-check.json",
+      "sha256": "892890705e4cdad915876db9372e1e1067a3f08f56e27f2ac7c07bd89c36353d",
+      "pass": true,
+      "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+      "scope": "320/1440 exact3 authored fences,2 source-equal assets, no doc-wide overflow and keyboard skip/navigation/search; engineering only"
+    }
+  ]
+}

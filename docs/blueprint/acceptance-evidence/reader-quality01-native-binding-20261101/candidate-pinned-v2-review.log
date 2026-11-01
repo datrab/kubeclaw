@@ -1,0 +1,17 @@
+review still running: codex elapsed=60s pid=910673 cpu=0.0s/60s(0%) rss=226M state=S
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: on
+trufflehog: clean (2.1s)
+bundle: 37578 bytes; review passes: 1
+autoreview findings: 1
+[P1] Reseal the publication profile after changing its fixed input
+scripts/docs-publication-example-assets.mjs:47
+`checkedPublicationNativeValidation` treats `scripts/docs-publication-example-assets.mjs` as a fixed, byte-hashed input. The supplied profile still records its old SHA-256 (`d32279…`), while this bundle changes that file (`439ab9…`). Consequently, any qualifying publication validation that acquires this receipt fails at `fixed source/input scripts/docs-publication-example-assets.mjs` before the updated request validation can run. Update the independently maintained fixed-input/profile metadata as part of adopting this source change.
+
+overall: patch is incorrect (0.97)
+The native request/template/provider/output validation is coherent, but the accompanying fixed-input publication guard is left inconsistent with the changed asset validator, making the relevant publication validation path fail closed.

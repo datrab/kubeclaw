@@ -1,0 +1,216 @@
+{
+  "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+  "fullRetainedEvidence": "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-quality01-original-mapping-20261101",
+  "publishedFiles": [
+    {
+      "path": "affected-original-preservation-verdict.json",
+      "bytes": 130769,
+      "sha256": "1ad3880a019aee9c0dd586e95161a5c3ddc1a088f2c5e05158f49e7c8a13e997"
+    },
+    {
+      "path": "affected-original-preservation-verdict.md",
+      "bytes": 1114,
+      "sha256": "71c588fc87b0a4e37ec97960dac7e3a4cc1585e745e9a84bac41d70711e734f5"
+    },
+    {
+      "path": "candidate-independent-verdict.json",
+      "bytes": 6280,
+      "sha256": "f2a1d8a1c28d91a2e87b3bc3625d52bb6a2c0d1fd269ee32bf51e4c78c0b48b2"
+    },
+    {
+      "path": "candidate-independent-verdict.md",
+      "bytes": 1653,
+      "sha256": "fc2a7826f2a508444b55d1ea812dd7c82e4e3362b43ccf17e5c7fa73a04e7257"
+    },
+    {
+      "path": "candidate-pinned-review.log",
+      "bytes": 232,
+      "sha256": "963eec8201ae1f1f7a5dbf3fe5a0300f0545cbae6316275981f4da8c1f0c2907"
+    },
+    {
+      "path": "candidate-pinned-terminal.json",
+      "bytes": 53,
+      "sha256": "feb4d963b636c90eca8ac1460b14c4f7136a8839d951dfefb9b4a51dbc49f11a"
+    },
+    {
+      "path": "candidate-pinned-v2-finding-disposition.json",
+      "bytes": 1797,
+      "sha256": "df0bbeb7a798ca4ff987420311ddec30e24e7c192254b1d64ed83792bd06ace8"
+    },
+    {
+      "path": "candidate-pinned-v2-finding-resolution.json",
+      "bytes": 3851,
+      "sha256": "37bfaeb6dc7b490937c0dcf49cd13f91b540edbf2322294f073ca66b6b7cff16"
+    },
+    {
+      "path": "candidate-pinned-v2-review.json",
+      "bytes": 1224,
+      "sha256": "ae729259bc0034d46b459db69e41dfb90b62f7180d4efefc0b282def7689b635"
+    },
+    {
+      "path": "candidate-pinned-v2-review.log",
+      "bytes": 1214,
+      "sha256": "6d1161d4561016996b0a09f751bc9b7acaeaf0fa3dc9470bdb29591213488b58"
+    },
+    {
+      "path": "completed-review-and-author-cleanup.json",
+      "bytes": 4647,
+      "sha256": "30e6b1435e41216450a54bd4ddb7ee7428d859c231aa88cd4093710ca8889448"
+    },
+    {
+      "path": "current-artifact.json",
+      "bytes": 536,
+      "sha256": "547e1322b0a331465fafe12052d94fa7a9882b1a8bab182a754435003a9a50a8"
+    },
+    {
+      "path": "current-build.json",
+      "bytes": 536,
+      "sha256": "2236f5008176f39978fa0c55bee97c4d2917390c8aa991869fc5fcbd1dbef1fe"
+    },
+    {
+      "path": "current-diagrams.json",
+      "bytes": 536,
+      "sha256": "da50840e2183687fbd6258f1c9a846e8fa2613a63d45aa10425ac37183d78be5"
+    },
+    {
+      "path": "current-native-assets-receiver.json",
+      "bytes": 567,
+      "sha256": "62360a3fb9c6948781b0fa48950880b3d15c85c86bb5cf06c264465187215ada"
+    },
+    {
+      "path": "current-native-assets-receiver.log",
+      "bytes": 14436,
+      "sha256": "08d0e2e3cbc42b50d8da71acb7aa5f9165c28c493126dba244ad1d4844d46f4a"
+    },
+    {
+      "path": "current-native-coverage.json",
+      "bytes": 559,
+      "sha256": "082fd786be48237be7ccbfcadb90e0e637df2d8a949430b50f3fbb599d0a3087"
+    },
+    {
+      "path": "current-native-coverage.log",
+      "bytes": 162,
+      "sha256": "8b85a209ea6336a4c4f9899531f3959c92f1a54c9725905fc3116d4f563d8a41"
+    },
+    {
+      "path": "current-quality-delivery-check.json",
+      "bytes": 1578,
+      "sha256": "892890705e4cdad915876db9372e1e1067a3f08f56e27f2ac7c07bd89c36353d"
+    },
+    {
+      "path": "current-search.json",
+      "bytes": 532,
+      "sha256": "8b53c18dbc43f925a281e37441d631a1902923baf2869fd09ca4428addce406d"
+    },
+    {
+      "path": "current-source-links.json",
+      "bytes": 545,
+      "sha256": "f08f7d7001f0d00a99e3ee9f12413f9c644706f9dc2bb6dd0f423b3c30fcd350"
+    },
+    {
+      "path": "current-source-previews.json",
+      "bytes": 551,
+      "sha256": "b4510da68bbded7f8aa35e8b1880512d821469a41a86f1a6abefa6d078ad9682"
+    },
+    {
+      "path": "current-three-guard-tests-tool-result.json",
+      "bytes": 2521,
+      "sha256": "1eb2560b7db028906e278bc879f153dba06cdaf0c0d038419facbba275643970"
+    },
+    {
+      "path": "current-three-guard-tests.json",
+      "bytes": 597,
+      "sha256": "70e64ee62d9f5ebe247ccb360ff3725482c0f54e90cb7077fa680d4014081a0b"
+    },
+    {
+      "path": "final-claims-map-pinned-review.json",
+      "bytes": 451,
+      "sha256": "d75d523b912173521fa057a40d392bac8fd528ed1ee93a224febd3685f78f9f5"
+    },
+    {
+      "path": "final-claims-map-pinned-review.log",
+      "bytes": 598,
+      "sha256": "b92b8ef49302a2972f0c7c911d30a32868b3e8ea5dfdce225672b91d23d5bf73"
+    },
+    {
+      "path": "final-guard-bindings-pinned-review.json",
+      "bytes": 389,
+      "sha256": "e73793d7540d34905346b50cad9821dd338ff119cae0e3eea7d4c7288b8cf8f9"
+    },
+    {
+      "path": "final-guard-bindings-pinned-review.log",
+      "bytes": 531,
+      "sha256": "e6d951100f0961ba41c691b8a959909e034acdcf97c151d236ea773b6b86b2c0"
+    },
+    {
+      "path": "metadata-independent-custody-proof.json",
+      "bytes": 910,
+      "sha256": "e4987f26ba872d0f69f7019fb1f359f694eae19ed6a6ad1e65214d5611bcdc1e"
+    },
+    {
+      "path": "metadata-independent-verdict.json",
+      "bytes": 4235,
+      "sha256": "f805e700ca09ec19961436f289a269f6817d1c376c9bf32b6250312a7dcd05f2"
+    },
+    {
+      "path": "metadata-independent-verdict.md",
+      "bytes": 1288,
+      "sha256": "8d183b446ce1dc26ef812902304fa2dbf5c6952c9932dde9a56dc15c9e17c333"
+    },
+    {
+      "path": "metadata-manifest-and-inverse-proof.json",
+      "bytes": 8958,
+      "sha256": "dfcfe7fad81fe6746a88c70f5e5463464720c8db46b85ea4002bf544e5715fe1"
+    },
+    {
+      "path": "native-map-exact-consequence.json",
+      "bytes": 3375,
+      "sha256": "3313b004751d9ea0da77cdd36a73ba25b4e1c048fd09ac07cc27d5e658ded2e4"
+    },
+    {
+      "path": "original-preservation-adoption.json",
+      "bytes": 619,
+      "sha256": "fbf7a33075deee065887959556b5a2c534a94e30820b7b09e3045c3d6b0741a9"
+    },
+    {
+      "path": "root-coherent-integration.json",
+      "bytes": 1797,
+      "sha256": "dea954ba544b5f7a1124f012fc167f5a2030dc462540f790db30b1194efa1a94"
+    },
+    {
+      "path": "source-candidate-manifest.json",
+      "bytes": 3313,
+      "sha256": "027266910f577207cf37aa8fea7beee62b947de8b25d432b025258b2fe7f64a3"
+    },
+    {
+      "path": "whole-helper-author-native-result.json",
+      "bytes": 8231,
+      "sha256": "01578c235ec5f7dbd614563f884aa415d90053155c6b27469979f361c17c4d9d"
+    },
+    {
+      "path": "whole-helper-prism-native-result.json",
+      "bytes": 2858,
+      "sha256": "60339e27a8bad5ed70aa79753dea78560090787d4cae332916bfd1e19e014c2e"
+    },
+    {
+      "path": "whole-helper.json",
+      "bytes": 568,
+      "sha256": "15b42467095dbe8828eb136ab16980fe0af8b1912d7960a8924f38b045c6b580"
+    }
+  ],
+  "wholeHelperExecutionRevision": "eee0a35102b572140d07a6860151dc190ca778a0",
+  "wholeHelperReuse": "Four product bodies and all native helper inputbindings byteexact at actualcurrentSource; later metadata only. Actual currentcanonicalnativeguard/assetreceiver/build/fiveartifactchecks/delivery separately executed. No fresh participant yet.",
+  "remaining": "Original QUALITY01 four outcomes still need new eligible fresh participant after publication. Genuine AT/screenreader/contrast, generator chain, other distinct readers and deferredAP10 unwaived; not human-only AT redefinition.",
+  "newAcceptedGateIds": [],
+  "newAcceptedRequirementIds": [],
+  "actualOriginalChecker": {
+    "ok": true,
+    "policy": "compact-topic-review-20261019",
+    "acceptancePoints": 89,
+    "catalogueRequirements": 261,
+    "acceptedGates": 81,
+    "acceptedRequirements": 260,
+    "complete": false,
+    "contentReviewPerformedByChecker": false
+  }
+}

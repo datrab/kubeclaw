@@ -1,0 +1,199 @@
+{
+  "participantFreshnessNotAsserted": true,
+  "productionExecution": false,
+  "startedAt": "2026-11-01T05:32:42.259Z",
+  "sourceBinding": {
+    "root": "/home/node/.openclaw/workspace/operations/pr13/runtime/quality01-candidate-source-20261101",
+    "revision": "eee0a35102b572140d07a6860151dc190ca778a0",
+    "tree": "9daccc627177fe58c9cf7ec19cd9c9797bd46fa6",
+    "cleanTrackedAndUntracked": true,
+    "singleCheckout": true,
+    "inputBindings": [
+      {
+        "relativePath": "docs/site/use/workflows/examples/quality-validation.mjs",
+        "sha256": "ab862a8a86d40810994bafea3a8669cbc5969e0f40f51887e28754b7507b8503"
+      },
+      {
+        "relativePath": "docs/site/use/workflows/examples/prism-studio-flow.json",
+        "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
+      },
+      {
+        "relativePath": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+        "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5"
+      },
+      {
+        "relativePath": "contracts/prism/v1/src/digest.ts",
+        "sha256": "672099defd80766e508e40150e5d20071e00e019f13da6497d2c8754f2455b6d"
+      },
+      {
+        "relativePath": "contracts/prism/v1/schemas/engine-requests.v1.json",
+        "sha256": "e35e0074cd79026a02b297fd3c6cdeeff1a115ea6a83957e396aa42572aa3f42"
+      },
+      {
+        "relativePath": "contracts/prism/v1/schemas/engine-results.v1.json",
+        "sha256": "1e24e32119ac95f6162968d4f57fa63fe1aafdf1457c0610d7df81d6dacd80b6"
+      },
+      {
+        "relativePath": "skills/prism/engine/index.ts",
+        "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+      },
+      {
+        "relativePath": "skills/prism/engine/design-providers.ts",
+        "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+      },
+      {
+        "relativePath": "skills/prism/engine/worker-binding.ts",
+        "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+      },
+      {
+        "relativePath": "skills/prism/engine/render-operation.ts",
+        "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+      },
+      {
+        "relativePath": "skills/prism/renderer/index.ts",
+        "sha256": "a96197346ae06317f68b5dd3fd68de35bb02780af6d17e2f7ac5683f17751552"
+      },
+      {
+        "relativePath": "contracts/prism/v1/src/index.ts",
+        "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18"
+      },
+      {
+        "relativePath": "skills/prism/studio/flows.ts",
+        "sha256": "a48cd934ead75e3cffccbfe3dcf0eae307f08e8f4f6c994575a6542b82cb4159"
+      },
+      {
+        "relativePath": "skills/prism/studio/preview.ts",
+        "sha256": "cbf3b6c34c8551bd51201e1dbab869d6cedf79461cf8f3dd808ff7a67e182764"
+      },
+      {
+        "relativePath": "skills/prism/evaluation/index.ts",
+        "sha256": "3c05396fdea1ada5bcc32fa5f45215e9ff2492f73e3c3987a4c0eb994a68416a"
+      },
+      {
+        "relativePath": "skills/nova/core/src/index.ts",
+        "sha256": "2cd478afa23772e88241245bbab2f9f5bcd86fb75e216250a7a6364c19bac9b8"
+      },
+      {
+        "relativePath": "scripts/check-capability-registrations-drift.mjs",
+        "sha256": "908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2"
+      },
+      {
+        "relativePath": "docs/site/reference/capabilities.md",
+        "sha256": "bda8980cbbd060a24f1b0e7c26cd5a5ff7aee5683c9c81dbdced48a849ba7d3d"
+      }
+    ],
+    "nativeClosureBinding": "Clean exact git tree binds tracked native implementations, manifests and suite inputs; dependencies are installed separately, not asserted fresh."
+  },
+  "prism": {
+    "actualContract": true,
+    "actualStudioActionResolution": true,
+    "actualPreviewRendered": true,
+    "actualSemanticInvalidEndpointRefused": true,
+    "fixture": {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1",
+      "nativeRequestOperation": "generate"
+    },
+    "documentId": "quality-reader-design",
+    "projectId": "quality-reader-project",
+    "revision": 1,
+    "flow": {
+      "id": "review",
+      "title": "Review",
+      "start": {
+        "view": "home",
+        "state": "ready"
+      },
+      "transitions": [
+        {
+          "from": {
+            "view": "home",
+            "state": "ready"
+          },
+          "to": {
+            "view": "home",
+            "state": "default"
+          },
+          "trigger": {
+            "action": "confirm",
+            "node": "confirm-button"
+          }
+        }
+      ]
+    },
+    "target": {
+      "view": "home",
+      "state": "default"
+    },
+    "template": {
+      "kind": "native reusable component definition, not product templateId registry",
+      "id": "review-card",
+      "definitionSHA256": "b350af0729cf4269dd959a7567426abe8a32a41d109e96f023339be4ae6d4554",
+      "renderedContentObserved": true
+    },
+    "provider": {
+      "module": "skills/prism/engine/design-providers.ts",
+      "export": "DeterministicDesignProvider",
+      "sourceSHA256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+      "selection": "Fixed actual local factory of this documented validation command, not a native provider wire field or production generation",
+      "actualGenerateOperationApplied": true,
+      "requestSHA256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
+    },
+    "requestContract": {
+      "schemaId": "prism.engine-requests.v1.json#/$defs/generate",
+      "schemaDigest": "sha256:e18427462e1e6bdab1c9f204b65f1cf020a32b21084fda8fb0d00a30d0eb367f"
+    },
+    "generatedOutput": {
+      "schemaId": "https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/generate",
+      "schemaDigest": "sha256:c60a2d5e5c434abc482040443fafa30aac7d28ed6ced04efc9b3fdb9a12eacb6",
+      "resultSHA256": "54b50035bef27eac4b6db03a2ba82e34e2ce0c608fdee019e0c79230a0748f2f"
+    },
+    "renderedOutput": {
+      "schemaId": "https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/render",
+      "schemaDigest": "sha256:dfd2beb6acf288381e44afbd56241572f6e09549993e14b71dbbab2e643ff2ac",
+      "resultSHA256": "bb8dc1a6d127dc4db5777d59316048f989cd508809875b65715f529c98fb98ed",
+      "capture": false
+    },
+    "evaluation": {
+      "status": "ready",
+      "findings": []
+    },
+    "productionHostGenerate": "Unsupported: native worker requires OpenClaw agent gateway; this direct local contract validation does not dispatch it",
+    "originalReaderAcceptance": "Pending independent original-condition judgment and new eligible participant; no self-award"
+  },
+  "buster": {
+    "nativeResolution": true,
+    "registeredFixtureSource": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+    "fixtureSHA": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5",
+    "planDigest": "sha256:11f074c409646229653cd1760c5c02434796f4904199a964e7d78c8af1ba5037",
+    "nodeIds": [
+      "deployment",
+      "http/matrix-001",
+      "http/matrix-002",
+      "unit/checked-manifest",
+      "unit/unit"
+    ],
+    "suites": [
+      {
+        "instanceId": "unit",
+        "contractId": "kubeclaw.unit-suite@1",
+        "templateDigest": "sha256:3d66a1b55ee384feb2733f80227a44fc4b757a3af4d1a65fdf04fb66bb147b61"
+      }
+    ],
+    "providerExecution": false
+  },
+  "mutation": {
+    "diagnostic": "DOC_DRIFT_CAPABILITY",
+    "source": "skills/buster/plugins/direct-command/plugin.json",
+    "registration": "kubeclaw.direct-command:command",
+    "mutation": "Append state.read to provider.requiredCapabilities in owned source copy only; canonical documentation unchanged",
+    "baselineExit": 0,
+    "mutatedExit": 1,
+    "restoredExit": 0,
+    "sourceRestoredByteEqual": true,
+    "scope": "Actual named registration-documentation-drift gate, not effective runtime grant rejection; proposed exact mutation requires registration, original fixture supplies no exact mutation metadata."
+  },
+  "status": "LOCAL_NATIVE_QUALITY_VALIDATION_COMPLETE_ORIGINAL_READER_PENDING",
+  "ownedScratchRemoved": true,
+  "endedAt": "2026-11-01T05:32:43.374Z"
+}

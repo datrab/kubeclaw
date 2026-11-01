@@ -1,0 +1,81 @@
+{
+  "status": "PASS_BOUNDED_CANDIDATE_SOURCE_READER_QUALITY",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "reviewedAt": "2026-11-01T05:34:43.807036+00:00",
+  "baselineRevision": "ea325a6d115a967ea6f5e0d674f4284081b27d6c",
+  "candidatePatchSHA256": "2351218e56a86f0937974152344b4f5349956d0d827f335e54ef260c6ada83f1",
+  "completeContextSHA256": "cb634d0ccf4849107ef449e151f5c45dbc12ef74623ba86766b23559794e585e",
+  "files": [
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "oldSHA256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600",
+      "currentSHA256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1",
+      "bytes": 3856
+    },
+    {
+      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "oldSHA256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6",
+      "currentSHA256": "ab862a8a86d40810994bafea3a8669cbc5969e0f40f51887e28754b7507b8503",
+      "bytes": 16253
+    },
+    {
+      "path": "docs/site/use/workflows/quality-validation.md",
+      "oldSHA256": "af7e73137e3f32a51d082985128e25378720bc5c1c63d44396e28b52dbd36e89",
+      "currentSHA256": "d88b9747a74d76342c24b25022f1fe0c856df72e3dfc24187a2805c8ff8c97f9",
+      "bytes": 9819
+    },
+    {
+      "path": "scripts/docs-publication-example-assets.mjs",
+      "oldSHA256": "d32279f359d0d2b17a49b10601dd3f611c8fcac6b6a431a9a0495de04bf14d05",
+      "currentSHA256": "439ab9b09fa0a5e2caddfa1e885124cc224f1523aa388e97a3c08d331909b7fc",
+      "bytes": 6449
+    },
+    {
+      "path": "scripts/docs-api-output-discovery.mjs",
+      "oldSHA256": "1d54a8e5793619c9324ea9f616c6c1551cfc8a449f5599ec17e6c76fb7956406",
+      "currentSHA256": "3cfe334619607ce366dac0ee099aeda3cfc76445ece660b863bcf1d5a796653a"
+    }
+  ],
+  "judgments": {
+    "Source": "PASS",
+    "Reader": "PASS",
+    "Quality": "PASS",
+    "originalPrismFlowResolvesFirstCondition": "SUFFICIENT_DOCUMENTED_NATIVE_VALIDATION_PROCEDURE_NOT_FRESH_OUTCOME"
+  },
+  "materialFindings": [],
+  "nativeMeaning": {
+    "flow": "Native nested designDocument review flow and confirm-button transition resolve via actual validation and Studio action resolution.",
+    "template": "Native reusable components.review-card is actually referenced and consumed through renderer; exact content assertion and missing/wrong reference negatives distinguish consumption from a seed label. No templateId registry invented.",
+    "provider": "Documented validation fixes the genuine maintained DeterministicDesignProvider local factory, actually used by PrismEngine.generate through executePrismOperation and bound to exact request SHA. The fixture need not contain a nonexistent provider wire field; no arbitrary transitive catalogue obligation follows from the original criterion.",
+    "output": "Actual generate and render result schema IDs/digests and values are validated through native worker binding; real generated operation and rendered component content are observed.",
+    "productionBoundary": "Native host rejects production generate before execution and requires the OpenClaw agent gateway. Direct local library validation is not host dispatch or a bypass; capture:false is HTML template consumption, not browser/AT proof."
+  },
+  "sourceCustody": {
+    "fourOldAndNewWholeContextsAndManifestHashesMatch": true,
+    "allTwelveFullNativeOwningContextsMatchSource": true,
+    "guardWholeSourceInverseExactExceptOneSelectedUseReplacement": true,
+    "guardChange": "Existing assets-native actionBoundary substitutes closed generate-request validation plus nested designDocument validation for obsolete whole-fixture designDocument validation; unchanged limit/callers/remaining profile. No runtime/helper/provider execution granted to publication.",
+    "existingGuardReuse": "Existing installed single tracked clean physical Source, sanitized Git calls, installed helper/fixture identity and new absolute outside-Source output ancestry guards retained. Buster resolver and capability-mutation bodies retain prior bounded responsibilities."
+  },
+  "actualEvidence": [
+    "operations/pr13/evidence/reader-quality01-original-mapping-20261101/candidate/changed-prism-native-results/exact-body-execution.json",
+    "operations/pr13/evidence/reader-quality01-original-mapping-20261101/candidate/changed-prism-native-results/exact-publication-consumer-controls.json",
+    "operations/pr13/evidence/reader-quality01-original-mapping-20261101/whole-helper.json",
+    "operations/pr13/evidence/reader-quality01-original-mapping-20261101/whole-helper-result/prism-native-result.json",
+    "operations/pr13/evidence/reader-quality01-original-mapping-20261101/whole-helper-result/buster-native-result.json",
+    "operations/pr13/evidence/reader-quality01-original-mapping-20261101/whole-helper-result/capability-mutation-result.json"
+  ],
+  "observations": "Read Root actual whole-helper receipt: exit0, 1.226684599s, clean owned full physical candidate eee0a35102b572140d07a6860151dc190ca778a0, exact frozen candidate. This reviewer did not rerun it. Exact changed-body and publication positive/negative controls reviewed; no model/Gateway/jobs.",
+  "historicalNegativesRetained": [
+    "operations/pr13/evidence/reader-quality01-original-mapping-20261101/candidate/initial-whole-helper-syntax-failure.txt",
+    "operations/pr13/evidence/reader-quality01-original-mapping-20261101/candidate/native-evidence/native-result-and-limit.json",
+    "Old flow-only canonical helper did not establish original template/provider/output tuple; prior partial probe is not rewritten as complete.",
+    "First P2 launch/context packaging refusal remains retained; corrected P2 terminal result not presumed."
+  ],
+  "limits": [
+    "No new eligible fresh QUALITY01 participant outcome, original task PASS, whole reader gate, human/AT/contrast or production provider execution award.",
+    "Root must independently finish coherent existing input/fact/claim/metadata bindings and actual current publication/native receivers; this semantic actionBoundary patch does not reseal or waive them.",
+    "P2 result remains separate; this review does not presume its outcome.",
+    "Unrelated default API/generator FAIL and prior original-case negatives remain unchanged."
+  ]
+}

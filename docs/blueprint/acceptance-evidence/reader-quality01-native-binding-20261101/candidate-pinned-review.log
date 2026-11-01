@@ -1,0 +1,9 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: on
+trufflehog: clean (2.2s)
+review bundle requires more than 8 bounded passes; reduce or split the change before review

@@ -1,0 +1,12 @@
+autoreview target: local
+branch: master
+engine: codex
+model: gpt-5.6-terra
+thinking: high
+tools: on
+web_search: on
+trufflehog: clean (9.0s)
+bundle: 235151 bytes; review passes: 1
+autoreview clean: no accepted/actionable findings reported
+overall: patch is correct (0.94)
+The claims manifest reseals the updated asset validator and associated guide/fixture hashes, while the generated documentation map reflects the documented three-field metadata change. The supplied native generation evidence matches the new map hash and confirms all other page records and source-surface data remain unchanged.

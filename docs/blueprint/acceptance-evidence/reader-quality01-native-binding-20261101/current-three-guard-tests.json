@@ -1,0 +1,15 @@
+{
+  "observedAt": "2026-11-01T05:45:44.981983+00:00",
+  "argv": [
+    "node",
+    "--test",
+    "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
+    "scripts/tests/api-output-publication-child-custody.test.mjs"
+  ],
+  "exitCode": 0,
+  "testsPassed": 18,
+  "durationMsFromActualRunner": 51902.87139,
+  "scope": "Actual current affected native/YAML/child guards, unchanged parser/CI scopes reused; no global API/defaultgenerator/AT/freshcase award",
+  "rawResult": "current-three-guard-tests-tool-result.json"
+}

@@ -1,0 +1,14 @@
+{
+  "startedAt": "2026-11-01T05:46:16.089821+00:00",
+  "endedAt": "2026-11-01T05:51:22.833272+00:00",
+  "seconds": 306.7434295939747,
+  "exitCode": 0,
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-publication.mjs",
+    "build"
+  ],
+  "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+  "scope": "Actual current publication build after material Prism native fixture/helper/guide/consumer correction; no fresh reader, AT/contrast or whole-gate acceptance"
+}

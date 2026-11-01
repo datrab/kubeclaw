@@ -1,0 +1,110 @@
+{
+  "at": "2026-11-01T05:48:48.826393+00:00",
+  "activeOwnedPathUsers": [],
+  "sourceWipProposalsFullOwningContextsAndActualNativeResultsPreserved": true,
+  "onlyKnownGeneratedCloneMapDirtyAlreadySavedByteExact": true,
+  "terminalFinalP2ReportsPreserved": true,
+  "reviewContextCustody": [
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-claims-map-pinned-20261101",
+      "path": "complete-current-product-source.json",
+      "bytes": 37596,
+      "sha256": "c2e856cf733ac68604f2682ae974264bd83ed4e3ecf0612c882c7fcf0c492037"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-claims-map-pinned-20261101",
+      "path": "complete-native-prism-owners.json",
+      "bytes": 61261,
+      "sha256": "81d461028ebc8676896a05e0be62c04df95f2710ff8d779c6758c71f3e4c2563"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-claims-map-pinned-20261101",
+      "path": "current-map-ownership-context.json",
+      "bytes": 83252,
+      "sha256": "7b73b29682be18248d625039ccc375ddce5bf9b2ca0d17c9b82c0f9c67a22bf6"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-claims-map-pinned-20261101",
+      "path": "current-selected-claims-context.json",
+      "bytes": 66953,
+      "sha256": "3355a27ce89fa8f5a921735132653578a0f72868026b66e15fee3155d91a5037"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-claims-map-pinned-20261101",
+      "path": "independent-source-candidate.json",
+      "bytes": 5842,
+      "sha256": "ce581b466bee794061c36cf167faf4d2f3316331717cd88a373267ae0df68efc"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-claims-map-pinned-20261101",
+      "path": "retained-p2-finding.json",
+      "bytes": 1113,
+      "sha256": "df949a89ab2c3ff2a9da30746dd15bf5e2765e8d4e1bf185eff78b10924cff4f"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-claims-map-pinned-20261101",
+      "path": "whole-metadata-manifest-and-inverse.json",
+      "bytes": 7664,
+      "sha256": "3b968ca36374dcb8f35c1028a2d1805250cf85dd58d500d20f3eb8e69abc1c5f"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-guard-bindings-pinned-20261101",
+      "path": "complete-13-guard-owning-context.json",
+      "bytes": 142179,
+      "sha256": "8e713fd77e0e652acbcf4c4dae1b2e196e69a77013933011af56d6b4493116e5"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-guard-bindings-pinned-20261101",
+      "path": "complete-current-product-source.json",
+      "bytes": 37596,
+      "sha256": "c2e856cf733ac68604f2682ae974264bd83ed4e3ecf0612c882c7fcf0c492037"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-guard-bindings-pinned-20261101",
+      "path": "current-map-ownership-context.json",
+      "bytes": 83252,
+      "sha256": "7b73b29682be18248d625039ccc375ddce5bf9b2ca0d17c9b82c0f9c67a22bf6"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-guard-bindings-pinned-20261101",
+      "path": "current-selected-claims-context.json",
+      "bytes": 66953,
+      "sha256": "3355a27ce89fa8f5a921735132653578a0f72868026b66e15fee3155d91a5037"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-guard-bindings-pinned-20261101",
+      "path": "independent-source-candidate.json",
+      "bytes": 5842,
+      "sha256": "ce581b466bee794061c36cf167faf4d2f3316331717cd88a373267ae0df68efc"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-guard-bindings-pinned-20261101",
+      "path": "retained-p2-finding.json",
+      "bytes": 1113,
+      "sha256": "df949a89ab2c3ff2a9da30746dd15bf5e2765e8d4e1bf185eff78b10924cff4f"
+    },
+    {
+      "reviewRoot": "/home/node/.openclaw/workspace/tmp/quality01-final-guard-bindings-pinned-20261101",
+      "path": "whole-metadata-manifest-and-inverse.json",
+      "bytes": 7664,
+      "sha256": "3b968ca36374dcb8f35c1028a2d1805250cf85dd58d500d20f3eb8e69abc1c5f"
+    }
+  ],
+  "removed": [
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/quality01-final-claims-map-pinned-20261101",
+      "removedBytes": 83941814,
+      "absentAfter": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/tmp/quality01-final-guard-bindings-pinned-20261101",
+      "removedBytes": 1321467,
+      "absentAfter": true
+    },
+    {
+      "path": "/home/node/.openclaw/workspace/operations/pr13/runtime/quality01-candidate-source-20261101",
+      "removedBytes": 1647785653,
+      "absentAfter": true
+    }
+  ]
+}

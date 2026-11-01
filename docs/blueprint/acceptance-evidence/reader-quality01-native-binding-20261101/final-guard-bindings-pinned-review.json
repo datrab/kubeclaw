@@ -1,0 +1,6 @@
+{
+  "findings": [],
+  "overall_correctness": "patch is correct",
+  "overall_explanation": "The changed fixed-input hashes consistently reseal the publication validation and child-purpose profiles for the supplied current claims, generated map, fixture, helper, guide, and asset-validator sources. No actionable P0\u2013P2 defect is evident in this bundle.",
+  "overall_confidence": 0.98
+}
