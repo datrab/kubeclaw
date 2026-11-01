@@ -65,6 +65,7 @@ export class FileBusterPlanJobStore {
   readonly #maximumResultBytes: number;
   readonly #maximumResultStoreBytes: number;
   readonly #admissionLock: string;
+  #admissionQueue: Promise<unknown> = Promise.resolve();
   readonly #trustedSourceAuthority: string;
   readonly #sourceAttestationPublicKey: string | Buffer;
 
@@ -118,9 +119,19 @@ export class FileBusterPlanJobStore {
 
   validate(job: RemotePlanJobV1): void { this.#preflight(job); }
 
+  // Queue this instance before acquiring the cross-process fence. Otherwise a
+  // second local request can exhaust flock's timeout while our own first request
+  // is still reading/writing the durable store (including large source archives).
+  #withAdmission<T>(operation: () => Promise<T>): Promise<T> {
+    const locked = () => withDurableStoreLock(this.#admissionLock, operation);
+    const result = this.#admissionQueue.then(locked, locked);
+    this.#admissionQueue = result.then(() => undefined, () => undefined);
+    return result;
+  }
+
   async accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {
     this.#preflight(job);
-    return withDurableStoreLock(this.#admissionLock, () => this.#accept(job, now));
+    return this.#withAdmission(() => this.#accept(job, now));
   }
 
   async #accept(job: RemotePlanJobV1, now: string): Promise<RemotePlanStatusV1> {
@@ -216,7 +227,7 @@ export class FileBusterPlanJobStore {
 
   async complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {
     validatePipelineTestGateContract('remotePlanResult', result);
-    return withDurableStoreLock(this.#admissionLock, () => this.#complete(jobId, result, now));
+    return this.#withAdmission(() => this.#complete(jobId, result, now));
   }
 
   async #complete(jobId: string, result: RemotePlanResultV1, now: string): Promise<RemotePlanStatusV1> {
@@ -265,7 +276,7 @@ export class FileBusterPlanJobStore {
     // Own the complete intent before validation or asynchronous lock acquisition.
     const intent = structuredClone(inputIntent);
     assertCompactionIntent(intent);
-    return withDurableStoreLock(this.#admissionLock, async () => {
+    return this.#withAdmission(async () => {
       const current = await this.get(intent.jobId);
       if (current.payload.schemaVersion === 'buster-plan-job-compacted-record.v1') {
         if (current.payload.compaction.intentDigest !== compactionDigest(intent)) throw new Error('BUSTER_COMPACTION_INTENT_CONFLICT');

@@ -57,5 +57,33 @@ test('result admission reserves capacity across competing processes and reconstr
     assert.equal((await reconstructed.records()).length, 2);
     assert.equal((await reconstructed.accept(first, new Date().toISOString())).jobId, first.jobId, 'accepted identity remains readable at capacity');
     await assert.rejects(() => reconstructed.accept(job('reservation:fourth'), new Date().toISOString()), /RESULT_CAPACITY_EXCEEDED/);
+    // A slow local holder must not make another request in this same store
+    // fail at flock's five-second cross-process contention deadline.
+    let entered!: () => void, release!: () => void;
+    const holding = new Promise<void>(resolve => { entered = resolve; });
+    const released = new Promise<void>(resolve => { release = resolve; });
+    class SlowStore extends FileBusterPlanJobStore {
+      first = true;
+      override async records() {
+        if (this.first) { this.first = false; entered(); await released; }
+        return super.records();
+      }
+    }
+    const slow = new SlowStore(state, options);
+    const firstRead = slow.accept(first, new Date().toISOString());
+    await holding;
+    const secondRead = slow.accept(first, new Date().toISOString());
+    // Observe rejections immediately so the old implementation fails the
+    // assertion, rather than leaking an unhandled rejection while we wait.
+    const outcomes = Promise.allSettled([firstRead, secondRead]);
+    try { await new Promise(resolve => setTimeout(resolve, 5800)); }
+    finally { release(); }
+    for (const outcome of await outcomes) {
+      assert.equal(outcome.status, 'fulfilled', outcome.status === 'rejected' ? String(outcome.reason) : undefined);
+      if (outcome.status === 'fulfilled') assert.equal(outcome.value.jobId, first.jobId);
+    }
+    await assert.rejects(() => slow.accept(job('reservation:fifth'), new Date().toISOString()), /RESULT_CAPACITY_EXCEEDED/);
+    assert.equal((await slow.accept(first, new Date().toISOString())).jobId, first.jobId, 'rejection does not poison the local queue');
+
   } finally { fs.rmSync(root, { recursive: true, force: true }); }
 });
