@@ -1,0 +1,12 @@
+{
+  "at": "2026-11-01T06:13:09.299702+00:00",
+  "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+  "sourceCheckoutCleanBefore": true,
+  "activeOwnedCwdExeFdUsers": [],
+  "helperOwnedScratchRemovedActual": true,
+  "allActualOutputsAndIndependentCustodyRetainedOutsideTmp": true,
+  "removedOwnedClone": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-quality01-fresh-source-20261101",
+  "removedBytes": 1655707961,
+  "absentAfter": true,
+  "sharedRuntimeSourceWipAndEvidencePreserved": true
+}

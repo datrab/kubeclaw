@@ -1,0 +1,49 @@
+{
+  "custodyType": "retrospective transcription from this participant existing native conversation context, not contemporaneous filesystem raw capture",
+  "recordedAt": "2026-11-01T06:06:30.070867+00:00",
+  "sourceRereadPerformed": false,
+  "originalTool": "functions.exec -> tools.exec_command",
+  "originalExecSource": "text(await tools.exec_command({cmd:\"cat docs/site/README.md\",\"workdir\":\"/home/node/.openclaw/workspace/operations/pr13/runtime/reader-quality01-fresh-source-20261101\",\"max_output_tokens\":6000}));",
+  "originalCommandRequest": {
+    "cmd": "cat docs/site/README.md",
+    "workdir": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-quality01-fresh-source-20261101",
+    "max_output_tokens": 6000
+  },
+  "observedToolResultMetadata": {
+    "chunk_id": "c52275",
+    "wall_time_seconds": 1.019e-05,
+    "exit_code": 0,
+    "original_token_count": 1197
+  },
+  "originalAbsoluteTimestamp": null,
+  "timestampLimit": "No absolute timestamp is exposed for the initial native tool call/result in my visible conversation context. The call precedes the Prism/Buster/extension combined read (chunk a6a662), route search (chunk bf84ad), and guide read (chunk 7b63fe). Do not assign the 02 reread timestamp to this original call.",
+  "originalToolCallId": null,
+  "toolIdLimit": "Visible context exposes result chunk c52275, not a separate native call UUID.",
+  "observedOutputBeginning": "# KubeClaw Documentation\n\nStatus: implemented\nAudience: operator, plugin author, maintainer, architecture reader\nOwner: documentation\nEvidence: packaging/runtime/package-ownership.json\nApplies to: current supported release\nLast verified: generated during publication\n",
+  "observedOutputEnding": "- [Decisions](decisions/README.md) records enduring constraints, their rationale and approval evidence.\n",
+  "outputLimit": "The complete initial README output remains visible in this participant conversation context, untruncated. This JSON transcribes only the beginning/end and metadata, not a byte-for-byte exported native transcript. Full contemporaneous native transport envelope has not been independently recovered. 02-entry.stdout is an explicitly later reread, not initial raw custody.",
+  "chronologicalOriginalCalls": [
+    {
+      "command": "cat docs/site/README.md",
+      "chunk": "c52275",
+      "exit": 0
+    },
+    {
+      "command": "cat docs/site/use/prism-studio.md docs/site/understand/buster.md docs/site/extend/README.md",
+      "chunk": "a6a662",
+      "exit": 0,
+      "display": "truncated"
+    },
+    {
+      "command": "rg -n 'prism-studio-flow|buster-fixture-matrix|undeclared|documentation-drift|validate' docs/site/use/workflows/README.md docs/site/extend/prism.md docs/site/extend/buster.md docs/site/understand/buster.md",
+      "chunk": "bf84ad",
+      "exit": 2
+    },
+    {
+      "command": "Python capture of cat docs/site/use/workflows/quality-validation.md into 01-quality-guide.raw and .command.json",
+      "chunk": "7b63fe",
+      "exit": 0
+    }
+  ],
+  "unchangedOriginalEvidence": true
+}

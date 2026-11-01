@@ -1,0 +1,13 @@
+{
+  "freshContext": true,
+  "priorContribution": false,
+  "finishedAt": "2026-11-01T06:04:21.542440+00:00",
+  "outcomes": {
+    "prism-flow-resolves": "PASS",
+    "buster-suite-resolves": "PASS",
+    "result-authority-correct": "PASS",
+    "extension-validation-fails-when-mutated": "PASS"
+  },
+  "scope": "Independent local documentation/native-validation reader outcome only; no whole-gate or live acceptance claim",
+  "report": "reader-outcomes.md"
+}

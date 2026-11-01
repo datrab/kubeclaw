@@ -1,0 +1,565 @@
+{
+  "status": "PASS_ORIGINAL_FOUR_OUTCOMES_MODEL_PARTICIPANT_ONLY",
+  "reviewer": "/root/reader_pipeline04_fresh_20261101",
+  "adjudicatedAt": "2026-11-01T06:08:12.163246+00:00",
+  "taskId": "READER-QUALITY-01",
+  "participant": "/root/reader_quality01_fresh_20261101",
+  "participantKind": "NEW_ISOLATED_MODEL_NOT_HUMAN",
+  "sourceRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+  "publicReachabilityVerifiedAtRemote": "b853fe30cb017794f10a770e06e728cde905df13",
+  "originalTaskExactVersionedFixtureMatch": true,
+  "outcomes": [
+    {
+      "id": "prism-flow-resolves",
+      "verdict": "PASS",
+      "originalPassCondition": "The documented Prism validation resolves the exact flow, template, provider, and output identities from the registered fixture.",
+      "observed": {
+        "fixture": {
+          "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+          "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1",
+          "nativeRequestOperation": "generate"
+        },
+        "documentId": "quality-reader-design",
+        "projectId": "quality-reader-project",
+        "inputRevision": 1,
+        "flow": {
+          "id": "review",
+          "title": "Review",
+          "start": {
+            "view": "home",
+            "state": "ready"
+          },
+          "transitions": [
+            {
+              "from": {
+                "view": "home",
+                "state": "ready"
+              },
+              "to": {
+                "view": "home",
+                "state": "default"
+              },
+              "trigger": {
+                "action": "confirm",
+                "node": "confirm-button"
+              }
+            }
+          ]
+        },
+        "actionTarget": {
+          "view": "home",
+          "state": "default"
+        },
+        "template": {
+          "kind": "native reusable component definition, not product templateId registry",
+          "id": "review-card",
+          "definitionSHA256": "b350af0729cf4269dd959a7567426abe8a32a41d109e96f023339be4ae6d4554",
+          "renderedContentObserved": true
+        },
+        "provider": {
+          "module": "skills/prism/engine/design-providers.ts",
+          "export": "DeterministicDesignProvider",
+          "sourceSHA256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145",
+          "selection": "Fixed actual local factory of this documented validation command, not a native provider wire field or production generation",
+          "actualGenerateOperationApplied": true,
+          "requestSHA256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
+        },
+        "requestContract": {
+          "schemaId": "prism.engine-requests.v1.json#/$defs/generate",
+          "schemaDigest": "sha256:e18427462e1e6bdab1c9f204b65f1cf020a32b21084fda8fb0d00a30d0eb367f"
+        },
+        "generatedOutput": {
+          "schemaId": "https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/generate",
+          "schemaDigest": "sha256:c60a2d5e5c434abc482040443fafa30aac7d28ed6ced04efc9b3fdb9a12eacb6",
+          "resultSHA256": "54b50035bef27eac4b6db03a2ba82e34e2ce0c608fdee019e0c79230a0748f2f"
+        },
+        "renderedOutput": {
+          "schemaId": "https://kubeclaw.dev/contracts/prism/engine-results.v1.json#/$defs/render",
+          "schemaDigest": "sha256:dfd2beb6acf288381e44afbd56241572f6e09549993e14b71dbbab2e643ff2ac",
+          "resultSHA256": "bb8dc1a6d127dc4db5777d59316048f989cd508809875b65715f529c98fb98ed",
+          "capture": false
+        }
+      },
+      "reason": "The participant actually invoked the named installed helper, then read and explained exact typed native generation/render records. Real local provider call applies one node.props.set operation from revision1 to2; rendered HTML contains the actual referenced component content and confirm action. Exact fixture/provider/request/output bindings match Source and retained output digests, not an unresolved label or invented registry. Original condition asks documented validation resolution, not production dispatch.",
+      "evidence": [
+        "09-native.json",
+        "10-0.json",
+        "10-1.json",
+        "10-2.json",
+        "10-3.json",
+        "native-results/author-native-result.json",
+        "native-results/prism-native-result.json",
+        "native-results/prism-generated-result.json",
+        "native-results/prism-rendered-result.json",
+        "native-results/prism-preview.html",
+        "reader-outcomes.md#1-prism-flow-resolves-pass-local-documented-validation-only"
+      ]
+    },
+    {
+      "id": "buster-suite-resolves",
+      "verdict": "PASS",
+      "originalPassCondition": "The documented Buster command resolves the exact suite, provider, fixture, report, matrix, and artifact identities from the registered fixture.",
+      "observed": {
+        "fixture": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+        "fixtureSHA256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5",
+        "planId": "plan:quality01:author",
+        "runId": "run:quality01:author",
+        "planDigest": "sha256:11f074c409646229653cd1760c5c02434796f4904199a964e7d78c8af1ba5037",
+        "registrySnapshotDigest": "sha256:c8f12329923dcd47af3a8e14ef171be9e77404986c5f43d875bd614f7a543867",
+        "suites": [
+          {
+            "instanceId": "unit",
+            "contractId": "kubeclaw.unit-suite@1",
+            "templateDigest": "sha256:3d66a1b55ee384feb2733f80227a44fc4b757a3af4d1a65fdf04fb66bb147b61"
+          }
+        ],
+        "nodes": [
+          {
+            "id": "deployment",
+            "kind": "fixture",
+            "provider": {
+              "packageId": "kubeclaw.kubernetes-fixture",
+              "packageVersion": "1.0.0",
+              "contentDigest": "sha256:920a383102e562e7e310b6ce79424dd11a1bc2b3ebf36d271d3b22008749c72a",
+              "registrationId": "deployment",
+              "contractId": "kubeclaw.kubernetes-fixture@1"
+            },
+            "reportAdapters": [],
+            "configuration": {
+              "schemaVersion": "provider-configuration.v1",
+              "contractId": "kubeclaw.kubernetes-fixture@1",
+              "schemaDigest": "sha256:b5bd127d9f7167d5cbb2c576f40ef6881fef16f12552a955e70576c7c730b443",
+              "values": {
+                "image": {
+                  "reference": "registry-local.kubeclaw.svc.cluster.local:5001/apps/web@sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+                  "digest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+                },
+                "serviceName": "web",
+                "servicePort": 8080,
+                "namespacePrefix": "test",
+                "retention": {
+                  "mode": "delete",
+                  "seconds": 1800
+                },
+                "readinessTimeoutSeconds": 120,
+                "secretReferences": []
+              }
+            },
+            "variation": {}
+          },
+          {
+            "id": "http/matrix-001",
+            "kind": "test",
+            "provider": {
+              "packageId": "kubeclaw.http",
+              "packageVersion": "1.0.0",
+              "contentDigest": "sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b",
+              "registrationId": "request",
+              "contractId": "kubeclaw.http@1"
+            },
+            "reportAdapters": [],
+            "configuration": {
+              "schemaVersion": "provider-configuration.v1",
+              "contractId": "kubeclaw.http@1",
+              "schemaDigest": "sha256:56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f",
+              "values": {
+                "method": "GET",
+                "expectedStatuses": [
+                  200
+                ],
+                "maximumResponseBytes": 1048576,
+                "requestTimeoutMs": 10000,
+                "path": "/health",
+                "accept": "*/*"
+              }
+            },
+            "variation": {
+              "path": "/health"
+            }
+          },
+          {
+            "id": "http/matrix-002",
+            "kind": "test",
+            "provider": {
+              "packageId": "kubeclaw.http",
+              "packageVersion": "1.0.0",
+              "contentDigest": "sha256:92c8588cec754427a00d1d0963e0863302a8cd975e2574230daedb4c6182140b",
+              "registrationId": "request",
+              "contractId": "kubeclaw.http@1"
+            },
+            "reportAdapters": [],
+            "configuration": {
+              "schemaVersion": "provider-configuration.v1",
+              "contractId": "kubeclaw.http@1",
+              "schemaDigest": "sha256:56553d307bebc7cc556ba66d35efeec08ba3d9825197df4b7cb0848db8b15e3f",
+              "values": {
+                "method": "GET",
+                "expectedStatuses": [
+                  200
+                ],
+                "maximumResponseBytes": 1048576,
+                "requestTimeoutMs": 10000,
+                "path": "/ready",
+                "accept": "*/*"
+              }
+            },
+            "variation": {
+              "path": "/ready"
+            }
+          },
+          {
+            "id": "unit/checked-manifest",
+            "kind": "test",
+            "provider": {
+              "packageId": "kubeclaw.direct-command",
+              "packageVersion": "1.0.0",
+              "contentDigest": "sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675",
+              "registrationId": "command",
+              "contractId": "kubeclaw.direct-command@1"
+            },
+            "reportAdapters": [
+              {
+                "adapterId": "junit",
+                "format": "junit",
+                "contractVersion": 1,
+                "package": {
+                  "packageId": "kubeclaw.junit-report",
+                  "packageVersion": "1.0.0",
+                  "contentDigest": "sha256:752375a1b7f10da48ee60c5e8f6baf745c24beb5e7b920ed80d0499cc46f22b9"
+                }
+              }
+            ],
+            "configuration": {
+              "schemaVersion": "provider-configuration.v1",
+              "contractId": "kubeclaw.direct-command@1",
+              "schemaDigest": "sha256:8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+              "values": {
+                "executable": "manifest-check",
+                "args": [
+                  "k8s/deployment.yaml",
+                  "build/checked.yaml"
+                ],
+                "workingDirectory": ".",
+                "resultMode": "exit-code",
+                "artifacts": [
+                  {
+                    "id": "checked-manifest",
+                    "path": "build/checked.yaml",
+                    "mediaType": "application/vnd.kubeclaw.checked-kubernetes-yaml"
+                  }
+                ]
+              }
+            },
+            "variation": {}
+          },
+          {
+            "id": "unit/unit",
+            "kind": "test",
+            "provider": {
+              "packageId": "kubeclaw.direct-command",
+              "packageVersion": "1.0.0",
+              "contentDigest": "sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675",
+              "registrationId": "command",
+              "contractId": "kubeclaw.direct-command@1"
+            },
+            "reportAdapters": [
+              {
+                "adapterId": "junit",
+                "format": "junit",
+                "contractVersion": 1,
+                "package": {
+                  "packageId": "kubeclaw.junit-report",
+                  "packageVersion": "1.0.0",
+                  "contentDigest": "sha256:752375a1b7f10da48ee60c5e8f6baf745c24beb5e7b920ed80d0499cc46f22b9"
+                }
+              }
+            ],
+            "configuration": {
+              "schemaVersion": "provider-configuration.v1",
+              "contractId": "kubeclaw.direct-command@1",
+              "schemaDigest": "sha256:8ea9a179b44f3bdcdeb0c9f251caf62757c3bf6a93724c993e3b51f23dc35ef8",
+              "values": {
+                "executable": "npm",
+                "args": [
+                  "test",
+                  "--",
+                  "--reporter=junit"
+                ],
+                "workingDirectory": ".",
+                "resultMode": "junit-required",
+                "reports": [
+                  {
+                    "id": "unit",
+                    "format": "junit",
+                    "path": "reports/unit.xml",
+                    "mediaType": "application/junit+xml"
+                  }
+                ]
+              }
+            },
+            "variation": {}
+          }
+        ],
+        "links": [
+          {
+            "schemaVersion": "typed-link.v1",
+            "kind": "artifact",
+            "from": {
+              "nodeId": "unit/checked-manifest",
+              "output": "artifact-1"
+            },
+            "to": {
+              "nodeId": "deployment",
+              "input": "checked-manifest"
+            },
+            "mediaType": "application/vnd.kubeclaw.checked-kubernetes-yaml"
+          },
+          {
+            "schemaVersion": "typed-link.v1",
+            "kind": "value",
+            "from": {
+              "nodeId": "deployment",
+              "output": "deployment"
+            },
+            "to": {
+              "nodeId": "http/matrix-001",
+              "input": "deployment"
+            },
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+          },
+          {
+            "schemaVersion": "typed-link.v1",
+            "kind": "value",
+            "from": {
+              "nodeId": "deployment",
+              "output": "deployment"
+            },
+            "to": {
+              "nodeId": "http/matrix-002",
+              "input": "deployment"
+            },
+            "schemaId": "kubeclaw.kubernetes-deployment-fixture@1"
+          }
+        ]
+      },
+      "reason": "Participant read full actual native frozen5node/3link plan and explicitly identified unit suite/template; direct-command and HTTP providers; deployment fixture; JUnit report/adapter; /health and /ready matrix expansions; checked-manifest artifact identity/path/media and typed dependency links. Placeholder image/executable are honestly not executed or admitted. Helper-chosen author labels are plan IDs, not participant provenance.",
+      "evidence": [
+        "05-fixtures.json",
+        "09-native.json",
+        "10-4.json",
+        "native-results/buster-native-result.json",
+        "native-results/buster-resolved-plan.json",
+        "reader-outcomes.md#2-buster-suite-resolves-pass-resolution-only"
+      ]
+    },
+    {
+      "id": "result-authority-correct",
+      "verdict": "PASS",
+      "originalPassCondition": "The participant identifies the signed or otherwise authoritative result record and does not treat provider output alone as acceptance.",
+      "observed": "Participant identifies Prism Control-admitted revision, bound quality result/warnings/approval and published Baseline Bundle approvalId/revision+digest/bundleDigest/currentness; Buster admitted job+terminal normalized result with plan/provider/source/receipts and exact evidence import; Nova computes gate decision and owns terminal pipeline journal. Provider output, preview, ready evaluation, stdout, exit0, JUnit/HTTP and completed status alone are explicitly not acceptance. No live signed approval/result is invented.",
+      "reason": "Original identification/explanation duty is met from participant interpretation of docs and real local records; it does not require manufacturing a live signed record for the local validation task. Local deterministic generation is acknowledged and does not become approval.",
+      "evidence": [
+        "reader-outcomes.md#3-result-authority-correct-pass-authority-identified-no-live-record-invented",
+        "01-quality-guide.raw",
+        "03-initial-reading.stdout",
+        "11-buster-guide.stdout"
+      ]
+    },
+    {
+      "id": "extension-validation-fails-when-mutated",
+      "verdict": "PASS",
+      "originalPassCondition": "The undeclared-capability mutation is rejected by the named validation gate with its registered documentation-drift diagnostic.",
+      "observed": {
+        "diagnostic": "DOC_DRIFT_CAPABILITY",
+        "source": "skills/buster/plugins/direct-command/plugin.json",
+        "registration": "kubeclaw.direct-command:command",
+        "mutation": "Append state.read to provider.requiredCapabilities in owned source copy only; canonical documentation unchanged",
+        "baselineExit": 0,
+        "mutatedExit": 1,
+        "restoredExit": 0,
+        "sourceRestoredByteEqual": true,
+        "scope": "Actual named registration-documentation-drift gate, not effective runtime grant rejection; proposed exact mutation requires registration, original fixture supplies no exact mutation metadata."
+      },
+      "reason": "Participant selected the guide\u2019s owned copied-manifest extension control, read actual raw baseline/refusal/restoration logs and correctly interpreted the named registration documentation-drift subgate. state.read addition to direct-command:command requiredCapabilities is refused with exact DOC_DRIFT_CAPABILITY registration namespace/required/provided mismatch;0/1/0 and byte restoration are observed. No runtime state.read or global larger capability-suite execution is claimed. Original fixture names the fault but supplies no further exact mutation metadata; the canonical documented registered-provider mutation is the concrete route, not an invented universal capability obligation.",
+      "evidence": [
+        "09-native.json",
+        "10-5.json",
+        "12-mutation-raw.json",
+        "12-mutation-raw.stdout",
+        "native-results/capability-mutation-result.json",
+        "native-results/capability-baseline.log",
+        "native-results/capability-mutated.log",
+        "native-results/capability-restored.log",
+        "reader-outcomes.md#4-extension-validation-fails-when-mutated-pass-documentation-drift-gate-not-runtime-refusal"
+      ]
+    }
+  ],
+  "unmetOriginalConditions": [],
+  "originalConditions": {
+    "freshnessAndRole": {
+      "verdict": "PASS",
+      "basis": "Registered new forkNONE model specialist with priorContribution:false; no author involvement in its task. Registration and participant report retained. This reviewer is not described as the fresh participant."
+    },
+    "startPath": {
+      "verdict": "PASS_WITH_EXPLICIT_CUSTODY_LIMIT",
+      "basis": "Original chronology/report already describe initial README start. Supplemental transcription from participant existing native context identifies first cat docs/site/README.md, chunk c52275 exit0, before combined read and guide01. Numbered02 is explicitly a later reread, not first-read timestamp. No contradictory actual source reading observed.",
+      "evidence": [
+        "chronology.md",
+        "reader-outcomes.md",
+        "initial-read-existing-tool-provenance.json",
+        "initial-read-existing-tool-provenance.md",
+        "02-entry.stdout"
+      ],
+      "custodyLimit": "Supplement is retrospective participant transcription, not independently recovered full native transport. Initial absolute timestamp/call UUID unavailable; no signed third-party timestamp or invented raw custody asserted. Original criterion does not require such a new condition."
+    },
+    "time": {
+      "verdict": "PASS",
+      "registeredAt": "2026-11-01T06:02:39.392014+00:00",
+      "finishedAt": "2026-11-01T06:04:21.542440+00:00",
+      "elapsedSeconds": 102.150426,
+      "originalLimitSeconds": 7200,
+      "clockReset": false
+    },
+    "sourceAndAllowedAssistance": {
+      "verdict": "PASS_AT_RETAINED_RECORD_SCOPE",
+      "basis": "Actual recorded direct reads/searches remain docs/site/canonical fixtures and retained results from named documented command; status/version/Source guards are documented prerequisites. No package README, review, migration or chat content read by participant observed. Helper\u2019s native implementation imports are execution of named command, not forbidden participant implementation reading. Host supplied clean physical public Source/locked deps/identity only; no Root procedural hints or output interpretation reported.",
+      "sourceBinding": {
+        "root": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-quality01-fresh-source-20261101",
+        "revision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+        "tree": "eb6168987f7abe6f36ee2af59861016c0f4e0186",
+        "cleanTrackedAndUntracked": true,
+        "singleCheckout": true,
+        "inputBindings": [
+          {
+            "relativePath": "docs/site/use/workflows/examples/quality-validation.mjs",
+            "sha256": "ab862a8a86d40810994bafea3a8669cbc5969e0f40f51887e28754b7507b8503"
+          },
+          {
+            "relativePath": "docs/site/use/workflows/examples/prism-studio-flow.json",
+            "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
+          },
+          {
+            "relativePath": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+            "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5"
+          },
+          {
+            "relativePath": "contracts/prism/v1/src/digest.ts",
+            "sha256": "672099defd80766e508e40150e5d20071e00e019f13da6497d2c8754f2455b6d"
+          },
+          {
+            "relativePath": "contracts/prism/v1/schemas/engine-requests.v1.json",
+            "sha256": "e35e0074cd79026a02b297fd3c6cdeeff1a115ea6a83957e396aa42572aa3f42"
+          },
+          {
+            "relativePath": "contracts/prism/v1/schemas/engine-results.v1.json",
+            "sha256": "1e24e32119ac95f6162968d4f57fa63fe1aafdf1457c0610d7df81d6dacd80b6"
+          },
+          {
+            "relativePath": "skills/prism/engine/index.ts",
+            "sha256": "8502a5bf60bc3b352556ed72464f743581b67fd4e70d70d3734a832c25a9ad16"
+          },
+          {
+            "relativePath": "skills/prism/engine/design-providers.ts",
+            "sha256": "8f5e806732b36779182d5b9e7e025927a6a9ff5898866d876880d382e4d67145"
+          },
+          {
+            "relativePath": "skills/prism/engine/worker-binding.ts",
+            "sha256": "c7480a44ddfcac32fea7c95a02560b4940dc86509b0463aea951584f6b8f659e"
+          },
+          {
+            "relativePath": "skills/prism/engine/render-operation.ts",
+            "sha256": "63b95de9640f47bce2b04e929232e0f7dd617c11ba08152f8e428db6a601d501"
+          },
+          {
+            "relativePath": "skills/prism/renderer/index.ts",
+            "sha256": "a96197346ae06317f68b5dd3fd68de35bb02780af6d17e2f7ac5683f17751552"
+          },
+          {
+            "relativePath": "contracts/prism/v1/src/index.ts",
+            "sha256": "441cbe7b6ad9c471c3d8144de958497377d3785cff53904ac45943cfaf4a7c18"
+          },
+          {
+            "relativePath": "skills/prism/studio/flows.ts",
+            "sha256": "a48cd934ead75e3cffccbfe3dcf0eae307f08e8f4f6c994575a6542b82cb4159"
+          },
+          {
+            "relativePath": "skills/prism/studio/preview.ts",
+            "sha256": "cbf3b6c34c8551bd51201e1dbab869d6cedf79461cf8f3dd808ff7a67e182764"
+          },
+          {
+            "relativePath": "skills/prism/evaluation/index.ts",
+            "sha256": "3c05396fdea1ada5bcc32fa5f45215e9ff2492f73e3c3987a4c0eb994a68416a"
+          },
+          {
+            "relativePath": "skills/nova/core/src/index.ts",
+            "sha256": "2cd478afa23772e88241245bbab2f9f5bcd86fb75e216250a7a6364c19bac9b8"
+          },
+          {
+            "relativePath": "scripts/check-capability-registrations-drift.mjs",
+            "sha256": "908591ed21236080637d3809778976cd7b7992f62360d84eb05972c4ee8a8cc2"
+          },
+          {
+            "relativePath": "docs/site/reference/capabilities.md",
+            "sha256": "bda8980cbbd060a24f1b0e7c26cd5a5ff7aee5683c9c81dbdced48a849ba7d3d"
+          }
+        ],
+        "nativeClosureBinding": "Clean exact git tree binds tracked native implementations, manifests and suite inputs; dependencies are installed separately, not asserted fresh."
+      },
+      "evidence": [
+        "registered-task.json",
+        "01-quality-guide.command.json",
+        "02-entry.json",
+        "03-initial-reading.json",
+        "04-route-search.json",
+        "05-fixtures.json",
+        "06-node.json",
+        "07-head.json",
+        "08-status.json",
+        "09-native.json",
+        "10-0.json",
+        "10-1.json",
+        "10-2.json",
+        "10-3.json",
+        "10-4.json",
+        "10-5.json",
+        "11-buster-guide.json",
+        "12-mutation-raw.json",
+        "13-final-status.json"
+      ]
+    },
+    "failureThreshold": {
+      "verdict": "NOT_TRIGGERED",
+      "unresolvedIdentity": false,
+      "wrongAuthority": false,
+      "acceptedMutation": false,
+      "forbiddenSourceObserved": false,
+      "deadlineExceeded": false
+    }
+  },
+  "preservedSurprisesAndNegatives": [
+    "Initial combined documentation display truncated; participant retained complete rereads03/11. No truncated display is represented as complete native transcript custody.",
+    "Route search included nonexistent docs/site/extend/prism.md and exited2; absent path yielded no content, not a successful search or hidden product refusal.",
+    "Numbered evidence persistence order differs from initial reading order; retrospective initial-read supplement clearly labels its limited provenance.",
+    "Empty helper stdout/stderr and exit0 alone are not acceptance; independent decision uses retained typed artifacts and participant explanations.",
+    "Helper reports participantFreshnessNotAsserted/originalReaderPending and filenames/plan IDs contain author: these are generic helper limits/labels, not evidence the fresh actor authored it or a self-award.",
+    "Global wording no providerexecution cannot mean no local provider method call: real Prism DeterministicDesignProvider.propose executes locally. Detailed participant report explicitly identifies real local generation; Buster providerExecution:false and absent live/production dispatch remain correct. Actor wording is not rewritten.",
+    "Previous author flow-only/partial mapping and syntax/P2 failures remain historical. First PIPE01 fresh NOT_COMPLETE and unrelated default API/generator/platform/AT/AP10 negatives are not altered by this separate original task."
+  ],
+  "independentEvidenceVerification": {
+    "all18ActualNativeSourceInputHashesMatchVersionedSource": true,
+    "bothCanonicalFixtureHashesMatch": true,
+    "typedGeneratedRenderedWholeObjectDigestsMatch": true,
+    "retainedRenderedHTMLMatches": true,
+    "nativeCommandExit0AndEmptyStreams": true,
+    "sourceCleanBeforeAndAfter": true,
+    "ownedScratchRemovedObserved": true,
+    "custodyProof": "independent-native-custody.json"
+  },
+  "separateEvidenceNotUsedToSupplyMissingReaderOutcomes": "Prior Source/P2/build/artifact/native author qualifications identify documented semantics only. This outcome decision rests on fresh participant command/results and independent explanation, not copied author outcomes.",
+  "limits": [
+    "Only original READER-QUALITY-01 four outcomes, NEW MODEL participant; not human, AT/contrast/screenreader/protected browser or whole four-reader gate.",
+    "No live production Prism provider/Gateway/Control approval/Baseline Bundle, Buster provider/job/signed result, Kubernetes/HTTP/deployment or runtime grant execution award.",
+    "No rerun of helper/model/Core/jobs/checks and no main/matrix mutation by this reviewer.",
+    "Root owns registration, cleanup inspection, unchanged original checker and commit/push; no future actions presumed."
+  ]
+}

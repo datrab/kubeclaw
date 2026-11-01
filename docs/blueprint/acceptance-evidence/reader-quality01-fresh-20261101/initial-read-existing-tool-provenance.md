@@ -1,0 +1,9 @@
+# Existing initial-read provenance clarification
+
+This is a retrospective transcription/attestation from my still-visible native conversation context, not contemporaneous raw filesystem capture or a new task execution. I did not reread README or rewrite existing evidence.
+
+My first Source tool request was functions.exec calling tools.exec_command with cmd `cat docs/site/README.md`, workdir `/home/node/.openclaw/workspace/operations/pr13/runtime/reader-quality01-fresh-source-20261101`, max_output_tokens 6000. The actual original returned result has chunk_id `c52275`, wall_time_seconds 0.00001019, exit_code 0, original_token_count 1197. Its full README output is visible untruncated in my existing context, starting `# KubeClaw Documentation` and ending the Decisions documentation-track bullet. The initial response contains the task routes, including Prism architecture, Buster architecture, Pipeline workflows, Prism and Studio, and Extension decision guide.
+
+This original call occurred before combined Prism/Buster/extension read chunk `a6a662` (display truncated), route search chunk `bf84ad` (exit 2 because extend/prism.md absent), and guide01 capture chunk `7b63fe`. Subsequent 02-entry is a reread captured during the later evidence persistence batch; its later timestamp does not represent the initial start.
+
+Limits: no absolute timestamp or native call UUID is exposed for the first tool call in my visible context. The original raw native transcript/transport envelope has not been independently exported or recovered. This supplemental file is not that raw transcript and should not be presented as one. The exact available request/result metadata and limitations are in the companion JSON. Root may independently retrieve the native transcript. No outcomes are reconsidered and no clock reset is asserted.

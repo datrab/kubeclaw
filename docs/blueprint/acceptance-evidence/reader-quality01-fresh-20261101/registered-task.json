@@ -1,0 +1,70 @@
+{
+  "registeredAt": "2026-11-01T06:02:39.392014+00:00",
+  "task": {
+    "id": "READER-QUALITY-01",
+    "persona": "prism-buster-specialist",
+    "startPath": "docs/site/README.md",
+    "acceptanceIds": [
+      "A99-07",
+      "A910-13",
+      "A913-04",
+      "A913-05"
+    ],
+    "objective": "Configure one Prism flow and one Buster suite, explain their result authority, and add a documented extension without bypassing validation.",
+    "taskInput": "The canonical Prism Studio flow and Buster suite fixture named by their guides, plus a mutation that adds the fixture's registered undeclared provider capability.",
+    "fixturePaths": [
+      "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"
+    ],
+    "injectedFaultId": "QUALITY-UNDECLARED-PROVIDER-CAPABILITY",
+    "requiredOutcomes": [
+      {
+        "id": "prism-flow-resolves",
+        "passCondition": "The documented Prism validation resolves the exact flow, template, provider, and output identities from the registered fixture."
+      },
+      {
+        "id": "buster-suite-resolves",
+        "passCondition": "The documented Buster command resolves the exact suite, provider, fixture, report, matrix, and artifact identities from the registered fixture."
+      },
+      {
+        "id": "result-authority-correct",
+        "passCondition": "The participant identifies the signed or otherwise authoritative result record and does not treat provider output alone as acceptance."
+      },
+      {
+        "id": "extension-validation-fails-when-mutated",
+        "passCondition": "The undeclared-capability mutation is rejected by the named validation gate with its registered documentation-drift diagnostic."
+      }
+    ],
+    "allowedAssistance": "Only docs/site, the two canonical fixtures, and commands named by their guides. The facilitator can apply the registered mutation but cannot interpret its result.",
+    "failureThreshold": "FAIL after one unresolved identity, wrong result authority, accepted mutation, forbidden source, or 120 minutes without completion.",
+    "participantRequirements": {
+      "freshContext": true,
+      "priorContribution": false,
+      "requiredRole": "prism-buster-specialist"
+    },
+    "forbiddenSources": [
+      "package-readme",
+      "review-file",
+      "migration-note",
+      "chat-context"
+    ]
+  },
+  "reviewedRevision": "f43af8a7402a749bba96c3040b2ec0f2d0e40f5d",
+  "publicReachabilityVerifiedAtRemote": "b853fe30cb017794f10a770e06e728cde905df13",
+  "sourceRoot": "/home/node/.openclaw/workspace/operations/pr13/runtime/reader-quality01-fresh-source-20261101",
+  "participant": "NEW isolated MODEL requiredRole prism-buster-specialist, no prior context or contribution",
+  "startPath": "docs/site/README.md",
+  "actualOutcome": "PENDING",
+  "hostPreparation": "Clean complete physical immutableSource plus installed lockeddependencies after package/lock byteequality and genuineexistingGit metadata; no taskoutputinterpretation or procedurehints",
+  "canonicalInputs": [
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "sha256": "ea096d2c1fe260eb2d568f6f018c36de64f435cad0d93fad0525cc09250735c1"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
+      "sha256": "d86e5c8143d03af2c41db295f9f763e4038ffd7a1c89a2a66790337c1874e2e5"
+    }
+  ],
+  "scope": "Exactly original four requiredoutcomes; nativevalidation vsruntimeprovideracceptance boundaries remain asdocs. No AT/human/wholegate inference."
+}

@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T06:13:09.429996+00:00",
+  "endedAt": "2026-11-01T06:14:12.142793+00:00",
+  "elapsedSeconds": 62.712787264958024,
+  "argv": [
+    "node",
+    "scripts/check-ap09-acceptance-contract.mjs"
+  ],
+  "exitCode": 0,
+  "sourceRevision": "b853fe30cb017794f10a770e06e728cde905df13",
+  "scope": "Unchanged original checker after one independently passed fresh originalQUALITY01 four-outcome case observation; no whole-gate award inferred."
+}
