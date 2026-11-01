@@ -206,6 +206,21 @@ Run these steps in order. Stop at the first nonzero exit.
 | Runtime image checks | Docker Buildx; pinned base access; scanner database network access | Registry read access where required. Publishing requires a different, write-enabled workflow. |
 | Deployment/live checks | Named test cluster, kubectl, Helm, DNS, storage, controller leases, trust identities, service secrets | Namespace and identity must belong to the test. Use [installation](../use/install.md) and [service diagnosis](../use/diagnose.md) for preflight. |
 
+Before documentation inventory, discovery or publication checks, explicitly prepare
+the unchanged native Go AST parsers with the pinned Go toolchain:
+
+```sh
+node scripts/docs-prepare-go-parsers.mjs
+```
+
+Preparation writes only its declared `node_modules/.cache/docs-go-parsers` tools
+and normal Go build cache. Checks consume source-, target- and binary-hash-locked
+executables; a missing or stale tool fails without compiling it. To use an owned
+writable tools directory instead, set `KUBECLAW_DOCS_GO_PARSERS_DIR` identically
+for preparation and checking. `KUBECLAW_DOCS_SHFMT_BINARY` selects an owned shfmt
+location without changing the required version/hash. Neither variable grants a
+tool identity or waives a failed check.
+
 Install the locked browser from repository root when your route needs it:
 
 ```sh
@@ -2217,6 +2232,7 @@ navigation. Changing the constant alone cannot establish a correct explanation.
 
    ```sh
    set -eu
+   node scripts/docs-prepare-go-parsers.mjs
    npm run docs:inventory
    npm run docs:inventory:local-helm
    npm run docs:inventory:config

@@ -14,7 +14,7 @@ function toolIdentity(context){
  if(process.platform!=='linux'||!arch)err('SHELL_CLI_PARSER_TOOL_PLATFORM_UNQUALIFIED',`${process.platform}/${process.arch}`);
  const expected=lock?.[`SHFMT_SHA256_${arch}`],version=lock?.SHFMT_VERSION;
  if(!/^[a-f0-9]{64}$/.test(expected??'')||!/^\d+\.\d+\.\d+$/.test(version??''))err('SHELL_CLI_PARSER_LOCK_INVALID',lockPath);
- const executable=context.shfmtExecutable??'/usr/local/bin/shfmt';let actual;
+ const executable=context.shfmtExecutable??process.env.KUBECLAW_DOCS_SHFMT_BINARY??'/usr/local/bin/shfmt';let actual;
  try {const stat=fs.lstatSync(executable);if(!stat.isFile()||!(stat.mode&0o111))throw Error('not executable regular file');actual=sha(fs.readFileSync(executable));}
  catch(e){err('SHELL_CLI_PARSER_TOOL_UNAVAILABLE',e.message);}
  if(actual!==expected)err('SHELL_CLI_PARSER_TOOL_HASH_MISMATCH',`${executable}; expected locked ${expected}`);

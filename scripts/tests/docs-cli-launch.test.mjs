@@ -1,6 +1,7 @@
-import test from 'node:test';import assert from 'node:assert/strict';import {execFileSync} from 'node:child_process';
+import test from 'node:test';import assert from 'node:assert/strict';import {createShellCliParser} from '../lib/cli/shell-cli-adapter.mjs';
 import {joinManifestCliLaunches} from '../lib/cli/manifest-cli-launch-join.mjs';
-const parseShell=text=>JSON.parse(execFileSync('/usr/local/bin/shfmt',['-ln','bash','--to-json'],{input:text,encoding:'utf8'}));
+const shellParser=createShellCliParser();
+const parseShell=text=>{const ast=shellParser.parse(text);shellParser.verify();return ast;};
 const decl=(command,name='start',manifest='package.json',cwd='.')=>({kind:'npm-script-declaration',manifest,manifestSha256:'source-sha',name,command,cwd});
 const run=(ds,extra={})=>joinManifestCliLaunches(ds,{parseShell,gitFiles:['entry','entry.mjs','pkg/task','pkg/entry','else/worker.py','test.mjs'],ownership:[{source:'entry',kind:'private-parser-helper'}],...extra});
 test('direct Node literal extensionless source without shebang is a candidate; argv strings are not launches',()=>{const r=run([decl('node entry --path else/worker.py')]);assert.equal(r.targets.length,1);assert.equal(r.targets[0].targetPath,'entry');assert.equal(r.targets[0].ownership.kind,'private-parser-helper');assert.equal(r.targets[0].supportGranted,false);assert.equal(r.targets[0].virtualSource.jsonPointer,'/scripts/start');assert.equal(r.targets[0].virtualSource.physicalSpan,null)});

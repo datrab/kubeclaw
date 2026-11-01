@@ -1,3 +1,4 @@
+import {preparedGoEnvironment,preparedGoParser,runPreparedGoParser} from './docs-prepared-go-parsers.mjs';
 import {assertDocumentationOwnerPurpose} from './docs-documentation-owner-purpose-custody.mjs';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
@@ -11832,13 +11833,14 @@ export function assertDocumentationExecutableRole(root,source,staticSources=new 
    purposeFiles.push(file);
   }
  }
+ if(source.endsWith('.go')){preparedGoParser(root,'roles').verify();preparedGoEnvironment();}
  if(reuseCustody(root,source,bytes))return;
  if(/\.(?:py|go)$/u.test(source)){
   const recipe=documentationExecutableRoleRecipes[source];
   assert(recipe?.role==='documentation-parser-adapter'&&recipe.consumer,`DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: ${source}; native documentation consumer has no Source-owned recipe`);
   const command=source.endsWith('.py')?'python3':process.env.KUBECLAW_DOCS_GO_BINARY??'go';
-  const argv=source.endsWith('.py')?[new URL('./docs-api-python-ast-v1.py',import.meta.url).pathname,'--stdin-custody',source]:['run',new URL('./docs-api-go-output-role-adapter.go',import.meta.url).pathname,'--documentation-custody',path.join(root,source)];
-  const receipt=spawnSync(command,argv,{input:source.endsWith('.py')?bytes:undefined,encoding:'utf8',maxBuffer:32*1024*1024});
+  const argv=source.endsWith('.py')?[new URL('./docs-api-python-ast-v1.py',import.meta.url).pathname,'--stdin-custody',source]:['--documentation-custody',path.join(root,source)];
+  const receipt=source.endsWith('.py')?spawnSync(command,argv,{input:bytes,encoding:'utf8',maxBuffer:32*1024*1024}):runPreparedGoParser(root,'roles',argv,{encoding:'utf8',maxBuffer:32*1024*1024});
   assert.equal(receipt.status,0,`DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: ${source}; native custody parse: ${receipt.error?.message??receipt.stderr}`);
   assert.deepEqual(documentationNativeReceipt(JSON.parse(receipt.stdout)),recipe.receipt,`DOCUMENTATION_TOOL_OUTPUT_ROLE_UNQUALIFIED: ${source}; native executable/import/initialization operations changed`);retainCustody(root,source,bytes,[path.join(root,source),new URL('./docs-api-python-ast-v1.py',import.meta.url).pathname,new URL('./docs-api-go-output-role-adapter.go',import.meta.url).pathname]);return;
  }

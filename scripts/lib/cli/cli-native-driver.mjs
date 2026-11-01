@@ -1,5 +1,5 @@
+import {preparedGoEnvironment,preparedGoParser} from '../../docs-prepared-go-parsers.mjs';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import {execFileSync} from 'node:child_process';
 import {createRequire} from 'node:module';
@@ -10,23 +10,23 @@ import {discoverManifestLaunches} from './manifest-cli-launch-join.mjs';
 import {projectCliDocumentationFacts,translateTypedContracts} from './cli-semantic-composition.mjs';
 
 // Run only the maintained extraction producers, never a product entrypoint or
-// --help invocation. Compiled helper is private scratch, removed on every exit.
+// --help invocation. The unchanged Go helper is prepared outside this read-only path.
 export async function generateNativeCliModel(root,{producerDirectory=path.join(root,'scripts/lib/cli'),ownershipSource='docs/blueprint/cli-source-ownership.json'}={}){
  root=fs.realpathSync(root);
  const files=trackedFiles(root),producers=['cli-source-model.mjs','typed-cli-ast.mjs','shell-cli-adapter.mjs','python_cli_ast.py','go_cli_ast.go','cli-native-driver.mjs','manifest-cli-launch-join.mjs','cli-semantic-composition.mjs'];
- const required=[ownershipSource,'versions.json','package.json','package-lock.json','scripts/docs-shell-source-custody.mjs','scripts/docs-inventory.mjs','scripts/docs-generate.mjs','scripts/docs-generate-core.mjs','.github/workflows/docs-checks.yaml',...producers.map(p=>path.relative(root,path.join(producerDirectory,p)).split(path.sep).join('/'))];
+ const required=['scripts/docs-prepared-go-parsers.mjs',ownershipSource,'versions.json','package.json','package-lock.json','scripts/docs-shell-source-custody.mjs','scripts/docs-inventory.mjs','scripts/docs-generate.mjs','scripts/docs-generate-core.mjs','.github/workflows/docs-checks.yaml',...producers.map(p=>path.relative(root,path.join(producerDirectory,p)).split(path.sep).join('/'))];
  const producerBindings=required.map(name=>{const b=readBoundSource(root,name,files);return {path:b.path,sha256:b.sha256,bytes:b.bytes,gitObject:b.gitObject,mode:b.mode};});
  const versions=JSON.parse(readBoundSource(root,'versions.json',files).text).buildArgs;
  const require=createRequire(path.join(root,'package.json')),ts=require('typescript'),locked=JSON.parse(readBoundSource(root,'package-lock.json',files).text).packages?.['node_modules/typescript']?.version;
  if(!locked||ts.version!==locked)throw Error('CLI_TYPESCRIPT_INSTALLED_LOCK_MISMATCH');
- const goVersion=execFileSync('go',['version'],{encoding:'utf8',timeout:10000}).trim();
+ const goEnvironment=preparedGoEnvironment();
+ const goVersion=execFileSync(goEnvironment.command,['version'],{env:goEnvironment.env,encoding:'utf8',timeout:10000}).trim();
  if(!goVersion.split(/\s+/u).includes('go'+versions.GO_VERSION))throw Error('CLI_GO_INSTALLED_LOCK_MISMATCH');
  const pythonVersion=execFileSync('python3',['-I','-c','import sys;print(".".join(map(str,sys.version_info[:3])))'],{encoding:'utf8',timeout:10000}).trim();
  if(Number(pythonVersion.split('.')[0])!==3||Number(pythonVersion.split('.')[1])!==11)throw Error('CLI_PYTHON_AST_VERSION_UNQUALIFIED');
- const scratch=fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-cli-extractor-'));
- try{
-  const binary=path.join(scratch,'go-cli-ast');
-  execFileSync('go',['build','-trimpath','-o',binary,path.join(producerDirectory,'go_cli_ast.go')],{cwd:root,env:{...process.env,GOTOOLCHAIN:'local',GOWORK:'off',GO111MODULE:'off',GOPROXY:'off',GOSUMDB:'off'},timeout:120000,stdio:'pipe'});
+ const prepared=preparedGoParser(root,'cli');
+ const binary=prepared.binary;
+ {
   const run=(command,args,sources)=>JSON.parse(execFileSync(command,args,{input:JSON.stringify({sources:sources.map(({path,text})=>({path,text}))}),encoding:'utf8',timeout:120000,maxBuffer:256*1024*1024}));
   const ownership=JSON.parse(readBoundSource(root,ownershipSource,files).text),shellParser=createShellCliParser({repositoryRoot:root});
   const model=await buildCliSourceModel(root,ownership,{
@@ -58,6 +58,7 @@ export async function generateNativeCliModel(root,{producerDirectory=path.join(r
   model.producerBindings=producerBindings;
   model.tools={typescript:{version:ts.version,lock:'package-lock.json'},go:{version:'go'+versions.GO_VERSION,lock:'versions.json',sourceHelper:'go_cli_ast.go'},python:{contract:'CPython3.11 qualified stdlib ast; isolated producer, no product imports'},shell:model.sources.find(s=>s.language==='shell')?.sourceBindings?{lock:'versions.json',contract:'hash/version verified shfmt AST; no shell execution'}:null};
   model.typedContracts=translateTypedContracts(model,ts);
+  prepared.verify();
   return projectCliDocumentationFacts(model);
- }finally{fs.rmSync(scratch,{recursive:true,force:true});}
+ }
 }

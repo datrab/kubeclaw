@@ -1,3 +1,4 @@
+import {preparedGoEnvironment,preparedGoParser,runPreparedGoParser} from './docs-prepared-go-parsers.mjs';
 import {localHelmChartFiles, renderLocalHelmChart} from './docs-helm-memory-chart.mjs';
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
@@ -5939,10 +5940,11 @@ export function discoverGoApiOutputs(root) {
   const cached=goOutputCache.get(root);for(const file of [...cached?.dependencyPaths??[],...cached?.externalAuthorityDependencies??[]])modulePaths.add(file);
   assert(!process.env.GOWORK||['auto','off'].includes(process.env.GOWORK),`API_PRODUCT_GO_MODULE_AUTHORITY_UNQUALIFIED: ${root}; explicit GOWORK outside finite documentation recipe`);
   const key=hash(JSON.stringify([root,process.env.GOWORK??'auto',process.env.GOMODCACHE??'<default>',process.env.GOPATH??'<default>',hash(fs.readFileSync(helper)),hash(fs.readFileSync(new URL('./docs-api-go-output-role-adapter.go',import.meta.url))),cacheInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))]),[...modulePaths].sort().map(file=>[file,fs.existsSync(file)?[fs.realpathSync(file),fs.statSync(file).isDirectory()?hash(fs.readdirSync(file).sort().join('\n')):hash(fs.readFileSync(file))]:null])]));
+  preparedGoParser(root,'roles').verify();preparedGoParser(root,'shapes').verify();preparedGoEnvironment();
   if(cached?.key===key)return cached.result;
   for(const source of sources)if(!documentationTools.has(source))assertNativeSerializationRoles(root,source,fs.readFileSync(path.join(root,source),'utf8'),'Go');
   const nativeAuthority=path.join(root,'scripts/docs-api-producer-adapter-authorities.json');const nativeContracts=fs.existsSync(nativeAuthority)?JSON.parse(fs.readFileSync(nativeAuthority,'utf8')).nativeLanguageSerializationContracts??[]:[];
-  const roles=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY??'go',['run',new URL('./docs-api-go-output-role-adapter.go',import.meta.url).pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>({path:path.join(root,source)}))),encoding:'utf8',maxBuffer:16*1024*1024});assert.equal(roles.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${roles.error?.message??roles.stderr}`);
+  const roles=runPreparedGoParser(root,'roles',[],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>({path:path.join(root,source)}))),encoding:'utf8',maxBuffer:16*1024*1024});assert.equal(roles.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${roles.error?.message??roles.stderr}`);
   const parsedRoles=JSON.parse(roles.stdout);
   const cliGoRoles=parsedRoles.filter(role=>role.path===path.join(root,'scripts/lib/cli/go_cli_ast.go'));
   if(cliGoRoles.length)assertCliStaticAstOutputVector(root,'scripts/lib/cli/go_cli_ast.go',cliGoRoles);
@@ -5952,7 +5954,7 @@ export function discoverGoApiOutputs(root) {
   if(parsedRoles.some(role=>role.function==='productHandler'&&/^json\.NewEncoder\(w\)/u.test(role.expression)))assertNativeProductResponseSchemaAuthority(root);
   for(const role of parsedRoles)assert(role.authorityQualified===true&&(role.role==='non-api'||role.role==='api'||nativeOutputConsumerMatches({...role,expression:role.expression,function:role.function},nativeContracts.filter(contract=>contract.source===path.relative(root,role.path)&&contract.language==='Go').flatMap(contract=>contract.outputs??[]),root)),`API_PRODUCT_GO_RAW_OUTPUT_ROLE_UNQUALIFIED: ${role.path}:${role.line}: ${role.expression}; ${(role.authorityIssues??[]).join('; ')}`);
   const literalOutputs=parsedRoles.filter(role=>role.role==='api').flatMap(role=>YAML.parseAllDocuments(role.value).map(document=>{assert(!document.errors.length,`API_PRODUCT_GO_LITERAL_YAML_INVALID: ${role.path}:${role.line}`);const value=document.toJS();assert(value?.apiVersion&&value?.kind,`API_PRODUCT_GO_LITERAL_IDENTITY_UNQUALIFIED: ${role.path}:${role.line}`);return {value,context:{apiVersion:value.apiVersion,kind:value.kind,path:path.relative(root,role.path),document:role.line,sourceDigest:hash(fs.readFileSync(role.path)),producer:'go-literal-forwarding',line:role.line,outputDigest:hash(JSON.stringify(value))}};}));
-  const parsed=spawnSync(process.env.KUBECLAW_DOCS_GO_BINARY ?? 'go',['run',helper.pathname],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>path.join(root,source))),encoding:'utf8',maxBuffer:32*1024*1024});
+  const parsed=runPreparedGoParser(root,'shapes',[],{input:JSON.stringify(sources.filter(source=>!documentationTools.has(source)).map(source=>path.join(root,source))),encoding:'utf8',maxBuffer:32*1024*1024});
   assert.equal(parsed.status,0,`API_PRODUCT_GO_PRODUCER_PARSE_FAILED: ${parsed.error?.message ?? parsed.stderr}`);
   const result=[...literalOutputs,...Object.entries(JSON.parse(parsed.stdout)).flatMap(([absolute,objects])=>objects.map((object,index)=>{
     const source=path.relative(root,absolute);
