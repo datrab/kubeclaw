@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "2670783e043afb829626873ffb25227d0ca349395d07f2ca510e6545fef9d2ef"
+      "sha256": "b04462f5d3e48e9aa32711c0475725da81071c88b4df8bbec8001c187c6d7a60"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3428,7 +3428,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "2670783e043afb829626873ffb25227d0ca349395d07f2ca510e6545fef9d2ef"
+      "sha256": "b04462f5d3e48e9aa32711c0475725da81071c88b4df8bbec8001c187c6d7a60"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3508,7 +3508,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
-      "sha256": "e35eb079b4b6cfeab58f9a8d3bfaa54370352a1d13ac948fd27a7a92660e7e5f"
+      "sha256": "bdd14a0769d2ff65a042be4bd5f9c7db12003ce017d8f053d45191c3a7446ea7"
     },
     {
       "path": "docs/site/reference/helm-values.md",
@@ -3548,7 +3548,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/use/workflows/README.md",
-      "sha256": "8a2faaf0e489fcb446172f9baf439661766de57c1187e458079fd8b158615426"
+      "sha256": "f2822fe0e0fa86354802c08daaf18f752e04775df1c1bad70b2059b353b41460"
     },
     {
       "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
@@ -3575,8 +3575,20 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "sha256": "3e54567536d0b13090f2ea37f1b04b4fad725415767c70e24533419eba985744"
     },
     {
+      "path": "docs/site/use/workflows/examples/minimal-compiled-redis.mjs",
+      "sha256": "c530079e5b2ece5a78d37458c5095c334f7be594118013e3485f743f006000f4"
+    },
+    {
       "path": "docs/site/use/workflows/examples/minimal-project.mjs",
       "sha256": "0851cc47a9376444c6ed0634cb079257a7edff0d5d8b08b2419ba22e66b95107"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/minimal-redis-inspection.mjs",
+      "sha256": "88fdfa08ede9213bde475652786697fc3ef9ab4d22289ae20dc125d526ac2580"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/minimal-redis-verification.mjs",
+      "sha256": "4dc9eb32db87ae0097e7a0031d4657086841df6ef32bf4c4a36ec7cccf366917"
     },
     {
       "path": "docs/site/use/workflows/examples/minimal.pipeline.json",
@@ -3688,7 +3700,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "scripts/lib/docs-publication-assets.mjs",
-      "sha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0"
+      "sha256": "c0f3bcd5f40e03df8355681a2aa9298af5b465f5ac69f3d6460ab868446680e0"
     },
     {
       "path": "scripts/lib/docs-publication-example-coverage.mjs",

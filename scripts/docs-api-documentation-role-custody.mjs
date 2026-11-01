@@ -4546,7 +4546,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "5761bd0067c5c5e81285e587cf7cd0b9d131f55475b8075ac44ef2c7015b0552",
+    "factsDigest": "1e3c600a6e1a0e8038573bcdba582c53d0dec5da039cc060f34330c66270e80d",
     "authorityInputs": [
       {
         "path": "scripts/docs-publication-examples.mjs",
@@ -5918,7 +5918,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "3dc1ff3d3ec94c1b0799d5c99298e41f4fc507f35f290ddbf7f4d5ef318f39e3"
       }
     ],
-    "factsDigest": "0e570e7397bc420f4ba49fab79885dae203885a11060145bd4345ce0ad3410f3",
+    "factsDigest": "2406ce9381720b33c1dee7c6826d28366ab15d7aaed5151a6dbfa179e8fb8f54",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-search.mjs": {
@@ -10312,7 +10312,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "513381bdf505da98a8e167972356a489817bafd9422efef66a347fa8d49c5b93"
       }
     ],
-    "factsDigest": "13d988b1d61ea2a9e670ec30d469986ea1239826dce861f7720a14c345c60713",
+    "factsDigest": "9cc0651f9784871f5b1ee5578bbbf2aec60d5fc58513bd109c860c8257cb2aac",
     "authorityInputs": [],
     "purposeInputs": [
       {
@@ -10373,7 +10373,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/lib/docs-publication-assets.mjs",
         "canonical": "scripts/lib/docs-publication-assets.mjs",
-        "sha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0"
+        "sha256": "c0f3bcd5f40e03df8355681a2aa9298af5b465f5ac69f3d6460ab868446680e0"
       },
       {
         "path": "scripts/lib/docs-route-continuity.mjs",
@@ -20717,75 +20717,75 @@ export const reviewedRootNodeEntryRecipes = {
       ]
     },
     {
-      "source": "scripts/lib/docs-publication-assets.mjs",
-      "kind": "selected-operative-definition",
-      "purpose": "Independently reviewed exact positive reader-asset selection, no Markdown wildcard or source execution. One added repair-retry example asset literal preserves all prior selections; public page/asset/copy producers retain their original bounds. Omitted definitions are not newly qualified by this range receipt; the separate publicationManifest operation is bound by its actual consumer facts. Additional finite compiled-project successor: exactly three explicit public example asset paths; same positive selection, copy-only behavior, no wildcard, new caller, runtime execution or DATA authority. Additional finite PIPE04 successor: exactly eight explicit canonical uncertain-effect graph/helper/private-package/schema/stage assets. All prior28 allowances and nonallowlist definitions remain exact; line positions shift by eight. Selection, physical-file rejection and copy-only producer behavior unchanged. Neither syntax/schema checking nor publication of teaching code authorizes its execution, external effects, API apply or new package/native caller. Finite PIPE01/QUALITY01 successor adds exactly four explicit canonical learning assets (minimal graph/helper and Prism design/local validation helper), preserving all prior36 allowances and nonallowlist behavior. Publication performs parse/schema/syntax checks only, never invokes these helpers or authorizes provider, Redis, Gateway, grant or runtime execution.",
-      "units": [
-        {
-          "symbol": "ImportDeclaration",
-          "kind": "ImportDeclaration",
-          "startLine": 1,
-          "endLine": 1,
-          "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
-        },
-        {
-          "symbol": "ImportDeclaration",
-          "kind": "ImportDeclaration",
-          "startLine": 2,
-          "endLine": 2,
-          "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
-        },
-        {
-          "symbol": "files",
-          "kind": "FirstStatement",
-          "startLine": 6,
-          "endLine": 47,
-          "syntaxSha256": "88f3e168c62aa1d9bd8a1be77904f221450a93486fa6cc0d9920ddefa061ab1c"
-        },
-        {
-          "symbol": "publicationPages",
-          "kind": "FunctionDeclaration",
-          "startLine": 49,
-          "endLine": 84,
-          "syntaxSha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
-        },
-        {
-          "symbol": "publicationAssets",
-          "kind": "FunctionDeclaration",
-          "startLine": 86,
-          "endLine": 104,
-          "syntaxSha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
-        },
-        {
-          "symbol": "copyPublicationAssets",
-          "kind": "FunctionDeclaration",
-          "startLine": 106,
-          "endLine": 112,
-          "syntaxSha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
-        }
-      ],
-      "ranges": [
-        {
-          "startLine": 1,
-          "endLine": 125,
-          "sha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0"
-        }
-      ],
-      "initialization": [
-        {
-          "kind": "ImportDeclaration",
-          "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
-        },
-        {
-          "kind": "ImportDeclaration",
-          "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
-        },
-        {
-          "kind": "FirstStatement",
-          "syntaxSha256": "88f3e168c62aa1d9bd8a1be77904f221450a93486fa6cc0d9920ddefa061ab1c"
-        }
-      ]
+  "source": "scripts/lib/docs-publication-assets.mjs",
+  "kind": "selected-operative-definition",
+  "purpose": "Independently reviewed exact positive reader-asset selection, no Markdown wildcard or source execution. One added repair-retry example asset literal preserves all prior selections; public page/asset/copy producers retain their original bounds. Omitted definitions are not newly qualified by this range receipt; the separate publicationManifest operation is bound by its actual consumer facts. Additional finite compiled-project successor: exactly three explicit public example asset paths; same positive selection, copy-only behavior, no wildcard, new caller, runtime execution or DATA authority. Additional finite PIPE04 successor: exactly eight explicit canonical uncertain-effect graph/helper/private-package/schema/stage assets. All prior28 allowances and nonallowlist definitions remain exact; line positions shift by eight. Selection, physical-file rejection and copy-only producer behavior unchanged. Neither syntax/schema checking nor publication of teaching code authorizes its execution, external effects, API apply or new package/native caller. Finite PIPE01/QUALITY01 successor adds exactly four explicit canonical learning assets (minimal graph/helper and Prism design/local validation helper), preserving all prior36 allowances and nonallowlist behavior. Publication performs parse/schema/syntax checks only, never invokes these helpers or authorizes provider, Redis, Gateway, grant or runtime execution. Finite operational PIPE01 successor adds exactly three explicit Redis operational teaching helper paths to the40existing allowances. Positive physical-file selection/copy only; generic JS syntax owner does not execute these helpers. No new directory wildcard, native call, runtime/API role, credential or observer authority.",
+  "units": [
+    {
+      "symbol": "ImportDeclaration",
+      "kind": "ImportDeclaration",
+      "startLine": 1,
+      "endLine": 1,
+      "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
     },
+    {
+      "symbol": "ImportDeclaration",
+      "kind": "ImportDeclaration",
+      "startLine": 2,
+      "endLine": 2,
+      "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "symbol": "files",
+      "kind": "FirstStatement",
+      "startLine": 6,
+      "endLine": 50,
+      "syntaxSha256": "ee8a08668bd0c66686e85498fddfd5cb415651a004ec01524bc1addf7532773e"
+    },
+    {
+      "symbol": "publicationPages",
+      "kind": "FunctionDeclaration",
+      "startLine": 52,
+      "endLine": 87,
+      "syntaxSha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
+    },
+    {
+      "symbol": "publicationAssets",
+      "kind": "FunctionDeclaration",
+      "startLine": 89,
+      "endLine": 107,
+      "syntaxSha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
+    },
+    {
+      "symbol": "copyPublicationAssets",
+      "kind": "FunctionDeclaration",
+      "startLine": 109,
+      "endLine": 115,
+      "syntaxSha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
+    }
+  ],
+  "ranges": [
+    {
+      "startLine": 1,
+      "endLine": 128,
+      "sha256": "c0f3bcd5f40e03df8355681a2aa9298af5b465f5ac69f3d6460ab868446680e0"
+    }
+  ],
+  "initialization": [
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "99a8a8a7117b1395e3a209cdc8ba5a70424687458932bc4dc8a7b6e59ff53868"
+    },
+    {
+      "kind": "ImportDeclaration",
+      "syntaxSha256": "113f0af17fdf683cf360ab9d03b7eff1b572d3475e83119031d47ee4331621aa"
+    },
+    {
+      "kind": "FirstStatement",
+      "syntaxSha256": "ee8a08668bd0c66686e85498fddfd5cb415651a004ec01524bc1addf7532773e"
+    }
+  ]
+},
     {
       "source": "scripts/lib/docs-publication-links.mjs",
       "kind": "selected-operative-definition",

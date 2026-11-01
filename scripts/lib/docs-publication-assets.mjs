@@ -4,6 +4,9 @@ import path from 'node:path';
 // Only canonical reader inputs belong in the published artifact. Keep this
 // allowlist separate from the source tree's internal documentation inputs.
 const files = new Set([
+  'use/workflows/examples/minimal-compiled-redis.mjs',
+  'use/workflows/examples/minimal-redis-inspection.mjs',
+  'use/workflows/examples/minimal-redis-verification.mjs',
   'use/workflows/examples/minimal.pipeline.json',
   'use/workflows/examples/minimal-project.mjs',
   'use/workflows/examples/prism-studio-flow.json',

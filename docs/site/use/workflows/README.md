@@ -3,9 +3,9 @@
 Status: workflow task index. Full wait/resume lifecycle and deployment execution open
 Audience: pipeline authors and operators
 Owner: product integration maintainers
-Evidence: docs/site/use/workflows/examples/compiled-project.mjs; docs/site/use/workflows/examples/compiled-project-input.mjs; docs/site/use/workflows/examples/compiled-project-verification.mjs; docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md; docs/site/use/workflows/repair-retry.md; docs/site/use/workflows/interruption-recovery.md; docs/site/use/workflows/redis-replay-recovery.md; docs/site/use/workflows/worker-result-recovery.md; docs/site/use/workflows/build-image.md; docs/site/use/workflows/tailnet-exposure.md
+Evidence: docs/site/use/workflows/examples/minimal-compiled-redis.mjs; docs/site/use/workflows/examples/minimal-redis-inspection.mjs; docs/site/use/workflows/examples/minimal-redis-verification.mjs; docs/site/use/workflows/examples/minimal.pipeline.json; docs/site/use/workflows/examples/compiled-project.mjs; docs/site/use/workflows/examples/compiled-project-input.mjs; docs/site/use/workflows/examples/compiled-project-verification.mjs; docs/site/use/workflows/examples/first-project.mjs; skills/nova/project/compiler.ts; docs/site/use/workflows/wait-resume.md; docs/site/use/workflows/buster-suite.md; docs/site/use/workflows/kubernetes-fixture.md; docs/site/use/demo-delivery.md; docs/site/use/diagnose.md; docs/site/use/recovery.md; docs/site/use/plugins.md; docs/site/use/workflows/repair-retry.md; docs/site/use/workflows/interruption-recovery.md; docs/site/use/workflows/redis-replay-recovery.md; docs/site/use/workflows/worker-result-recovery.md; docs/site/use/workflows/build-image.md; docs/site/use/workflows/tailnet-exposure.md
 Applies to: pipeline workflow selection. Each guide states its contracts and execution prerequisites
-Last verified: 2026-10-26. One actual eight-stage compiled minimal-project run, original audit and artifact verification. Compile-only task remains separate. No deployment or human acceptance claim
+Last verified: 2026-11-01. Actual canonical eight-stage Core/audit/Redis author run and separately identified nonterminal Redis-fault SAFE_STOP. Historical file-telemetry scope and compile-only task remain separate. No deployment or fresh-participant acceptance
 
 Use these guides to [bind](../../reference/glossary.md#technical-verb-bind) a pipeline task to its inputs, durable state, result
 authority, and cleanup. A **wait** is a persisted request for a later decision.
@@ -225,6 +225,206 @@ admission or authoritative runtime-target resolution. The original minimal
 pipeline task still requires the healthy Redis-bound Core run and audit, actual
 runtime authority, the unreachable-Redis failure/state/bounded-action evidence,
 and a fresh participant. Those results are not supplied by these commands.
+
+### Run the canonical fixture with owned Redis
+
+This route uses the unchanged [minimal graph](examples/minimal.pipeline.json),
+[run helper](examples/minimal-compiled-redis.mjs),
+[Redis/state inspector](examples/minimal-redis-inspection.mjs) and
+[native verifier](examples/minimal-redis-verification.mjs). It does not substitute
+a different graph for the registered `READER-PIPELINE-01` fixture.
+
+**Source and host prerequisites.** Use the complete reviewed commit supplied
+with the exercise, including these three helpers. Do not select the older
+handbook or historical file-telemetry baseline below. From a new clone:
+
+```bash
+set -e
+: "${PIPELINE01_REVIEWED_REVISION:?Supply the reviewed full commit for this exercise}"
+git clone https://github.com/datrab/kubeclaw.git kubeclaw-minimal-source
+cd kubeclaw-minimal-source
+git fetch origin "$PIPELINE01_REVIEWED_REVISION"
+git checkout --detach "$PIPELINE01_REVIEWED_REVISION"
+test "$(git rev-parse HEAD)" = "$PIPELINE01_REVIEWED_REVISION"
+export PIPELINE01_SOURCE_ROOT="$(pwd -P)"
+```
+
+Follow the [handbook's locked development dependencies](../../extend/developer-handbook.md#prepare-a-clean-checkout)
+in this same checkout, without changing that revision. Use Node 24, GNU Git,
+flock, tar and script, a C compiler, the hash-locked Semgrep environment and
+locked `docker/nova-tools` bundle described under the existing compiled-project
+scope below. These host/dependency steps apply; its historical Source revision
+and different fixture directory do not. Build the shipped sandbox in this
+checkout before the run:
+
+```bash
+set -e
+npm run plugin-system:sandbox:build
+```
+
+The operator supplies `COMPILED_TOOLS_BIN` for that actual locked tool bundle.
+Stop on an unavailable or failing tool; never replace it with a successful stub.
+The helper derives Source from its installed location. Its explicit Source
+argument must equal that checkout. All three helpers must be tracked physical
+files there; the checkout and prepared input digests must remain unchanged.
+
+**Execution prerequisites.** Use the approved Gateway-owned execution terminal
+for credential-dependent commands. The operator supplies an authorized Gateway
+`/tools/invoke` endpoint, its protected bearer value, an existing implementation
+agent and its configured model through `COMPILED_GATEWAY_ENDPOINT`,
+`COMPILED_GATEWAY_TOKEN`, `COMPILED_AGENT_ID` and `COMPILED_MODEL`. The endpoint
+must permit the selected session creation/status/history/cleanup operations.
+Do not print credentials, put them in URLs/arguments, copy them into Source or
+bypass the Gateway's approval/SecretStore boundary.
+
+The facilitator also supplies a genuine, exclusively owned loopback Redis
+process with an empty database and ephemeral authentication. Its state/config
+and process ownership stay outside `/tmp/kubeclaw-reader-pipeline01`.
+`PIPELINE01_REDIS_URL` is its literal `redis://127.0.0.1:<owned-port>` endpoint;
+`PIPELINE01_REDIS_AUTH` holds authentication only in the protected environment.
+`PIPELINE01_REDIS_CLI` names the canonical genuine Redis CLI. If extracted
+binaries require their owned library directory, supply that exact
+`LD_LIBRARY_PATH`; do not substitute a different client or broaden credentials.
+Check the real client without starting a workflow:
+
+```bash
+set -e
+"$PIPELINE01_REDIS_CLI" --version
+```
+
+The facilitator must retain actual server ownership, binary/package provenance
+and readiness. Never use production Redis or delete another process's data.
+The run performs actual authenticated PING and requires database size zero.
+Those probes do not prove the later observer delivery.
+
+**Prepare, validate and explain defaults.** The fixed root must not exist.
+Never delete an unknown collision. These commands use the real compiler and
+require complete equality with the registered canonical graph:
+
+```bash
+set -e
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" prepare /tmp/kubeclaw-reader-pipeline01
+node docs/site/use/workflows/examples/minimal-project.mjs identities /tmp/kubeclaw-reader-pipeline01
+node docs/site/use/workflows/examples/minimal-project.mjs defaults /tmp/kubeclaw-reader-pipeline01
+```
+
+`identities` validates the graph schema and resolves installed stage, selected
+adapter/observer and Buster plan identities. It is not complete runtime admission.
+Read `compiled-platform.complete.json` after admission for every selected
+provider/grant and its exact configuration. Full native platform admission occurs
+before Core starts. Link each compiler default to the
+[finite policy/default authority table](../../reference/nova-project.md#minimal-compiler-policy-and-derived-values).
+Generated identities and derived values are not additional runtime defaults.
+
+In the protected Gateway-owned terminal, `gateway-identities` makes only the
+read-only `agents_list` operation through the authorized `/tools/invoke` endpoint.
+It resolves the canonical graph's implementation role `forge` to the unique
+`COMPILED_AGENT_ID` in the actual `result.details.agents` response and requires
+its declared model to equal `COMPILED_MODEL`. It retains a separate exclusive
+`gateway-runtime-identity.json` observation without the token or raw response;
+`run` refuses a changed Source, graph, endpoint, agent or model selection.
+This is a registry observation, not a model dispatch or proof of execution.
+Keep the token in protected environment only; do not print it or pass it in argv.
+
+**Healthy run and audit.** Run once with the owned healthy dependencies:
+
+```bash
+set -e
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" gateway-identities /tmp/kubeclaw-reader-pipeline01
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" run /tmp/kubeclaw-reader-pipeline01 healthy
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" inspect /tmp/kubeclaw-reader-pipeline01 healthy
+```
+
+The helper starts the genuine shipped Buster runtime on a fresh local store.
+Source jobs carry real source attestations; imported results and decisions are
+digest-bound, not separately signed decisions. Sampled process limiting is not
+cgroup isolation acceptance. The canonical run must succeed in all eight stages,
+with original artifacts and both passed Buster decisions. The helper captures
+and verifies the native audit, graph, complete journal hashes and original bytes.
+The native passive audit command is also available in this same checkout:
+
+```bash
+set -e
+/usr/bin/script -q -e -c 'node skills/nova/core/cli.ts --platform /tmp/kubeclaw-reader-pipeline01/compiled-platform.complete.json --audit run:first-project-001' /dev/null
+```
+
+Core stdout, process exit or a provider response alone is not the result
+boundary. The inspector joins that same run's canonical events, delivery records,
+checkpoint and actual Redis rows. It uses the **frozen run-snapshot observer
+identity**, not a new registry lookup. Complete raw XRANGE responses are retained
+under `redis-stream-raw/collection-*` before semantic checks; preserve them if a
+join fails. Do not edit records to make the identities match.
+
+Author observations at executable product Source
+`0ff69df861a9abe490effb5145d5e54b3e663f9a` independently verified eight stages,
+10 artifacts, 224 events and 224 rows in 12 streams. Those observations used the
+outside-main author entry point. The installed helper's additional Source guard
+is separately checked. This is not a fresh participant result or a claim that
+this guide deploys a production service.
+
+**Export healthy evidence before the fault.** Select a new absolute export
+path with a canonical existing parent, outside both Source and the fixed root:
+
+```bash
+set -e
+: "${PIPELINE01_EVIDENCE_EXPORT:?Select a new absolute healthy evidence export path}"
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" cleanup /tmp/kubeclaw-reader-pipeline01 healthy
+```
+
+Cleanup requires verified state, no active users, one clean fixture worktree,
+and a complete byte-equal export with an exclusively created sidecar. It removes
+only this owned root. An existing export/sidecar or symlink is a stop, not
+permission to overwrite it. The separate Redis process/config remains the
+facilitator's responsibility. A refused cleanup means preserve the state.
+
+**Declared fault and bounded action.** Prepare the same fixed graph again only
+after the healthy export and owned cleanup. The facilitator makes that same
+owned Redis endpoint unreachable **before** the second run. Do not change the
+graph, reset a journal or silently choose another endpoint.
+
+```bash
+set -e
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" prepare /tmp/kubeclaw-reader-pipeline01
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" gateway-identities /tmp/kubeclaw-reader-pipeline01
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" run /tmp/kubeclaw-reader-pipeline01 redis-unreachable
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" inspect /tmp/kubeclaw-reader-pipeline01 redis-unreachable
+```
+
+For this observed product version, the real connection-refusal fault produces
+Core exit **13**, empty Core stdout and an unsettled top-level-await diagnostic.
+The journal contains `run.created` and `run.started`, with **no terminal** or
+stage attempt. One observer attempt starts and fails with a native
+`adapter.effect_failed` receipt and the same endpoint's `ECONNREFUSED` error.
+There is no checkpoint and no five-attempt exhaustion. The original success-only
+author wrapper failed after trying to parse the empty stdout; that failure is
+retained, not relabelled as a successful workflow.
+
+The corrected offline inspector validates this exact state and reports
+`ORIGINAL_REDIS_FAULT_PERSISTED_NONTERMINAL_SAFE_STOP`. Its zero exit means
+successful **state identification**, not Core success. It does not connect to
+Redis or require its authentication. A different or incomplete state refuses
+qualification and must remain with its actual owner.
+
+Record **SAFE_STOP** as the selected action and retain the event, delivery,
+failed effect receipt, process diagnostics and stale ownership records. Do not
+run again, replay/reset the projection, edit the journal or remove a stale lock to resume execution.
+The observer/Core and owned Redis maintainers must assess supported continuation.
+Restored endpoint readiness alone does not authorize it. See
+[Redis projection and bounded replay](redis-replay-recovery.md).
+
+Use a different new `PIPELINE01_EVIDENCE_EXPORT` for the stopped fault case:
+
+```bash
+set -e
+: "${PIPELINE01_EVIDENCE_EXPORT:?Select a different new absolute fault evidence export path}"
+node docs/site/use/workflows/examples/minimal-compiled-redis.mjs "$PIPELINE01_SOURCE_ROOT" cleanup /tmp/kubeclaw-reader-pipeline01 redis-unreachable
+```
+
+This is verified bounded-stop **state-custody cleanup**, not full-workflow success
+or recovery. The historical author attempt r3 export retains its legacy failed inspector record. Fresh exports retain their own actual diagnostics; that old failure is not promised for a fresh run. The
+facilitator separately stops/removes only the known Redis resources, retaining
+its actual ownership/shutdown evidence. No production release, human acceptance
+or original fresh-reader pass follows from an author run or offline inspector.
 
 ### Existing executed compiled-project scope
 

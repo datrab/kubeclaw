@@ -3929,8 +3929,12 @@
       "audience": "pipeline authors and operators",
       "owner": "product integration maintainers",
       "appliesTo": "pipeline workflow selection. Each guide states its contracts and execution prerequisites",
-      "lastVerified": "2026-10-26. One actual eight-stage compiled minimal-project run, original audit and artifact verification. Compile-only task remains separate. No deployment or human acceptance claim",
+      "lastVerified": "2026-11-01. Actual canonical eight-stage Core/audit/Redis author run and separately identified nonterminal Redis-fault SAFE_STOP. Historical file-telemetry scope and compile-only task remain separate. No deployment or fresh-participant acceptance",
       "sourceDependencies": [
+        "docs/site/use/workflows/examples/minimal-compiled-redis.mjs",
+        "docs/site/use/workflows/examples/minimal-redis-inspection.mjs",
+        "docs/site/use/workflows/examples/minimal-redis-verification.mjs",
+        "docs/site/use/workflows/examples/minimal.pipeline.json",
         "docs/site/use/workflows/examples/compiled-project.mjs",
         "docs/site/use/workflows/examples/compiled-project-input.mjs",
         "docs/site/use/workflows/examples/compiled-project-verification.mjs",
