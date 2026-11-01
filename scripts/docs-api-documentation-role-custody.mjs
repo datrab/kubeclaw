@@ -2222,7 +2222,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "bb8ab2d6a9b676ab5d904423d87b25a6b7bb91f6dd13fa19fb0e2296d110113f"
       }
     ],
-    "factsDigest": "8849ba7aef7edcc457dd2519e83dbb5a324781cb39e6bb63b200784752b43f40",
+    "factsDigest": "f148d0198204f5e1ff523582f74366a3834a0421ecff4130dd19582d798782e3",
     "authorityInputs": []
   },
   "scripts/docs-kubernetes-admission-receiver-contracts.mjs": {
