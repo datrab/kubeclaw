@@ -28,14 +28,16 @@ test('original vendor CLI refreshes offline and preserves other archive owners',
   const values = 'setting: true\n';
   write('input/fixture/Chart.yaml', 'apiVersion: v2\nname: fixture\nversion: 1.0.0\n');
   write('input/fixture/values.yaml', values);
+  write('input/fixture/values.schema.json', JSON.stringify({type:'object',properties:{setting:{type:'boolean'}}}));
+  write('input/fixture/templates/setting.yaml', 'apiVersion: v1\nkind: ConfigMap\ndata:\n  setting: {{ .Values.setting | quote }}\n');
   const archive = path.join(root, 'fixture.tgz');
   execFileSync('tar', ['--owner=1001', '--group=1001', '-czf', archive,
     '-C', path.join(root, 'input'), 'fixture']);
   const archiveBytes = fs.readFileSync(archive);
   const chart = { chart: 'fixture', version: '1.0.0', repository: 'https://example.invalid',
-    archiveSha256: digest(archiveBytes), valuesSha256: digest(values), schemaSha256: null };
+    archiveSha256: digest(archiveBytes), valuesSha256: digest(values), schemaSha256: digest(fs.readFileSync(path.join(root,'input/fixture/values.schema.json'))) };
   write('scripts/docs-external-helm-authority-lock.json', JSON.stringify({ charts: { fixture: chart } }));
-  write('docs/generated/inventory/configuration-values.json', JSON.stringify({ files: [] }));
+  write('docs/generated/inventory/configuration-values.json', JSON.stringify({files:[{path:'my-values/fixture.yaml',documents:[{fields:[{path:'$.setting',value:true,meaning:{status:'external-chart-authority',externalChart:{chart:chart.chart,version:chart.version,archiveSha256:chart.archiveSha256}}}]}]}]}));
   const shared = { chart: 'other-consumer', path: 'retained-by-other-owner.tgz', proof: 'preserve-exact-record' };
   const manifest = { version: 1, generatedBy: 'fixture', charts: {
     fixture: { chart: chart.chart, version: chart.version, repository: chart.repository,
@@ -63,6 +65,11 @@ test('original vendor CLI refreshes offline and preserves other archive owners',
   const artifact = JSON.parse(fs.readFileSync(artifactFile, 'utf8'));
   assert.equal(artifact.archiveManifestSha256, digest(originalManifest));
   assert.equal(artifact.charts.fixture.extractedValuesSha256, digest(values));
+  assert.equal(Object.keys(artifact.fields).length,1);
+  const proof=artifact.fields['my-values/fixture.yaml#$.setting'];
+  assert.deepEqual(proof.schema,{path:['setting'],contract:{type:'boolean'}});
+  assert.equal(proof.templateContextIds.length,1);
+  assert.equal(artifact.templateContexts[proof.templateContextIds[0]].path,'templates/setting.yaml');
   const beforeCheck = fs.readFileSync(artifactFile);
   result = run([]);
   assert.equal(result.status, 0, result.stderr);

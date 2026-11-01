@@ -46,6 +46,9 @@ const option = (name, fallback) => {
 };
 const root = path.resolve(option('--root', process.cwd()));
 const checkOnly = argv.includes('--check');
+const inventoryStdout = argv.includes('--inventory-stdout');
+assert(!inventoryStdout || (!checkOnly && !argv.includes('--out-dir')),
+  '--inventory-stdout cannot be combined with --check or --out-dir');
 const allowSensitivityFixture = argv.includes('--allow-sensitivity-fixture');
 const allowSemanticGaps = argv.includes('--allow-semantic-gaps');
 // A write run must be able to publish a newly discovered field as an explicit
@@ -10446,6 +10449,16 @@ export function buildConfigurationInventories() {
 if (argv.includes('--check-payload-delivery-only')) {
   const payloads = deployedConfigPayloads();
   console.log(`Exact deployed payload delivery chains are current (${payloads.length} payloads).`);
+  process.exit(0);
+}
+
+// The maintenance consumer needs the same fresh inventories, not temporary files.
+// This transport does not select a narrower inventory or suppress its guards.
+if (inventoryStdout) {
+  const inventories = buildConfigurationInventories();
+  await new Promise((resolve, reject) => process.stdout.write(
+    `${JSON.stringify([...inventories])}\n`, error => error ? reject(error) : resolve(),
+  ));
   process.exit(0);
 }
 

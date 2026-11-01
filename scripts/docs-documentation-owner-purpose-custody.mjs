@@ -308,8 +308,8 @@ export const reviewedDocumentationOwnerPurposes=freeze({
   },
   "scripts/vendor-external-helm-authorities.mjs": {
     "kind": "manual-vendored-chart-evidence-owner/v1",
-    "sourceSha256": "077c8136790d759262609f716ab6c77b0049d19bb7e2208c27a7c3733d6a96f8",
-    "consumer": "Locked archive extraction generates documentation field/schema/template-context evidence; copied chart inputs and Source evidence never grant deployed-chart authority or API apply.",
+    "sourceSha256": "851b181ca76ced442c4fa7dc3492ad04d45c97d3cf23fac03e2c1b25e1d0a24e",
+    "consumer": "Locked authenticated archive member final-occurrence stdout reads derive same documentation field/schema/template evidence; refresh remains separate writing route. No deployed-chart/API apply or arbitrary archive grant.",
     "purposeInputs": [
       {
         "path": "docs/generated/inventory/configuration-values.json",
@@ -344,7 +344,7 @@ export const reviewedDocumentationOwnerPurposes=freeze({
       {
         "path": "scripts/tests/vendor-external-helm-authorities.test.mjs",
         "canonical": "scripts/tests/vendor-external-helm-authorities.test.mjs",
-        "sha256": "9fbf8dabefbeba2ee504204e5d1a7b9451505ffe685bff7b486218043d24640c"
+        "sha256": "a562e1c311e5ca8ee2a35c35a5232f65371c66f395ab81fa70eb407560a670ab"
       },
       {
         "path": "scripts/yaml-field-path.mjs",

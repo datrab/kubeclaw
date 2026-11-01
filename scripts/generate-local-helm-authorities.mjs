@@ -7,7 +7,6 @@ import { helmProfileBinding } from './docs-helm-profile-bindings.mjs';
 import assert from 'node:assert/strict';
 import { spawnSync } from 'node:child_process';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import YAML from 'yaml';
 import { yamlFieldPathWithoutRoot } from './yaml-field-path.mjs';
@@ -19,20 +18,25 @@ const helmValuesOnly = process.argv.includes('--helm-values-only');
 const outputPath = path.join(root, 'scripts/docs-local-helm-field-authorities.json');
 if (!fs.existsSync(outputPath)) throw new Error('exact local Helm authority registry is missing');
 const approvedRegistry = JSON.parse(fs.readFileSync(outputPath, 'utf8'));
-const candidateDirectory = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-local-helm-authorities-'));
 const candidate = spawnSync(process.execPath, [
   path.join(root, 'scripts/docs-configuration-inventory.mjs'),
   '--root', root,
-  '--out-dir', candidateDirectory,
+  '--inventory-stdout',
   '--allow-semantic-gaps',
   '--allow-local-helm-authority-maintenance',
   ...(helmValuesOnly ? ['--helm-values-only'] : []),
-], { cwd: root, encoding: 'utf8' });
+], { cwd: root, encoding: 'utf8', maxBuffer: 128 * 1024 * 1024 });
+if (candidate.error) throw candidate.error;
 if (candidate.status !== 0) throw new Error(`candidate local Helm inventory failed\n${candidate.stdout}\n${candidate.stderr}`);
-const inventoryPath = path.join(candidateDirectory, helmValuesOnly ? 'configuration-helm-values.json' : 'configuration-values.json');
-const inventory = JSON.parse(fs.readFileSync(inventoryPath, 'utf8'));
-const runtimeInventory = helmValuesOnly ? null
-  : JSON.parse(fs.readFileSync(path.join(candidateDirectory, 'configuration-runtime-inputs.json'), 'utf8'));
+const entries = JSON.parse(candidate.stdout);
+assert(Array.isArray(entries) && entries.every(entry => Array.isArray(entry) && entry.length === 2
+  && typeof entry[0] === 'string' && entry[1] && typeof entry[1] === 'object'),
+  'candidate local Helm inventory envelope is invalid');
+const inventories = new Map(entries);
+assert.equal(inventories.size, entries.length, 'candidate local Helm inventory names are duplicated');
+const inventory = inventories.get(helmValuesOnly ? 'configuration-helm-values.json' : 'configuration-values.json');
+const runtimeInventory = helmValuesOnly ? null : inventories.get('configuration-runtime-inputs.json');
+assert(inventory && (helmValuesOnly || runtimeInventory), 'candidate local Helm inventory is incomplete');
 const digest = (text) => crypto.createHash('sha256').update(text).digest('hex');
 const sourceDigest = (relative) => digest(fs.readFileSync(path.join(root, relative)));
 const local = inventory.files.flatMap((file) => file.documents.flatMap((document) => document.fields
@@ -982,7 +986,6 @@ if (checkOnly) {
 } else {
   fs.writeFileSync(outputPath, output);
 }
-fs.rmSync(candidateDirectory, { recursive: true, force: true });
 if (stale) throw new Error('local Helm field authority registry is stale; run node scripts/generate-local-helm-authorities.mjs');
 console.log(checkOnly
   ? `local Helm field authority registry is current (${local.length} exact authorities)`

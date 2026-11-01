@@ -65,26 +65,19 @@ function schemaAt(schema, tokens) {
   return { path: resolved, contract: selected };
 }
 
-function walk(directory) {
-  if (!fs.existsSync(directory)) return [];
-  return fs.readdirSync(directory, { recursive: true, withFileTypes: true })
-    .filter((entry) => entry.isFile())
-    .map((entry) => path.join(entry.parentPath, entry.name));
-}
-
-function templateEvidence(chartDirectory, tokens) {
+function templateEvidence(chartFiles, tokens) {
   const stringTokens = tokens.filter((token) => typeof token === 'string');
   const candidates = [];
   for (let length = stringTokens.length; length > 0; length -= 1) candidates.push(`.Values.${stringTokens.slice(0, length).join('.')}`);
   const result = [];
-  for (const absolute of walk(path.join(chartDirectory, 'templates'))) {
-    const lines = fs.readFileSync(absolute, 'utf8').split('\n');
+  for (const relative of chartFiles.names.filter(name => name.startsWith('templates/'))) {
+    const lines = chartFiles.read(relative).toString('utf8').split('\n');
     lines.forEach((line, index) => {
       const matchedPrefix = candidates.find((candidate) => line.includes(candidate));
       if (!matchedPrefix) return;
       const context = lines.slice(Math.max(0, index - 2), Math.min(lines.length, index + 3)).join('\n');
       result.push({
-        path: path.relative(chartDirectory, absolute).replaceAll(path.sep, '/'),
+        path: relative,
         line: index + 1,
         matchedPrefix,
         context,
@@ -97,16 +90,39 @@ function templateEvidence(chartDirectory, tokens) {
     .sort((left, right) => `${left.path}:${left.line}`.localeCompare(`${right.path}:${right.line}`));
 }
 
-function extractChart(key, chart, archive, directory) {
+// The check route reads authenticated members through tar's stdout. No chart
+// is materialized on disk; refresh acquisition remains a separate write route.
+function readChartFiles(key, chart, archive) {
   const archiveBytes = fs.readFileSync(archive);
   assert.equal(sha256(archiveBytes), chart.archiveSha256, `${key}: archive digest differs from the checked-in lock`);
-  const extracted = path.join(directory, 'extracted');
-  fs.mkdirSync(extracted);
-  const untarred = spawnSync('tar', ['--no-same-owner', '-xzf', archive, '-C', extracted], { encoding: 'utf8' });
-  if (untarred.status !== 0) throw new Error(`${key}: chart extraction failed: ${untarred.stderr}`);
-  const children = fs.readdirSync(extracted).map((name) => path.join(extracted, name)).filter((candidate) => fs.statSync(candidate).isDirectory());
-  assert.equal(children.length, 1, `${key}: archive does not contain one chart directory`);
-  return children[0];
+  const listed = spawnSync('tar', ['-tzf', archive], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  assert.equal(listed.status, 0, `${key}: chart member listing failed: ${listed.stderr}`);
+  const verbose = spawnSync('tar', ['-tvzf', archive], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+  assert.equal(verbose.status, 0, `${key}: chart member type listing failed: ${verbose.stderr}`);
+  assert(verbose.stdout.trim().split('\n').every(line => line[0] === '-' || line[0] === 'd'), `${key}: chart contains unsupported nonregular members`);
+  const members = listed.stdout.trimEnd().split('\n');
+  assert(members.every(name => !path.posix.isAbsolute(name) && !name.split('/').some(part => part === '..' || part === '.')), `${key}: chart member path is not canonical`);
+  const roots = new Set(members.map(name => name.split('/')[0]));
+  assert.equal(roots.size, 1, `${key}: archive does not contain one chart directory`);
+  const prefix = `${[...roots][0]}/`;
+  // tar extraction leaves the final regular occurrence at a repeated path.
+  // Preserve that exact overwrite meaning rather than concatenate -O output.
+  const occurrences = new Map();
+  for (const name of members.filter(name => !name.endsWith('/'))) {
+    const relative = name.slice(prefix.length);
+    occurrences.set(relative, (occurrences.get(relative) ?? 0) + 1);
+  }
+  const names = [...occurrences.keys()];
+  const content = new Map();
+  return { names, read(relative) {
+    assert(names.includes(relative), `${key}: chart member is missing: ${relative}`);
+    if (!content.has(relative)) {
+      const extracted = spawnSync('tar', ['-xOzf', archive, `--occurrence=${occurrences.get(relative)}`, prefix + relative], { maxBuffer: 64 * 1024 * 1024 });
+      assert.equal(extracted.status, 0, `${key}: chart member read failed: ${relative}`);
+      content.set(relative, extracted.stdout);
+    }
+    return content.get(relative);
+  } };
 }
 
 function pullChart(key, chart, directory) {
@@ -137,11 +153,7 @@ function inventoryExternalFields() {
 function deriveArtifact(archiveManifest) {
   const fields = inventoryExternalFields();
   const output = { version: 2, generatedBy: 'scripts/vendor-external-helm-authorities.mjs', lockSha256: sha256(fs.readFileSync(lockPath)), archiveManifestSha256: sha256(fs.readFileSync(archiveManifestPath)), charts: {}, templateContexts: {}, fields: {} };
-  const temporaryRoot = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-external-helm-authority-'));
-  try {
-    for (const [key, chart] of Object.entries(lock.charts)) {
-      const directory = path.join(temporaryRoot, key);
-      fs.mkdirSync(directory);
+  for (const [key, chart] of Object.entries(lock.charts)) {
       const archiveEntry = archiveManifest.charts[key];
       assert(archiveEntry, `${key}: vendored chart archive manifest entry is missing`);
       assert.equal(archiveEntry.sha256, chart.archiveSha256, `${key}: vendored archive manifest differs from chart lock`);
@@ -150,11 +162,10 @@ function deriveArtifact(archiveManifest) {
       const archiveBytes = fs.readFileSync(archive);
       assert.equal(archiveBytes.length, archiveEntry.size, `${key}: vendored archive byte count changed`);
       assert.equal(sha256(archiveBytes), archiveEntry.sha256, `${key}: vendored archive bytes changed`);
-      const chartDirectory = extractChart(key, chart, archive, directory);
-      const valuesBytes = fs.readFileSync(path.join(chartDirectory, 'values.yaml'));
+      const chartFiles = readChartFiles(key, chart, archive);
+      const valuesBytes = chartFiles.read('values.yaml');
       assert.equal(sha256(valuesBytes), chart.valuesSha256, `${key}: extracted values.yaml digest differs from the checked-in lock`);
-      const schemaPath = path.join(chartDirectory, 'values.schema.json');
-      const schemaBytes = fs.existsSync(schemaPath) ? fs.readFileSync(schemaPath) : null;
+      const schemaBytes = chartFiles.names.includes('values.schema.json') ? chartFiles.read('values.schema.json') : null;
       if (chart.schemaSha256) {
         assert(schemaBytes, `${key}: locked schema is missing from archive`);
         assert.equal(sha256(schemaBytes), chart.schemaSha256, `${key}: extracted schema digest differs from the checked-in lock`);
@@ -167,7 +178,7 @@ function deriveArtifact(archiveManifest) {
         const tokens = yamlFieldPathTokens(field.fieldPath);
         const upstream = nearestValue(values, tokens);
         const schemaContract = schemaAt(schema, tokens);
-        const templates = templateEvidence(chartDirectory, tokens);
+        const templates = templateEvidence(chartFiles, tokens);
         const templateContextIds = templates.map((template) => {
           const id = sha256(JSON.stringify(stable(template)));
           output.templateContexts[id] ??= template;
@@ -183,9 +194,6 @@ function deriveArtifact(archiveManifest) {
           authorityMode: templateContextIds.length ? 'extracted-template-and-values' : schemaContract ? 'extracted-schema-and-values' : 'extracted-values-nearest-ancestor',
         };
       }
-    }
-  } finally {
-    fs.rmSync(temporaryRoot, { recursive: true, force: true });
   }
   return `${JSON.stringify(stable(output), null, 2)}\n`;
 }

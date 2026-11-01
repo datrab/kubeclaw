@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { gunzipSync, gzipSync } from 'node:zlib';
@@ -114,10 +113,6 @@ function loadCustomResourceSchemas() {
     const archiveBytes = fs.readFileSync(path.join(repositoryRoot, archive.path));
     assert.equal(archiveBytes.length, archive.size, `CONFIG_YAML_AUTHORITY_DRIFT: ${archiveIdentity}: chart archive byte count changed`);
     assert.equal(sha256(archiveBytes), archive.sha256, `CONFIG_YAML_AUTHORITY_DRIFT: ${archiveIdentity}: chart archive bytes changed`);
-    const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-api-crd-'));
-    try {
-      const unpack = spawnSync('tar', ['-xzf', path.join(repositoryRoot, archive.path), '-C', temporary], { encoding: 'utf8' });
-      assert.equal(unpack.status, 0, `${authority.chartKey}: cannot extract vendored CRD authority`);
       const documents = [];
       if (authority.crds) {
         for (const [kind, crd] of Object.entries(authority.crds)) {
@@ -130,10 +125,14 @@ function loadCustomResourceSchemas() {
           documents.push(...YAML.parseAllDocuments(bytes.toString('utf8'), { prettyErrors: false }).map((document) => ({ document, source: crd.source })));
         }
       } else {
-        const chartDirectory = fs.readdirSync(temporary).map((name) => path.join(temporary, name)).find((candidate) => fs.statSync(candidate).isDirectory());
-        const rendered = spawnSync('helm', ['template', 'api-authority', chartDirectory, '--include-crds', '--set', 'crds.install=true'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+        // Helm accepts the authenticated local archive directly; unpacking it
+        // into a writable temporary directory is not part of schema authority.
+        const archivePath = path.join(repositoryRoot, archive.path);
+        const rendered = spawnSync('helm', ['template', 'api-authority', archivePath, '--include-crds', '--set', 'crds.install=true'], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
         assert.equal(rendered.status, 0, `${authority.chartKey}: cannot render vendored CRD authority: ${rendered.stderr}`);
-        const chart = YAML.parse(fs.readFileSync(path.join(chartDirectory, 'Chart.yaml'), 'utf8'));
+        const metadata = spawnSync('helm', ['show', 'chart', archivePath], { encoding: 'utf8', maxBuffer: 64 * 1024 * 1024 });
+        assert.equal(metadata.status, 0, `${authority.chartKey}: cannot read vendored chart metadata: ${metadata.stderr}`);
+        const chart = YAML.parse(metadata.stdout);
         assert(/^v[0-9]+\.[0-9]+\.[0-9]+$/u.test(chart.appVersion), 'API_SCHEMA_APP_VERSION_INVALID');
         documents.push(...YAML.parseAllDocuments(rendered.stdout, { prettyErrors: false }).map((document) => ({ document, source: `${authority.chart}@${authority.version} rendered CRDs`, appVersion: chart.appVersion })));
       }
@@ -154,9 +153,6 @@ function loadCustomResourceSchemas() {
             });
           }
       }
-    } finally {
-      fs.rmSync(temporary, { recursive: true, force: true });
-    }
   }
   for (const { value, context } of discoverExternalChartApiOutputs(repositoryRoot)) {
     if(value.kind!=='CustomResourceDefinition')continue;

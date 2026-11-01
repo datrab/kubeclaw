@@ -1,3 +1,4 @@
+import {localHelmChartFiles, renderLocalHelmChart} from './docs-helm-memory-chart.mjs';
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
 import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose} from './docs-api-top-level-script-purpose.mjs';
@@ -22,7 +23,7 @@ import { documentationExecutableRoleRecipes, assertDocumentationExecutableRole, 
 import { createSerializedOutputRoleClassifier, deriveNativeOperationFacts, nativeOperationFactDigest } from './docs-api-output-role-classification.mjs';
 import { checkCatalogueInputSurface } from './lib/docs-catalogue-input-surface.mjs';
 
-const isReviewedPracticalReaderGraphRoot=root=>root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root;
+const isReviewedPracticalReaderGraphRoot=root=>(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'||root==='/home/node/.openclaw/workspace/tmp/pr13-a91108-local-helm-readonly-20261101')&&fs.realpathSync(root)===root;
 const isSelectedCompilerCapability=value=>['root-selected-compiler-require','cli-native-static-compiler-require','cli-typed-fixture-compiler-require'].includes(value?.kind);
 const installedCompilerTarget=(root,capability,recordDependency)=>capability.kind==='cli-typed-fixture-compiler-require'?cliTypedFixtureCompilerTarget(root,capability,recordDependency):capability.kind==='cli-native-static-compiler-require'?cliNativeCompilerTarget(root,capability,recordDependency):rootSelectedCompilerTarget(root,capability,recordDependency);
 const isImporterResolutionMetadata=value=>value?.kind==='importer-relative-resolution-only-metadata';
@@ -219,7 +220,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/docs-configuration-inventory.mjs",
     "semanticClass": "finite-documentation-runtime-semantics",
-    "recipeSha256": "3924bd072e33962bdd6287fe711bbcf32e596108e03e9df8a3f090687e79107e"
+    "recipeSha256": "f7bcdd459c27a9aca8669d55f80c1fd7b108427f5d995faaa86f0837f37ac4df"
   },
   {
     "source": "scripts/docs-lint-policy-reference.mjs",
@@ -1289,7 +1290,7 @@ function cliStaticAstDescriptor(root, output) {
 function assertCliStaticAstSourcePurpose(root, source) {
  const r=reviewedCliStaticAstProtocols,p=Object.values(r.profiles).find(p=>p.source===source);
  assert(p,'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: source');
- assert((root===r.root||(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))&&process.cwd()===root&&fs.realpathSync(root)===root,'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: canonical root/cwd');
+ assert((root===r.root||isReviewedPracticalReaderGraphRoot(root))&&process.cwd()===root&&fs.realpathSync(root)===root,'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: canonical root/cwd');
  for(const input of r.fixedInputs){const file=path.join(root,input.path);assert(fs.existsSync(file)&&fs.realpathSync(file)===file&&fs.lstatSync(file).isFile()&&hash(fs.readFileSync(file))===input.sha256,'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: bound input '+input.path);}
  const graph=documentationGraphCache.get(root);
  assert(graph?.installedFoundationDependencies?.some(d=>d.capabilityKind==='cli-native-static-compiler-require'),'CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: existing injected compiler/caller route');
@@ -1762,8 +1763,7 @@ function profiles(root, chart) {
 // Require a render witness for every source branch that can emit API YAML.
 // Validation-only branches are not output alternatives. The temporary copy is
 // instrumented; authored sources and published output receive no markers.
-function instrumentChart(root, chart, target) {
-  fs.cpSync(path.join(root,chart),target,{recursive:true});
+function instrumentChart(root, chart, files) {
   const obligations=[];
   for(const source of walkProductSources(root,[`${chart}/templates`],file=>/\.(?:ya?ml|tpl)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -1811,13 +1811,15 @@ function instrumentChart(root, chart, target) {
     }
     let instrumented=bytes;
     for(const insertion of insertions.sort((a,b)=>b.at-a.at)) instrumented=instrumented.slice(0,insertion.at)+insertion.text+instrumented.slice(insertion.at);
-    fs.writeFileSync(path.join(target,path.relative(chart,source)),instrumented);
+    const relative=path.relative(chart,source).replaceAll(path.sep,'/');
+    if(files.has(relative))files.set(relative,Buffer.from(instrumented));
   }
   // Collect helper witnesses after each root template renders. Helper output
   // can be parsed with fromYaml; comments in that intermediate text disappear.
   // The shared root values retain only private instrumentation markers.
   for(const source of walkProductSources(root,[`${chart}/templates`],file=>/\.ya?ml$/u.test(file))) {
-    fs.appendFileSync(path.join(target,path.relative(chart,source)),'\n{{ range $id, $_ := .Values.__docsOutputBranchWitnesses }}{{ printf "# docs-output-branch:%s" $id | nindent 0 }}{{ end }}\n');
+    const relative=path.relative(chart,source).replaceAll(path.sep,'/');
+    if(files.has(relative))files.set(relative,Buffer.concat([files.get(relative),Buffer.from('\n{{ range $id, $_ := .Values.__docsOutputBranchWitnesses }}{{ printf "# docs-output-branch:%s" $id | nindent 0 }}{{ end }}\n')]));
   }
   return obligations;
 }
@@ -1869,18 +1871,15 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
   const result=[];
   const failures=[];
   const rejections=[];
-  const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'docs-api-output-'));
-  try {
     for (const chartFile of chartFiles) {
       const chart=path.dirname(chartFile);
-      const chartCopy=path.join(temporary,path.basename(chart));
+      const transformedChart=localHelmChartFiles(root,chart);
       let obligations=[];
       if(schemaAuthorityOnly) {
-        fs.cpSync(path.join(root,chart),chartCopy,{recursive:true});
         for(const template of walkProductSources(root,[`${chart}/templates`],file=>/\.ya?ml$/u.test(file))) {
-          if(!/^kind:\s*CustomResourceDefinition\s*$/mu.test(fs.readFileSync(path.join(root,template),'utf8')))fs.rmSync(path.join(chartCopy,path.relative(chart,template)));
+          if(!/^kind:\s*CustomResourceDefinition\s*$/mu.test(fs.readFileSync(path.join(root,template),'utf8')))transformedChart.delete(path.relative(chart,template).replaceAll(path.sep,'/'));
         }
-      } else obligations=instrumentChart(root,chart,chartCopy);
+      } else obligations=instrumentChart(root,chart,transformedChart);
       const witnessed=new Set();
       for(const profile of profiles(root,chart)) {
         const rejected=rejectedContracts.find(contract=>contract.chart===chart&&contract.profile===profile.id);
@@ -1888,12 +1887,12 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
           assert.deepEqual(Object.keys(rejected.inputSourceDigests).sort(),profile.inputs.slice().sort(),`API_PRODUCT_REJECTED_PROFILE_INPUT_SET_DRIFT: ${profile.id}`);
           assert.equal(hash(YAML.stringify(profile.values)),rejected.discoveryInputDigest,`API_PRODUCT_REJECTED_PROFILE_DERIVED_INPUT_DRIFT: ${profile.id}`);
         }
-        const input=path.join(temporary,'values.yaml');fs.writeFileSync(input,YAML.stringify(profile.values));
-        const rendered=spawnSync('helm',['template','discovery',chartCopy,'--namespace','default','--kube-version','1.35.0','--include-crds','-f',input],{encoding:'utf8',maxBuffer:64*1024*1024});
+        const input=YAML.stringify(profile.values);
+        const rendered=renderLocalHelmChart(transformedChart,input);
         if (rendered.status !== 0) {
           if(rejected) {
-            const command=['template','discovery',path.join(root,chart),'--namespace','default','--kube-version','1.35.0','--include-crds','-f',input];
-            const observed=spawnSync('helm',command,{encoding:'utf8',maxBuffer:64*1024*1024});
+            const command=['template','discovery',path.join(root,chart),'--namespace','default','--kube-version','1.35.0','--include-crds','-f','-'];
+            const observed=spawnSync('helm',command,{input,encoding:'utf8',maxBuffer:64*1024*1024});
             assert.notEqual(observed.status,0,`API_PRODUCT_REJECTED_PROFILE_UNEXPECTED_SUCCESS: ${profile.id}`);
             assert.equal(observed.stdout,'',`API_PRODUCT_REJECTED_PROFILE_PARTIAL_OUTPUT: ${profile.id}`);
             assert.equal(observed.stderr.trim(),rejected.expectedError,`API_PRODUCT_REJECTED_PROFILE_ERROR_DRIFT: ${profile.id}`);
@@ -1903,7 +1902,7 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
         }
         assert(!rejected,`API_PRODUCT_REJECTED_PROFILE_UNEXPECTED_SUCCESS: ${profile.id}`);
         for(const marker of rendered.stdout.matchAll(/# docs-output-branch:([a-f0-9]{16})/gu))witnessed.add(marker[1]);
-        const authoritative=spawnSync('helm',['template','discovery',schemaAuthorityOnly?chartCopy:path.join(root,chart),'--namespace','default','--kube-version','1.35.0','--include-crds','-f',input],{encoding:'utf8',maxBuffer:64*1024*1024});
+        const authoritative=schemaAuthorityOnly?renderLocalHelmChart(transformedChart,input):spawnSync('helm',['template','discovery',path.join(root,chart),'--namespace','default','--kube-version','1.35.0','--include-crds','-f','-'],{input,encoding:'utf8',maxBuffer:64*1024*1024});
         assert.equal(authoritative.status,0,`API_PRODUCT_HELM_AUTHORITATIVE_RENDER_FAILED: ${chart} ${profile.id}: ${authoritative.stderr}`);
         const clean=authoritative.stdout;
         const chunks=clean.split(/(?:^|\n)---\s*\n/u).filter(chunk=>chunk.trim());
@@ -1921,7 +1920,6 @@ function discoverHelmOutputs(root, {allowRejectedInputs,schemaAuthorityOnly}) {
       const missing=obligations.filter(branch=>!witnessed.has(branch.id));
       if(!schemaAuthorityOnly&&missing.length) failures.push(`API_PRODUCT_HELM_BRANCH_UNDISCOVERED: ${JSON.stringify(missing)}`);
     }
-  } finally {fs.rmSync(temporary,{recursive:true,force:true});}
   for(const rejected of rejectedContracts)assert(rejections.some(entry=>entry.chart===rejected.chart&&entry.profile===rejected.profile),`API_PRODUCT_REJECTED_PROFILE_MISSING: ${rejected.profile}`);
   cache.clear();cache.set(key,{root:path.resolve(root),schemaAuthorityOnly,outputs:result,failures,rejections});
   assert(allowRejectedInputs || !failures.length, `API_PRODUCT_HELM_RENDER_FAILED: ${failures.join("; ")}`);
@@ -2468,7 +2466,7 @@ function checkedCommonErrorMarkdownOutput(root,graph,classify,sources) {
   const profile=reviewedCommonErrorMarkdownOutput;
   if(!sources.includes(profile.source))return null;
   const fail=detail=>assert.fail('API_PRODUCT_COMMON_ERROR_MARKDOWN_PURPOSE_UNQUALIFIED: '+detail);
-  if((root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+  if((root!==profile.root&&!isReviewedPracticalReaderGraphRoot(root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
   const physical=relative=>{
     if(path.posix.normalize(relative)!==relative||path.isAbsolute(relative)||relative.split('/').includes('..'))fail('path boundary');
     const file=path.join(root,relative);
@@ -2623,7 +2621,7 @@ function checkedEventContractDocumentationOutputs(root,graph,classify,sources) {
   const profile=reviewedEventContractDocumentationOutput;
   if(!sources.includes(profile.source))return null;
   const fail=detail=>assert.fail('API_PRODUCT_EVENT_DOCUMENTATION_PURPOSE_UNQUALIFIED: '+detail);
-  if((root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+  if((root!==profile.root&&!isReviewedPracticalReaderGraphRoot(root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
   const physicalTarget=relative=>{
     if(path.isAbsolute(relative)||path.posix.normalize(relative)!==relative||relative.split('/').includes('..'))fail('path boundary');
     const file=path.join(root,relative);
@@ -2809,7 +2807,7 @@ function checkedPublicationYamlValidationInputs(root,graph,classify,sources) {
   const profile=reviewedPublicationYamlValidationInputs;
   if(!sources.includes(profile.source))return null;
   const fail=detail=>assert.fail('API_PRODUCT_PUBLICATION_YAML_INPUT_PURPOSE_UNQUALIFIED: '+detail);
-  if((root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+  if((root!==profile.root&&!isReviewedPracticalReaderGraphRoot(root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
   for(const input of profile.fixedInputs){
     const file=path.join(root,input.path);
     for(let current=file;current!==root;current=path.dirname(current)){
@@ -5491,7 +5489,7 @@ function checkedPublicationNativeValidation(root,graph,classify,sources) {
  const profile=reviewedPublicationNativeValidation;
  if(!sources.includes(profile.source))return null;
  const fail=detail=>assert.fail('API_PRODUCT_PUBLICATION_NATIVE_VALIDATION_UNQUALIFIED: '+detail);
- if((root!==profile.root&&!(root==='/home/node/.openclaw/workspace/tmp/pr13-gov-mnt-practical-reader-61c0a550'&&fs.realpathSync(root)===root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
+ if((root!==profile.root&&!isReviewedPracticalReaderGraphRoot(root))||process.cwd()!==root||fs.realpathSync(root)!==root)fail('canonical root/cwd');
  for(const input of profile.fixedInputs){
   const file=path.join(root,input.path);
   for(let current=file;current!==root;current=path.dirname(current)){
@@ -7393,12 +7391,9 @@ export function discoverExternalChartApiOutputs(root) {
     const archivePath=path.join(root,archive.path);
     assert.equal(hash(fs.readFileSync(archivePath)),archive.sha256,`API_PRODUCT_EXTERNAL_ARCHIVE_DRIFT: ${archive.path}`);
     for(const upgrade of recipe.profile.startsWith('application:')?[false]:[false,true]) {
-      const inlineDirectory=recipe.inline!==undefined?fs.mkdtempSync(path.join(os.tmpdir(),'kubeclaw-docs-external-inline-')):null;
-      const inlinePath=inlineDirectory?path.join(inlineDirectory,'values.yaml'):null;
-      if(inlinePath)fs.writeFileSync(inlinePath,recipe.inline);
-      const args=['template',recipe.release,archivePath,'--namespace',recipe.namespace,'--kube-version',recipe.kubeVersion??'1.35.0',...(recipe.apiVersions??[]).flatMap(value=>['--api-versions',value]),...(recipe.skipCrds?[]:['--include-crds']),'--skip-tests',...(recipe.skipSchemaValidation?['--skip-schema-validation']:[]),...(recipe.values??recipe.inputs.filter(input=>/\.ya?ml$/u.test(input)).map(input=>path.join(root,input))).flatMap(input=>['-f',input]),...(inlinePath?['-f',inlinePath]:[]),...recipe.args,...(upgrade?['--is-upgrade']:[])];
-      const rendered=spawnSync('helm',args,{cwd:root,encoding:'utf8',maxBuffer:64*1024*1024});
-      if(inlineDirectory)fs.rmSync(inlineDirectory,{recursive:true,force:true});
+      assert(recipe.inline===undefined||typeof recipe.inline==='string',`API_PRODUCT_EXTERNAL_INLINE_INVALID: ${recipe.profile}`);
+      const args=['template',recipe.release,archivePath,'--namespace',recipe.namespace,'--kube-version',recipe.kubeVersion??'1.35.0',...(recipe.apiVersions??[]).flatMap(value=>['--api-versions',value]),...(recipe.skipCrds?[]:['--include-crds']),'--skip-tests',...(recipe.skipSchemaValidation?['--skip-schema-validation']:[]),...(recipe.values??recipe.inputs.filter(input=>/\.ya?ml$/u.test(input)).map(input=>path.join(root,input))).flatMap(input=>['-f',input]),...(recipe.inline!==undefined?['-f','-']:[]),...recipe.args,...(upgrade?['--is-upgrade']:[])];
+      const rendered=spawnSync('helm',args,{cwd:root,encoding:'utf8',maxBuffer:64*1024*1024,...(recipe.inline!==undefined?{input:recipe.inline}:{})});
       assert.equal(rendered.status,0,`API_PRODUCT_EXTERNAL_RENDER_FAILED: ${recipe.profile}: ${rendered.stderr}`);
       const documents=YAML.parseAllDocuments(rendered.stdout);
       assert(documents.every(document=>!document.errors.length),`API_PRODUCT_EXTERNAL_RENDER_YAML_INVALID: ${recipe.profile}`);
