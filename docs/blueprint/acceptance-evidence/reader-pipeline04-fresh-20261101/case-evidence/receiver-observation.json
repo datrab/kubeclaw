@@ -1,0 +1,12 @@
+{
+  "idempotencyKey": "run:reader-uncertain-effect:mutate:1:1",
+  "payload": {
+    "operation": "append",
+    "value": "one bounded local mutation"
+  },
+  "payloadSha256": "dab656fa21fc63177aaa990232f5d68693e8dde57c23ed003f5a9b43cd202e6d",
+  "resource": "mutation-service",
+  "effectCommitCount": 1,
+  "authorizationVerified": true,
+  "committedAt": "2026-11-01T00:49:04.362Z"
+}

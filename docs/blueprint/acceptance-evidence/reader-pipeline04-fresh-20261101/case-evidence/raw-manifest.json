@@ -1,0 +1,67 @@
+[
+  {
+    "path": "resource-locks/locks.jsonl",
+    "bytes": 1779,
+    "sha256": "3e08929da50508172a520231da8305340632d8359d64a5ad5d44295294c05dfb"
+  },
+  {
+    "path": "resource-locks/locks.jsonl.append-lock",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "resource-locks/metadata.guard",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "runs/.run-mutation-locks/locks.jsonl",
+    "bytes": 1239,
+    "sha256": "9579e22c02cdce5d0491ca50e238a007d8eea3f3926723cd0f30d8346322371f"
+  },
+  {
+    "path": "runs/.run-mutation-locks/locks.jsonl.append-lock",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "runs/.run-mutation-locks/metadata.guard",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "runs/v2-25cc20491012bd0b56d389c31d450a54a4fd06f1a0d763e8a67c19fd27a73667/effects.jsonl",
+    "bytes": 2300,
+    "sha256": "d6440cfb36bd00dbc30db227ac1835da75e8f01942b5cb294012d7e887b6fc0f"
+  },
+  {
+    "path": "runs/v2-25cc20491012bd0b56d389c31d450a54a4fd06f1a0d763e8a67c19fd27a73667/effects.jsonl.append-lock",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "runs/v2-25cc20491012bd0b56d389c31d450a54a4fd06f1a0d763e8a67c19fd27a73667/events.jsonl",
+    "bytes": 12726,
+    "sha256": "d04514c4dcd67875a960cc33beca5c7328c619abdda09473aa1a70fdebc465d1"
+  },
+  {
+    "path": "runs/v2-25cc20491012bd0b56d389c31d450a54a4fd06f1a0d763e8a67c19fd27a73667/events.jsonl.append-lock",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "runs/v2-25cc20491012bd0b56d389c31d450a54a4fd06f1a0d763e8a67c19fd27a73667/observer-checkpoints.jsonl.append-lock",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "runs/v2-25cc20491012bd0b56d389c31d450a54a4fd06f1a0d763e8a67c19fd27a73667/observer-deliveries.jsonl.append-lock",
+    "bytes": 0,
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "path": "runs/v2-25cc20491012bd0b56d389c31d450a54a4fd06f1a0d763e8a67c19fd27a73667/run-snapshot.json",
+    "bytes": 46064,
+    "sha256": "86ecef0bd9f3a31221208b5ba1e71f0663f7381da2ed1a6313cd888ab45b8185"
+  }
+]

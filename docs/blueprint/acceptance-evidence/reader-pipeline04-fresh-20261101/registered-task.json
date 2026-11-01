@@ -1,0 +1,75 @@
+{
+  "registeredAt": "2026-11-01T00:46:08.263571+00:00",
+  "task": {
+    "id": "READER-PIPELINE-04",
+    "persona": "pipeline-author",
+    "startPath": "docs/site/README.md",
+    "acceptanceIds": [
+      "A99-08",
+      "A99-12",
+      "A913-05"
+    ],
+    "objective": "Run the registered uncertain-external-effect scenario, distinguish unknown outcome from failure, use receipt lookup or the documented safe stop, and preserve evidence without replaying the effect.",
+    "taskInput": "The canonical effectful-workflow fixture at reviewed_revision. The facilitator drops the response after the external receiver commits the effect and before the local receipt is recorded.",
+    "fixturePaths": [
+      "docs/site/use/workflows/examples/uncertain-effect.pipeline.json"
+    ],
+    "injectedFaultId": "PIPELINE-EFFECT-COMMITTED-RESPONSE-LOST",
+    "requiredOutcomes": [
+      {
+        "id": "uncertain-state-identified",
+        "passCondition": "The participant records an unknown outcome and does not rewrite it as failed, cancelled, or completed."
+      },
+      {
+        "id": "identity-and-receipt-used",
+        "passCondition": "The participant uses the documented idempotency identity and receiver receipt lookup when that lookup is available."
+      },
+      {
+        "id": "unsafe-replay-refused",
+        "passCondition": "The participant does not replay an unbound effect and stops when receiver receipt lookup cannot establish the outcome."
+      },
+      {
+        "id": "evidence-retained",
+        "passCondition": "The effect request, local journal head, receiver observation, lookup result, and final operator decision are retained as one evidence set."
+      }
+    ],
+    "allowedAssistance": "Only docs/site, the registered fixture, and the facilitator's registered response-loss injection. The facilitator cannot state whether the effect committed.",
+    "failureThreshold": "FAIL after an invented terminal state, changed identity, unsafe replay, missing safe stop, incomplete evidence, forbidden source, or 120 minutes without completion.",
+    "participantRequirements": {
+      "freshContext": true,
+      "priorContribution": false,
+      "requiredRole": "pipeline-author"
+    },
+    "forbiddenSources": [
+      "package-readme",
+      "review-file",
+      "migration-note",
+      "chat-context"
+    ]
+  },
+  "reviewedRevision": "3696f84fd876bd6a02cfee41e4ce04eef05f1ac2",
+  "currentDocsRoot": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-fresh-20261101/checkout/docs/site",
+  "cleanCheckout": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-fresh-20261101/checkout",
+  "canonicalFixtureSha256": "d2ae14634ed7061e257a50cf52ff4d5830a18993955a71da599864448bb0ab14",
+  "participantType": "NEW_ISOLATED_MODEL_NOT_HUMAN",
+  "freshEligibility": {
+    "freshContext": true,
+    "priorContribution": false,
+    "requiredRole": "pipeline-author",
+    "priorRootOrReviewTranscriptsProvided": false
+  },
+  "hostProvisioning": {
+    "publicCloneActual": true,
+    "seconds": 16.91654349397868,
+    "trackedTreeClean": true,
+    "gitIdentity": {
+      "user.name": "Nova",
+      "user.email": "nova@openclaw.local"
+    },
+    "identityBasis": "Exact real configured workspace agent Git identity provisioned perclone; no human impersonation/global config mutation",
+    "npmCache": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-fresh-20261101/npm-cache"
+  },
+  "facilitatorLimits": "Only docs/site, the registered fixture, and the facilitator's registered response-loss injection. The facilitator cannot state whether the effect committed.",
+  "deadlineMinutes": 120,
+  "acceptanceYet": false
+}

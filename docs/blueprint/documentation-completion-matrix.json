@@ -119229,6 +119229,42 @@
       "newAcceptedGates": [],
       "newAcceptedRequirements": [],
       "scope": "Actual environment precondition failure only; no new whole acceptance. Real author setup and mandatory generator chain required before new eligible attempt."
+    },
+    {
+      "id": "READER-PIPELINE-04-fresh-model-20261101",
+      "taskId": "READER-PIPELINE-04",
+      "reviewedDocumentationRevision": "3696f84fd876bd6a02cfee41e4ce04eef05f1ac2",
+      "executionRevision": "3696f84fd876bd6a02cfee41e4ce04eef05f1ac2",
+      "participantType": "fresh independent MODEL pipeline-author, not human",
+      "verdict": "PASS",
+      "originalOutcomes": [
+        {
+          "id": "uncertain-state-identified",
+          "verdict": "PASS"
+        },
+        {
+          "id": "identity-and-receipt-used",
+          "verdict": "PASS"
+        },
+        {
+          "id": "unsafe-replay-refused",
+          "verdict": "PASS"
+        },
+        {
+          "id": "evidence-retained",
+          "verdict": "PASS"
+        }
+      ],
+      "independentDecision": "docs/blueprint/acceptance-evidence/reader-pipeline04-fresh-20261101/original-case-decision.json",
+      "evidence": "docs/blueprint/acceptance-evidence/reader-pipeline04-fresh-20261101/participant-report.md",
+      "registeredAcceptanceIds": [
+        "A99-08",
+        "A99-12",
+        "A913-05"
+      ],
+      "newAcceptedGates": [],
+      "newAcceptedRequirements": [],
+      "scope": "Exactly original localresponse-loss-only case, actualnativeCorefailedreceipt/blocked preserved while externaloutcomeunknown; originalidentity/actual501lookup/no replay/explicit safeSTOP/retention+cleanup independentlyproven. Other whole-case/gate/human/deployed/AT/contrast/AP10 duties not inferred."
     }
   ],
   "pipeline04PublicationCheckpoint20261101": {

@@ -1,0 +1,3 @@
+Participation began by reading only registered-task.json, then docs/site/README.md, workflow index, uncertain-effect.md, diagnosis/recovery sections and developer handbook clean-checkout section. Selected Source remains the registered full revision; handbook older baseline is explicitly overridden by the selected journey. No implementation or package README inspected. Expected transport failure is distinct from unknown external outcome; no replay or recovery is authorized.
+
+After inspecting the actual original request and native failed receipt, matched its key/resource/payload to receiver observation. HTTP 501 supplies no reconciliation authority. Kept external outcome unknown and selected safe stop. Complete copy compared before cleanup; no retry or recovery attempted.

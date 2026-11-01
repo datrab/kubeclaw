@@ -1,0 +1,7 @@
+{
+  "exitCode": 1,
+  "signal": null,
+  "quiescent": true,
+  "fault": "Receiver fsync committed the identified effect, then destroyed the response socket before sending headers. No prior signal or interruption was injected; actual Core handling finished normally.",
+  "priorKill": false
+}

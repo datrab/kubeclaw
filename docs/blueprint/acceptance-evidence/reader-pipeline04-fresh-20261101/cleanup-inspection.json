@@ -1,0 +1,11 @@
+{
+  "at": "2026-11-01T00:49:29.892101+00:00",
+  "activeCwdFdReferences": [],
+  "unreadableOrRaced": 50,
+  "fixturePort46413Listeners": [],
+  "scope": "Readable /proc cwd and fd; listener TCP tables; helper separately verified child quiescence",
+  "removedOwnedPaths": [
+    "/home/node/.openclaw/workspace/tmp/reader-pipeline04-fresh-20261101/checkout",
+    "/home/node/.openclaw/workspace/tmp/reader-pipeline04-fresh-20261101/npm-cache"
+  ]
+}

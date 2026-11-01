@@ -1,0 +1,12 @@
+{
+  "startedAt": "2026-11-01T00:55:57.232669+00:00",
+  "argv": [
+    "node",
+    "scripts/check-ap09-acceptance-contract.mjs"
+  ],
+  "sourceRevision": "3696f84fd876bd6a02cfee41e4ce04eef05f1ac2",
+  "scope": "Actual unchanged originalreceiver after append-onlyfreshcase registration; no native/browser/Source scope rerun",
+  "exitCode": 0,
+  "elapsedSeconds": 63.31834879901726,
+  "endedAt": "2026-11-01T00:57:00.551015+00:00"
+}

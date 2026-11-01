@@ -1,0 +1,77 @@
+{
+  "status": "PASS_ORIGINAL_READER_PIPELINE_04_LOCAL_FRESH_MODEL_CASE",
+  "taskId": "READER-PIPELINE-04",
+  "reviewedSource": "3696f84fd876bd6a02cfee41e4ce04eef05f1ac2",
+  "independentDecision": "Allfour originalrequired outcomes PASS from actualfresh commands/rawstrictjournals/heads/receiverlookup/explicitoperatordecision/exportcleanup, notselfreportedoutcomes alone. No whole gate awarded.",
+  "eligibility": {
+    "decision": "PASS_AT_REGISTERED_MODEL_PROVENANCE_SCOPE",
+    "basis": "Preregisterednewisolatedpipelineauthor/no priorcontribution/context/rootreviewtranscripts. Participantreport/reasoning consistent;notauthor/reviewer reused. Realpublicclone exactSource andlocalagentidentity provisioning are hostprerequisites, notsolution/code/test assistance. Not humanidentity or omniscientindependentmodelmemoryproof.",
+    "allowedSources": "Registeredtask+docs/sitecentralentry/workflow/guide/diagnosis/recovery/handbook andcanonicalfixture/namedhelper only. Initialdocreads predaterecorder and are documentednavigation inreasoning.md; nofulltimedreadarchiveclaimed. No forbiddenpackageREADME/review/migration/chat/implementationfallback orfacilitatorcorrection recorded.",
+    "facilitatorBoundary": "Registeredresponse-lossinjection encodedalreadyreviewedhelper; actualno-priorkillcase. No facilitatorverbalcommitassertion recorded; participantindependentlyreadpermittedrawreceiverobservation. ActualpublicSource verification usesprovisioning/setup/source receipts, notlocalclone substitution.",
+    "threshold": "No inventedterminal,changedidentity,unsafereplay,missingsafeSTOP,incompleteevidence,forbiddensourceortimeout found. Registered00:46:08 tocompleted00:49:49 under4minutes, below120min."
+  },
+  "actualProvenance": {
+    "Source": "setup.log cleanHEAD3696f84f andfixtureSHA d2ae14634ed7061e257a50cf52ff4d5830a18993955a71da599864448bb0ab14; source.json exactsame. Publicclone provisionreceipt exists. Initialandfinaltrackedstatusclean; finalstatusfile0bytes.",
+    "orderedCommands": "Sevenrecordedcommandgroups sequential00:48:07->00:49:20, allexit0. Lockedinclude-dev ignoredhooks+modules then baseline0 then documentedrun0 theninspect0/readraw0 thenexplicitstop/export/diff/cleanup0. RealCore1/null is nestedexpectedfailedlocalprocess, notrelabelledpipelinePASS.",
+    "readOnlyIndependentValidation": "Reviewer usedactualmaintainedcurrentnative parseJournalRecords against retainedEXPORTEDrawjournals only (explicitlyallowedreadonly), notrerunCore/fixture or requiredeletedliveRoot. Strictnativeparser accepted;13rawmanifestrows match BOTHstate andrawcopies byte/hash, no mismatches.",
+    "strictJournal": "Effects exactlyrequested/accepted/completedreceiptstatusfailed withadapter.effect_failed/fetchfailed; onecanonicalrun.blocked terminal. Unknownassessment didNOTreplace actualcanonicalfailure/blocked state."
+  },
+  "outcomes": [
+    {
+      "id": "uncertain-state-identified",
+      "decision": "PASS",
+      "proof": "Independentparticipantreasoning/report distinguish actualfailedtransportreceipt/Coreblocked fromunknownthroughsupportedreconciliationexternal outcome. Separateoperator-decision recordsunknown andsafeSTOP, rawactualreceipt preserved. Receiveronecommitobservation retainedasobserved, notpromotedCorecompletedreceipt."
+    },
+    {
+      "id": "identity-and-receipt-used",
+      "decision": "PASS",
+      "proof": "RawrequesteffectID effect:json-utf16-v1:509e0640a64eac142ff50ee55df6c5713b21ca8fcc6ac31550b8f0877a46ad2b; originalkey run:reader-uncertain-effect:mutate:1:1; resource runtime.agent/mutation-service; appendpayload exactlymatchesreceiver. ActualGEToriginalkey501 RECEIVER_RECEIPT_LOOKUP_UNAVAILABLE retained; no availableimplementedreceiptrouteignored."
+    },
+    {
+      "id": "unsafe-replay-refused",
+      "decision": "PASS",
+      "proof": "Documentedhelperrun invokedONCE; actualCoreblocked/1attempt, no recover/import/newattempt/casekeyresendcommands. Receiverledger2rows:1separatepreflight+1originalcasekey, caseidentityguarddifferentkey409/ledgerunchanged/noactualeffectresent. Explicitoperatorstop command afterinspection; not automatic fresh choice fromhelperrun. Originalidentity unchanged."
+    },
+    {
+      "id": "evidence-retained",
+      "decision": "PASS",
+      "proof": "One exportedcase-evidence containscanonicalgraph/platform/Source/validation/command, actualprocess/output, originalrequest+receipt/rawheads, receiverobservation/ledger/controls/lookup andoperator-decision. Actualcp-R/diff-qr0 BEFOREcleanup.13rawmanifestrows equalstate+rawcopies. Finalretainedcompletebundle remainsafterownedcaseroot/checkout/cache removal; no needrecreateliveRoot."
+    }
+  ],
+  "exactHeads": {
+    "eventHead": "sha256:8b2141c8dcebed531ed5007170ce6bc64effddb2c407058340d093abf552fe2d",
+    "effectHead": "sha256:29549e28b40f7894e472793461d43c17571a5bb11ed6d6a1b544bd48ef34d55d",
+    "equalOperatorDecision": true
+  },
+  "faultFaithfulness": "Actualreceiverfsynccommit00:49:04.362 precedesfailedlocalreceipt00:49:04.378. process.json1/null/quiescent/priorKillfalse; qualifiedhelperdropssocketbeforeheadersandallowactualhandling, no compoundpre-dropkill. Authorcompoundvariantandallpriorfailures remainunchanged.",
+  "cleanup": {
+    "documentedCase": "stop-export.log removecase0/readableactiveReferenceProbe0 with62unreadable/racedexplicitlycounted, parentrmdir0.",
+    "checkoutCache": "cleanup-inspection.json actualreadablecwd/fdusers[]/fixtureportlisteners[],50unreadable/racedexplicitlyretained; exactownedcheckout/cache removedafter npmlogs retained. NotclaimglobalOSabsence/isolation proof.",
+    "retainedBundleFiles": 49,
+    "retainedBundleBytes": 139933
+  },
+  "facetMembership": {
+    "registeredAcceptanceIds": [
+      "A99-08",
+      "A99-12",
+      "A913-05"
+    ],
+    "reusableMeaning": "Exactlyoneoriginaluncertain-effectpipelineauthor practicalMODELtask andfouractualoutcomes; boundedlocalcasefacet available toeachregisteredgate only.",
+    "noAutomaticWholeGate": [
+      "A99-08",
+      "A99-12",
+      "A913-05",
+      "A913-04"
+    ],
+    "remaining": "Eachwholegateretainsotherregisteredcases/personas/requiredconditions andactualindependentwholedecision. A913-04notanacceptanceIdofthiscase; no extrapolation. No PUB/AT/fullcontrast/human/deployed/genericreconciler/globalAPI/defaultgenerator/AP10award."
+  },
+  "evidenceRead": [
+    "registered-task.json",
+    "checkout-provisioning.log (actual clone completion and detached3696f84f), setup/source records",
+    "participant/report.md/outcomes.json/reasoning.md",
+    "participant/commands.jsonl andsetup/stop-export/request/inspect evidence",
+    "participant/case-evidence rawstrictjournals+manifest+process/runoutput/receiverledger/lookup/operatordecision",
+    "participant/cleanup-inspection.json/final-source-status.log"
+  ],
+  "actions": "Independentreadonlyactualexport strictnativeparse/hashcomparison permittedbytask; nooriginalcase rerun, state/main mutation, children oractorhints."
+}

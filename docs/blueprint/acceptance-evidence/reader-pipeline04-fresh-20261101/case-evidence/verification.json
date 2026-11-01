@@ -1,0 +1,23 @@
+{
+  "runId": "run:reader-uncertain-effect",
+  "runLifecycle": "blocked (actual Core terminal)",
+  "externalOutcome": "unknown after response loss; failed transport receipt does not prove remote effect failure",
+  "effectId": "effect:json-utf16-v1:509e0640a64eac142ff50ee55df6c5713b21ca8fcc6ac31550b8f0877a46ad2b",
+  "idempotencyKey": "run:reader-uncertain-effect:mutate:1:1",
+  "resource": {
+    "type": "runtime.agent",
+    "canonicalId": "mutation-service"
+  },
+  "eventHead": "sha256:8b2141c8dcebed531ed5007170ce6bc64effddb2c407058340d093abf552fe2d",
+  "effectHead": "sha256:29549e28b40f7894e472793461d43c17571a5bb11ed6d6a1b544bd48ef34d55d",
+  "localReceipt": {
+    "status": "failed",
+    "code": "adapter.effect_failed"
+  },
+  "localTransportReceiptPreserved": true,
+  "authoritativeTerminalPreserved": true,
+  "receiverObservationFile": "receiver-observation.json",
+  "lookup": "unavailable; no Core reconciliation or result import attempted",
+  "mutationNotReplayed": true,
+  "rawBytesPreserved": true
+}

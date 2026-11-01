@@ -1,0 +1,7 @@
+{
+  "sourceRoot": "/home/node/.openclaw/workspace/tmp/reader-pipeline04-fresh-20261101/checkout",
+  "revision": "3696f84fd876bd6a02cfee41e4ce04eef05f1ac2",
+  "fixtureSha256": "d2ae14634ed7061e257a50cf52ff4d5830a18993955a71da599864448bb0ab14",
+  "node": "v24.22.1",
+  "scope": "Actual Core CLI and real adapters; trusted private teaching stage, not deployment or isolation proof"
+}
