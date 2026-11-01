@@ -1,0 +1,33 @@
+{
+  "at": "2026-11-01T03:46:26.528050+00:00",
+  "steps": [
+    {
+      "operation": "prepare",
+      "exitCode": 0,
+      "seconds": 3.4703823040472344,
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site/use/workflows/examples/minimal-compiled-redis.mjs",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "prepare",
+        "/tmp/kubeclaw-reader-pipeline01"
+      ]
+    },
+    {
+      "operation": "gateway-identities",
+      "exitCode": 0,
+      "seconds": 1.366309467004612,
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/docs/site/use/workflows/examples/minimal-compiled-redis.mjs",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "gateway-identities",
+        "/tmp/kubeclaw-reader-pipeline01"
+      ]
+    }
+  ],
+  "sourceRevision": "4fb294496bf7c9dc86ec97579054a47fd14711a2",
+  "workflowOrModelDispatched": false,
+  "originalAcceptanceGranted": false,
+  "cleanup": "pending owned prepared-fixture reconciliation"
+}

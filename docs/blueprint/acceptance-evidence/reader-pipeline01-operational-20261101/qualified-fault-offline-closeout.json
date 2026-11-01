@@ -1,0 +1,35 @@
+{
+  "at": "2026-11-01T03:14:09.355520+00:00",
+  "steps": [
+    {
+      "operation": "inspect",
+      "exitCode": 0,
+      "seconds": 5.022880687029101,
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/operational-successor-v6-original-stop-20261101/operational-compiled-redis.mjs",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "inspect",
+        "/tmp/kubeclaw-reader-pipeline01",
+        "redis-unreachable"
+      ]
+    },
+    {
+      "operation": "cleanup",
+      "exitCode": 0,
+      "seconds": 5.072922385996208,
+      "argv": [
+        "node",
+        "/home/node/.openclaw/workspace/operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/operational-successor-v6-original-stop-20261101/operational-compiled-redis.mjs",
+        "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
+        "cleanup",
+        "/tmp/kubeclaw-reader-pipeline01",
+        "redis-unreachable"
+      ]
+    }
+  ],
+  "legacyReportBeforeSHA256": "952e384c34345065943df92763b99a5a099f7fb051268ff4b7575e901f528152",
+  "workflowRedispatched": false,
+  "credentialsUsed": false,
+  "originalAcceptanceGranted": false
+}

@@ -1,0 +1,138 @@
+{
+  "verdict": "PASS_ACTUAL_HEALTHY_AUTHOR_CORE_AND_REDIS_CASE_ONLY",
+  "independentProof": "independent-healthy-author-verification.json + read-only native verification script",
+  "actual": {
+    "files": 473,
+    "bytes": 9935123,
+    "wholeExportBytesBeforeAfterExact": true,
+    "canonicalDigest": "sha256:d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b",
+    "runId": "run:first-project-001",
+    "successfulFirstAttemptStages": 8,
+    "events": 224,
+    "journalHead": "sha256:bc6d8edabf8e351e25afeb008fe8f89fb9efff3b3c4a386b56c053958b03bfc6",
+    "auditDigest": "sha256:38db60eb7bb367a5a19a3e169aa15f3ae026486ce6c6bfb1bc251e1b85b3ef2e",
+    "originalArtifacts": 10,
+    "busterJobs": [
+      {
+        "stage": "test-app",
+        "jobId": "job:3d02fc6bf24e3fa551baf1fa8937d17c0dd05601d99444bfdd37677ac9801064",
+        "requestDigest": "sha256:2bfc7a3819a6198d5b70dab676be804eea71f199efbed2c6232022fc1a619b0c",
+        "planDigest": "sha256:a66f08a6b29b4e01e5b953c8e532d2d5c2f1649f817af708c83db3262193ba96",
+        "sourceRevision": "git:42d93a2f5b8984f475df309ed1202d1a08d96cb3",
+        "sourceTree": "git:bd1f1df6ef1d515c3ab560e45b18de83e6aa46e7",
+        "archiveDigest": "sha256:7b435b005632ffd92254c8fecce2e72d5f3838138155977e02a071e8e736e8b0",
+        "sourceAttestationPresent": true,
+        "resultDigest": "sha256:2568f7d744eb8356eaa742b810fe96a45c90cd7711f0f7b021074117e9639c75",
+        "resultContentDigest": "sha256:b6f9f4b1c903546127d61d121f52e8cd73060d9762d26e55c623825d134956cb",
+        "decisionDigest": "sha256:6c55f1c1acb9b98532f8909c66f01b217508b2677bbe0979b32d29a0c1940dfb",
+        "decisionArtifactDigest": "sha256:38ebaf49ceace735c10498a8ec387e1f2655491f890aaf633b72549391226c7a",
+        "evidenceDigests": [
+          "sha256:3f5d9d1e0e4cf55ca572b9887cb14c7f6b1a0eec16470c531c39d5155a47f2c0"
+        ],
+        "attempts": [
+          {
+            "attemptId": "attempt:998e48007135bdb636e0457b53722a04723942b57cc28f395328f2ca4552696c",
+            "outcome": "passed",
+            "exitCode": 0,
+            "receipt": {
+              "receiptDigest": "sha256:0123b2fc63084b997e6696f7e14ad261d937fcf28ea7dbfa103979429b0556f5",
+              "receiptId": "receipt:cedf5816fc393b88b5933fbc33d4fd378b3265358e9f4b6277a64010f49d376a"
+            },
+            "provider": {
+              "contentDigest": "sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675",
+              "contractId": "kubeclaw.direct-command@1",
+              "packageId": "kubeclaw.direct-command",
+              "packageVersion": "1.0.0",
+              "registrationId": "command"
+            }
+          }
+        ]
+      },
+      {
+        "stage": "final-test",
+        "jobId": "job:4d1705014bb237d6b6d248dd92cad23ed77864c4cfcd323b4af70225216198ad",
+        "requestDigest": "sha256:08d61633853f88e863b9873904614dcf530b95d22bf2336dd8c7e5171d4edd14",
+        "planDigest": "sha256:bfdcebc316a8280a36dc1089422851aedcefa434cee9861f1f4d4bc442335c0a",
+        "sourceRevision": "git:42d93a2f5b8984f475df309ed1202d1a08d96cb3",
+        "sourceTree": "git:bd1f1df6ef1d515c3ab560e45b18de83e6aa46e7",
+        "archiveDigest": "sha256:7b435b005632ffd92254c8fecce2e72d5f3838138155977e02a071e8e736e8b0",
+        "sourceAttestationPresent": true,
+        "resultDigest": "sha256:b6db10089e2d6c38b8baf9fea0d548dcc921d86a88dbedb0d83b37589f5a6a28",
+        "resultContentDigest": "sha256:7d63d45cfcd32eb529c843877961cbac487ba1c78af1ae22c00058f1eba96de7",
+        "decisionDigest": "sha256:b9845be4e944d3c7677bd1f9764ee88fcab6565f3af1eda193c9062acf211244",
+        "decisionArtifactDigest": "sha256:c8d998b078db530e001768ca0f93c0504b746a4f2f80ddf22632148bcd2393df",
+        "evidenceDigests": [
+          "sha256:622bb2b22d53a4c43140c1e5786dfec4809a470631ee7756db8608b2a3b6763d"
+        ],
+        "attempts": [
+          {
+            "attemptId": "attempt:430999be282c4ac5a7bebb35dc1b21d4dd32f50beb7d67333072a60b61a02b24",
+            "outcome": "passed",
+            "exitCode": 0,
+            "receipt": {
+              "receiptDigest": "sha256:440f9124091756e29344054fdb58c33b43d3b95df5660f544c9fe78775b9da36",
+              "receiptId": "receipt:ad9c06054bb7a87bf985f8419bbe03e57d5ee3c4bdc4947cdf070726f107c990"
+            },
+            "provider": {
+              "contentDigest": "sha256:fdefbf56980a538ef77a4a20e3caacff4627752f93d6bd91609304de541be675",
+              "contractId": "kubeclaw.direct-command@1",
+              "packageId": "kubeclaw.direct-command",
+              "packageVersion": "1.0.0",
+              "registrationId": "command"
+            }
+          }
+        ]
+      }
+    ],
+    "redis": {
+      "status": "PASS_ACTUAL_SAME_RUN_RAW_REDIS_JOIN",
+      "boundEndpoint": "redis://127.0.0.1:58919",
+      "authenticatedEmptyDatabaseBeforeRun": true,
+      "rawCollection": "redis-stream-raw/collection-cb779f7d-eb63-467f-aff0-6be09f7c6fb1",
+      "expectedSubscribedEvents": 224,
+      "streamCount": 12,
+      "rowCount": 224,
+      "exactNativeSnapshotBoundObserver": {
+        "schemaVersion": "registration-provenance.v2",
+        "package": {
+          "schemaVersion": "package-provenance.v2",
+          "package": {
+            "pluginId": "kubeclaw.telemetry-observer",
+            "apiVersion": "pipeline-plugin-v2",
+            "packageVersion": "1.0.0",
+            "contentDigest": "sha256:4651d90115a488d986e7504e19840dcd1cf3e8995851ae7c128462989edcb5d1"
+          },
+          "source": {
+            "type": "builtin",
+            "canonicalReference": "local:/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/common/plugins/telemetry-observer"
+          },
+          "canonicalPath": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery/skills/common/plugins/telemetry-observer",
+          "trustScope": "trusted_first_party",
+          "trustEvidence": {
+            "method": "builtin_allowlist",
+            "verifier": "kubeclaw-platform-v2",
+            "verifiedAt": "2026-11-01T03:00:50.266Z"
+          },
+          "resolvedAt": "2026-11-01T03:00:50.266Z"
+        },
+        "surface": "observer",
+        "registrationId": "telemetry"
+      },
+      "allPayloadsDeliveriesCheckpointsJoined": true,
+      "allRawQueryReceiptsHashesAndByteCountsVerified": true
+    }
+  },
+  "meaning": "New actual author healthy run, inspect and export/cleanup all0 established, not merely Source proposal. Exact canonical compiler graph/8stageCore/native audit/10original blob bytes plus2actual signed-source Buster results/evidence/import/recomputed decisions independently retained and verified. New missing Redis facet now proved from immutable full raw CLI response bytes:12streams224rows join224same-run native subscribed events, completed deliveries and checkpoints using frozen run actual bound observer provenance, native redaction/envelope and stream identities. Endpoint bound to actual probe/platform/result. No catalogue-provenance substitution.",
+  "sourceAttestationLimit": "Retained signed source envelopes and actual Buster admitted/completed records, dispatch/import/result/evidence/decision native consistency independently verified. Ephemeral trust public key was not retained in this358file export; no claim of independent cryptographic signature re-verification. Result receipts are digest-bound native authority records, not separately Ed25519-signed result objects.",
+  "cleanup": "Actual healthy-export-and-cleanup command0 retained; complete473file export hash/size vector independently matches all retained files before/after verification. No need for live original root after documented cleanup. Separate Redis owner lifecycle recorded in attempt progress; no production cleanup inferred.",
+  "exactRemainingGaps": [
+    "Separate redis-unreachable actual attempt failed before verifier on empty-file parsing; NOT qualified, no successful fault/SAFE_STOP result inferred from healthy case.",
+    "Original participant effective-default explanation and dependency-failure bounded-action outcome must be actually completed by eligible fresh reader; author case and helper output are not independent reader acceptance.",
+    "No automatic original PIPE01 whole case, A99-12/A912-12/A91304/A91305 whole gate, human/deployment/AT/PUB acceptance."
+  ],
+  "priorFailures": "Earlier CLI loader127, r2 catalogue-provenance collector failure and current separate fault failure remain immutable. Healthy3success does not rewrite them.",
+  "exportOrReceiptWrites": false,
+  "newRuntimeModelsServices": false,
+  "mainWrites": false,
+  "freshActorConsumed": false
+}

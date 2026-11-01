@@ -1,0 +1,13 @@
+{
+  "startedAt": "2026-11-01T04:04:48.524794+00:00",
+  "endedAt": "2026-11-01T04:05:28.357995+00:00",
+  "sourceRevision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+  "argv": [
+    "/home/node/.openclaw/workspace/operations/pr13/run-reader-env.sh",
+    "node",
+    "scripts/docs-reader/check-search.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 39.8331975749461,
+  "scope": "Actual current artifact search only; no assistive/human/freshreader/gate acceptance"
+}

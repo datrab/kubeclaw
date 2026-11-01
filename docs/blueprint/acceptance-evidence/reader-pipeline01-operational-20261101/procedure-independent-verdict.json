@@ -1,0 +1,40 @@
+{
+  "scope": "V3 only PUBLIC-IDENTITY-01 and PUBLIC-EXPORT-02 corrections; unchanged V2/V6 scopes reused",
+  "Source": "PASS",
+  "Reader": "PASS_PROCEDURE_COVERAGE_NOT_ACTUAL_FRESH_OUTCOMES",
+  "Quality": "PASS",
+  "materialFindings": [],
+  "contextSHA256": "f5db27fa94b7187d5403de35eac92d5a08abddc7a50d4d4ff3542cd72aada85b",
+  "candidateHashes": {
+    "docs/site/use/workflows/README.md": "f2822fe0e0fa86354802c08daaf18f752e04775df1c1bad70b2059b353b41460",
+    "docs/site/use/workflows/examples/minimal-compiled-redis.mjs": "c530079e5b2ece5a78d37458c5095c334f7be594118013e3485f743f006000f4",
+    "docs/site/use/workflows/examples/minimal-redis-inspection.mjs": "36f779e737df06c05dc89c3d37f8173847f2a0f60bed7a3a547ce55426557f86",
+    "docs/site/use/workflows/examples/minimal-redis-verification.mjs": "4dc9eb32db87ae0097e7a0031d4657086841df6ef32bf4c4a36ec7cccf366917"
+  },
+  "findingDisposition": {
+    "PUBLIC-IDENTITY-01": "Closed at documented Source/procedure scope: explicit gateway-identities for each prepared case performs only authorized POST agents_list{}, selects exactly one result.details.agents id/model, binds canonical forge stage and exact configured target; exclusive receipt binds Source revision/canonical SHA and run preflight refuses selection changes. Actual protected Gateway observation remains required before runtime, not supplied by synthetic controls.",
+    "PUBLIC-EXPORT-02": "Closed: legacy failed inspector retention is explicitly historical author r3; fresh exports retain actual own diagnostics."
+  },
+  "handlerMeaning": [
+    "Canonical forge implementation stage mapping is explicit; no implicit role/model inference from runtime success",
+    "HTTPS or literal loopback HTTP tools endpoint without URL credentials/query/fragment; redirects refused; 30-second abort and 1MiB response bound",
+    "Only read-only agents_list with empty args; canonical details.agents parser; failed/absent/duplicate/mismatched target refuses",
+    "No token/raw response retained in safe selected receipt; hashes bind observed request/response; wx0600 receipt refuses replacement",
+    "Installed clean same-Source/canonical ownership guards precede lookup; run receipt matching precedes probe and dispatch"
+  ],
+  "controlScope": "Reviewed whole local HTTP call-through positive and twelve negative controls; synthetic registry/token, no live Gateway/model/session evidence. No controls rerun.",
+  "originalFiveProcedureCoverage": {
+    "pipeline-validates": "canonical compiler equality plus documented schema/registry identities",
+    "minimal-run-succeeds": "healthy authoritative eight-stage Core/audit/native artifacts and same-run Redis join",
+    "effective-defaults-explained": "defaults command plus finite documented authority table; actor explanation still required",
+    "runtime-identities-resolve": "documented native registry identities plus selected Gateway forge target agent/model registry command and admitted actual providers/grants; actor must retain both finite observations",
+    "failure-action-is-bounded": "separate declared fault exact native persisted nonterminal state, explicit actor SAFE_STOP, no replay/reset, exact custody cleanup"
+  },
+  "limits": [
+    "No fresh participant/original award or new actual runtime success",
+    "Root protected actual Gateway identity command remains required",
+    "Source commit/publication metadata/current artifact and fresh reader remain pending",
+    "Prior V4/V5 failures and actual exit13 nonterminal fault remain historical unchanged",
+    "Native healthy/fault and installed Source guard qualifications reused only unchanged code"
+  ]
+}

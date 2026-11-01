@@ -1,0 +1,74 @@
+{
+  "scope": "Original READER-PIPELINE-01 fault-condition interpretation only; not original participant acceptance",
+  "interpretation": "Core success is required for the healthy case, not the fault case. Persisted-state identification plus bounded documented SAFE_STOP can satisfy the fault outcome despite actual exit13/no terminal.",
+  "originalTaskUnchangedFromB023": true,
+  "originalOutcome": {
+    "id": "failure-action-is-bounded",
+    "passCondition": "For the Redis fault, the participant identifies the persisted state, does not use unbounded retry, and selects the documented stop or recovery action."
+  },
+  "observedNegatives": [
+    "Core exit13 with unsettled top-level await; stdout empty; no authoritative run terminal",
+    "Only one observer started/failed attempt; not five-attempt exhaustion",
+    "No observer checkpoint; no fault-run audit success",
+    "Operational inspector stricter Core-success qualification remains failed, not rewritten"
+  ],
+  "observedPositiveBasis": [
+    "Declared same loopback endpoint pre-run ECONNREFUSED",
+    "Canonical run.created/run.started persisted",
+    "Observer failure joins original event/delivery/effect identity",
+    "Effect receipt status failed with adapter.effect_failed and REDIS_CONNECTION_FAILED:connect ECONNREFUSED",
+    "Documented redis-replay-recovery permits retaining exact event/delivery/receipt and safe stop when supported continuation is unavailable; healthy dependency does not authorize replay/reset"
+  ],
+  "finiteRemainingProof": [
+    "Strict native parsing/integrity inspection and export of exact raw journals/snapshot/effect receipt while writers stopped",
+    "Record actual participant/operator SAFE_STOP and selected observer/Redis owner continuation boundary",
+    "No retry/restart/reset or automatic recovery; preserve no-terminal and exit13 findings",
+    "Readiness restoration PONG, if performed, is dependency readiness only; it cannot supply missing Core terminal or authorize continuation"
+  ],
+  "helperGap": "classifyFaultCoreEvidence currently demands run.succeeded/exit0/full verification and later five attempts. This is a stronger operational scenario than the original fault outcome; report original bounded-stop evidence separately without forging old helper PASS or modifying its historical result.",
+  "Source": "PASS_ORIGINAL_CONDITION_INTERPRETATION",
+  "Reader": "CONDITIONAL_FINITE_STOP_EVIDENCE_NOT_FRESH_ACCEPTANCE",
+  "Quality": "PASS_SCOPE_SEPARATION_NO_RUNTIME_SUCCESS_CLAIM",
+  "custody": [
+    {
+      "path": "kubeclaw-pr13-recovery/docs/blueprint/AP09-acceptance-fixtures.json",
+      "sha256": "af1973d167a0c43ffe14eb828fc8d139a63ab8b696fdc4095c8e862f2d414dd8"
+    },
+    {
+      "path": "kubeclaw-pr13-recovery/docs/site/use/workflows/examples/minimal.pipeline.json",
+      "sha256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b"
+    },
+    {
+      "path": "kubeclaw-pr13-recovery/docs/site/use/workflows/redis-replay-recovery.md",
+      "sha256": "41a5067140a53a2d97e4162849a99be5a4e08b65da0c98acf75209e5589c877d"
+    },
+    {
+      "path": "/tmp/kubeclaw-reader-pipeline01/compiled-run-result.json",
+      "sha256": "f42504f00249ea3fa075b86f39d987f07090246306dd2cfa2ca60497b7401cde"
+    },
+    {
+      "path": "/tmp/kubeclaw-reader-pipeline01/compiled-run.stderr",
+      "sha256": "6673885129bce00c466ed7f9e82ca50164a91e3d739c1678504a4da9655c4d9c"
+    },
+    {
+      "path": "/tmp/kubeclaw-reader-pipeline01/redis-before-run.json",
+      "sha256": "da7a727ddcc6b7915b0e72e82e9fb00cbf08b3d412fc478d86adc6fa55e57927"
+    },
+    {
+      "path": "/tmp/kubeclaw-reader-pipeline01/redis-case-inspection.json",
+      "sha256": "952e384c34345065943df92763b99a5a099f7fb051268ff4b7575e901f528152"
+    },
+    {
+      "path": "/tmp/kubeclaw-reader-pipeline01/raw-before-audit/state/runs/v2-c465c21c667d59a2958599744237ccf5cd3c90faadad807f07c6c31503d4981a/events.jsonl",
+      "sha256": "d7c73db19240c1d4d7f3cbf5b1975e3de00e12de59a24df145ce6857f044c58e"
+    },
+    {
+      "path": "/tmp/kubeclaw-reader-pipeline01/raw-before-audit/state/runs/v2-c465c21c667d59a2958599744237ccf5cd3c90faadad807f07c6c31503d4981a/observer-deliveries.jsonl",
+      "sha256": "25f32f9b1fa4c662ff35550d465d7563137f223b46ccfc525cf4ddd5df94f32f"
+    },
+    {
+      "path": "/tmp/kubeclaw-reader-pipeline01/raw-before-audit/state/runs/v2-c465c21c667d59a2958599744237ccf5cd3c90faadad807f07c6c31503d4981a/effects.jsonl",
+      "sha256": "2211d43727f5dc9e215edd274d9e6b3e5a646de6fc000dc3f865ce77ba67a3f6"
+    }
+  ]
+}

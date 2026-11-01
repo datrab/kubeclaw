@@ -1,0 +1,241 @@
+{
+  "at": "2026-11-01T03:48:17.603848+00:00",
+  "ownedRoot": "/tmp/kubeclaw-reader-pipeline01",
+  "sourceRevision": "4fb294496bf7c9dc86ec97579054a47fd14711a2",
+  "actualProtectedGatewayObservation": {
+    "status": "SELECTED_GATEWAY_AGENT_MODEL_OBSERVED",
+    "role": "forge",
+    "stageIds": [
+      "implement-app"
+    ],
+    "endpoint": "http://127.0.0.1:18789/tools/invoke",
+    "agentId": "main",
+    "model": "openai/gpt-6.1-sol",
+    "selected": {
+      "id": "main",
+      "model": "openai/gpt-6.1-sol"
+    },
+    "observedAt": "2026-11-01T03:46:26.515Z",
+    "operation": {
+      "tool": "agents_list",
+      "args": {}
+    },
+    "requestSha256": "36e5d6e2fcc2836fe4768bcfe384c39af4babd931124a0461aa66cba8a496d2c",
+    "responseSha256": "25861e7fd52f064565c813982e3c2e04fbb5c9f2700fe206806aa9e3b69ad48d",
+    "credentialsRetained": false,
+    "sourceRevision": "4fb294496bf7c9dc86ec97579054a47fd14711a2",
+    "canonicalSha256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b"
+  },
+  "activeCwdOrFdUsers": [],
+  "wholePreparedTreeManifest": [
+    {
+      "path": "compiled-platform.local-providers.json",
+      "bytes": 8729,
+      "sha256": "d5c0d35776f5d79f785b0f99e43f8491605121c80d82a0c70eaaaebac0649f86"
+    },
+    {
+      "path": "gateway-runtime-identity.json",
+      "bytes": 764,
+      "sha256": "8864a60d14de0286aefd336ccd8a3327c0779e6a5d3783d63c6482d60f8dd85a"
+    },
+    {
+      "path": "local/source.json",
+      "bytes": 67,
+      "sha256": "82e2f00612a008251d88243d0c5c5c686f495bdee9de6388a7b8675a23b43dc7"
+    },
+    {
+      "path": "owned-compiled-project.json",
+      "bytes": 456,
+      "sha256": "7fb1510b92d4f1b5c864ed06e8acdccb54e85d7951fb63b66368abfc8a774341"
+    },
+    {
+      "path": "prepare-project.command.json",
+      "bytes": 243,
+      "sha256": "121933954f1cc8c988ffea90211a9f86ccc3268f666e1b0e3b50b4ea67630e1d"
+    },
+    {
+      "path": "prepare-project.stderr",
+      "bytes": 0,
+      "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+    },
+    {
+      "path": "prepare-project.stdout",
+      "bytes": 332,
+      "sha256": "1e75598e7c05a8ba973c969da29420aac56231bea385852bfbe1c2983c2adf1b"
+    },
+    {
+      "path": "project/compiled.json",
+      "bytes": 13374,
+      "sha256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b"
+    },
+    {
+      "path": "project/eslint.config.mjs",
+      "bytes": 150,
+      "sha256": "48f84d692981b4dbddda863d3cb95d907021f1261eb940106878c9acb2c64b6b"
+    },
+    {
+      "path": "project/knip.json",
+      "bytes": 88,
+      "sha256": "fd3fbed1f81f78f16563dbd1b044e20d9716fdc4dbecf0eeb2f3d9513a3bf04e"
+    },
+    {
+      "path": "project/lint-baseline.json",
+      "bytes": 68,
+      "sha256": "b6d475ee43518718cdb3cb3d6eb19ac6ab100645d06ee0e975a000daed9356b2"
+    },
+    {
+      "path": "project/operator-selected-lint-policy.json",
+      "bytes": 23311,
+      "sha256": "a333055795184382d4bb341a894dee22b95f0179345ac7040879d6d2dadf9430"
+    },
+    {
+      "path": "project/project.json",
+      "bytes": 12604,
+      "sha256": "e83e6d17077f455f5bf9acb9175275782b43f3dcfc04005b2221a8dcb6a06a03"
+    },
+    {
+      "path": "project/repository/.git/COMMIT_EDITMSG",
+      "bytes": 23,
+      "sha256": "5e4ff5c84a588ee4ea3aec760df30b74bbf47c7663ecf48cf64b07e36b7d9432"
+    },
+    {
+      "path": "project/repository/.git/HEAD",
+      "bytes": 23,
+      "sha256": "f6f2b945f6c411b02ba3da9c7ace88dcf71b6af65ba2e0d89aa82900042b5a10"
+    },
+    {
+      "path": "project/repository/.git/config",
+      "bytes": 92,
+      "sha256": "cfe7ba1238c9a78be7535d7c63bcaf5a4d5011d46b07c9b45d3bbf7d6c312dfe"
+    },
+    {
+      "path": "project/repository/.git/index",
+      "bytes": 641,
+      "sha256": "1f4007084abcc9e16c21f568ba228200920bc8844da963d040ff44c9c09b8596"
+    },
+    {
+      "path": "project/repository/.git/logs/HEAD",
+      "bytes": 188,
+      "sha256": "7ebb27c4db83ff0cbeaddb610f9632300402a550310a9225c758e30039fde526"
+    },
+    {
+      "path": "project/repository/.git/logs/refs/heads/master",
+      "bytes": 188,
+      "sha256": "7ebb27c4db83ff0cbeaddb610f9632300402a550310a9225c758e30039fde526"
+    },
+    {
+      "path": "project/repository/.git/objects/00/88ec2775a44643a0fd27a7cc14acbd0337bf56",
+      "bytes": 107,
+      "sha256": "62d8131876210b6566e61040d22e0997d378fbe7795c3f3134b5c13bba1d9dc3"
+    },
+    {
+      "path": "project/repository/.git/objects/0c/4f6ca0521162d8b9f012667aa781a79a430520",
+      "bytes": 57,
+      "sha256": "d6bb150dd47acd6e129e2ccddefc2427a1bbcd9e0d39f7efead84b67f50834a2"
+    },
+    {
+      "path": "project/repository/.git/objects/3b/28081085a3a0a212d24db571cc713a28b8448a",
+      "bytes": 53,
+      "sha256": "115852165b1ed88711682a008797ca7bd33c7bb48abde1724d80c7bc399effb1"
+    },
+    {
+      "path": "project/repository/.git/objects/54/6c2e32f157f381387592a4480986d3a3dcaa30",
+      "bytes": 158,
+      "sha256": "3d3b3e9def64ce1bd2ccc9b48d756af60263970e82053284770ec7977dfc4e4d"
+    },
+    {
+      "path": "project/repository/.git/objects/89/3820c1cc6c999780a51dfa666f1d82ed55ffb7",
+      "bytes": 144,
+      "sha256": "08f48abbd1f9cdf78f39d56ad0b6b1b65088a7342fa333ffc621c129abf243f1"
+    },
+    {
+      "path": "project/repository/.git/objects/8e/7cc73474f5d500c9a8593125869143aa83e120",
+      "bytes": 108,
+      "sha256": "58ffe0ed28d02be8c6263908b6ceeaa41da6b05fdabbcb2eeb9dc6912833ae31"
+    },
+    {
+      "path": "project/repository/.git/objects/93/9bad03d1496cb373ac87ca348c5fb1d959acff",
+      "bytes": 85,
+      "sha256": "aa3be4abc5b35ed93cd9bddd85119c3524cbb740511a097e305529aa915b74d1"
+    },
+    {
+      "path": "project/repository/.git/objects/97/bbed74409fa84cfa83c4485e27899d4d1a787d",
+      "bytes": 45,
+      "sha256": "d279aebbbb0bfae3568502277e22fb9a06fca91b6ace15b403045ed56eddd60c"
+    },
+    {
+      "path": "project/repository/.git/objects/9d/71f7ed8d7d32f36edc9337616d2fcda953fd87",
+      "bytes": 101,
+      "sha256": "c6832b020d9081c33ab8f80f62ee22687e7ea8c08c3a50d602fd096353a4a3fc"
+    },
+    {
+      "path": "project/repository/.git/objects/a3/e3d446528ab2580b1dde5ea89fd8f5b5f11ad8",
+      "bytes": 186,
+      "sha256": "7516df38c07c2811d643ed1c618fff8f9927b83cfaec779ab97bddf1ecf6299e"
+    },
+    {
+      "path": "project/repository/.git/objects/e2/84ca25712faf0a8bc6197bb85ed971b2863234",
+      "bytes": 35,
+      "sha256": "d39fcad45a3fedee6e484af9f5618cec96658c80c4950f5e92d9ca9764a9b619"
+    },
+    {
+      "path": "project/repository/.git/refs/heads/master",
+      "bytes": 41,
+      "sha256": "2a4ebd592dc7dbd1fb82521ddb0e4074c057b0a95a5b0b0200a1e782723031b3"
+    },
+    {
+      "path": "project/repository/.gitignore",
+      "bytes": 19,
+      "sha256": "a748b49b01fc70e65fc9e66f97936a20b481da1d33944b5d8ebace2ead1039e6"
+    },
+    {
+      "path": "project/repository/README.md",
+      "bytes": 107,
+      "sha256": "0fa8cd7ea37c03fd8d1643d1ba809a8c058515f133efd0ccac2f0c88105337fb"
+    },
+    {
+      "path": "project/repository/app/greeting.mjs",
+      "bytes": 41,
+      "sha256": "8c341684aadab9a28407502685035d780eed0c3308cd96d1a0e37ff5e1321e39"
+    },
+    {
+      "path": "project/repository/app/greeting.test.mjs",
+      "bytes": 117,
+      "sha256": "25632c3c4aad14877837616811d8a012bec1d820a177c81c484f3725f352de19"
+    },
+    {
+      "path": "project/repository/modules/app/FORGE.md",
+      "bytes": 188,
+      "sha256": "b606601502e80e3af58607cdff03f8e88d4a4ce86d3ae50980b926e6dcc94766"
+    },
+    {
+      "path": "project/repository/package.json",
+      "bytes": 111,
+      "sha256": "b398aad38b6f2f21d4c0b6f0b7d4bf5755f983cb006908045c75b7fd0968d009"
+    }
+  ],
+  "retainedNonGitFiles": [
+    "compiled-platform.local-providers.json",
+    "gateway-runtime-identity.json",
+    "local/source.json",
+    "owned-compiled-project.json",
+    "prepare-project.command.json",
+    "prepare-project.stderr",
+    "prepare-project.stdout",
+    "project/compiled.json",
+    "project/eslint.config.mjs",
+    "project/knip.json",
+    "project/lint-baseline.json",
+    "project/operator-selected-lint-policy.json",
+    "project/project.json",
+    "project/repository/.gitignore",
+    "project/repository/README.md",
+    "project/repository/app/greeting.mjs",
+    "project/repository/app/greeting.test.mjs",
+    "project/repository/modules/app/FORGE.md",
+    "project/repository/package.json"
+  ],
+  "noOperationalDispatchOrCoreOrBusterStore": true,
+  "fixtureRepositoryCleanAndOneWorktree": true,
+  "operation": "Remove only known quiescent prepared fixture after retaining actual selected identity and generated input custody; no workflow/recovery acceptance"
+}

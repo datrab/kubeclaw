@@ -1,0 +1,56 @@
+{
+  "at": "2026-11-01T04:06:36.906Z",
+  "revision": "01f0f1d58037293e18045b5483f4c9f9da91061e",
+  "pass": true,
+  "assets": [
+    {
+      "path": "use/workflows/examples/minimal-compiled-redis.mjs",
+      "bytes": 20876,
+      "sha256": "c530079e5b2ece5a78d37458c5095c334f7be594118013e3485f743f006000f4",
+      "byteEqual": true
+    },
+    {
+      "path": "use/workflows/examples/minimal-redis-inspection.mjs",
+      "bytes": 26673,
+      "sha256": "88fdfa08ede9213bde475652786697fc3ef9ab4d22289ae20dc125d526ac2580",
+      "byteEqual": true
+    },
+    {
+      "path": "use/workflows/examples/minimal-redis-verification.mjs",
+      "bytes": 4945,
+      "sha256": "4dc9eb32db87ae0097e7a0031d4657086841df6ef32bf4c4a36ec7cccf366917",
+      "byteEqual": true
+    }
+  ],
+  "observations": [
+    {
+      "width": 320,
+      "route": "/use/workflows/README.html",
+      "httpStatus": 200,
+      "layout": {
+        "viewport": 320,
+        "scrollWidth": 320
+      },
+      "exactAuthoredFencePayloads": 20,
+      "sourcePreviewCodeExcluded": true,
+      "keyboardSkip": true,
+      "keyboardNavigationToggleAndLinkFocus": true,
+      "keyboardSearchAndResultActivation": true
+    },
+    {
+      "width": 1440,
+      "route": "/use/workflows/README.html",
+      "httpStatus": 200,
+      "layout": {
+        "viewport": 1440,
+        "scrollWidth": 1440
+      },
+      "exactAuthoredFencePayloads": 20,
+      "sourcePreviewCodeExcluded": true,
+      "keyboardSkip": true,
+      "keyboardNavigationToggleAndLinkFocus": true,
+      "keyboardSearchAndResultActivation": true
+    }
+  ],
+  "limits": "Bounded engineering route/viewport/fence/keyboard/search/asset delivery only; not fresh participant, assistive technology, screen reader, contrast, protected browser or original acceptance."
+}

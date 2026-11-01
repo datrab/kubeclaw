@@ -1,0 +1,13 @@
+{
+  "at": "2026-11-01T03:44:23.780845+00:00",
+  "argv": [
+    "node",
+    "--test",
+    "scripts/tests/api-output-publication-native-custody.test.mjs",
+    "scripts/tests/api-output-publication-yaml-input-custody.test.mjs",
+    "scripts/tests/api-output-publication-parser-custody.test.mjs"
+  ],
+  "exitCode": 0,
+  "seconds": 51.529611603938974,
+  "scope": "Actual maintained guarded Source/facts/input receipt behavior and meaningful negatives; no defaultgenerator/globalAPI/AT/freshreader award"
+}

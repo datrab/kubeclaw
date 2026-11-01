@@ -1,0 +1,102 @@
+[
+  {
+    "file": "actual-corrected-build.json",
+    "sha256": "aea46c3f8700900a51edb61d2bf078fb7110c36c6945df5f100572e458a6959a",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/actual-corrected-build.json"
+  },
+  {
+    "file": "actual-workflow-delivery-check.json",
+    "sha256": "5694f937b602dc41c3b8f3c5d16bbf1ea9592cc60cbeb43340fbaf7fbdd3c794",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/actual-workflow-delivery-check.json"
+  },
+  {
+    "file": "actual-current-18-guard-tests.json",
+    "sha256": "e60d40b6009a5025e5edef0a1da9582c2709b8d3c486512794cc8c43e5dd6f42",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/actual-current-18-guard-tests.json"
+  },
+  {
+    "file": "actual-syntax471-native-parser.json",
+    "sha256": "07c22123dbc98f59ab71817a579e8eb0568be49409628b1787245d2cdd761821",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/actual-syntax471-native-parser.json"
+  },
+  {
+    "file": "actual-fault-original-condition-independent.json",
+    "sha256": "f33b0f20559332cf1319bb3656d286ffdf1f25b743dfabf2a83d4c9b00e80640",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/actual-fault-original-condition-independent.json"
+  },
+  {
+    "file": "independent-healthy-author-disposition.json",
+    "sha256": "a76ae55859844339c9b31d1ffb2460bb88315bf70dfb341a603197864d5a72f4",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-actual-r3-20261101/independent-healthy-author-disposition.json"
+  },
+  {
+    "file": "qualified-fault-offline-closeout.json",
+    "sha256": "35d6ae375e69d8353e005fa445548d40c8be0bde8d9a165f051d88037a3a83fb",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-actual-r3-20261101/qualified-fault-offline-closeout.json"
+  },
+  {
+    "file": "current-check-artifact.json",
+    "sha256": "3e005d83b8c23a98afaf29df938e64e09cf5d62b64a674e8de9bad025df75128",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/current-check-artifact.json"
+  },
+  {
+    "file": "current-check-source-links.json",
+    "sha256": "9cdad3cf4ba74c4cf6341b85a85457d14e955cb687a85758d88e094171e8b56e",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/current-check-source-links.json"
+  },
+  {
+    "file": "current-check-source-previews.json",
+    "sha256": "b01fcb3e7c4874a901ef8ebc4100b00e42607bfc3d8b968d8c342ec3a2f20574",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/current-check-source-previews.json"
+  },
+  {
+    "file": "current-check-search.json",
+    "sha256": "ea4c89f2f95ca19870ab6926608550357b2f8533e958a80ca79ac821f4787eac",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/current-check-search.json"
+  },
+  {
+    "file": "current-check-diagrams.json",
+    "sha256": "efa53d25b43f5b435cfd731bea298f903184757b14333d8195e8ceafb3ef7e68",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/current-check-diagrams.json"
+  },
+  {
+    "file": "actual-protected-registry.json",
+    "sha256": "05fd689ccf3b4a12d2bebf570cf7998077ec62c8739e13538e9f6f047967f5ec",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/actual-installed-registry-observation/actual-result.json"
+  },
+  {
+    "file": "registry-owned-cleanup.json",
+    "sha256": "c91c6a9f1e0c8389b5ae2d6004d8dca36462dd577f44a3478dcbf41845e9e580",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/actual-installed-registry-observation/owned-prepared-root-cleanup.json"
+  },
+  {
+    "file": "procedure-independent-verdict.json",
+    "sha256": "990a01077d31ddee36905dfc54798929a75f737756424c49df41d522a474b6c7",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/public-adoption-v3-independent-verdict.json"
+  },
+  {
+    "file": "syntax-independent-verdict.json",
+    "sha256": "a5e08da9a41eb010b6569886bbf009c7e47ce330e651c4c7bac54e4219160cb0",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/syntax471-independent-verdict.json"
+  },
+  {
+    "file": "affected-original-preservation-verdict.json",
+    "sha256": "be4a977ca612c63a2f6b9d6ca220f4f66a05a6642c346f0fbeb59c941b5e278e",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/original-affected-record-independent-qualified-20261101/verdict.json"
+  },
+  {
+    "file": "affected-original-finalization.json",
+    "sha256": "11df54190156dcc243735ff932a95319924e8f6f542876d324188f1417ea3463",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/original-affected-record-independent-qualified-20261101/candidate-finalization-check.json"
+  },
+  {
+    "file": "qualified-original-checker.json",
+    "sha256": "0575514890379a162f2aed9555f38aec83afa20882264250def8f8ce7a4235c4",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/qualified-original-checker.json"
+  },
+  {
+    "file": "qualified-original-checker.log",
+    "sha256": "90a350b42b9cf9dd5d621e1f2d3cff8549c65bf9524d42a81fe879842bd9c3c5",
+    "operationsOrigin": "operations/pr13/evidence/reader-pipeline01-original-author-path-20261101/qualified-original-checker.log"
+  }
+]
