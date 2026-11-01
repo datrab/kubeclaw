@@ -13271,9 +13271,9 @@
       }
     },
     "scripts/updates/deployment-release.mjs": {
-      "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+      "sha256": "71bd2e1f239f06c490fd697c614ee9fd93aaa09150dd8d8d376950b34526fcf7",
       "operation": "Actual selected-release rendering/overlay validation caller for supported local chart roles; missing selected-release inputs remain a deployment prerequisite.",
-      "operationDigest": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+      "operationDigest": "71bd2e1f239f06c490fd697c614ee9fd93aaa09150dd8d8d376950b34526fcf7",
       "invocations": [
         "const render = values => execFileSync('helm', [...common, ...values], { encoding: 'utf8', maxBuffer: 32 * 1024 * 1024 });"
       ],
@@ -13338,7 +13338,7 @@
           },
           {
             "kind": "FunctionDeclaration",
-            "syntax": "function withDeploymentContext(args, role, run) {\n  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'release-registry-context-'));\n  const context = [];\n  try {\n    for (let index = 0; index < args.length - 1; index += 1) {\n      if (!['-f', '--values'].includes(args[index])) continue;\n      const values = yaml.load(fs.readFileSync(args[++index], 'utf8'));\n      const registry = values?.runtimeInfrastructure?.registry;\n      const native = role === 'prism' ? values?.worker?.native : undefined;\n      const binding = native && Object.fromEntries(['nodeName', 'namespace', 'policyDigest']\n        .filter(key => native[key] !== undefined).map(key => [key, native[key]]));\n      if (registry === undefined && (!binding || !Object.keys(binding).length)) continue;\n      const file = path.join(temporary, `${index}.yaml`);\n      fs.writeFileSync(file, yaml.dump({ ...(registry === undefined ? {} : { runtimeInfrastructure: { registry } }),\n        ...(binding && Object.keys(binding).length ? { worker: { native: binding } } : {}) }), { mode: 0o600 });\n      context.push('-f', file);\n    }\n    return run(context);\n  } finally { fs.rmSync(temporary, { recursive: true, force: true }); }\n}"
+            "syntax": "function withDeploymentContext(args, role, run) {\n  let temporary;\n  const context = [];\n  try {\n    for (let index = 0; index < args.length - 1; index += 1) {\n      if (!['-f', '--values'].includes(args[index])) continue;\n      const values = yaml.load(fs.readFileSync(args[++index], 'utf8'));\n      const registry = values?.runtimeInfrastructure?.registry;\n      const native = role === 'prism' ? values?.worker?.native : undefined;\n      const binding = native && Object.fromEntries(['nodeName', 'namespace', 'policyDigest']\n        .filter(key => native[key] !== undefined).map(key => [key, native[key]]));\n      if (registry === undefined && (!binding || !Object.keys(binding).length)) continue;\n      temporary ??= fs.mkdtempSync(path.join(os.tmpdir(), 'release-registry-context-'));\n      const file = path.join(temporary, `${index}.yaml`);\n      fs.writeFileSync(file, yaml.dump({ ...(registry === undefined ? {} : { runtimeInfrastructure: { registry } }),\n        ...(binding && Object.keys(binding).length ? { worker: { native: binding } } : {}) }), { mode: 0o600 });\n      context.push('-f', file);\n    }\n    return run(context);\n  } finally { if (temporary) fs.rmSync(temporary, { recursive: true, force: true }); }\n}"
           },
           {
             "kind": "FunctionDeclaration",
@@ -14219,8 +14219,8 @@
       }
     },
     "scripts/infrastructure-chart.mjs": {
-      "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
-      "operationDigest": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
+      "sha256": "fbd1c1d4ce43ea652992459387a47db34829cf466d79872a31dc82d4b448762b",
+      "operationDigest": "fbd1c1d4ce43ea652992459387a47db34829cf466d79872a31dc82d4b448762b",
       "operation": "Actual immutable infrastructure staging, original pure Helm rendering and source-bound image post-renderer.",
       "invocations": [
         "import { downloadInfrastructureOciChart } from './infrastructure-oci-chart.mjs';",
@@ -14289,7 +14289,7 @@
           },
           {
             "kind": "FunctionDeclaration",
-            "syntax": "export function stageInfrastructureChart(name) {\n  const lock = infrastructureChart(name);\n  const cache = path.join(os.tmpdir(), `kubeclaw-infrastructure-charts-${process.getuid()}`);\n  fs.mkdirSync(cache, { recursive: true, mode: 0o700 });\n  const stat = fs.lstatSync(cache);\n  if (!stat.isDirectory() || stat.uid !== process.getuid() || (stat.mode & 0o077) !== 0) {\n    throw new Error('INFRASTRUCTURE_CHART_CACHE_NOT_PRIVATE');\n  }\n  const file = path.join(cache, `${lock.name}-${lock.version}-${lock.sha256}.tgz`);\n  if (!fs.existsSync(file)) {\n    const temporary = fs.mkdtempSync(path.join(cache, 'download-'));\n    try {\n      const download = path.join(temporary, 'chart.tgz');\n      if (lock.url.startsWith('oci:')) downloadInfrastructureOciChart(lock.url, download);\n      else execFileSync('curl', ['--fail', '--silent', '--show-error', '--location', '--proto', '=https',\n        '--proto-redir', '=https', '--retry', '4', '--retry-max-time', '120', '--connect-timeout', '15', '--max-time', '60', '--max-filesize', String(maximumBytes),\n        '--output', download, lock.url], { stdio: ['ignore', 'ignore', 'inherit'] });\n      verifyInfrastructureChart(name, download);\n      fs.renameSync(download, file);\n    } finally { fs.rmSync(temporary, { recursive: true, force: true }); }\n  }\n  verifyInfrastructureChart(name, file);\n  return file;\n}"
+            "syntax": "export function stageInfrastructureChart(name, { readOnly = false } = {}) {\n  const lock = infrastructureChart(name);\n  const cache = path.join(os.tmpdir(), `kubeclaw-infrastructure-charts-${process.getuid()}`);\n  if (!readOnly) fs.mkdirSync(cache, { recursive: true, mode: 0o700 });\n  else if (!fs.existsSync(cache)) throw new Error('INFRASTRUCTURE_CHART_NOT_PREPARED');\n  const stat = fs.lstatSync(cache);\n  if (!stat.isDirectory() || stat.uid !== process.getuid() || (stat.mode & 0o077) !== 0) {\n    throw new Error('INFRASTRUCTURE_CHART_CACHE_NOT_PRIVATE');\n  }\n  const file = path.join(cache, `${lock.name}-${lock.version}-${lock.sha256}.tgz`);\n  if (!fs.existsSync(file)) {\n    if (readOnly) throw new Error('INFRASTRUCTURE_CHART_NOT_PREPARED');\n    const temporary = fs.mkdtempSync(path.join(cache, 'download-'));\n    try {\n      const download = path.join(temporary, 'chart.tgz');\n      if (lock.url.startsWith('oci:')) downloadInfrastructureOciChart(lock.url, download);\n      else execFileSync('curl', ['--fail', '--silent', '--show-error', '--location', '--proto', '=https',\n        '--proto-redir', '=https', '--retry', '4', '--retry-max-time', '120', '--connect-timeout', '15', '--max-time', '60', '--max-filesize', String(maximumBytes),\n        '--output', download, lock.url], { stdio: ['ignore', 'ignore', 'inherit'] });\n      verifyInfrastructureChart(name, download);\n      fs.renameSync(download, file);\n    } finally { fs.rmSync(temporary, { recursive: true, force: true }); }\n  }\n  verifyInfrastructureChart(name, file);\n  return file;\n}"
           },
           {
             "kind": "IfStatement",
@@ -16722,7 +16722,7 @@
               "expression": "documents.map(value => dump(value, { noRefs: true, lineWidth: -1 })).join('---\\n')"
             }
           ],
-          "factsDigest": "50e4130e13cc3583d228b7a1c8a54e71009980a9ec35aea3d7d5ef18245547bc"
+          "factsDigest": "1d6fc41409e99d2b2d09fcf74682749dfd1bb516f054600441259a7150d5b447"
         }
       ],
       "roleConsumerEvidence": {

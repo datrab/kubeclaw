@@ -6,8 +6,8 @@
     "scripts/render-kubernetes-api-probe.mjs": "f081a58cdce9aea6a958ae9bd543c0c440b47c97b4a4d5d284a66262e8753eb0",
     "scripts/render-stateful-network-policies.mjs": "4b2777294145a1605113238cc6319558abad3a6bd0409dc974e7684e495d0e25",
     "scripts/updates/check-upstream-refresh.mjs": "cbc42cd5476a3edb1b89e24fb7d18fce2b92af582e95c1151f187c9e7c504f43",
-    "scripts/updates/deployment-release.mjs": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
-    "scripts/updates/materialize-release.mjs": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475",
+    "scripts/updates/deployment-release.mjs": "71bd2e1f239f06c490fd697c614ee9fd93aaa09150dd8d8d376950b34526fcf7",
+    "scripts/updates/materialize-release.mjs": "508018a6b1f46464612c702d55107aa13076627c661ab46a3e5e87375459e454",
     "scripts/updates/refresh-versions.mjs": "f125cb70dd7dec201ab1415a61d21d5f87e8e6e8ea3f5bd8f2ce1deaa5a04356",
     "scripts/updates/release-images.mjs": "6c9afb34ba328142af2b086985ceda3313e74a48fac1608dc2271d8f80e47bf5",
     "scripts/versions.mjs": "c837f871d19a8d37bc1748c3f85db9cb46ccdf9d53b1c0aaa6f64c7c6efbf00b",
@@ -107,7 +107,7 @@
     },
     {
       "source": "scripts/updates/deployment-release.mjs",
-      "line": 149,
+      "line": 150,
       "sink": "fs.writeFileSync",
       "expression": null,
       "sinkContract": null,
@@ -115,24 +115,18 @@
     },
     {
       "source": "scripts/updates/deployment-release.mjs",
-      "line": 177,
+      "line": 178,
       "sink": "process.stdout.write",
-      "expression": null,
-      "sinkContract": {
-        "destination": "`${receipt.code?.commit ?? receipt.commit}\\n`",
-        "expression": "`${receipt.code?.commit??receipt.commit}\\n`"
-      },
+      "expression": "`${receipt.code?.commit ?? receipt.commit}\\n`",
+      "sinkContract": null,
       "role": "unknown"
     },
     {
       "source": "scripts/updates/deployment-release.mjs",
-      "line": 195,
+      "line": 196,
       "sink": "process.stdout.write",
-      "expression": null,
-      "sinkContract": {
-        "destination": "rendered",
-        "expression": "rendered"
-      },
+      "expression": "execFileSync",
+      "sinkContract": null,
       "role": "unknown"
     },
     {
@@ -308,11 +302,11 @@
     },
     {
       "path": "scripts/updates/deployment-release.mjs",
-      "sha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3"
+      "sha256": "71bd2e1f239f06c490fd697c614ee9fd93aaa09150dd8d8d376950b34526fcf7"
     },
     {
       "path": "scripts/updates/materialize-release.mjs",
-      "sha256": "ad026a32e4e9cad21ab3f2f0e87fcafe6c5d563f5133191f70b4c5ef4c925475"
+      "sha256": "508018a6b1f46464612c702d55107aa13076627c661ab46a3e5e87375459e454"
     },
     {
       "path": "scripts/updates/refresh-versions.mjs",

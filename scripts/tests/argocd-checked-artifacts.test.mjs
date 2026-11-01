@@ -1,5 +1,6 @@
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
+import { createHash } from 'node:crypto';
 import os from 'node:os';
 import path from 'node:path';
 import test from 'node:test';
@@ -30,6 +31,15 @@ test('original checked-artifact current witness preserves history and rejects ch
   const original = fs.readFileSync(path.join(root, source), 'utf8');
   const read = () => checkedArgocdArtifactOutputs(root, source, fs.readFileSync(path.join(root, source), 'utf8'));
   const result = read();
+  const [successor] = authority.sourceQualifiedDependencySuccessors;
+  assert.equal(authority.sourceQualifiedDependencySuccessors.length, 1);
+  assert.equal(successor.path, 'scripts/updates/deployment-release.mjs');
+  const dependency = fs.readFileSync(path.join(root, successor.path));
+  assert.equal(successor.bytes, dependency.length);
+  assert.equal(successor.sha256, createHash('sha256').update(dependency).digest('hex'));
+  assert.equal(current.inputsAndCheckedOutputs.find(f => f.path === successor.path).sha256, successor.historicalSha256);
+  assert(result.outputs.every(output => /Retained original.*Source-qualified dependency equivalence/u.test(output.context.executionLimit)
+    && /not a repeated\/current execution observation/u.test(output.context.executionLimit)));
   assert.equal(result.outputs.length, 21);
   assert.equal(result.outputs.filter(output => output.value.kind === 'AppProject').length, 5);
   assert.equal(result.outputs.filter(output => output.value.kind === 'Application').length, 16);
@@ -37,7 +47,8 @@ test('original checked-artifact current witness preserves history and rejects ch
   assert(result.outputs.every(output => output.context.producer === 'node-original-checked-artifact'));
 
   for (const file of ['package.json', 'versions.json', 'scripts/platform-services.mjs',
-    'gitops/platform/bootstrap/argocd.yaml', 'node_modules/js-yaml/dist/js-yaml.mjs']) {
+    'gitops/platform/bootstrap/argocd.yaml', 'node_modules/js-yaml/dist/js-yaml.mjs',
+    'scripts/updates/deployment-release.mjs']) {
     const bytes = fs.readFileSync(path.join(root, file));
     write(file, Buffer.concat([bytes, Buffer.from('\n')]));
     assert.throws(read, /CHECKED_ARTIFACT_UNQUALIFIED.*changed input or checked artifact/u, file);
@@ -47,6 +58,21 @@ test('original checked-artifact current witness preserves history and rejects ch
     write(file, '{}');
     assert.throws(read, /CHECKED_ARTIFACT_UNQUALIFIED.*new package boundary/u, file);
     fs.unlinkSync(path.join(root, file));
+  }
+  // These mutations exercise the immutable witness boundary, not bypassed inner guards.
+  for (const mutate of [
+    value => value.sourceQualifiedDependencySuccessors.push({...successor}),
+    value => { value.sourceQualifiedDependencySuccessors[0].path = 'scripts/foreign.mjs'; },
+    value => { value.sourceQualifiedDependencySuccessors[0].sha256 = 'a'.repeat(64); },
+    value => { value.sourceQualifiedDependencySuccessors[0].bytes += 1; },
+    value => { value.sourceQualifiedDependencySuccessors[0].path = current.outputs[0].path; },
+    value => { value.observation.node.version = 'changed'; },
+    value => { value.currentReadOnlyObservation20261031.node.version = 'changed'; },
+  ]) {
+    const changed = JSON.parse(authorityBytes); mutate(changed);
+    write(authorityPath, JSON.stringify(changed));
+    assert.throws(read, /immutable witness digest/u);
+    write(authorityPath, authorityBytes);
   }
   write(authorityPath, Buffer.concat([authorityBytes, Buffer.from('\n')]));
   assert.throws(read, /immutable witness digest/u);

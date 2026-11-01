@@ -1949,7 +1949,7 @@ export function checkedReleaseRendererOutputs(root, topLevelPurposes) {
   const source='scripts/updates/deployment-release.mjs';
   if(!fs.existsSync(path.join(root,source)))return null;
   const fail=detail=>assert.fail(`API_PRODUCT_RELEASE_RENDERER_OUTPUT_UNQUALIFIED: ${detail}`);
-  const expected=topLevelPurposes?.descriptors.find(role=>role.source===source&&role.line===195);
+  const expected=topLevelPurposes?.descriptors.find(role=>role.source===source&&role.line===196);
   if(!expected)fail('missing sealed renderer slot');
   selectedTopLevelScriptPurpose(source,expected,topLevelPurposes); // authenticates the private receipt and exact raw roster
   if(expected.role!=='unknown'||expected.sink!=='process.stdout.write')fail('canonical raw role');
@@ -1963,7 +1963,7 @@ export function checkedReleaseRendererOutputs(root, topLevelPurposes) {
   const inputDigest=hash(JSON.stringify([topLevelPurposes.inputDigest,proof.sourceDigest,proof.dependencies,
     proof.outputs.map(output=>[output.context.profile,output.context.inputDigest,output.context.outputDigest])]));
   const outputs=proof.outputs.map(({value,context})=>({value,context:{...context,
-    path:source,line:195,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
+    path:source,line:196,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
     producer:'node-original-release-forwarding',inputs:dependencies,inputDigest,
     forwardedProducer:{...context.forwardedProducer,forwardingCaller:caller,forwardingLine:30},
     runtimeExecutionAuthorized:false,apiApplyAuthorized:false,
@@ -1973,7 +1973,7 @@ export function checkedReleaseRendererOutputs(root, topLevelPurposes) {
   qualifiedReleaseRendererOutputs.add(receipt);return receipt;
 }
 function selectedReleaseRendererOutput(source,role,receipt) {
-  if(source!=='scripts/updates/deployment-release.mjs'||role.line!==195)return false;
+  if(source!=='scripts/updates/deployment-release.mjs'||role.line!==196)return false;
   assert(receipt&&qualifiedReleaseRendererOutputs.has(receipt),'API_PRODUCT_RELEASE_RENDERER_OUTPUT_UNQUALIFIED: unacquired receipt');
   const descriptor=value=>Object.fromEntries(['line','sink','expression','sinkContract','role'].map(key=>[key,value[key]??null]));
   assert.deepEqual(descriptor(role),descriptor(receipt.expected),'API_PRODUCT_RELEASE_RENDERER_OUTPUT_UNQUALIFIED: changed canonical slot');
@@ -1992,7 +1992,7 @@ const reviewedArgocdArtifactProfile=Object.freeze({
   "source": "scripts/argocd-self-management.mjs",
   "sourceSha256": "79330ccdc6c86a6a3187e538f3a11fb2ab13e97d24e7b9681b1b2a52d2fe7b26",
   "authority": "scripts/docs-api-argocd-checked-artifact-authority.json",
-  "authoritySha256": "ebabd27fea509b6f1a094ffe06cdae4c73379911792bd97f44af90802b8ff6ec",
+  "authoritySha256": "d3e0348c42a538c8d0bf85e32e4fa9e85e8c72673c720625ba7390350c3c0225",
   "nodeIdentity": {
     "path": "/usr/local/bin/node",
     "version": "v24.22.1",
@@ -2014,6 +2014,14 @@ const reviewedArgocdArtifactProfile=Object.freeze({
     "child-denied:",
     "worker-denied:",
     "outside-read-denied:"
+  ],
+  "sourceQualifiedDependencySuccessors": [
+    {
+      "path": "scripts/updates/deployment-release.mjs",
+      "historicalSha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+      "sha256": "71bd2e1f239f06c490fd697c614ee9fd93aaa09150dd8d8d376950b34526fcf7",
+      "bytes": 10813
+    }
   ]
 });
 export function checkedArgocdArtifactOutputs(root,source,sourceBytes) {
@@ -2053,10 +2061,19 @@ export function checkedArgocdArtifactOutputs(root,source,sourceBytes) {
   for(const file of authority.absentPackageBoundaries){
     try{fs.lstatSync(path.join(root,file));fail(`new package boundary ${file}`);}catch(error){if(error.code!=='ENOENT')throw error;}
   }
+  // Dated executions remain immutable. This exact independently reviewed
+  // dependency equivalence is Source qualification, never a new observed run.
+  const successors=authority.sourceQualifiedDependencySuccessors;
+  if(!Array.isArray(successors)||JSON.stringify(successors.map(item=>Object.fromEntries(['path','historicalSha256','sha256','bytes'].map(key=>[key,item[key]]))))!==JSON.stringify(profile.sourceQualifiedDependencySuccessors))fail('exact Source-qualified dependency successor');
+  for(const successor of successors){
+    const historic=observation.inputsAndCheckedOutputs.filter(fact=>fact.path===successor.path);
+    if(historic.length!==1||historic[0].sha256!==successor.historicalSha256
+      ||observation.outputs.some(fact=>fact.path===successor.path))fail('historical dependency identity, never checked-output successor');
+  }
   const buffers=new Map();
   for(const fact of observation.inputsAndCheckedOutputs){
-    const bytes=read(fact.path);
-    if(hash(bytes)!==fact.sha256)fail(`changed input or checked artifact ${fact.path}`);
+    const bytes=read(fact.path),successor=successors.find(item=>item.path===fact.path);
+    if(hash(bytes)!==(successor?.sha256??fact.sha256)||successor&&bytes.length!==successor.bytes)fail(`changed input or checked artifact ${fact.path}`);
     buffers.set(fact.path,bytes);
   }
   if(!buffers.get(source)?.equals(Buffer.from(sourceBytes)))fail('selected source snapshot');
@@ -2071,7 +2088,7 @@ export function checkedArgocdArtifactOutputs(root,source,sourceBytes) {
       sourceDigest:profile.sourceSha256,producer:'node-original-checked-artifact',profile:authority.profile,
       sourceLine:authority.descriptor.line,artifactPath:record.path,artifactDigest:record.outputSha256,
       inputs:dependencies,inputDigest,outputDigest:hash(JSON.stringify(value)),
-      executionLimit:'Original isolated read-only --check observation only; no producer execution by inventory, normal generation, cluster apply or general helper-mode qualification.'}};
+      executionLimit:'Retained original isolated read-only --check observation plus exact Source-qualified dependency equivalence; not a repeated/current execution observation, normal generation, cluster apply or general helper-mode qualification.'}};
   });
   return {outputs,dependencies,descriptor:authority.descriptor,witnessDigest:inputDigest};
 }
@@ -2105,7 +2122,7 @@ function assertReviewedDiagnosticOutputSources(root) {
 // enlarge it. Inventory never imports or invokes those product modules.
 const reviewedGitOpsProfile = Object.freeze({
   authority: 'scripts/docs-api-gitops-output-profile-authority.json',
-  authoritySha256: '1f5316ad9c99959473cb938a79c44b8bee01f8a5399a95d2df36fcd9a17d17ca',
+  authoritySha256: '740c850a386a080f18a942bd37630aaceb3ec266cf8c8dbcdd7a13d6d13b099d',
   // Current source binding only; the sealed observations remain historical.
   currentPackageBinding20261031: Object.freeze({"path":"package.json","sha256":"0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef","bytes":54287,"historicalSha256":"4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3","historicalBytes":53756}),
   activationSource: 'scripts/gitops-continuous.mjs',
@@ -2230,12 +2247,12 @@ export function gitOpsOutputProfileRole(source, role, witness) {
 // remains the sole infrastructure API producer.
 const reviewedInfrastructureProfile = Object.freeze({
   authority: 'scripts/docs-api-infrastructure-output-profile-authority.json',
-  authoritySha256: '70708daefa080386068281c154cddb581ee9fc76cfe3b5fa817bfb2a417d6fbe',
+  authoritySha256: '319a9ec7a428fa45bff9cb6be4b3b549c1f3415083e57e55d052dc4507168f6e',
   sources: Object.freeze(['scripts/infrastructure-chart.mjs', 'scripts/infrastructure-release.mjs']),
   // Separate current package binding; all nine observations remain historical.
   currentPackageBinding20261031: Object.freeze({"path":"package.json","sha256":"0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef","bytes":54287,"historicalSha256":"4ab1e90c2259aeb96acfdc877e5a9eed330f605abff46d7eca85faded0f020c3","historicalBytes":53756}),
   activationSource: 'scripts/infrastructure-chart.mjs',
-  activationSha256: '6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25',
+  activationSha256: 'fbd1c1d4ce43ea652992459387a47db34829cf466d79872a31dc82d4b448762b',
 });
 const qualifiedInfrastructureProfiles = new WeakSet();
 export function checkedInfrastructureOutputProfiles(root, graph) {

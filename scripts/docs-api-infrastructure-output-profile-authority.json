@@ -189,7 +189,7 @@
   "runtimeExecutionAuthorized": false,
   "apiApplyAuthorized": false,
   "sourcePins": {
-    "scripts/infrastructure-chart.mjs": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
+    "scripts/infrastructure-chart.mjs": "fbd1c1d4ce43ea652992459387a47db34829cf466d79872a31dc82d4b448762b",
     "scripts/infrastructure-release.mjs": "a03aa7721f871473effbb0f79de84bc7ebcb2877c68fa023675ea335e27936f8"
   },
   "inputs": [
@@ -250,8 +250,8 @@
     },
     {
       "path": "scripts/infrastructure-chart.mjs",
-      "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25",
-      "bytes": 3579
+      "sha256": "fbd1c1d4ce43ea652992459387a47db34829cf466d79872a31dc82d4b448762b",
+      "bytes": 3781
     },
     {
       "path": "scripts/infrastructure-image-renderer.mjs",
@@ -359,7 +359,7 @@
   "callerOperation": {
     "source": "scripts/docs-api-output-discovery.mjs",
     "function": "discoverInfrastructureApiOutputs",
-    "syntaxSha256": "5f1ea49ce9a173e8a05b0eb5602dd558f8c0b49d307e3c44938418d5fdb60e05",
+    "syntaxSha256": "1816ecc1c1465509ca2de87884a83fc58edfca6a5b3ca6a50b17974eb5b94796",
     "purpose": "Both original inline import shims and exact real six-profile API adapter, with full-version cache and input binding. Whole observer Source remains separately bound by mandatory existing owner/caller/graph custody."
   },
   "selectedIncomingEdges": [
@@ -542,9 +542,9 @@
   "descriptors": [
     {
       "source": "scripts/infrastructure-chart.mjs",
-      "line": 63,
+      "line": 65,
       "sink": "console.log",
-      "classifierDescriptorSha256": "7bad7f6ba34e09580ad0d1c870c44c04874ff909dcf399536ac99d7f4e67a26b"
+      "classifierDescriptorSha256": "88328a1e717b06dd3cb9e012b3fd40d86a5d831a9af4ed7f00dbacc09a32c3dd"
     },
     {
       "source": "scripts/infrastructure-release.mjs",

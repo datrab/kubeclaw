@@ -958,5 +958,14 @@
     }
   },
   "historicalObservationDisposition": "observation is unchanged historical Node24.21 evidence; currentReadOnlyObservation20261031 is the separately named fresh bounded check and requires independent qualification.",
-  "currentWitnessReview20261031": "docs/blueprint/acceptance-evidence/argocd-current-check-profile-20261031/ref003-argocd-current-witness-verdict.json"
+  "currentWitnessReview20261031": "docs/blueprint/acceptance-evidence/argocd-current-check-profile-20261031/ref003-argocd-current-witness-verdict.json",
+  "sourceQualifiedDependencySuccessors": [
+    {
+      "path": "scripts/updates/deployment-release.mjs",
+      "historicalSha256": "87d7c5e64c9718aba77a259611a760666f05626379dd2cc3f218b75869ed9ac3",
+      "sha256": "71bd2e1f239f06c490fd697c614ee9fd93aaa09150dd8d8d376950b34526fcf7",
+      "bytes": 10813,
+      "basis": "Independent current Source equivalence: lazy context creation only when registry/native context present; unrelated original argocd check dependency has unchanged exports/initialization/selected receiver behavior. Historical observation bytes/results remain exact, not replayed."
+    }
+  ]
 }

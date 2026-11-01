@@ -177,7 +177,7 @@ test('five additional artifact/status purposes preserve UNKNOWN and their actual
   }
   for (const [source, line] of [
     ['scripts/render-kubernetes-api-probe.mjs', 39],
-    ['scripts/updates/deployment-release.mjs', 195],
+    ['scripts/updates/deployment-release.mjs', 196],
     ['scripts/versions.mjs', 181],
   ]) {
     assert.equal(selectedTopLevelScriptPurpose(source, classify(source).find(role => role.line === line), receipt), null);
@@ -204,8 +204,8 @@ test('release renderer retains original API documents from every maintained Ops 
   const receipt = checkedTopLevelScriptPurposes(repository, graph, classify, sources, nativePackageEntries);
   const proof = checkedReleaseRendererOutputs(repository, receipt);
   const renderer = 'scripts/updates/deployment-release.mjs';
-  assert.equal(classify(renderer).find(role => role.line === 195).role, 'unknown');
-  assert.equal(selectedTopLevelScriptPurpose(renderer, classify(renderer).find(role => role.line === 195), receipt), null);
+  assert.equal(classify(renderer).find(role => role.line === 196).role, 'unknown');
+  assert.equal(selectedTopLevelScriptPurpose(renderer, classify(renderer).find(role => role.line === 196), receipt), null);
   assert(proof.outputs.length > 0);
   assert.deepEqual([...new Set(proof.outputs.map(row => row.context.profile))], [
     'selected-ops-public-render:default', 'selected-ops-public-render:releases/values/ops.yaml',
@@ -215,7 +215,7 @@ test('release renderer retains original API documents from every maintained Ops 
   for (const {value, context} of proof.outputs) {
     assert(value.apiVersion && value.kind);
     assert.equal(context.path, renderer);
-    assert.equal(context.line, 195);
+    assert.equal(context.line, 196);
     assert.equal(context.forwardedProducer.forwardingCaller, 'scripts/deploy-ops-pod.sh');
     assert.equal(context.runtimeExecutionAuthorized, false);
     assert.equal(context.apiApplyAuthorized, false);
