@@ -318,25 +318,10 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "c012572761039a696c3f7e0726dea5ec2df5cac75ae3df4d72001b5abde4bcf8"
       },
       {
-        "expressionSha256": "64ed71c34c7bd9b63eef7efd40ab28a30d0f6b6f98544835e4138082f30a5d5f"
-      },
-      {
-        "expressionSha256": "f572daed1afb02da5d050d7c27813035ab64495cdc296f4cee4959eb2bbddf03"
-      },
-      {
-        "expressionSha256": "5a754b42b9fe69198a1380aec167e0216c9d543febc092e5a1ec933de5bddb1b"
-      },
-      {
         "expressionSha256": "f1b555e5b390cd51cefe6e431ffc0c89498c08a12793fd9086ed9a443695f821"
       },
       {
-        "expressionSha256": "43a44d16ec1b334ce5bd8b672084e5d695f5585af0649379f653f26c23d12a40"
-      },
-      {
         "expressionSha256": "01dfb5a901779216ccfa5c957c80efdeca522e3a1407575c235a13f1498f6913"
-      },
-      {
-        "expressionSha256": "6f024c11dd439374477e219c38c9cfafb1153e02483ea7103730722d6236a1a5"
       },
       {
         "expressionSha256": "68a62b12eb5eff1e90346b8f335d1b23feb2aaec825f700eba2100425a8d78c3"
@@ -346,9 +331,6 @@ export const documentationExecutableRoleRecipes = {
       },
       {
         "expressionSha256": "0cad48cf55a6b1d9f5f75d0891326bf95367756e07ac21f1f358685efdbd27d7"
-      },
-      {
-        "expressionSha256": "fb964720bc6b64c57f00e348db382fe9b56a853fd0c138f4fe0c8c222f721995"
       },
       {
         "expressionSha256": "492f6103f5c137c78fbe6d345efc6bbf2dc045026f3cb5acaa563434b25f83eb"
@@ -399,7 +381,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "fbb875639987f3d01ee34044f470837cd13ccaf1a38da5a69d0ad57ea99041d8"
       },
       {
-        "expressionSha256": "1bae97f8faee8b5f1a34d2f020351ed6e6df892f19c15e04555e6b97820897f6"
+        "expressionSha256": "ce2f863b39b163017ab6105dd89b3382d7e9bdef5d9678edfd6fdb90d1d03f2e"
       },
       {
         "expressionSha256": "c81a0ab77b94b4edf45710fb7b4c064f4ba5094811c868a626414c6a1e0374de"
@@ -408,7 +390,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9ab3343f9a0fe5f0ad36e2f5f71e03683dee5c9335b7fa29e3cdb07262e7107e"
       },
       {
-        "expressionSha256": "5f1ea49ce9a173e8a05b0eb5602dd558f8c0b49d307e3c44938418d5fdb60e05"
+        "expressionSha256": "1816ecc1c1465509ca2de87884a83fc58edfca6a5b3ca6a50b17974eb5b94796"
       },
       {
         "expressionSha256": "fdf1efaf31e8d6943b06870c7fe12b00543da0d11ae4ad5bdc1b23bebbf4f569"
@@ -417,7 +399,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "5a61aace8ba69be1179466f6c1b6ff69114de4d3bc786724ce21f78f06627702"
       },
       {
-        "expressionSha256": "48e220cf0543c0db18e59d2098ed1e84afa138c71253be27d4320696e7d5f2e5"
+        "expressionSha256": "6c61b0649f78958e4e0518e985824dab8eb10f9d8567ec573430cee6da32c2d7"
       },
       {
         "expressionSha256": "45043f5d31a5a9b7b9d18fc901567cf91d9a706938a43a3ed888a67f4064b7df"
@@ -432,7 +414,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "02922e8453bb5e7401332bbcf78311f6606627413665ef7b4c9d42b8df130b7a"
       },
       {
-        "expressionSha256": "5483a1ef2a36b2ac04733f44cb10d9bf2ec4a42b9f5f19115d34df984a067414"
+        "expressionSha256": "0bb645b7f3c09fcf9419032569ef212f95c7501c73294cc57405852241cfc8f5"
       },
       {
         "expressionSha256": "4965ca3bd2811a5ebad50b8e38d8af4fcca8f1f8255bbeb23495dde1a146f4ef"
@@ -472,30 +454,6 @@ export const documentationExecutableRoleRecipes = {
       },
       {
         "expressionSha256": "8cd45800f408ec06e454958444a20ca9aa569d291a1df22d6c317d0dcc690b9e"
-      },
-      {
-        "expressionSha256": "58e6f6ff98ce55913fd159dd47c05e1026da83a608e9377ca0b7b00c85437627"
-      },
-      {
-        "expressionSha256": "670e4f2645e17151fcc671a7f926117e3a76d9c63a6b06bc06a9a66c7c89a63b"
-      },
-      {
-        "expressionSha256": "05728a404b3519fe94af24f52a18148b2ab3363b8533b52aba6366dfbbebfafc"
-      },
-      {
-        "expressionSha256": "3de51284d288d84bd92e3a56874b55d99f034ed07e6c492bd407e233510885ae"
-      },
-      {
-        "expressionSha256": "6b608582e5b5a60578ddab4c222babc55aaa0bf94a757bb508141e6db091326d"
-      },
-      {
-        "expressionSha256": "059eed72459580c8f943649073f1f0ef43a74fd2632222765bcdcada5075a108"
-      },
-      {
-        "expressionSha256": "4dfdcb74457779cc873b2c3c89a6bf6b8d9cadc48231bdf851916c8015c6382c"
-      },
-      {
-        "expressionSha256": "875fee59939dd7d34a97d4dcdce1483375bec6754e807c984e8c032680e62c9d"
       },
       {
         "expressionSha256": "2f47cf142a1c3fc2fde3794044c22f4b59dcc4c31d481d35e964c5da096ed827"
@@ -561,7 +519,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "2622126f748ecb921e36ef23523ff970251ea6e66431b89d3b8efc913e7f780a"
       },
       {
-        "expressionSha256": "fe8b7e0d51b4c69a47f21772740add286eb683621b2c273ebdc05a3f53e3ff2b"
+        "expressionSha256": "6121398ce1c1808fe596e19bee8317ece244cfd44ce2016c65993f452f7bff8f"
       },
       {
         "expressionSha256": "76d7338c29c7149ddaff1061573f03f59f63c2085d7f4de6c8248de84017dfca"
@@ -585,25 +543,16 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "e9e3b5379d7855e12c57ee967d07dd15f67c5d13d4f7aab1c4f609dc35e0361d"
       },
       {
+        "expressionSha256": "034c52b16b5ec284b5fac100077d0c9c8615ae58a953bd0b8353f7a55fc24789"
+      },
+      {
+        "expressionSha256": "29daf67ea5e5192be1e6245b977d21ac8c3a2e2c44544314ef3528123f01a662"
+      },
+      {
         "expressionSha256": "549e5fdeb7f66f24dd2a41184b6fa99c7389dbfa01f5403bfc00c63a80722f05"
       },
       {
-        "expressionSha256": "eaf7b3cf74f7eec4c520b12701c0a088d6cfc68dce8206c10243d04126d3873c"
-      },
-      {
-        "expressionSha256": "80becaf63feb8cedeaec308620577d8b78234df835d1f4cb365bde796e99dd81"
-      },
-      {
         "expressionSha256": "3312a17003efb2483be700b067d6575ffda1831dd046fea519d33aaf173e32c0"
-      },
-      {
-        "expressionSha256": "7850dbf4149e05c6fd94da96c734fa182e55aae70e43120d523cd1bcc8524bb1"
-      },
-      {
-        "expressionSha256": "a20f2b5bd86ba46f7cecb5610f0e1cf82ddfb975e611209d4b6a506257525699"
-      },
-      {
-        "expressionSha256": "9c452ca3b6489a124447a7e8f876b409f2483d2bf7695a5117e7d2bd72d58cad"
       },
       {
         "expressionSha256": "8a059d739c685bd28cc46b9a2ce5ce3b6ced2a1e5dc2ee7432a2cf2fbde10701"
@@ -621,7 +570,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "be0cfd5f0f37cb2b48fe4fa536da9e993d09204fe82dedf8b6defa4a43b4b428"
       },
       {
-        "expressionSha256": "3cdec82b774c9336081d4b7de87bc913345d071c6412604597dadec4d2e49934"
+        "expressionSha256": "c24d800fe5c75ddc1b0b4735fb4bb3194f2724c4ed01f651608e5af34c114588"
       },
       {
         "expressionSha256": "aee0f665c60269ac805faa14bca7a337809f0cb7bf07b52d4fc5b7aa7a6b2ed9"
@@ -666,31 +615,19 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "80308028e5895aea1e22a5a4d9c3647f9e0961b1847e67a8ce0ee952c71f98fa"
       },
       {
-        "expressionSha256": "5db35b01a7c731954b06d2d62b3a6085b5646dfb7065033b5e4a6be90dc74190"
-      },
-      {
-        "expressionSha256": "aee64aa3bae18d8ba6ec8a7a2fc5e1f8368a56e76229d6ce5e5eddd43b976cc3"
-      },
-      {
         "expressionSha256": "8197a074fed5190c1f205938fe96260c3a3068c9343660c71930d579dc7dac2a"
       },
       {
-        "expressionSha256": "efb22a7e0cf2f60626109c89b0a303afde2d6be4cdcce4a6d406bd5885eada9d"
+        "expressionSha256": "da26d71ecd02db779135845c6c4067324b3d8db0e7ca22334b8466500ad94167"
       },
       {
-        "expressionSha256": "a530f91b04a26c115bc16bd30c8ad0ccd10a7b82e53d3beadee9cef360952409"
-      },
-      {
-        "expressionSha256": "1ac9485f21234fb5395a404cecd0aad8f043f7c12689597f592546de2a6a73b3"
+        "expressionSha256": "0de84e95bf3d99b75ed26ea1842e03d518d0b6007044e8e9d86cfa8b690f58f0"
       },
       {
         "expressionSha256": "23f8ffe64b7fa6557f778121a6c050adfea672efeffdef0ee17768d219793389"
-      },
-      {
-        "expressionSha256": "328f8dd702f5cb8ccffb9ae17cc3d577e76cd8ec81456fffa49b452e908adb55"
       }
     ],
-    "factsDigest": "16d542904ba4eb4ba2b0c63cef2ae92e9f54f3e52aed831dfe61a0d7ff66a38c",
+    "factsDigest": "46b3de85fc59103fde9e7393305e5f29139d1d8bd81701433a1f86e780908112",
     "authorityInputs": [
       {
         "path": "scripts/docs-api-go-output-role-adapter.go",
@@ -715,7 +652,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/infrastructure-chart.mjs",
         "canonical": "scripts/infrastructure-chart.mjs",
-        "sha256": "6a136a40cced70d63de028e635bd5b9e4fb30f1a632cd725175385faf9c57e25"
+        "sha256": "fbd1c1d4ce43ea652992459387a47db34829cf466d79872a31dc82d4b448762b"
       },
       {
         "path": "scripts/infrastructure-image-renderer.mjs",
@@ -908,7 +845,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "041aa7206a41cf5c3bdd66f61797f9b67c06085f6d0076ce1f84e2a9c8d57db8"
       }
     ],
-    "factsDigest": "d134b139fe4a097faed75776018ec584f95cc2bf6bb294a27c6682ba980b3a40",
+    "factsDigest": "dd1cdc843e926179e5e202bfd914ddd689b15fd89f728f8df7c5e49b57708212",
     "authorityInputs": []
   },
   "scripts/docs-api-python-output-adapter.py": {
@@ -1187,7 +1124,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "9efac25cb0d8a53fc3a31aec649afa2cd99102c34366428833c403eccaef3fbe"
       }
     ],
-    "factsDigest": "d6bbe5659b4bd1b397b576b3ecfb703277c918a19de89ec05640132f6d5f3635",
+    "factsDigest": "0e0113de88634ed93a4d82fd2e0b5c4a69a58b2e4d920586de91ea934cf83d11",
     "authorityInputs": []
   },
   "scripts/docs-api-schema-authorities.mjs": {
@@ -2034,7 +1971,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "7602a8f927b47cd0b4b4f2501bccd41bb8e4e4ea43e571cf4bce62f3c3717191"
       }
     ],
-    "factsDigest": "61da7ff3d46e36d6aa689ba319d06d47cb19d81269c7468d39b811528d0eb327",
+    "factsDigest": "91b9174e6230b5b95a63442a4a02b79cabcc1e0545a356ca2b949186021f8f10",
     "authorityInputs": [
       {
         "path": "scripts/vendor-external-helm-authorities.mjs",
@@ -2179,7 +2116,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "cba76d80649d6ce8d92897a224d01ee9877a1807a9de9e765cdad79d29f912ce"
       }
     ],
-    "factsDigest": "77415f86d28e9faea3db4478a9ba79d0a20fd541fb503791691410dc08507026",
+    "factsDigest": "07ade1b13e1846db5ba510939ab685436bf53b6fa9266edbd26affed033796b9",
     "authorityInputs": []
   },
   "scripts/docs-governance.mjs": {
@@ -9736,7 +9673,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": ".github/workflows/docs-checks.yaml",
         "canonical": ".github/workflows/docs-checks.yaml",
-        "sha256": "7c8470352aec69b2f26bf8c60b1a5fb93be0c8f1cc8ece2b432cbf88f4c665a8"
+        "sha256": "fb4f075cbae40abaf6082be5e048d875bb5108ad24f44f099ba8e145e8068134"
       },
       {
         "path": "scripts/tests/docs-reader-redirects.test.mjs",
@@ -10122,7 +10059,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": ".github/workflows/docs-checks.yaml",
         "canonical": ".github/workflows/docs-checks.yaml",
-        "sha256": "7c8470352aec69b2f26bf8c60b1a5fb93be0c8f1cc8ece2b432cbf88f4c665a8"
+        "sha256": "fb4f075cbae40abaf6082be5e048d875bb5108ad24f44f099ba8e145e8068134"
       },
       {
         "path": "package.json",
@@ -10341,7 +10278,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": ".github/workflows/docs-checks.yaml",
         "canonical": ".github/workflows/docs-checks.yaml",
-        "sha256": "7c8470352aec69b2f26bf8c60b1a5fb93be0c8f1cc8ece2b432cbf88f4c665a8"
+        "sha256": "fb4f075cbae40abaf6082be5e048d875bb5108ad24f44f099ba8e145e8068134"
       },
       {
         "path": "scripts/tests/docs-reader-page-records.test.mjs",
@@ -10500,12 +10437,57 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/docs-api-output-discovery.mjs",
         "canonical": "scripts/docs-api-output-discovery.mjs",
-        "sha256": "61862d772ba65746490987cfa3efbc866b9ccb23594de304319eb0985a924bc2"
+        "sha256": "9f8fbb2a3cf13e59ffc8c43abf59aea9f4f86d1ca27dda3168c18bfa81232ef6"
       },
       {
         "path": "scripts/docs-helm-memory-chart.mjs",
         "canonical": "scripts/docs-helm-memory-chart.mjs",
         "sha256": "4d44afb56d88061d05f4f75397de4354885529a1bdc79329a967b3d68140166f"
+      }
+    ]
+  },
+  "scripts/docs-memory-inputs.mjs": {
+    "role": "documentation-consumer",
+    "consumer": "Exact sealed anonymous-input relay used only by controlled documentary Ops/registry/continuous render observations in docs-api-output-discovery. It preserves actual command/argument/stdin/output/exit bytes and holds sealed descriptors through descendant completion. Actual Source caller closure and fixed input bytes are separately enforced; not arbitrary passed-command safety, runtime acquisition, API apply, subprocess or global helper execution authorization. Actual API renderer outputs remain classified at original consumer.",
+    "selectors": [
+      {
+        "expressionSha256": "d30990e5dea232df8f6a0314b46134d437aabcda2e910ea5cd59a8a088960535"
+      },
+      {
+        "expressionSha256": "127337b5eca8b86042bc16e676e7f0b3271cd809f700aa3953d67beeb489cf04"
+      },
+      {
+        "expressionSha256": "3bd42e15e5427f946b98b898212af900ed0a4068cff03a37aa2ce1d3a081f2ec"
+      },
+      {
+        "expressionSha256": "09b1340d0a4d4dd72e22e768ea2632e4ac161b7b01a3af6026f8c3964d634fc5"
+      },
+      {
+        "expressionSha256": "9f3fad083ae819cd1c8f1f72366901e672ce7b119d7aa0eea57f10a5bdeb41b6"
+      },
+      {
+        "expressionSha256": "81224079bff38a4eadd0838cdc3a3849721586588d3c7f6b4a8785c5c7ebe09d"
+      }
+    ],
+    "factsDigest": "97859e9c213cf24996899ccdb0c0b0dbe947c1677249fe82fce499cf1e630673",
+    "authorityInputs": [],
+    "qualificationKind": "reviewed-documentation-consumer/v1",
+    "sourceSha256": "fe8818c88971427495e86635a83dd62306d2d814a7596e9419d1f8d393fd2b01",
+    "purposeInputs": [
+      {
+        "path": "package.json",
+        "canonical": "package.json",
+        "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+      },
+      {
+        "path": "scripts/docs-api-output-discovery.mjs",
+        "canonical": "scripts/docs-api-output-discovery.mjs",
+        "sha256": "9f8fbb2a3cf13e59ffc8c43abf59aea9f4f86d1ca27dda3168c18bfa81232ef6"
+      },
+      {
+        "path": "scripts/docs-memory-inputs.mjs",
+        "canonical": "scripts/docs-memory-inputs.mjs",
+        "sha256": "fe8818c88971427495e86635a83dd62306d2d814a7596e9419d1f8d393fd2b01"
       }
     ]
   }
