@@ -897,6 +897,11 @@
       "canonicalUrl": "/use/workflows/local-core.html"
     },
     {
+      "sourcePath": "docs/site/use/workflows/quality-validation.md",
+      "route": "/use/workflows/quality-validation.html",
+      "canonicalUrl": "/use/workflows/quality-validation.html"
+    },
+    {
       "sourcePath": "docs/site/use/workflows/redis-replay-recovery.md",
       "route": "/use/workflows/redis-replay-recovery.html",
       "canonicalUrl": "/use/workflows/redis-replay-recovery.html"

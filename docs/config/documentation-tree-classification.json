@@ -36041,6 +36041,46 @@
       "originalPath": "docs/site/use/workflows/uncertain-effect.md",
       "expectedPath": "docs/site/use/workflows/uncertain-effect.md",
       "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/minimal-project.mjs",
+      "class": "canonical-reader-documentation",
+      "purpose": "Bounded local PIPE01/QUALITY01 teaching input or guide; exact Source/native parsing and explicit partial execution/authority limits, not runtime registration.",
+      "originalPath": "docs/site/use/workflows/examples/minimal-project.mjs",
+      "expectedPath": "docs/site/use/workflows/examples/minimal-project.mjs",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/minimal.pipeline.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Bounded local PIPE01/QUALITY01 teaching input or guide; exact Source/native parsing and explicit partial execution/authority limits, not runtime registration.",
+      "originalPath": "docs/site/use/workflows/examples/minimal.pipeline.json",
+      "expectedPath": "docs/site/use/workflows/examples/minimal.pipeline.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "class": "canonical-reader-documentation",
+      "purpose": "Bounded local PIPE01/QUALITY01 teaching input or guide; exact Source/native parsing and explicit partial execution/authority limits, not runtime registration.",
+      "originalPath": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "expectedPath": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "class": "canonical-reader-documentation",
+      "purpose": "Bounded local PIPE01/QUALITY01 teaching input or guide; exact Source/native parsing and explicit partial execution/authority limits, not runtime registration.",
+      "originalPath": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "expectedPath": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "introducedAfterBaseline": true
+    },
+    {
+      "path": "docs/site/use/workflows/quality-validation.md",
+      "class": "canonical-reader-documentation",
+      "purpose": "Bounded local PIPE01/QUALITY01 teaching input or guide; exact Source/native parsing and explicit partial execution/authority limits, not runtime registration.",
+      "originalPath": "docs/site/use/workflows/quality-validation.md",
+      "expectedPath": "docs/site/use/workflows/quality-validation.md",
+      "introducedAfterBaseline": true
     }
   ]
 }

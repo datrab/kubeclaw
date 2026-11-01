@@ -456,7 +456,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": "scripts/lib/docs-publication-assets.mjs",
       "canonical": "scripts/lib/docs-publication-assets.mjs",
-      "sha256": "2a87cebc2487e7ef7e3cff6dcf4b46182ec315c23143fb03845c7278a69bee68"
+      "sha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0"
     },
     {
       "path": "scripts/lib/docs-route-continuity.mjs",
@@ -541,7 +541,7 @@ const publicationExampleChildPurpose=freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "05c3b82a531bb06a175da106d7d442cb4120c3b2a338cc8be2dd6ad036a6e1bb"
+      "sha256": "d97c56efef457c3f90ae4b0162a18caf5ea7c772efd19fee87bd8d2ee83d4e17"
     },
     {
       "path": "package.json",

@@ -19,6 +19,7 @@ new stage attempt. It does not change the result of the earlier attempt.
 | Compile, run, audit and clean up one minimal project | [Run one compiled minimal project](#run-one-compiled-minimal-project) | One actual compiler-produced graph, implementation, two lint/test gates, audit, original artifacts and owned cleanup. No deployment or human acceptance. |
 | Wait, approval, and resume | [Rehearse Human Approval and Resume](wait-resume.md) | Complete inputs, host prerequisites, and ordered local rehearsal. No successful full local lifecycle evidence. The required deployment run remains open. |
 | Run a Buster suite with a fixture, matrix, and report | [Run a Buster Suite](buster-suite.md) | Use that guide's declared local and deployment checks. |
+| Validate a local Prism flow and resolve a Buster suite | [Local quality validation](quality-validation.md) | Native document/flow/action/preview and exact Buster plan resolution, plus copied-manifest documentation-drift rejection. No provider execution or original Prism template/provider/output linkage; a zero command exit is only the stated partial validation. |
 | Prepare and release a Kubernetes fixture | [Prepare and Release a Kubernetes Fixture](kubernetes-fixture.md) | Separates local plan validation from deployed fixture lifecycle. |
 | Deliver a demo and request human acceptance | [Deliver a Demo](../demo-delivery.md#canonical-demo-delivery-procedure) | Local contract rehearsal and explicit live-delivery prerequisites. |
 | Diagnose an uncertain external effect | [Lost Responses and Uncertain Effects](../diagnose.md#lost-responses-and-uncertain-effects), then [Pipeline State Recovery](../recovery.md#pipeline-state-recovery); [owned local response-loss rehearsal](uncertain-effect.md) | Preserve stopped-writer raw state before audit. Match the original request, resource and receipt through an authorized owner read. Stop while the outcome or supported reconciliation path remains unknown. The local rehearsal separately retains the real failed transport receipt and blocked Core result; it is not deployed reconciliation. |
@@ -190,6 +191,42 @@ a successful notification, or a source link.
 
 
 ## Run one compiled minimal project
+
+### Inspect the canonical minimal fixture (partial scope)
+
+The [canonical minimal graph](examples/minimal.pipeline.json) and
+[inspection helper](examples/minimal-project.mjs) provide a separate bounded
+prepare/schema-and-registry/default-inspection path. They do not replace the
+actual compiled-project run below or its recorded file-telemetry boundary.
+Use a clean reviewed Source with the handbook's locked Node24 dependencies.
+The helper derives its installed checkout; it and the canonical fixture must be
+tracked physical files there. An optional `PIPELINE01_SOURCE_ROOT` may only equal
+that checkout, never select a different compiler or registry Source.
+The fixed disposable root must not exist; never delete an unknown collision.
+
+```bash
+set -e
+export PIPELINE01_SOURCE_ROOT="$(pwd -P)"
+node docs/site/use/workflows/examples/minimal-project.mjs prepare /tmp/kubeclaw-reader-pipeline01
+node docs/site/use/workflows/examples/minimal-project.mjs identities /tmp/kubeclaw-reader-pipeline01
+node docs/site/use/workflows/examples/minimal-project.mjs defaults /tmp/kubeclaw-reader-pipeline01
+```
+
+Prepare ignores inherited Git environment/global/system configuration and disables
+fixture signing, hooks, external attributes and inherited templates only in its
+child environment; it never edits your configuration. It still checks the real
+selected Source checkout and revision. Prepare uses fixed Git fixture dates and
+the real compiler, then requires whole
+byte equality with the unchanged canonical graph. Inspection rechecks the owned
+marker, clean Source/revision, both prepared-input digests and canonical bytes.
+See [the finite policy/default and derived-value table](../../reference/nova-project.md#minimal-compiler-policy-and-derived-values).
+Exit zero is **partial local inspection only**, not complete platform/grant
+admission or authoritative runtime-target resolution. The original minimal
+pipeline task still requires the healthy Redis-bound Core run and audit, actual
+runtime authority, the unreachable-Redis failure/state/bounded-action evidence,
+and a fresh participant. Those results are not supplied by these commands.
+
+### Existing executed compiled-project scope
 
 This journey compiles one `nova-project.v2` and gives that exact `compiled.json`
 to Core. It does not join the compile-only exercise above with an unrelated

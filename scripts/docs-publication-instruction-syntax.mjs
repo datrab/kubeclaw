@@ -48,7 +48,7 @@ export function validateInstructionSyntax(pages, sources) {
   assert.equal(textCommands.size, 0, 'declared text command disappeared');
   // Preserve all454 previous hosts and the four uncertain-effect procedure blocks.
   // The explicit declaration binds every old/new block; all parser-only limits remain.
-  assert.equal(selected.size, 458, 'instruction host responsibility changed');
+  assert.equal(selected.size, 462, 'instruction host responsibility changed');
   const embedded = [];
   for (const binding of embeddedProgramBindings) {
     assert(selected.has(binding.ref), `unbound embedded host input: ${binding.ref}`);

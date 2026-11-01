@@ -3,7 +3,7 @@
   "authority": "Page metadata supplies ownership and source dependencies. This file is generated and must not be edited by hand.",
   "generatedBy": "scripts/docs-governance.mjs",
   "routeRegistry": "docs/site/reference/documentation-route-registry.json",
-  "pageCount": 185,
+  "pageCount": 186,
   "pages": [
     {
       "page": "docs/site/README.md",
@@ -4059,6 +4059,26 @@
         "skills/common/plugins/telemetry-observer",
         "skills/common/plugins/telemetry-store",
         "skills/nova/core/telemetry"
+      ],
+      "checks": [
+        "npm run docs:governance:check",
+        "npm run docs:publication:check",
+        "npm run docs:check:refs"
+      ]
+    },
+    {
+      "page": "docs/site/use/workflows/quality-validation.md",
+      "route": "/use/workflows/quality-validation/",
+      "contentKind": "authored",
+      "status": "bounded local validation proposal; original quality-reader case remains incomplete",
+      "audience": "Prism and Buster specialist",
+      "owner": "Prism document and Studio maintainers; Buster resolver and capability-documentation maintainers",
+      "appliesTo": "native document, transition, preview, suite resolution and documentation-drift checks; no provider execution or deployment",
+      "lastVerified": "2026-11-01. Actual author validation and mutation controls; not a fresh participant or independent acceptance",
+      "sourceDependencies": [
+        "docs/site/use/workflows/examples/prism-studio-flow.json",
+        "docs/site/use/workflows/examples/quality-validation.mjs",
+        "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json"
       ],
       "checks": [
         "npm run docs:governance:check",

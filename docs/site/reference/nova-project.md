@@ -272,6 +272,37 @@ can request the implementation stage again. Current compilation gives two
 orders to each present category, one orchestrator order, and one technical
 retry, then calculates `maxAttempts` to cover that bounded policy.
 
+## Minimal compiler policy and derived values
+
+For the canonical minimal fixture, `minimal-project.mjs defaults` reports the
+following finite compiler policy and constants. These are compilation values,
+not evidence that an attempt, repair, provider or external service ran. The
+fixture selects no optional review, approval or demo stages.
+
+| Output in this minimal graph | Effective value | Classification and meaning | Native authority |
+| --- | --- | --- | --- |
+| Graph `maxConcurrency` | `1` | Fixed compiler policy: one serialized repository lane, not provider-node concurrency. | `compiler.ts`, `compileProject` |
+| `source-preflight` and `blueprint-sync` config | `{}` | Fixed empty configuration for the two generated source stages. | `source.ts`, `sourceStages` |
+| Those two source stages' execution | `maxAttempts: 1`, `maxRemediationCycles: 0`, `timeoutMs: 120000` | Fixed source-stage policy; no technical-retry or repair-budget field is inserted here. | `source.ts`, `sourceStages` |
+| Module repair categories | `lint: 2`, `test: 2`; `maximumOrchestratorOrders: 1` | Fixed category/order allowances for this no-review module. Optional review would add its own category, not silently change this fixture. | `compiler.ts`, `moduleStages` |
+| Module execution: implementation, lint and test | `maxTechnicalRetries: 1`, `maxRemediationCycles: 5`, `maxAttempts: 7`, `timeoutMs: 1800000` | One technical retry; five orders are `2 + 2 + 1`; seven attempts are initial work `1 + 5 + 1`. Only implementation owns the `repairBudget` object. | `compiler.ts`, `moduleStages` |
+| Module lint/test routing | `repairCategory: lint` / `test`; `on.request_fix: implement-app` | Derived checker association and repair edge, not a separate retry allowance or ordinary dependency. | `compiler.ts`, `moduleStages` |
+| `final-lint`, `final-test`, `project-summary` execution | `maxAttempts: 2`, `maxRemediationCycles: 0`, `maxTechnicalRetries: 1`, `timeoutMs: 1800000` | Fixed cumulative policy: initial work plus one technical retry, no remediation cycles. | `coverage.ts`, `cumulativeStages` |
+| Implementation input `attempt` | `1` | Fixed initial-attempt input constant. It is not a record of a dispatched attempt or permission to rewrite persisted attempts. | `compiler.ts`, `moduleStages` |
+| Implementation workspace `baseRef` | `HEAD` | Fixed workspace selector. The declared base revision and clean-source preflight still bind the actual repository; `HEAD` alone is not source authority. | `compiler.ts`, `moduleStages` |
+| Test-stage config `agent` when omitted | `buster` | Compiler default name. This fixture explicitly supplies `testAgentEnabled: false`; that does not disable either mandatory provider gate. | `coverage.ts`, `testConfiguration` |
+| Generated stage IDs, types and ordered dependencies | `source-preflight`, `blueprint-sync`, `implement-app`, `lint-app`, `test-app`, `final-lint`, `final-test`, `project-summary` | Derived graph structure from the one module and final checks. Generated identifiers are not role/endpoint authorization. | `compiler.ts`, `compileProject`; `source.ts`; `coverage.ts` |
+| Workspace path/branch, source contract/binding, baseline, coverage and plan references | Values derived from the declared project, run ID, actual baseline and resolved plans | Derived Source identities and data, not implicit policy defaults. The fixed local root and Git fixture dates reproduce these bytes; they do not describe execution time. | `compiler.ts`, `moduleStages`; `source.ts`, `sourceStages`; `coverage.ts` |
+| Identity, review and delivery encodings in this fixture | The materializer explicitly selects portable UTF-16 JSON, project-review and delivery encodings | Explicit compile arguments, not omitted-input defaults. `project-summary`'s delivery encoding follows that explicit choice. | `compiled-project-input.mjs`; `compiler.ts`; `coverage.ts` |
+
+The source files named above are under `skills/nova/project/`, except the
+materializer under `docs/site/use/workflows/examples/`. Keep this table distinct
+from runtime/plugin defaults. For example, telemetry's best-effort delivery
+attempts and deadlines belong to its selected observer manifest, not to these
+compiler execution values. The table does not establish a healthy Redis-bound
+run, complete platform/grant validation, configured runtime-target authority or
+a participant's complete explanation of the original task.
+
 ## Change and recovery rules
 
 Normal start checks the declared commit and a clean worktree. Compilation alone

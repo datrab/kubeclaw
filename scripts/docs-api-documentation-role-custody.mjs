@@ -4546,7 +4546,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "0c07d5c689b4e48cfa546e3f4be6056b06b0a07cbc7b16a08901bef75afef919"
       }
     ],
-    "factsDigest": "0a97e611305d278840f1e8dab485af2e7327f48f42ab45e816c7821c70f72a67",
+    "factsDigest": "5761bd0067c5c5e81285e587cf7cd0b9d131f55475b8075ac44ef2c7015b0552",
     "authorityInputs": [
       {
         "path": "scripts/docs-publication-examples.mjs",
@@ -5918,7 +5918,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "3dc1ff3d3ec94c1b0799d5c99298e41f4fc507f35f290ddbf7f4d5ef318f39e3"
       }
     ],
-    "factsDigest": "914fb82e3bf512f2274ecf542c3c802bea53d7bba03457f128af075bad3b2ddc",
+    "factsDigest": "0e570e7397bc420f4ba49fab79885dae203885a11060145bd4345ce0ad3410f3",
     "authorityInputs": []
   },
   "scripts/docs-reader/check-search.mjs": {
@@ -10312,7 +10312,7 @@ export const documentationExecutableRoleRecipes = {
         "expressionSha256": "513381bdf505da98a8e167972356a489817bafd9422efef66a347fa8d49c5b93"
       }
     ],
-    "factsDigest": "a7c151ee51859915965607f7ca2c3abb7439ac1eb85d08e7c04b68c1df81be01",
+    "factsDigest": "13d988b1d61ea2a9e670ec30d469986ea1239826dce861f7720a14c345c60713",
     "authorityInputs": [],
     "purposeInputs": [
       {
@@ -10373,7 +10373,7 @@ export const documentationExecutableRoleRecipes = {
       {
         "path": "scripts/lib/docs-publication-assets.mjs",
         "canonical": "scripts/lib/docs-publication-assets.mjs",
-        "sha256": "2a87cebc2487e7ef7e3cff6dcf4b46182ec315c23143fb03845c7278a69bee68"
+        "sha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0"
       },
       {
         "path": "scripts/lib/docs-route-continuity.mjs",
@@ -10714,7 +10714,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-publication-instruction-syntax.mjs",
-      "sha256": "edaad893617524f08bef0c6a741a46b1a880257f356d610c02d26367569be418"
+      "sha256": "51424c23dcb60f8505fc35ddac9e90bd53d22c2e7803cf9f71bd4c5024437949"
     },
     {
       "path": "scripts/docs-publication-embedded-yaml.mjs",
@@ -20719,7 +20719,7 @@ export const reviewedRootNodeEntryRecipes = {
     {
       "source": "scripts/lib/docs-publication-assets.mjs",
       "kind": "selected-operative-definition",
-      "purpose": "Independently reviewed exact positive reader-asset selection, no Markdown wildcard or source execution. One added repair-retry example asset literal preserves all prior selections; public page/asset/copy producers retain their original bounds. Omitted definitions are not newly qualified by this range receipt; the separate publicationManifest operation is bound by its actual consumer facts. Additional finite compiled-project successor: exactly three explicit public example asset paths; same positive selection, copy-only behavior, no wildcard, new caller, runtime execution or DATA authority. Additional finite PIPE04 successor: exactly eight explicit canonical uncertain-effect graph/helper/private-package/schema/stage assets. All prior28 allowances and nonallowlist definitions remain exact; line positions shift by eight. Selection, physical-file rejection and copy-only producer behavior unchanged. Neither syntax/schema checking nor publication of teaching code authorizes its execution, external effects, API apply or new package/native caller.",
+      "purpose": "Independently reviewed exact positive reader-asset selection, no Markdown wildcard or source execution. One added repair-retry example asset literal preserves all prior selections; public page/asset/copy producers retain their original bounds. Omitted definitions are not newly qualified by this range receipt; the separate publicationManifest operation is bound by its actual consumer facts. Additional finite compiled-project successor: exactly three explicit public example asset paths; same positive selection, copy-only behavior, no wildcard, new caller, runtime execution or DATA authority. Additional finite PIPE04 successor: exactly eight explicit canonical uncertain-effect graph/helper/private-package/schema/stage assets. All prior28 allowances and nonallowlist definitions remain exact; line positions shift by eight. Selection, physical-file rejection and copy-only producer behavior unchanged. Neither syntax/schema checking nor publication of teaching code authorizes its execution, external effects, API apply or new package/native caller. Finite PIPE01/QUALITY01 successor adds exactly four explicit canonical learning assets (minimal graph/helper and Prism design/local validation helper), preserving all prior36 allowances and nonallowlist behavior. Publication performs parse/schema/syntax checks only, never invokes these helpers or authorizes provider, Redis, Gateway, grant or runtime execution.",
       "units": [
         {
           "symbol": "ImportDeclaration",
@@ -20739,36 +20739,36 @@ export const reviewedRootNodeEntryRecipes = {
           "symbol": "files",
           "kind": "FirstStatement",
           "startLine": 6,
-          "endLine": 43,
-          "syntaxSha256": "0e44853376aa89591cb8d4aba722101f8057a2251f391a9184e689d85c58a7cc"
+          "endLine": 47,
+          "syntaxSha256": "88f3e168c62aa1d9bd8a1be77904f221450a93486fa6cc0d9920ddefa061ab1c"
         },
         {
           "symbol": "publicationPages",
           "kind": "FunctionDeclaration",
-          "startLine": 45,
-          "endLine": 80,
+          "startLine": 49,
+          "endLine": 84,
           "syntaxSha256": "164b6ce1b1f18d3b52707c356b9386c5d025ff91ada984810eaa772420741fb7"
         },
         {
           "symbol": "publicationAssets",
           "kind": "FunctionDeclaration",
-          "startLine": 82,
-          "endLine": 100,
+          "startLine": 86,
+          "endLine": 104,
           "syntaxSha256": "949d411f82d86d4626bcfc8f0ccc4f16b58c23449a453707791e871d2bb7cde1"
         },
         {
           "symbol": "copyPublicationAssets",
           "kind": "FunctionDeclaration",
-          "startLine": 102,
-          "endLine": 108,
+          "startLine": 106,
+          "endLine": 112,
           "syntaxSha256": "88bdfde2064ff986bade55d9f049315219c539d17c1de0bfd088e619d579d633"
         }
       ],
       "ranges": [
         {
           "startLine": 1,
-          "endLine": 121,
-          "sha256": "2a87cebc2487e7ef7e3cff6dcf4b46182ec315c23143fb03845c7278a69bee68"
+          "endLine": 125,
+          "sha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0"
         }
       ],
       "initialization": [
@@ -20782,7 +20782,7 @@ export const reviewedRootNodeEntryRecipes = {
         },
         {
           "kind": "FirstStatement",
-          "syntaxSha256": "0e44853376aa89591cb8d4aba722101f8057a2251f391a9184e689d85c58a7cc"
+          "syntaxSha256": "88f3e168c62aa1d9bd8a1be77904f221450a93486fa6cc0d9920ddefa061ab1c"
         }
       ]
     },

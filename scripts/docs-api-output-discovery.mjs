@@ -2697,7 +2697,7 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "05c3b82a531bb06a175da106d7d442cb4120c3b2a338cc8be2dd6ad036a6e1bb"
+      "sha256": "d97c56efef457c3f90ae4b0162a18caf5ea7c772efd19fee87bd8d2ee83d4e17"
     },
     {
       "path": "docs/site/use/diagnose.md",
@@ -3424,11 +3424,11 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/config/documentation-tree-classification.json",
-      "sha256": "3ea2e2d544e5a64f90aefe40137668e533a6b20b47f463c2a7de59b2b468d102"
+      "sha256": "9d27fc45da52788e58abc43b2f024d24e81970ee1c0aca8a4b9c5237618342bd"
     },
     {
       "path": "docs/config/publication-example-claims.json",
-      "sha256": "05c3b82a531bb06a175da106d7d442cb4120c3b2a338cc8be2dd6ad036a6e1bb"
+      "sha256": "d97c56efef457c3f90ae4b0162a18caf5ea7c772efd19fee87bd8d2ee83d4e17"
     },
     {
       "path": "docs/site/extend/examples/minimal-stage/package.json",
@@ -3508,7 +3508,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/reference/generated-documentation-map.json",
-      "sha256": "508624b7fed8ace1eb2d468a7313942b48ad8c23774be0119f76d97a365eb5e2"
+      "sha256": "e35eb079b4b6cfeab58f9a8d3bfaa54370352a1d13ac948fd27a7a92660e7e5f"
     },
     {
       "path": "docs/site/reference/helm-values.md",
@@ -3520,7 +3520,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/reference/nova-project.md",
-      "sha256": "e1b616ff78668582570727541b5d0acf4869d3341a96899512ee5c450e35e03f"
+      "sha256": "217d91583f26d89ec054c810dd101181a6d5e43fce48cf255e7b7dc776c7154e"
     },
     {
       "path": "docs/site/reference/pipeline-definition.md",
@@ -3548,7 +3548,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "docs/site/use/workflows/README.md",
-      "sha256": "11af2555f4a65eea88fb1daaee40b0e6bb01cb4e7473bac4dc75e57c15f6b389"
+      "sha256": "8a2faaf0e489fcb446172f9baf439661766de57c1187e458079fd8b158615426"
     },
     {
       "path": "docs/site/use/workflows/examples/buster-fixture-matrix-report.pipeline.json",
@@ -3573,6 +3573,22 @@ const reviewedPublicationNativeValidation = Object.freeze({
     {
       "path": "docs/site/use/workflows/examples/local-core.mjs",
       "sha256": "3e54567536d0b13090f2ea37f1b04b4fad725415767c70e24533419eba985744"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/minimal-project.mjs",
+      "sha256": "0851cc47a9376444c6ed0634cb079257a7edff0d5d8b08b2419ba22e66b95107"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/minimal.pipeline.json",
+      "sha256": "d2429199edfbbe3acba58876ac5fc64e930822cfa79edc26dabd7262155c127b"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/prism-studio-flow.json",
+      "sha256": "dc977a02bdf0730cf862f1186531df2da05a48215f08e47782921bd4c7d4b600"
+    },
+    {
+      "path": "docs/site/use/workflows/examples/quality-validation.mjs",
+      "sha256": "5c046c324ff58f0313b9cb002b77c36a7b5b6497b41b066cc04c48b37ff634c6"
     },
     {
       "path": "docs/site/use/workflows/examples/repair-retry.mjs",
@@ -3619,6 +3635,10 @@ const reviewedPublicationNativeValidation = Object.freeze({
       "sha256": "9f03161a68b3f82d7e51ab84315dc1385db2a78e877e8084f08a506d50dfeed3"
     },
     {
+      "path": "docs/site/use/workflows/quality-validation.md",
+      "sha256": "62d8f66bd86e238e31caf07b49fa9a1c9e5e2c82d717ed68982f3f608ea8ac30"
+    },
+    {
       "path": "docs/site/use/workflows/uncertain-effect.md",
       "sha256": "eb4ea2c0d09968315b58cf313ca0cc55344ca79b6cfd5e2406c48a45bd223ec6"
     },
@@ -3644,7 +3664,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "scripts/docs-publication-example-assets.mjs",
-      "sha256": "eb3f7e237274103d6ef3c7acec9a3702ef9cfa5d4cf76aa2254bd6acf32515bd"
+      "sha256": "d32279f359d0d2b17a49b10601dd3f611c8fcac6b6a431a9a0495de04bf14d05"
     },
     {
       "path": "scripts/docs-publication-example-native.mjs",
@@ -3660,7 +3680,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "scripts/docs-publication-instruction-syntax.mjs",
-      "sha256": "edaad893617524f08bef0c6a741a46b1a880257f356d610c02d26367569be418"
+      "sha256": "51424c23dcb60f8505fc35ddac9e90bd53d22c2e7803cf9f71bd4c5024437949"
     },
     {
       "path": "scripts/docs-publication.mjs",
@@ -3668,7 +3688,7 @@ const reviewedPublicationNativeValidation = Object.freeze({
     },
     {
       "path": "scripts/lib/docs-publication-assets.mjs",
-      "sha256": "2a87cebc2487e7ef7e3cff6dcf4b46182ec315c23143fb03845c7278a69bee68"
+      "sha256": "74787a6b44afef31e0d6392329e6648d3ee9cfd8987a24d1588c567eaf0c7dd0"
     },
     {
       "path": "scripts/lib/docs-publication-example-coverage.mjs",
@@ -5420,7 +5440,9 @@ const reviewedPublicationNativeValidation = Object.freeze({
         "validateTestScopeExample(matrix)",
         "validateApprovalSignalExample",
         "validateBrowserCompanions",
-        "validateGraphExample(uncertainGraph)"
+        "validateGraphExample(uncertainGraph)",
+        "validateGraphExample(json('use/workflows/examples/minimal.pipeline.json'))",
+        "validatePrism('designDocument', json('use/workflows/examples/prism-studio-flow.json'))"
       ],
       "limit": "Existing assets-native validation only; no independent package entry or runtime grant."
     },
