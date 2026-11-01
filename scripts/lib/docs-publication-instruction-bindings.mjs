@@ -639,31 +639,31 @@ export const embeddedProgramBindings = [
   },
   {
     "ref": "docs/site/use/diagnose.md#block-28",
-    "start": 100,
-    "length": 1414,
-    "sha256": "ed2e5481ca0691c70747c9f1b6c96a1b5dc662fd341481ead1bff18286c03630",
+    "start": 117,
+    "length": 1816,
+    "sha256": "98ff35c324c28cae5c12dd80a8e6b4e9434d79ed926ec7b43219d1f57aa7653b",
     "language": "javascript",
     "mode": "module"
   },
   {
     "ref": "docs/site/use/diagnose.md#block-30",
     "start": 449,
-    "length": 973,
-    "sha256": "c1a1f855cf45a8412eab30d3374fb426103b82fa0fe405ced07994a3e60617ad",
+    "length": 1833,
+    "sha256": "cf8ce13cf83a2a985d3d08d1d00e7d2596044bebced7f9b47ee1e19824e7cadd",
     "language": "javascript",
     "mode": "commonjs"
   },
   {
     "ref": "docs/site/use/diagnose.md#block-32",
     "start": 510,
-    "length": 2188,
-    "sha256": "28f186b026c492717f59a09d7abb29202350da348d83038b051dd1c19b1d78a7",
+    "length": 2334,
+    "sha256": "5d8be51056180eec7c627817c05e005786147cc08bd9dbffea29bb4d99ac1d1c",
     "language": "javascript",
     "mode": "commonjs"
   },
   {
     "ref": "docs/site/use/diagnose.md#block-32",
-    "start": 2743,
+    "start": 2889,
     "length": 145,
     "sha256": "4e1c6a3c347036f6cc278c391949e588ddeb02edbf020d29b3d167f33ccd3702",
     "language": "javascript",

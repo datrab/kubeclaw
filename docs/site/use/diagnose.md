@@ -2486,7 +2486,7 @@ executed here.
 >
 > **Implementation:** [Project source prefix](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/project/source.ts#L33-L65); [exact subject ref resolution](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/common/plugin-runtime/sdk/src/review-subject.ts#L50-L75); [blocked source stage](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/plugins/preflight-contract/src/source-stage.ts#L20-L40).
 >
-> **Contract or setting:** The original project descriptor and [source admission binding](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/project/source.ts#L33-L65) determine the required ref. Fault and restored descriptors have separate run identities.
+> **Contract or setting:** The original project descriptor and [source admission binding](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/skills/nova/project/source.ts#L33-L65) determine the required ref. Fault and restored descriptors have separate run identities but retain the same required architecture revision.
 >
 > **Test evidence:** [Mandatory source failure and invalid binding regression](https://github.com/datrab/kubeclaw/blob/4d3068465a2e202d2d5073b77e9273c308497995/tests/verification/reliability/project-source.test.mjs#L37-L53): **SOURCE ONLY; NOT EXECUTED**. This regression source was read. It covers the source/Git prefix, not the full remote Buster path. **LOCAL CHECKS PASSED:** failed-source audit helpers used synthetic records.
 >
@@ -2502,24 +2502,49 @@ through their declared backup procedures for that exact run. Use the original
 `PLATFORM_FILE` and each descriptor's original run ID. A returned status alone
 does not prove that all writers stopped. On missing ownership, failed copies,
 or rejected strict copied journals, retain raw bytes and stop before audit or
-any new run. No interruption or tail repair can substitute for terminal success.
+any new run. No interruption or tail repair can substitute for the intended durable blocked
+fault or the later terminal success.
 
-Use a disposable registered `nova-project.v2` project whose repository and
-immutable release ref are owned by the acceptance operator. Its compact Buster
+Complete [Locked Dependency Installation](quickstart.md#locked-dependency-installation)
+and the [Buster execution prerequisites](workflows/buster-suite.md#before-you-start)
+in the selected clean Source checkout first. The C compiler and maintained
+`npm run plugin-system:sandbox:build` command must produce the real native
+provider sandbox before either run. A missing sandbox can produce
+`TEST_PROVIDER_SANDBOX_NOT_BUILT` after source verification; that is a separate
+provider failure, not evidence that Git substitution occurred or that the full
+pipeline passed. Do not bypass the native sandbox or change privileges.
+
+Use a disposable registered `nova-project.v2` project with an owned local bare
+origin and a reachable source/base commit B. The required architecture commit A
+is a separate real Git object: preserve its complete bytes in an owned bundle
+before the fault. Both runs keep `architecture.ref` equal to A and
+`baseRevision` equal to B. A reachable B is never a substitute for A. Before either run, register the
+new disposable platform with the repository adapter's optional `expectedHead`
+**omitted**. That flat pin, when present, constrains every resolved ref, not only
+HEAD, and would reject legitimate A different from B. Do not change a live or
+production pin, or remove it between fault and recovery. The native source
+stage still requires clean HEAD equal to base B, resolves exact A, checks
+repository identity and revision proofs, and retains the existing grants. A
+platform requiring one flat pin for both refs cannot execute this A/B exercise;
+select the supported configuration in the new isolated registration instead. Its compact Buster
 plan must finish without another human wait so this exercise can distinguish
 the Git failure from later behavior. Its `test.plan.execute` results must fit
 within the 16 KiB inline-audit result limit for the receipt check below. Do not rewrite a production ref or edit
 the original project descriptor. Create two descriptor copies outside the
-project repository: one distinct failed-run identity with an unavailable
-architecture revision and one distinct successful-run identity with the exact
-valid revision restored.
+project repository: one distinct failed-run identity while A is unavailable and
+one distinct successful-run identity after exactly A is restored. Do not use an
+all-ones placeholder or change the successful descriptor to a different SHA.
 
 ```bash
+npm run plugin-system:sandbox:build || exit 1
 export PROJECT_REPOSITORY="<absolute-path-to-disposable-project>"
 export GIT_EXERCISE_DIR="<absolute-path-outside-project>/git-unavailable-evidence"
-export SOURCE_REF="<advertised-immutable-ref>"
-export RELEASE_COMMIT="<full-git-commit>"
-export UNAVAILABLE_COMMIT="1111111111111111111111111111111111111111"
+export OWNED_ORIGIN_REPOSITORY="<absolute-path-to-owned-disposable-bare-origin>"
+export BASE_REF="refs/heads/base"
+export SOURCE_REF="refs/heads/architecture"
+export RELEASE_COMMIT="<full-source-base-commit-B>"
+export ARCHITECTURE_SEED="<new-owned-directory-outside-project-and-origin>"
+export ARCHITECTURE_BUNDLE="$GIT_EXERCISE_DIR/architecture.bundle"
 export GIT_FAULT_RUN_ID="<new-registered-fault-run-id>"
 export GIT_SUCCESS_RUN_ID="<different-new-registered-success-run-id>"
 export GIT_FAULT_PROJECT="$GIT_EXERCISE_DIR/project-fault.json"
@@ -2533,19 +2558,37 @@ case "$GIT_EXERCISE_DIR" in
 esac
 test "$(git -C "$PROJECT_REPOSITORY" rev-parse --verify HEAD)" = "$RELEASE_COMMIT"
 test -z "$(git -C "$PROJECT_REPOSITORY" status --porcelain)"
-git -C "$PROJECT_REPOSITORY" fetch --no-tags origin "$SOURCE_REF"
+test "$(git -C "$PROJECT_REPOSITORY" remote get-url origin)" = "$OWNED_ORIGIN_REPOSITORY"
+test "$(git -C "$OWNED_ORIGIN_REPOSITORY" rev-parse --is-bare-repository)" = true
+git -C "$PROJECT_REPOSITORY" fetch --no-tags origin "$BASE_REF"
 test "$(git -C "$PROJECT_REPOSITORY" rev-parse --verify FETCH_HEAD^{commit})" = "$RELEASE_COMMIT"
+# Only the separate owned seed creates A; project and origin retain only B.
+test ! -e "$ARCHITECTURE_SEED"
+test ! -e "$ARCHITECTURE_BUNDLE"
+git clone --no-hardlinks "$PROJECT_REPOSITORY" "$ARCHITECTURE_SEED"
+architecture_tree="$(git -C "$ARCHITECTURE_SEED" rev-parse "$RELEASE_COMMIT^{tree}")"
+export REQUIRED_COMMIT="$(git -C "$ARCHITECTURE_SEED" \
+  -c user.name='Documentation Git Exercise' \
+  -c user.email='git-exercise@example.invalid' -c commit.gpgSign=false \
+  commit-tree "$architecture_tree" -m 'Registered immutable architecture input')"
+test "$REQUIRED_COMMIT" != "$RELEASE_COMMIT"
+git -C "$ARCHITECTURE_SEED" update-ref "$SOURCE_REF" "$REQUIRED_COMMIT"
+git -C "$ARCHITECTURE_SEED" bundle create "$ARCHITECTURE_BUNDLE" "$SOURCE_REF"
+git -C "$ARCHITECTURE_SEED" bundle verify "$ARCHITECTURE_BUNDLE"
+sha256sum "$ARCHITECTURE_BUNDLE" > "$GIT_EXERCISE_DIR/architecture-bundle.sha256"
+printf '%s\n' "$OWNED_ORIGIN_REPOSITORY" "$SOURCE_REF" "$REQUIRED_COMMIT" \
+  "$BASE_REF" "$RELEASE_COMMIT" > "$GIT_EXERCISE_DIR/registered-source-identities.txt"
 set +e
-git -C "$PROJECT_REPOSITORY" cat-file -e "$UNAVAILABLE_COMMIT^{commit}" \
+git -C "$PROJECT_REPOSITORY" cat-file -e "$REQUIRED_COMMIT^{commit}" \
   > "$GIT_EXERCISE_DIR/git-local-unavailable.txt" 2>&1
 git_local_status=$?
-git -C "$PROJECT_REPOSITORY" fetch --no-tags origin "$UNAVAILABLE_COMMIT" \
+git -C "$PROJECT_REPOSITORY" fetch --no-tags origin "$REQUIRED_COMMIT" \
   > "$GIT_EXERCISE_DIR/git-origin-unavailable.txt" 2>&1
 git_fault_status=$?
 set -e
 test "$git_local_status" -ne 0
 test "$git_fault_status" -ne 0
-git -C "$PROJECT_REPOSITORY" ls-remote --exit-code origin "$SOURCE_REF" \
+git -C "$PROJECT_REPOSITORY" ls-remote --exit-code origin "$BASE_REF" \
   | tee "$GIT_EXERCISE_DIR/git-reachable-ref.txt"
 ```
 
@@ -2556,11 +2599,17 @@ below performs exactly those changes and refuses to overwrite a file.
 
 ```bash
 node --input-type=module - "$PROJECT_FILE" "$GIT_FAULT_PROJECT" \
-  "$GIT_SUCCESS_PROJECT" <<'NODE'
+  "$GIT_SUCCESS_PROJECT" "$PLATFORM_FILE" <<'NODE'
 import fs from 'node:fs';
 import { resolvedTestPlanDigest } from '@kubeclaw/pipeline-test-gate-contract';
-const [sourceFile, faultFile, successFile] = process.argv.slice(2);
+const [sourceFile, faultFile, successFile, platformFile] = process.argv.slice(2);
 const source = JSON.parse(fs.readFileSync(sourceFile, 'utf8'));
+const platform = JSON.parse(fs.readFileSync(platformFile, 'utf8'));
+const repository = platform.adapters?.['kubeclaw.repository-adapter:repository'];
+if (repository?.repositoryRoot !== process.env.PROJECT_REPOSITORY
+  || Object.hasOwn(repository, 'expectedHead')) {
+  throw new Error('register a new isolated same-root platform with optional flat expectedHead omitted before both runs');
+}
 if (source.schemaVersion !== 'nova-project.v2'
   || source.repositoryRoot !== process.env.PROJECT_REPOSITORY
   || source.baseRevision !== process.env.RELEASE_COMMIT) {
@@ -2582,19 +2631,25 @@ const descriptor = (runId, architectureRef) => {
   return value;
 };
 fs.writeFileSync(faultFile,
-  `${JSON.stringify(descriptor(process.env.GIT_FAULT_RUN_ID, process.env.UNAVAILABLE_COMMIT))}\n`,
+  `${JSON.stringify(descriptor(process.env.GIT_FAULT_RUN_ID, process.env.REQUIRED_COMMIT))}\n`,
   { flag: 'wx', mode: 0o600 });
 fs.writeFileSync(successFile,
-  `${JSON.stringify(descriptor(process.env.GIT_SUCCESS_RUN_ID, process.env.RELEASE_COMMIT))}\n`,
+  `${JSON.stringify(descriptor(process.env.GIT_SUCCESS_RUN_ID, process.env.REQUIRED_COMMIT))}\n`,
   { flag: 'wx', mode: 0o600 });
 NODE
 ```
 
 Compile and start the fault descriptor. Compilation must succeed because it
 validates the registered graph, schemas, and grants without reading the Git
-revision. Start must then return exit status `1` and a terminal `blocked` or
-`failed` run. Unlike a CLI argument error before run creation, this result has
-a durable audit.
+revision. Start must then return exit status `1` and a durable `blocked` run.
+`run.blocked` is **not a completed-work receipt**: the native completed-run
+evidence reader excludes it. It is nevertheless a stop boundary for ordinary
+`--recover` and wait-signal resume, which refuse the blocked run. Do not infer
+permission to retry from the evidence reader's exclusion. Unlike a CLI argument error before run creation,
+this result has a native audit and original attempt/effect journal records.
+Read the blocked reason from the matching audit event, not from the abbreviated
+`run.stages` status summary. Keep this blocked run unchanged; the restored
+descriptor is a different governed run, not an edited-input resume.
 
 ```bash
 npm --silent run pipeline -- \
@@ -2634,12 +2689,27 @@ const [runFile, auditFile] = process.argv.slice(2);
 const run = JSON.parse(fs.readFileSync(runFile, 'utf8'));
 const audit = JSON.parse(fs.readFileSync(auditFile, 'utf8'));
 if (run.runId !== process.env.GIT_FAULT_RUN_ID || audit.runId !== run.runId
-  || !['blocked', 'failed'].includes(run.status)) throw new Error('expected durable failed run');
+  || run.status !== 'blocked') throw new Error('expected durable blocked stop');
 const source = run.stages?.['source-preflight'];
-if (!source || !['blocked', 'failed'].includes(source.status)
-  || source.reason?.code !== 'source_preflight.invalid') throw new Error('Git source preflight did not fail');
-if (!JSON.stringify(source).includes(process.env.UNAVAILABLE_COMMIT)) {
-  throw new Error('failed source state does not retain the unavailable revision');
+const blocked = audit.events.filter(event => event.type === 'stage.blocked'
+  && event.identity?.stageId === 'source-preflight');
+const attempts = audit.events.filter(event => event.type === 'attempt.completed'
+  && event.identity?.stageId === 'source-preflight');
+if (source?.status !== 'blocked' || source.attemptNumber !== 1
+  || blocked.length !== 1 || attempts.length !== 1
+  || blocked[0].payload?.reason?.code !== 'source_preflight.invalid'
+  || attempts[0].payload?.result?.reason?.code !== 'source_preflight.invalid') {
+  throw new Error('Git source preflight did not produce the original blocked attempt');
+}
+const reason = blocked[0].payload.reason;
+if (!reason.message?.includes(process.env.REQUIRED_COMMIT)
+  || JSON.stringify(attempts[0].payload.result.reason) !== JSON.stringify(reason)) {
+  throw new Error('original blocked reason does not retain the required architecture revision');
+}
+const runEvents = audit.events.filter(event => event.type.startsWith('run.'));
+if (runEvents.at(-1)?.type !== 'run.blocked'
+  || runEvents.some(event => ['run.succeeded', 'run.failed', 'run.cancelled'].includes(event.type))) {
+  throw new Error('expected blocked stop, not a completed-work receipt');
 }
 if (audit.events.some(event => event.type === 'effect.requested'
   && event.payload?.capability === 'test.plan.execute')) {
@@ -2648,19 +2718,29 @@ if (audit.events.some(event => event.type === 'effect.requested'
 NODE
 ```
 
-The expected observation is a failed source preflight naming the unavailable
-revision, no `test.plan.execute` effect, no source archive, and no Buster
-import. A reachable branch head or another local commit is not a substitute.
+The expected observation is a blocked source preflight naming exact A in the
+original attempt and stage-blocked event reasons, no `test.plan.execute` effect,
+no source archive, and no Buster import. This is a blocked stop, not successful
+completion or retry exhaustion. Keep it unchanged. Native administrative
+reopening is a separate authenticated owner API, not ordinary CLI recovery;
+this isolated platform has no configured administrative issuer. Never add one,
+reset budgets or replay the recorded Buster job to make this exercise green. A reachable branch head or another local commit is not a substitute.
 Preserve this audit. Do not recover it with changed input.
 
-Fetch and revalidate the exact valid revision, then compile and start the
-separate restored descriptor. This is a new governed run because its run and
-source request differ from the failed one.
+Restore the exact registered A into the same owned origin from the preserved
+bundle, then fetch it into the same project. Do not move HEAD or base B and do
+not edit either descriptor. This is a distinct governed run because its run ID
+and derived plan identities differ; its architecture request does not change.
+A new valid SHA or branch-head fallback is not recovery.
 
 ```bash
-git -C "$PROJECT_REPOSITORY" fetch --no-tags origin "$SOURCE_REF"
-test "$(git -C "$PROJECT_REPOSITORY" rev-parse --verify FETCH_HEAD^{commit})" = "$RELEASE_COMMIT"
-git -C "$PROJECT_REPOSITORY" cat-file -e "$RELEASE_COMMIT^{commit}"
+sha256sum --check "$GIT_EXERCISE_DIR/architecture-bundle.sha256"
+test "$(git -C "$PROJECT_REPOSITORY" remote get-url origin)" = "$OWNED_ORIGIN_REPOSITORY"
+git -C "$OWNED_ORIGIN_REPOSITORY" fetch "$ARCHITECTURE_BUNDLE" "$SOURCE_REF:$SOURCE_REF"
+test "$(git -C "$OWNED_ORIGIN_REPOSITORY" rev-parse "$SOURCE_REF^{commit}")" = "$REQUIRED_COMMIT"
+git -C "$PROJECT_REPOSITORY" fetch --no-tags origin "$REQUIRED_COMMIT"
+test "$(git -C "$PROJECT_REPOSITORY" rev-parse --verify FETCH_HEAD^{commit})" = "$REQUIRED_COMMIT"
+git -C "$PROJECT_REPOSITORY" cat-file -e "$REQUIRED_COMMIT^{commit}"
 test "$(git -C "$PROJECT_REPOSITORY" rev-parse --verify HEAD)" = "$RELEASE_COMMIT"
 test -z "$(git -C "$PROJECT_REPOSITORY" status --porcelain)"
 npm --silent run pipeline -- \
@@ -2699,6 +2779,9 @@ const run = JSON.parse(fs.readFileSync(runFile, 'utf8'));
 const audit = JSON.parse(fs.readFileSync(auditFile, 'utf8'));
 const terminal = [...audit.events].reverse().find(event =>
   ['run.succeeded', 'run.failed', 'run.blocked', 'run.cancelled'].includes(event.type));
+if (run.stages?.['source-preflight']?.status !== 'succeeded') {
+  throw new Error('restored exact architecture did not pass source admission');
+}
 if (run.runId !== process.env.GIT_SUCCESS_RUN_ID || run.status !== 'succeeded'
   || audit.runId !== run.runId || terminal?.type !== 'run.succeeded') {
   throw new Error('restored run did not succeed under its distinct identity');
@@ -2771,8 +2854,11 @@ receipt that can be ignored.
 The final ancestry check allows the governed project stages to produce a later
 candidate while proving that Buster received a source descended from the exact
 restored baseline. Preserve both distinct run audits and the projected Buster
-source receipt. The descriptor and compiled-graph copies are disposable after
-their retention period; remove only those exact files. Never rewrite the
+source receipt. The descriptor and compiled-graph copies, owned architecture seed/bundle and
+disposable origin are eligible for their registered retention cleanup only after
+writers and worktrees are proven stopped and complete evidence is exported.
+Never delete a shared origin or remove an active run. Preserve the bundle digest
+and exact A/B identities with both run records; remove only registered owned files. Never rewrite the
 failed run's source identity or its audit.
 
 ## Prism Diagnosis
