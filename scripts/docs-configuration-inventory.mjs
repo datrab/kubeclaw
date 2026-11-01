@@ -9995,13 +9995,23 @@ async function verifyRuntimeConsumerSemantics() {
   const ops = await importSource('tools/ops-mcp/src/config.mjs');
   assert.equal(ops.loadOpsMcpConfig({}).defaultNamespace, 'kubeclaw');
   assert.throws(() => ops.loadOpsMcpConfig({ OPS_DEFAULT_NAMESPACE: '' }), /OPS_ALLOWED_NAMESPACES/u);
+  // Public malformed-origin samples: construct userinfo explicitly so these
+  // validation fixtures do not store credential-shaped URL literals.
+  // Keep the exact original rejected URI bytes and both rejection paths.
+  const [rejectedKubeUserInfoOrigin, rejectedRuntimeUserInfoOrigin] =
+    ['https://api.invalid', 'https://runtime.invalid'].map((value) => {
+      const origin = new URL(value);
+      origin.username = 'user';
+      origin.password = 'pass';
+      return origin.href.slice(0, -1); // fixed origins acquire exactly one '/'
+    });
   const kube = await importSource('tools/ops-mcp/src/kubernetes.mjs');
   assert.equal(typeof kube.createKubeRequest({ api: 'https://api.invalid' }), 'function');
-  for (const api of ['', 'http://api.invalid', 'https://user:pass@api.invalid', 'https://api.invalid/path', 'https://api.invalid/#fragment']) assert.throws(() => kube.createKubeRequest({ api }), /Invalid URL|HTTPS origin/u);
+  for (const api of ['', 'http://api.invalid', rejectedKubeUserInfoOrigin, 'https://api.invalid/path', 'https://api.invalid/#fragment']) assert.throws(() => kube.createKubeRequest({ api }), /Invalid URL|HTTPS origin/u);
   const dispatch = await importSource('skills/common/plugins/runtime-dispatch/src/adapter.ts');
   const activate = (target) => dispatch.activate({ config: { targets: { sample: target } } });
   for (const target of [{ endpoint: 'http://127.0.0.1:8080', tokenSecret: 'valid-secret' }, { endpoint: 'https://runtime.invalid', tokenSecret: 'valid-secret' }, { endpoint: 'http://localhost:8080', authentication: 'spiffe-proxy' }]) await activate(target).shutdown();
-  for (const endpoint of ['ftp://runtime.invalid', 'https://user:pass@runtime.invalid', 'https://runtime.invalid/#fragment', 'http://runtime.invalid']) assert.throws(() => activate({ endpoint, tokenSecret: 'valid-secret' }), /RUNTIME_CONFIG_INVALID/u);
+  for (const endpoint of ['ftp://runtime.invalid', rejectedRuntimeUserInfoOrigin, 'https://runtime.invalid/#fragment', 'http://runtime.invalid']) assert.throws(() => activate({ endpoint, tokenSecret: 'valid-secret' }), /RUNTIME_CONFIG_INVALID/u);
   for (const tokenSecret of ['', '../secret', 'UPPER', 'a'.repeat(129)]) assert.throws(() => activate({ endpoint: 'https://runtime.invalid', tokenSecret }), /RUNTIME_CONFIG_INVALID:tokenSecret/u);
   assert.throws(() => activate({ endpoint: 'https://runtime.invalid', authentication: 'spiffe-proxy' }), /RUNTIME_CONFIG_INVALID:spiffeProxy/u);
   const ajv = new Ajv2020({ strict: false }); addFormats(ajv);

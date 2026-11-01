@@ -69,7 +69,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "tests/verification/reliability/review-report-locale-child.mjs",
     "semanticClass": "native-reliability-replay-selected-module-metadata",
-    "recipeSha256": "2a6bea6008709eec7c819d830305a529b229080de18320c039e9d412866edce6"
+    "recipeSha256": "f302d565687efed785f681719b1128d1a725c30a8e878c6d18a438ad9b6c6212"
   },
   {
     "source": "tests/verification/reliability/runtime-dispatch-native-profile.test.mjs",
@@ -94,7 +94,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "tests/verification/historical-branch-acceptance/delivery-manifest-v2-reader-corpus-child.mjs",
     "semanticClass": "historical-environment-root-module-input-metadata",
-    "recipeSha256": "5c2172b21621127ca4f7cb4b3b6da70a32802f9b113cd1ba084db8b11ed9b00f"
+    "recipeSha256": "02519248ee47f6f536347838ebed143137ee6a79c8f1a3813978fb89960b8af4"
   },
   {
     "source": "tests/verification/contracts/check-project-compiler.mts",
@@ -204,7 +204,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/check-ap08-minimal-plugin.mjs",
     "semanticClass": "fixed-repository-modules",
-    "recipeSha256": "ab83a00ce984358968adf6cb37759466728cf3bc88c26940ca973849dfa73ec8"
+    "recipeSha256": "52da80d51af75943ead3930f6ca1bfbaf129dbcbba06c7640c2c4ddd23ba519c"
   },
   {
     "source": "scripts/check-core-architecture-guides.mjs",
@@ -219,7 +219,7 @@ const reviewedDocumentationModuleInputRecipes = [
   {
     "source": "scripts/docs-configuration-inventory.mjs",
     "semanticClass": "finite-documentation-runtime-semantics",
-    "recipeSha256": "9e3563efd98bf3a3d5a37fb96547602355297a67d16e53b27542f4d9215b4226"
+    "recipeSha256": "3924bd072e33962bdd6287fe711bbcf32e596108e03e9df8a3f090687e79107e"
   },
   {
     "source": "scripts/docs-lint-policy-reference.mjs",
@@ -1974,7 +1974,7 @@ function selectedReleaseRendererOutput(source,role,receipt) {
 // authority. Sink facts alone cannot bind new values added to the error list.
 // A mutable line/digest refresh cannot authorize a changed producer or output.
 const reviewedDiagnosticOutputSources={
-  'scripts/check-site-reader-boundary.mjs':'8621bd96590bae1dbdb973ddee07be8fccf27cc66f6be0acb9d13dc71438e5c5',
+  'scripts/check-site-reader-boundary.mjs':'af24e5deabb4be51b0ac69f4cf552d68ded5ffacff0e28ab34163bf40811b36e',
 };
 // A finite original --check observation binds this API producer to its exact
 // checked artifacts. Inventory only reads the witness; it never executes the
