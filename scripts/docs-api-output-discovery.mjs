@@ -4,6 +4,7 @@ import {localHelmChartFiles, renderLocalHelmChart} from './docs-helm-memory-char
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
 import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose} from './docs-api-top-level-script-purpose.mjs';
+import {checkedStorageReceiverPurposes,selectedStorageReceiverPurpose} from './docs-api-storage-receiver-purpose.mjs';
 import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed} from './docs-documentation-owner-purpose-custody.mjs';
 import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
 import {deploymentScalarOccurrenceCustody, selectedDeploymentScalarOccurrences} from './docs-deployment-scalar-occurrence-custody.mjs';
@@ -5643,6 +5644,8 @@ export function discoverScriptApiOutputs(root) {
   const publicationYamlInputs=checkedPublicationYamlValidationInputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const publicationNative=checkedPublicationNativeValidation(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources,documentationEntryPoints(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).scripts??{},false,root));
+  const storageReceiverPurposes=checkedStorageReceiverPurposes(root,sourcePurposeSources);
+  const storagePurposeByRole=new WeakMap();
   const nodeTestFixtureNativeEntries=documentationEntryPoints(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).scripts??{},false,root,true);
   const probe39=checkedOriginalProbe39Output(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
@@ -5650,10 +5653,10 @@ export function discoverScriptApiOutputs(root) {
     ?checkedReleaseRendererOutputs(root,topLevelPurposes):null;
   const sourceInputs=walkProductSources(root,producerRoots,()=>true);
   if(fs.existsSync(path.join(root,'package.json')))sourceInputs.push('package.json');
-  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,publicationNative?.inputDigest??null,publicationYamlInputs?.inputDigest??null,eventContractOutputs?.inputDigest??null,commonErrorMarkdown?.inputDigest??null,topLevelPurposes?.inputDigest??null,probe39?.inputDigest??null,versionsMap?.inputDigest??null,releaseRenderer?.inputDigest??null,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
+  const inputKey=hash(JSON.stringify([documentationGraphCache.get(root).inputKey,publicationNative?.inputDigest??null,publicationYamlInputs?.inputDigest??null,eventContractOutputs?.inputDigest??null,commonErrorMarkdown?.inputDigest??null,topLevelPurposes?.inputDigest??null,storageReceiverPurposes?.inputDigest??null,probe39?.inputDigest??null,versionsMap?.inputDigest??null,releaseRenderer?.inputDigest??null,gitOpsProfile?.witnessDigest??null,infrastructureProfile?.witnessDigest??null,disabledRegistration?.witnessDigest??null,bundleCopy?.inputDigest??null,configOutput?.inputDigest??null,minimalPlugin?.inputDigest??null,[...scalarOccurrences].map(([source,receipt])=>[source,receipt.inputDigest]),sourceInputs.map(source=>[source,hash(fs.readFileSync(path.join(root,source)))])]));
   const cached=scriptOutputCache.get(root);
   if(cached?.inputKey===inputKey&&cached.dependencies.every(([source,digest])=>fs.existsSync(path.join(root,source))&&hash(fs.readFileSync(path.join(root,source)))===digest))return cached.result;
-  const classifiedDependencies=new Set([...(publicationNative?.dependencies??[]),...(publicationYamlInputs?.dependencies??[]),...(eventContractOutputs?.dependencies??[]),...(commonErrorMarkdown?.dependencies??[]),...(probe39?.dependencies??[]),...(topLevelPurposes?.dependencies??[]),...(versionsMap?.dependencies??[]),...(releaseRenderer?.dependencies??[]),...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
+  const classifiedDependencies=new Set([...(publicationNative?.dependencies??[]),...(publicationYamlInputs?.dependencies??[]),...(eventContractOutputs?.dependencies??[]),...(commonErrorMarkdown?.dependencies??[]),...(probe39?.dependencies??[]),...(topLevelPurposes?.dependencies??[]),...(storageReceiverPurposes?.dependencies??[]),...(versionsMap?.dependencies??[]),...(releaseRenderer?.dependencies??[]),...(infrastructureProfile?.dependencies??[]),...(disabledRegistration?.dependencies??[])]);
   const result=[];
   for(const source of walkProductSources(root,producerRoots,file=>!executableSourceSet.has(path.relative(root,fs.realpathSync(path.join(root,file))).replaceAll(path.sep,'/'))&&!/\.(?:[cm]?js|[cm]?ts|py|sh|go|ya?ml|json|md|txt|toml|lock|pem|crt)$/u.test(file))) {
     const bytes=fs.readFileSync(path.join(root,source),'utf8');
@@ -5716,7 +5719,7 @@ export function discoverScriptApiOutputs(root) {
     assert(!/(?:from\s*|(?:require|import)\(\s*)['"]@kubernetes\/client-node['"]/u.test(bytes),`API_PRODUCT_SCRIPT_TYPED_SDK_UNQUALIFIED: ${source}; documentation output adapter maintainers must classify the typed emitter`);
     if(/\b(?:spawnSync|execFileSync|execFile|spawn)\(\s*['"]helm['"]/u.test(bytes)&&!(source===reviewedPublicationNativeValidation.source&&publicationNative&&publicationNativeValidationReceipts.has(publicationNative)))assertProducerAdapterAuthority(root,[source]);
     const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
-    const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null)).map(role=>minimalPluginFixtureOutputRole(role,source===minimalPluginSource?minimalPlugin:null));
+    const outputRoles=classifyOutputRoles(source).map(role=>{const purpose=selectedStorageReceiverPurpose(source,role,storageReceiverPurposes);if(purpose)storagePurposeByRole.set(role,purpose);return role;}).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null)).map(role=>minimalPluginFixtureOutputRole(role,source===minimalPluginSource?minimalPlugin:null));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
     const nodeTestFixturePurpose=checkedNodeTestFixturePurpose(root,source,bytes,outputRoles,documentationGraphCache.get(root),nodeTestFixtureNativeEntries);
     // A canonical traversal seed is not proof of a bare CLI invocation. The
@@ -5730,6 +5733,7 @@ export function discoverScriptApiOutputs(root) {
       const eventContractPurpose=selectedEventContractDocumentationOutput(source,role,eventContractOutputs);
       const commonErrorMarkdownSlot=selectedCommonErrorMarkdownOutput(source,role,commonErrorMarkdown);
       const topLevelPurpose=selectedTopLevelScriptPurpose(source,role,topLevelPurposes);
+      const storageReceiverPurpose=storagePurposeByRole.get(role);
       const nodeTestFixtureSlot=selectedNodeTestFixturePurpose(source,role,nodeTestFixturePurpose);
       const probe39Slot=selectedOriginalProbe39Output(source,role,probe39);
       const versionsMapPurpose=selectedVersionsMapOutput(source,role,versionsMap);
@@ -5738,7 +5742,7 @@ export function discoverScriptApiOutputs(root) {
       const disabledRegistrationSlot=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
       assert(scalarOccurrences.has(source)
         ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source))
-        :publicationNativePurpose||publicationYamlPurpose||eventContractPurpose||commonErrorMarkdownSlot||probe39Slot||topLevelPurpose||nodeTestFixtureSlot||versionsMapPurpose||releaseRendererSlot||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
+        :publicationNativePurpose||publicationYamlPurpose||eventContractPurpose||commonErrorMarkdownSlot||probe39Slot||topLevelPurpose||storageReceiverPurpose||nodeTestFixtureSlot||versionsMapPurpose||releaseRendererSlot||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
         `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     }
     // Only the fully acquired ten-slot validation consumer, not a product emitter.
@@ -6056,6 +6060,8 @@ export function discoverScriptOutputRoleClassifications(root) {
   const sources=nodeOutputExecutableSources(root).filter(file=>!documentationTools.has(file));
   const classify=createSerializedOutputRoleClassifier(root,sources);
   const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),classify,sources,documentationEntryPoints(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).scripts??{},false,root));
+  const storageReceiverPurposes=checkedStorageReceiverPurposes(root,sources);
+  const storagePurposeByRole=new WeakMap();
   const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),classify,sources);
   const observations=discoverDeploymentNodeOutputObservations(root);
   const gitOpsProfile=checkedGitOpsOutputProfiles(root,documentationGraphCache.get(root));
@@ -6070,7 +6076,7 @@ export function discoverScriptOutputRoleClassifications(root) {
     const bundleCopy=runtimeBundleCopyCustody(root,source,fs.readFileSync(path.join(root,source)));
     const configOutput=deploymentConfigOutputCustody(root,source,fs.readFileSync(path.join(root,source)));
     const minimalPlugin=minimalPluginFixtureOutputCustody(root,source,fs.readFileSync(path.join(root,source)));
-    return classify(source).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).map(role=>deploymentConfigOutputRole(role,configOutput)).map(role=>minimalPluginFixtureOutputRole(role,minimalPlugin)).flatMap(role=>{
+    return classify(source).map(role=>{const purpose=selectedStorageReceiverPurpose(source,role,storageReceiverPurposes);if(purpose)storagePurposeByRole.set(role,purpose);return role;}).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,bundleCopy)).map(role=>deploymentConfigOutputRole(role,configOutput)).map(role=>minimalPluginFixtureOutputRole(role,minimalPlugin)).flatMap(role=>{
     // Deployment observations alone remain annotations, never role grants.
     // The separate Source-owned checked-artifact profile above binds one exact
     // descriptor and API output set; all other unknown outputs stay unknown.
@@ -6080,14 +6086,16 @@ export function discoverScriptOutputRoleClassifications(root) {
     const qualifiedScalarUses=scalarOccurrences.has(source)?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source)):null;
     if(scalarOccurrences.has(source))assert(qualifiedScalarUses,`DEPLOYMENT_SCALAR_OCCURRENCE_UNQUALIFIED: ${source}; canonical stdout must remain unknown`);
     const topLevelPurpose=selectedTopLevelScriptPurpose(source,role,topLevelPurposes);
+    const storageReceiverPurpose=storagePurposeByRole.get(role);
     const versionsMapPurpose=selectedVersionsMapOutput(source,role,versionsMap);
     const qualifiedInfrastructureProfile=selectedInfrastructureOutputProfile(source,role,infrastructureProfile);
     const qualifiedDisabledRegistrationProfile=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
     const context={...role,path:source,sourceDigest:hash(fs.readFileSync(path.join(root,source))),
-      dependencies:[...new Set([...role.dependencies,...(topLevelPurpose?topLevelPurposes.dependencies:[]),...(versionsMapPurpose?versionsMap.dependencies:[])])],
-      dependencyDigests:Object.fromEntries([...new Set([...role.dependencies,...(topLevelPurpose?topLevelPurposes.dependencies:[]),...(versionsMapPurpose?versionsMap.dependencies:[])])].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),
+      dependencies:[...new Set([...role.dependencies,...(topLevelPurpose?topLevelPurposes.dependencies:[]),...(versionsMapPurpose?versionsMap.dependencies:[]),...(storageReceiverPurpose?storageReceiverPurposes.dependencies:[])])],
+      dependencyDigests:Object.fromEntries([...new Set([...role.dependencies,...(topLevelPurpose?topLevelPurposes.dependencies:[]),...(versionsMapPurpose?versionsMap.dependencies:[]),...(storageReceiverPurpose?storageReceiverPurposes.dependencies:[])])].map(file=>[file,hash(fs.readFileSync(path.join(root,file)))])),
       ...(selectedOccurrences.length?{selectedOccurrences}:{} ),
       ...(topLevelPurpose?{sourceOwnedOutputPurpose:topLevelPurpose,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}:{}),
+      ...(storageReceiverPurpose?{storageReceiverPurpose,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}:{}),
       ...(versionsMapPurpose?{versionsMapOutputPurpose:versionsMapPurpose,runtimeExecutionAuthorized:false,apiApplyAuthorized:false}:{}),
       ...(qualifiedScalarUses?{qualifiedScalarUses,standaloneOutputRole:'unknown'}:{}),
       ...(qualifiedInfrastructureProfile?{historicalInfrastructureProfile:infrastructureProfile.witnessDigest,executionAuthority:false,standaloneOutputRole:'unknown'}:{}),
@@ -6096,7 +6104,7 @@ export function discoverScriptOutputRoleClassifications(root) {
     // selected deployment evidence cannot travel across that boundary.
     return publicNodeSourceContexts(root,source,context).map(context=>{
       if(!context.canonicalSource)return context;
-      const {selectedOccurrences,...unqualifiedAlias}=context;
+      const {selectedOccurrences,storageReceiverPurpose,...unqualifiedAlias}=context;
       return unqualifiedAlias;
     });
   });});

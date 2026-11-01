@@ -1,0 +1,128 @@
+{
+  "scope": "Fixed seven original native writer receiving contracts, six physical Sources; no payload or execution grant",
+  "sourcePins": {
+    "skills/buster/engine/test-gates/artifacts.ts": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179",
+    "skills/common/plugin-runtime/foundation/config/published-pair.ts": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a",
+    "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0",
+    "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd",
+    "skills/common/plugins/runtime-dispatch/src/result-persistence.ts": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41",
+    "skills/prism/storage/artifacts.ts": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f"
+  },
+  "receivers": [
+    {
+      "source": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+      "export": "persistResult",
+      "inputParameter": "content",
+      "operations": [
+        {
+          "source": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts",
+          "selectors": [
+            {
+              "symbol": "persistResult"
+            }
+          ],
+          "factsDigest": "229f7c3a37dc2c2d86ee60a5de1cd33edc3d1b0cded4d3bb9f95fb9e8d7609b5"
+        }
+      ]
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+      "export": "writeDurableState",
+      "inputParameter": "value",
+      "operations": [
+        {
+          "source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts",
+          "selectors": [
+            {
+              "symbol": "writeDurableState"
+            }
+          ],
+          "factsDigest": "ca518623ce225e0f018986370ea997052c939d62eb4bf3441146e6d4ecfef244"
+        }
+      ]
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+      "export": "publishJsonPair",
+      "inputParameter": "values",
+      "operations": [
+        {
+          "source": "skills/common/plugin-runtime/foundation/config/published-pair.ts",
+          "selectors": [
+            {
+              "symbol": "publishJsonPair"
+            }
+          ],
+          "factsDigest": "aafe625f25173d759e39c861560a51ffa5e590967d6935054f6f22a1e24f3371"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/engine/test-gates/artifacts.ts",
+      "export": "stageEvidenceFiles",
+      "inputParameter": "declarations",
+      "operations": [
+        {
+          "source": "skills/buster/engine/test-gates/artifacts.ts",
+          "selectors": [
+            {
+              "symbol": "stageEvidenceFiles"
+            }
+          ],
+          "factsDigest": "8c987e6b465589092af9a3b67be1544ad9e9d1f25c4e090345650b9cafb1fafa"
+        }
+      ]
+    },
+    {
+      "source": "skills/buster/engine/test-gates/artifacts.ts",
+      "class": "FileEvidenceStore",
+      "method": "store",
+      "inputParameter": "declaration",
+      "operations": [
+        {
+          "source": "skills/buster/engine/test-gates/artifacts.ts",
+          "selectors": [
+            {
+              "symbol": "FileEvidenceStore"
+            }
+          ],
+          "factsDigest": "b3d96987c5b42f09158b3d1f53391ceb5ef705e66c24378a92d5f1f301382388"
+        }
+      ]
+    },
+    {
+      "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+      "class": "FileDurableBlobStore",
+      "method": "put",
+      "inputParameter": "input",
+      "operations": [
+        {
+          "source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts",
+          "selectors": [
+            {
+              "symbol": "FileDurableBlobStore"
+            }
+          ],
+          "factsDigest": "2af0b0af3d45a98256999d131ff893fa8b1a772d32fedd10260b756024231999"
+        }
+      ]
+    },
+    {
+      "source": "skills/prism/storage/artifacts.ts",
+      "class": "ContentAddressedArtifactStore",
+      "method": "put",
+      "inputParameter": "content",
+      "operations": [
+        {
+          "source": "skills/prism/storage/artifacts.ts",
+          "selectors": [
+            {
+              "symbol": "ContentAddressedArtifactStore"
+            }
+          ],
+          "factsDigest": "3f965f76741b49f6a274c8f5b26782287ab41de2c8e0dd9ee0d7be4dd1255d68"
+        }
+      ]
+    }
+  ]
+}

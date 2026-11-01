@@ -5,6 +5,18 @@ import ts from 'typescript';
 import { createHash } from 'node:crypto';
 import YAML from 'yaml';
 
+// Private original storage receiving provenance. Never rewrites raw roles.
+const storageReceiverRoleProofs=new WeakMap();
+const reviewedStorageReceivers=[{"source": "skills/common/plugins/runtime-dispatch/src/result-persistence.ts", "export": "persistResult", "inputParameter": "content"}, {"source": "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts", "export": "writeDurableState", "inputParameter": "value"}, {"source": "skills/common/plugin-runtime/foundation/config/published-pair.ts", "export": "publishJsonPair", "inputParameter": "values"}, {"source": "skills/buster/engine/test-gates/artifacts.ts", "export": "stageEvidenceFiles", "inputParameter": "declarations"}, {"source": "skills/buster/engine/test-gates/artifacts.ts", "class": "FileEvidenceStore", "method": "store", "inputParameter": "declaration"}, {"source": "skills/common/plugin-runtime/foundation/observability/durable-records.ts", "class": "FileDurableBlobStore", "method": "put", "inputParameter": "input"}, {"source": "skills/prism/storage/artifacts.ts", "class": "ContentAddressedArtifactStore", "method": "put", "inputParameter": "content"}];
+const reviewedStorageOwnerPins={"skills/buster/engine/test-gates/artifacts.ts": "4eedb9892218a3b0ee8a9b14d22c8e37b29c454333adbdf4cbae1772f44e5179", "skills/common/plugin-runtime/foundation/config/published-pair.ts": "c0c4fc08ae422962f201b4ec9f134ec03f8e3354c85316cb92657db18aafa27a", "skills/common/plugin-runtime/foundation/observability/durable-delivery.ts": "5624aa2b5f980a373ab30fdf012dee1346418ac3b2537244475f2a496d3766a0", "skills/common/plugin-runtime/foundation/observability/durable-records.ts": "c9a0c42b8cdd3a2f188ec38a3cab5270d0f032444801626ea2c6860e534582dd", "skills/common/plugins/runtime-dispatch/src/result-persistence.ts": "4939307a37adc3aea6dfba4d7f196a897c5ee3ca72a7594c6b7b8c02f4509a41", "skills/prism/storage/artifacts.ts": "8177fe9d5199d1af866a2ad7d5d7fdfa82b99b0fe6df5b7f0c3c04e96536ef1f"};
+export function storageReceiverRoleProof(root,source,role){
+ const proof=storageReceiverRoleProofs.get(role);
+ if(!proof||proof.root!==root||proof.source!==source||role.role!=='unknown'||proof.raw!==JSON.stringify(role))return null;
+ try{for(const [file,sha]of [[source,proof.sourceSha256],...(proof.writerSource?[[proof.writerSource,proof.writerSha256]]:[])]){
+  const absolute=path.join(root,file);if(fs.realpathSync(absolute)!==absolute||!fs.lstatSync(absolute).isFile()||createHash('sha256').update(fs.readFileSync(absolute)).digest('hex')!==sha)return null;
+ }}catch{return null;}
+ return proof;
+}
 // Project this reviewed private utility to every direct caller. This is not a
 // payload role: source copies stay unknown, and constructors are checked at the
 // call site. Neither an operation-receipt refresh nor another same-named writer
@@ -499,7 +511,7 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
    const value=indirectWriter(call.expression);if(!value)continue;
    if(value.indirect){state.sinks.push({expression:{getText:()=> 'unknown-output-function'},arguments:[call],getStart:()=>call.getStart(tree)});continue;}
    const {capability,fn,fnState}=value,index=fn?.parameters?.findIndex(parameter=>parameter.name.getText(fnState.tree)===capability.inputParameter)??-1;
-   state.sinks.push({expression:{getText:()=> 'native-file-writer-call'},arguments:[index>=0&&!call.arguments.some(ts.isSpreadElement)?call.arguments[index]??call:call],getStart:()=>call.getStart(tree),originalCall:call,capability});
+   state.sinks.push({expression:{getText:()=> 'native-file-writer-call'},arguments:[index>=0&&!call.arguments.some(ts.isSpreadElement)?call.arguments[index]??call:call],getStart:()=>call.getStart(tree),originalCall:call,capability,resolvedWriterState:fnState,resolvedWriterDeclaration:fn,writerReceiverProvenance:fn&&ts.isMethodSignature(fn)?'imported-interface-contract':fn&&(ts.isFunctionDeclaration(fn)||ts.isMethodDeclaration(fn))?'resolved-native-declaration':null});
   }
   const writerProfile=reviewedClosedLocalWriters.find(profile=>profile.source===file&&createHash('sha256').update(bytes).digest('hex')===profile.sourceSha256);
   if(writerProfile){
@@ -944,7 +956,22 @@ export function createSerializedOutputRoleClassifier(root,universe=[]) {
  for(const sink of state.sinks) {
   const name=sink.expression.getText(state.tree);const argumentsToPublish=name==='fs.writeFileSync'||name==='writeFileSync'?sink.arguments.slice(1,2):sink.arguments;
   for(const argument of argumentsToPublish){const text=argument.getText(state.tree);if(name==='return'&&!serialized(argument,state)&&!rawPublication(argument,state))continue;
-   const destination=(name==='fs.writeFileSync'||name==='writeFileSync')?sourcePath(sink.arguments[0],state):null;const classified=qualifiedFileRole(sink,argument,state)??(rawPublication(argument,state)&&unknownRawText(argument,state)?unknown(argument,state):shape(argument,state));const {properties,returns,choices,elements,...role}=classified;results.push({line:state.tree.getLineAndCharacterOfPosition(sink.getStart(state.tree)).line+1,sink:name,...role,dependencies:[...dependencies].sort()});
+   const destination=(name==='fs.writeFileSync'||name==='writeFileSync')?sourcePath(sink.arguments[0],state):null;const classified=qualifiedFileRole(sink,argument,state)??(rawPublication(argument,state)&&unknownRawText(argument,state)?unknown(argument,state):shape(argument,state));const {properties,returns,choices,elements,...role}=classified;const result={line:state.tree.getLineAndCharacterOfPosition(sink.getStart(state.tree)).line+1,sink:name,...role,dependencies:[...dependencies].sort()};
+   // No new physical I/O for unrelated or virtual/embedded Sources. A parsed
+   // snapshot alone grants nothing: accessor and receiver authority recheck it.
+   if(result.role==='unknown'){
+    const identity=name==='native-file-writer-call'&&sink.capability&&reviewedStorageReceivers.find(p=>['source','export','class','method','inputParameter'].every(k=>(p[k]??null)===(sink.capability[k]??null)));
+    const terminal=Object.hasOwn(reviewedStorageOwnerPins,state.file)&&['fs.writeFileSync','writeFileSync','fs.writeFile','writeFile','file-stream.write'].includes(name);
+    const writer=sink.resolvedWriterState;
+    if(terminal||identity&&writer&&writer.file===identity.source&&sink.writerReceiverProvenance){
+     const units=[];const position=sink.getStart(state.tree);
+     if(terminal){const visit=node=>{if(node.getStart(state.tree)<=position&&node.end>position){if(ts.isFunctionDeclaration(node)||ts.isClassDeclaration(node)||ts.isMethodDeclaration(node)||ts.isVariableStatement(node))units.push(createHash('sha256').update(node.getText(state.tree)).digest('hex'));ts.forEachChild(node,visit);}};visit(state.tree);}
+     const proof={root,source:state.file,sourceSha256:createHash('sha256').update(state.tree.text).digest('hex'),raw:JSON.stringify(result),terminal,units:Object.freeze(units)};
+     if(identity&&writer&&sink.writerReceiverProvenance)Object.assign(proof,{receiver:Object.freeze({...identity}),writerSource:writer.file,writerSha256:createHash('sha256').update(writer.tree.text).digest('hex'),provenance:sink.writerReceiverProvenance});
+     storageReceiverRoleProofs.set(result,Object.freeze(proof));
+    }
+   }
+   results.push(result);
   }
  }
   for(const role of results.filter(value=>value.role==='api-capable-utility')){
