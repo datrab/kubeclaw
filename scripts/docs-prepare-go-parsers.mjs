@@ -11,12 +11,13 @@ assert.equal(process.argv.length,2,'Usage: node scripts/docs-prepare-go-parsers.
 const target=process.platform+'/'+({x64:'amd64',arm64:'arm64'}[process.arch]??process.arch);
 const directory=path.resolve(process.env.KUBECLAW_DOCS_GO_PARSERS_DIR??path.join(root,'node_modules/.cache/docs-go-parsers'));
 const command=process.env.KUBECLAW_DOCS_GO_BINARY??'go';
-const env={...process.env,GOTOOLCHAIN:'local',GOWORK:'off',GO111MODULE:'off',GOPROXY:'off',GOSUMDB:'off',GOTELEMETRY:'off',CGO_ENABLED:'1',GOOS:process.platform,GOARCH:process.arch==='x64'?'amd64':process.arch};
+const env={...process.env,GOTOOLCHAIN:'local',GOWORK:'off',GO111MODULE:'off',GOPROXY:'off',GOSUMDB:'off',GOTELEMETRY:'off',XDG_CONFIG_HOME:path.join(directory,'go-config'),GOENV:'off',CGO_ENABLED:'1',GOOS:process.platform,GOARCH:process.arch==='x64'?'amd64':process.arch};
 assert(!process.env.GOFLAGS,'DOCS_GO_PREPARATION_GOFLAGS_UNQUALIFIED');
 const expected=JSON.parse(fs.readFileSync(path.join(root,'versions.json'),'utf8')).buildArgs.GO_VERSION;
 assert(execFileSync(command,['version'],{env,encoding:'utf8'}).trim().split(/\s+/u).includes('go'+expected),'DOCS_GO_PREPARATION_TOOLCHAIN_MISMATCH');
 fs.mkdirSync(directory,{recursive:true});
 assert.equal(fs.realpathSync(directory),directory,'DOCS_GO_PREPARATION_DIRECTORY_SYMLINK');
+execFileSync(command,['telemetry','off'],{env,stdio:'pipe',timeout:30000});
 const scratch=fs.mkdtempSync(path.join(directory,'.prepare-'));
 try{
  for(const key of ['cli','roles','shapes']){

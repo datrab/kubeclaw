@@ -8,6 +8,7 @@ import test from 'node:test';
 import {execFileSync} from 'node:child_process';
 import ts from 'typescript';
 import {discoverScriptInputAcquisition,nativeOutputConsumerMatches} from '../docs-api-output-discovery.mjs';
+import {preparedGoParser,preparedGoEnvironment} from '../docs-prepared-go-parsers.mjs';
 import {assertCliNativeCompilerGraphPurpose} from '../docs-api-documentation-role-custody.mjs';
 const root=path.resolve(import.meta.dirname,'../..'),modulePath='scripts/docs-api-output-discovery.mjs';
 const code=fs.readFileSync(path.join(root,modulePath),'utf8'),tree=ts.createSourceFile(modulePath,code,ts.ScriptTarget.Latest,true);
@@ -25,8 +26,8 @@ function privateVerifier({overrides=new Map(),cwd=root,selectedGraph=graph,warm=
  const reader={...fs,readFileSync:(file,...args)=>overrides.has(String(file))?(args[0]?overrides.get(String(file)).toString(args[0]):overrides.get(String(file))):fs.readFileSync(file,...args)};
  const cachePrefix=JSON.stringify([root]).slice(0,-1)+',';
  const hash=value=>warm&&typeof value==='string'&&value.startsWith(cachePrefix)?'known-warm-key':sha(value);
- const context=vm.createContext({assert,fs:reader,path,URL,process:{cwd:()=>cwd,env:{}},hash,documentationGraphCache:new Map([[root,selectedGraph]]),assertCliNativeCompilerGraphPurpose,walkProductSources:()=>[goSource],documentationToolSources:()=>new Set(),goOutputCache:new Map([[root,{key:'known-warm-key',result:['known-cached-result']} ]])});
- vm.runInContext(profileStatement.getText(tree)+'\n'+declarations.join('\n')+'\nglobalThis.api={source:assertCliStaticAstSourcePurpose,vector:assertCliStaticAstOutputVector};',context);
+ const context=vm.createContext({assert,fs:reader,path,URL,process:{cwd:()=>cwd,env:{}},hash,documentationGraphCache:new Map([[root,selectedGraph]]),assertCliNativeCompilerGraphPurpose,preparedGoParser,preparedGoEnvironment,walkProductSources:()=>[goSource],documentationToolSources:()=>new Set(),goOutputCache:new Map([[root,{key:'known-warm-key',result:['known-cached-result']} ]])});
+ vm.runInContext(tree.statements.find(n=>ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(tree)==='isReviewedPracticalReaderGraphRoot')).getText(tree)+'\n'+profileStatement.getText(tree)+'\n'+declarations.join('\n')+'\nglobalThis.api={source:assertCliStaticAstSourcePurpose,vector:assertCliStaticAstOutputVector};',context);
  const vector=(source,rows)=>{context.input=JSON.stringify(rows);return context.api.vector(root,source,vm.runInContext('JSON.parse(input)',context));};
  if(warm){const roots=tree.statements.find(n=>ts.isVariableStatement(n)&&n.declarationList.declarations.some(d=>d.name.getText(tree)==='producerRoots'));assert(roots);vm.runInContext(roots.getText(tree),context);const node=tree.statements.find(n=>ts.isFunctionDeclaration(n)&&n.name?.text==='discoverGoApiOutputs');assert(node);vm.runInContext(node.getText(tree).replace('export function','function').replaceAll('import.meta.url',JSON.stringify(pathToFileURL(path.join(root,modulePath)).href))+'\nglobalThis.warmGo=discoverGoApiOutputs;',context);}
  return {source:(selectedRoot,source)=>context.api.source(selectedRoot,source),vector,warmGo:()=>context.warmGo(root)};
@@ -69,9 +70,11 @@ test('helper and selected driver stdio/parser/offline/version/cleanup/source-tex
   [goSource,text=>text+"\n// added serializer or unreviewed source\n"],
   [driver,text=>text.replace("['-I',path.join(producerDirectory,'python_cli_ast.py')]","[path.join(producerDirectory,'python_cli_ast.py')]")],
   [driver,text=>text.replace("Number(pythonVersion.split('.')[1])!==11","Number(pythonVersion.split('.')[1])!==10")],
-  [driver,text=>text.replace("GOPROXY:'off'","GOPROXY:'direct'")],
+  ['scripts/docs-prepare-go-parsers.mjs',text=>text.replace("GOPROXY:'off'","GOPROXY:'direct'")],
   [driver,text=>text.replace("includes('go'+versions.GO_VERSION)","includes('go0.0.0')")],
-  [driver,text=>text.replace('finally{fs.rmSync(scratch','finally{void fs.rmSync(scratch')],
+  [driver,text=>text.replace('prepared.verify();','void prepared.verify;')],
+  [driver,text=>text.replace("preparedGoParser(root,'cli')","preparedGoParser(root,'shapes')")],
+  ['scripts/docs-prepared-go-parsers.mjs',text=>text.replace('verify();\n return {binary,verify};','return {binary,verify};')],
   [driver,text=>text.replace('({path,text})=>({path,text})','({path,text})=>({path})')],
   [driver,text=>text.replace("producerDirectory=path.join(root,'scripts/lib/cli')","producerDirectory='/tmp/other'")],
  ];
@@ -104,6 +107,6 @@ test('Go consumed encoder and helper stderr cannot become independent publicatio
 
 test('actual Go cache path rechecks the closed caller profile before returning a warm result',()=>{
  assert.deepEqual([...privateVerifier({warm:true}).warmGo()],['known-cached-result']);
- const source='scripts/lib/cli/cli-native-driver.mjs',before=fs.readFileSync(path.join(root,source),'utf8'),changed=before.replace("GOPROXY:'off'","GOPROXY:'direct'");assert.notEqual(before,changed);
+ const source='scripts/lib/cli/cli-native-driver.mjs',before=fs.readFileSync(path.join(root,source),'utf8'),changed=before.replace('prepared.verify();','void prepared.verify;');assert.notEqual(before,changed);
  assert.throws(()=>privateVerifier({warm:true,overrides:new Map([[path.join(root,source),Buffer.from(changed)]])}).warmGo(),/CLI_STATIC_AST_PROTOCOL_UNQUALIFIED: bound input/);
 });

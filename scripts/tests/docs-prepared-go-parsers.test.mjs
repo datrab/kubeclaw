@@ -59,3 +59,27 @@ test('actual selected Go stdlib directory authority is not inherited GOROOT/GOEN
   process.env.GOWORK='off';process.env.GOFLAGS='-overlay=/untrusted';assert.throws(()=>preparedGoEnvironment(),/explicit GOFLAGS/);
  }finally{for(const [key,value]of Object.entries(previous))if(value===undefined)delete process.env[key];else process.env[key]=value;}
 });
+
+test('Go config must be explicitly prepared and exact off before a read-only query',()=>{
+ const prior=process.env.KUBECLAW_DOCS_GO_PARSERS_DIR;
+ const temp=fs.realpathSync(fs.mkdtempSync(path.join(os.tmpdir(),'docs-go-mode-control-')));
+ const mode=path.join(temp,'go-config/go/telemetry/mode');
+ try{
+  process.env.KUBECLAW_DOCS_GO_PARSERS_DIR=temp;
+  assert.throws(()=>preparedGoEnvironment(),/ENOENT/);
+  fs.mkdirSync(path.dirname(mode),{recursive:true});
+  fs.writeFileSync(mode,'on 2026-11-01');
+  assert.throws(()=>preparedGoEnvironment(),/CONFIG_NOT_OFF/);
+  fs.writeFileSync(mode,'off 2026-11-01');
+  const selected=preparedGoEnvironment();assert.equal(selected.env.XDG_CONFIG_HOME,path.join(temp,'go-config'));
+  const outside=path.join(temp,'outside-mode');fs.renameSync(mode,outside);fs.symlinkSync(outside,mode);
+  assert.throws(()=>preparedGoEnvironment(),/CONFIG_NOT_REGULAR/);
+  fs.unlinkSync(mode);fs.renameSync(outside,mode);
+  const original=new Map(['writeFileSync','mkdirSync','mkdtempSync','renameSync','unlinkSync'].map(key=>[key,fs[key]]));
+  try{for(const key of original.keys())fs[key]=()=>{throw Error('UNEXPECTED_QUERY_WRITE:'+key);};preparedGoEnvironment();}
+  finally{for(const [key,value]of original)fs[key]=value;}
+ }finally{
+  if(prior===undefined)delete process.env.KUBECLAW_DOCS_GO_PARSERS_DIR;else process.env.KUBECLAW_DOCS_GO_PARSERS_DIR=prior;
+  fs.rmSync(temp,{recursive:true,force:true});
+ }
+});

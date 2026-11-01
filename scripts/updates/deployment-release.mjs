@@ -134,7 +134,7 @@ export function validateRenderedRelease(baseline, rendered, receipt, requireBund
 // Private registry connectivity and the native host binding are needed even to
 // render a valid baseline. Never import images or bundle controls from overlays.
 function withDeploymentContext(args, role, run) {
-  const temporary = fs.mkdtempSync(path.join(os.tmpdir(), 'release-registry-context-'));
+  let temporary;
   const context = [];
   try {
     for (let index = 0; index < args.length - 1; index += 1) {
@@ -145,13 +145,14 @@ function withDeploymentContext(args, role, run) {
       const binding = native && Object.fromEntries(['nodeName', 'namespace', 'policyDigest']
         .filter(key => native[key] !== undefined).map(key => [key, native[key]]));
       if (registry === undefined && (!binding || !Object.keys(binding).length)) continue;
+      temporary ??= fs.mkdtempSync(path.join(os.tmpdir(), 'release-registry-context-'));
       const file = path.join(temporary, `${index}.yaml`);
       fs.writeFileSync(file, yaml.dump({ ...(registry === undefined ? {} : { runtimeInfrastructure: { registry } }),
         ...(binding && Object.keys(binding).length ? { worker: { native: binding } } : {}) }), { mode: 0o600 });
       context.push('-f', file);
     }
     return run(context);
-  } finally { fs.rmSync(temporary, { recursive: true, force: true }); }
+  } finally { if (temporary) fs.rmSync(temporary, { recursive: true, force: true }); }
 }
 
 function validateOverlays(args, root, role, baseline, render, receipt) {

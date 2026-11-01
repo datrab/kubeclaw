@@ -1,8 +1,9 @@
+import {runDocumentationInputs} from './docs-memory-inputs.mjs';
 import {preparedGoEnvironment,preparedGoParser,runPreparedGoParser} from './docs-prepared-go-parsers.mjs';
 import {localHelmChartFiles, renderLocalHelmChart} from './docs-helm-memory-chart.mjs';
 import {checkedOriginalProbe39Output, selectedOriginalProbe39Output} from './docs-api-probe39-original-output.mjs';
 import {checkedVersionsMapOutputs,selectedVersionsMapOutput} from './docs-api-versions-map-output.mjs';
-import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose} from './docs-api-top-level-script-purpose.mjs';
+import {checkedTopLevelScriptPurposes,selectedTopLevelScriptPurpose,checkedNodeTestFixturePurpose,selectedNodeTestFixturePurpose,selectedNodeTestFixtureNodePurpose} from './docs-api-top-level-script-purpose.mjs';
 import {assertDocumentationOwnerPurpose,assertDocumentationOwnerAncestry,documentationOwnerNativeEntryMatches,reviewedDocumentationOwnerPurposes,assertReaderArtifactExternalCiPurpose,addReaderArtifactExternalCiSeed,assertPublicationExampleChildPurpose,addPublicationExampleChildSeed} from './docs-documentation-owner-purpose-custody.mjs';
 import {minimalPluginFixtureOutputCustody, minimalPluginFixtureOutputRole} from './docs-minimal-plugin-fixture-output-custody.mjs';
 import {deploymentScalarOccurrenceCustody, selectedDeploymentScalarOccurrences} from './docs-deployment-scalar-occurrence-custody.mjs';
@@ -305,17 +306,18 @@ export function documentationModuleInputAuthority(root,boundary,graph) {
   }
   return hash(JSON.stringify(facts));
 }
-function documentationEntryPoints(scripts,documentationOnly=true,root) {
+function documentationEntryPoints(scripts,documentationOnly=true,root,purposeDetails=false) {
   const entries=[];
   for(const [name,command]of Object.entries(scripts)) {
     if(documentationOnly&&!name.startsWith('docs:')&&!name.startsWith('verify:docs:'))continue;
     assert(typeof command==='string',`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: package.json; ${name} command must be literal`);
     for(const acquisition of shellNativeNodeEntries(`package.json scripts.${name}`,command)){
       const {nativeTest,entryWords:targets}=acquisition;
+      const nativePurpose=purposeDetails?{nativeTest,nativeCommandStart:acquisition.start,nativeCommandEnd:acquisition.end}:{};
       for(const word of targets){
-        if(/[*?]/u.test(word.value)){for(const source of expandReviewedNodePackageGlob(root,{name,command,word,nativeTest}))entries.push({name,command,source});continue;}
+        if(/[*?]/u.test(word.value)){for(const source of expandReviewedNodePackageGlob(root,{name,command,word,nativeTest}))entries.push({name,command,source,...nativePurpose});continue;}
         assert(!/[\$`]/u.test(word.value),`DOCUMENTATION_TOOL_GRAPH_UNQUALIFIED: package.json; ${name} unsupported dynamic Node entry: ${word.value}`);
-        entries.push({name,command,source:path.posix.normalize(word.value)});
+        entries.push({name,command,source:path.posix.normalize(word.value),...nativePurpose});
       }
     }
   }
@@ -895,7 +897,7 @@ const reviewedCliStaticAstProtocols = Object.freeze({
   "fixedInputs": [
     {
       "path": "scripts/lib/cli/cli-native-driver.mjs",
-      "sha256": "ea2104b5a7ec4dfdee7b5c48a4ef21d330ca2100c82b6b3407019b4ac4df5f5a"
+      "sha256": "b0aed8258fac9de84a56c2aba7cb85a5a2f934d40219808a1896035354c9144a"
     },
     {
       "path": "scripts/docs-inventory.mjs",
@@ -944,6 +946,14 @@ const reviewedCliStaticAstProtocols = Object.freeze({
     {
       "path": "scripts/lib/cli/go_cli_ast.go",
       "sha256": "ef7c1ced42aeb627626e7fdb39c47b306cf8d69f1be79fa0f8572ad494b3e948"
+    },
+    {
+      "path": "scripts/docs-prepared-go-parsers.mjs",
+      "sha256": "10fec14b8198ce16f91ec085a0160c393dd83ade8cb9b11e7ce388264b574e39"
+    },
+    {
+      "path": "scripts/docs-prepare-go-parsers.mjs",
+      "sha256": "8a17aca687b5d2ce9b3b9388971dfa0a88e890adac8f780f206289ac5a70247f"
     }
   ],
   "profiles": {
@@ -2671,16 +2681,10 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
   "root": "/home/node/.openclaw/workspace/kubeclaw-pr13-recovery",
   "source": "scripts/docs-publication-embedded-yaml.mjs",
   "caller": "scripts/docs-publication-examples.mjs",
-  "incomingEdge": {
-    "source": "scripts/docs-publication-examples.mjs",
-    "target": "scripts/docs-publication-embedded-yaml.mjs",
-    "kind": "import",
-    "operation": "import { validateEmbeddedYaml } from './docs-publication-embedded-yaml.mjs';"
-  },
   "fixedInputs": [
     {
       "path": "scripts/docs-publication-embedded-yaml.mjs",
-      "sha256": "4ec435e5e80ca0b2e4a99dd328df0d4d8d603f8e41587fe16a86069dce7c16eb"
+      "sha256": "bc00ecfd3d9cab31f0ba0baf5200477a2c2cc11de8fa1a2b391ccf463108090a"
     },
     {
       "path": "scripts/lib/docs-publication-example-coverage.mjs",
@@ -2725,6 +2729,14 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     {
       "path": "package.json",
       "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    },
+    {
+      "path": "scripts/docs-prepare-publication-schemas.mjs",
+      "sha256": "902a54bf83adf7b36ef33821dfb05e585e8b9e75ded6d04fa64eceedc644b389"
+    },
+    {
+      "path": ".github/workflows/docs-checks.yaml",
+      "sha256": "fb4f075cbae40abaf6082be5e048d875bb5108ad24f44f099ba8e145e8068134"
     }
   ],
   "authorityRecords": [
@@ -2749,39 +2761,54 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
     "pvc-probe-template",
     "pod-probe-template"
   ],
-  "temporaryPrefix": "kubeclaw-embedded-yaml-",
-  "temporaryFileNames": [
-    "cilium-denial-template.json",
-    "cilium-denial-template.yaml",
-    "pvc-probe-template.json",
-    "pvc-probe-template.yaml",
-    "pod-probe-template.json",
-    "pod-probe-template.yaml"
-  ],
   "selectors": [
     {
-      "expression": "item.schema ?? { $schema: 'http://json-schema.org/draft-04/schema#',\n        $ref: `#/definitions/io.k8s.api.core.v1.${item.definition}`, definitions: kubernetes.definitions }"
+      "expression": "JSON.stringify(item.schema)"
     },
     {
-      "expression": "YAML.stringify(value)"
+      "expression": "export function prepareEmbeddedYamlSchemas(root) {\n  const directory=schemaDirectory(root);\n  fs.mkdirSync(directory,{recursive:true,mode:0o700});\n  assert.equal(fs.realpathSync(directory),directory,'PUBLICATION_SCHEMA_PREPARATION_DIRECTORY_SYMLINK');\n  for(const item of embeddedYamlMaterials(root)){\n    const file=path.join(directory,item.id+'.json');\n    let prior;try{prior=fs.lstatSync(file);}catch(error){if(error.code!=='ENOENT')throw error;}\n    if(prior)assert(prior.isFile()&&!prior.isSymbolicLink(),'PUBLICATION_SCHEMA_PREPARATION_TARGET_NOT_REGULAR');\n    fs.writeFileSync(file,JSON.stringify(item.schema),{mode:0o600});\n  }\n}"
+    },
+    {
+      "expression": "export function validateEmbeddedYaml(root, { corrupt = null } = {}) {\n  const materials=embeddedYamlMaterials(root),directory=schemaDirectory(root);\n  {\n    const results = [];\n    for (const item of materials) {\n      assert(!item.content.includes('${'), `unmaterialized embedded YAML: ${item.id}`);\n      const value = YAML.parse(item.content);\n      if (corrupt === item.id) value.spec = 'not-an-object';\n      const schema=item.schema;\n      const schemaPath=path.join(directory,item.id+'.json');\n      const stat=fs.lstatSync(schemaPath);\n      assert(stat.isFile()&&!stat.isSymbolicLink()&&fs.realpathSync(schemaPath)===schemaPath,'PUBLICATION_SCHEMA_INPUT_NOT_REGULAR');\n      assert.equal(fs.readFileSync(schemaPath,'utf8'),JSON.stringify(schema),'PUBLICATION_SCHEMA_INPUT_STALE');\n      const result = spawnSync('kubeconform', ['-strict', '-summary', '-output', 'json',\n        '-kubernetes-version', '1.35.0', '-schema-location', schemaPath, '-'],\n      { input:YAML.stringify(value), encoding: 'utf8', timeout: 30000, maxBuffer: 4 * 1024 * 1024,\n        env: { PATH: process.env.PATH, HOME: '/nonexistent-kubeclaw-docs-validation', LANG: 'C.UTF-8' } });\n      assert.ifError(result.error);\n      assert.equal(result.status, 0, `native embedded YAML ${item.id}: ${result.stdout} ${result.stderr}`);\n      const output = JSON.parse(result.stdout);\n      assert.deepEqual(output.summary, { valid: 1, invalid: 0, errors: 0, skipped: 0 });\n      results.push({ id: item.id, materializedSha256: sha(item.content), schemaSha256: sha(JSON.stringify(schema)), nativeSummary: output.summary });\n    }\n    return { results, profile: 'Pinned raw OpenAPI/CRD schema specimens; not approved target admission',\n      kubectlClusterCiliumEnforcementOrWorkloadExecution: false };\n  }\n}"
+    },
+    {
+      "expression": "fs.writeFileSync(file,JSON.stringify(item.schema),{mode:0o600})"
+    },
+    {
+      "expression": "import YAML from 'yaml';"
+    },
+    {
+      "expression": "import assert from 'node:assert/strict';"
+    },
+    {
+      "expression": "import crypto from 'node:crypto';"
+    },
+    {
+      "expression": "import fs from 'node:fs';"
+    },
+    {
+      "expression": "import path from 'node:path';"
+    },
+    {
+      "expression": "import zlib from 'node:zlib';"
+    },
+    {
+      "expression": "import { publicationExampleBlocks } from './lib/docs-publication-example-coverage.mjs';"
+    },
+    {
+      "expression": "import { spawnSync } from 'node:child_process';"
+    },
+    {
+      "expression": "spawnSync('kubeconform', ['-strict', '-summary', '-output', 'json',\n        '-kubernetes-version', '1.35.0', '-schema-location', schemaPath, '-'],\n      { input:YAML.stringify(value), encoding: 'utf8', timeout: 30000, maxBuffer: 4 * 1024 * 1024,\n        env: { PATH: process.env.PATH, HOME: '/nonexistent-kubeclaw-docs-validation', LANG: 'C.UTF-8' } })"
     }
   ],
-  "factsDigest": "79dea1473f089d01718925c668685976c1dabfca5a056e851b15795089fcdf0b",
+  "factsDigest": "b283903349a14a4bdc313dbc0a1afae2fad44b102da7ec99ea28d6bfb41a6f00",
   "descriptors": [
-    {
-      "line": 52,
-      "sink": "fs.writeFileSync",
-      "role": "unknown",
-      "expression": "item.schema ?? { $schema: 'http://json-schema.org/draft-04/schema#',\n        $ref: `#/definitions/io.k8s.api.core.v1.${item.definition}`, definitions: kubernetes.definitions }",
-      "basis": null,
-      "keys": null,
-      "sinkContract": null
-    },
     {
       "line": 53,
       "sink": "fs.writeFileSync",
       "role": "unknown",
-      "expression": "YAML.stringify(value)",
+      "expression": "item.schema",
       "basis": null,
       "keys": null,
       "sinkContract": null
@@ -2789,15 +2816,34 @@ const reviewedPublicationYamlValidationInputs = Object.freeze({
   ],
   "slots": [
     {
-      "line": 52,
-      "kind": "schema-validation-input",
-      "kubernetesShapedPayload": false
+      "line": 53,
+      "kind": "explicit-preparation-schema-artifact",
+      "kubernetesShapedPayload": false,
+      "owner": "prepareEmbeddedYamlSchemas",
+      "normalCheckWrites": false
+    }
+  ],
+  "incomingEdges": [
+    {
+      "source": "scripts/docs-publication-examples.mjs",
+      "target": "scripts/docs-publication-embedded-yaml.mjs",
+      "kind": "import",
+      "operation": "import { validateEmbeddedYaml } from './docs-publication-embedded-yaml.mjs';"
     },
     {
-      "line": 53,
-      "kind": "kubernetes-example-validation-specimen",
-      "kubernetesShapedPayload": true
+      "source": "scripts/docs-prepare-publication-schemas.mjs",
+      "target": "scripts/docs-publication-embedded-yaml.mjs",
+      "kind": "import",
+      "operation": "import {prepareEmbeddedYamlSchemas} from './docs-publication-embedded-yaml.mjs';"
     }
+  ],
+  "preparationSource": "scripts/docs-prepare-publication-schemas.mjs",
+  "preparationCommand": "node scripts/docs-prepare-publication-schemas.mjs",
+  "preparationWorkflowOccurrences": 2,
+  "preparedSchemaFileNames": [
+    "cilium-denial-template.json",
+    "pvc-probe-template.json",
+    "pod-probe-template.json"
   ]
 });
 const publicationYamlValidationReceipts = new WeakSet();
@@ -2825,19 +2871,22 @@ function checkedPublicationYamlValidationInputs(root,graph,classify,sources) {
   const definition=JSON.parse(fs.readFileSync(path.join(root,'package.json')));
   const targets=value=>typeof value==='string'?[value]:value&&typeof value==='object'?Object.values(value).flatMap(targets):[];
   if([definition.bin,definition.exports,definition.main].flatMap(targets).some(value=>path.posix.normalize(value.startsWith('./')?value.slice(2):value)===profile.source))fail('helper public package target');
-  if(JSON.stringify(graph?.edges?.filter(edge=>edge.target===profile.source))!==JSON.stringify([profile.incomingEdge]))fail('exact sole publication consumer');
+  if(JSON.stringify(graph?.edges?.filter(edge=>edge.target===profile.source))!==JSON.stringify([...profile.incomingEdges].sort((a,b)=>a.source.localeCompare(b.source))))fail('exact normal/preparation consumers');
+  if(graph.edges.some(edge=>edge.target===profile.preparationSource)||graph.publicEntries.some(entry=>entry.canonicalSource===profile.preparationSource&&entry.path!==profile.preparationSource))fail('preparation importer/public alias');
+  const preparationLines=fs.readFileSync(path.join(root,'.github/workflows/docs-checks.yaml'),'utf8').split('\n').map(line=>line.trim()).filter(line=>line===profile.preparationCommand);
+  if(preparationLines.length!==profile.preparationWorkflowOccurrences)fail('declared explicit preparation argv');
   const entries=graph?.publicEntries?.filter(entry=>entry.path===profile.source||entry.canonicalSource===profile.source);
   if(JSON.stringify(entries)!==JSON.stringify([{path:profile.source,canonicalSource:profile.source}]))fail('helper public alias');
   if(graph.edges.some(edge=>edge.target===profile.caller)||graph.publicEntries.some(entry=>entry.canonicalSource===profile.caller&&entry.path!==profile.caller))fail('normal publication child graph boundary');
-  // This checks only the current base. The future owned directory/files are not observed.
-  const base=os.tmpdir();
-  if(!path.isAbsolute(base)||fs.realpathSync(base)!==base||!fs.lstatSync(base).isDirectory()||fs.lstatSync(base).isSymbolicLink())fail('canonical temporary base');
+  // Preparation owns the sole schema write. Normal validation re-derives the
+  // exact schemas, reads prepared files and sends specimens over native stdin.
+  // This purpose grants neither preparation execution nor validator success.
   const facts=deriveNativeOperationFacts(root,profile.source,profile.selectors);
   if(!facts||nativeOperationFactDigest(facts)!==profile.factsDigest)fail('complete selected native facts');
   const roles=classify(profile.source);
-  if(JSON.stringify(roles.map(publicationYamlValidationDescriptor))!==JSON.stringify(profile.descriptors))fail('complete raw schema/specimen vector');
+  if(JSON.stringify(roles.map(publicationYamlValidationDescriptor))!==JSON.stringify(profile.descriptors))fail('complete explicit-preparation raw schema vector');
   const slots=Object.freeze(profile.slots.map(slot=>Object.freeze({...slot,descriptor:Object.freeze(profile.descriptors.find(row=>row.line===slot.line)),runtimeExecutionAuthorized:false,apiApplyAuthorized:false,schemaSemanticsNewlyApproved:false})));
-  const receipt=Object.freeze({source:profile.source,slots,materials:Object.freeze([...profile.materials]),temporaryFileNames:Object.freeze([...profile.temporaryFileNames]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,materials:profile.materials,files:profile.temporaryFileNames})),nativeValidatorSuccessObserved:false,newBinaryProvenanceGranted:false,futureTemporaryPathStateObserved:false,sourceAttemptsFinallyCleanup:true,cleanupOrRollbackGuaranteed:false,scope:'Only exact normal publication action; optional corrupt controls are not a new caller grant'});
+  const receipt=Object.freeze({source:profile.source,slots,materials:Object.freeze([...profile.materials]),preparedSchemaFileNames:Object.freeze([...profile.preparedSchemaFileNames]),dependencies:Object.freeze(profile.fixedInputs.map(input=>input.path)),inputDigest:hash(JSON.stringify({inputs:profile.fixedInputs,materials:profile.materials,files:profile.preparedSchemaFileNames})),nativeValidatorSuccessObserved:false,newBinaryProvenanceGranted:false,futurePreparedPathStateObserved:false,preparationExecutionAuthorized:false,normalValidationReadOnly:true,cleanupOrRollbackGuaranteed:false,scope:'Only exact schema preparation-output purpose and normal read/stdin validation boundary; no native success, new caller or API grant'});
   publicationYamlValidationReceipts.add(receipt);return receipt;
 }
 function selectedPublicationYamlValidationInput(source,role,receipt) {
@@ -5577,6 +5626,7 @@ export function discoverScriptApiOutputs(root) {
   const publicationYamlInputs=checkedPublicationYamlValidationInputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const publicationNative=checkedPublicationNativeValidation(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const topLevelPurposes=checkedTopLevelScriptPurposes(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources,documentationEntryPoints(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).scripts??{},false,root));
+  const nodeTestFixtureNativeEntries=documentationEntryPoints(JSON.parse(fs.readFileSync(path.join(root,'package.json'),'utf8')).scripts??{},false,root,true);
   const probe39=checkedOriginalProbe39Output(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const versionsMap=checkedVersionsMapOutputs(root,documentationGraphCache.get(root),sourcePurposeClassifier,sourcePurposeSources);
   const releaseRenderer=sourcePurposeSources.includes('scripts/updates/deployment-release.mjs')
@@ -5651,6 +5701,7 @@ export function discoverScriptApiOutputs(root) {
     const witness=source===reviewedArgocdArtifactProfile.source?checkedArtifact:null;
     const outputRoles=classifyOutputRoles(source).map(role=>checkedArtifactRole(role,witness)).map(role=>gitOpsOutputProfileRole(source,role,gitOpsProfile)).map(role=>runtimeBundleCopyRole(role,source===bundleSource?bundleCopy:null)).map(role=>deploymentConfigOutputRole(role,source===configSource?configOutput:null)).map(role=>minimalPluginFixtureOutputRole(role,source===minimalPluginSource?minimalPlugin:null));
     for(const role of outputRoles)for(const dependency of role.dependencies??[])classifiedDependencies.add(dependency);
+    const nodeTestFixturePurpose=checkedNodeTestFixturePurpose(root,source,bytes,outputRoles,documentationGraphCache.get(root),nodeTestFixtureNativeEntries);
     // A canonical traversal seed is not proof of a bare CLI invocation. The
     // separate receipts cover only the original captured configuration uses; public
     // canonical output classification remains unknown, and new uses stop.
@@ -5662,6 +5713,7 @@ export function discoverScriptApiOutputs(root) {
       const eventContractPurpose=selectedEventContractDocumentationOutput(source,role,eventContractOutputs);
       const commonErrorMarkdownSlot=selectedCommonErrorMarkdownOutput(source,role,commonErrorMarkdown);
       const topLevelPurpose=selectedTopLevelScriptPurpose(source,role,topLevelPurposes);
+      const nodeTestFixtureSlot=selectedNodeTestFixturePurpose(source,role,nodeTestFixturePurpose);
       const probe39Slot=selectedOriginalProbe39Output(source,role,probe39);
       const versionsMapPurpose=selectedVersionsMapOutput(source,role,versionsMap);
       const releaseRendererSlot=selectedReleaseRendererOutput(source,role,releaseRenderer);
@@ -5669,7 +5721,7 @@ export function discoverScriptApiOutputs(root) {
       const disabledRegistrationSlot=selectedDisabledRegistrationOutput(source,role,disabledRegistration);
       assert(scalarOccurrences.has(source)
         ?selectedDeploymentScalarOccurrences(role,scalarOccurrences.get(source))
-        :publicationNativePurpose||publicationYamlPurpose||eventContractPurpose||commonErrorMarkdownSlot||probe39Slot||topLevelPurpose||versionsMapPurpose||releaseRendererSlot||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
+        :publicationNativePurpose||publicationYamlPurpose||eventContractPurpose||commonErrorMarkdownSlot||probe39Slot||topLevelPurpose||nodeTestFixtureSlot||versionsMapPurpose||releaseRendererSlot||infrastructureSlot||disabledRegistrationSlot||role.role!=='unknown',
         `API_PRODUCT_SCRIPT_OUTPUT_ROLE_UNQUALIFIED: ${source}:${role.line}: ${role.expression}`);
     }
     // Only the fully acquired ten-slot validation consumer, not a product emitter.
@@ -5855,6 +5907,7 @@ export function discoverScriptApiOutputs(root) {
       return {__docsDynamicExpression:node.getText(tree)};
     }
     constructors.forEach((node,index)=>{
+      if(selectedNodeTestFixtureNodePurpose(source,tree,node,nodeTestFixturePurpose))return;
       for(let parent=node.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){if(guardedTestFunctions.has(parent))return;break;}
       opaque.clear();serializedInputs.clear();const binding=ts.isVariableDeclaration(node.parent)&&ts.isIdentifier(node.parent.name)?node.parent.name:null;const publications=binding?serializedPublications.filter(publication=>{let found=false;const visit=part=>{if(ts.isIdentifier(part)&&declarationFor(part)===node)found=true;ts.forEachChild(part,visit);};publication.arguments.forEach(visit);return found;}):[];
       terminalPosition=publications.length?Math.min(...publications.map(publication=>publication.getStart(tree))):Infinity;
@@ -5890,6 +5943,7 @@ export function discoverScriptApiOutputs(root) {
         outputDigest:hash(JSON.stringify(value)),inputs:[...serializedInputs].sort(),inputDigest:hash(JSON.stringify([...serializedInputs].sort().map(input=>[input,hash(fs.readFileSync(path.join(root,input)))]))),expressions:[...opaque.values()]}});
     });
     for(const publication of serializedPublications) {
+      if(selectedNodeTestFixtureNodePurpose(source,tree,publication,nodeTestFixturePurpose))continue;
       terminalPosition=publication.getStart(tree);
       let guarded=false;
       for(let parent=publication.parent;parent;parent=parent.parent)if(ts.isFunctionLike(parent)){guarded=guardedTestFunctions.has(parent);break;}
@@ -5910,7 +5964,7 @@ export function discoverScriptApiOutputs(root) {
         }
       }
     }
-    assert(!outputRoles.some(role=>role.role==='api')||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
+    assert(!outputRoles.some(role=>role.role==='api'&&!selectedNodeTestFixturePurpose(source,role,nodeTestFixturePurpose,true))||result.some(output=>output.context.path===source),`API_PRODUCT_SCRIPT_OUTPUT_IDENTITY_UNQUALIFIED: ${source}`);
   }
   for(const output of result)for(const source of output.context.inputs??[])classifiedDependencies.add(source);
   // Entry aliases carry the canonical source's actual line/digest and inputs;
@@ -6291,21 +6345,21 @@ function shellReleaseFileProof(root,source,bytes,sink) {
  for(const file of walkProductSources(root,['scripts/updates','charts/ops-pod','releases'],file=>/\.(?:mjs|json|ya?ml|tpl)$/u.test(file)))dependencies[file]=hash(fs.readFileSync(path.join(root,file)));
  const factId=`${root}:${source}:${sink.line}`,old=namedShellChannelFacts.get(factId);
  if(old?.role==='api'&&old.sourceDigest===sourceDigest&&JSON.stringify(old.dependencies)===JSON.stringify(dependencies))return old;
- const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'docs-ops-public-render-')),outputs=[];
- try {
-  const discovery=path.join(temporary,'discovery.json');fs.writeFileSync(discovery,JSON.stringify({networkPolicy:{apiServerCIDRs:['192.0.2.1/32']}}));
+ const outputs=[];
+ {
+  const discovery=Buffer.from(JSON.stringify({networkPolicy:{apiServerCIDRs:['192.0.2.1/32']}}));
   for(const profile of profiles(root,'charts/ops-pod')){
    const selectedValues=structuredClone(profile.values);delete selectedValues.codexImage;delete selectedValues.mcpImage;
-   const overlay=path.join(temporary,'overlay.yaml');fs.writeFileSync(overlay,YAML.stringify(selectedValues));
-   const args=[renderer,'render',root,'ops','ops','codex-ops','kubeclaw-ops',`--discovery=${discovery}`,'--','-f',discovery,'-f',path.join(root,'releases/values/ops.yaml'),'-f',overlay];
-   const rendered=spawnSync(process.execPath,args,{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024});
+   const overlay=Buffer.from(YAML.stringify(selectedValues));
+   const args=[renderer,'render',root,'ops','ops','codex-ops','kubeclaw-ops',{file:'discovery.json',prefix:'--discovery='},'--','-f',{file:'discovery.json'},'-f',path.join(root,'releases/values/ops.yaml'),'-f',{file:'overlay.yaml'}];
+   const rendered=runDocumentationInputs(process.execPath,args,new Map([['discovery.json',discovery],['overlay.yaml',overlay]]),{cwd:root,maxBuffer:32*1024*1024});
    assert.equal(rendered.status,0,`API_PRODUCT_SHELL_RELEASE_RENDER_FAILED: ${source}: ${rendered.stderr}`);
    const documents=YAML.parseAllDocuments(rendered.stdout);assert(documents.every(document=>!document.errors.length),`API_PRODUCT_SHELL_RELEASE_YAML_INVALID: ${source}`);
    for(const [index,document]of documents.entries()){const value=document.toJS();if(value===null)continue;assert(value?.apiVersion&&value?.kind,`API_PRODUCT_SHELL_RELEASE_OUTPUT_ROLE_UNQUALIFIED: ${source}`);
     outputs.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:outputs.length,sourceDigest:sourceDigest,producer:'shell-shape',line:sink.line,profile:`selected-ops-public-render:${profile.id}`,inputs:Object.keys(dependencies),inputDigest:hash(JSON.stringify([dependencies,profile.values])),forwardedProducer:{path:renderer,argv,release:'codex-ops',namespace:'kubeclaw-ops',helmProfile:profile.id,document:index,controlledDiscovery:{networkPolicy:{apiServerCIDRs:['192.0.2.1/32']}},runtimeInputs:['OPS_DISCOVERY_VALUES','OPS_POD_VALUES','OPS_CODEX_IMAGE','OPS_MCP_IMAGE','OPS_GITHUB_TOKEN_FILE','OPS_TAILSCALE_AUTHKEY_FILE']},outputDigest:hash(JSON.stringify(value))}});
    }
   }
- } finally {fs.rmSync(temporary,{recursive:true,force:true});}
+ }
  const result={role:'api',sourceDigest:sourceDigest,contract:'selected-release-render-stdout-forwarding',dependencies,outputs};namedShellChannelFacts.set(factId,result);return result;
 }
 function shellNamedFileProof(root,source,bytes,sink) {
@@ -7044,17 +7098,16 @@ export function discoverTransformedApiOutputs(root) {
     ['scripts/render-postgresql-recovery.mjs',['default','my-values/infra/postgresql-recovery.yaml','my-values/infra/postgresql-values.yaml','my-values/infra/litellm-deployment.yaml','postgresql']],
     ['scripts/render-stateful-network-policies.mjs',['my-values/infra/network-policies.yaml','default','redis','my-values/infra/redis-values.yaml','postgresql','my-values/infra/postgresql-values.yaml']],
   ];
-  const temporary=fs.mkdtempSync(path.join(os.tmpdir(),'docs-api-transforms-'));
   const registry='scripts/render-registry-local.mjs';
   if(fs.existsSync(path.join(root,registry))) {
-    const config=path.join(temporary,'storage.json'),existing=path.join(temporary,'deployment.json'),pvc=path.join(temporary,'pvc.json');
-    fs.writeFileSync(config,JSON.stringify({capacity:'10Gi',storageClassName:'discovery'}));fs.writeFileSync(existing,'');fs.writeFileSync(pvc,'');
-    const served=spawnSync(process.execPath,[registry,config,'serve',existing,pvc],{cwd:root,encoding:'utf8'});
+    const files=new Map([['storage.json',Buffer.from(JSON.stringify({capacity:'10Gi',storageClassName:'discovery'}))],['deployment.json',Buffer.alloc(0)],['pvc.json',Buffer.alloc(0)]]);
+    const base=[{file:'storage.json'},'serve',{file:'deployment.json'},{file:'pvc.json'}];
+    const served=runDocumentationInputs(process.execPath,[registry,...base],files,{cwd:root});
     assert.equal(served.status,0,`API_PRODUCT_REGISTRY_RENDER_FAILED: ${served.stderr}`);
     const objects=YAML.parseAllDocuments(served.stdout).map(document=>{assert.equal(document.errors.length,0);return document.toJS();});
-    const deployed=path.join(temporary,'deployed.json'),claim=path.join(temporary,'claim.json');
-    fs.writeFileSync(deployed,JSON.stringify(objects.find(value=>value.kind==='Deployment')));fs.writeFileSync(claim,JSON.stringify(objects.find(value=>value.kind==='PersistentVolumeClaim')));
-    recipes.push([registry,[config,'serve',existing,pvc]],[registry,[config,'gc-dry-run',deployed,claim]],[registry,[config,'gc',deployed,claim]]);
+    files.set('deployed.json',Buffer.from(JSON.stringify(objects.find(value=>value.kind==='Deployment'))));
+    files.set('claim.json',Buffer.from(JSON.stringify(objects.find(value=>value.kind==='PersistentVolumeClaim'))));
+    recipes.push([registry,base,files],[registry,[{file:'storage.json'},'gc-dry-run',{file:'deployed.json'},{file:'claim.json'}],files],[registry,[{file:'storage.json'},'gc',{file:'deployed.json'},{file:'claim.json'}],files]);
   }
   const result=[];
   const continuous='scripts/gitops-continuous.mjs';
@@ -7083,7 +7136,7 @@ export function discoverTransformedApiOutputs(root) {
     const declarations=`const environment=${JSON.stringify(environment.text)};${helpers.map(node=>`const ${node.getText()};`).join('')};const readCommittedBundle=()=>input;${bootstrap.getText(bootstrapTree).replace(/^export\s+/u,'')};${functions.map(fn=>fn.getText(tree).replace(/^export\s+/u,'')).join(';')}`;
     const evaluate=(expression,context)=>{
       const program=`import vm from 'node:vm';import yaml from ${JSON.stringify(yamlModule)};const result=vm.runInNewContext(${JSON.stringify(declarations+';'+expression)},{...${JSON.stringify(context)},yaml,structuredClone,URL},{timeout:1000});process.stdout.write(JSON.stringify(result));`;
-      const rendered=spawnSync(process.execPath,['--input-type=module','-e',program],{cwd:temporary,env:{PATH:process.env.PATH},encoding:'utf8',maxBuffer:32*1024*1024});
+      const rendered=spawnSync(process.execPath,['--input-type=module','-e',program],{cwd:root,env:{PATH:process.env.PATH},encoding:'utf8',maxBuffer:32*1024*1024});
       assert.equal(rendered.status,0,`API_PRODUCT_CONTINUOUS_TRANSFORM_FAILED: ${rendered.stderr}`);return JSON.parse(rendered.stdout);
     };
     const namingProfiles=[{id:'default',naming:{}},{id:'custom',naming:{rootName:'discovery-root',bootstrapProject:'discovery-bootstrap',workloadProject:'discovery-workloads'}}];
@@ -7092,8 +7145,7 @@ export function discoverTransformedApiOutputs(root) {
       const context={input:controlled,naming,config};
       const initial=evaluate(`bootstrapDocuments('offline','releases/gitops/discovery','https://example.invalid/discovery.git','${syntheticDigest.slice(0,40)}','default',naming)`,context);
       const boot=evaluate('continuousDocuments(initial,\'default\',config)',{...context,initial});
-      const values=path.join(temporary,`${profile}-values.json`);fs.writeFileSync(values,JSON.stringify(initial.values));
-      const rendered=spawnSync('helm',['template','runtime',path.join(root,'charts/gitops'),'-n','default','-f',values],{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024});
+      const rendered=spawnSync('helm',['template','runtime',path.join(root,'charts/gitops'),'-n','default','-f','-'],{cwd:root,input:JSON.stringify(initial.values),encoding:'utf8',maxBuffer:32*1024*1024});
       assert.equal(rendered.status,0,`API_PRODUCT_CONTINUOUS_CHILD_RENDER_FAILED: ${rendered.stderr}`);
       const children=evaluate('continuousApplications(manifest,config)',{...context,manifest:rendered.stdout});
       const bootstrapApp=boot.find(document=>document.kind==='Application');
@@ -7132,20 +7184,20 @@ export function discoverTransformedApiOutputs(root) {
       for(const [documents,publicOutput]of [[boot,`${environment.text}/bootstrap.yaml`],[children,`${environment.text}/apps/applications.yaml`]])documents.forEach((value,index)=>result.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:continuous,document:index,producer:'script-render',profile,sourceDigest:hash(bytes),inputs,inputDigest,outputDigest:hash(YAML.stringify(value)),publicOutput}}));
     }
   }
-  try { for(const [source,args] of recipes) {
+  for(const [source,args,memoryFiles] of recipes) {
     if(!fs.existsSync(path.join(root,source)))continue;
-    const rendered=spawnSync(process.execPath,[source,...args],{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024});
+    const rendered=memoryFiles?runDocumentationInputs(process.execPath,[source,...args],memoryFiles,{cwd:root,maxBuffer:32*1024*1024}):spawnSync(process.execPath,[source,...args],{cwd:root,encoding:'utf8',maxBuffer:32*1024*1024});
     assert.equal(rendered.status,0,`API_PRODUCT_SCRIPT_RENDER_FAILED: ${source}: ${rendered.stderr}`);
-    const inputFiles=args.filter(argument=>fs.existsSync(path.resolve(root,argument))&&fs.statSync(path.resolve(root,argument)).isFile());
-    const inputs=inputFiles.filter(argument=>!path.isAbsolute(argument));
-    const inputDigest=hash(JSON.stringify(inputFiles.map(input=>[path.isAbsolute(input)?path.basename(input):input,hash(fs.readFileSync(path.resolve(root,input)))])));
+    const inputFiles=args.filter(argument=>typeof argument==='string'?fs.existsSync(path.resolve(root,argument))&&fs.statSync(path.resolve(root,argument)).isFile():memoryFiles?.has(argument.file));
+    const inputs=inputFiles.filter(argument=>typeof argument==='string'&&!path.isAbsolute(argument));
+    const inputDigest=hash(JSON.stringify(inputFiles.map(input=>typeof input==='string'?[path.isAbsolute(input)?path.basename(input):input,hash(fs.readFileSync(path.resolve(root,input)))]:[input.file,hash(memoryFiles.get(input.file))])));
     const documents=YAML.parseAllDocuments(rendered.stdout);
     assert(documents.every(document=>!document.errors.length),`API_PRODUCT_SCRIPT_YAML_INVALID: ${source}`);
     documents.forEach((document,index)=>{
       const value=document.toJS();if(!value?.apiVersion||!value?.kind)return;
       result.push({value,context:{apiVersion:value.apiVersion,kind:value.kind,path:source,document:index,producer:'script-render',profile:source===registry?args[1]:'deploy-default',sourceDigest:hash(fs.readFileSync(path.join(root,source))),inputs,inputDigest,outputDigest:hash(JSON.stringify(value))}});
     });
-  }} finally {fs.rmSync(temporary,{recursive:true,force:true});}
+  }
   transformOutputCache.clear();transformOutputCache.set(cacheKey,result);return result;
 }
 
@@ -7235,7 +7287,7 @@ export function discoverInfrastructureApiOutputs(root) {
     const stageArgs=binding.argv.slice(2).map(shell.expand);
     const invocations=shell.invocations.filter(argv=>argv[4]===`$${binding.variable}`||argv[4]===`\${${binding.variable}}`);
     assert.equal(invocations.length,1,`API_PRODUCT_INFRASTRUCTURE_INVOCATION_UNQUALIFIED: ${name}`);
-    const stage=spawnSync(process.execPath,['--input-type=module','-e',`import {stageInfrastructureChart} from ${JSON.stringify(pathToFileURL(path.join(root,'scripts/infrastructure-chart.mjs')).href)};process.stdout.write(stageInfrastructureChart(${JSON.stringify(name)}));`],{cwd:root,encoding:'utf8'});
+    const stage=spawnSync(process.execPath,['--input-type=module','-e',`import {stageInfrastructureChart} from ${JSON.stringify(pathToFileURL(path.join(root,'scripts/infrastructure-chart.mjs')).href)};process.stdout.write(stageInfrastructureChart(${JSON.stringify(name)},{readOnly:true}));`],{cwd:root,encoding:'utf8'});
     assert.equal(stage.status,0,`API_PRODUCT_INFRASTRUCTURE_STAGE_FAILED: ${name}: ${stage.stderr}`);
     shell.variables[binding.variable]=stage.stdout.trim();
     const recipe=installerHelmRecipe(root,caller,invocations[0].map(shell.expand));

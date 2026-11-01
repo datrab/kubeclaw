@@ -1,7 +1,6 @@
 import assert from 'node:assert/strict';
 import crypto from 'node:crypto';
 import fs from 'node:fs';
-import os from 'node:os';
 import path from 'node:path';
 import zlib from 'node:zlib';
 import { spawnSync } from 'node:child_process';
@@ -11,7 +10,7 @@ const sha = value => crypto.createHash('sha256').update(value).digest('hex');
 
 // Validate only the three literal, explicitly materialized embedded resources.
 // Never execute their shell wrappers, container commands, kubectl or a cluster.
-export function validateEmbeddedYaml(root, { corrupt = null } = {}) {
+function embeddedYamlMaterials(root) {
   const read = relative => fs.readFileSync(path.join(root, relative), 'utf8');
   const lock = JSON.parse(read('scripts/docs-api-authority-lock.json'));
   function authority(record, parser) {
@@ -38,23 +37,39 @@ export function validateEmbeddedYaml(root, { corrupt = null } = {}) {
     { id: 'pvc-probe-template', content: install[0].replaceAll('${PREFLIGHT_STORAGE_CLASS}', 'mnt014-fixture-class').replaceAll('${PREFLIGHT_STORAGE_REQUEST}', '1Mi'), definition: 'PersistentVolumeClaim' },
     { id: 'pod-probe-template', content: install[1].replaceAll('${PREFLIGHT_IMAGE}', image).replaceAll('\\$(', '$('), definition: 'Pod' },
   ];
-  const directory = fs.mkdtempSync(path.join(os.tmpdir(), 'kubeclaw-embedded-yaml-'));
-  try {
+  return materials.map(item => ({...item, schema:item.schema ?? { $schema:'http://json-schema.org/draft-04/schema#', $ref:`#/definitions/io.k8s.api.core.v1.${item.definition}`, definitions:kubernetes.definitions }}));
+}
+function schemaDirectory(root) {
+  return path.resolve(process.env.KUBECLAW_DOCS_PUBLICATION_SCHEMAS_DIR ?? path.join(root,'node_modules/.cache/docs-publication-schemas'));
+}
+export function prepareEmbeddedYamlSchemas(root) {
+  const directory=schemaDirectory(root);
+  fs.mkdirSync(directory,{recursive:true,mode:0o700});
+  assert.equal(fs.realpathSync(directory),directory,'PUBLICATION_SCHEMA_PREPARATION_DIRECTORY_SYMLINK');
+  for(const item of embeddedYamlMaterials(root)){
+    const file=path.join(directory,item.id+'.json');
+    let prior;try{prior=fs.lstatSync(file);}catch(error){if(error.code!=='ENOENT')throw error;}
+    if(prior)assert(prior.isFile()&&!prior.isSymbolicLink(),'PUBLICATION_SCHEMA_PREPARATION_TARGET_NOT_REGULAR');
+    fs.writeFileSync(file,JSON.stringify(item.schema),{mode:0o600});
+  }
+}
+export function validateEmbeddedYaml(root, { corrupt = null } = {}) {
+  const materials=embeddedYamlMaterials(root),directory=schemaDirectory(root);
+  {
     const results = [];
     for (const item of materials) {
       assert(!item.content.includes('${'), `unmaterialized embedded YAML: ${item.id}`);
       const value = YAML.parse(item.content);
       if (corrupt === item.id) value.spec = 'not-an-object';
-      const schema = item.schema ?? { $schema: 'http://json-schema.org/draft-04/schema#',
-        $ref: `#/definitions/io.k8s.api.core.v1.${item.definition}`, definitions: kubernetes.definitions };
-      const schemaPath = path.join(directory, `${item.id}.json`);
-      const specimenPath = path.join(directory, `${item.id}.yaml`);
-      fs.writeFileSync(schemaPath, JSON.stringify(schema));
-      fs.writeFileSync(specimenPath, YAML.stringify(value));
+      const schema=item.schema;
+      const schemaPath=path.join(directory,item.id+'.json');
+      const stat=fs.lstatSync(schemaPath);
+      assert(stat.isFile()&&!stat.isSymbolicLink()&&fs.realpathSync(schemaPath)===schemaPath,'PUBLICATION_SCHEMA_INPUT_NOT_REGULAR');
+      assert.equal(fs.readFileSync(schemaPath,'utf8'),JSON.stringify(schema),'PUBLICATION_SCHEMA_INPUT_STALE');
       const result = spawnSync('kubeconform', ['-strict', '-summary', '-output', 'json',
-        '-kubernetes-version', '1.35.0', '-schema-location', schemaPath, specimenPath],
-      { encoding: 'utf8', timeout: 30000, maxBuffer: 4 * 1024 * 1024,
-        env: { PATH: process.env.PATH, HOME: directory, LANG: 'C.UTF-8' } });
+        '-kubernetes-version', '1.35.0', '-schema-location', schemaPath, '-'],
+      { input:YAML.stringify(value), encoding: 'utf8', timeout: 30000, maxBuffer: 4 * 1024 * 1024,
+        env: { PATH: process.env.PATH, HOME: '/nonexistent-kubeclaw-docs-validation', LANG: 'C.UTF-8' } });
       assert.ifError(result.error);
       assert.equal(result.status, 0, `native embedded YAML ${item.id}: ${result.stdout} ${result.stderr}`);
       const output = JSON.parse(result.stdout);
@@ -63,5 +78,5 @@ export function validateEmbeddedYaml(root, { corrupt = null } = {}) {
     }
     return { results, profile: 'Pinned raw OpenAPI/CRD schema specimens; not approved target admission',
       kubectlClusterCiliumEnforcementOrWorkloadExecution: false };
-  } finally { fs.rmSync(directory, { recursive: true, force: true }); }
+  }
 }

@@ -211,10 +211,23 @@ the unchanged native Go AST parsers with the pinned Go toolchain:
 
 ```sh
 node scripts/docs-prepare-go-parsers.mjs
+node scripts/docs-prepare-publication-schemas.mjs
+node scripts/infrastructure-chart.mjs tailscale
+node scripts/infrastructure-chart.mjs redis
+node scripts/infrastructure-chart.mjs postgresql
 ```
 
-Preparation writes only its declared `node_modules/.cache/docs-go-parsers` tools
-and normal Go build cache. Checks consume source-, target- and binary-hash-locked
+Preparation writes its declared `node_modules/.cache/docs-go-parsers` tools,
+their owned telemetry-off Go configuration, normal Go build cache and three
+raw-authority-derived JSON schemas in `node_modules/.cache/docs-publication-schemas`.
+The three infrastructure staging commands acquire their original locked archives
+and verify digest/chart identity before checks; discovery then requires that
+private cache and does not acquire or repair a missing archive.
+Native schema checks compare those exact schema bytes and validate specimen YAML
+on stdin; they do not materialize new schema/specimen files. Use
+`KUBECLAW_DOCS_PUBLICATION_SCHEMAS_DIR` consistently to select another owned schema
+location. A missing or stale schema requires explicit preparation, not check-time
+repair. Parser checks consume source-, target- and binary-hash-locked
 executables; a missing or stale tool fails without compiling it. To use an owned
 writable tools directory instead, set `KUBECLAW_DOCS_GO_PARSERS_DIR` identically
 for preparation and checking. `KUBECLAW_DOCS_SHFMT_BINARY` selects an owned shfmt
@@ -2233,6 +2246,10 @@ navigation. Changing the constant alone cannot establish a correct explanation.
    ```sh
    set -eu
    node scripts/docs-prepare-go-parsers.mjs
+   node scripts/docs-prepare-publication-schemas.mjs
+   node scripts/infrastructure-chart.mjs tailscale
+   node scripts/infrastructure-chart.mjs redis
+   node scripts/infrastructure-chart.mjs postgresql
    npm run docs:inventory
    npm run docs:inventory:local-helm
    npm run docs:inventory:config

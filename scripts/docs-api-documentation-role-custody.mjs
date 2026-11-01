@@ -10525,8 +10525,8 @@ function retainCustody(root,source,bytes,files){roleCustodyCache.set(root+':'+so
 const reviewedCliNativeCompilerRecipe=frozenRecipes({
   "source": "scripts/lib/cli/cli-native-driver.mjs",
   "owner": "generateNativeCliModel",
-  "sourceSha256": "ea2104b5a7ec4dfdee7b5c48a4ef21d330ca2100c82b6b3407019b4ac4df5f5a",
-  "ownerSyntaxSha256": "ddd8df5d8493b7939fc127c91acda469cab9d59e83201e23f1135200d827783a",
+  "sourceSha256": "b0aed8258fac9de84a56c2aba7cb85a5a2f934d40219808a1896035354c9144a",
+  "ownerSyntaxSha256": "edcb19afe721f99d0a36ff59c99cf86cc17f96bc8ed57e483430dfb7cdb06192",
   "factorySyntax": "createRequire(path.join(root,'package.json'))",
   "consumerSyntax": "require('typescript')",
   "lockSyntax": "JSON.parse(readBoundSource(root,'package-lock.json',files).text).packages?.['node_modules/typescript']?.version",
@@ -10541,7 +10541,7 @@ const reviewedCliNativeCompilerRecipe=frozenRecipes({
   "inputs": [
     {
       "path": "scripts/lib/cli/cli-native-driver.mjs",
-      "sha256": "ea2104b5a7ec4dfdee7b5c48a4ef21d330ca2100c82b6b3407019b4ac4df5f5a"
+      "sha256": "b0aed8258fac9de84a56c2aba7cb85a5a2f934d40219808a1896035354c9144a"
     },
     {
       "path": "scripts/docs-inventory.mjs",
@@ -10558,6 +10558,14 @@ const reviewedCliNativeCompilerRecipe=frozenRecipes({
     {
       "path": "package.json",
       "sha256": "0a8f76c0a868d5b85467081f4c635421995b1792791b0acec05f80be9e93c4ef"
+    },
+    {
+      "path": "scripts/docs-prepared-go-parsers.mjs",
+      "sha256": "10fec14b8198ce16f91ec085a0160c393dd83ade8cb9b11e7ce388264b574e39"
+    },
+    {
+      "path": "scripts/docs-prepare-go-parsers.mjs",
+      "sha256": "8a17aca687b5d2ce9b3b9388971dfa0a88e890adac8f780f206289ac5a70247f"
     }
   ],
   "runtimeAcquisitionAuthorized": false,
@@ -10770,7 +10778,7 @@ const reviewedPublicationParserRecipe=frozenRecipes({
     },
     {
       "path": "scripts/docs-publication-embedded-yaml.mjs",
-      "sha256": "4ec435e5e80ca0b2e4a99dd328df0d4d8d603f8e41587fe16a86069dce7c16eb"
+      "sha256": "bc00ecfd3d9cab31f0ba0baf5200477a2c2cc11de8fa1a2b391ccf463108090a"
     },
     {
       "path": "scripts/docs-publication-example-projections.mjs",

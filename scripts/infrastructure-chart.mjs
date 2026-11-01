@@ -32,16 +32,18 @@ export function verifyInfrastructureChart(name, file) {
   return { name: lock.name, version: lock.version, appVersion: metadata.appVersion, sha256: digest };
 }
 
-export function stageInfrastructureChart(name) {
+export function stageInfrastructureChart(name, { readOnly = false } = {}) {
   const lock = infrastructureChart(name);
   const cache = path.join(os.tmpdir(), `kubeclaw-infrastructure-charts-${process.getuid()}`);
-  fs.mkdirSync(cache, { recursive: true, mode: 0o700 });
+  if (!readOnly) fs.mkdirSync(cache, { recursive: true, mode: 0o700 });
+  else if (!fs.existsSync(cache)) throw new Error('INFRASTRUCTURE_CHART_NOT_PREPARED');
   const stat = fs.lstatSync(cache);
   if (!stat.isDirectory() || stat.uid !== process.getuid() || (stat.mode & 0o077) !== 0) {
     throw new Error('INFRASTRUCTURE_CHART_CACHE_NOT_PRIVATE');
   }
   const file = path.join(cache, `${lock.name}-${lock.version}-${lock.sha256}.tgz`);
   if (!fs.existsSync(file)) {
+    if (readOnly) throw new Error('INFRASTRUCTURE_CHART_NOT_PREPARED');
     const temporary = fs.mkdtempSync(path.join(cache, 'download-'));
     try {
       const download = path.join(temporary, 'chart.tgz');

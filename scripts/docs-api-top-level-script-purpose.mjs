@@ -2,6 +2,8 @@ import assert from 'node:assert/strict';
 import fs from 'node:fs';
 import path from 'node:path';
 import {createHash} from 'node:crypto';
+import ts from 'typescript';
+import {shellNativeNodeEntries} from './docs-shell-source-custody.mjs';
 
 const authorityPath = 'scripts/docs-api-top-level-script-purpose-authority.json';
 const authoritySha256 = '88850308d72e7f7595d0926dded683d1224731d7169f0648b97b0f3afe037f95';
@@ -141,4 +143,401 @@ export function selectedTopLevelScriptPurpose(source, role, receipt) {
     currentPurposeInputBindingDigest: receipt.currentPurposeInputBindingDigest,
     runtimeExecutionAuthorized: false, apiApplyAuthorized: false,
     limit: 'Source-owned output purpose only; runtime inputs/results unobserved; arbitrary embedded tool/status bytes are not globally non-API.'});
+}
+
+// Builtin NodeTest receiving-context purpose only; never payload truth or an
+// execution/safety grant. Existing exact Source profiles remain independent.
+//
+// A reusable, deliberately partial ownership grammar. Authority is actual
+// builtin test receiver + fresh allocator/lifecycle + closed lexical callers,
+// NEVER test directory, fixture Source hash, raw descriptor roster or temp name.
+const nodeFixtureReceipts = new WeakMap();
+export function checkedNodeTestFixturePurpose(root, source, bytes, roles, graph, nativePackageEntries) {
+  if (!bytes.includes('node:test')) return null;
+  // Acquisition failure is absence of THIS purpose, not acceptance/fallback.
+  // The unchanged raw UNKNOWN assertion still fails any unsupported occurrence.
+  const physical = relative => {
+    if (!relative || path.isAbsolute(relative) || relative !== path.posix.normalize(relative)
+      || relative.split('/').some(part => !part || part === '..' || part === '.')) return null;
+    const file = path.join(root, relative);
+    return fs.existsSync(file) && fs.realpathSync(file) === file && fs.lstatSync(file).isFile()
+      ? fs.readFileSync(file, 'utf8') : null;
+  };
+  if (fs.realpathSync(root) !== root || physical(source) !== bytes) return null;
+  if (!graph || graph.edges.some(edge => edge.target === source)
+    || graph.aliases.some(alias => JSON.stringify(alias).includes(source))) return null;
+  // A canonical public traversal seed is NOT a CLI invocation. Require genuine
+  // maintained package argv instead; the graph's public canonical source is
+  // allowed only at its identical path. Bin/main/exports ownership is separate.
+  if (graph.publicEntries.some(entry => entry.canonicalSource === source && entry.path !== source)) return null;
+  const pkg = JSON.parse(physical('package.json') ?? 'null');
+  if (!pkg || [pkg.bin, pkg.main, pkg.exports].some(value =>
+    value && JSON.stringify(value).includes(source))) return null;
+  if (!Array.isArray(nativePackageEntries)) return null;
+  const entries = nativePackageEntries.filter(entry => entry.source === source);
+  if (!entries.length) return null;
+  for (const entry of entries) {
+    if (pkg.scripts?.[entry.name] !== entry.command) return null;
+    const invocations = shellNativeNodeEntries(`package.json#${entry.name}`, entry.command);
+    const targeting = invocations.filter(invocation=>invocation.start===entry.nativeCommandStart
+      && invocation.end===entry.nativeCommandEnd); // native maintained expansion, not a new glob parser
+    // No env/loader/wrapper/cwd inference. Existing parser rejects unsupported
+    // options; every actual targeting invocation must be a direct node --test.
+    if (!entry.nativeTest || targeting.length!==1 || targeting.some(invocation => !invocation.nativeTest
+      || invocation.words[0]?.value !== 'node' || invocation.words.some(word => word.expanded))) return null;
+  }
+
+  const tree = ts.createSourceFile(source, bytes, ts.ScriptTarget.Latest, true, /\.[cm]?ts$/u.test(source)?ts.ScriptKind.TS:ts.ScriptKind.JS);
+  if (tree.parseDiagnostics.length) return null;
+  // Use the maintained TS lexical binder, not identifier-text equivalence or a
+  // new interpreter/dataflow evaluator. No imported module is loaded/evaluated.
+  const options = {allowJs: true, noLib: true, noResolve: true, target: ts.ScriptTarget.Latest};
+  const program = ts.createProgram([source], options, {
+    getSourceFile: name => name === source ? tree : undefined,
+    getDefaultLibFileName: () => '', writeFile() {}, getCurrentDirectory: () => root,
+    getDirectories: () => [], fileExists: name => name === source,
+    readFile: name => name === source ? bytes : undefined,
+    getCanonicalFileName: name => name, useCaseSensitiveFileNames: () => true,
+    getNewLine: () => '\n',
+  });
+  const checker = program.getTypeChecker();
+  const identifier = node => !!node && ts.isIdentifier(node);
+  const nodes = [];
+  const visit = node => { nodes.push(node); ts.forEachChild(node, visit); };
+  visit(tree);
+  const sym = node => identifier(node) && ts.isShorthandPropertyAssignment(node.parent)
+    ? checker.getShorthandAssignmentValueSymbol(node.parent) : checker.getSymbolAtLocation(node);
+  const same = (node, declaration) => !!node && !!declaration && identifier(node)
+    && !!sym(declaration) && sym(node) === sym(declaration);
+  const refs = declaration => nodes.filter(node => identifier(node) && node !== declaration
+    && same(node, declaration) && !(ts.isPropertyAccessExpression(node.parent) && node.parent.name === node));
+  const enclosingFunction = node => {
+    for (let parent = node.parent; parent; parent = parent.parent) if (ts.isFunctionLike(parent)) return parent;
+    return null;
+  };
+  const isConst = declaration => !!declaration && ts.isVariableDeclaration(declaration)
+    && ts.isVariableDeclarationList(declaration.parent)
+    && !!(declaration.parent.flags & ts.NodeFlags.Const);
+  const defaultImport = module => {
+    const imports = tree.statements.filter(node => ts.isImportDeclaration(node)
+      && ts.isStringLiteral(node.moduleSpecifier) && node.moduleSpecifier.text === module
+      && node.importClause?.name && !node.importClause.namedBindings);
+    return imports.length === 1 ? imports[0].importClause.name : null;
+  };
+  const fsName = defaultImport('node:fs'), pathName = defaultImport('node:path');
+  const osName = defaultImport('node:os'), assertName = defaultImport('node:assert/strict');
+  const testNames = tree.statements.filter(node => ts.isImportDeclaration(node)
+    && ts.isStringLiteral(node.moduleSpecifier) && node.moduleSpecifier.text === 'node:test')
+    .flatMap(node => [node.importClause?.name, ...(node.importClause?.namedBindings
+      && ts.isNamedImports(node.importClause.namedBindings) ? node.importClause.namedBindings.elements
+        .filter(element => (element.propertyName ?? element.name).text === 'test').map(element => element.name) : [])]).filter(Boolean);
+  if (![fsName, pathName, osName].every(Boolean) || !testNames.length) return null;
+  const member = (node, binding, name) => !!node && ts.isPropertyAccessExpression(node)
+    && same(node.expression, binding) && node.name.text === name;
+  const call = (node, binding, name, count) => !!node && ts.isCallExpression(node)
+    && member(node.expression, binding, name) && node.arguments.length === count;
+  // No builtin object/method aliasing, mutation or passing of imported handles.
+  // Arbitrary ordinary Source code is not globally exempted by this predicate.
+  for (const binding of [fsName, pathName, osName]) {
+    if (refs(binding).some(node => {
+      const access = node.parent;
+      return !(ts.isPropertyAccessExpression(access) && access.expression === node
+        && ts.isCallExpression(access.parent) && access.parent.expression === access)
+        && !(binding === assertName && ts.isCallExpression(access) && access.expression === node);
+    })) return null;
+  }
+  const testCallback = registration => {
+    const args=registration.arguments;
+    if (![2,3].includes(args.length)||!ts.isStringLiteral(args[0])) return null;
+    if(args.length===3&&(!ts.isObjectLiteralExpression(args[1])||args[1].properties.some(property=>
+      !ts.isPropertyAssignment(property)||!(ts.isIdentifier(property.name)||ts.isStringLiteral(property.name))
+      ||!(ts.isStringLiteral(property.initializer)||ts.isNumericLiteral(property.initializer)
+        ||[ts.SyntaxKind.TrueKeyword,ts.SyntaxKind.FalseKeyword].includes(property.initializer.kind)))))return null;
+    const callback=args.at(-1);
+    return (ts.isArrowFunction(callback)||ts.isFunctionExpression(callback))&&ts.isBlock(callback.body)?callback:null;
+  };
+  const callbacks = new Set();
+  for (const reference of testNames.flatMap(refs)) {
+    const registration = reference.parent;
+    if (!ts.isCallExpression(registration) || registration.expression !== reference
+      || !ts.isExpressionStatement(registration.parent) || registration.parent.parent !== tree) return null;
+    const callback = testCallback(registration);
+    if (!callback) return null;
+    callbacks.add(callback);
+  }
+  if (!callbacks.size) return null;
+  // Local helper closure is derived from REAL binding references, not its name.
+  // A helper may return any record/property names; exported/escaped callbacks,
+  // recursion without a test seed and dynamic invocation remain unsupported.
+  const helperBinding=fn=>ts.isFunctionDeclaration(fn)?fn.name
+    :ts.isVariableDeclaration(fn.parent)&&fn.parent.initializer===fn&&isConst(fn.parent)
+      &&identifier(fn.parent.name)?fn.parent.name:null;
+  const helpers=nodes.filter(node=>{
+    if(ts.isFunctionDeclaration(node))return !!node.name&&!!node.body&&!node.modifiers?.some(modifier=>modifier.kind!==ts.SyntaxKind.AsyncKeyword)&&node.parent===tree;
+    if(!(ts.isArrowFunction(node)||ts.isFunctionExpression(node)&&!node.name)||!helperBinding(node))return false;
+    const statement=node.parent.parent.parent;
+    return ts.isVariableStatement(statement)&&statement.parent===tree&&!statement.modifiers?.length;
+  });
+  const awaitedHelperReference=(reference,fn)=>{
+    const invocation=reference.parent;
+    if(!ts.isCallExpression(invocation)||invocation.expression!==reference)return false;
+    if(!fn.modifiers?.some(modifier=>modifier.kind===ts.SyntaxKind.AsyncKeyword))return true;
+    let selected=invocation;
+    while(ts.isParenthesizedExpression(selected.parent))selected=selected.parent;
+    return ts.isAwaitExpression(selected.parent);
+  };
+  const closed = new Set(callbacks);
+  const helperCalls = new Map();
+  for (let changed = true; changed;) {
+    changed = false;
+    for (const fn of helpers) {
+      if (closed.has(fn)) continue;
+      const references = refs(helperBinding(fn));
+      if (!references.length || references.some(reference => !awaitedHelperReference(reference,fn)
+        || !closed.has(enclosingFunction(reference)))) continue;
+      closed.add(fn); helperCalls.set(fn, references.map(reference => reference.parent)); changed = true;
+    }
+  }
+  // Nested t.test callbacks are genuine builtin receiving contexts only when t
+  // resolves to a registered callback's own context parameter; not method text.
+  for (let changed = true; changed;) {
+    changed = false;
+    for (const node of nodes.filter(ts.isCallExpression)) {
+      const owner = enclosingFunction(node), parameter = owner?.parameters[0]?.name;
+      if (!callbacks.has(owner) || !identifier(parameter)
+        || !member(node.expression, parameter, 'test')) continue;
+      const callback = testCallback(node);
+      if (callback
+        && !callbacks.has(callback)) { callbacks.add(callback); closed.add(callback); changed = true; }
+    }
+  }
+  // Helpers called solely from nested test contexts get the same closure check.
+  for (let changed = true; changed;) {
+    changed = false;
+    for (const fn of helpers) {
+      if (closed.has(fn)) continue;
+      const references = refs(helperBinding(fn));
+      if (references.length && references.every(reference => awaitedHelperReference(reference,fn)
+        && closed.has(enclosingFunction(reference)))) {
+        closed.add(fn); helperCalls.set(fn, references.map(reference => reference.parent)); changed = true;
+      }
+    }
+  }
+  const empty = {bindings:new Map(), chain:[]};
+  const unwrap = node => {
+    while (node && (ts.isParenthesizedExpression(node) || ts.isAwaitExpression(node)
+      || ts.isAsExpression(node) || ts.isTypeAssertionExpression(node) || ts.isNonNullExpression(node))) node = node.expression;
+    return node;
+  };
+  const mutationPath = expression => {
+    const keys=[];
+    while(ts.isPropertyAccessExpression(expression)||ts.isElementAccessExpression(expression)){
+      keys.unshift(ts.isPropertyAccessExpression(expression)?expression.name.text
+        :ts.isStringLiteral(expression.argumentExpression)?expression.argumentExpression.text:null);
+      expression=expression.expression;
+    }
+    return identifier(expression)?{base:expression,keys}:null;
+  };
+  const mutated = (binding, keys = []) => nodes.some(node => {
+    let target=null;
+    if(ts.isBinaryExpression(node)&&node.operatorToken.kind>=ts.SyntaxKind.FirstAssignment
+      && node.operatorToken.kind<=ts.SyntaxKind.LastAssignment)target=node.left;
+    if(ts.isDeleteExpression(node)||ts.isPostfixUnaryExpression(node)||ts.isPrefixUnaryExpression(node))target=node.expression??node.operand;
+    const projection=target&&mutationPath(target);
+    return projection&&same(projection.base,binding)
+      && (keys.length ? projection.keys.slice(0,Math.min(keys.length,projection.keys.length)).every((key,index)=>key===null||key===keys[index])
+        : !projection.keys.length);
+  });
+  if([...callbacks].some(callback=>identifier(callback.parameters[0]?.name)
+    && (mutated(callback.parameters[0].name,['test'])||mutated(callback.parameters[0].name,['after']))))return null;
+  const safeSuffix = value => typeof value === 'string' && value && !value.includes('\\')
+    && !path.posix.isAbsolute(value) && value.split('/').every(part => part && part !== '.' && part !== '..');
+  const returned = fn => {
+    if (ts.isArrowFunction(fn) && !ts.isBlock(fn.body)) return fn.body;
+    const returns = nodes.filter(node => ts.isReturnStatement(node) && enclosingFunction(node) === fn);
+    return returns.length === 1 && returns[0].parent === fn.body ? returns[0].expression : null;
+  };
+  // This is an OWNERSHIP domain only: literal relative suffix / owned path /
+  // lazy record / local closure. It never evaluates arbitrary JavaScript, treats
+  // function output as true, or infers non-API from a test or temporary dirname.
+  const withOrigins=(result,origins)=>result?{...result,origins:[...new Set([...(result.origins??[]),...origins])]}:null;
+  function value(node, context = empty, seen = new Set()) {
+    node = unwrap(node);
+    if (!node || seen.has(node)) return null;
+    seen = new Set([...seen,node]);
+    if (ts.isStringLiteral(node) || ts.isNoSubstitutionTemplateLiteral(node)) return {kind:'literal',text:node.text};
+    if (identifier(node)) {
+      const symbol = sym(node), bound = context.bindings.get(symbol);
+      if (bound) return withOrigins(value(bound.node,bound.context,seen),[node]);
+      const declaration = symbol?.declarations?.find(declaration => ts.isVariableDeclaration(declaration)
+        || ts.isBindingElement(declaration) || ts.isFunctionDeclaration(declaration));
+      if (declaration && ts.isFunctionDeclaration(declaration)) return closed.has(declaration) ? {kind:'function',fn:declaration,context} : null;
+      if (declaration && ts.isBindingElement(declaration) && ts.isObjectBindingPattern(declaration.parent)
+        && !declaration.dotDotDotToken && identifier(declaration.name)) {
+        const variable = declaration.parent.parent;
+        if (!isConst(variable) || mutated(declaration.name)) return null;
+        const record = value(variable.initializer,context,seen);
+        const key = declaration.propertyName ?? declaration.name;
+        return record?.kind === 'record' && (identifier(key) || ts.isStringLiteral(key))
+          ? withOrigins(value(record.properties.get(key.text),record.context,seen),[declaration.name,...(record.origins??[])]) : null;
+      }
+      if (!isConst(declaration) || !identifier(declaration.name) || mutated(declaration.name)) return null;
+      return withOrigins(value(declaration.initializer,context,seen),[declaration.name]);
+    }
+    if (ts.isObjectLiteralExpression(node)) {
+      const properties = new Map();
+      for (const property of node.properties) {
+        if (!(ts.isShorthandPropertyAssignment(property) || ts.isPropertyAssignment(property))
+          || !(identifier(property.name) || ts.isStringLiteral(property.name))
+          || properties.has(property.name.text)) return null;
+        properties.set(property.name.text,ts.isShorthandPropertyAssignment(property) ? property.name : property.initializer);
+      }
+      return {kind:'record',properties,context};
+    }
+    if (ts.isArrowFunction(node) || ts.isFunctionExpression(node)) return {kind:'function',fn:node,context};
+    if (ts.isPropertyAccessExpression(node) || ts.isElementAccessExpression(node)) {
+      const projection=mutationPath(node);
+      if(projection&&mutated(projection.base,projection.keys))return null;
+      const record = value(node.expression,context,seen);
+      const key = ts.isPropertyAccessExpression(node) ? node.name.text
+        : ts.isStringLiteral(node.argumentExpression) ? node.argumentExpression.text : null;
+      return record?.kind === 'record' && key !== null ? withOrigins(value(record.properties.get(key),record.context,seen),record.origins??[]) : null;
+    }
+    if (!ts.isCallExpression(node)) return null;
+    if (call(node,fsName,'mkdtempSync',1) && call(node.arguments[0],pathName,'join',2)
+      && call(node.arguments[0].arguments[0],osName,'tmpdir',0)
+      && ts.isStringLiteral(node.arguments[0].arguments[1]) && closed.has(enclosingFunction(node))) {
+      return {kind:'owned',allocator:node,context,key:[...context.chain,node.getStart(tree)].join(':'),parts:[]};
+    }
+    if (member(node.expression,pathName,'join') && node.arguments.length >= 2) {
+      const base = value(node.arguments[0],context,seen);
+      const suffixes = node.arguments.slice(1).map(argument=>value(argument,context,seen));
+      return base?.kind === 'owned' && suffixes.every(suffix=>suffix?.kind==='literal'&&safeSuffix(suffix.text))
+        ? {...base,parts:[...base.parts,...suffixes.flatMap(suffix=>suffix.text.split('/'))]} : null;
+    }
+    if (call(node,pathName,'dirname',1)) {
+      const base = value(node.arguments[0],context,seen);
+      return base?.kind === 'owned' && base.parts.length ? {...base,parts:base.parts.slice(0,-1)} : null;
+    }
+    const callee = value(node.expression,context,seen);
+    if (callee?.kind !== 'function' || !closed.has(callee.fn)
+      || callee.fn.parameters.some(parameter=>!identifier(parameter.name) || parameter.dotDotDotToken)) return null;
+    const expression = returned(callee.fn);
+    if (!expression) return null;
+    const child = {bindings:new Map(callee.context.bindings),chain:[...context.chain,node.getStart(tree)]};
+    callee.fn.parameters.forEach((parameter,index)=>child.bindings.set(sym(parameter.name),
+      node.arguments[index] ? {node:node.arguments[index],context} : {node:parameter.initializer,context:child}));
+    return value(expression,child,seen);
+  }
+  const rootSame = (left,right) => left?.kind === 'owned' && right?.kind === 'owned' && left.key === right.key;
+  const rootContext = pathValue => pathValue.context;
+  const rootLifecycle = pathValue => nodes.some(node => {
+    if (!call(node,fsName,'rmSync',2)) return false;
+    const target = value(node.arguments[0],rootContext(pathValue));
+    if (!rootSame(pathValue,target) || target.parts.length) return false;
+    // Finally removal is the actual enclosing allocator owner's cleanup, not a
+    // same-text root from a different helper invocation or a conditional branch.
+    const allocatorOwner = enclosingFunction(pathValue.allocator);
+    for (let parent=node.parent;parent;parent=parent.parent) {
+      if (ts.isBlock(parent) && ts.isTryStatement(parent.parent) && parent.parent.finallyBlock === parent
+        && enclosingFunction(parent) === allocatorOwner) return true;
+      if (ts.isArrowFunction(parent) || ts.isFunctionExpression(parent)) {
+        const registration = parent.parent;
+        if (!ts.isCallExpression(registration) || registration.arguments.length !== 1
+          || registration.arguments[0] !== parent || !ts.isPropertyAccessExpression(registration.expression)
+          || registration.expression.name.text !== 'after') return false;
+        let receiver = registration.expression.expression;
+        if(identifier(receiver)&&mutated(receiver,['after']))return false;
+        const bound = rootContext(pathValue).bindings.get(sym(receiver));
+        if (bound) receiver = bound.node;
+        return [...callbacks].some(callback=>identifier(callback.parameters[0]?.name)
+          && same(receiver,callback.parameters[0].name));
+      }
+      if (ts.isFunctionLike(parent)) return false;
+    }
+    return false;
+  });
+  // Reject ownership-handle/global escapes and rebinding. Passing an owned path
+  // to a real test's product receiver remains a fixture setup operation; it does
+  // NOT exempt that callee's API sinks or grant its exported runtime capability.
+  const noEscape = (expression,origins) => {
+    const inspect = node => {
+      if (!identifier(node)) return true;
+      const declaration = sym(node)?.declarations?.find(declaration=>ts.isVariableDeclaration(declaration)||ts.isParameter(declaration)||ts.isBindingElement(declaration));
+      if (!declaration || !(isConst(declaration)||ts.isParameter(declaration)
+        ||ts.isBindingElement(declaration)&&isConst(declaration.parent.parent)) || !identifier(declaration.name)) return true;
+      const record=value(declaration.name)?.kind==='record';
+      return refs(declaration.name).every(reference=>{
+        if(record&&!(ts.isPropertyAccessExpression(reference.parent)&&reference.parent.expression===reference
+          || ts.isElementAccessExpression(reference.parent)&&reference.parent.expression===reference
+            && ts.isStringLiteral(reference.parent.argumentExpression)
+          ||ts.isReturnStatement(reference.parent)&&helpers.includes(enclosingFunction(reference))
+            &&closed.has(enclosingFunction(reference))))return false;
+        const owner = enclosingFunction(reference);
+        if (!closed.has(owner) && ![...closed].some(callback=>{
+          for(let parent=reference.parent;parent;parent=parent.parent)if(parent===callback)return true;
+          return false;
+        })) return false;
+        for(let parent=reference;parent&&!ts.isStatement(parent);parent=parent.parent){
+          if(ts.isBinaryExpression(parent)&&parent.operatorToken.kind>=ts.SyntaxKind.FirstAssignment
+            && parent.operatorToken.kind<=ts.SyntaxKind.LastAssignment&&parent.right.getStart(tree)<=reference.getStart(tree)
+            && parent.right.end>=reference.end)return false;
+        }
+        return !mutated(declaration.name);
+      });
+    };
+    let okay=true;const walk=node=>{if(!inspect(node))okay=false;ts.forEachChild(node,walk);};walk(expression);for(const origin of origins)if(!inspect(origin))okay=false;return okay;
+  };
+  const contextsFor=(owner,seen=new Set())=>{
+    if(callbacks.has(owner))return [empty];
+    if(seen.has(owner)||!helperCalls.has(owner))return [];
+    const result=[];seen=new Set([...seen,owner]);
+    for(const invocation of helperCalls.get(owner))for(const parent of contextsFor(enclosingFunction(invocation),seen)){
+      if(owner.parameters.some(parameter=>!identifier(parameter.name)||parameter.dotDotDotToken))return [];
+      const child={bindings:new Map(parent.bindings),chain:[...parent.chain,invocation.getStart(tree)]};
+      owner.parameters.forEach((parameter,index)=>child.bindings.set(sym(parameter.name),invocation.arguments[index]
+        ?{node:invocation.arguments[index],context:parent}:{node:parameter.initializer,context:child}));
+      result.push(child);
+    }
+    return result;
+  };
+  const owned = [];
+  for (const write of nodes.filter(node => call(node,fsName,'writeFileSync',2) && closed.has(enclosingFunction(node)))) {
+    const contexts=contextsFor(enclosingFunction(write));
+    const targets=contexts.map(context=>value(write.arguments[0],context));
+    if(!contexts.length||targets.some(target=>target?.kind!=='owned'||!target.parts.length||!rootLifecycle(target))
+      ||!noEscape(write.arguments[0],targets.flatMap(target=>target.origins??[])))continue;
+    const line = tree.getLineAndCharacterOfPosition(write.getStart(tree)).line + 1;
+    if (nodes.filter(node=>ts.isCallExpression(node)&&node.expression.getText(tree)==='fs.writeFileSync'
+      && tree.getLineAndCharacterOfPosition(node.getStart(tree)).line+1===line).length!==1) continue;
+    const occurrenceRoles = roles.filter(role=>role.line===line&&role.sink==='fs.writeFileSync');
+    if (!occurrenceRoles.length) continue;
+    const literal = node => ts.isStringLiteral(node)||ts.isNoSubstitutionTemplateLiteral(node)||ts.isNumericLiteral(node)
+      || [ts.SyntaxKind.TrueKeyword,ts.SyntaxKind.FalseKeyword,ts.SyntaxKind.NullKeyword].includes(node.kind)
+      || ts.isArrayLiteralExpression(node)&&node.elements.every(literal)
+      || ts.isObjectLiteralExpression(node)&&node.properties.every(property=>ts.isPropertyAssignment(property)
+        && (identifier(property.name)||ts.isStringLiteral(property.name))&&literal(property.initializer));
+    const payload=write.arguments[1];
+    const json=ts.isCallExpression(payload)&&payload.arguments.length===1&&ts.isPropertyAccessExpression(payload.expression)
+      && payload.expression.name.text==='stringify'&&identifier(payload.expression.expression)
+      && payload.expression.expression.text==='JSON'&&!sym(payload.expression.expression)
+      && !nodes.some(node=>identifier(node)&&node.text==='JSON'&&node!==payload.expression.expression);
+    owned.push({roles:new Map(occurrenceRoles.map(role=>[role,JSON.stringify(role)])),start:write.getStart(tree),end:write.end,
+      payloadStart:payload.getStart(tree),payloadEnd:payload.end,closedLiteral:literal(payload)||json&&literal(payload.arguments[0])});
+  }
+  if (!owned.length) return null;
+  const receipt=Object.freeze({purpose:'native-node-test-owned-fixture-write',runtimeApiGrant:false,applyGrant:false,rawRoleMutation:false});
+  nodeFixtureReceipts.set(receipt,{source,bytes,owned});return receipt;
+}
+
+export function selectedNodeTestFixturePurpose(source,role,receipt,apiExclusion=false) {
+  const proof=nodeFixtureReceipts.get(receipt);
+  return !!proof&&proof.source===source&&proof.owned.some(occurrence=>occurrence.roles.has(role)
+    && occurrence.roles.get(role)===JSON.stringify(role)&&(!apiExclusion||occurrence.closedLiteral));
+}
+export function selectedNodeTestFixtureNodePurpose(source,tree,node,receipt) {
+  const proof=nodeFixtureReceipts.get(receipt);
+  return !!proof&&proof.source===source&&tree.text===proof.bytes&&node.getSourceFile?.()===tree
+    && proof.owned.some(occurrence=>occurrence.closedLiteral&&(node.getStart(tree)===occurrence.start&&node.end===occurrence.end
+      || node.getStart(tree)>=occurrence.payloadStart&&node.end<=occurrence.payloadEnd));
 }

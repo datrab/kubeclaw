@@ -427,7 +427,7 @@ const readerArtifactCiPurpose=freeze({
     {
       "path": ".github/workflows/docs-checks.yaml",
       "canonical": ".github/workflows/docs-checks.yaml",
-      "sha256": "7c8470352aec69b2f26bf8c60b1a5fb93be0c8f1cc8ece2b432cbf88f4c665a8"
+      "sha256": "fb4f075cbae40abaf6082be5e048d875bb5108ad24f44f099ba8e145e8068134"
     },
     {
       "path": "scripts/tests/docs-reader-page-records.test.mjs",

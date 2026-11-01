@@ -7,6 +7,7 @@ import path from 'node:path';
 import assert from 'node:assert/strict';
 import {createHash} from 'node:crypto';
 import {execFileSync,spawnSync} from 'node:child_process';
+import {fileURLToPath} from 'node:url';
 const locks={
   "cli": {
     "source": "scripts/lib/cli/go_cli_ast.go",
@@ -60,6 +61,11 @@ export function preparedGoEnvironment(){
  assert(!process.env.GOFLAGS,'API_PRODUCT_GO_MODULE_AUTHORITY_UNQUALIFIED: explicit GOFLAGS');
  assert(!process.env.GOWORK||process.env.GOWORK==='off','API_PRODUCT_GO_MODULE_AUTHORITY_UNQUALIFIED: explicit GOWORK');
  const command=process.env.KUBECLAW_DOCS_GO_BINARY??'go';
+ const directory=process.env.KUBECLAW_DOCS_GO_PARSERS_DIR??path.join(fileURLToPath(new URL('../',import.meta.url)),'node_modules/.cache/docs-go-parsers');
+ const config=path.resolve(directory,'go-config');
+ const mode=path.join(config,'go/telemetry/mode');
+ assert(fs.lstatSync(mode).isFile()&&fs.realpathSync(mode)===mode,'DOCS_GO_PREPARED_CONFIG_NOT_REGULAR');
+ assert(/^off \d{4}-\d{2}-\d{2}$/u.test(fs.readFileSync(mode,'utf8')),'DOCS_GO_PREPARED_CONFIG_NOT_OFF');
  const selected=command.includes('/')?path.resolve(command):(process.env.PATH??'').split(path.delimiter).map(dir=>path.resolve(dir,command)).find(file=>{try{fs.accessSync(file,fs.constants.X_OK);return fs.statSync(file).isFile();}catch{return false;}});
  assert(selected,'DOCS_GO_PREPARED_TOOLCHAIN_MISSING');
  const executable=fs.realpathSync(selected);
@@ -74,7 +80,7 @@ export function preparedGoEnvironment(){
  }};
  visit(src);
  assert.equal(digest(directories.sort().join('\n')+'\n'),'f903799f2888062d81e06784838d208fdc9c55e82a8c8985fa830c1166f46fe8','DOCS_GO_PREPARED_STDLIB_MEMBERSHIP_CHANGED');
- return {command:executable,env:{...process.env,GOROOT:goroot,GOENV:'off',GOTOOLCHAIN:'local',GOPROXY:'off',GOSUMDB:'off',GOTELEMETRY:'off'}};
+ return {command:executable,env:{...process.env,XDG_CONFIG_HOME:config,GOROOT:goroot,GOENV:'off',GOTOOLCHAIN:'local',GOPROXY:'off',GOSUMDB:'off',GOTELEMETRY:'off'}};
 }
 export function runPreparedGoParser(root,key,args,options){
  assert(!process.env.GOFLAGS,'DOCS_GO_PREPARED_GOFLAGS_UNQUALIFIED');
