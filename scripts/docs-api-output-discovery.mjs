@@ -2352,6 +2352,11 @@ const reviewedDisabledRegistration = Object.freeze({
   source: 'scripts/install/register-runtime-argo.mjs',
   authority: 'scripts/docs-api-disabled-registration-authority.json',
   authoritySha256: '9a019e1bcee769d6cc0b0dcf617f913889e1a3ac6a754d63ee29ed9d61850c5e',
+  // Preserve the immutable disabled observation's original parent link. Only
+  // the Source-qualified deployment-release input identity/length changed in
+  // the current parent; all historical profiles/stream bytes remain unchanged.
+  physicalClosureHistoricalWitnessSha256: '1f5316ad9c99959473cb938a79c44b8bee01f8a5399a95d2df36fcd9a17d17ca',
+  physicalClosureCurrentWitnessSha256: '740c850a386a080f18a942bd37630aaceb3ec266cf8c8dbcdd7a13d6d13b099d',
 });
 const qualifiedDisabledRegistration = new WeakSet();
 export function checkedDisabledRegistrationOutput(root, graph, physicalClosure) {
@@ -2368,7 +2373,9 @@ export function checkedDisabledRegistrationOutput(root, graph, physicalClosure) 
   if (hash(bytes) !== profile.authoritySha256) fail('immutable disabled profile');
   const authority = JSON.parse(bytes);
   if (!physicalClosure || !qualifiedGitOpsProfiles.has(physicalClosure)
-    || physicalClosure.witnessDigest !== authority.physicalClosureWitnessSha256
+    || authority.physicalClosureWitnessSha256 !== profile.physicalClosureHistoricalWitnessSha256
+    || physicalClosure.witnessDigest !== profile.physicalClosureCurrentWitnessSha256
+    || profile.physicalClosureCurrentWitnessSha256 !== reviewedGitOpsProfile.authoritySha256
     || authority.physicalClosureWitness !== reviewedGitOpsProfile.authority) fail('unacquired physical closure');
   for (const [file, digest] of [[profile.source, authority.sourceSha256], [authority.configuration, authority.configurationSha256]]) {
     if (!physicalClosure.dependencies.includes(file) || hash(read(file)) !== digest) fail(`selected Source/configuration ${file}`);

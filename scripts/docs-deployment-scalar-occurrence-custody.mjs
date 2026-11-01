@@ -28,8 +28,8 @@ const excludedDirectories = new Set(['node_modules', 'vendor', '.git', 'dist', '
 // Existing Source trust anchors cannot include their own receipt hash. Their
 // current implementation remains checked by ordinary documentation custody.
 const trustAnchors = new Set(['scripts/docs-deployment-scalar-occurrence-custody.mjs', 'scripts/docs-api-documentation-role-custody.mjs']);
-const reviewedSelectedGraphSha256 = '2131d689d5880515065e67fa70d94c16c6aed6e1b5af91403e18ef4b7dc639c1';
-const reviewedCallerCensusSha256 = 'ed8e54f2e1a62030480b8f1068669474cd6d2cea64c709248736bf49dff5deac';
+const reviewedSelectedGraphSha256 = 'eae3c33e8f87fe1d4e209bc4a937f15ef858889b2cee93cb270c49c9f30fc54b';
+const reviewedCallerCensusSha256 = '2eb0e2ba9cf4e4240c29ea8ce6c7f64165bf030b9bbdca6f84ae68fb37d7c64b';
 const hash = value => createHash('sha256').update(value).digest('hex');
 const receipts = new WeakSet();
 const cache = new Map();
